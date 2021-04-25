@@ -16,12 +16,12 @@ namespace Content.Shared.Damage.ResistanceSet
     public class ResistanceSet
     {
         [ViewVariables]
-        private Dictionary<DamageType, ResistanceSetSettings> _resistances =
+        private Dictionary<DamageTypePrototype, ResistanceSetSettings> _resistances =
             new();
 
         public ResistanceSet()
         {
-            foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
+            foreach (var damageType in (DamageTypePrototype[]) Enum.GetValues(typeof(DamageType)))
             {
                 _resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
             }
@@ -42,7 +42,7 @@ namespace Content.Shared.Damage.ResistanceSet
         /// </summary>
         /// <param name="damageType">Type of damage.</param>
         /// <param name="amount">Incoming amount of damage.</param>
-        public int CalculateDamage(DamageType damageType, int amount)
+        public int CalculateDamage(DamageTypePrototype damageType, int amount)
         {
             if (amount > 0) // Only apply reduction if it's healing, not damage.
             {

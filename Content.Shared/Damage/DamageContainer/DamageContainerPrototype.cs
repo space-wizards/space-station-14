@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,14 +16,17 @@ namespace Content.Shared.Damage.DamageContainer
     [Serializable, NetSerializable]
     public class DamageContainerPrototype : IPrototype, ISerializationHooks
     {
+        [Dependency]
+        private readonly IPrototypeManager _prototypeManager = default!;
+
         [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
-        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
+        [DataField("supportedClasses")] private HashSet<DamageGroupPrototype> _supportedClasses = new();
+        [DataField("supportedTypes")] private HashSet<DamageTypePrototype> _supportedTypes = new();
 
         // TODO NET 5 IReadOnlySet
-        [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
+        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedClasses => _supportedClasses;
 
-        [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
+        [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedTypes => _supportedTypes;
 
         [ViewVariables]
         [DataField("id", required: true)]
@@ -32,22 +36,34 @@ namespace Content.Shared.Damage.DamageContainer
         {
             if (_supportAll)
             {
-                _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());
-                _supportedTypes.UnionWith(Enum.GetValues<DamageType>());
+                // _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());
+                //_supportedTypes.UnionWith(Enum.GetValues<DamageType>());
+
+                foreach (var DamageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+                {
+                    _supportedClasses.Add(DamageGroup);
+                    foreach (var DamageType in DamageGroup.Types)
+                    {
+                        _supportedTypes.Add(DamageType);
+                    }
+                }
+
                 return;
             }
 
             foreach (var supportedClass in _supportedClasses)
             {
-                foreach (var supportedType in supportedClass.ToTypes())
+                foreach (var supportedType in supportedClass.Types)
                 {
                     _supportedTypes.Add(supportedType);
                 }
             }
 
+
+            //ask smug about this
             foreach (var originalType in _supportedTypes)
             {
-                _supportedClasses.Add(originalType.ToClass());
+                _supportedTypes.Add(originalType);
             }
         }
     }

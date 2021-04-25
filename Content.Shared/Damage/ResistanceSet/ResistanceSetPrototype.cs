@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,16 +16,19 @@ namespace Content.Shared.Damage.ResistanceSet
     [Serializable, NetSerializable]
     public class ResistanceSetPrototype : IPrototype, ISerializationHooks
     {
-        [ViewVariables]
-        [DataField("coefficients")]
-        public Dictionary<DamageType, float> Coefficients { get; } = new();
+        [Dependency]
+        private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        [DataField("flatReductions")]
-        public Dictionary<DamageType, int> FlatReductions { get; } = new();
+        [field: DataField("coefficients")]
+        public Dictionary<DamageTypePrototype, float> Coefficients { get; } = new();
 
         [ViewVariables]
-        public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; } = new();
+        [field: DataField("flatReductions")]
+        public Dictionary<DamageTypePrototype, int> FlatReductions { get; } = new();
+
+        [ViewVariables]
+        public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; private set; } = new();
 
         [ViewVariables]
         [DataField("id", required: true)]
@@ -32,11 +36,11 @@ namespace Content.Shared.Damage.ResistanceSet
 
         void ISerializationHooks.AfterDeserialization()
         {
-            Resistances = new Dictionary<DamageType, ResistanceSetSettings>();
-            foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
+            Resistances = new Dictionary<DamageTypePrototype, ResistanceSetSettings>();
+
+            foreach (var damageType in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
             {
-                Resistances.Add(damageType,
-                    new ResistanceSetSettings(Coefficients[damageType], FlatReductions[damageType]));
+                Resistances.Add(damageType, new ResistanceSetSettings(Coefficients[damageType], FlatReductions[damageType]));
             }
         }
     }
