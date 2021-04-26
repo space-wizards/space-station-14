@@ -155,7 +155,9 @@
     fireSpread: true
     canResistFire: true
   - type: Temperature
+    heatDamageType: Heat
     heatDamageThreshold: 360
+    coldDamageType: Cold
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42

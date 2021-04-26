@@ -19,9 +19,15 @@ namespace Content.Server.GameObjects.Components.Temperature
     [RegisterComponent]
     public class TemperatureComponent : Component
     {
+
+        [DataField("coldDamageType",required: true)]
+        private readonly DamageTypePrototype coldDamageType = default!;
+
+        [DataField("coldDamageType",required: true)]
+        private readonly DamageTypePrototype hotDamageType = default!;
+
         /// <inheritdoc />
         public override string Name => "Temperature";
-
         [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
 
         [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
@@ -55,16 +61,16 @@ namespace Content.Server.GameObjects.Components.Temperature
         public void Update()
         {
             var tempDamage = 0;
-            DamageType? damageType = null;
+            DamageTypePrototype? damageType = null;
             if (CurrentTemperature >= _heatDamageThreshold)
             {
                 tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                damageType = DamageType.Heat;
+                damageType = hotDamageType;
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
                 tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                damageType = DamageType.Cold;
+                damageType = coldDamageType;
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
@@ -108,10 +114,10 @@ namespace Content.Server.GameObjects.Components.Temperature
                 }
             }
 
-            if (!damageType.HasValue) return;
+            if (damageType is null) return;
 
             if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
-            component.ChangeDamage(damageType.Value, tempDamage, false);
+            component.ChangeDamage(damageType, tempDamage, false);
         }
 
         /// <summary>

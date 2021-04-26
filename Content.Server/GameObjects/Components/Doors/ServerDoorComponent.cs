@@ -50,6 +50,9 @@ namespace Content.Server.GameObjects.Components.Doors
         [DataField("board")]
         private string? _boardPrototype;
 
+        [DataField("damageType", required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
+
         public override DoorState State
         {
             get => base.State;
@@ -231,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Doors
             // Disabled because it makes it suck hard to walk through double doors.
 
                 TryOpen(otherFixture.Body.Owner);
-            
+
         }
 
         #region Opening
@@ -510,7 +513,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
+                damage.ChangeDamage(_damageType, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
             }
 

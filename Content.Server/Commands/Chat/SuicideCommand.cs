@@ -40,17 +40,17 @@ namespace Content.Server.Commands.Chat
             {
                 damageableComponent.SetDamage(kind switch
                     {
-                        SuicideKind.Blunt => DamageType.Blunt,
-                        SuicideKind.Slash => DamageType.Slash,
-                        SuicideKind.Piercing => DamageType.Piercing,
-                        SuicideKind.Heat => DamageType.Heat,
-                        SuicideKind.Shock => DamageType.Shock,
-                        SuicideKind.Cold => DamageType.Cold,
-                        SuicideKind.Poison => DamageType.Poison,
-                        SuicideKind.Radiation => DamageType.Radiation,
-                        SuicideKind.Asphyxiation => DamageType.Asphyxiation,
-                        SuicideKind.Bloodloss => DamageType.Bloodloss,
-                        _ => DamageType.Blunt
+                        SuicideKind.Blunt => damageableComponent.GetDamageType("Blunt"),
+                        SuicideKind.Slash => damageableComponent.GetDamageType("Slash"),
+                        SuicideKind.Piercing => damageableComponent.GetDamageType("Piercing"),
+                        SuicideKind.Heat => damageableComponent.GetDamageType("Heat"),
+                        SuicideKind.Shock => damageableComponent.GetDamageType("Shock"),
+                        SuicideKind.Cold => damageableComponent.GetDamageType("Cold"),
+                        SuicideKind.Poison => damageableComponent.GetDamageType("Poison"),
+                        SuicideKind.Radiation => damageableComponent.GetDamageType("Radiation"),
+                        SuicideKind.Asphyxiation => damageableComponent.GetDamageType("Asphyxiation"),
+                        SuicideKind.Bloodloss => damageableComponent.GetDamageType("Bloodloss"),
+                        _ => damageableComponent.GetDamageType("Blunt")
                     },
                 200, source);
             }
@@ -119,7 +119,7 @@ namespace Content.Server.Commands.Chat
             var selfMessage = Loc.GetString("You attempt to bite your own tongue!");
             owner.PopupMessage(selfMessage);
 
-            dmgComponent.SetDamage(DamageType.Piercing, 200, owner);
+            dmgComponent.SetDamage(dmgComponent.GetDamageType("Piercing"), 200, owner);
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};

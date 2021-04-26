@@ -162,7 +162,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         }
 
         /// <summary>
-        ///     Attempts to set the damage value for the given <see cref="DamageType"/>.
+        ///     Attempts to set the damage value for the given <see cref="DamageTypePrototype"/>.
         /// </summary>
         /// <returns>
         ///     True if successful, false if this container does not support that type.

@@ -195,7 +195,7 @@ namespace Content.Shared.GameObjects.Components.Body
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
+                    damageable.ChangeDamage(damageable.GetDamageType("Bloodloss"), 300, true); // TODO BODY KILL
                 }
             }
 
