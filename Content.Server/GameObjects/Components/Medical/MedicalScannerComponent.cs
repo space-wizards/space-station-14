@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Medical
             new(
                 null,
                 new Dictionary<DamageClass, int>(),
-                new Dictionary<DamageType, int>(),
+                new Dictionary<DamageTypePrototype, int>(),
                 false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
-            var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
+            var types = new Dictionary<DamageTypePrototype, int>(damageable.DamageTypes);
 
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {

@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Mining
 {
@@ -20,6 +21,9 @@ namespace Content.Server.GameObjects.Components.Mining
 
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
+
+        [DataField("damageType",required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
 
         public override void Initialize()
         {
@@ -36,8 +40,8 @@ namespace Content.Server.GameObjects.Components.Mining
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent)) return false;
 
-            var DamageableComponent = Owner.GetComponent<IDamageableComponent>();
-            DamageableComponent.ChangeDamage(DamageableComponent.GetDamageType("Blunt"),meleeWeaponComponent.Damage, false, item);
+            var DamageableComponent = Owner.GetComponent<IDamageableComponent>().ChangeDamage(
+                _damageType, meleeWeaponComponent.Damage, false, item);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))

@@ -21,13 +21,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EntityUid _shooter = EntityUid.Invalid;
 
-        [DataField("damages")] private Dictionary<DamageType, int> _damages = new();
+        [DataField("damageTypes")]
+        private Dictionary<DamageTypePrototype, int> _damageTypes = new();
 
         [ViewVariables]
-        public Dictionary<DamageType, int> Damages
+        public Dictionary<DamageTypePrototype, int> Damages
         {
-            get => _damages;
-            set => _damages = value;
+            get => _damageTypes;
+            set => _damageTypes = value;
         }
 
         [DataField("deleteOnCollide")]
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
-                foreach (var (damageType, amount) in _damages)
+                foreach (var (damageType, amount) in _damageTypes)
                 {
                     damage.ChangeDamage(damageType, amount, false, shooter);
                 }

@@ -25,8 +25,8 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override string Name => "DamageOnHighSpeedImpact";
 
-        [DataField("damage")]
-        public DamageType Damage { get; set; } = DamageType.Blunt;
+        [DataField("damageType", required: true)]
+        public DamageTypePrototype DamageType { get; set; } = default!;
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("baseDamage")]
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Damage
             if (Owner.TryGetComponent(out StunnableComponent? stun) && _robustRandom.Prob(StunChance))
                 stun.Stun(StunSeconds);
 
-            damageable.ChangeDamage(Damage, damage, false, otherFixture.Body.Owner);
+            damageable.ChangeDamage(DamageType, damage, false, otherFixture.Body.Owner);
         }
     }
 }

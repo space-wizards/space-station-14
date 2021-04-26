@@ -21,36 +21,34 @@ namespace Content.Server.GameObjects.Components.Projectiles
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override string Name => "Hitscan";
-        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
-
-        [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
-        private int _collisionMask = (int) CollisionGroup.Opaque;
-
-        public float Damage
-        {
-            get => _damage;
-            set => _damage = value;
-        }
-        [DataField("damage")]
-        private float _damage = 10f;
-        public DamageType DamageType => _damageType;
-        [DataField("damageType")]
-        private DamageType _damageType = DamageType.Heat;
-        public float MaxLength => 20.0f;
-
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
 
-        public float ColorModifier { get; set; } = 1.0f;
-        [DataField("spriteName")]
-        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
+        [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
+        private int _collisionMask = (int) CollisionGroup.Opaque;
+        [DataField("damage")]
+        private float _damage = 10f;
+        [DataField("damageType")]
+        private DamageTypePrototype _damageType = default!;
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
         [DataField("impactFlash")]
         private string? _impactFlash;
         [DataField("soundHitWall")]
         private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
+        [DataField("spriteName")]
+        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
+
+        public override string Name => "Hitscan";
+        public DamageTypePrototype DamageType => _damageType;
+        public float MaxLength => 20.0f;
+        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
+        public float ColorModifier { get; set; } = 1.0f;
+        public float Damage
+        {
+            get => _damage;
+            set => _damage = value;
+        }
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {

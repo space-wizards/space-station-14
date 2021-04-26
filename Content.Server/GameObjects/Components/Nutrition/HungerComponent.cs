@@ -22,41 +22,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        // Base stuff
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseDecayRate
-        {
-            get => _baseDecayRate;
-            set => _baseDecayRate = value;
-        }
         [DataField("base_decay_rate")]
         private float _baseDecayRate = 0.1f;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float ActualDecayRate
-        {
-            get => _actualDecayRate;
-            set => _actualDecayRate = value;
-        }
+        [DataField("damageType",required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
+
         private float _actualDecayRate;
-
-        // Hunger
-        [ViewVariables(VVAccess.ReadOnly)]
-        public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
-        private HungerThreshold _currentHungerThreshold;
-
-        private HungerThreshold _lastHungerThreshold;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentHunger
-        {
-            get => _currentHunger;
-            set => _currentHunger = value;
-        }
         private float _currentHunger;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
+        private HungerThreshold _currentHungerThreshold;
+        private HungerThreshold _lastHungerThreshold;
         private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
             {HungerThreshold.Overfed, 600.0f},
@@ -65,6 +40,36 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {HungerThreshold.Starving, 150.0f},
             {HungerThreshold.Dead, 0.0f},
         };
+
+        // Base stuff
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseDecayRate
+        {
+            get => _baseDecayRate;
+            set => _baseDecayRate = value;
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ActualDecayRate
+        {
+            get => _actualDecayRate;
+            set => _actualDecayRate = value;
+        }
+
+        // Hunger
+        [ViewVariables(VVAccess.ReadOnly)]
+        public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CurrentHunger
+        {
+            get => _currentHunger;
+            set => _currentHunger = value;
+        }
+
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
@@ -186,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (!mobState.IsDead())
             {
-                damageable.ChangeDamage(DamageType.Blunt, 2, true);
+                damageable.ChangeDamage(_damageType, 2, true);
             }
         }
 

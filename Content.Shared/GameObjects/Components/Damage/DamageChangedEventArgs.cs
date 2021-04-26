@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             Data = data;
         }
 
-        public DamageChangedEventArgs(IDamageableComponent damageable, DamageType type, int newValue, int delta)
+        public DamageChangedEventArgs(IDamageableComponent damageable, DamageTypePrototype type, int newValue, int delta)
         {
             Damageable = damageable;
 

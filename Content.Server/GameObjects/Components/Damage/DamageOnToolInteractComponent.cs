@@ -21,6 +21,12 @@ namespace Content.Server.GameObjects.Components.Damage
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
+        [DataField("weldingDamageType",required: true)]
+        private readonly DamageTypePrototype _weldingDamageType = default!;
+
+        [DataField("defaultDamageType",required: true)]
+        private readonly DamageTypePrototype _defaultDamageType = default!;
+
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -44,17 +50,15 @@ namespace Content.Server.GameObjects.Components.Damage
 
         protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
         {
-            if (eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
-            {
-                damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                        ? damageable.GetDamageType("Heat")
-                        : damageable.GetDamageType("Blunt"),
-                    Damage, false, eventArgs.User);
+            if (!eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
+                return false;
 
-                return true;
-            }
+            damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
+                    ? _weldingDamageType
+                    : _defaultDamageType,
+                Damage, false, eventArgs.User);
 
-            return false;
+            return true;
         }
     }
 }

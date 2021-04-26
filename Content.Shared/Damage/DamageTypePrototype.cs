@@ -6,7 +6,7 @@ namespace Content.Shared.Damage
 {
     public class DamageTypePrototype : IPrototype
     {
-        [field: DataField(tag: "id", required: true)]
+        [DataField(tag: "id", required: true)]
         public string ID { get; } = default!;
     }
 }

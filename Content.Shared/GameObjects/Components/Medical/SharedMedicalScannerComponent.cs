@@ -18,13 +18,13 @@ namespace Content.Shared.GameObjects.Components.Medical
         {
             public readonly EntityUid? Entity;
             public readonly Dictionary<DamageClass, int> DamageClasses;
-            public readonly Dictionary<DamageType, int> DamageTypes;
+            public readonly Dictionary<DamageTypePrototype, int> DamageTypes;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
                 Dictionary<DamageClass, int> damageClasses,
-                Dictionary<DamageType, int> damageTypes,
+                Dictionary<DamageTypePrototype, int> damageTypes,
                 bool isScanned)
             {
                 Entity = entity;
