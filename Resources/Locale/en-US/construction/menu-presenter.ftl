@@ -1,4 +1,4 @@
-﻿construction-presenter-all = All
+﻿construction-presenter-category-all = All
 construction-presenter-to-craft = {$step-number}. To craft this item, you need:
 construction-presenter-to-build = {$step-number}. To build this, first you need:
 

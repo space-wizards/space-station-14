@@ -49,15 +49,15 @@ namespace Content.Client.Arcade
 
             var buttonGrid = new GridContainer {Columns = 3};
             _gameButtons[0] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Attack)
-                {Text = Loc.GetString("spacevillain-attack")};
+                {Text = Loc.GetString("spacevillain-action-attack")};
             buttonGrid.AddChild(_gameButtons[0]);
 
             _gameButtons[1] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Heal)
-                {Text = Loc.GetString("spacevillain-heal")};
+                {Text = Loc.GetString("spacevillain-action-heal")};
             buttonGrid.AddChild(_gameButtons[1]);
 
             _gameButtons[2] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Recharge)
-                {Text = Loc.GetString("spacevillain-recharge")};
+                {Text = Loc.GetString("spacevillain-action-recharge")};
             buttonGrid.AddChild(_gameButtons[2]);
 
             centerContainer = new CenterContainer();

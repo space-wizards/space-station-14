@@ -164,7 +164,7 @@ namespace Content.Client.Construction
                         continue;
                 }
 
-                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("construction-presenter-all"))
+                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("construction-presenter-category-all"))
                 {
                     if (recipe.Category != category)
                         continue;
@@ -181,7 +181,7 @@ namespace Content.Client.Construction
             var uniqueCategories = new HashSet<string>();
 
             // hard-coded to show all recipes
-            uniqueCategories.Add(Loc.GetString("construction-presenter-all"));
+            uniqueCategories.Add(Loc.GetString("construction-presenter-category-all"));
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {

@@ -1,2 +1,1 @@
-﻿wires-wires = Wires
-wires-dead-beef = DEAD-BEEF
+﻿wires-name-label = Wires

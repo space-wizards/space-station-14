@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components.Configuration
 
             _inputs = new List<(string name, LineEdit input)>();
 
-            Title = Loc.GetString("configuration-device");
+            Title = Loc.GetString("configuration-device-title");
 
             _baseContainer = new VBoxContainer
             {
