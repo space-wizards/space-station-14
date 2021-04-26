@@ -5,7 +5,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 {
     /// <summary>
     ///     Data class with information on how the value of a
-    ///     single <see cref="DamageType"/> has changed.
+    ///     single <see cref="DamageTypePrototype"/> has changed.
     /// </summary>
     public struct DamageChangeData
     {

@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -8,20 +10,23 @@ namespace Content.Shared.Damage.ResistanceSet
 {
     /// <summary>
     ///     Set of resistances used by damageable objects.
-    ///     Each <see cref="DamageType"/> has a multiplier and flat damage
+    ///     Each <see cref="DamageTypePrototype"/> has a multiplier and flat damage
     ///     reduction value.
     /// </summary>
     [NetSerializable]
     [Serializable]
     public class ResistanceSet
     {
+        [Dependency]
+        private IPrototypeManager _prototypeManager = default!;
+
         [ViewVariables]
         private Dictionary<DamageTypePrototype, ResistanceSetSettings> _resistances =
             new();
 
         public ResistanceSet()
         {
-            foreach (var damageType in (DamageTypePrototype[]) Enum.GetValues(typeof(DamageType)))
+            foreach (var damageType in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
             {
                 _resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
             }
