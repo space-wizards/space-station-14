@@ -34,6 +34,7 @@
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
+    damageType: blunt
   - type: DamageOnHighSpeedImpact
     soundHit: 
       path: /Audio/Effects/hit_kick.ogg

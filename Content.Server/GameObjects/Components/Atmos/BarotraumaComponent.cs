@@ -7,6 +7,10 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -16,7 +20,12 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class BarotraumaComponent : Component
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "Barotrauma";
+
+        [DataField("damageType",required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)
@@ -66,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.ChangeDamage(damageable.GetDamageType("Blunt"), damage, false, Owner);
+                    damageable.ChangeDamage(_damageType, damage, false, Owner);
 
                     if (status == null) break;
 

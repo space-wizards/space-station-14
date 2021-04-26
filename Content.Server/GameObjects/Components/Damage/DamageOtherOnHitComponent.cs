@@ -1,4 +1,4 @@
-using Content.Shared.Damage;
+using Content.Shared.Damage;        else
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -11,8 +11,8 @@ namespace Content.Server.GameObjects.Components.Damage
     {
         public override string Name => "DamageOtherOnHit";
 
-        [DataField("damageType")]
-        private DamageTypePrototype _damageType = default!;
+        [DataField("damageType",required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
 
         [DataField("amount")]
         private int _amount = 1;
@@ -22,12 +22,9 @@ namespace Content.Server.GameObjects.Components.Damage
 
         void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
         {
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable)) return;
-
-            if (_damageType is null)
-                damageable.ChangeDamage(damageable.GetDamageType("Blunt"), _amount, _ignoreResistances, eventArgs.User);
-            else
-                damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
+                return;
+            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }
