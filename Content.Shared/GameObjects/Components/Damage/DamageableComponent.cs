@@ -35,6 +35,8 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
+        public bool Godmode { get; set; }
+
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
@@ -349,6 +351,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
 
             if (!_damageList.ContainsKey(type))
+            {
+                return false;
+            }
+
+            if (Godmode)
             {
                 return false;
             }

@@ -1,33 +1,32 @@
-- type: DamageType
+- type: damageType
   id: Blunt
 
-- type: DamageType
+- type: damageType
   id: Slash
 
-- type: DamageType
+- type: damageType
   id: Piercing
 
-- type: DamageType
+- type: damageType
   id: Heat
 
-- type: DamageType
+- type: damageType
   id: Shock
 
-- type: DamageType
+- type: damageType
   id: Cold
 
-- type: DamageType
+- type: damageType
   id: Poison
 
-- type: DamageType
+- type: damageType
   id: Radiation
 
-- type: DamageType
+- type: damageType
   id: Asphyxiation
 
-- type: DamageType
+- type: damageType
   id: Bloodloss
 
-- type: DamageType
+- type: damageType
   id: Cellular
-

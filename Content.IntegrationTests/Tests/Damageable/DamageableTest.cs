@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Damageable
 {
@@ -13,7 +15,6 @@ namespace Content.IntegrationTests.Tests.Damageable
     public class DamageableTest : ContentIntegrationTest
     {
         private const string DamageableEntityId = "DamageableEntityId";
-
         private static readonly string Prototypes = $@"
 - type: entity
   id: {DamageableEntityId}
@@ -34,6 +35,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
+            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
 
             IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
@@ -56,20 +58,20 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 var damageToDeal = 7;
 
-                foreach (var type in Enum.GetValues<DamageType>())
+                foreach (var damageType in sPrototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportsDamageType(type));
+                    Assert.That(sDamageableComponent.SupportsDamageType(damageType));
 
                     // Damage
-                    Assert.That(sDamageableComponent.ChangeDamage(type, damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(damageType, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.TryGetDamage(type, out var damage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(damageType, out var damage), Is.True);
                     Assert.That(damage, Is.EqualTo(damageToDeal));
 
                     // Heal
-                    Assert.That(sDamageableComponent.ChangeDamage(type, -damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(damageType, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                    Assert.That(sDamageableComponent.TryGetDamage(type, out damage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(damageType, out damage), Is.True);
                     Assert.That(damage, Is.Zero);
                 }
             });
@@ -87,6 +89,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
+            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
 
             IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
@@ -107,35 +110,35 @@ namespace Content.IntegrationTests.Tests.Damageable
             {
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
-                foreach (var @class in Enum.GetValues<DamageClass>())
+                foreach (var damageGroup in sPrototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportsDamageClass(@class));
+                    Assert.That(sDamageableComponent.SupportsDamageClass(damageGroup));
 
-                    var types = @class.ToTypes();
+                    var types = damageGroup.Types;
 
                     foreach (var type in types)
                     {
                         Assert.That(sDamageableComponent.SupportsDamageType(type));
                     }
 
-                    var damageToDeal = types.Count * 5;
+                    var damageToDeal = types.Count() * 5;
 
                     // Damage
-                    Assert.That(sDamageableComponent.ChangeDamage(@class, damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(damageGroup, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.TryGetDamage(@class, out var classDamage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out var classDamage), Is.True);
                     Assert.That(classDamage, Is.EqualTo(damageToDeal));
 
                     foreach (var type in types)
                     {
                         Assert.That(sDamageableComponent.TryGetDamage(type, out var typeDamage), Is.True);
-                        Assert.That(typeDamage, Is.EqualTo(damageToDeal / types.Count));
+                        Assert.That(typeDamage, Is.EqualTo(damageToDeal / types.Count()));
                     }
 
                     // Heal
-                    Assert.That(sDamageableComponent.ChangeDamage(@class, -damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(damageGroup, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                    Assert.That(sDamageableComponent.TryGetDamage(@class, out classDamage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out classDamage), Is.True);
                     Assert.That(classDamage, Is.Zero);
 
                     foreach (var type in types)
@@ -159,6 +162,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
+            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
 
             IEntity sDamageableEntity;
             IDamageableComponent sDamageableComponent = null;
@@ -175,17 +179,18 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             await server.WaitAssertion(() =>
             {
-                var damageType = DamageClass.Brute;
+
+                sPrototypeManager.TryIndex<DamageGroupPrototype>("Brute",out var damageGroup);
                 var damage = 10;
 
-                Assert.True(sDamageableComponent.ChangeDamage(DamageClass.Brute, damage, true));
+                Assert.True(sDamageableComponent.ChangeDamage(damageGroup, damage, true));
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(10));
 
                 var totalTypeDamage = 0;
 
-                foreach (var type in damageType.ToTypes())
+                foreach (var damageType in sPrototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
-                    Assert.True(sDamageableComponent.TryGetDamage(type, out var typeDamage));
+                    Assert.True(sDamageableComponent.TryGetDamage(damageType, out var typeDamage));
                     Assert.That(typeDamage, Is.LessThanOrEqualTo(damage));
 
                     totalTypeDamage += typeDamage;

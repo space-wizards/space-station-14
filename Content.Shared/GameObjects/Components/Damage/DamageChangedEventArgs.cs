@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         public IDamageableComponent Damageable { get; }
 
         /// <summary>
-        ///     List containing data on each <see cref="DamageType"/> that was changed.
+        ///     List containing data on each <see cref="DamageTypePrototype"/> that was changed.
         /// </summary>
         public IReadOnlyList<DamageChangeData> Data { get; }
     }

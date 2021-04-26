@@ -34,7 +34,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.AddFlag(DamageFlag.Invulnerable);
+                //TODO use resistanceSet instead?
+                damageable.Godmode = true;
             }
 
             return true;
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.RemoveFlag(DamageFlag.Invulnerable);
+                damageable.Godmode = false;
             }
 
             return true;

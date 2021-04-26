@@ -1,32 +1,32 @@
-- type: DamageClass
+- type: damageGroup
   id: Brute
-  types:
+  damageTypes:
     - Blunt
     - Slash
     - Piercing
 
-- type: DamageClass
+- type: damageGroup
   id: Burn
-  types:
+  damageTypes:
     - Heat
     - Shock
     - Cold
 
-- type: DamageClass
+- type: damageGroup
   id: Toxin
-  types:
+  damageTypes:
     - Poison
     - Radiation
 
-- type: DamageClass
+- type: damageGroup
   id: Airloss
-  types:
+  damageTypes:
     - Asphyxiation
     - Bloodloss
 
-- type: DamageClass
+- type: damageGroup
   id: Genetic
-  types:
+  damageTypes:
     - Cellular
 
 

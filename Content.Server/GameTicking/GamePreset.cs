@@ -66,7 +66,7 @@ namespace Content.Server.GameTicking
                     {
                         //todo: what if they dont breathe lol
                         //cry deeply
-                        damageable.SetDamage(DamageType.Asphyxiation, 200, playerEntity);
+                        damageable.SetDamage(damageable.GetDamageType("Asphyxiation"), 200, playerEntity);
                     }
                 }
                 else

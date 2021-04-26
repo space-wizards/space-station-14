@@ -33,7 +33,7 @@
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
-    damageType: blunt
+    damageType: Blunt
   - type: DamageOnHighSpeedImpact
     soundHit: /Audio/Effects/hit_kick.ogg
   - type: Hunger
@@ -169,6 +169,7 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Metabolism
+    damageType: Blunt
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000

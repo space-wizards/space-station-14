@@ -28,8 +28,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
         private int _collisionMask = (int) CollisionGroup.Opaque;
         [DataField("damage")]
         private float _damage = 10f;
-        [DataField("damageType")]
-        private DamageTypePrototype _damageType = default!;
+
+        [DataField("damageType", required: true)]
+        private DamageTypePrototype _damageType { get; set; } = default!;
+
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
         [DataField("impactFlash")]

@@ -50,11 +50,11 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             {
                 text.Append($"{entity.Name}{Loc.GetString("'s health:")}\n");
 
-                foreach (var (@class, classAmount) in state.DamageClasses)
+                foreach (var (damageGroup, damageAmount) in state.DamageGroup)
                 {
-                    text.Append($"\n{Loc.GetString("{0}: {1}", @class, classAmount)}");
+                    text.Append($"\n{Loc.GetString("{0}: {1}", damageGroup, damageAmount)}");
 
-                    foreach (var type in @class.ToTypes())
+                    foreach (var type in damageGroup.Types)
                     {
                         if (!state.DamageTypes.TryGetValue(type, out var typeAmount))
                         {
