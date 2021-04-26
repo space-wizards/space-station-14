@@ -147,14 +147,14 @@ namespace Content.Client.GameObjects.Components.Wires
                 {
                     (_nameLabel = new Label
                     {
-                        Text = Loc.GetString("Wires"),
+                        Text = Loc.GetString("wires-wires"),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,
                     }),
                     (_serialLabel = new Label
                     {
-                        Text = Loc.GetString("DEAD-BEEF"),
+                        Text = Loc.GetString("wires-dead-beef"),
                         FontOverride = fontSmall,
                         FontColorOverride = Color.Gray,
                         VerticalAlignment = VAlignment.Center,
