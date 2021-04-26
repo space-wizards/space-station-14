@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -11,6 +12,11 @@ using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Damage
 {
+    /// <summary>
+    ///
+    /// </summary>
+    [Prototype("damageGroup")]
+    [Serializable, NetSerializable]
     public class DamageGroupPrototype : IPrototype, ISerializationHooks
     {
         [Dependency]
@@ -19,11 +25,8 @@ namespace Content.Shared.Damage
         [field: DataField(tag: "id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField(tag: "name", required: true)]
-        public string Name { get; } = default!;
-
-        [field: DataField(tag: "types", required: true )]
-        public ImmutableList<string> TypeIds { get; } = ImmutableList<string>.Empty;
+        [field: DataField(tag: "damageTypes", required: true)]
+        public List<string> TypeIds { get; } = default!;
 
         public IEnumerable<DamageTypePrototype> Types = default!;
 

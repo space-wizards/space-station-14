@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Commands
 {
@@ -41,6 +42,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
+                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
                 var human = entityManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
 
@@ -53,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
-                damageable.ChangeDamage(DamageClass.Brute, 10000000, true);
+                damageable.ChangeDamage(prototypeManager.Index<DamageGroupPrototype>("Brute"), 10000000, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);

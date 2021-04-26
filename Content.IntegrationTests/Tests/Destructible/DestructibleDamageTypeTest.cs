@@ -56,20 +56,24 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
+
+                var bluntDamage = sDamageableComponent.GetDamageType("Blunt");
+                var SlashDamage = sDamageableComponent.GetDamageType("Slash");
+
                 // Raise blunt damage to 5
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 5, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, 5, true));
 
                 // No thresholds reached yet, the earliest one is at 10 damage
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise blunt damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 5, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, 5, true));
 
                 // No threshold reached, slash needs to be 10 as well
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise slash damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Slash, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(SlashDamage, 10, true));
 
                 // One threshold reached, blunt 10 + slash 10
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -92,25 +96,25 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Raise blunt damage to 20
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise slash damage to 20
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Slash, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(SlashDamage, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Lower blunt damage to 0
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, -20, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, -20, true));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise blunt damage back up to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, 10, true));
 
                 // 10 blunt + 10 slash threshold reached, blunt was healed and brought back to its threshold amount and slash stayed the same
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -118,20 +122,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Heal both types of damage to 0
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, -10, true));
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Slash, -20, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, -10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(SlashDamage, -20, true));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise blunt damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise slash damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Slash, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(SlashDamage, 10, true));
 
                 // Both types of damage were healed and then raised again, the threshold should have been reached as triggers once is default false
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -157,20 +161,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal blunt and slash back to 0
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, -10, true));
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Slash, -10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, -10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(SlashDamage, -10, true));
 
                 // No new thresholds reached from healing
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise blunt damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Blunt, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bluntDamage, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise slash damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(DamageType.Slash, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(SlashDamage, 10, true));
 
                 // No new thresholds reached as triggers once is set to true and it already triggered before
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);

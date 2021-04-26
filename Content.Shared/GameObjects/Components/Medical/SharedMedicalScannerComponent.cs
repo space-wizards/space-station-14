@@ -17,25 +17,25 @@ namespace Content.Shared.GameObjects.Components.Medical
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly Dictionary<DamageClass, int> DamageClasses;
+            public readonly Dictionary<DamageGroupPrototype, int> DamageGroup;
             public readonly Dictionary<DamageTypePrototype, int> DamageTypes;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-                Dictionary<DamageClass, int> damageClasses,
+                Dictionary<DamageGroupPrototype, int> damageGroup,
                 Dictionary<DamageTypePrototype, int> damageTypes,
                 bool isScanned)
             {
                 Entity = entity;
-                DamageClasses = damageClasses;
+                DamageGroup = damageGroup;
                 DamageTypes = damageTypes;
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-                return DamageClasses.Count > 0 || DamageTypes.Count > 0;
+                return DamageGroup.Count > 0 || DamageTypes.Count > 0;
             }
         }
 

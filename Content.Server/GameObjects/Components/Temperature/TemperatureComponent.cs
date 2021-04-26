@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Temperature
         [DataField("coldDamageType",required: true)]
         private readonly DamageTypePrototype coldDamageType = default!;
 
-        [DataField("coldDamageType",required: true)]
+        [DataField("hotDamageType",required: true)]
         private readonly DamageTypePrototype hotDamageType = default!;
 
         /// <inheritdoc />

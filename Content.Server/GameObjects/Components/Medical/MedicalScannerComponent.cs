@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new(
                 null,
-                new Dictionary<DamageClass, int>(),
+                new Dictionary<DamageGroupPrototype, int>(),
                 new Dictionary<DamageTypePrototype, int>(),
                 false);
 
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return EmptyUIState;
             }
 
-            var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
+            var classes = new Dictionary<DamageGroupPrototype, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageTypePrototype, int>(damageable.DamageTypes);
 
             if (_bodyContainer.ContainedEntity?.Uid == null)

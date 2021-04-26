@@ -34,7 +34,7 @@
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
-    damageType: blunt
+    damageType: Blunt
   - type: DamageOnHighSpeedImpact
     soundHit: 
       path: /Audio/Effects/hit_kick.ogg
@@ -171,7 +171,12 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: biologicalDamageContainer
+<<<<<<< refs/remotes/origin/master
   - type: Respirator
+=======
+  - type: Metabolism
+    damageType: Blunt
+>>>>>>> all thats left is bug/missing node hunting then verification.
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000

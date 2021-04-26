@@ -15,17 +15,20 @@ namespace Content.Shared.Damage.ResistanceSet
     /// </summary>
     [NetSerializable]
     [Serializable]
-    public class ResistanceSet
+    public class ResistanceSet : ISerializationHooks
     {
-        [Dependency]
-        private IPrototypeManager _prototypeManager = default!;
-
         [ViewVariables]
         private Dictionary<DamageTypePrototype, ResistanceSetSettings> _resistances =
             new();
 
         public ResistanceSet()
         {
+
+        }
+
+        public void AfterDeserialization()
+        {
+            var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var damageType in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
             {
                 _resistances.Add(damageType, new ResistanceSetSettings(1f, 0));

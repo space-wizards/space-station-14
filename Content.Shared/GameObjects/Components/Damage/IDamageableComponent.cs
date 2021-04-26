@@ -14,17 +14,23 @@ namespace Content.Shared.GameObjects.Components.Damage
         int TotalDamage { get; }
 
         /// <summary>
-        ///     The amount of damage mapped by <see cref="DamageClass"/>.
+        /// Enables Godmode when set to true.
+        /// </summary>
+        bool Godmode { get; set; }
+
+
+        /// <summary>
+        ///     The amount of damage mapped by <see cref="DamageGroupPrototype"/>.
         /// </summary>
         IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses { get; }
 
         /// <summary>
-        ///     The amount of damage mapped by <see cref="DamageType"/>.
+        ///     The amount of damage mapped by <see cref="DamageTypePrototype"/>.
         /// </summary>
         IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes { get; }
 
         /// <summary>
-        ///  Get a specific DamageType via a ID.
+        ///  Get a specific DamageType Prototype via an ID.
         /// </summary>
         /// <param name="ID"></param>
         DamageTypePrototype GetDamageType(string ID);
@@ -54,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         bool TryGetDamage(DamageGroupPrototype damageGroup, out int damage);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageType"/>, applying
+        ///     Changes the specified <see cref="DamageTypePrototype"/>, applying
         ///     resistance values only if it is damage.
         /// </summary>
         /// <param name="type">Type of damage being changed.</param>
@@ -83,9 +89,9 @@ namespace Content.Shared.GameObjects.Components.Damage
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageClass"/>, applying
+        ///     Changes the specified <see cref="DamageClassPrototype"/>, applying
         ///     resistance values only if it is damage.
-        ///     Spreads amount evenly between the <see cref="DamageType"></see>s
+        ///     Spreads amount evenly between the <see cref="DamageTypePrototype"></see>s
         ///     represented by that class.
         /// </summary>
         /// <param name="class">Class of damage being changed.</param>
@@ -113,7 +119,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Forcefully sets the specified <see cref="DamageType"/> to the given
+        ///     Forcefully sets the specified <see cref="DamageTypePrototype"/> to the given
         ///     value, ignoring resistance values.
         /// </summary>
         /// <param name="type">Type of damage being changed.</param>
