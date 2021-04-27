@@ -79,6 +79,10 @@
             - coillv-10
             - coillv-20
             - coillv-30
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: Cable
 
 - type: entity
   parent: ApcExtensionCableStack
@@ -90,7 +94,6 @@
     - type: Item
       size: 3
     - type: Stack
-      stackType: ApcExtensionCableStack1
       count: 1
 
 - type: entity

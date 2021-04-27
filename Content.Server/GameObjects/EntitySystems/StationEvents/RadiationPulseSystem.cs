@@ -2,6 +2,7 @@ using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
@@ -40,6 +41,8 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             base.Update(frameTime);
 
+            var lookupSystem = IoCManager.Resolve<IEntityLookup>();
+
             foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
             {
                 comp.Update(frameTime);
@@ -47,7 +50,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 if (ent.Deleted) continue;
 
-                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
+                foreach (var entity in lookupSystem.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
                 {
                     if (entity.Deleted) continue;
 

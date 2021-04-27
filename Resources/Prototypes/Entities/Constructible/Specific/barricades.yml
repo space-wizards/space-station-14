@@ -1,7 +1,8 @@
 - type: entity
   id: Barricade
+  parent: BaseConstructible
+  name: barricade
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Construction
     graph: barricade
@@ -10,12 +11,9 @@
     sprite: Constructible/Structures/barricades.rsi
     state: barricadewooden
   - type: Physics
-    mass: 75
-    bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+        !type:PhysShapeAabb {}
       layer:
       - Opaque
       - Impassable
@@ -43,6 +41,19 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+  - type: Reactive
+    reactions:
+      - !type:ExtinguishReaction
+        touch: true
+        reagents:
+          - Water
+      - !type:FlammableReaction
+        touch: true
+        reagents:
+          - WeldingFuel
+          - Thermite
+          - Plasma
+          - Ethanol
   - type: Appearance
     visuals:
     - type: FireVisualizer
@@ -50,8 +61,3 @@
       normalState: 1
       Sprite:
         drawdepth: Overlays
-  - type: SnapGrid
-    offset: Edge
-  placement:
-    snap:
-    - Wall

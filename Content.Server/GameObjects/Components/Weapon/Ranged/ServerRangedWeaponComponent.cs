@@ -8,7 +8,6 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -17,10 +16,12 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Content.Server.Atmos;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
@@ -39,6 +40,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clumsyExplodeChance")]
         public float ClumsyExplodeChance { get; set; } = 0.5f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canHotspot")]
+        private bool _canHotspot = true;
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;
@@ -151,12 +156,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                var soundSystem = EntitySystem.Get<AudioSystem>();
-                soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default, 5);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default, 5);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 if (user.TryGetComponent(out IDamageableComponent? health))
                 {
@@ -175,6 +179,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
+            if (_canHotspot && user.Transform.Coordinates.TryGetTileAtmosphere(out var tile))
+            {
+                tile.HotspotExpose(700, 50);
+            }
             FireHandler?.Invoke(user, targetPos);
         }
 

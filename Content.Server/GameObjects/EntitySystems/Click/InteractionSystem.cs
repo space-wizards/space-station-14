@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -131,7 +131,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private void InteractionActivate(IEntity user, IEntity used)
         {
             var activateMsg = new ActivateInWorldMessage(user, used);
-            RaiseLocalEvent(activateMsg);
+            RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
             {
                 return;

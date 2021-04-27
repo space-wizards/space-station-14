@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -22,9 +22,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        [DataField("show_examine_info")]
-        private bool _showExamineInfo;
-
         /// <inheritdoc />
         public override string Name => "Mind";
 
@@ -61,6 +58,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void InternalEjectMind()
         {
+            if (!Deleted)
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
             Mind = null;
         }
 
@@ -94,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                     Mind!.TransferTo(visiting);
                 }
-                else if(GhostOnShutdown)
+                else if (GhostOnShutdown)
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
@@ -152,5 +151,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                 message.AddMarkup(text);
             }
         }
+    }
+
+    public class MindRemovedMessage : EntityEventArgs
+    {
     }
 }

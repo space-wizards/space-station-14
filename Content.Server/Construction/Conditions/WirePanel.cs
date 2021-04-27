@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class WirePanel : IEdgeCondition
+    public class WirePanel : IGraphCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 

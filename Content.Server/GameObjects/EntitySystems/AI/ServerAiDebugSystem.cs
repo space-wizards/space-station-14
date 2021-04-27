@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
         private void NotifyActionJob(SharedAiDebug.UtilityAiDebugMessage message)
         {
-            EntityManager.EntityNetManager.SendSystemNetworkMessage(message);
+            RaiseNetworkEvent(message);
         }
     }
 #endif

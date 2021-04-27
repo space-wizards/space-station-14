@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Content.Shared.Maps;
+using Content.Shared.Preferences.Appearance;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -19,6 +20,7 @@ namespace Content.Shared
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
+            SharedContentIoC.Register();
 
             Localization.Init();
         }
@@ -33,6 +35,7 @@ namespace Content.Shared
 
             _initTileDefinitions();
             CheckReactions();
+            IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
         }
 
         private void CheckReactions()

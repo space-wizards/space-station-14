@@ -1,0 +1,62 @@
+# TODO: Add description (1)
+- type: entity
+  parent: BaseItem
+  name: mop
+  id: MopItem
+  description: A mop that can't be stopped, viscera cleanup detail awaits.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
+  - type: Item
+    size: 10
+    sprite: Objects/Specific/Janitorial/mop.rsi
+  - type: Mop
+  - type: SolutionContainer
+    maxVol: 10
+
+- type: entity
+  name: mop bucket
+  id: MopBucket
+  description: Holds water and the tears of the janitor.
+  suffix: Full
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: mopbucket
+    - state: mopbucket_water
+    drawdepth: Objects
+  - type: InteractionOutline
+  - type: Bucket
+  - type: SolutionContainer
+    maxVol: 500
+    contents:
+      reagents:
+        - ReagentId: Water
+          Quantity: 500
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.25,0.25,0.25"
+      mass: 20
+      mask:
+      - Impassable
+      layer:
+      - Opaque
+  - type: Pullable
+
+- type: entity
+  name: wet floor sign
+  id: WetFloorSign
+  parent: BaseItem
+  description: Caution! Wet Floor!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    state: caution
+  - type: Item
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi

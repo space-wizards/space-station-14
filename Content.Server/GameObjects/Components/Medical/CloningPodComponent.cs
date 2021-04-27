@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Eui;
 using Content.Server.GameObjects.Components.Mobs;
@@ -203,9 +203,6 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             if (message.Sender == _capturedMind)
             {
-                //If the captured mind is in a ghost, we want to get rid of it.
-                _capturedMind.VisitingEntity?.Delete();
-
                 //Transfer the mind to the new mob
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
 

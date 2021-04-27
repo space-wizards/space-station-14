@@ -313,6 +313,8 @@ namespace Content.Server.Mobs
             {
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
+
+            oldVisitingEnt.EntityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

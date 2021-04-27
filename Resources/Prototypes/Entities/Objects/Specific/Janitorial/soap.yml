@@ -1,0 +1,93 @@
+- type: entity
+  name: soap
+  id: Soap
+  parent: BaseItem
+  description: A cheap bar of soap. Doesn't smell.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: soap
+  - type: Item
+    sprite: Objects/Specific/Janitorial/soap.rsi
+  - type: Slippery
+    paralyzeTime: 2
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      name: "slips"
+      hard: false
+      layer:
+      - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 5
+      mask:
+      - SmallImpassable
+
+- type: entity
+  name: soap
+  id: SoapNT
+  parent: Soap
+  description: A Nanotrasen brand bar of soap. Smells of plasma.
+  components:
+  - type: Sprite
+    state: nt
+  - type: Item
+    HeldPrefix: nt
+
+- type: entity
+  name: soap
+  id: SoapDeluxe
+  parent: Soap
+  description: A deluxe Waffle Co. brand bar of soap. Smells of condoms.
+  components:
+  - type: Sprite
+    state: deluxe
+  - type: Item
+    HeldPrefix: deluxe
+
+- type: entity
+  name: soap
+  id: SoapSyndie
+  parent: Soap
+  description: An untrustworthy bar of soap. Smells of fear.
+  components:
+  - type: Sprite
+    state: syndie
+  - type: Slippery
+    paralyzeTime: 5
+  - type: Item
+    HeldPrefix: syndie
+
+- type: entity
+  name: soap
+  id: SoapHomemade
+  parent: Soap
+  description: A homemade bar of soap. Smells of... well....
+  components:
+  - type: Sprite
+    state: gibs
+  - type: Slippery
+    paralyzeTime: 2
+  - type: Item
+    HeldPrefix: gibs
+
+- type: entity
+  name: omega soap
+  id: SoapOmega
+  parent: Soap
+  description: The most advanced soap known to mankind. Smells of bluespace.
+  components:
+  - type: Sprite
+    state: omega
+  - type: Slippery
+    paralyzeTime: 7
+  - type: Item
+    HeldPrefix: omega

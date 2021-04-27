@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Client.Voting;
+using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client;
 using Robust.Client.Console;
@@ -76,10 +77,16 @@ namespace Content.Client.State
                 InputCmdHandler.FromDelegate(_ => GameScreen.FocusChat(_lobby.Chat)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusOOC(_lobby.Chat)));
+                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.OOC)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusAdminChat(_lobby.Chat)));
+                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.AdminChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
+                InputCmdHandler.FromDelegate(_ => GameScreen.CycleChatChannel(_lobby.Chat, true)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
+                InputCmdHandler.FromDelegate(_ => GameScreen.CycleChatChannel(_lobby.Chat, false)));
 
             UpdateLobbyUi();
 

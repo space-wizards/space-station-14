@@ -28,6 +28,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -134,8 +135,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         }
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalMailingUnitUiKey.Key);
-
-        private DisposalMailingUnitBoundUserInterfaceState? _lastUiState;
 
         /// <summary>
         ///     Store the translated state.
@@ -375,34 +374,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private DisposalMailingUnitBoundUserInterfaceState GetInterfaceState()
+        private void UpdateInterface()
         {
             string stateString;
 
-            if (_locState.State != State)
-            {
-                stateString = Loc.GetString($"{State}");
-                _locState = (State, stateString);
-            }
-            else
-            {
-                stateString = _locState.Localized;
-            }
-
-            return new DisposalMailingUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged, _tag, _targetList, _target);
-        }
-
-        private void UpdateInterface(bool checkEqual = true)
-        {
-            var state = GetInterfaceState();
-
-            if (checkEqual && _lastUiState != null && _lastUiState.Equals(state))
-            {
-                return;
-            }
-
-            _lastUiState = state;
-            UserInterface?.SetState((DisposalMailingUnitBoundUserInterfaceState) state.Clone());
+            stateString = Loc.GetString($"{State}");
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
+            UserInterface?.SetState(state);
         }
 
         private bool PlayerCanUse(IEntity? player)
@@ -445,7 +423,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                         break;
                     case UiButton.Power:
                         TogglePower();
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                        SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
 
                         break;
                     default:
@@ -546,7 +524,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            UpdateInterface();
+            if (_pressure < 1.0f || oldPressure < 1.0f && _pressure >= 1.0f)
+            {
+                UpdateInterface();
+            }
         }
 
         private void PowerStateChanged(PowerChangedMessage args)
@@ -591,6 +572,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             UpdateTargetList();
             UpdateVisualState();
+            UpdateInterface();
         }
 
         public override void OnRemove()
@@ -653,7 +635,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 if (command == NET_CMD_RESPONSE && payload.TryGetValue(NET_TAG, out var tag))
                 {
                     _targetList.Add(tag);
-                    UpdateInterface(false);
+                    UpdateInterface();
                 }
 
                 if (command == NET_CMD_REQUEST)
@@ -714,7 +696,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (IsValidInteraction(eventArgs))
             {
                 UpdateTargetList();
-                UpdateInterface(false);
+                UpdateInterface();
                 UserInterface?.Open(actor.playerSession);
                 return true;
             }

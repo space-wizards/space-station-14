@@ -3,7 +3,9 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -44,7 +46,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
-        private AudioSystem _audioSystem = default!;
         private ToolComponent? _tool;
         private SpriteComponent? _sprite;
 
@@ -53,9 +54,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.Initialize();
             Owner.TryGetComponent(out _tool);
             Owner.TryGetComponent(out _sprite);
-
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-
             SetTool();
         }
 
@@ -65,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetTool();
             var current = _tools[_currentTool];
             if(!string.IsNullOrEmpty(current.ChangeSound))
-                _audioSystem.PlayFromEntity(current.ChangeSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), current.ChangeSound, Owner);
         }
 
         private void SetTool()

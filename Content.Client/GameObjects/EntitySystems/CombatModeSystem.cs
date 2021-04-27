@@ -19,34 +19,18 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _gameHud.OnCombatModeChanged = OnCombatModeChanged;
             _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.ToggleCombatMode,
-                    InputCmdHandler.FromDelegate(CombatModeToggled))
-                .Register<CombatModeSystem>();
         }
 
         public override void Shutdown()
         {
             CommandBinds.Unregister<CombatModeSystem>();
             base.Shutdown();
-        }
-
-        private void CombatModeToggled(ICommonSession? session)
-        {
-            if (_gameTiming.IsFirstTimePredicted)
-            {
-                EntityManager.RaisePredictiveEvent(
-                    new CombatModeSystemMessages.SetCombatModeActiveMessage(!IsInCombatMode()));
-            }
         }
 
         public bool IsInCombatMode()
@@ -63,11 +47,6 @@ namespace Content.Client.GameObjects.EntitySystems
         private void OnTargetingZoneChanged(TargetingZone obj)
         {
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
-        }
-
-        private void OnCombatModeChanged(bool obj)
-        {
-            EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetCombatModeActiveMessage(obj));
         }
     }
 }

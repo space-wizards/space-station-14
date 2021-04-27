@@ -1,0 +1,40 @@
+﻿- type: entity
+  parent: BaseGenerator
+  id: SalternGenerator
+  components:
+  - type: PowerSupplier
+    supplyRate: 30000
+
+- type: entity
+  parent: BaseSmes
+  id: SalternSmes
+  components:
+  - type: Battery
+    maxCharge: 10000000
+    startingCharge: 10000000
+  - type: BatteryStorage
+    activeDrawRate: 0
+  - type: BatteryDischarger
+    activeSupplyRate: 0
+
+- type: entity
+  parent: BaseSubstation
+  id: SalternSubstation
+  components:
+  - type: Battery
+    maxCharge: 4000000
+    startingCharge: 4000000
+  - type: BatteryStorage
+    activeDrawRate: 8000
+  - type: BatteryDischarger
+    activeSupplyRate: 6000
+
+- type: entity
+  parent: BaseApc
+  id: SalternApc
+  components:
+  - type: Battery
+    maxCharge: 12000
+    startingCharge: 2000
+  - type: BatteryStorage
+    activeDrawRate: 2000

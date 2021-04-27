@@ -13,7 +13,7 @@ namespace Content.Server.Construction.Completions
     {
         [field: DataField("passUser")] public bool PassUser { get; } = false;
 
-        [field: DataField("condition", required:true)] public IEdgeCondition? Condition { get; } = null;
+        [field: DataField("condition", required:true)] public IGraphCondition? Condition { get; } = null;
 
         [field: DataField("action", required:true)] public IGraphAction? Action { get; } = null;
 

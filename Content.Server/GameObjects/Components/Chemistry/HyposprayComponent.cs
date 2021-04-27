@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.EntitySystems;
@@ -8,9 +8,11 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -88,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 meleeSys.SendLunge(angle, user);
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/hypospray.ogg", user);
+            SoundSystem.Play(Filter.Pvs(user), "/Audio/Items/hypospray.ogg", user);
 
             var targetSolution = target.GetComponent<SolutionContainerComponent>();
 

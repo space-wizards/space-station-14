@@ -8,9 +8,11 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -112,8 +114,8 @@ namespace Content.Server.GameObjects.Components
 
         private void ClickLatchSound()
         {
-            EntitySystem.Get<AudioSystem>() // Don't have original click, this sounds close
-                .PlayFromEntity(DoorSound, Owner, AudioHelpers.WithVariation(0.15f));
+            // Don't have original click, this sounds close
+            SoundSystem.Play(Filter.Pvs(Owner), DoorSound, Owner, AudioHelpers.WithVariation(0.15f));
         }
     }
 }

@@ -12,7 +12,6 @@
     spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: LoopingSound
-  - type: InteractionOutline
   - type: Clickable
   - type: Slippery
   - type: Physics

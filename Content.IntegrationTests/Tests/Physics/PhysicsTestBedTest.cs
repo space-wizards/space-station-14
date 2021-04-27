@@ -32,9 +32,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Dynamics.Shapes;
-using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Physics
 {
@@ -64,8 +63,7 @@ namespace Content.IntegrationTests.Tests.Physics
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                // TODO: Need a blank entity we can spawn for testbed.
-                var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+                var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
                 var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
                 var horizontalFixture = new Fixture(ground, horizontal)
@@ -98,7 +96,7 @@ namespace Content.IntegrationTests.Tests.Physics
                     {
                         var x = 0.0f;
 
-                        var box = entityManager.SpawnEntity("BlankEntity",
+                        var box = entityManager.SpawnEntity(null,
                             new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                         box.BodyType = BodyType.Dynamic;
@@ -181,8 +179,7 @@ namespace Content.IntegrationTests.Tests.Physics
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                // TODO: Need a blank entity we can spawn for testbed.
-                var ground = entityManager.SpawnEntity("BlankEntity", new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
+                var ground = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
 
                 var horizontal = new EdgeShape(new Vector2(-20, 0), new Vector2(20, 0));
                 var horizontalFixture = new Fixture(ground, horizontal)
@@ -215,7 +212,7 @@ namespace Content.IntegrationTests.Tests.Physics
                     {
                         var x = 0.0f;
 
-                        var circle = entityManager.SpawnEntity("BlankEntity",
+                        var circle = entityManager.SpawnEntity(null,
                             new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                         circle.BodyType = BodyType.Dynamic;

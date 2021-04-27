@@ -1,7 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: Dwarven Mining Equipment
-  name: Dwarven Mining Equipment
-  description: Get your mining equipment here, and above all keep digging!
-  spriteName: mining
-  startingInventory:
-    Pickaxe: 4

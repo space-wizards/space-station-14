@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -10,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
@@ -124,8 +125,7 @@ namespace Content.Server.GameObjects.Components.Research
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(SoundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
-            var audioSystem = EntitySystem.Get<AudioSystem>();
-            audioSystem.PlayFromEntity(file,Owner,AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), file,Owner,AudioParams.Default);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿- type: entity
+  abstract: true
   parent: Clothing
   id: ClothingHeadsetAlt
   name: headset
-  abstract: true
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
   components:
   - type: Headset
