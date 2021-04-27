@@ -1,4 +1,4 @@
-# Base
+Maybe# Base
 
 - type: entity
   parent: BaseItem
@@ -157,7 +157,7 @@
   name: slice of donk-pocket pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaDonkpocketSlice
-  description: Smells like donkpocket.
+  description: Smells like donk-pocket.
   components:
   - type: Sprite
     layers:
