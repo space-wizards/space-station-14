@@ -17,19 +17,19 @@
       - ReagentId: Nutriment
         Quantity: 10
 
-# Ice cream
+# Ice-cream
 
 - type: entity
-  name: ice cream sandwich
+  name: ice-cream sandwich
   parent: FoodFrozenBase
   id: FoodFrozenSandwich
-  description: Portable Ice-cream in its own packaging.
+  description: Portable ice-cream in its own packaging.
   components:
   - type: Sprite
     state: sandwich
 
 - type: entity
-  name: strawberry ice cream sandwich
+  name: strawberry ice-cream sandwich
   parent: FoodFrozenBase
   id: FoodFrozenSandwichStrawberry
   description: Portable ice-cream in its own packaging of the strawberry variety.
@@ -41,13 +41,13 @@
   name: space freezy
   parent: FoodFrozenBase
   id: FoodFrozenFreezy
-  description: The best icecream in space.
+  description: The best ice-cream in space.
   components:
   - type: Sprite
     state: spacefreezy
 
 - type: entity
-  name: ice cream sundae
+  name: ice-cream sundae
   parent: FoodFrozenBase
   id: FoodFrozenSundae
   description: A classic dessert.
@@ -59,7 +59,7 @@
   name: cornuto
   parent: FoodFrozenBase
   id: FoodFrozenCornuto
-  description: A neapolitan vanilla and chocolate icecream cone. It menaces with a sprinkling of caramelized nuts.
+  description: A neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
   components:
   - type: Sprite
     state: cornuto
@@ -97,10 +97,10 @@
     trash: FoodFrozenPopsicleTrash
 
 - type: entity
-  name: jumbo icecream
+  name: jumbo ice-cream
   parent: FoodFrozenBase
   id: FoodFrozenPopsicleJumbo
-  description: A luxurious icecream covered in rich chocolate. It's smaller than you remember.
+  description: A luxurious ice-cream covered in rich chocolate. It's smaller than you remember.
   components:
   - type: Sprite
     layers:
@@ -113,7 +113,7 @@
   name: nogga black
   parent: FoodFrozenBase
   id: FoodFrozenPopsicleNogga
-  description: A salty licorice icecream. Those who cannot remember the past are doomed to repeat it.
+  description: A salty licorice ice-cream. Those who cannot remember the past are doomed to repeat it.
   components:
   - type: Sprite
     layers:
@@ -225,7 +225,7 @@
   name: popsicle stick
   parent: BaseItem
   id: FoodFrozenPopsicleTrash
-  description: Once held a delicious treat. Now, tis barren.
+  description: Once held a delicious treat. Now, 'tis barren.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi

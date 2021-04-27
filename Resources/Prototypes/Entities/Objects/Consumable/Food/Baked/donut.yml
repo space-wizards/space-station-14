@@ -160,7 +160,7 @@
   name: matcha donut
   parent: FoodDonutBase
   id: FoodDonut
-  description: The L-Theanine in this donut is relaxing, yet not euphoric. Goes great with a cup of tea.
+  description: The L-theanine in this donut is relaxing, yet not euphoric. Goes great with a cup of tea.
   components:
   - type: Sprite
     state: olive
@@ -264,7 +264,7 @@
   name: matcha jelly-donut
   parent: FoodDonutBase
   id: FoodDonutJelly
-  description: The L-Theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
+  description: The L-theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
   components:
   - type: Sprite
     state: jelly-olive

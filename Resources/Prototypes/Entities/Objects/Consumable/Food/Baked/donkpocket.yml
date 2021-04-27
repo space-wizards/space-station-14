@@ -97,7 +97,7 @@
   name: teriyaki-pocket
   parent: FoodDonkpocketBase
   id: FoodDonkpocketTeriyaki
-  description: An east-asian take on the classic stationside snack.
+  description: An East Asian take on the classic stationside snack.
   components:
   - type: Sprite
     state: teriyaki
@@ -106,7 +106,7 @@
   name: warm teriyaki-pocket
   parent: FoodDonkpocketTeriyaki
   id: FoodDonkpocketTeriyakiWarm
-  description: An east-asian take on the classic stationside snack, now steamy and warm.
+  description: An East Asian take on the classic stationside snack, now steamy and warm.
   components:
   - type: SolutionContainer
     contents:
@@ -132,7 +132,7 @@
   name: warm pizza-pocket
   parent: FoodDonkpocketPizza
   id: FoodDonkpocketPizzaWarm
-  description: An east-asian take on the classic stationside snack, now steamy and warm.
+  description: An East Asian take on the classic stationside snack, now steamy and warm.
   components:
   - type: SolutionContainer
     contents:

@@ -20,8 +20,8 @@
 
 - type: reagent
   id: Cornoil
-  name: Corn Oil
-  desc: Corn Oil, A delicious oil used in cooking. Made from corn.
+  name: corn oil
+  desc: Corn oil, A delicious oil used in cooking. Made from corn.
 #  physicalDesc:
   color: yellow
   metabolism:

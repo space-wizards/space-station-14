@@ -141,7 +141,7 @@
 # Tastes like crust, tomato, cheese, carrot.
 
 - type: entity
-  name: donkpocket pizza
+  name: donk-pocket pizza
   parent: FoodPizzaBase
   id: FoodPizzaDonkpocket
   description: Who thought this would be a good idea?
@@ -154,7 +154,7 @@
     slice: FoodPizzaDonkpocketSlice
 
 - type: entity
-  name: slice of donkpocket pizza
+  name: slice of donk-pocket pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaDonkpocketSlice
   description: Smells like donkpocket.

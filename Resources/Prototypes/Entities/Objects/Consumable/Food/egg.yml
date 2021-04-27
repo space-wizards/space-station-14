@@ -70,7 +70,7 @@
   name: eggshells
   parent: BaseItem
   id: Eggshells
-  description: You're walkin' on em' bud.
+  description: You're walkin' on 'em bud.
   components:
   - type: Food
   - type: Sprite

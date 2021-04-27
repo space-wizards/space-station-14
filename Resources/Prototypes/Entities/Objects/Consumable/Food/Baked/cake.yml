@@ -108,7 +108,7 @@
   name: slice of carrot cake
   parent: FoodCakeSliceBase
   id: FoodCakeCarrotSlice
-  description: Carrotty slice of Carrot Cake, carrots are good for your eyes!
+  description: Carrotty slice of carrot cake. Carrots are good for your eyes!
   components:
   - type: Sprite
     layers:
@@ -272,7 +272,7 @@
   name: apple cake
   parent: FoodCakeBase
   id: FoodCakeApple
-  description: A cake centred with Apple.
+  description: A cake centred with apple.
   components:
   - type: Food
     trash: FoodPlate

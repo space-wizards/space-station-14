@@ -23,12 +23,12 @@
     caliber: CreamPie
     caseless: true
     projectile: BulletCreampie
-    
+
 - type: entity
   parent: FoodPieBase
   id: FoodPieSliceBase
   abstract: true
-  description:
+  description: A slice of pie. Tasty!
   components:
   - type: Food
     trash: FoodPlateSmall
@@ -45,7 +45,7 @@
   name: apple pie
   parent: FoodPieBase
   id: FoodPieApple
-  description: A pie containing sweet sweet love...or apple.
+  description: A pie containing sweet, sweet love... or apple.
   components:
   - type: Sprite
     layers:
@@ -125,7 +125,7 @@
   name: cherry pie
   parent: FoodPieBase
   id: FoodPieCherry
-  description: Taste so good, make a grown man cry.
+  description: Tastes good enough to make a grown man cry.
   components:
   - type: Sprite
     layers:
@@ -179,7 +179,6 @@
   name: xeno pie
   parent: FoodPieBase
   id: FoodPieXeno
-  description:
   components:
   - type: Sprite
     layers:
@@ -275,7 +274,7 @@
   name: mime tart
   parent: FoodPieBase
   id: FoodTartMime
-  description: "      "
+  description: "\"      \""
   components:
   - type: Food
     trash: FoodPlateSmall2

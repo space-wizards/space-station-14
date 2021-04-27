@@ -37,7 +37,7 @@
   name: skewer
   parent: BaseItem
   id: FoodKebabSkewer
-  description:
+  description: A thin rod of metal used to skewer just about anything and cook it.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
@@ -114,7 +114,7 @@
   name: double rat kebab
   parent: FoodSkewerBase
   id: FoodMeatRatdoubleKebab
-  description: A double-serving of not so delicious rat meat, on a stick.
+  description: A double serving of not so delicious rat meat, on a stick.
   components:
   - type: Sprite
     layers:
@@ -131,7 +131,7 @@
   name: fiesta kebab
   parent: FoodSkewerBase
   id: FoodMeatFiestaKebab
-  description: Always a cruise ship party somewhere in the world right?
+  description: Always a cruise ship party somewhere in the world, right?
   components:
   - type: Sprite
     layers:

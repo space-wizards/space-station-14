@@ -9,7 +9,7 @@
   parent: BaseItem
   id: FoodBoxDonut
   name: donutbox
-  description: Mmm. Donuts.
+  description: Mmm, Donuts.
   components:
   - type: Sprite
     netsync: false
@@ -49,7 +49,7 @@
   parent: BaseItem
   id: FoodContainerEgg
   name: eggbox
-  description: Don't drop em'!
+  description: Don't drop 'em!
   components:
   - type: Sprite
     netsync: false

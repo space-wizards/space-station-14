@@ -218,7 +218,7 @@
   name: raw spider meat
   parent: FoodMeatBase
   id: FoodMeatSpider
-  description: A slab of spider meat. That is so Kafkaesque.
+  description: A slab of spider meat. That's so Kafkaesque.
   components:
   - type: Tag
     tags:
@@ -255,7 +255,7 @@
   name: meatwheat clump
   parent: FoodMeatBase
   id: FoodMeatWheat
-  description: This doesn't look like meat, but your standards aren't that< high to begin with.
+  description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
   - type: Tag
     tags:
@@ -559,7 +559,7 @@
   name: boiled spider leg
   parent: FoodMeatBase
   id: FoodMeatSpiderlegCooked
-  description: A giant spider's leg that's still twitching after being cooked. Gross!.
+  description: A giant spider's leg that's still twitching after being cooked. Gross!
   components:
   - type: Tag
     tags:
@@ -700,7 +700,7 @@
   name: raw spider cutlet
   parent: FoodMeatBase
   id: FoodMeatSpiderCutlet
-  description: A cutletof raw spider meat. So Kafkaesque.
+  description: A cutlet of raw spider meat. So Kafkaesque.
   components:
   - type: Tag
     tags:
@@ -777,7 +777,7 @@
   name: cutlet
   parent: FoodMeatBase
   id: FoodMeatCutletCooked
-  description:
+  description: A cooked meat cutlet. Needs some seasoning.
   components:
   - type: Tag
     tags:
@@ -896,7 +896,7 @@
   name: xeno cutlet
   parent: FoodMeatBase
   id: FoodMeatXenoCutletCooked
-  description: A cutlet of cooked xeno, dripping with - tastiness?
+  description: A cutlet of cooked xeno, dripping with... tastiness?
   components:
   - type: Tag
     tags:

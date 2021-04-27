@@ -4,7 +4,7 @@
   parent: BaseItem
   id: FoodNoodlesBase
   abstract: true
-  description: Now that's a nic'e pasta!
+  description: Now that's a nice pasta!
   components:
   - type: Food
     trash: FoodPlate
@@ -59,7 +59,7 @@
   name: spaghetti and meatballs
   parent: FoodNoodlesBase
   id: FoodNoodlesMeatball
-  description: Now that's a nic'e meatball!
+  description: Now that's a nice meatball!
   components:
   - type: Sprite
     layers:
@@ -71,7 +71,7 @@
   name: spesslaw
   parent: FoodNoodlesBase
   id: FoodNoodlesSpesslaw
-  description: A lawyers favourite.
+  description: A lawyer's favourite.
   components:
   - type: Sprite
     layers:

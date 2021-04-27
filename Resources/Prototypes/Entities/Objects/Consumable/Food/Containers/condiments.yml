@@ -59,8 +59,8 @@
 - type: entity
   parent: FoodCondimentPacket
   id: FoodCondimentPacketCornoil
-  name: Corn Oil
-  description: Corn Oil. A delicious oil used in cooking. Made from corn.
+  name: corn oil
+  description: Corn oil. A delicious oil used in cooking. Made from corn.
   components:
   - type: SolutionContainer
     contents:
@@ -195,12 +195,14 @@
 
 # Trash
 
+# Maybe in some dumb universe you could put liquid back in this and seal it
+# with a lighter or something.
 - type: entity
   abstract: true
   parent: BaseItem
   id: FoodCondimentPacketTrash
   name: empty condiment packet
-  description:
+  description: A ripped condiment packet. Useless.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/condiments.rsi

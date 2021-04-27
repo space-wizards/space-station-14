@@ -60,7 +60,7 @@
   name: tofu burger
   parent: FoodBurgerBase
   id: FoodBurgerTofu
-  description: What.. is that meat?
+  description: What... is that meat?
   components:
   - type: Sprite
     state: tofu
@@ -128,7 +128,7 @@
   name: ghost burger
   parent: FoodBurgerBase
   id: FoodBurgerGhost
-  description: Too Spooky!
+  description: Too spooky!
   components:
   - type: Sprite
     state: ghost
@@ -203,7 +203,7 @@
   name: home run baseball burger
   parent: FoodBurgerBase
   id: FoodBurgerBaseball
-  description: It's still warm. The steam coming off of it looks like baseball
+  description: It's still warm. The steam coming off of it smells kinda sweaty.
   components:
   - type: Sprite
     state: baseball
@@ -263,7 +263,7 @@
   name: mcguffin
   parent: FoodBurgerBase
   id: FoodBurgerMcguffin
-  description: A cheap and greasy imitation of an eggs benedict.
+  description: A cheap and greasy imitation of an eggs Benedict.
   components:
   - type: Sprite
     state: mcguffin

@@ -38,7 +38,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-        
+
 # Custom Soup Example
 
 - type: entity
@@ -61,7 +61,7 @@
   name: aesir salad
   parent: FoodBowlBase
   id: FoodSaladAesir
-  description: Probably too incredible for mortal men to fully enjoy.
+  description: Probably too incredible for mortals to fully enjoy.
   components:
   - type: Sprite
     layers:
@@ -330,7 +330,7 @@
   name: hot chili
   parent: FoodBowlBase
   id: FoodSoupChiliHot
-  description: A five alarm Texan Chili!
+  description: A Texan five-alarm chili!
   components:
   - type: Sprite
     layers:
@@ -354,7 +354,7 @@
   name: chili con carnival
   parent: FoodBowlBase
   id: FoodSoupChiliClown
-  description: A delicious stew of meat, chiles, and salty, salty clown tears.
+  description: A delicious stew of meat, chilies, and salty, salty clown tears.
   components:
   - type: Sprite
     layers:
@@ -390,7 +390,7 @@
   name: eyeball soup
   parent: FoodBowlBase
   id: FoodSoupEyeball
-  description: It looks back at you...
+  description: It's looking back at you...
   components:
   - type: Sprite
     layers:
@@ -399,10 +399,10 @@
 # Tastes like tomato, squirming.
 
 - type: entity
-  name: milosoup
+  name: miso soup
   parent: FoodBowlBase
-  id: FoodSoup
-  description:
+  id: FoodSoupMiso
+  description: Salty, fishy soup, best had with ramen.
   components:
   - type: Sprite
     layers:
@@ -410,7 +410,7 @@
     - state: milo
   - type: SolutionContainer
     trash: BowlFancy
-# Tastes like milo. WHAT THE FUCK IS MILO??
+# Tastes like miso.
 
 - type: entity
   name: mushroom soup
@@ -488,7 +488,7 @@
   name: bisque
   parent: FoodBowlBase
   id: FoodSoupBisque
-  description: A classic entree from Space-France.
+  description: A classic entrée from Space France.
   components:
   - type: Sprite
     layers:

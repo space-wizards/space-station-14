@@ -128,7 +128,7 @@
   name: xeno-meat bread
   parent: FoodBreadBase
   id: FoodBreadMeatXeno
-  description: The culinary base of every self-respecting eloquen/tg/entleman. Extra heretical.
+  description: Reassuringly green meatloaf made from xeno meat. Extra heretical.
   components:
   - type: Food
     trash: FoodPlate
@@ -212,7 +212,7 @@
     - state: banana-slice
 
 - type: entity
-  name: Tofubread
+  name: tofu bread
   parent: FoodBreadBase
   id: FoodBreadTofu
   description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
@@ -228,10 +228,10 @@
 # Tastes like bread, tofu.
 
 - type: entity
-  name: Tofubread slice
+  name: tofu bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadTofuSlice
-  description: A slice of delicious tofubread.
+  description: A slice of delicious tofu bread.
   components:
   - type: Food
     trash: FoodPlate
@@ -260,7 +260,7 @@
   name: cream cheese bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadCreamcheeseSlice
-  description: A slice of yum!.
+  description: A slice of yum!
   components:
   - type: Food
     trash: FoodPlate
@@ -316,7 +316,7 @@
   name: baguette
   parent: FoodBreadBase
   id: FoodBreadBaguette
-  description: Bon appetit!
+  description: Bon appétit!
   components:
   - type: Sprite
     state: baguette
