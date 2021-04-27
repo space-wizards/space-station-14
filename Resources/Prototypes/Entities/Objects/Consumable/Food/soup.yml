@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Food
-    trash: BowlBig
+    trash: FoodBowlBig
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 20
@@ -409,7 +409,7 @@
     - state: bowl2
     - state: milo
   - type: SolutionContainer
-    trash: BowlFancy
+    trash: FoodBowlFancy
 # Tastes like miso.
 
 - type: entity
