@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Content.Client;
 using Content.Server;
+using Content.Shared;
 using Robust.UnitTesting;
 
 namespace Content.Tests
@@ -11,6 +12,8 @@ namespace Content.Tests
         protected override void OverrideIoC()
         {
             base.OverrideIoC();
+
+            SharedContentIoC.Register();
 
             if (Project == UnitTestProject.Server)
             {

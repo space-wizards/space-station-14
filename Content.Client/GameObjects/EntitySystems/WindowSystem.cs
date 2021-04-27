@@ -17,6 +17,13 @@ namespace Content.Client.GameObjects.EntitySystems
             SubscribeLocalEvent<WindowSmoothDirtyEvent>(HandleDirtyEvent);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<WindowSmoothDirtyEvent>();
+        }
+
         private void HandleDirtyEvent(WindowSmoothDirtyEvent ev)
         {
             if (ev.Sender.HasComponent<WindowComponent>())

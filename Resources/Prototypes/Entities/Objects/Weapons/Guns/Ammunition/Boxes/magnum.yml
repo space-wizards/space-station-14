@@ -1,0 +1,92 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BoxMagnumBase
+  components:
+  - type: AmmoBox
+    caliber: Magnum
+    capacity: 60
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
+    netsync: false
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 2
+      zeroVisible: false
+
+# Boxes
+- type: entity
+  parent: BoxMagnumBase
+  id: BoxMagnum
+  name: ammunition box (.40 magnum)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeMagnum
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+
+- type: entity
+  parent: BoxMagnumBase
+  id: BoxMagnumFlash
+  name: ammunition box (.40 magnum flash)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeMagnumFlash
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: flash
+
+- type: entity
+  parent: BoxMagnumBase
+  id: BoxMagnumHV
+  name: ammunition box (.40 magnum high-velocity)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeMagnumHV
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: hv
+
+- type: entity
+  parent: BoxMagnumBase
+  id: BoxMagnumPractice
+  name: ammunition box (.40 magnum practice)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeMagnumPractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BoxMagnumBase
+  id: BoxMagnumRubber
+  name: ammunition box (.40 magnum rubber)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgeMagnumRubber
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber

@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Recycling;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
@@ -39,7 +40,7 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            var intersecting = EntityManager.GetEntitiesIntersecting(comp.Owner, true);
+            var intersecting = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(comp.Owner, true);
             var direction = comp.GetAngle().ToVec();
             Vector2? ownerPos = null;
 
@@ -99,11 +100,12 @@ namespace Content.Server.Physics.Controllers
             var direction = Vector2.UnitX;
             Vector2? ownerPos = null;
 
+            // TODO: I know it sucks but conveyors need a refactor
             for (var i = comp.Intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = comp.Intersecting[i];
 
-                if (entity.Deleted || !comp.CanMove(entity) || !EntityManager.IsIntersecting(comp.Owner, entity))
+                if (entity.Deleted || !comp.CanMove(entity) || !IoCManager.Resolve<IEntityLookup>().IsIntersecting(comp.Owner, entity))
                 {
                     comp.Intersecting.RemoveAt(i);
                     continue;

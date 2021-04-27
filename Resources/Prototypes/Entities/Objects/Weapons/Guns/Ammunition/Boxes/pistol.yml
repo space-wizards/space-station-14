@@ -1,0 +1,93 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BoxPistolBase
+  name: ammunition box (.35 auto)
+  components:
+  - type: AmmoBox
+    caliber: Pistol
+    capacity: 60
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+    netsync: false
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 2
+      zeroVisible: false
+
+# Boxes
+- type: entity
+  parent: BoxPistolBase
+  id: BoxPistolBox
+  name: ammunition box (.35 auto)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgePistol
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+
+- type: entity
+  parent: BoxPistolBase
+  id: BoxPistolBoxFlash
+  name: ammunition box (.35 auto flash)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgePistolFlash
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: flash
+
+- type: entity
+  parent: BoxPistolBase
+  id: BoxPistolBoxHV
+  name: ammunition box (.35 auto high-velocity)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgePistolHV
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: hv
+
+- type: entity
+  parent: BoxPistolBase
+  id: BoxPistolBoxPractice
+  name: ammunition box (.35 auto practice)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgePistolPractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BoxPistolBase
+  id: BoxPistolBoxRubber
+  name: ammunition box (.35 auto rubber)
+  components:
+  - type: AmmoBox
+    fillPrototype: CartridgePistolRubber
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+    - state: rubber

@@ -229,7 +229,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        private void HandleGridRemoval(GridId gridId)
+        private void HandleGridRemoval(MapId mapId, GridId gridId)
         {
             if (_graph.ContainsKey(gridId))
             {

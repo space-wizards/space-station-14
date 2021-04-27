@@ -132,12 +132,12 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             if (tooltip == PathfindingDebugMode.Graph)
             {
-                EntityManager.EntityNetManager.SendSystemNetworkMessage(new SharedAiDebug.RequestPathfindingGraphMessage());
+                RaiseNetworkEvent(new SharedAiDebug.RequestPathfindingGraphMessage());
             }
 
             if (tooltip == PathfindingDebugMode.Regions)
             {
-                EntityManager.EntityNetManager.SendSystemNetworkMessage(new SharedAiDebug.SubscribeReachableMessage());
+                RaiseNetworkEvent(new SharedAiDebug.SubscribeReachableMessage());
             }
 
             // TODO: Request region graph, although the client system messages didn't seem to be going through anymore
@@ -148,7 +148,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         {
             if (mode == PathfindingDebugMode.Regions && (_modes & PathfindingDebugMode.Regions) != 0)
             {
-                EntityManager.EntityNetManager.SendSystemNetworkMessage(new SharedAiDebug.UnsubscribeReachableMessage());
+                RaiseNetworkEvent(new SharedAiDebug.UnsubscribeReachableMessage());
             }
 
             _modes &= ~mode;
@@ -464,15 +464,15 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         #endregion
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             if (Modes == 0)
             {
                 return;
             }
 
-            handle.UseShader(_shader);
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.ScreenHandle;
+            screenHandle.UseShader(_shader);
             var viewport = _eyeManager.GetWorldViewport();
 
             if ((Modes & PathfindingDebugMode.Route) != 0)

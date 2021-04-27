@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -125,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
                 var file = _random.Pick(soundCollection.PickFiles);
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, args.User, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(args.User), file, args.User, AudioParams.Default);
                 Opened = true;
                 return false;
             }
@@ -217,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (!string.IsNullOrEmpty(_useSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(target), _useSound, target, AudioParams.Default.WithVolume(-2f));
             }
 
             target.PopupMessage(Loc.GetString("Slurp"));
@@ -249,7 +250,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var solution = interactions.Drain(interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_burstSound, Owner,
+                SoundSystem.Play(Filter.Pvs(Owner), _burstSound, Owner,
                     AudioParams.Default.WithVolume(-4));
             }
         }

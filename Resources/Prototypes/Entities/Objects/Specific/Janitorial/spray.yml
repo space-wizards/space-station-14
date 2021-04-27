@@ -1,0 +1,85 @@
+- type: entity
+  name: spray bottle
+  id: SprayBottle
+  parent: BaseItem
+  suffix: Empty
+  description: A spray bottle with an unscrewable top.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
+  - type: Item
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+  - type: SolutionContainer
+    maxVol: 100
+    caps: Refillable, Drainable
+  - type: SolutionTransfer
+    transferAmount: 5.0
+  - type: Spillable
+  - type: ItemCooldown
+  - type: Spray
+    transferAmount: 10
+    sprayVelocity: 2
+    spraySound: /Audio/Effects/spray2.ogg
+
+- type: entity
+  name: spray bottle
+  id: SprayBottleWater
+  suffix: Filled
+  parent: SprayBottle
+  components:
+    - type: SolutionContainer
+      maxVol: 100
+      contents:
+        reagents:
+          - ReagentId: Water
+            Quantity: 100
+
+- type: entity
+  name: space cleaner
+  description: BLAM!-brand non-foaming space cleaner!
+  id: SprayBottleSpaceCleaner
+  parent: SprayBottle
+  suffix: ""
+  components:
+    - type: SolutionContainer
+      maxVol: 100
+      contents:
+        reagents:
+          - ReagentId: SpaceCleaner
+            Quantity: 100
+
+# Vapor
+
+- type: entity
+  id: Vapor
+  name: "vapor"
+  abstract: true
+  components:
+  - type: SnapGrid
+    offset: Center
+  - type: SolutionContainer
+    maxVol: 50
+  - type: Vapor
+  - type: AnimationPlayer
+  - type: Sprite
+    netsync: false
+    sprite: Effects/chempuff.rsi
+    layers:
+      - state: chempuff
+        map: [ "enum.VaporVisualLayers.Base" ]
+  - type: Physics
+    bodyType: KinematicController
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      hard: false
+      mask:
+        - Impassable
+        - MobImpassable
+        - SmallImpassable
+  - type: Appearance
+    visuals:
+      - type: VaporVisualizer

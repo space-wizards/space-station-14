@@ -1,14 +1,7 @@
 - type: entity
-  name: "clothing"
-  id: Clothing
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: Clothing
   components:
   - type: Clothing
     size: 5
-
-
-
-
-
-

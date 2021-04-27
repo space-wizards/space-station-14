@@ -14,11 +14,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
   - type: Physics
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.50,-0.25,0.30,0.25"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -62,11 +62,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45,-0.20,0.30,0.20"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable
@@ -131,11 +131,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
   - type: Physics
-    mass: 10
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.45,-0.35,0.15,0.35"
+      mass: 10
       mask:
       - Impassable
       - VaultImpassable

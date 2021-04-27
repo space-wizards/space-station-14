@@ -1,15 +1,18 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Content.Client.State;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client
 {
@@ -20,24 +23,30 @@ namespace Content.Client
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         public void Initialize()
         {
             _inputManager.SetInputCommand(ContentKeyFunctions.TakeScreenshot, InputCmdHandler.FromDelegate(_ =>
             {
-                Take(ScreenshotType.AfterUI);
+                _clyde.Screenshot(ScreenshotType.Final, Take);
             }));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.TakeScreenshotNoUI, InputCmdHandler.FromDelegate(_ =>
             {
-                Take(ScreenshotType.BeforeUI);
+                if (_stateManager.CurrentState is IMainViewportState state)
+                {
+                    state.Viewport.Viewport.Screenshot(Take);
+                }
+                else
+                {
+                    Logger.InfoS("screenshot", "Can't take no-UI screenshot: current state is not GameScreen");
+                }
             }));
         }
 
-        private async void Take(ScreenshotType type)
+        private async void Take<T>(Image<T> screenshot) where T : unmanaged, IPixel<T>
         {
-            var screenshot = await _clyde.ScreenshotAsync(type);
-
             var time = DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss");
 
             if (!_resourceManager.UserData.IsDir(BaseScreenshotPath))

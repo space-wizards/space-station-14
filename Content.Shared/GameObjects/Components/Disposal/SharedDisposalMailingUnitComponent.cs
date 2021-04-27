@@ -21,7 +21,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         public const string NET_CMD_RESPONSE = "mailer_tag";
 
         [Serializable, NetSerializable]
-        public new enum UiButton
+        public new enum UiButton : byte
         {
             Eject,
             Engage,

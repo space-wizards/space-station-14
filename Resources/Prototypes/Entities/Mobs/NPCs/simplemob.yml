@@ -7,6 +7,19 @@
   - type: Tag
     tags:
     - Teleportable
+  - type: Reactive
+    reactions:
+      - !type:ExtinguishReaction
+        touch: true
+        reagents:
+          - Water
+      - !type:FlammableReaction
+        touch: true
+        reagents:
+          - WeldingFuel
+          - Thermite
+          - Plasma
+          - Ethanol
   - type: UtilityAI
     behaviorSets:
     - Clothing
@@ -25,7 +38,6 @@
   - type: Barotrauma
   - type: DamageOnHighSpeedImpact
     soundHit: /Audio/Effects/hit_kick.ogg
-  - type: InteractionOutline
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -33,10 +45,10 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 50
       mask:
       - Impassable
 #      - MobImpassable Turns these off for now since humans don't have collisions either.

@@ -2,6 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -11,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             if (Parent == null)
             {
@@ -19,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            Parent.TryRepell(Owner, otherBody.Entity);
+            Parent.TryRepell(Owner, otherFixture.Body.Owner);
         }
     }
 }

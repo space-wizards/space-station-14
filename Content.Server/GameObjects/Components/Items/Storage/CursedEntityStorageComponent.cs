@@ -1,9 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -45,8 +47,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 locker.Insert(entity);
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/teleport_departure.ogg", Owner, AudioHelpers.WithVariation(0.125f));
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/teleport_arrival.ogg", lockerEnt, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/teleport_departure.ogg", Owner, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(lockerEnt), "/Audio/Effects/teleport_arrival.ogg", lockerEnt, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

@@ -1,100 +1,87 @@
 - type: entity
-  name: "basedice"
+  abstract: true
   parent: BaseItem
   id: BaseDice
-  abstract: true
   components:
   - type: Dice
   - type: LoopingSound
+  - type: Sprite
+    sprite: Objects/Fun/dice.rsi
 
 - type: entity
-  name: "d100"
   parent: BaseDice
   id: d100
+  name: d100
   description: A die with one hundred sides! Probably not fairly weighted...
   components:
   - type: Dice
     sides: 100
     step: 10
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d100100
 
-
 - type: entity
-  name: "d20"
   parent: BaseDice
   id: d20
+  name: d20
   description: A die with twenty sides. The preferred die to throw at the GM.
   components:
   - type: Dice
     sides: 20
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d2020
 
-
 - type: entity
-  name: "d12"
   parent: BaseDice
   id: d12
+  name: d12
   description: A die with twelve sides. There's an air of neglect about it.
   components:
   - type: Dice
     sides: 12
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d1212
 
-
 - type: entity
-  name: "d10"
   parent: BaseDice
   id: d10
+  name: d10
   description: A die with ten sides. Useful for percentages.
   components:
   - type: Dice
     sides: 10
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d1010
 
-
 - type: entity
-  name: "d8"
   parent: BaseDice
   id: d8
+  name: d8
   description: A die with eight sides. It feels... lucky.
   components:
   - type: Dice
     sides: 8
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d88
 
-
 - type: entity
-  name: "d6"
   parent: BaseDice
   id: d6
+  name: d6
   description: A die with six sides. Basic and serviceable.
   components:
   - type: Dice
     sides: 6
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d66
 
-
 - type: entity
-  name: "d4"
   parent: BaseDice
   id: d4
+  name: d4
   description: A die with four sides. The nerd's caltrop.
   components:
   - type: Dice
     sides: 4
   - type: Sprite
-    sprite: Objects/Fun/dice.rsi
     state: d44
-

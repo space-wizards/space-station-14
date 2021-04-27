@@ -18,10 +18,11 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
-      layer: [Clickable]
       mask:
       - Impassable
       - MobImpassable
+    linearDamping: 0
+    angularDamping: 0
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
@@ -150,7 +151,7 @@
     state: frag
   - type: ExplosiveProjectile
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -172,7 +173,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
     soundHit: /Audio/Effects/gen_hit.ogg
   - type: StunnableProjectile
     paralyzeAmount: 8
@@ -189,7 +190,7 @@
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -207,7 +208,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
     soundHit: /Audio/Effects/flash_bang.ogg
   - type: FlashProjectile
     range: 7
@@ -225,7 +226,7 @@
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1
@@ -243,7 +244,7 @@
     sprite: Objects/Fun/toys.rsi
     state: foamdart
   - type: Projectile
-    delete_on_collide: true
+    deleteOnCollide: true
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Blunt: 2
@@ -259,6 +260,27 @@
     sprite: Objects/Fun/toys.rsi
     state: capbullet
   - type: Projectile
-    delete_on_collide: true
+    deleteOnCollide: true
     damages:
       Piercing: 0
+
+- type: entity
+  id: BulletCreampie
+  name: cream pie
+  parent: BulletBase
+  description: get creampied, honk!!
+  abstract: true
+  components:
+    - type: Projectile
+      deleteOnCollide: false # CreamPie component handles this.
+    - type: CreamPie
+    - type: ThrownItem
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Consumable/Food/pie.rsi
+      state: icon
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 8

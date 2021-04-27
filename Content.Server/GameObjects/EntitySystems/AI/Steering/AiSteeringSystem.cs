@@ -245,7 +245,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if (entity.Deleted || !entity.TryGetComponent(out AiControllerComponent? controller) || !ActionBlockerSystem.CanMove(entity))
+            if (entity.Deleted ||
+                !entity.TryGetComponent(out AiControllerComponent? controller) ||
+                !ActionBlockerSystem.CanMove(entity) ||
+                !entity.Transform.GridID.IsValid())
             {
                 return SteeringStatus.NoPath;
             }

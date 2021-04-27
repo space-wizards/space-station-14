@@ -13,7 +13,6 @@
     isOpen: true
   - type: Sprite
     state: icon
-
   - type: Spillable
 
 - type: entity
@@ -27,24 +26,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/golden_cup.rsi
 
-
-- type: entity
-  parent: DrinkBaseCup
-  id: DrinkPitcher
-  name: insulated pitcher
-  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
-  components:
-  - type: SolutionContainer
-    maxVol: 15
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/pitcher.rsi
-    state: icon-6
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 7
-
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMug
@@ -56,11 +37,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon-3
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
 
 - type: entity
   parent: DrinkBaseCup
@@ -74,11 +50,6 @@
     sprite: Objects/Consumable/Drinks/mug_black.rsi
     state: icon-3
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
-
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugBlue
@@ -90,11 +61,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_blue.rsi
     state: icon-3
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
 
 - type: entity
   parent: DrinkBaseCup
@@ -108,11 +74,6 @@
     sprite: Objects/Consumable/Drinks/mug_green.rsi
     state: icon-3
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
-
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugHeart
@@ -124,11 +85,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
     state: icon-3
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
 
 - type: entity
   parent: DrinkBaseCup
@@ -142,11 +98,6 @@
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
     state: icon-3
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
-
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugMoebius
@@ -158,11 +109,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_moebius.rsi
     state: icon-3
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
 
 - type: entity
   parent: DrinkBaseCup
@@ -176,11 +122,6 @@
     sprite: Objects/Consumable/Drinks/mug_one.rsi
     state: icon-3
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
-
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugRainbow
@@ -192,11 +133,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
     state: icon-3
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
 
 - type: entity
   parent: DrinkBaseCup
@@ -210,11 +146,6 @@
     sprite: Objects/Consumable/Drinks/mug_red.rsi
     state: icon-3
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 4
-
 - type: entity
   parent: DrinkBaseCup
   id: DrinkHotCoco
@@ -224,7 +155,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
-
 
 - type: entity
   parent: DrinkBaseCup
@@ -236,11 +166,10 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Coffee
+      - ReagentId: Coffee
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
-
 
 - type: entity
   parent: DrinkBaseCup
@@ -252,16 +181,11 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Tea
+      - ReagentId: Tea
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-1
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 2
 
 - type: entity
   parent: DrinkBaseCup
@@ -273,11 +197,10 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Lean
+      - ReagentId: Lean
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
     state: icon
-
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi

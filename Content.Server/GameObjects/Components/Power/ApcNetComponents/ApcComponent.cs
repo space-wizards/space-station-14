@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
                     _uiDirty = true;
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                 }
                 else
                 {

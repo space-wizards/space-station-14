@@ -1,9 +1,0 @@
-- type: entity
-  id: BulletAntiMaterial
-  name: bullet (.60 anti-material)
-  parent: BulletBaseHV
-  abstract: true
-  components:
-  - type: Projectile
-    damages:
-      Piercing: 70

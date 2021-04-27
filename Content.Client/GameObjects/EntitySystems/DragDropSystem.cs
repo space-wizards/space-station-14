@@ -372,7 +372,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // TODO: Duplicated in SpriteSystem
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = EntityManager.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
+            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||

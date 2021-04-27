@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: SmartFridgeInventory
+  name: SmartFridge
+  description: A refrigerated storage unit for storing medicine and chemicals.
+  spriteName: smartfridge

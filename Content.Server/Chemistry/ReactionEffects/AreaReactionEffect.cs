@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Utility;
@@ -6,10 +6,12 @@ using Content.Shared.Audio;
 using Content.Shared.Interfaces.Chemistry;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -136,7 +138,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             if (!string.IsNullOrEmpty(_sound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, solutionEntity, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(solutionEntity), _sound, solutionEntity, AudioHelpers.WithVariation(0.125f));
             }
         }
 

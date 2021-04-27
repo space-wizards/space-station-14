@@ -10,6 +10,7 @@ using Content.Shared;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -35,6 +36,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private readonly IContextMenuView _contextMenuView;
         private readonly VerbSystem _verbSystem;
@@ -133,6 +135,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     inputSys.HandleInputCommand(session, func, message);
                 }
                 CloseAllMenus();
+                args.Handle();
                 return;
             }
 
@@ -151,7 +154,14 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 var inRange =
                     localPlayer.InRangeUnobstructed(e.ContextEntity, ignoreInsideBlocker: true);
-                e.OutlineComponent?.UpdateInRange(inRange);
+
+                // BUG: This assumes that the main viewport is the viewport that the context menu is active on.
+                // This is not necessarily true but we currently have no way to find the viewport (reliably)
+                // from the input event.
+                //
+                // This might be particularly important in the future with a more advanced mapping mode.
+                var renderScale = _eyeManager.MainViewport.GetRenderScale();
+                e.OutlineComponent?.UpdateInRange(inRange, renderScale);
             }
         }
 
@@ -169,7 +179,8 @@ namespace Content.Client.GameObjects.EntitySystems
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer?.ControlledEntity == null) return;
 
-            e.OutlineComponent?.OnMouseEnter(localPlayer.InRangeUnobstructed(entity, ignoreInsideBlocker: true));
+            var renderScale = _eyeManager.MainViewport.GetRenderScale();
+            e.OutlineComponent?.OnMouseEnter(localPlayer.InRangeUnobstructed(entity, ignoreInsideBlocker: true), renderScale);
             if (e.SpriteComp != null)
             {
                 e.SpriteComp.DrawDepth = (int) Shared.GameObjects.DrawDepth.HighlightedItems;
@@ -197,12 +208,14 @@ namespace Content.Client.GameObjects.EntitySystems
              if (args.Function == ContentKeyFunctions.OpenContextMenu)
              {
                  _verbSystem.OnContextButtonPressed(entity);
+                 args.Handle();
                  return;
              }
 
              if (args.Function == ContentKeyFunctions.ExamineEntity)
              {
                  _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity);
+                 args.Handle();
                  return;
              }
 
@@ -224,6 +237,7 @@ namespace Content.Client.GameObjects.EntitySystems
                  }
 
                  CloseAllMenus();
+                 args.Handle();
                  return;
              }
 

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Utility;
@@ -8,10 +8,12 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -133,7 +135,7 @@ namespace Content.Server.GameObjects.Components
 
             if (!string.IsNullOrEmpty(_useSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), _useSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             // Decrease "Ammo"

@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ContainerNotEmpty : IEdgeCondition
+    public class ContainerNotEmpty : IGraphCondition
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
         [DataField("text")] public string Text { get; private set; } = string.Empty;

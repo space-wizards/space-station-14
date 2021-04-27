@@ -20,20 +20,20 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
     public class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(IBodyPart part, string slot)
+        public BodyPartAddedEventArgs(string slot, IBodyPart part)
         {
-            Part = part;
             Slot = slot;
+            Part = part;
         }
-
-        /// <summary>
-        ///     The part that was added.
-        /// </summary>
-        public IBodyPart Part { get; }
 
         /// <summary>
         ///     The slot that <see cref="Part"/> was added to.
         /// </summary>
         public string Slot { get; }
+
+        /// <summary>
+        ///     The part that was added.
+        /// </summary>
+        public IBodyPart Part { get; }
     }
 }

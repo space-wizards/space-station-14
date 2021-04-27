@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
                 foreach (var entity in Body.GetBodiesIntersecting())
                 {
-                    if ((entity.CollisionLayer & (int) CollisionGroup.VaultImpassable) != 0) return true;
+                    if ((entity.CollisionLayer & (int) CollisionGroup.SmallImpassable) != 0) return true;
                 }
 
                 return false;
@@ -70,14 +70,14 @@ namespace Content.Shared.GameObjects.Components.Movement
                 if (_isClimbing == value) return;
                 _isClimbing = value;
 
-                ToggleVaultPassable(value);
+                ToggleSmallPassable(value);
             }
         }
 
         protected bool _isClimbing;
 
         // TODO: Layers need a re-work
-        private void ToggleVaultPassable(bool value)
+        private void ToggleSmallPassable(bool value)
         {
             // Hope the mob has one fixture
             if (Body == null || Body.Deleted) return;
@@ -86,11 +86,11 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 if (value)
                 {
-                    fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
+                    fixture.CollisionMask &= ~(int) CollisionGroup.SmallImpassable;
                 }
                 else
                 {
-                    fixture.CollisionMask |= (int) CollisionGroup.VaultImpassable;
+                    fixture.CollisionMask |= (int) CollisionGroup.SmallImpassable;
                 }
             }
         }

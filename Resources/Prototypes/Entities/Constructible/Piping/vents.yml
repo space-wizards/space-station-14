@@ -35,13 +35,14 @@
 - type: entity
   parent: VentBase
   id: Vent
-  name: Vent
-  description: "A vent that releases gas."
+  name: vent
+  description: A vent that releases gas.
   components:
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: South
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
   - type: PressureVent
     ventInletDirection: South

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Mobs;
@@ -7,10 +7,12 @@ using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -101,7 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId) continue;
-                Get<AudioSystem>().PlayFromEntity("/Audio/Effects/alert.ogg", player.AttachedEntity);
+                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), "/Audio/Effects/alert.ogg", player.AttachedEntity);
             }
         }
 

@@ -1,0 +1,45 @@
+- type: entity
+  abstract: true
+  id: BaseGenerator
+  description: A high efficiency thermoelectric generator.
+  name: generator
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.4, 0.3, 0.4"
+      mass: 25
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/power.rsi
+    state: generator
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:AdjacentNode
+        nodeGroupID: HVPower
+  - type: PowerSupplier
+    supplyRate: 3000
+  - type: Anchorable
+  - type: Pullable
+  - type: ClientEntitySpawner
+    prototypes:
+    - HVDummyWire
