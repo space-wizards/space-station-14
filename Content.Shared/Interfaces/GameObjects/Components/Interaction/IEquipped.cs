@@ -18,6 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IEquipped
     {
+        [Obsolete("Use EquippedMessage instead")]
         void Equipped(EquippedEventArgs eventArgs);
     }
 
