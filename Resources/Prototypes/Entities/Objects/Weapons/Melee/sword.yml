@@ -1,0 +1,47 @@
+- type: entity
+  name: captain's sabre
+  parent: BaseItem
+  id: CaptainSabre
+  description: A ceremonial weapon belonging to the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 15
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    prefix: inhand
+
+- type: entity
+  name: katana
+  parent: BaseItem
+  id: Katana
+  description: Ancient craftwork made with not so ancient plasteel.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 25
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/katana.rsi
+    prefix: inhand
+
+- type: entity
+  name: machete
+  parent: BaseItem
+  id: Machete
+  description: A large, vicious looking blade.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/machete.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 20
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/machete.rsi
+    prefix: inhand
