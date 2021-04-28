@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void UpdateFillLevelVisualizer()
         {
-            // udpate visualizer if needed
+            // update visualizer if needed
             if (_showFillLevel && _appearanceComponent != null)
             {
                 var state = new StorageFillLevel(_storageUsed, _storageCapacityMax);
