@@ -35,6 +35,5 @@
     doAfter: 3
   - type: Airtight
   - type: SnapGrid
-    offset: Center
   placement:
     mode: SnapgridCenter

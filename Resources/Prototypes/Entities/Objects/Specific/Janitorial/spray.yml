@@ -58,7 +58,6 @@
   abstract: true
   components:
   - type: SnapGrid
-    offset: Center
   - type: SolutionContainer
     maxVol: 50
   - type: Vapor
