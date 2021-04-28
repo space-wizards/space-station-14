@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
@@ -14,6 +13,7 @@ using Content.Shared.Research;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -30,9 +30,9 @@ namespace Content.Server.GameObjects.Components.Research
         [ViewVariables]
         public bool Producing { get; private set; }
 
-        private LatheState _state = LatheState.Base;
+        private LatheVisualState _state = LatheVisualState.Idle;
 
-        protected virtual LatheState State
+        protected virtual LatheVisualState State
         {
             get => _state;
             set => _state = value;
@@ -94,8 +94,6 @@ namespace Content.Server.GameObjects.Components.Research
 
                     break;
             }
-
-
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
@@ -115,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
 
-            State = LatheState.Producing;
+            State = LatheVisualState.Producing;
             SetAppearance(LatheVisualState.Producing);
 
             Owner.SpawnTimer(recipe.CompleteTime, () =>
@@ -124,8 +122,7 @@ namespace Content.Server.GameObjects.Components.Research
                 _producingRecipe = null;
                 Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
-                State = LatheState.Base;
-                SetAppearance(LatheVisualState.Idle);
+                State = LatheVisualState.Idle;
             });
 
             return true;
@@ -140,6 +137,7 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
+
             if (!Powered)
             {
                 return;
@@ -175,29 +173,14 @@ namespace Content.Server.GameObjects.Components.Research
                 storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
             }
 
-            State = LatheState.Inserting;
-            switch (material.MaterialTypes.First().Value.Name)
-            {
-                case "steel":
-                    SetAppearance(LatheVisualState.InsertingMetal);
-                    break;
-                case "glass":
-                    SetAppearance(LatheVisualState.InsertingGlass);
-                    break;
-                case "gold":
-                    SetAppearance(LatheVisualState.InsertingGold);
-                    break;
-                case "plastic":
-                    SetAppearance(LatheVisualState.InsertingPlastic);
-                    break;
-                case "plasma":
-                    SetAppearance(LatheVisualState.InsertingPlasma);
-                    break;
-            }
+            State = LatheVisualState.Inserting;
+            var color = "#ffff00";
+            SetAppearance(LatheVisualState.Inserting, color);
+
 
             Owner.SpawnTimer(InsertionTime, () =>
             {
-                State = LatheState.Base;
+                State = LatheVisualState.Idle;
                 SetAppearance(LatheVisualState.Idle);
             });
 
@@ -206,11 +189,13 @@ namespace Content.Server.GameObjects.Components.Research
             return true;
         }
 
-        private void SetAppearance(LatheVisualState state)
+        private void SetAppearance(LatheVisualState state, string materialColor = "#ffffff")
         {
+            var color = Color.FromHex(materialColor);
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+                appearance.SetData(LatheVisualData.State, state);
+                appearance.SetData(LatheVisualData.Color, color);
             }
         }
 
@@ -223,13 +208,6 @@ namespace Content.Server.GameObjects.Components.Research
             }
 
             return queue;
-        }
-
-        protected enum LatheState
-        {
-            Base,
-            Inserting,
-            Producing
         }
     }
 }

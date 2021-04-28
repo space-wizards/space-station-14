@@ -43,12 +43,12 @@
     sprite: Constructible/Power/autolathe.rsi
     layers:
     - state: icon
-      map: ["enum.AutolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.Base"]
     - state: unlit
       shader: unshaded
-      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-    - state: icon
-      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+      map: ["enum.LatheVisualLayers.Unlit"]
+    - map: ["enum.LatheVisualLayers.Inserting"]
+    - map: ["enum.LatheVisualLayers.Producing"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Construction
@@ -94,7 +94,9 @@
       - Spade
   - type: Appearance
     visuals:
-    - type: AutolatheVisualizer
+    - type: LatheVisualizer
+      producingAnimationTime: 0.9
+      insertingAnimationTime: 0.9
     - type: WiresVisualizer
 
 - type: entity
@@ -107,12 +109,14 @@
     sprite: Constructible/Power/protolathe.rsi
     layers:
     - state: icon
-      map: ["enum.ProtolatheVisualLayers.Base"]
+      map: ["enum.LatheVisualLayers.Base"]
     - state: unlit
       shader: unshaded
-      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+      map: ["enum.LatheVisualLayers.Unlit"]
     - state: icon
-      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+      map: ["enum.LatheVisualLayers.Inserting"]
+    - state: icon
+      map: ["enum.LatheVisualLayers.Producing"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ResearchClient
@@ -138,21 +142,6 @@
     LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
-    protolatherecipes:
-      - Brutepack
-      - Ointment
-      - LightTube
-      - LightBulb
-      - SheetSteel
-      - GlassStack
-      - Wirecutter
-      - Screwdriver
-      - Welder
-      - Wrench
-      - CableStack
-      - Crowbar
-      - Multitool
-      - ConveyorAssembly
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -161,5 +150,7 @@
       type: ResearchClientBoundUserInterface
   - type: Appearance
     visuals:
-    - type: ProtolatheVisualizer
+    - type: LatheVisualizer
+      producingAnimationTime: 1.2
+      insertingAnimationTime: 0.9
     - type: WiresVisualizer
