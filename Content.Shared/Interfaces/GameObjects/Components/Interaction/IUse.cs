@@ -16,6 +16,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// Called when we activate an object we are holding to use it
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Use UseInHandMessage instead")]
         bool UseEntity(UseEntityEventArgs eventArgs);
     }
 

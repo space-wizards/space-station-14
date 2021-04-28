@@ -18,6 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Called when this component is activated by another entity who is in range.
         /// </summary>
+        [Obsolete("Use ActivateInWorldMessage instead")]
         void Activate(ActivateEventArgs eventArgs);
     }
 
