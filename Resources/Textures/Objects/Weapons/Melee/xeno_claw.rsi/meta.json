@@ -1,20 +1,20 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/eb0d3b2552537b2be044c6bf42e5c65268ee0e56",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/7344da18b5e3dd0b1994a84e9c9c0774d71b93a5/icons/mob/alien.dmi",
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "inhand-left"
-        },
-        {
-            "name": "inhand-right"
-        }
-    ]
+    {
+      "name": "inhand-left"
+    },
+    {
+      "name": "inhand-right"
+    }
+  ]
 }

@@ -1,1 +1,301 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "Taken from LINKTOCODEBASE", "states": [{"name": "chestdrawer", "delays": [[1.0]]}, {"name": "chestdrawer-open", "delays": [[0.5, 0.1]]}, {"name": "clipboard", "delays": [[1.0]]}, {"name": "clipboard_over", "delays": [[1.0]]}, {"name": "clipboard_pen", "delays": [[1.0]]}, {"name": "envelope_closed", "delays": [[1.0]]}, {"name": "envelope_open", "delays": [[1.0]]}, {"name": "envelope_open_overlay", "delays": [[1.0]]}, {"name": "envelope_torn", "delays": [[1.0]]}, {"name": "envelope_torn_overlay", "delays": [[1.0]]}, {"name": "filingcabinet", "delays": [[1.0]]}, {"name": "filingcabinet-open", "delays": [[0.5, 0.1]]}, {"name": "folder", "delays": [[1.0]]}, {"name": "folder_blue", "delays": [[1.0]]}, {"name": "folder_paper", "delays": [[1.0]]}, {"name": "folder_red", "delays": [[1.0]]}, {"name": "folder_white", "delays": [[1.0]]}, {"name": "folder_yellow", "delays": [[1.0]]}, {"name": "label_cart", "delays": [[1.0]]}, {"name": "labeler0", "delays": [[1.0]]}, {"name": "labeler1", "delays": [[1.0]]}, {"name": "labeler_e", "delays": [[1.0]]}, {"name": "nano_paper", "delays": [[1.0]]}, {"name": "nano_paper_words", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "newspaper", "delays": [[1.0]]}, {"name": "np_dispenser", "delays": [[1.0]]}, {"name": "np_dispenser_empty", "delays": [[1.0]]}, {"name": "pamphlet", "delays": [[1.0]]}, {"name": "paper", "delays": [[1.0]]}, {"name": "paper_bin0", "delays": [[1.0]]}, {"name": "paper_bin1", "delays": [[1.0]]}, {"name": "paper_bin2", "delays": [[1.0]]}, {"name": "paper_bin3", "delays": [[1.0]]}, {"name": "paper_plane", "delays": [[1.0]]}, {"name": "paper_stamp-cap", "delays": [[1.0]]}, {"name": "paper_stamp-ce", "delays": [[1.0]]}, {"name": "paper_stamp-cent", "delays": [[1.0]]}, {"name": "paper_stamp-chaplain", "delays": [[1.0]]}, {"name": "paper_stamp-clown", "delays": [[1.0]]}, {"name": "paper_stamp-cmo", "delays": [[1.0]]}, {"name": "paper_stamp-deny", "delays": [[1.0]]}, {"name": "paper_stamp-hop", "delays": [[1.0]]}, {"name": "paper_stamp-hos", "delays": [[1.0]]}, {"name": "paper_stamp-iaa", "delays": [[1.0]]}, {"name": "paper_stamp-mime", "delays": [[1.0]]}, {"name": "paper_stamp-qm", "delays": [[1.0]]}, {"name": "paper_stamp-rd", "delays": [[1.0]]}, {"name": "paper_stamp-trader", "delays": [[1.0]]}, {"name": "paper_stamp-warden", "delays": [[1.0]]}, {"name": "paper_talisman", "delays": [[1.0]]}, {"name": "paper_talisman_armor", "delays": [[1.0]]}, {"name": "paper_talisman_blind", "delays": [[1.0]]}, {"name": "paper_talisman_communicate", "delays": [[1.0]]}, {"name": "paper_talisman_conceal", "delays": [[1.0]]}, {"name": "paper_talisman_deafen", "delays": [[1.0]]}, {"name": "paper_talisman_emp", "delays": [[1.0]]}, {"name": "paper_talisman_newtome", "delays": [[1.0]]}, {"name": "paper_talisman_revealrunes", "delays": [[1.0]]}, {"name": "paper_talisman_runestun", "delays": [[1.0]]}, {"name": "paper_talisman_supply", "delays": [[1.0]]}, {"name": "paper_talisman_travel", "delays": [[1.0]]}, {"name": "paper_talisman_travel_unused", "delays": [[1.0]]}, {"name": "paper_words", "delays": [[1.0]]}, {"name": "paper_words-blood", "delays": [[1.0]]}, {"name": "pen", "delays": [[1.0]]}, {"name": "pen_blue", "delays": [[1.0]]}, {"name": "pen_red", "delays": [[1.0]]}, {"name": "scrap", "delays": [[1.0]]}, {"name": "scrap_bloodied", "delays": [[1.0]]}, {"name": "stamp-cap", "delays": [[1.0]]}, {"name": "stamp-ce", "delays": [[1.0]]}, {"name": "stamp-cent", "delays": [[1.0]]}, {"name": "stamp-chaplain", "delays": [[1.0]]}, {"name": "stamp-clown", "delays": [[1.0]]}, {"name": "stamp-cmo", "delays": [[1.0]]}, {"name": "stamp-deny", "delays": [[1.0]]}, {"name": "stamp-hop", "delays": [[1.0]]}, {"name": "stamp-hos", "delays": [[1.0]]}, {"name": "stamp-iaa", "delays": [[1.0]]}, {"name": "stamp-mime", "delays": [[1.0]]}, {"name": "stamp-qm", "delays": [[1.0]]}, {"name": "stamp-rd", "delays": [[1.0]]}, {"name": "stamp-trader", "delays": [[1.0]]}, {"name": "stamp-warden", "delays": [[1.0]]}, {"name": "tallcabinet", "delays": [[1.0]]}, {"name": "tallcabinet-open", "delays": [[0.5, 0.1]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chestdrawer"
+    },
+    {
+      "name": "chestdrawer-open",
+      "delays": [
+        [
+          0.5,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "clipboard"
+    },
+    {
+      "name": "clipboard_over"
+    },
+    {
+      "name": "clipboard_pen"
+    },
+    {
+      "name": "envelope_closed"
+    },
+    {
+      "name": "envelope_open"
+    },
+    {
+      "name": "envelope_open_overlay"
+    },
+    {
+      "name": "envelope_torn"
+    },
+    {
+      "name": "envelope_torn_overlay"
+    },
+    {
+      "name": "filingcabinet"
+    },
+    {
+      "name": "filingcabinet-open",
+      "delays": [
+        [
+          0.5,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "folder"
+    },
+    {
+      "name": "folder_blue"
+    },
+    {
+      "name": "folder_paper"
+    },
+    {
+      "name": "folder_red"
+    },
+    {
+      "name": "folder_white"
+    },
+    {
+      "name": "folder_yellow"
+    },
+    {
+      "name": "label_cart"
+    },
+    {
+      "name": "labeler0"
+    },
+    {
+      "name": "labeler1"
+    },
+    {
+      "name": "labeler_e"
+    },
+    {
+      "name": "nano_paper"
+    },
+    {
+      "name": "nano_paper_words",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "newspaper"
+    },
+    {
+      "name": "np_dispenser"
+    },
+    {
+      "name": "np_dispenser_empty"
+    },
+    {
+      "name": "pamphlet"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "paper_bin0"
+    },
+    {
+      "name": "paper_bin1"
+    },
+    {
+      "name": "paper_bin2"
+    },
+    {
+      "name": "paper_bin3"
+    },
+    {
+      "name": "paper_plane"
+    },
+    {
+      "name": "paper_stamp-cap"
+    },
+    {
+      "name": "paper_stamp-ce"
+    },
+    {
+      "name": "paper_stamp-cent"
+    },
+    {
+      "name": "paper_stamp-chaplain"
+    },
+    {
+      "name": "paper_stamp-clown"
+    },
+    {
+      "name": "paper_stamp-cmo"
+    },
+    {
+      "name": "paper_stamp-deny"
+    },
+    {
+      "name": "paper_stamp-hop"
+    },
+    {
+      "name": "paper_stamp-hos"
+    },
+    {
+      "name": "paper_stamp-iaa"
+    },
+    {
+      "name": "paper_stamp-mime"
+    },
+    {
+      "name": "paper_stamp-qm"
+    },
+    {
+      "name": "paper_stamp-rd"
+    },
+    {
+      "name": "paper_stamp-trader"
+    },
+    {
+      "name": "paper_stamp-warden"
+    },
+    {
+      "name": "paper_talisman"
+    },
+    {
+      "name": "paper_talisman_armor"
+    },
+    {
+      "name": "paper_talisman_blind"
+    },
+    {
+      "name": "paper_talisman_communicate"
+    },
+    {
+      "name": "paper_talisman_conceal"
+    },
+    {
+      "name": "paper_talisman_deafen"
+    },
+    {
+      "name": "paper_talisman_emp"
+    },
+    {
+      "name": "paper_talisman_newtome"
+    },
+    {
+      "name": "paper_talisman_revealrunes"
+    },
+    {
+      "name": "paper_talisman_runestun"
+    },
+    {
+      "name": "paper_talisman_supply"
+    },
+    {
+      "name": "paper_talisman_travel"
+    },
+    {
+      "name": "paper_talisman_travel_unused"
+    },
+    {
+      "name": "paper_words"
+    },
+    {
+      "name": "paper_words-blood"
+    },
+    {
+      "name": "pen"
+    },
+    {
+      "name": "pen_blue"
+    },
+    {
+      "name": "pen_red"
+    },
+    {
+      "name": "scrap"
+    },
+    {
+      "name": "scrap_bloodied"
+    },
+    {
+      "name": "stamp-cap"
+    },
+    {
+      "name": "stamp-ce"
+    },
+    {
+      "name": "stamp-cent"
+    },
+    {
+      "name": "stamp-chaplain"
+    },
+    {
+      "name": "stamp-clown"
+    },
+    {
+      "name": "stamp-cmo"
+    },
+    {
+      "name": "stamp-deny"
+    },
+    {
+      "name": "stamp-hop"
+    },
+    {
+      "name": "stamp-hos"
+    },
+    {
+      "name": "stamp-iaa"
+    },
+    {
+      "name": "stamp-mime"
+    },
+    {
+      "name": "stamp-qm"
+    },
+    {
+      "name": "stamp-rd"
+    },
+    {
+      "name": "stamp-trader"
+    },
+    {
+      "name": "stamp-warden"
+    },
+    {
+      "name": "tallcabinet"
+    },
+    {
+      "name": "tallcabinet-open",
+      "delays": [
+        [
+          0.5,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
