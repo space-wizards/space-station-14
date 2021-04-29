@@ -1,17 +1,10 @@
 ﻿- type: entity
-  id: SolarAssemblyPart
   parent: BaseItem
+  id: SolarAssemblyPart
+  name: solar assembly part
   components:
   - type: Item
     size: 10
   - type: Sprite
     sprite: Objects/Power/solar_parts.rsi
     state: solar_assembly_parts
-    
-- type: entity
-  id: SolarTrackerElectronics
-  parent: BaseItem
-  components:
-    - type: Sprite
-      sprite: Constructible/Misc/module.rsi
-      state: generic

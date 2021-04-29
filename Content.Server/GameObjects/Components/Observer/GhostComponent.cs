@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Startup();
 
             // Allow this entity to be seen by other ghosts.
-            Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
+            Owner.EnsureComponent<VisibilityComponent>().Layer |= (int) VisibilityFlags.Ghost;
 
             // Allows this entity to see other ghosts.
             Owner.EnsureComponent<EyeComponent>().VisibilityMask |= (uint) VisibilityFlags.Ghost;
@@ -70,26 +70,6 @@ namespace Content.Server.GameObjects.Components.Observer
             }
 
             base.Shutdown();
-        }
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            if (Owner.TryGetComponent<MindComponent>(out var mind))
-            {
-                mind.GhostOnShutdown = false;
-            }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            if (Owner.TryGetComponent<MindComponent>(out var mind))
-            {
-                mind.GhostOnShutdown = true;
-            }
         }
 
         public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);

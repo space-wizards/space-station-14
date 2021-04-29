@@ -1,21 +1,21 @@
 {
-    "version": 1,
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/799647e170c9b7dbdbb28bdf46234e012b6bd6c8",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/799647e170c9b7dbdbb28bdf46234e012b6bd6c8",
+  "size": {
+      "x": 32,
+      "y": 32
+  },
+  "states": [
+    {
+      "name": "inhand-left",
+      "directions": 4,
     },
-    "states": [
-        {
-            "name": "inhand-left",
-            "directions": 4,
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4,
-        },
-        {
-            "name": "gohei"
-        }
-    ]
+    {
+      "name": "inhand-right",
+      "directions": 4,
+    },
+    {
+      "name": "gohei"
+    }
+  ]
 }

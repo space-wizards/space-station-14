@@ -19,7 +19,6 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {

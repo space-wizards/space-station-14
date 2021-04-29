@@ -7,15 +7,13 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Content.Shared.GameObjects.Components.Body.Preset;
+using Content.Shared.GameObjects.Components.Body.Slot;
 using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -34,35 +32,45 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public override uint? NetID => ContentNetIDs.BODY;
 
-        [DataField("centerSlot", required: true)]
-        private string? _centerSlot;
-
-        private Dictionary<string, string> _partIds = new();
-
-        private readonly Dictionary<string, IBodyPart> _parts = new();
+        [ViewVariables]
+        [field: DataField("template", required: true)]
+        private string? TemplateId { get; } = default;
 
         [ViewVariables]
-        [DataField("template", required: true)]
-        public string? TemplateName { get; private set; }
+        [field: DataField("preset", required: true)]
+        private string? PresetId { get; } = default;
 
         [ViewVariables]
-        [DataField("preset", required: true)]
-        public string? PresetName { get; private set; }
+        public BodyTemplatePrototype? Template => TemplateId == null
+            ? null
+            : _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
 
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots { get; private set; } = new();
+        public BodyPresetPrototype? Preset => PresetId == null
+            ? null
+            : _prototypeManager.Index<BodyPresetPrototype>(PresetId);
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; private set; } = new();
-
-        /// <summary>
-        ///     Maps slots to the part filling each one.
-        /// </summary>
-        [ViewVariables]
-        public IReadOnlyDictionary<string, IBodyPart> Parts => _parts;
+        private Dictionary<string, BodyPartSlot> SlotIds { get; } = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, string> PartIds => _partIds;
+        private Dictionary<IBodyPart, BodyPartSlot> SlotParts { get; } = new();
+
+        [ViewVariables]
+        public IEnumerable<BodyPartSlot> Slots => SlotIds.Values;
+
+        [ViewVariables]
+        public IEnumerable<KeyValuePair<IBodyPart, BodyPartSlot>> Parts => SlotParts;
+
+        [ViewVariables]
+        public IEnumerable<BodyPartSlot> EmptySlots => Slots.Where(slot => slot.Part == null);
+
+        public BodyPartSlot? CenterSlot =>
+            Template?.CenterSlot is { } centerSlot
+                ? SlotIds.GetValueOrDefault(centerSlot)
+                : null;
+
+        public IBodyPart? CenterPart => CenterSlot?.Part;
 
         public override void Initialize()
         {
@@ -70,60 +78,66 @@ namespace Content.Shared.GameObjects.Components.Body
 
             // TODO BODY BeforeDeserialization
             // TODO BODY Move to template or somewhere else
-            if (TemplateName != null)
+            if (TemplateId != null)
             {
-                var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateName);
+                var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
 
-                Connections = template.Connections;
-                Slots = template.Slots;
-                _centerSlot = template.CenterSlot;
-            }
-
-            if (PresetName != null)
-            {
-                var preset = _prototypeManager.Index<BodyPresetPrototype>(PresetName);
-
-                _partIds = preset.PartIDs;
-            }
-
-            // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
-            // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, List<string>>();
-
-            foreach (var targetSlotName in Slots.Keys)
-            {
-                var tempConnections = new List<string>();
-                foreach (var (slotName, slotConnections) in Connections)
+                foreach (var (id, partType) in template.Slots)
                 {
-                    if (slotName == targetSlotName)
-                    {
-                        foreach (var connection in slotConnections)
-                        {
-                            if (!tempConnections.Contains(connection))
-                            {
-                                tempConnections.Add(connection);
-                            }
-                        }
-                    }
-                    else if (slotConnections.Contains(targetSlotName))
-                    {
-                        tempConnections.Add(slotName);
-                    }
+                    SetSlot(id, partType);
                 }
 
-                if (tempConnections.Count > 0)
+                foreach (var (slotId, connectionIds) in template.Connections)
                 {
-                    cleanedConnections.Add(targetSlotName, tempConnections);
+                    var connections = connectionIds.Select(id => SlotIds[id]);
+                    SlotIds[slotId].SetConnectionsInternal(connections);
                 }
             }
 
-            Connections = cleanedConnections;
             CalculateSpeed();
         }
 
-        protected virtual bool CanAddPart(string slot, IBodyPart part)
+        public override void OnRemove()
         {
-            if (!HasSlot(slot) || !_parts.TryAdd(slot, part))
+            foreach (var slot in SlotIds.Values)
+            {
+                slot.Shutdown();
+            }
+
+            base.OnRemove();
+        }
+
+        private BodyPartSlot SetSlot(string id, BodyPartType type)
+        {
+            var slot = new BodyPartSlot(id, type);
+
+            SlotIds[id] = slot;
+            slot.PartAdded += part => OnAddPart(slot, part);
+            slot.PartRemoved += part => OnRemovePart(slot, part);
+
+            return slot;
+        }
+
+        private Dictionary<BodyPartSlot, IBodyPart> GetHangingParts(BodyPartSlot from)
+        {
+            var hanging = new Dictionary<BodyPartSlot, IBodyPart>();
+
+            foreach (var connection in from.Connections)
+            {
+                if (connection.Part != null &&
+                    !ConnectedToCenter(connection.Part))
+                {
+                    hanging.Add(connection, connection.Part);
+                }
+            }
+
+            return hanging;
+        }
+
+        protected virtual bool CanAddPart(string slotId, IBodyPart part)
+        {
+            if (!SlotIds.TryGetValue(slotId, out var slot) ||
+                slot.CanAddPart(part))
             {
                 return false;
             }
@@ -131,11 +145,12 @@ namespace Content.Shared.GameObjects.Components.Body
             return true;
         }
 
-        protected virtual void OnAddPart(string slot, IBodyPart part)
+        protected virtual void OnAddPart(BodyPartSlot slot, IBodyPart part)
         {
+            SlotParts[part] = slot;
             part.Body = this;
 
-            var argsAdded = new BodyPartAddedEventArgs(part, slot);
+            var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
             foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
             {
@@ -146,11 +161,22 @@ namespace Content.Shared.GameObjects.Components.Body
             OnBodyChanged();
         }
 
-        protected virtual void OnRemovePart(string slot, IBodyPart part)
+        protected virtual void OnRemovePart(BodyPartSlot slot, IBodyPart part)
         {
+            SlotParts.Remove(part);
+
+            foreach (var connectedSlot in slot.Connections)
+            {
+                if (connectedSlot.Part != null &&
+                    !ConnectedToCenter(connectedSlot.Part))
+                {
+                    RemovePart(connectedSlot.Part);
+                }
+            }
+
             part.Body = null;
 
-            var args = new BodyPartRemovedEventArgs(part, slot);
+            var args = new BodyPartRemovedEventArgs(slot.Id, part);
 
             foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
             {
@@ -158,7 +184,8 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             // creadth: fall down if no legs
-            if (part.PartType == BodyPartType.Leg && Parts.Count(x => x.Value.PartType == BodyPartType.Leg) == 0)
+            if (part.PartType == BodyPartType.Leg &&
+                GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
                 EntitySystem.Get<SharedStandingStateSystem>().Down(Owner);
             }
@@ -166,7 +193,7 @@ namespace Content.Shared.GameObjects.Components.Body
             // creadth: immediately kill entity if last vital part removed
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
+                if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
                     damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
                 }
@@ -175,174 +202,133 @@ namespace Content.Shared.GameObjects.Components.Body
             OnBodyChanged();
         }
 
-        public bool TryAddPart(string slot, IBodyPart part, bool force = false)
+        public bool TryAddPart(string slotId, IBodyPart part)
         {
             DebugTools.AssertNotNull(part);
-            DebugTools.AssertNotNull(slot);
+            DebugTools.AssertNotNull(slotId);
 
-            if (force)
+            if (!CanAddPart(slotId, part))
             {
-                if (!HasSlot(slot))
-                {
-                    Slots[slot] = part.PartType;
-                }
-
-                _parts[slot] = part;
-            }
-            else
-            {
-                if (!CanAddPart(slot, part))
-                {
-                    return false;
-                }
+                return false;
             }
 
-            OnAddPart(slot, part);
-
-            return true;
+            return SlotIds.TryGetValue(slotId, out var slot) &&
+                   slot.TryAddPart(part);
         }
 
-        public bool HasPart(string slot)
+        public void SetPart(string slotId, IBodyPart part)
         {
-            DebugTools.AssertNotNull(slot);
+            if (!SlotIds.TryGetValue(slotId, out var slot))
+            {
+                slot = SetSlot(slotId, part.PartType);
+                SlotIds[slotId] = slot;
+            }
 
-            return _parts.ContainsKey(slot);
+            slot.SetPart(part);
+        }
+
+        public bool HasPart(string slotId)
+        {
+            DebugTools.AssertNotNull(slotId);
+
+            return SlotIds.TryGetValue(slotId, out var slot) &&
+                   slot.Part != null;
         }
 
         public bool HasPart(IBodyPart part)
         {
             DebugTools.AssertNotNull(part);
 
-            return _parts.ContainsValue(part);
+            return SlotParts.ContainsKey(part);
         }
 
-        public void RemovePart(IBodyPart part)
+        public bool RemovePart(IBodyPart part)
         {
             DebugTools.AssertNotNull(part);
 
-            var slotName = _parts.FirstOrDefault(x => x.Value == part).Key;
-
-            if (string.IsNullOrEmpty(slotName))
-            {
-                return;
-            }
-
-            RemovePart(slotName);
+            return SlotParts.TryGetValue(part, out var slot) &&
+                   slot.RemovePart();
         }
 
-        // TODO BODY invert this behavior with the one above
-        public bool RemovePart(string slot)
+        public bool RemovePart(string slotId)
         {
-            DebugTools.AssertNotNull(slot);
+            DebugTools.AssertNotNull(slotId);
 
-            if (!_parts.Remove(slot, out var part))
+            return SlotIds.TryGetValue(slotId, out var slot) &&
+                   slot.RemovePart();
+        }
+
+        public bool RemovePart(IBodyPart part, [NotNullWhen(true)] out BodyPartSlot? slotId)
+        {
+            DebugTools.AssertNotNull(part);
+
+            if (!SlotParts.TryGetValue(part, out var slot))
             {
+                slotId = null;
                 return false;
             }
 
-            OnRemovePart(slot, part);
-
-            if (TryGetSlotConnections(slot, out var connections))
+            if (!slot.RemovePart())
             {
-                foreach (var connectionName in connections)
-                {
-                    if (TryGetPart(connectionName, out var result) && !ConnectedToCenter(result))
-                    {
-                        RemovePart(connectionName);
-                    }
-                }
+                slotId = null;
+                return false;
             }
 
+            slotId = slot;
             return true;
         }
 
-        public bool RemovePart(IBodyPart part, [NotNullWhen(true)] out string? slotName)
+        public bool TryDropPart(BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, IBodyPart>? dropped)
         {
-            DebugTools.AssertNotNull(part);
+            DebugTools.AssertNotNull(slot);
 
-            (slotName, _) = _parts.FirstOrDefault(kvPair => kvPair.Value == part);
-
-            if (slotName == null)
-            {
-                return false;
-            }
-
-            if (RemovePart(slotName))
-            {
-                return true;
-            }
-
-            slotName = null;
-            return false;
-        }
-
-        public bool TryDropPart(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? dropped)
-        {
-            DebugTools.AssertNotNull(part);
-
-            if (!_parts.ContainsValue(part))
+            if (!SlotIds.TryGetValue(slot.Id, out var ownedSlot) ||
+                ownedSlot != slot ||
+                slot.Part == null)
             {
                 dropped = null;
                 return false;
             }
 
-            if (!RemovePart(part, out var slotName))
+            var oldPart = slot.Part;
+            dropped = GetHangingParts(slot);
+
+            if (!slot.RemovePart())
             {
                 dropped = null;
                 return false;
             }
 
-            dropped = new List<IBodyPart> {part};
-            // Call disconnect on all limbs that were hanging off this limb.
-            if (TryGetSlotConnections(slotName, out var connections))
-            {
-                // TODO BODY optimize
-                foreach (var connectionName in connections)
-                {
-                    if (TryGetPart(connectionName, out var result) &&
-                        !ConnectedToCenter(result) &&
-                        RemovePart(connectionName))
-                    {
-                        dropped.Add(result);
-                    }
-                }
-            }
-
-            OnBodyChanged();
+            dropped[slot] = oldPart;
             return true;
         }
 
         public bool ConnectedToCenter(IBodyPart part)
         {
-            var searchedSlots = new List<string>();
-
             return TryGetSlot(part, out var result) &&
-                   ConnectedToCenterPartRecursion(searchedSlots, result);
+                   ConnectedToCenterPartRecursion(result);
         }
 
-        private bool ConnectedToCenterPartRecursion(ICollection<string> searchedSlots, string slotName)
+        private bool ConnectedToCenterPartRecursion(BodyPartSlot slot, HashSet<BodyPartSlot>? searched = null)
         {
-            if (!TryGetPart(slotName, out var part))
+            searched ??= new HashSet<BodyPartSlot>();
+
+            if (Template?.CenterSlot == null)
             {
                 return false;
             }
 
-            if (part == CenterPart())
+            if (slot.Part == CenterPart)
             {
                 return true;
             }
 
-            searchedSlots.Add(slotName);
+            searched.Add(slot);
 
-            if (!TryGetSlotConnections(slotName, out var connections))
+            foreach (var connection in slot.Connections)
             {
-                return false;
-            }
-
-            foreach (var connection in connections)
-            {
-                if (!searchedSlots.Contains(connection) &&
-                    ConnectedToCenterPartRecursion(searchedSlots, connection))
+                if (!searched.Contains(connection) &&
+                    ConnectedToCenterPartRecursion(connection, searched))
                 {
                     return true;
                 }
@@ -351,56 +337,64 @@ namespace Content.Shared.GameObjects.Components.Body
             return false;
         }
 
-        public IBodyPart? CenterPart()
-        {
-            if (_centerSlot == null) return null;
-
-            return Parts.GetValueOrDefault(_centerSlot);
-        }
-
         public bool HasSlot(string slot)
         {
-            return Slots.ContainsKey(slot);
+            return SlotIds.ContainsKey(slot);
         }
 
-        public bool TryGetPart(string slot, [NotNullWhen(true)] out IBodyPart? result)
+        public IEnumerable<IBodyPart> GetParts()
         {
-            return Parts.TryGetValue(slot, out result);
+            foreach (var slot in SlotIds.Values)
+            {
+                if (slot.Part != null)
+                {
+                    yield return slot.Part;
+                }
+            }
         }
 
-        public bool TryGetSlot(IBodyPart part, [NotNullWhen(true)] out string? slot)
+        public bool TryGetPart(string slotId, [NotNullWhen(true)] out IBodyPart? result)
         {
-            // We enforce that there is only one of each value in the dictionary,
-            // so we can iterate through the dictionary values to get the key from there.
-            (slot, _) = Parts.FirstOrDefault(x => x.Value == part);
+            result = null;
 
-            return slot != null;
+            return SlotIds.TryGetValue(slotId, out var slot) &&
+                   (result = slot.Part) != null;
         }
 
-        public bool TryGetSlotType(string slot, out BodyPartType result)
+        public BodyPartSlot? GetSlot(string id)
         {
-            return Slots.TryGetValue(slot, out result);
+            return SlotIds.GetValueOrDefault(id);
         }
 
-        public bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out List<string>? connections)
+        public BodyPartSlot? GetSlot(IBodyPart part)
         {
-            return Connections.TryGetValue(slot, out connections);
+            return SlotParts.GetValueOrDefault(part);
         }
 
-        public bool TryGetPartConnections(string slot, [NotNullWhen(true)] out List<IBodyPart>? connections)
+        public bool TryGetSlot(string slotId, [NotNullWhen(true)] out BodyPartSlot? slot)
         {
-            if (!Connections.TryGetValue(slot, out var slotConnections))
+            return (slot = GetSlot(slotId)) != null;
+        }
+
+        public bool TryGetSlot(IBodyPart part, [NotNullWhen(true)] out BodyPartSlot? slot)
+        {
+            return (slot = GetSlot(part)) != null;
+        }
+
+        public bool TryGetPartConnections(string slotId, [NotNullWhen(true)] out List<IBodyPart>? connections)
+        {
+            if (!SlotIds.TryGetValue(slotId, out var slot))
             {
                 connections = null;
                 return false;
             }
 
             connections = new List<IBodyPart>();
-            foreach (var connection in slotConnections)
+            foreach (var connection in slot.Connections)
             {
-                if (TryGetPart(connection, out var part))
+                if (connection.Part != null)
                 {
-                    connections.Add(part);
+                    connections.Add(connection.Part);
                 }
             }
 
@@ -413,57 +407,68 @@ namespace Content.Shared.GameObjects.Components.Body
             return true;
         }
 
-        public bool TryGetPartConnections(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? connections)
+        public bool HasSlotOfType(BodyPartType type)
         {
-            connections = null;
-
-            return TryGetSlot(part, out var slotName) &&
-                   TryGetPartConnections(slotName, out connections);
-        }
-
-        public List<IBodyPart> GetPartsOfType(BodyPartType type)
-        {
-            var parts = new List<IBodyPart>();
-
-            foreach (var part in Parts.Values)
+            foreach (var _ in GetSlotsOfType(type))
             {
-                if (part.PartType == type)
-                {
-                    parts.Add(part);
-                }
+                return true;
             }
 
-            return parts;
+            return false;
         }
 
-        public List<(IBodyPart part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
+        public IEnumerable<BodyPartSlot> GetSlotsOfType(BodyPartType type)
         {
-            var parts = new List<(IBodyPart, IBodyPartProperty)>();
-
-            foreach (var part in Parts.Values)
+            foreach (var slot in SlotIds.Values)
             {
-                if (part.TryGetProperty(type, out var property))
+                if (slot.PartType == type)
                 {
-                    parts.Add((part, property));
+                    yield return slot;
                 }
             }
-
-            return parts;
         }
 
-        public List<(IBodyPart part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
+        public bool HasPartOfType(BodyPartType type)
         {
-            var parts = new List<(IBodyPart, T)>();
+            foreach (var _ in GetPartsOfType(type))
+            {
+                return true;
+            }
 
-            foreach (var part in Parts.Values)
+            return false;
+        }
+
+        public IEnumerable<IBodyPart> GetPartsOfType(BodyPartType type)
+        {
+            foreach (var slot in GetSlotsOfType(type))
+            {
+                if (slot.Part != null)
+                {
+                    yield return slot.Part;
+                }
+            }
+        }
+
+        public IEnumerable<(IBodyPart part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
+        {
+            foreach (var slot in SlotIds.Values)
+            {
+                if (slot.Part != null && slot.Part.TryGetProperty(type, out var property))
+                {
+                    yield return (slot.Part, property);
+                }
+            }
+        }
+
+        public IEnumerable<(IBodyPart part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
+        {
+            foreach (var part in SlotParts.Keys)
             {
                 if (part.TryGetProperty<T>(out var property))
                 {
-                    parts.Add((part, property));
+                    yield return (part, property);
                 }
             }
-
-            return parts;
         }
 
         private void CalculateSpeed()
@@ -473,7 +478,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 return;
             }
 
-            var legs = GetPartsWithProperty<LegComponent>();
+            var legs = GetPartsWithProperty<LegComponent>().ToArray();
             float speedSum = 0;
 
             foreach (var leg in legs)
@@ -497,7 +502,7 @@ namespace Content.Shared.GameObjects.Components.Body
             {
                 // Extra legs stack diminishingly.
                 playerMover.BaseWalkSpeed =
-                    speedSum / (legs.Count - (float) Math.Log(legs.Count, 4.0));
+                    speedSum / (legs.Length - (float) Math.Log(legs.Length, 4.0));
 
                 playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
             }
@@ -537,27 +542,29 @@ namespace Content.Shared.GameObjects.Components.Body
                 return extension.Distance;
             }
 
-            return LookForFootRecursion(source, new List<IBodyPart>());
+            return LookForFootRecursion(source);
         }
 
-        private float LookForFootRecursion(IBodyPart current, ICollection<IBodyPart> searchedParts)
+        private float LookForFootRecursion(IBodyPart current, HashSet<BodyPartSlot>? searched = null)
         {
+            searched ??= new HashSet<BodyPartSlot>();
+
             if (!current.TryGetProperty<ExtensionComponent>(out var extProperty))
             {
                 return float.MinValue;
             }
 
             // Get all connected parts if the current part has an extension property
-            if (!TryGetPartConnections(current, out var connections))
+            if (!TryGetSlot(current, out var slot))
             {
                 return float.MinValue;
             }
 
             // If a connected BodyPart is a foot, return this BodyPart's length.
-            foreach (var connection in connections)
+            foreach (var connection in slot.Connections)
             {
                 if (connection.PartType == BodyPartType.Foot &&
-                    !searchedParts.Contains(connection))
+                    !searched.Contains(connection))
                 {
                     return extProperty.Distance;
                 }
@@ -566,14 +573,14 @@ namespace Content.Shared.GameObjects.Components.Body
             // Otherwise, get the recursion values of all connected BodyParts and
             // store them in a list.
             var distances = new List<float>();
-            foreach (var connection in connections)
+            foreach (var connection in slot.Connections)
             {
-                if (!searchedParts.Contains(connection))
+                if (connection.Part == null || !searched.Contains(connection))
                 {
                     continue;
                 }
 
-                var result = LookForFootRecursion(connection, searchedParts);
+                var result = LookForFootRecursion(connection.Part, searched);
 
                 if (Math.Abs(result - float.MinValue) > 0.001f)
                 {
@@ -592,24 +599,24 @@ namespace Content.Shared.GameObjects.Components.Body
         }
 
         // TODO BODY optimize this
-        public KeyValuePair<string, BodyPartType> SlotAt(int index)
+        public BodyPartSlot SlotAt(int index)
         {
-            return Slots.ElementAt(index);
+            return SlotIds.Values.ElementAt(index);
         }
 
-        public KeyValuePair<string, IBodyPart> PartAt(int index)
+        public KeyValuePair<IBodyPart, BodyPartSlot> PartAt(int index)
         {
-            return Parts.ElementAt(index);
+            return SlotParts.ElementAt(index);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            var parts = new (string slot, EntityUid partId)[_parts.Count];
+            var parts = new (string slot, EntityUid partId)[SlotParts.Count];
 
             var i = 0;
-            foreach (var (slot, part) in _parts)
+            foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot, part.Owner.Uid);
+                parts[i] = (slot.Id, part.Owner.Uid);
                 i++;
             }
 
@@ -627,28 +634,28 @@ namespace Content.Shared.GameObjects.Components.Body
 
             var newParts = state.Parts();
 
-            foreach (var (slot, oldPart) in _parts)
+            foreach (var (oldPart, slot) in SlotParts)
             {
-                if (!newParts.TryGetValue(slot, out var newPart) ||
+                if (!newParts.TryGetValue(slot.Id, out var newPart) ||
                     newPart != oldPart)
                 {
                     RemovePart(oldPart);
                 }
             }
 
-            foreach (var (slot, newPart) in newParts)
+            foreach (var (slotId, newPart) in newParts)
             {
-                if (!_parts.TryGetValue(slot, out var oldPart) ||
-                    oldPart != newPart)
+                if (!SlotIds.TryGetValue(slotId, out var slot) ||
+                    slot.Part != newPart)
                 {
-                    TryAddPart(slot, newPart, true);
+                    SetPart(slotId, newPart);
                 }
             }
         }
 
         public virtual void Gib(bool gibParts = false)
         {
-            foreach (var (_, part) in Parts)
+            foreach (var part in SlotParts.Keys)
             {
                 RemovePart(part);
 

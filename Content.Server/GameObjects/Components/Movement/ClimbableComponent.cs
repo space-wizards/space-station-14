@@ -80,8 +80,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            if (body.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
-                body.GetPartsOfType(BodyPartType.Foot).Count == 0)
+            if (!body.HasPartOfType(BodyPartType.Leg) ||
+                !body.HasPartOfType(BodyPartType.Foot))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;

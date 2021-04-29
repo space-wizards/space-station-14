@@ -1,11 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -24,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
-        [ComponentDependency] protected readonly SnapGridComponent? SnapGridComponent = default!;
         [ComponentDependency] protected readonly SolutionContainerComponent? SolutionContainerComponent = default!;
         public int Amount { get; set; }
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
@@ -63,26 +61,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            if (SnapGridComponent == null)
-            {
-                Logger.Error("AreaEffectComponent attached to " + Owner.Prototype.ID +
-                             " couldn't get SnapGridComponent from owner.");
-                return;
-            }
-
             void SpreadToDir(Direction dir)
             {
-                foreach (var neighbor in SnapGridComponent.GetInDir(dir))
+                var grid = MapManager.GetGrid(Owner.Transform.GridID);
+                var coords = Owner.Transform.Coordinates;
+                foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (neighbor.TryGetComponent(out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (neighbor.TryGetComponent(out AirtightComponent? airtight) && airtight.AirBlocked)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }
 
-                var newEffect =
-                    Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, SnapGridComponent.DirectionToGrid(dir));
+                var newEffect = Owner.EntityManager.SpawnEntity(Owner.Prototype.ID, grid.DirectionToGrid(coords, dir));
 
                 if (!newEffect.TryGetComponent(out SolutionAreaEffectComponent? effectComponent))
                 {

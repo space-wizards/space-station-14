@@ -58,6 +58,9 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         }
 
         [ViewVariables]
+        public string DisplayName => Name;
+
+        [ViewVariables]
         [DataField("partType")]
         public BodyPartType PartType { get; private set; } = BodyPartType.Other;
 

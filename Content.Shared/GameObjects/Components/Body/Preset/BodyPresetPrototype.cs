@@ -20,13 +20,14 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
         [field: DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [DataField("partIDs")]
+        [field: DataField("partIDs")]
         private Dictionary<string, string> _partIDs = new();
 
         [ViewVariables]
         [field: DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [ViewVariables] public Dictionary<string, string> PartIDs => new(_partIDs);
+        [ViewVariables]
+        public Dictionary<string, string> PartIDs => new(_partIDs);
     }
 }

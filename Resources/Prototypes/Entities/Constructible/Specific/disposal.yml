@@ -11,7 +11,6 @@
   - type: Physics
     bodyType: Static
   - type: SnapGrid
-    offset: Center
   - type: Anchorable
   - type: Damageable
     resistances: metallicResistances
@@ -399,7 +398,6 @@
       - VaultImpassable
       - SmallImpassable
   - type: SnapGrid
-    offset: Center
   - type: Anchorable
   - type: Damageable
     resistances: metallicResistances

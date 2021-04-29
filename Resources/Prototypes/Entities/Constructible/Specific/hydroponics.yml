@@ -37,13 +37,13 @@
   - type: Sprite
     sprite: Constructible/Hydroponics/misc.rsi
     state: soil
+    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainer
     maxVol: 200
     caps: Refillable
   - type: SnapGrid
-    offset: Center
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction
@@ -70,5 +70,6 @@
   - type: Sprite
     sprite: Constructible/Hydroponics/containers.rsi
     state: hydrotray3
+    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: true

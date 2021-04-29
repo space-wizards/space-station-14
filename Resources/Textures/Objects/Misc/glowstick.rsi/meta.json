@@ -1,45 +1,39 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites created by https://github.com/nuke-makes-games",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "off-inhand-left",
+      "directions": 4
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Sprites created by https://github.com/nuke-makes-games",
-    "states":
-    [
-        {
-            "name": "off-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "off-inhand-right",
-            "directions": 4
-        },
-		{
-            "name": "on-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "on-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "glowstick_base",
-
-        },
-        {
-            "name": "glowstick_lit",
-
-        },
-		{
-            "name": "glowstick_glow",
-
-        },
-        {
-            "name": "glowstick_unlit",
-
-        }
-    ]
+    {
+      "name": "off-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "glowstick_base",
+    },
+    {
+      "name": "glowstick_lit",
+    },
+    {
+      "name": "glowstick_glow",
+    },
+    {
+      "name": "glowstick_unlit",
+    }
+  ]
 }
-

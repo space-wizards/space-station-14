@@ -26,6 +26,14 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<GravityChangedMessage>();
+            UnsubscribeLocalEvent<EntParentChangedMessage>();
+        }
+
         public void Reset()
         {
             _alerts.Clear();

@@ -46,7 +46,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Absinthe
+      - ReagentId: Absinthe
         Quantity: 100
 
 - type: entity
@@ -70,7 +70,7 @@
     maxVol: 100
     contents:
       reagents:
-      - ReagentId: chem.Ale
+      - ReagentId: Ale
         Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
@@ -96,7 +96,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Cognac
+      - ReagentId: Cognac
         Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
@@ -114,7 +114,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-        - ReagentId: chem.Gin
+        - ReagentId: Gin
           Quantity: 100
 
 - type: entity
@@ -138,7 +138,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Water
+      - ReagentId: Water
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluabottle.rsi
@@ -209,7 +209,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Vodka
+      - ReagentId: Vodka
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
@@ -225,7 +225,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Whiskey
+      - ReagentId: Whiskey
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
@@ -241,7 +241,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Wine
+      - ReagentId: Wine
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi

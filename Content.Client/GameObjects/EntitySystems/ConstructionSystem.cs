@@ -51,8 +51,12 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Shutdown()
         {
-            CommandBinds.Unregister<ConstructionSystem>();
             base.Shutdown();
+
+            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
+            UnsubscribeNetworkEvent<AckStructureConstructionMessage>();
+
+            CommandBinds.Unregister<ConstructionSystem>();
         }
 
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;

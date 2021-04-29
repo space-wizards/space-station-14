@@ -8,107 +8,107 @@
   },
   "states": [
     {
-        "name": "alienhide"
+      "name": "alienhide"
     },
     {
-        "name": "bananium"
+      "name": "bananium"
     },
     {
-        "name": "bearpelt"
+      "name": "bearpelt"
     },
     {
-        "name": "cathide"
+      "name": "cathide"
     },
     {
-        "name": "cloth"
+      "name": "cloth"
     },
     {
-        "name": "cloth_2"
+      "name": "cloth_2"
     },
     {
-        "name": "cloth_3"
+      "name": "cloth_3"
     },
     {
-        "name": "corgihide"
+      "name": "corgihide"
     },
     {
-        "name": "cotton"
+      "name": "cotton"
     },
     {
-        "name": "cotton_2"
+      "name": "cotton_2"
     },
     {
-        "name": "cotton_3"
+      "name": "cotton_3"
     },
     {
-        "name": "diamond"
+      "name": "diamond"
     },
     {
-        "name": "diamond-inhand-left",
-        "directions": 4
+      "name": "diamond-inhand-left",
+      "directions": 4
     },
     {
-        "name": "diamond-inhand-right",
-        "directions": 4
+      "name": "diamond-inhand-right",
+      "directions": 4
     },
     {
-        "name": "durathread"
+      "name": "durathread"
     },
     {
-        "name": "durathread_2"
+      "name": "durathread_2"
     },
     {
-        "name": "durathread_3"
+      "name": "durathread_3"
     },
     {
-        "name": "durathreadraw"
+      "name": "durathreadraw"
     },
     {
-        "name": "durathreadraw_2"
+      "name": "durathreadraw_2"
     },
     {
-        "name": "durathreadraw_3"
+      "name": "durathreadraw_3"
     },
     {
-        "name": "hide"
+      "name": "hide"
     },
     {
-        "name": "hide_2"
+      "name": "hide_2"
     },
     {
-        "name": "hide_3"
+      "name": "hide_3"
     },
     {
-        "name": "leather"
+      "name": "leather"
     },
     {
-        "name": "leather_2"
+      "name": "leather_2"
     },
     {
-        "name": "leather_3"
+      "name": "leather_3"
     },
     {
-        "name": "liggerhide"
+      "name": "liggerhide"
     },
     {
-        "name": "monkeyhide"
+      "name": "monkeyhide"
     },
     {
-        "name": "phoron_gem"
+      "name": "phoron_gem"
     },
     {
-        "name": "phoron_gem_spent"
+      "name": "phoron_gem_spent"
     },
     {
-        "name": "wood"
+      "name": "wood"
     },
     {
-        "name": "wood-inhand-left",
-        "directions": 4
+      "name": "wood-inhand-left",
+      "directions": 4
     },
     {
-        "name": "wood-inhand-right",
-        "directions": 4
+      "name": "wood-inhand-right",
+      "directions": 4
     }
   ]
 }

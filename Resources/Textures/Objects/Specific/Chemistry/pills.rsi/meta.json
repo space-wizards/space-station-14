@@ -1,1 +1,77 @@
-{"version":1,"size":{"x":32,"y":32},"license":"CC-BY-SA-3.0","copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi","states":[{"name":"pill","directions":1,"delays":[[1]]},{"name":"pill1","directions":1,"delays":[[1]]},{"name":"pill10","directions":1,"delays":[[1]]},{"name":"pill11","directions":1,"delays":[[1]]},{"name":"pill12","directions":1,"delays":[[1]]},{"name":"pill13","directions":1,"delays":[[1]]},{"name":"pill14","directions":1,"delays":[[1]]},{"name":"pill15","directions":1,"delays":[[1]]},{"name":"pill16","directions":1,"delays":[[1]]},{"name":"pill17","directions":1,"delays":[[1]]},{"name":"pill18","directions":1,"delays":[[1]]},{"name":"pill19","directions":1,"delays":[[1]]},{"name":"pill2","directions":1,"delays":[[1]]},{"name":"pill20","directions":1,"delays":[[1]]},{"name":"pill3","directions":1,"delays":[[1]]},{"name":"pill4","directions":1,"delays":[[1]]},{"name":"pill5","directions":1,"delays":[[1]]},{"name":"pill6","directions":1,"delays":[[1]]},{"name":"pill7","directions":1,"delays":[[1]]},{"name":"pill8","directions":1,"delays":[[1]]},{"name":"pill9","directions":1,"delays":[[1]]},{"name":"pill_canister","directions":1,"delays":[[1]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pill"
+    },
+    {
+      "name": "pill1"
+    },
+    {
+      "name": "pill10"
+    },
+    {
+      "name": "pill11"
+    },
+    {
+      "name": "pill12"
+    },
+    {
+      "name": "pill13"
+    },
+    {
+      "name": "pill14"
+    },
+    {
+      "name": "pill15"
+    },
+    {
+      "name": "pill16"
+    },
+    {
+      "name": "pill17"
+    },
+    {
+      "name": "pill18"
+    },
+    {
+      "name": "pill19"
+    },
+    {
+      "name": "pill2"
+    },
+    {
+      "name": "pill20"
+    },
+    {
+      "name": "pill3"
+    },
+    {
+      "name": "pill4"
+    },
+    {
+      "name": "pill5"
+    },
+    {
+      "name": "pill6"
+    },
+    {
+      "name": "pill7"
+    },
+    {
+      "name": "pill8"
+    },
+    {
+      "name": "pill9"
+    },
+    {
+      "name": "pill_canister"
+    }
+  ]
+}

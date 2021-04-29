@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Power.AME;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
@@ -68,12 +69,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             //Check each shield node to see if it meets core criteria
             foreach (Node node in Nodes)
             {
-                if (!node.Owner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
-                var nodeNeighbors = node.Owner
-                    .GetComponent<SnapGridComponent>()
-                    .GetCellsInSquareArea()
-                    .Select(sgc => sgc.Owner)
-                    .Where(entity => entity != node.Owner)
+                var nodeOwner = node.Owner;
+                if (!nodeOwner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
+
+                var grid = IoCManager.Resolve<IMapManager>().GetGrid(nodeOwner.Transform.GridID);
+                var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
+                    .Select(sgc => nodeOwner.EntityManager.GetEntity(sgc))
+                    .Where(entity => entity != nodeOwner)
                     .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)
                     .Where(adjshield => adjshield != null);
 
