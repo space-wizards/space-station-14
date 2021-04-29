@@ -14,7 +14,7 @@
       "name": "flash"
     },
     {
-      "name": "flashing"
+      "name": "flashing",
       "delays": [
         [
           0.1,

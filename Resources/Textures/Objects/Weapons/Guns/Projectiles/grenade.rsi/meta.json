@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "grenade"
+      "name": "grenade",
       "delays": [
         [
           0.05,

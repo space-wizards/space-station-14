@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "spark"
+      "name": "spark",
       "delays": [
         [
           0.1,

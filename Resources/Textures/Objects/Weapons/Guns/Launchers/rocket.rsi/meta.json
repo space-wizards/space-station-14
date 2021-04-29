@@ -14,7 +14,10 @@
       "name": "base"
     },
     {
-      "name": "mag0"
+      "name": "mag-0"
+    },
+    {
+      "name": "mag-1"
     },
     {
       "name": "inhand-left",
