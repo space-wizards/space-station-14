@@ -214,7 +214,7 @@ namespace Content.Client.State
         ///     Converts a state change event from outside the simulation to inside the simulation.
         /// </summary>
         /// <param name="args">Event data values for a bound key state change.</param>
-        private void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
+        protected virtual void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
             // If there is no InputSystem, then there is nothing to forward to, and nothing to do here.
             if(!EntitySystemManager.TryGetEntitySystem(out InputSystem? inputSys))
