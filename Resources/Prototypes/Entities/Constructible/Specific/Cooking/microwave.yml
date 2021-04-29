@@ -6,7 +6,6 @@
     mode: SnapgridCenter
   components:
   - type: SnapGrid
-    offset: Center
   - type: Microwave
   - type: Clickable
   - type: InteractionOutline

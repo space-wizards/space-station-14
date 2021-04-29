@@ -1,0 +1,59 @@
+# For empty check out chemistry bottles
+
+# With cut-out
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkVisualizerTestCut
+  name: solution container vis cut-out
+  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
+  components:
+  - type: SolutionContainer
+    maxVol: 30
+    contents:
+      reagents:
+        - ReagentId: WatermelonJuice
+          Quantity: 30
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Drinks/pitcher.rsi
+    layers:
+      - state: icon
+      - state: fill-6
+        map: ["enum.SolutionContainerLayers.Fill"]
+        # REMEMBER IF YOU'RE SPAWNING WITH LIQUID ALREADY IN IT YOU WANT THIS TRUE
+        visible: true
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: fill-
+
+# Without (For food, non cut-out stuff)
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkVisualizerTestNot
+  name: solution container vis cut-not
+  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
+  components:
+  - type: SolutionContainer
+    maxVol: 30
+    contents:
+      reagents:
+        - ReagentId: WatermelonJuice
+          Quantity: 30
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Drinks/pitcher.rsi
+    layers:
+      - state: icon-6
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: icon-
+      changeColor: false
+      emptySpriteName: icon

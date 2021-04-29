@@ -9,16 +9,3 @@
     state: booze_dispenser
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
-
-- type: reagentDispenserInventory
-  id: BoozeDispenserInventory
-  inventory:
-  - Ale
-  - Beer
-  - Cognac
-  - Ice
-  - Kahlua
-  - Rum
-  - Vodka
-  - Whiskey
-  - Wine

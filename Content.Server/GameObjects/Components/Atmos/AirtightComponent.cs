@@ -3,6 +3,8 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -14,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private (GridId, Vector2i) _lastPosition;
         private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -77,13 +81,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            // Using the SnapGrid is critical for performance, and thus if it is absent the component
-            // will not be airtight. A warning is much easier to track down than the object magically
-            // not being airtight, so log one if the SnapGrid component is missing.
-            Owner.EnsureComponentWarn(out SnapGridComponent _);
-
             if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
+
+            // Adding this component will immediately anchor the entity, because the atmos system
+            // requires airtight entities to be anchored for performance.
+            Owner.Transform.Anchored = true;
 
             UpdatePosition();
         }
@@ -116,27 +119,24 @@ namespace Content.Server.GameObjects.Components.Atmos
             return newAirBlockedDirs;
         }
 
+        /// <inheritdoc />
         public void MapInit()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (Owner.Transform.Anchored)
             {
-                snapGrid.OnPositionChanged += OnTransformMove;
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
 
             UpdatePosition();
         }
 
+        /// <inheritdoc />
         protected override void Shutdown()
         {
             base.Shutdown();
 
             _airBlocked = false;
-
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                snapGrid.OnPositionChanged -= OnTransformMove;
-            }
 
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
@@ -146,21 +146,25 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        private void OnTransformMove()
+        public void OnTransformMove()
         {
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
 
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (Owner.Transform.Anchored)
             {
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
         }
 
         private void UpdatePosition()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
+            if (Owner.Transform.Anchored)
+            {
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                UpdatePosition(Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+            }
         }
 
         private void UpdatePosition(GridId gridId, Vector2i pos)

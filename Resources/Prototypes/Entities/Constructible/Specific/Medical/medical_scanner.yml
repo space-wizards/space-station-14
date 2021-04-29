@@ -27,7 +27,6 @@
       - Impassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: Anchorable
   - type: Pullable
   - type: MedicalScanner

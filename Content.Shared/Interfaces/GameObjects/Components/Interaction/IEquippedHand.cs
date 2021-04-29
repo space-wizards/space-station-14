@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
@@ -15,6 +16,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IEquippedHand
     {
+        [Obsolete("Use EquippedHandMessage instead")]
         void EquippedHand(EquippedHandEventArgs eventArgs);
     }
 

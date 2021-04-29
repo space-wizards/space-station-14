@@ -104,7 +104,6 @@
   - type: Anchorable
   - type: Pullable
   - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

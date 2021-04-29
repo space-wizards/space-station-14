@@ -13,7 +13,6 @@
   - type: Drink
   - type: Sprite
     state: icon
-
   - type: Spillable
 
 - type: entity
@@ -45,7 +44,6 @@
   - type: DamageOtherOnHit
     amount: 5
 
-
 # Transformable container - normal glass
 - type: entity
   name: Drinking glass
@@ -76,7 +74,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/aleglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkAntifreeze
@@ -92,7 +89,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/antifreeze.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -110,7 +106,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkB52Glass
@@ -127,7 +122,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/b52glass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBananahonkglass
@@ -138,7 +132,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBeepskySmashGlass
@@ -148,7 +141,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -165,7 +157,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBeerglass
@@ -180,7 +171,6 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beerglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -198,7 +188,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBlackRussianGlass
@@ -208,7 +197,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -220,7 +208,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBooger
@@ -230,7 +217,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/booger.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -242,7 +228,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bravebullglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBrownStar
@@ -252,7 +237,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/brownstar.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -264,11 +248,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carafe.rsi
     state: icon-10
-
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 11
 
 - type: entity
   parent: DrinkGlassBase
@@ -285,7 +264,6 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carrotjuice.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1730,11 +1708,6 @@
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 2
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWhiskeyColaGlass
@@ -1814,4 +1787,3 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi
-

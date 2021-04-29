@@ -7,13 +7,12 @@ namespace Content.Server.Utility
 {
     public static class SnapgridHelper
     {
-        public static void SnapToGrid(this IEntity entity, SnapGridOffset offset = SnapGridOffset.Center, IEntityManager? entityManager = null, IMapManager? mapManager = null)
+        public static void SnapToGrid(this IEntity entity, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            entity.Transform.Coordinates = entity.Transform.Coordinates.SnapToGrid(offset, entityManager, mapManager);
+            entity.Transform.Coordinates = entity.Transform.Coordinates.SnapToGrid(entityManager, mapManager);
         }
 
-        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates,
-            SnapGridOffset offset = SnapGridOffset.Center, IEntityManager? entityManager = null, IMapManager? mapManager = null)
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             mapManager ??= IoCManager.Resolve<IMapManager>();
@@ -30,21 +29,20 @@ namespace Content.Server.Utility
 
             var localPos = coordinates.Position;
 
-            var x = (int)Math.Floor(localPos.X / tileSize) + tileSize / (offset == SnapGridOffset.Center ? 2f : 0f);
-            var y = (int)Math.Floor(localPos.Y / tileSize) + tileSize / (offset == SnapGridOffset.Center ? 2f : 0f);
+            var x = (int)Math.Floor(localPos.X / tileSize) + tileSize / 2f;
+            var y = (int)Math.Floor(localPos.Y / tileSize) + tileSize / 2f;
 
             return new EntityCoordinates(coordinates.EntityId, x, y);
         }
 
-        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IMapGrid grid,
-            SnapGridOffset offset = SnapGridOffset.Center)
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IMapGrid grid)
         {
             var tileSize = grid.TileSize;
 
             var localPos = coordinates.Position;
 
-            var x = (int)Math.Floor(localPos.X / tileSize) + tileSize / (offset == SnapGridOffset.Center ? 2f : 0f);
-            var y = (int)Math.Floor(localPos.Y / tileSize) + tileSize / (offset == SnapGridOffset.Center ? 2f : 0f);
+            var x = (int)Math.Floor(localPos.X / tileSize) + tileSize / 2f;
+            var y = (int)Math.Floor(localPos.Y / tileSize) + tileSize / 2f;
 
             return new EntityCoordinates(coordinates.EntityId, x, y);
         }

@@ -78,7 +78,6 @@ namespace Content.Server.GameObjects.Components.Fluids
         private bool _overflown;
 
         private SpriteComponent _spriteComponent = default!;
-        private SnapGridComponent _snapGrid = default!;
 
         public ReagentUnit MaxVolume
         {
@@ -112,7 +111,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             base.Initialize();
 
             _contents = Owner.EnsureComponentWarn<SolutionContainerComponent>();
-            _snapGrid = Owner.EnsureComponent<SnapGridComponent>();
 
             // Smaller than 1m^3 for now but realistically this shouldn't be hit
             MaxVolume = ReagentUnit.New(1000);
@@ -348,8 +346,9 @@ namespace Content.Server.GameObjects.Components.Fluids
             puddle = default;
 
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
 
-            if (!Owner.Transform.Coordinates.Offset(direction).TryGetTileRef(out var tile))
+            if (!coords.Offset(direction).TryGetTileRef(out var tile))
             {
                 return false;
             }
@@ -360,16 +359,19 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            foreach (var entity in _snapGrid.GetInDir(direction))
+            if (!Owner.Transform.Anchored)
+                return false;
+
+            foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
-                if (entity.TryGetComponent(out IPhysBody? physics) &&
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;
                 }
 
-                if (entity.TryGetComponent(out PuddleComponent? existingPuddle))
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
                 {
                     if (existingPuddle._overflown)
                     {
@@ -382,8 +384,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddle == default)
             {
-                var grid = _snapGrid.DirectionToGrid(direction);
-                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, grid).GetComponent<PuddleComponent>();
+                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, mapGrid.DirectionToGrid(coords, direction)).GetComponent<PuddleComponent>();
             }
 
             return true;

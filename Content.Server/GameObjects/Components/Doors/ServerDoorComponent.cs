@@ -230,23 +230,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (otherFixture.Body.Owner.HasComponent<IBody>())
-            {
-                if (!otherFixture.Body.Owner.TryGetComponent<IMoverComponent>(out var mover)) return;
-
-                /*
-                // TODO: temporary hack to fix the physics system raising collision events akwardly.
-                // E.g. when moving parallel to a door by going off the side of a wall.
-                var (walking, sprinting) = mover.VelocityDir;
-                // Also TODO: walking and sprint dir are added together here
-                // instead of calculating their contribution correctly.
-                var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
-                if (dotProduct <= -0.85f)
-                    TryOpen(entity);
-                */
-
                 TryOpen(otherFixture.Body.Owner);
-            }
+            
         }
 
         #region Opening

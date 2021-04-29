@@ -7,7 +7,6 @@
     mode: SnapgridCenter
   components:
   - type: SnapGrid
-    offset: Center
   - type: ReagentGrinder
   - type: UserInterface
     interfaces:

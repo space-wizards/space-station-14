@@ -45,14 +45,14 @@ namespace Content.Client.Graphics.Overlays
             return false;
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             if (!LocalPlayerHasState(_playerManager, true, false))
                 return;
 
-            var worldHandle = (DrawingHandleWorld) handle;
+            var worldHandle = args.WorldHandle;
             var viewport = _eyeManager.GetWorldViewport();
-            handle.UseShader(_gradientCircleShader);
+            worldHandle.UseShader(_gradientCircleShader);
             worldHandle.DrawRect(viewport, Color.White);
         }
     }

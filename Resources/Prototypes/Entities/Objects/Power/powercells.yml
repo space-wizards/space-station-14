@@ -155,6 +155,27 @@
           prefix: s_ar
 
 - type: entity
+  name: hardsuit helmet power cell
+  description: A small cell that recharges itself intended for hardsuit helmets.
+  id: PowerCellHardsuitHelmet
+  parent: PowerCellSmallBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
+      layers:
+        - state: s_ar
+    - type: PowerCell
+      maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+      startingCharge: 600
+      autoRecharge: true
+      autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: s_ar
+
+
+- type: entity
   name: medium standard power cell
   description: A rechargeable standardized power cell, size M. This is the cheapest kind you can find.
   id: PowerCellMediumStandard

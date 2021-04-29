@@ -1,6 +1,6 @@
 - type: entity
   id: Heater
-  name: Heater
+  name: heater
   description: Heats gas.
   placement:
     mode: SnapgridCenter
@@ -9,7 +9,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: SnapGrid
-    offset: Center
   - type: Damageable
   - type: Destructible
     thresholds:

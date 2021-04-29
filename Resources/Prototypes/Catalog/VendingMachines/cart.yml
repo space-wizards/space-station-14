@@ -1,5 +1,0 @@
-- type: vendingMachineInventory
-  id: PTech
-  name: PTech
-  description: "PTech vending! Providing a ROBUST selection of PDA cartridges."
-  spriteName: cart

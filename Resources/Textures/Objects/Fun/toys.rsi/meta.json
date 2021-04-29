@@ -147,7 +147,7 @@
       "directions": 4
     },
     {
-      "name": "capgun-inhand-right",
+      "name": "capgun-inhand-left",
       "directions": 4
     },
     {
@@ -263,17 +263,17 @@
       ]
     },
 	{
-	  "name": "singularitytoy", 
-	  "directions": 1, 
+	  "name": "singularitytoy",
+	  "directions": 1,
 	  "delays": [
 	    [
-		  0.1, 
-	      0.1, 
-		  0.1, 
-		  0.1, 
-		  0.1, 
-		  0.1, 
-		  0.1, 
+		  0.1,
+	      0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+		  0.1,
+		  0.1,
 		  0.1
 	    ]
 	  ]

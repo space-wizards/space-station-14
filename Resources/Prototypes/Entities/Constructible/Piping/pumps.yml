@@ -8,7 +8,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -35,7 +34,8 @@
 - type: entity
   parent: PumpBase
   id: DebugPressurePump
-  name: Debug Pressure Pump
+  name: pressure pump
+  suffix: DEBUG
   components:
   - type: NodeContainer
     nodes:

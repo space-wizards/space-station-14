@@ -880,3 +880,80 @@ Entries:
   - {message: Add named fixtures so banana peel doesn't spin out of control, type: Add}
   id: 159
   time: '2021-04-13T10:57:29.0000000+00:00'
+- author: Hardly
+  changes:
+  - {message: Bar backroom in Saltern, type: Add}
+  - {message: BarDrobe, type: Add}
+  id: 160
+  time: '2021-04-15T18:24:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Destroyed state for canisters, type: Add}
+  - {message: Buffed canister HP from 100 to 300, type: Tweak}
+  id: 161
+  time: '2021-04-15T21:14:47.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Bucket now works and there's one in botany and janitor hut, type: Fix}
+  - {message: Janitorial items now have proper inhands, type: Add}
+  id: 162
+  time: '2021-04-15T21:21:10.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: 'Names for tanks, solar stuff and more are fixed.', type: Fix}
+  id: 163
+  time: '2021-04-16T05:28:09.0000000+00:00'
+- author: MehimoNemo
+  changes:
+  - {message: Thrown PDAs and IDs now open doors. Try it out!, type: Add}
+  id: 164
+  time: '2021-04-18T08:03:31.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Improved shadow edges somewhat., type: Tweak}
+  id: 165
+  time: '2021-04-19T07:49:27.579650+00:00'
+- author: PJB
+  changes:
+  - {message: The game viewport is now a limited size (21x15 tiles)., type: Add}
+  - {message: 'As part of this, the game viewport is now scaled to match your window
+      size.', type: Add}
+  - {message: Scaling is quite intelligent and will use integer-scale nearest neighbor
+      where applicable. So people playing on fullscreen 1080p/1440p monitors will
+      experience perfect crisp graphics., type: Add}
+  id: 166
+  time: '2021-04-19T07:52:40.0000000+00:00'
+- author: chairbender and ike709
+  changes:
+  - {message: Completely redid the chatbox., type: Add}
+  - {message: Chat can now be resized (Unless in the lobby)., type: Add}
+  - {message: Chat can now be filtered., type: Add}
+  - {message: 'To talk in a channel, you now switch to it rather than using a prefix.',
+    type: Tweak}
+  - {message: The chat channel focus keys have changed. Check keybinds for a list.,
+    type: Tweak}
+  - {message: Added channel focus keys for radio and in-character., type: Add}
+  - {message: 'Tab and Ctrl+Tab will cycle channels, as an alternative to focus hotkeys.',
+    type: Add}
+  id: 167
+  time: '2021-04-20T23:39:39.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Added advertising to vending machines, type: Add}
+  id: 168
+  time: '2021-04-21T10:00:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix footstep sounds exception, type: Fix}
+  id: 169
+  time: '2021-04-21T10:14:40.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: (Re)Added the machete and the baseball bat (melee weapons)., type: Add}
+  - {message: Added inhands for the beaker and large beaker., type: Add}
+  - {message: minor changes to the laser gun sprite and mag-unshaded files., type: Fix}
+  - {message: 'reworked the inhands for the homemade pistol, clarissa, giskard  and
+      mk58 (both variants),', type: Fix}
+  - {message: nerfed melee weapons, type: Fix}
+  id: 170
+  time: '2021-04-28T21:14:28.0000000+00:00'

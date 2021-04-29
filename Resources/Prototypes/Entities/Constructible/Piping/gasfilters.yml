@@ -8,7 +8,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -35,7 +34,7 @@
 - type: entity
   parent: GasFilterBase
   id: GasFilter
-  name: Gas Filter
+  name: gas filter
   description: It filters gases.
   components:
   - type: NodeContainer

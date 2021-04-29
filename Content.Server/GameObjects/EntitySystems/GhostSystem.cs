@@ -26,24 +26,24 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)
         {
-            if (!EntityManager.TryGetEntity(uid, out var entity))
-                return;
-            DeleteEntity(entity);
+            DeleteEntity(uid);
         }
 
         private void OnMindUnvisitedMessage(EntityUid uid, GhostComponent component, MindUnvisitedMessage args)
         {
-            if (!EntityManager.TryGetEntity(uid, out var entity))
-                return;
-            DeleteEntity(entity);
+            DeleteEntity(uid);
         }
 
-        private void DeleteEntity(IEntity? entity)
+        private void DeleteEntity(EntityUid uid)
         {
-            if (entity?.Deleted == true)
+            if (!EntityManager.TryGetEntity(uid, out var entity)
+                || entity.Deleted == true
+                || entity.LifeStage == EntityLifeStage.Terminating)
                 return;
 
-            entity?.Delete();
+            if (entity.TryGetComponent<MindComponent>(out var mind))
+                mind.GhostOnShutdown = false;
+            entity.Delete();
         }
     }
 }
