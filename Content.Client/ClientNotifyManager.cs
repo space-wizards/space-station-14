@@ -111,7 +111,7 @@ namespace Content.Client
 
         public void PopupMessage(string message)
         {
-            PopupMessage(new ScreenCoordinates(_userInterfaceManager.MousePositionScaled), message);
+            PopupMessage(_userInterfaceManager.MousePositionScaled, message);
         }
 
         public void FrameUpdate(FrameEventArgs eventArgs)
