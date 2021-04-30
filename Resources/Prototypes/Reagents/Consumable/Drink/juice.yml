@@ -1,5 +1,5 @@
 - type: reagent
-  id: AppleJuice
+  id: JuiceApple
   name: apple juice
   desc: It's a little piece of Eden.
   physicalDesc: crisp
@@ -9,7 +9,7 @@
       rate: 1
 
 - type: reagent
-  id: BerryJuice
+  id: JuiceBerry
   name: berry juice
   desc: A delicious blend of several different kinds of berries.
   physicalDesc: sweet
@@ -19,7 +19,7 @@
       rate: 1
 
 - type: reagent
-  id: BananaJuice
+  id: JuiceBanana
   name: banana juice
   desc: The raw essence of a banana. HONK.
   physicalDesc: crisp
@@ -40,7 +40,7 @@
 # data++
 
 - type: reagent
-  id: CarrotJuice
+  id: JuiceCarrot
   name: carrot juice
   desc: It's like a carrot, but less crunchy.
   physicalDesc: crisp
@@ -50,7 +50,7 @@
       rate: 1
 
 - type: reagent
-  id: LimeJuice
+  id: JuiceLime
   name: lime juice
   desc: The sweet-sour juice of limes.
   physicalDesc: citric
@@ -60,7 +60,7 @@
       rate: 1
 
 - type: reagent
-  id: LemonJuice
+  id: JuiceLemon
   name: lemon juice
   desc: This juice is VERY sour.
   physicalDesc: citric
@@ -70,7 +70,7 @@
       rate: 1
 
 - type: reagent
-  id: GrapeJuice
+  id: JuiceGrape
   name: grape juice
   desc: Freshly squeezed juice from red grapes. Quite sweet.
   physicalDesc: crisp
@@ -78,7 +78,6 @@
   metabolism:
     - !type:DefaultDrink
       rate: 1
-
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
 
@@ -89,7 +88,7 @@
 # M.adjustToxLoss(-REM)
 
 - type: reagent
-  id: OrangeJuice
+  id: JuiceOrange
   name: orange juice
   desc: Both delicious AND rich in Vitamin C. What more do you need?
   physicalDesc: citric
@@ -99,7 +98,7 @@
       rate: 1
 
 - type: reagent
-  id: TomatoJuice
+  id: JuiceTomato
   name: tomato juice
   desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
   physicalDesc: saucey
@@ -116,7 +115,7 @@
 # M.adjustToxLoss(1)
 
 - type: reagent
-  id: PoisonBerryJuice
+  id: JuiceBerryPoison
   name: poison berry juice
   desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
   physicalDesc: aromatic #maybe should be 'sickly'?
@@ -126,7 +125,7 @@
       rate: 1
 
 - type: reagent
-  id: WatermelonJuice
+  id: JuiceWatermelon
   name: water melon juice
   desc: The delicious juice of a watermelon.
   physicalDesc: sweet

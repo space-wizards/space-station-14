@@ -103,7 +103,7 @@
   - type: Juiceable
     result:
       reagents:
-      - ReagentId: BananaJuice
+      - ReagentId: JuiceBanana
         Quantity: 10
 
 - type: entity
@@ -125,7 +125,7 @@
   - type: Juiceable
     result:
       reagents:
-      - ReagentId: CarrotJuice
+      - ReagentId: JuiceCarrot
         Quantity: 10
 
 - type: entity
@@ -147,7 +147,7 @@
   - type: Juiceable
     result:
       reagents:
-      - ReagentId: LimeJuice
+      - ReagentId: JuiceLime
         Quantity: 10
 
 - type: entity
@@ -186,7 +186,7 @@
   - type: Juiceable
     result:
       reagents:
-      - ReagentId: TomatoJuice
+      - ReagentId: JuiceTomato
         Quantity: 10
 
 - type: entity
@@ -225,7 +225,7 @@
   - type: Juiceable
     result:
       reagents:
-      - ReagentId: AppleJuice
+      - ReagentId: JuiceApple
         Quantity: 10
 
 - type: entity
