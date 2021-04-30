@@ -66,3 +66,12 @@
   metabolism:
     - !type:DefaultFood
       rate: 1
+
+- type: reagent
+  id: Vinegar
+  name: vinegar
+  desc: Often used to flavor food.
+  color: tan
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
