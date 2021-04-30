@@ -10,7 +10,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -105,7 +104,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             if (Snap)
-                Owner.SnapToGrid(SnapGridOffset.Center, Owner.EntityManager);
+                Owner.SnapToGrid(Owner.EntityManager);
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredMessage(), false);
 

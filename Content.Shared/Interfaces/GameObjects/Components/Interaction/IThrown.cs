@@ -12,6 +12,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IThrown
     {
+        [Obsolete("Use ThrownMessage instead")]
         void Thrown(ThrownEventArgs eventArgs);
     }
 

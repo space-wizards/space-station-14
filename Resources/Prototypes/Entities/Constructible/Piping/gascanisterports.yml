@@ -8,7 +8,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     netsync: false
     sprite: Constructible/Atmos/gascanisterport.rsi

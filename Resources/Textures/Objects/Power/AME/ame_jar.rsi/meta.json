@@ -1,15 +1,14 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
-    },
-	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/Bleeding-Edge/icons/obj/machines/new_ame.dmi at 1b7952787c06c21ef1623e494dcfe7cb1f46e041",
-    "states": [
-        {
-            "name": "jar",
-
-        }
-    ]
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1b7952787c06c21ef1623e494dcfe7cb1f46e041",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "jar"
+    }
+  ]
 }

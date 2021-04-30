@@ -947,3 +947,13 @@ Entries:
   - {message: Fix footstep sounds exception, type: Fix}
   id: 169
   time: '2021-04-21T10:14:40.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: (Re)Added the machete and the baseball bat (melee weapons)., type: Add}
+  - {message: Added inhands for the beaker and large beaker., type: Add}
+  - {message: minor changes to the laser gun sprite and mag-unshaded files., type: Fix}
+  - {message: 'reworked the inhands for the homemade pistol, clarissa, giskard  and
+      mk58 (both variants),', type: Fix}
+  - {message: nerfed melee weapons, type: Fix}
+  id: 170
+  time: '2021-04-28T21:14:28.0000000+00:00'

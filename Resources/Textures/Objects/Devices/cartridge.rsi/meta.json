@@ -1,1 +1,74 @@
-{"version":1,"size":{"x":32,"y":32},"states":[{"name":"cart","directions":1,"delays":[[1]]},{"name":"cart-a","directions":1,"delays":[[1]]},{"name":"cart-b","directions":1,"delays":[[1]]},{"name":"cart-c","directions":1,"delays":[[1]]},{"name":"cart-ce","directions":1,"delays":[[1]]},{"name":"cart-chem","directions":1,"delays":[[1]]},{"name":"cart-clown","directions":1,"delays":[[1]]},{"name":"cart-cmo","directions":1,"delays":[[1]]},{"name":"cart-e","directions":1,"delays":[[1]]},{"name":"cart-eye","directions":1,"delays":[[1]]},{"name":"cart-h","directions":1,"delays":[[1]]},{"name":"cart-hos","directions":1,"delays":[[1]]},{"name":"cart-j","directions":1,"delays":[[1]]},{"name":"cart-lib","directions":1,"delays":[[1]]},{"name":"cart-m","directions":1,"delays":[[1]]},{"name":"cart-mi","directions":1,"delays":[[1]]},{"name":"cart-q","directions":1,"delays":[[1]]},{"name":"cart-rd","directions":1,"delays":[[1]]},{"name":"cart-s","directions":1,"delays":[[1]]},{"name":"cart-tear","directions":1,"delays":[[1]]},{"name":"cart-tox","directions":1,"delays":[[1]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cart"
+    },
+    {
+      "name": "cart-a"
+    },
+    {
+      "name": "cart-b"
+    },
+    {
+      "name": "cart-c"
+    },
+    {
+      "name": "cart-ce"
+    },
+    {
+      "name": "cart-chem"
+    },
+    {
+      "name": "cart-clown"
+    },
+    {
+      "name": "cart-cmo"
+    },
+    {
+      "name": "cart-e"
+    },
+    {
+      "name": "cart-eye"
+    },
+    {
+      "name": "cart-h"
+    },
+    {
+      "name": "cart-hos"
+    },
+    {
+      "name": "cart-j"
+    },
+    {
+      "name": "cart-lib"
+    },
+    {
+      "name": "cart-m"
+    },
+    {
+      "name": "cart-mi"
+    },
+    {
+      "name": "cart-q"
+    },
+    {
+      "name": "cart-rd"
+    },
+    {
+      "name": "cart-s"
+    },
+    {
+      "name": "cart-tear"
+    },
+    {
+      "name": "cart-tox"
+    }
+  ]
+}

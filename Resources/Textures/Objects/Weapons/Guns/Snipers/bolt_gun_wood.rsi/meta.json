@@ -1,31 +1,31 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a/icons/obj/guns/projectile/boltgun.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a/icons/obj/guns/projectile/boltgun.dmi",
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "base"
-        },
-        {
-            "name": "bolt-closed"
-        },
-        {
-            "name": "bolt-open"
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
-        }
-    ]
+    {
+      "name": "base"
+    },
+    {
+      "name": "bolt-closed"
+    },
+    {
+      "name": "bolt-open"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
 }

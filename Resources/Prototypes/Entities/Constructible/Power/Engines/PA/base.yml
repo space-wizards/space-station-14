@@ -19,6 +19,5 @@
         - MobImpassable
         - VaultImpassable
     - type: SnapGrid
-      offset: Center
     - type: Pullable
     - type: Clickable

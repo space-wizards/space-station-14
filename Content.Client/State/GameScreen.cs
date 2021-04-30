@@ -165,5 +165,13 @@ namespace Content.Client.State
 
             Viewport.Viewport.Eye = _eyeManager.CurrentEye;
         }
+
+        protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
+        {
+            if (args.Viewport == null)
+                base.OnKeyBindStateChanged(new ViewportBoundKeyEventArgs(args.KeyEventArgs, Viewport.Viewport));
+            else
+                base.OnKeyBindStateChanged(args);
+        }
     }
 }

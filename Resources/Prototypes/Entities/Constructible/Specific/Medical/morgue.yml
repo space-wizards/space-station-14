@@ -48,7 +48,6 @@
       light_mob: morgue_nosoul_light
       light_soul: morgue_soul_light
   - type: SnapGrid
-    offset: Center
 
 - type: entity
   id: MorgueTray
@@ -115,7 +114,6 @@
       light_contents: crema_contents_light
       light_burning: crema_active_light
   - type: SnapGrid
-    offset: Center
 
 - type: entity
   id: CrematoriumTray
