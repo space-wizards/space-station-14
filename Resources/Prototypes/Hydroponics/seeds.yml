@@ -5,7 +5,7 @@
   displayName: wheat stalks
   plantRsi: Objects/Specific/Hydroponics/wheat.rsi
   productPrototypes:
-    - Wheat
+    - WheatBushel
   lifespan: 25
   maturation: 6
   production: 1
@@ -19,6 +19,31 @@
       Max: 20
       PotencyDivisor: 20
     Flour:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: oat
+  name: oat
+  seedName: oat
+  displayName: oat stalks
+  plantRsi: Objects/Specific/Hydroponics/oat.rsi
+  productPrototypes:
+    - OatBushel
+  lifespan: 25
+  maturation: 6
+  production: 1
+  yield: 4
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.15
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Oats:
       Min: 5
       Max: 20
       PotencyDivisor: 20

@@ -418,11 +418,21 @@
     - !type:DefaultDrink
       rate: 1
 
+# - type: reagent
+#   id: PotatoJuice
+#   name: potato juice
+#   desc: Juice of the potato. Bleh.
+#   physicalDesc: starchy
+#   color: "#302000"
+#   metabolism:
+#     - !type:DefaultDrink
+#       rate: 1
+
 - type: reagent
-  id: PotatoJuice
-  name: potato juice
-  desc: Juice of the potato. Bleh.
-  physicalDesc: starchy
+  id: MilkOat
+  name: oat milk
+  desc: Surprisingly tasty.
+  physicalDesc: refreshing
   color: "#302000"
   metabolism:
     - !type:DefaultDrink

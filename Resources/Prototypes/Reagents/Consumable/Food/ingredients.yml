@@ -9,6 +9,16 @@
       rate: 1
 
 - type: reagent
+  id: Oats
+  name: oats
+  desc: Used for a variety of tasty purposes.
+  physicalDesc: coarse
+  color: tan
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
   id: Egg
   name: egg
   desc: Used for baking.
