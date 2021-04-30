@@ -8,16 +8,58 @@
   },
   "states": [
     {
+      "name": "bottle-ketchup"
+    },
+    {
+      "name": "bottle-hotsauce"
+    },
+    {
+      "name": "bottle-empty"
+    },
+    {
+      "name": "bottle-enzyme"
+    },
+    {
+      "name": "bottle-coldsauce"
+    },
+    {
+      "name": "bottle-alpha-1"
+    },
+    {
+      "name": "bottle-alpha-2"
+    },
+    {
+      "name": "bottle-alpha-3"
+    },
+    {
+      "name": "bottle-alpha-4"
+    },
+    {
+      "name": "bottle-alpha-5"
+    },
+    {
+      "name": "bottle-alpha-6"
+    },
+    {
+      "name": "label-b"
+    },
+    {
+      "name": "label-c"
+    },
+    {
+      "name": "label-e"
+    },
+    {
+      "name": "label-h"
+    },
+    {
+      "name": "label-k"
+    },
+    {
       "name": "packet-astrotame"
     },
     {
       "name": "packet-bbq"
-    },
-    {
-      "name": "bbqsauce"
-    },
-    {
-      "name": "coldsauce"
     },
     {
       "name": "packet-cornoil"
@@ -29,12 +71,6 @@
       "name": "packet-trash"
     },
     {
-      "name": "empty"
-    },
-    {
-      "name": "enzyme"
-    },
-    {
       "name": "packet-frostoil"
     },
     {
@@ -44,16 +80,7 @@
       "name": "packet-hotsauce"
     },
     {
-      "name": "hotsauce"
-    },
-    {
       "name": "packet-ketchup"
-    },
-    {
-      "name": "ketchup"
-    },
-    {
-      "name": "mixed"
     },
     {
       "name": "packet-mixed"
@@ -81,6 +108,9 @@
     },
     {
       "name": "packet-layer"
+    },
+    {
+      "name": "packet-label"
     },
     {
       "name": "packet-trans-1"

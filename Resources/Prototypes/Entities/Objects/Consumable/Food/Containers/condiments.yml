@@ -17,7 +17,10 @@
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
-
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-empty
+    
 - type: entity
   parent: FoodCondimentPacket
   id: FoodCondimentPacketAstrotame
@@ -35,6 +38,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-astrotame
+  - type: Icon
+    state: packet-astrotame
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -58,6 +63,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-bbq
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -81,6 +88,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-cornoil
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -104,6 +113,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-frostoil
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -127,6 +138,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-greygoo
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -150,6 +163,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-hotsauce
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -173,6 +188,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-ketchup
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -196,6 +213,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-pepper
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -219,6 +238,10 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+      - state: packet-label
+        color: black
+  - type: Icon
+    state: packet-salt
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -242,6 +265,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-soysauce
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -265,6 +290,8 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
       - state: packet-layer
+  - type: Icon
+    state: packet-sugar
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -272,6 +299,135 @@
       fillBaseName: packet-solid-
 
 # Bottles
+
+- type: entity
+  parent: BaseItem
+  id: FoodCondimentBottle
+  name: condiment bottle
+  description: A thin glass bottle used to store condiments.
+  components:
+  - type: Drink
+    openSounds: pop
+  - type: SolutionContainer
+    maxVol: 30
+  - type: SolutionTransfer
+    transferAmount: 5
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-empty
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: bottle-alpha-
+
+- type: entity
+  parent: FoodCondimentBottle
+  id: FoodCondimentBottleColdsauce
+  name: coldsauce bottle
+  description: Leaves the tongue numb in its passage.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Frostoil
+        Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-c
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-coldsauce
+
+- type: entity
+  parent: FoodCondimentBottle
+  id: FoodCondimentBottleEnzyme
+  name: universal enzyme
+  description: Used in cooking various dishes.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Enzyme
+        Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-e
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-enzyme
+
+- type: entity
+  parent: FoodCondimentBottle
+  id: FoodCondimentBottleHotsauce
+  name: hotsauce
+  description: You can almost TASTE the stomach ulcers now!
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Hotsauce
+        Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-h
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-hotsauce
+
+- type: entity
+  parent: FoodCondimentBottle
+  id: FoodCondimentBottleKetchup
+  name: ketchup
+  description: You feel more American already.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-k
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-ketchup
+
+- type: entity
+  parent: FoodCondimentBottle
+  id: FoodCondimentBottleBBQ
+  name: BBQ sauce
+  description: Hand wipes not included.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: BbqSauce
+        Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-b
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
 
 # Trash
 
