@@ -211,6 +211,7 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     netsync: false
   - type: Food
+    transferAmount: 5
   - type: SolutionContainer
     maxVol: 15
     contents:
@@ -222,6 +223,7 @@
   name: dough
   parent: FoodBakingBase
   id: FoodDough
+  description: A piece of dough.
   components:
   - type: Sprite
     state: dough
@@ -233,23 +235,35 @@
   name: dough slice
   parent: FoodBakingBase
   id: FoodDoughSlice
+  description: A slice of dough. Can be cooked into a bun.
   components:
   - type: Sprite
     state: dough-slice
 
 - type: entity
-  name: pastry dough
+  name: bun
   parent: FoodBakingBase
-  id: FoodDoughPastry
+  id: FoodDoughBun
+  description: A base for any self-respecting burger.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    state: bun
+
+- type: entity
+  name: raw pastry base
+  parent: FoodBakingBase
+  id: FoodDoughPastryBaseRaw
+  description: Must be cooked before use.
   components:
   - type: Sprite
     state: dough-pastry
 
 - type: entity
-  name: baked pastry dough
+  name: pastry base
   parent: FoodBakingBase
-  id: FoodDoughPastryBaked
-  description:
+  id: FoodDoughPastryBase
+  description: A base for any self-respecting pastry.
   components:
   - type: Sprite
     state: dough-pastry-baked
@@ -258,39 +272,43 @@
   name: pie dough
   parent: FoodBakingBase
   id: FoodDoughPie
+  description: Cook it to get a pie.
   components:
   - type: Sprite
     state: dough-pie
 
 - type: entity
-  name: pizza dough
+  name: flat dough
   parent: FoodBakingBase
-  id: FoodDoughPizza
-  description:
+  id: FoodDoughFlat
+  description: A flattened dough.
   components:
   - type: Sprite
-    state: dough-pizza
+    state: dough-flat
 
 - type: entity
-  name: pizza dough
+  name: pizza bread
   parent: FoodBakingBase
   id: FoodDoughPizzaBaked
+  description: Add ingredients to make a pizza.
   components:
   - type: Sprite
-    state: dough-pizza-baked
+    state: pizzabread
 
 - type: entity
   name: cake batter
   parent: FoodBakingBase
   id: FoodCakeBatter
+  description: Cook it to get a cake.
   components:
   - type: Sprite
     state: cakebatter
 
 - type: entity
-  name: butter
+  name: stick of butter
   parent: FoodBakingBase
   id: FoodButter
+  description: A stick of delicious, golden, fatty goodness.
   components:
   - type: Sprite
     state: butter
@@ -299,6 +317,7 @@
   name: cheese wheel
   parent: FoodBakingBase
   id: FoodCheese
+  description: A big wheel of delcious Cheddar.
   components:
   - type: Sprite
     state: cheesewheel
@@ -307,17 +326,19 @@
     slice: FoodCheeseSlice
 
 - type: entity
-  name: slice of cheese
+  name: cheese wedge
   parent: FoodBakingBase
   id: FoodCheeseSlice
+  description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
   components:
   - type: Sprite
     state: cheesewedge
 
 - type: entity
-  name: bad recipe
+  name: burned mess
   parent: FoodBakingBase
   id: FoodBadRecipe
+  description: Someone should be demoted from cook for this.
   components:
   - type: Sprite
     state: badrecipe

@@ -45,6 +45,7 @@
   parent: FoodTinBase
   id: FoodTinPeaches
   name: tinned peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
     state: peachtin
@@ -68,6 +69,7 @@
   parent: FoodTinBase
   id: FoodTinPeachesOpen
   name: tinned peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
     state: peachtin-open
@@ -92,6 +94,7 @@
   parent: FoodTinBase
   id: FoodTinPeachesMaint
   name: Maintenance Peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
     state: peachtinmaint
@@ -115,6 +118,7 @@
   parent: FoodTinBase
   id: FoodTinPeachesMaintOpen
   name: Maintenance Peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
     state: peachtinmaint-open
@@ -139,6 +143,7 @@
   parent: FoodTinBase
   id: FoodTinBeans
   name: tin of beans
+  description: Musical fruit in a slightly less musical container.
   components:
   - type: Sprite
     state: beans
@@ -162,6 +167,7 @@
   parent: FoodTinBase
   id: FoodTinBeansOpen
   name: tin of beans
+  description: Musical fruit in a slightly less musical container.
   components:
   - type: Sprite
     state: beans-open

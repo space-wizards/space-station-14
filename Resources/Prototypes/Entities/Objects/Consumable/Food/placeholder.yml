@@ -17,12 +17,6 @@
 
 - type: entity
   parent: FoodBananaCreamPie
-  id: DisgustingSweptSoup
-  components:
-  - type: LoopingSound
-
-- type: entity
-  parent: FoodBananaCreamPie
   id: BoxDonkpocket
   components:
   - type: LoopingSound

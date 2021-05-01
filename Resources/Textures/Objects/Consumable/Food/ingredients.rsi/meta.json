@@ -35,10 +35,7 @@
       "name": "dough-pie"
     },
     {
-      "name": "dough-pizza"
-    },
-    {
-      "name": "dough-pizza-baked"
+      "name": "dough-flat"
     },
     {
       "name": "dough-slice"
@@ -63,6 +60,9 @@
     },
     {
       "name": "oliveoil"
+    },
+    {
+      "name": "pizzabread"
     },
     {
       "name": "rice-big"
