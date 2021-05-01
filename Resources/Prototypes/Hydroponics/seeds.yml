@@ -113,6 +113,27 @@
       PotencyDivisor: 20
 
 - type: seed
+  id: pineapple
+  name: pineapple
+  seedName: pineapple
+  displayName: pineapple plant
+  plantRsi: Objects/Specific/Hydroponics/pineapple.rsi
+  productPrototypes:
+    - FoodPineapple
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 4
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
   id: potato
   name: potato
   seedName: potato
@@ -251,6 +272,52 @@
   plantRsi: Objects/Specific/Hydroponics/corn.rsi
   productPrototypes:
     - FoodCorn
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: onion
+  name: onion
+  seedName: onion
+  displayName: onions
+  plantRsi: Objects/Specific/Hydroponics/onion.rsi
+  productPrototypes:
+    - FoodOnion
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: onionred
+  name: red onion
+  seedName: red onion
+  displayName: red onions
+  plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
+  productPrototypes:
+    - FoodOnionRed
   lifespan: 25
   maturation: 8
   production: 6

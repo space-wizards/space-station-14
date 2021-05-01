@@ -6,6 +6,7 @@
   - type: SolutionContainer
     caps: None
   - type: Sprite
+    netsync: false
     state: produce
   - type: Produce
   - type: Tag
@@ -151,6 +152,31 @@
         Quantity: 10
 
 - type: entity
+  name: pineapple
+  parent: ProduceBase
+  id: FoodPineapple
+  description: Mmm, tropical.
+  components:
+  - type: Food
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pineapple.rsi
+  - type: Produce
+    seed: pineapple
+  - type: Juiceable
+    result:
+      reagents:
+      - ReagentId: JuicePineapple
+        Quantity: 10
+  - type: SliceableFood
+    count: 5
+    slice: FoodPineappleSlice
+
+- type: entity
   name: potato
   parent: ProduceBase
   id: FoodPotato
@@ -247,6 +273,46 @@
     seed: corn
 
 - type: entity
+  name: onion
+  parent: ProduceBase
+  id: FoodOnion
+  description: Nothing to cry over.
+  components:
+  - type: Food
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion.rsi
+  - type: Produce
+    seed: onion
+  - type: SliceableFood
+    count: 5
+    slice: FoodOnionSlice
+
+- type: entity
+  name: red onion
+  parent: ProduceBase
+  id: FoodOnionRed
+  description: Purple despite the name.
+  components:
+  - type: Food
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion_red.rsi
+  - type: Produce
+    seed: onionred
+  - type: SliceableFood
+    count: 4
+    slice: FoodOnionRedSlice
+
+- type: entity
   name: chanterelle cluster
   parent: ProduceBase
   id: FoodMushroom
@@ -262,3 +328,55 @@
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
     seed: chanterelle
+
+# Slices
+
+- type: entity
+  parent: BaseItem
+  id: ProduceSliceBase
+  abstract: true
+  components:
+  - type: Food
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+  - type: Sprite
+    netsync: false
+    state: slice
+  - type: Tag
+    tags:
+    - Grindable
+
+- type: entity
+  name: pineapple slice
+  parent: ProduceSliceBase
+  id: FoodPineappleSlice
+  description: Mmm, tropical.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pineapple.rsi
+  - type: Juiceable
+    result:
+      reagents:
+      - ReagentId: JuicePineapple
+        Quantity: 2
+
+- type: entity
+  name: onion slice
+  parent: ProduceSliceBase
+  id: FoodOnionSlice
+  description: Nothing to cry over.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion.rsi
+
+- type: entity
+  name: red onion slice
+  parent: ProduceSliceBase
+  id: FoodOnionRedSlice
+  description: Purple despite the name.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion_red.rsi

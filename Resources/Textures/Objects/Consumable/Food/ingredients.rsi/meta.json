@@ -26,10 +26,31 @@
       "name": "dough"
     },
     {
-      "name": "flour"
+      "name": "dough-pastry"
     },
     {
-      "name": "mayonnaise"
+      "name": "dough-pastry-baked"
+    },
+    {
+      "name": "dough-pie"
+    },
+    {
+      "name": "dough-pizza"
+    },
+    {
+      "name": "dough-pizza-baked"
+    },
+    {
+      "name": "dough-slice"
+    },
+    {
+      "name": "flour-big"
+    },
+    {
+      "name": "flour-small"
+    },
+    {
+      "name": "mayo"
     },
     {
       "name": "milk"
@@ -44,22 +65,10 @@
       "name": "oliveoil"
     },
     {
-      "name": "onion-slice"
+      "name": "rice-big"
     },
     {
-      "name": "onion-slice-red"
-    },
-    {
-      "name": "pastry"
-    },
-    {
-      "name": "pineapple-slice"
-    },
-    {
-      "name": "pizzabread"
-    },
-    {
-      "name": "rice"
+      "name": "rice-small"
     },
     {
       "name": "soylent-green"
@@ -71,10 +80,10 @@
       "name": "spice"
     },
     {
-      "name": "sugar"
+      "name": "sugar-big"
     },
     {
-      "name": "tortilla"
+      "name": "sugar-small"
     }
   ]
 }
