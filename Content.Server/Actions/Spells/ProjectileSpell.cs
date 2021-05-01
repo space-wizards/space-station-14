@@ -15,6 +15,8 @@ using System;
 
 namespace Content.Server.Actions
 {
+    [UsedImplicitly]
+    [DataDefinition]
     public class ProjectileSpell : ITargetPointAction
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;

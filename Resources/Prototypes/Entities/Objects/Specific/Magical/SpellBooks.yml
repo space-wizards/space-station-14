@@ -1,12 +1,16 @@
 - type: entity
-  name: Urban Legends
+  name: Debug SpellBook
   parent: BaseItem
-  id: SpellBookUrban
-  description: 'penned by "Beyond Occult Rituals Typography" of space wizards'
+  id: Urban legends
+  description: 'penned by "Beyond Occult Rituals Typography"'
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
     state: bookold
-  - type: SpellBookComponent
-     spells:
-     - MagicFireball
+  - type: SpellBook
+    spells:
+     - SpellFireball
+     - SpellTraps
+     - SpellCarp
+     - SpellPie
+     - SpellTarget

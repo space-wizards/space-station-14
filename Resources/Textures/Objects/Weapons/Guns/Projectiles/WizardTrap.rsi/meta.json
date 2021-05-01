@@ -5,14 +5,14 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/guns/projectile/rocket.dmi",
+    "copyright": "https://github.com/DmitriyRubetskoy",
     "states": [
         {
             "name": "trap",
             "directions": 1
         },
         {
-            "name": "trap",
+            "name": "trapsmall",
             "directions": 1
         }
     ]

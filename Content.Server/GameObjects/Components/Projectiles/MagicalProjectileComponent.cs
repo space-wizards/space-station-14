@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
+            if (otherFixture == null) return;
             var target = otherFixture.Body.Owner;
             var compFactory = IoCManager.Resolve<IComponentFactory>();
             var registration = compFactory.GetRegistration(TargetType);

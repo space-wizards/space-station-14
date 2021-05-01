@@ -1,32 +1,24 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
-using System;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using System.ComponentModel;
+using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Server.GameObjects.Components
-{ 
-    public sealed class SpellBookComponent : IUse
+{
+    [RegisterComponent]
+    public class SpellBookComponent : Component, IUse
     {
-        [ViewVariables] [DataField("spells")] public List<ActionType>? GrantedSpells { get; set; }
+
+        [ViewVariables] [DataField("spells")] private readonly List<ActionType>? GrantedSpells = new();
+
+        public override string Name => "SpellBook";
+
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actions)) return false;
@@ -35,7 +27,7 @@ namespace Content.Server.GameObjects.Components
             {
                 actions.Grant(spell);
             }
-            return false;
+            return true;
         }
     }
 }

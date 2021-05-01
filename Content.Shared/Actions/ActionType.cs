@@ -22,7 +22,7 @@ namespace Content.Shared.Actions
         SpellTraps,
         SpellCarp,
         SpellPie,
-        DebugTarget
+        SpellTarget
     }
 
     /// <summary>
