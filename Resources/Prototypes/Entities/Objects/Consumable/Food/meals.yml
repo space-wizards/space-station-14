@@ -10,7 +10,6 @@
   description: A delicious meal, cooked with love.
   components:
   - type: Food
-    transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
     netsync: false

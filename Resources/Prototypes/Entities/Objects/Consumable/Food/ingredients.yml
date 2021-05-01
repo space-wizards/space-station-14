@@ -211,7 +211,6 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     netsync: false
   - type: Food
-    transferAmount: 5
   - type: SolutionContainer
     maxVol: 15
     contents:

@@ -6,6 +6,7 @@
   abstract: true
   components:
   - type: Food
+    transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     netsync: false
