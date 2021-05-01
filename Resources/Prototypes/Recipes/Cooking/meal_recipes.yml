@@ -372,7 +372,7 @@
 - type: microwaveMealRecipe
   id: RecipeBananaCreamPie
   name: banana cream pie
-  result: FoodBananaCreamPie
+  result: FoodPieBananaCream
   time: 15
   reagents:
     Flour: 10

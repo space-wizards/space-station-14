@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 15
     contents:
@@ -19,10 +18,6 @@
         Quantity: 15
   - type: SliceableFood
     count: 4
-  - type: Ammo
-    caliber: CreamPie
-    caseless: true
-    projectile: BulletCreampie
 
 - type: entity
   parent: FoodPieBase
@@ -92,6 +87,23 @@
     - state: plate-small
     - state: baklava-slice
 # Tastes like pie, nuts.
+
+- type: entity
+  name: banana cream pie
+  parent: FoodPieBase
+  id: FoodPieBananaCream
+  description: Just like back home, on clown planet! HONK!
+  components:
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: plain
+  - type: CreamPie
+  - type: Ammo
+    caliber: CreamPie
+    caseless: true
+    projectile: BulletCreampie
+# Tastes like pie, cream, banana.
 
 - type: entity
   name: berry clafoutis
