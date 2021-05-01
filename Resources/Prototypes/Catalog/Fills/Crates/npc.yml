@@ -103,7 +103,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: FoodContainerMonkeyCubeBox
+      - name: MonkeyCubeBox
         amount: 1
 
 

@@ -31,7 +31,7 @@
   - type: StorageFill
     contents:
       - name: CrowbarRed
-      - name: FoodContainerMonkeyCubeBox
+      - name: MonkeyCubeBox
       - name: SprayBottleWater
       - name: ReagentContainerFlour
 

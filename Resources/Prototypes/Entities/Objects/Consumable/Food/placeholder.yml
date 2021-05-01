@@ -44,9 +44,3 @@
   id: FoodChocolateBar
   components:
   - type: LoopingSound
-
-- type: entity
-  parent: FoodBananaCreamPie
-  id: FoodContainerMonkeyCubeBox
-  components:
-  - type: LoopingSound
