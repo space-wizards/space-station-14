@@ -47,17 +47,17 @@
 - type: action
   actionType: SpellTarget
   icon: Mobs/Species/Human/organs.rsi/brain.png
-  name: "Mind to ass"
+  name: "Instagib"
   filters:
     - spells
-  description: "Instantly give a sentient creature a hunched seatable back"
+  description: "Instantly give a sentient creature a good shock"
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
    castrange: 5
    castmessage: ASE'N'MRE!
    cooldown: 1
-   NeedComponent: item
-   AddedComponent: AI
+   NeedComponent: Item
+   AddedComponent: UtilityAI
   
 - type: action
   actionType: SpellPie

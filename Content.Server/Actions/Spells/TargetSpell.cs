@@ -14,6 +14,7 @@ using System;
 
 namespace Content.Server.Actions
 {
+    [DataDefinition]
     public class TargetSpell : ITargetEntityAction
     {
 
