@@ -104,6 +104,39 @@
     },
     {
       "name": "rack"
-    }
+    },
+	{
+	  "name": "rollerbed"
+	},
+	{
+	  "name": "rollerbed_buckled"
+	},
+	{
+	  "name": "rollerbed_folded"
+	},
+	{
+	  "name": "cheap_rollerbed",
+	  "copyright": "https://github.com/Baystation12/Baystation12"
+	},
+	{
+	  "name": "cheap_rollerbed_buckled",
+	  "copyright": "https://github.com/Baystation12/Baystation12"
+	},
+	{
+	  "name": "cheap_rollerbed_folded",
+	  "copyright": "https://github.com/Baystation12/Baystation12"
+	},
+	{
+	  "name": "emergency_rollerbed",
+	  "copyright": "https://github.com/Aurorastation/Aurora.3"
+	},
+	{
+	  "name": "emergency_rollerbed_buckled",
+	  "copyright": "https://github.com/Aurorastation/Aurora.3"
+	},
+	{
+	  "name": "emergency_rollerbed_folded",
+	  "copyright": "https://github.com/Aurorastation/Aurora.3"
+	}
   ]
 }
