@@ -56,8 +56,8 @@
    castrange: 5
    castmessage: ASE'N'MRE!
    cooldown: 1
-   NeedComponent: Item
-   AddedComponent: UtilityAI
+   NeedComponent: Mind
+   AddedComponent: BarnYardCurse
   
 - type: action
   actionType: SpellPie

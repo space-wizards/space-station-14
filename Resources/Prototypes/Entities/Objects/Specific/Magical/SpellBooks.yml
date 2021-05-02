@@ -8,6 +8,7 @@
     sprite: Objects/Misc/books.rsi
     state: bookold
   - type: SpellBook
+    usemessage: You're a wiznred, Garry!
     spells:
      - SpellFireball
      - SpellTraps

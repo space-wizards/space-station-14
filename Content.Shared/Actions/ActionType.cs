@@ -22,7 +22,8 @@ namespace Content.Shared.Actions
         SpellTraps,
         SpellCarp,
         SpellPie,
-        SpellTarget
+        SpellTarget,
+        SpellBarnYardSpeak
     }
 
     /// <summary>
