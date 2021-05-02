@@ -41,7 +41,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SnapGrid
-    offset: Center
   - type: Anchorable
   - type: Pullable
   - type: AMEController

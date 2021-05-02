@@ -9,7 +9,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: SnapGrid
-    offset: Center
   - type: Damageable
   - type: Destructible
     thresholds:

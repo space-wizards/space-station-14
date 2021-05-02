@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -38,13 +39,12 @@ namespace Content.Server.GameObjects.Components.Power
                 return true;
             if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager), out var grid))
                 return true;
-            var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
-            var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
+            var snapPos = grid.TileIndicesFor(eventArgs.ClickLocation);
             if(grid.GetTileRef(snapPos).Tile.IsEmpty)
                 return true;
-            foreach (var snapComp in snapCell)
+            foreach (var anchored in grid.GetAnchoredEntities(snapPos))
             {
-                if (snapComp.Owner.TryGetComponent<WireComponent>(out var wire) && wire.WireType == _blockingWireType)
+                if (Owner.EntityManager.ComponentManager.TryGetComponent<WireComponent>(anchored, out var wire) && wire.WireType == _blockingWireType)
                 {
                     return true;
                 }

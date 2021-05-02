@@ -19,7 +19,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/recycling.rsi

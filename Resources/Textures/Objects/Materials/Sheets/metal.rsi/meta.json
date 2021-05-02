@@ -8,89 +8,89 @@
   },
   "states": [
     {
-        "name": "brass"
+      "name": "brass"
     },
     {
-        "name": "brass_2"
+      "name": "brass_2"
     },
     {
-        "name": "brass_3"
+      "name": "brass_3"
     },
     {
-        "name": "brass-inhand-left",
-        "directions": 4
+      "name": "brass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "brass-inhand-right",
-        "directions": 4
+      "name": "brass-inhand-right",
+      "directions": 4
     },
     {
-        "name": "plasteel"
+      "name": "plasteel"
     },
     {
-        "name": "plasteel_2"
+      "name": "plasteel_2"
     },
     {
-        "name": "plasteel_3"
+      "name": "plasteel_3"
     },
     {
-        "name": "plasteel-inhand-left",
-        "directions": 4
+      "name": "plasteel-inhand-left",
+      "directions": 4
     },
     {
-        "name": "plasteel-inhand-right",
-        "directions": 4
+      "name": "plasteel-inhand-right",
+      "directions": 4
     },
     {
-        "name": "plastitanium"
+      "name": "plastitanium"
     },
     {
-        "name": "plastitanium_2"
+      "name": "plastitanium_2"
     },
     {
-        "name": "plastitanium_3"
+      "name": "plastitanium_3"
     },
     {
-        "name": "plastitanium-inhand-left",
-        "directions": 4
+      "name": "plastitanium-inhand-left",
+      "directions": 4
     },
     {
-        "name": "plastitanium-inhand-right",
-        "directions": 4
+      "name": "plastitanium-inhand-right",
+      "directions": 4
     },
     {
-        "name": "steel"
+      "name": "steel"
     },
     {
-        "name": "steel_2"
+      "name": "steel_2"
     },
     {
-        "name": "steel_3"
+      "name": "steel_3"
     },
     {
-        "name": "steel-inhand-left",
-        "directions": 4
+      "name": "steel-inhand-left",
+      "directions": 4
     },
     {
-        "name": "steel-inhand-right",
-        "directions": 4
+      "name": "steel-inhand-right",
+      "directions": 4
     },
     {
-        "name": "titanium"
+      "name": "titanium"
     },
     {
-        "name": "titanium_2"
+      "name": "titanium_2"
     },
     {
-        "name": "titanium_3"
+      "name": "titanium_3"
     },
     {
-        "name": "titanium-inhand-left",
-        "directions": 4
+      "name": "titanium-inhand-left",
+      "directions": 4
     },
     {
-        "name": "titanium-inhand-right",
-        "directions": 4
+      "name": "titanium-inhand-right",
+      "directions": 4
     }
   ]
 }

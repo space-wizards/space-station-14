@@ -25,7 +25,6 @@
       - VaultImpassable
       - SmallImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/smes.rsi
@@ -85,7 +84,6 @@
       - VaultImpassable
       - SmallImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/substation.rsi
     layers:
@@ -139,7 +137,6 @@
             bounds: "-0.25, -0.25, 0.25, 0.3"
         layer: [ Passable ]
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     drawdepth: WallMountedItems
     netsync: false

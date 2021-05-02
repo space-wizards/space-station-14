@@ -23,7 +23,6 @@
           - MobImpassable
           - VaultImpassable
     - type: SnapGrid
-      offset: Center
     - type: Anchorable
     - type: SeedExtractor
     - type: PowerReceiver

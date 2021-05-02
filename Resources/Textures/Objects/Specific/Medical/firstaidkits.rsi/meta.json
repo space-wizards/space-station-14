@@ -1,11 +1,11 @@
 {
 	"version": 1,
+	"license": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1. Rad, toxin, o2, fire and adv by peptide",
+	"copyright": "CC-BY-SA-3.0",
 	"size": {
 		"x": 32,
 		"y": 32
 	},
-	"license": "Taken from https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1. Rad, toxin, o2, fire and adv by peptide",
-	"copyright": "CC-BY-SA-3.0",
 	"states": [
 		{
 			"name": "firstaid"

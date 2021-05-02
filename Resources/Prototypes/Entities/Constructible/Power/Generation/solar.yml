@@ -35,7 +35,6 @@
   - type: SolarPanel
     supply: 1500
   - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -78,7 +77,6 @@
     sprite: Constructible/Power/solar_panel.rsi
     state: solar_assembly
   - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -123,7 +121,6 @@
     sprite: Constructible/Power/solar_panel.rsi
     state: solar_tracker
   - type: SnapGrid
-    offset: Center
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

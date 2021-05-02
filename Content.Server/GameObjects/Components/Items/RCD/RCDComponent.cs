@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-            var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+            var snapPos = mapGrid.TileIndicesFor(eventArgs.ClickLocation);
 
             //Using an RCD isn't instantaneous
             var cancelToken = new CancellationTokenSource();
