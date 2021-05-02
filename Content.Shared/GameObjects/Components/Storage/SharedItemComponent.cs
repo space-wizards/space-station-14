@@ -11,6 +11,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 
 namespace Content.Shared.GameObjects.Components.Storage
 {
@@ -112,6 +113,9 @@ namespace Content.Shared.GameObjects.Components.Storage
         public bool CanPickup(IEntity user)
         {
             if (!ActionBlockerSystem.CanPickup(user))
+                return false;
+
+            if (!EffectBlockerSystem.CanBePickedUp(Owner))
                 return false;
 
             if (user.Transform.MapID != Owner.Transform.MapID)

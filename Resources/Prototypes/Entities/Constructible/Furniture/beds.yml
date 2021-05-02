@@ -50,6 +50,9 @@
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
+    - type: Foldable
+    - type: Item
+      size: 5
     - type: Sprite
       sprite: Constructible/Misc/furniture.rsi
       state: rollerbed

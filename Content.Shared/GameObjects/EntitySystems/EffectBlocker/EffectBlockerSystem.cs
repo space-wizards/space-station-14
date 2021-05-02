@@ -35,5 +35,17 @@ namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
 
             return canSlip;
         }
+
+        public static bool CanBePickedUp(IEntity entity)
+        {
+            var canBePickedUp = true;
+
+            foreach (var blocker in entity.GetAllComponents<IEffectBlocker>())
+            {
+                canBePickedUp &= blocker.CanBePickedUp();
+            }
+
+            return canBePickedUp;
+        }
     }
 }
