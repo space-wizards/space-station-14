@@ -11,6 +11,5 @@ namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
     {
         bool CanFall() => true;
         bool CanSlip() => true;
-        bool CanBePickedUp() => true;
     }
 }

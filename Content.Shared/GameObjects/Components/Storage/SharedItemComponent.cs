@@ -115,9 +115,6 @@ namespace Content.Shared.GameObjects.Components.Storage
             if (!ActionBlockerSystem.CanPickup(user))
                 return false;
 
-            if (!EffectBlockerSystem.CanBePickedUp(Owner))
-                return false;
-
             if (user.Transform.MapID != Owner.Transform.MapID)
                 return false;
 
