@@ -1,0 +1,15 @@
+- type: entity
+  name: baseball bat
+  parent: BaseItem
+  id: BaseBallBat
+  description: A robust baseball bat.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/baseball_bat.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 20
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Melee/baseball_bat.rsi
+    prefix: inhand

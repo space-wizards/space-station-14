@@ -24,7 +24,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/Singularity/containment.rsi
     state: icon
@@ -66,7 +65,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/Singularity/containment_field.rsi
     state: field

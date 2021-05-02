@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainer

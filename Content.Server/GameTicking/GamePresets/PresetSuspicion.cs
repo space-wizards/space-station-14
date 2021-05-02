@@ -74,11 +74,7 @@ namespace Content.Server.GameTicking.GamePresets
                 {
                     continue;
                 }
-                var profile = ReadyProfiles[player.UserId];
-                if (profile.AntagPreferences.Contains(_prototypeManager.Index<AntagPrototype>(TraitorID).Name))
-                {
-                    prefList.Add(player);
-                }
+                prefList.Add(player);
 
                 player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
             }

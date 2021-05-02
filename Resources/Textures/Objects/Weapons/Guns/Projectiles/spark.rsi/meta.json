@@ -1,20 +1,20 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
-    },
-    "license": "GPL3",
-    "copyright": "https://github.com/tgstation/tgstation/raw/64e5682495a3d3383546b3bfcd4732c32f09b419/icons/obj/projectiles.dmi",
-    "states": [
-        {
-            "name": "spark",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
-        }
-    ]
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/2acc4d34a894dbcc9dbf3779b696ddf296aa2c56/icons/obj/projectiles.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "spark",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
 }

@@ -22,7 +22,6 @@
       - Opaque
       - MobImpassable
   - type: SnapGrid
-    offset: Center
   - type: Lathe
   - type: MaterialStorage
   - type: Anchorable

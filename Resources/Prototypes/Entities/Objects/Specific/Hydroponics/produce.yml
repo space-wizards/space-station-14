@@ -114,7 +114,7 @@
   name: lemon
   parent: ProduceBase
   id: FoodLemon
-  description: When life gives you lemons, be grateful they aren't limes
+  description: When life gives you lemons, be grateful they aren't limes.
   components:
     - type: Food
     - type: SolutionContainer
