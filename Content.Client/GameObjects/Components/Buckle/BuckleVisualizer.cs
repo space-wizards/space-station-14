@@ -6,9 +6,14 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Buckle
 {
+    /// <summary>
+    /// This component is used to change the appearance of **mobs** when they're buckled.
+    /// To change an object-on-which-you-can-buckle-a-mob's appearance, see <see cref="StrapVisualizer"/>
+    /// </summary>
     [UsedImplicitly]
     public class BuckleVisualizer : AppearanceVisualizer
     {
