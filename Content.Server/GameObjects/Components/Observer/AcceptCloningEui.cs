@@ -28,7 +28,9 @@ namespace Content.Server.GameObjects.Components.Observer
                 return;
             }
 
-            Player.ContentData()?.Mind?.TransferTo(_newMob);
+            var mind = Player.ContentData()?.Mind;
+            mind?.TransferTo(_newMob);
+            mind?.UnVisit();
             Close();
         }
     }

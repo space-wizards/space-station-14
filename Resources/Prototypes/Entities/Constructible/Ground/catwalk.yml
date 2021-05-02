@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Catwalk
   name: catwalk
   description: A catwalk for easier EVA maneuvering and cable placement.
@@ -8,6 +8,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -21,7 +22,6 @@
     sprite: Constructible/Tiles/catwalk.rsi
     state: catwalk_preview
   - type: SnapGrid
-    offset: Center
   - type: IconSmooth
     key: catwalk
     base: catwalk_

@@ -6,7 +6,6 @@
     mode: SnapgridCenter
   components:
   - type: SnapGrid
-    offset: Center
   - type: Microwave
   - type: Clickable
   - type: InteractionOutline
@@ -27,9 +26,8 @@
         !type:PhysShapeAabb
           bounds: "-0.16,-0.3,0.16,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
+      - SmallImpassable
+      mask:
       - VaultImpassable
   - type: Sprite
     netsync: false

@@ -8,7 +8,6 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -17,10 +16,12 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Content.Server.Atmos;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
@@ -40,11 +41,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         [DataField("clumsyExplodeChance")]
         public float ClumsyExplodeChance { get; set; } = 0.5f;
 
-        public Func<bool> WeaponCanFireHandler;
-        public Func<IEntity, bool> UserCanFireHandler;
-        public Action<IEntity, Vector2> FireHandler;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canHotspot")]
+        private bool _canHotspot = true;
 
-        public ServerRangedBarrelComponent Barrel
+        public Func<bool>? WeaponCanFireHandler;
+        public Func<IEntity, bool>? UserCanFireHandler;
+        public Action<IEntity, Vector2>? FireHandler;
+
+        public ServerRangedBarrelComponent? Barrel
         {
             get => _barrel;
             set
@@ -59,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 Dirty();
             }
         }
-        private ServerRangedBarrelComponent _barrel;
+        private ServerRangedBarrelComponent? _barrel;
 
         private FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
 
@@ -74,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         }
 
         /// <inheritdoc />
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -126,12 +131,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         /// <param name="targetPos">Target position on the map to shoot at.</param>
         private void TryFire(IEntity user, Vector2 targetPos)
         {
-            if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
+            if (!user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
             {
                 return;
             }
 
-            if(!user.TryGetComponent(out CombatModeComponent combat) || !combat.IsInCombatMode) {
+            if(!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode) {
                 return;
             }
 
@@ -142,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             var curTime = _gameTiming.CurTime;
             var span = curTime - _lastFireTime;
-            if (span.TotalSeconds < 1 / _barrel.FireRate)
+            if (span.TotalSeconds < 1 / _barrel?.FireRate)
             {
                 return;
             }
@@ -151,20 +156,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                var soundSystem = EntitySystem.Get<AudioSystem>();
-                soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default, 5);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default, 5);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                if (user.TryGetComponent(out IDamageableComponent health))
+                if (user.TryGetComponent(out IDamageableComponent? health))
                 {
                     health.ChangeDamage(DamageType.Blunt, 10, false, user);
                     health.ChangeDamage(DamageType.Heat, 5, false, user);
                 }
 
-                if (user.TryGetComponent(out StunnableComponent stun))
+                if (user.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Paralyze(3f);
                 }
@@ -175,6 +179,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
+            if (_canHotspot && user.Transform.Coordinates.TryGetTileAtmosphere(out var tile))
+            {
+                tile.HotspotExpose(700, 50);
+            }
             FireHandler?.Invoke(user, targetPos);
         }
 

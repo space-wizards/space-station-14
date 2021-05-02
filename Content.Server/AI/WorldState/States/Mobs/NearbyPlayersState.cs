@@ -17,7 +17,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
         {
             var result = new List<IEntity>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent controller))
+            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
             {
                 return result;
             }
@@ -27,6 +27,11 @@ namespace Content.Server.AI.WorldState.States.Mobs
 
             foreach (var player in nearbyPlayers)
             {
+                if (player.AttachedEntity == null)
+                {
+                    continue;
+                }
+
                 if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<IDamageableComponent>())
                 {
                     result.Add(player.AttachedEntity);

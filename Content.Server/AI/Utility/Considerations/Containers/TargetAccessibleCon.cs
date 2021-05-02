@@ -24,7 +24,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
 
             if (target.TryGetContainer(out var container))
             {
-                if (container.Owner.TryGetComponent(out EntityStorageComponent storageComponent))
+                if (container.Owner.TryGetComponent(out EntityStorageComponent? storageComponent))
                 {
                     if (storageComponent.IsWeldedShut && !storageComponent.Open)
                     {
@@ -40,6 +40,11 @@ namespace Content.Server.AI.Utility.Considerations.Containers
             }
 
             var owner = context.GetState<SelfState>().GetValue();
+
+            if (owner == null)
+            {
+                return 0;
+            }
 
             return EntitySystem.Get<AiReachableSystem>().CanAccess(owner, target, SharedInteractionSystem.InteractionRange) ? 1.0f : 0.0f;
         }

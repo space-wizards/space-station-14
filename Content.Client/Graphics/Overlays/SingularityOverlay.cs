@@ -38,7 +38,7 @@ namespace Content.Client.Graphics.Overlays
             return _singularities.Count() > 0;
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             SingularityQuery();
 
@@ -52,8 +52,8 @@ namespace Content.Client.Graphics.Overlays
                 _shader?.SetParameter("intensity", LevelToIntensity(instance.Level));
                 _shader?.SetParameter("falloff", LevelToFalloff(instance.Level));
 
-                handle.UseShader(_shader);
-                var worldHandle = (DrawingHandleWorld) handle;
+                var worldHandle = args.WorldHandle;
+                worldHandle.UseShader(_shader);
                 var viewport = _eyeManager.GetWorldViewport();
                 worldHandle.DrawRect(viewport, Color.White);
             }
@@ -62,29 +62,30 @@ namespace Content.Client.Graphics.Overlays
 
 
 
-        //Queries all singulos on the map and either adds or removes them from the list of singulos to render depending on their location and existence.
+        //Queries all singulos on the map and either adds or removes them from the list of rendered singulos based on whether they should be drawn (in range? on the same z-level/map? singulo entity still exists?)
         private float _maxDist = 15.0f;
         private void SingularityQuery()
         {
             var currentEyeLoc = _eyeManager.CurrentEye.Position;
+            var currentMap = _eyeManager.CurrentMap; //TODO: support multiple viewports once it is added
 
             var singuloComponents = _componentManager.EntityQuery<IClientSingularityInstance>();
-            foreach (var singuloInterface in singuloComponents)
+            foreach (var singuloInterface in singuloComponents) //Add all singulos that are not added yet but qualify
             {
                 var singuloComponent = (Component)singuloInterface;
                 var singuloEntity = singuloComponent.Owner;
-                if (!_singularities.Keys.Contains(singuloEntity.Uid) && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
+                if (!_singularities.Keys.Contains(singuloEntity.Uid) && singuloEntity.Transform.MapID == currentMap && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
                 {
                     _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(singuloEntity.Transform.MapPosition.Position, singuloInterface.Level));
                 }
             }
 
             var activeShaderUids = _singularities.Keys;
-            foreach (var activeSinguloUid in activeShaderUids)
+            foreach (var activeSinguloUid in activeShaderUids) //Remove all singulos that are added and no longer qualify
             {
                 if (_entityManager.TryGetEntity(activeSinguloUid, out IEntity? singuloEntity))
                 {
-                    if (!singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
+                    if (singuloEntity.Transform.MapID != currentMap || !singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
                     {
                         _singularities.Remove(activeSinguloUid);
                     }

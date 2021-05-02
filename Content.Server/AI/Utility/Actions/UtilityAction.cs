@@ -59,7 +59,11 @@ namespace Content.Server.AI.Utility.Actions
         protected virtual void UpdateBlackboard(Blackboard context) {}
 
         // Needs to be able to be instantiated without args via typefactory.
-        public UtilityAction() {}
+        public UtilityAction()
+        {
+            Owner = default!;
+            ActionOperators = default!;
+        }
 
         public virtual void Shutdown() {}
 

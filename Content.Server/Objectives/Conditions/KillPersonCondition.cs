@@ -12,7 +12,7 @@ namespace Content.Server.Objectives.Conditions
         protected Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind mind);
 
-        public string Title => Loc.GetString("Kill {0}", Target?.OwnedEntity.Name ?? "");
+        public string Title => Loc.GetString("Kill {0}", Target?.OwnedEntity?.Name ?? "");
 
         public string Description => Loc.GetString("Do it however you like, just make sure they don't last the shift.");
 

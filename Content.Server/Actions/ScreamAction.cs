@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
@@ -9,10 +9,9 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Preferences;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -47,7 +46,7 @@ namespace Content.Server.Actions
 
             if (_random.Prob(.01f) && !string.IsNullOrWhiteSpace(_wilhelm))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_wilhelm, args.Performer, AudioParams.Default.WithVolume(Volume));
+                SoundSystem.Play(Filter.Pvs(args.Performer), _wilhelm, args.Performer, AudioParams.Default.WithVolume(Volume));
             }
             else
             {
@@ -55,12 +54,12 @@ namespace Content.Server.Actions
                 {
                     case Sex.Male:
                         if (_male == null) break;
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_male), args.Performer,
+                        SoundSystem.Play(Filter.Pvs(args.Performer), _random.Pick(_male), args.Performer,
                             AudioHelpers.WithVariation(Variation).WithVolume(Volume));
                         break;
                     case Sex.Female:
                         if (_female == null) break;
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity(_random.Pick(_female), args.Performer,
+                        SoundSystem.Play(Filter.Pvs(args.Performer), _random.Pick(_female), args.Performer,
                             AudioHelpers.WithVariation(Variation).WithVolume(Volume));
                         break;
                     default:

@@ -14,7 +14,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (args.Player.TryGetComponent(out FlammableComponent flammable))
+            if (args.Player.TryGetComponent(out FlammableComponent? flammable))
             {
                 flammable.Resist();
             }

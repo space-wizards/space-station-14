@@ -14,8 +14,8 @@ using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
 using Content.Server.Voting;
 using Content.Shared.Actions;
-using Content.Shared.Kitchen;
 using Content.Shared.Alert;
+using Content.Shared.Kitchen;
 using Robust.Server.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -27,10 +27,10 @@ namespace Content.Server
 {
     public class EntryPoint : GameServer
     {
-        private IGameTicker _gameTicker;
-        private EuiManager _euiManager;
-        private StatusShell _statusShell;
-        private IVoteManager _voteManager;
+        private IGameTicker _gameTicker = default!;
+        private EuiManager _euiManager = default!;
+        private StatusShell _statusShell = default!;
+        private IVoteManager _voteManager = default!;
 
         /// <inheritdoc />
         public override void Init()

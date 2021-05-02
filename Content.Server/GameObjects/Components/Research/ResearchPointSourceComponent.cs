@@ -1,8 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -18,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Research
         private int _pointsPerSecond;
         [DataField("active")]
         private bool _active;
-        private PowerReceiverComponent _powerReceiver;
+        private PowerReceiverComponent? _powerReceiver;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int PointsPerSecond

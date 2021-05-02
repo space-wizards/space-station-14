@@ -46,7 +46,6 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            IoCManager.InjectDependencies(this);
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
@@ -62,11 +61,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Shutdown()
         {
+            base.Shutdown();
+
+            UnsubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>();
+            UnsubscribeNetworkEvent<PlayerContainerVisibilityMessage>();
             UnsubscribeLocalEvent<MoveEvent>();
             _contextMenuPresenter?.Dispose();
 
             CommandBinds.Unregister<VerbSystem>();
-            base.Shutdown();
         }
 
         public void Reset()
@@ -117,7 +119,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public void OnContextButtonPressed(IEntity entity)
         {
-            OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
+            OpenContextMenu(entity, _userInterfaceManager.MousePositionScaled);
         }
 
         private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
@@ -223,10 +225,9 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     first = false;
 
-                    if (groupIcons.TryGetValue(category, out var icon))
-                    {
-                        vBox.AddChild(CreateCategoryButton(category, verbs, icon));
-                    }
+                    groupIcons.TryGetValue(category, out var icon);
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
                 }
 
                 if (buttons.ContainsKey(""))
@@ -290,7 +291,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
         {
             verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
@@ -365,7 +366,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             MinSize = (32, 32),
-                            Stretch = TextureRect.StretchMode.KeepCentered
+                            Stretch = TextureRect.StretchMode.KeepCentered,
+                            TextureScale = (0.5f, 0.5f)
                         }),
                         (_label = new Label()),
                         // Padding
@@ -410,7 +412,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 set => _icon.Texture = value;
             }
 
-            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
             {
                 _system = system;
                 VerbButtons = verbButtons;
@@ -424,6 +426,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             MinSize = (32, 32),
+                            TextureScale = (0.5f, 0.5f),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
@@ -438,7 +441,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
+                            TextureScale = (0.5f, 0.5f),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }

@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            foreach (var near in EntityManager.GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, true))
             {
                 yield return near;
             }
@@ -352,11 +352,18 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
+            var user = args.SenderSession.AttachedEntity;
+
+            if (user == null)
+            {
+                Logger.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            var user = args.SenderSession.AttachedEntity;
 
             if (_beingBuilt.TryGetValue(args.SenderSession, out var set))
             {

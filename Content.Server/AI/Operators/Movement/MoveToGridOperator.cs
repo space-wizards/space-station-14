@@ -9,7 +9,7 @@ namespace Content.Server.AI.Operators.Movement
     public sealed class MoveToGridOperator : AiOperator
     {
         private readonly IEntity _owner;
-        private GridTargetSteeringRequest _request;
+        private GridTargetSteeringRequest? _request;
         private readonly EntityCoordinates _target;
         public float DesiredRange { get; set; }
 
@@ -45,7 +45,7 @@ namespace Content.Server.AI.Operators.Movement
 
         public override Outcome Execute(float frameTime)
         {
-            switch (_request.Status)
+            switch (_request?.Status)
             {
                 case SteeringStatus.Pending:
                     DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));

@@ -9,7 +9,7 @@ namespace Content.Server.AI.Utility.Considerations.Movement
         {
             var self = context.GetState<SelfState>().GetValue();
             var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null || target.Deleted || target.Transform.GridID != self.Transform.GridID)
+            if (target == null || target.Deleted || target.Transform.GridID != self?.Transform.GridID)
             {
                 return 0.0f;
             }

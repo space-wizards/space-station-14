@@ -8,5 +8,5 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_wood
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemWood

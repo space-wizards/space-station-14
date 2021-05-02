@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
@@ -6,17 +7,13 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using System.Linq;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -100,95 +97,95 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
 
             var message = serverMsg.Message;
-            if (!orders.ConnectedToDatabase)
+            if (orders.Database == null)
                 return;
             if (!Powered)
                 return;
             switch (message)
             {
                 case CargoConsoleAddOrderMessage msg:
+                {
+                    if (msg.Amount <= 0 || _bankAccount == null)
                     {
-                        if (msg.Amount <= 0 || _bankAccount == null)
-                        {
-                            break;
-                        }
-
-                        _cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                         break;
                     }
+
+                    _cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                    break;
+                }
                 case CargoConsoleRemoveOrderMessage msg:
-                    {
-                        _cargoConsoleSystem.RemoveOrder(orders.Database.Id, msg.OrderNumber);
-                        break;
-                    }
+                {
+                    _cargoConsoleSystem.RemoveOrder(orders.Database.Id, msg.OrderNumber);
+                    break;
+                }
                 case CargoConsoleApproveOrderMessage msg:
+                {
+                    if (_requestOnly ||
+                        !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
+                        _bankAccount == null)
                     {
-                        if (_requestOnly ||
-                            !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
-                            _bankAccount == null)
-                        {
-                            break;
-                        }
-
-                        PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product);
-                        if (product == null!)
-                            break;
-                        var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
-                        if (capacity.CurrentCapacity == capacity.MaxCapacity)
-                            break;
-                        if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                            break;
-                        _cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber);
-                        UpdateUIState();
                         break;
                     }
+
+                    PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product);
+                    if (product == null!)
+                        break;
+                    var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
+                    if (capacity.CurrentCapacity == capacity.MaxCapacity)
+                        break;
+                    if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
+                        break;
+                    _cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber);
+                    UpdateUIState();
+                    break;
+                }
                 case CargoConsoleShuttleMessage _:
+                {
+                    //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                    //orders.Database.ClearOrderCapacity();
+
+                    // TODO replace with shuttle code
+                    // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
+                    IEntity? cargoTelepad = null;
+                    var indices = Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager);
+                    var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
+                                                   new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
+                    var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
+                    foreach (var offset in offsets)
                     {
-                        //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
-                        //orders.Database.ClearOrderCapacity();
-
-                        // TODO replace with shuttle code
-                        // TEMPORARY loop for spawning stuff on telepad (looks for a telepad adjacent to the console)
-                        IEntity? cargoTelepad = null;
-                        var indices = Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager);
-                        var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
-                                                       new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-                        var adjacentEntities = new List<IEnumerable<IEntity>>(); //Probably better than IEnumerable.concat
-                        foreach (var offset in offsets)
-                        {
-                            adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(Owner.Transform.GridID));
-                        }
-
-                        foreach (var enumerator in adjacentEntities)
-                        {
-                            foreach (IEntity entity in enumerator)
-                            {
-                                if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
-                                {
-                                    cargoTelepad = entity;
-                                    break;
-                                }
-                            }
-                        }
-                        if (cargoTelepad != null)
-                        {
-                            if (cargoTelepad.TryGetComponent<CargoTelepadComponent>(out var telepadComponent))
-                            {
-                                var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
-                                orders.Database.ClearOrderCapacity();
-                                foreach (var order in approvedOrders)
-                                {
-                                    if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product))
-                                        continue;
-                                    for (var i = 0; i < order.Amount; i++)
-                                    {
-                                        telepadComponent.QueueTeleport(product);
-                                    }
-                                }
-                            }
-                        }
-                        break;
+                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(Owner.Transform.GridID));
                     }
+
+                    foreach (var enumerator in adjacentEntities)
+                    {
+                        foreach (IEntity entity in enumerator)
+                        {
+                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            {
+                                cargoTelepad = entity;
+                                break;
+                            }
+                        }
+                    }
+                    if (cargoTelepad != null)
+                    {
+                        if (cargoTelepad.TryGetComponent<CargoTelepadComponent>(out var telepadComponent))
+                        {
+                            var approvedOrders = _cargoConsoleSystem.RemoveAndGetApprovedOrders(orders.Database.Id);
+                            orders.Database.ClearOrderCapacity();
+                            foreach (var order in approvedOrders)
+                            {
+                                if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product))
+                                    continue;
+                                for (var i = 0; i < order.Amount; i++)
+                                {
+                                    telepadComponent.QueueTeleport(product);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
             }
         }
 

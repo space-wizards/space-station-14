@@ -14,9 +14,11 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -119,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (makeNoise)
             {
-                if (TurnOffSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOffSound, Owner);
+                if (TurnOffSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOffSound, Owner);
             }
 
             return true;
@@ -134,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Cell == null)
             {
-                if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 UpdateLightAction();
                 return false;
@@ -145,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Simple enough.
             if (Wattage > Cell.CurrentCharge)
             {
-                if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 UpdateLightAction();
                 return false;
@@ -156,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(true);
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
-            if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
+            if (TurnOnSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound, Owner);
             return true;
         }
 

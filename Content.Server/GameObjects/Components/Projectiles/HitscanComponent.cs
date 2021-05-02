@@ -2,15 +2,14 @@ using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -47,13 +46,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
         [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
         [DataField("muzzleFlash")]
-        private string _muzzleFlash;
+        private string? _muzzleFlash;
         [DataField("impactFlash")]
-        private string _impactFlash;
+        private string? _impactFlash;
         [DataField("soundHitWall")]
         private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
 
-        public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
+        public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
             _startTime = _gameTiming.CurTime;
@@ -85,7 +84,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.Coordinates.Offset(offset));
+                var coordinates = user.Transform.Coordinates.Offset(offset);
+                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall, coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>
@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             });
         }
 
-        private EffectSystemMessage MuzzleFlash(EntityCoordinates grid, Angle angle)
+        private EffectSystemMessage? MuzzleFlash(EntityCoordinates grid, Angle angle)
         {
             if (_muzzleFlash == null)
             {
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             return message;
         }
 
-        private EffectSystemMessage ImpactFlash(float distance, Angle angle)
+        private EffectSystemMessage? ImpactFlash(float distance, Angle angle)
         {
             if (_impactFlash == null)
             {

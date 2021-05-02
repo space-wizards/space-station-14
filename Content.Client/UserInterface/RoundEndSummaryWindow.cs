@@ -74,20 +74,23 @@ namespace Content.Client.UserInterface
             {
                 var playerInfoText = new RichTextLabel();
 
-                if (playerInfo.Observer)
+                if (playerInfo.PlayerICName != null)
                 {
-                    playerInfoText.SetMarkup(
-                        Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
-                                        playerInfo.PlayerOOCName, playerInfo.PlayerICName));
-                }
-                else
-                {
-                    //TODO: On Hover display a popup detailing more play info.
-                    //For example: their antag goals and if they completed them sucessfully.
-                    var icNameColor = playerInfo.Antag ? "red" : "white";
-                    playerInfoText.SetMarkup(
-                        Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
-                                        playerInfo.PlayerOOCName, icNameColor, playerInfo.PlayerICName, Loc.GetString(playerInfo.Role)));
+                    if (playerInfo.Observer)
+                    {
+                        playerInfoText.SetMarkup(
+                            Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
+                                playerInfo.PlayerOOCName, playerInfo.PlayerICName));
+                    }
+                    else
+                    {
+                        //TODO: On Hover display a popup detailing more play info.
+                        //For example: their antag goals and if they completed them sucessfully.
+                        var icNameColor = playerInfo.Antag ? "red" : "white";
+                        playerInfoText.SetMarkup(
+                            Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
+                                playerInfo.PlayerOOCName, icNameColor, playerInfo.PlayerICName, Loc.GetString(playerInfo.Role)));
+                    }
                 }
                 innerScrollContainer.AddChild(playerInfoText);
             }

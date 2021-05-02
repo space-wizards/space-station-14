@@ -21,11 +21,12 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public class HumanoidCharacterProfile : ICharacterProfile
     {
+        public const int MinimumAge = 18;
+        public const int MaximumAge = 120;
+        public const int MaxNameLength = 32;
+
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
-        public static int MinimumAge = 18;
-        public static int MaximumAge = 120;
-        public static int MaxNameLength = 32;
 
         private HumanoidCharacterProfile(
             string name,
@@ -85,7 +86,20 @@ namespace Content.Shared.Preferences
 
         public static HumanoidCharacterProfile Default()
         {
-            return Random();
+            return new(
+                "John Doe",
+                MinimumAge,
+                Sex.Male,
+                Gender.Male,
+                HumanoidCharacterAppearance.Default(),
+                ClothingPreference.Jumpsuit,
+                BackpackPreference.Backpack,
+                new Dictionary<string, JobPriority>
+                {
+                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                },
+                PreferenceUnavailableMode.SpawnAsOverflow,
+                new List<string>());
         }
 
         public static HumanoidCharacterProfile Random()

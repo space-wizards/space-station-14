@@ -14,9 +14,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -128,6 +128,18 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
+
+            // Pause/resume advertising if advertising component exists and not broken
+            if (!Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent) || _broken) return;
+
+            if (Powered)
+            {
+                advertiseComponent.Resume();
+            }
+            else
+            {
+                advertiseComponent.Pause();
+            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -187,7 +199,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void TryEject(string id, IEntity? sender)
@@ -206,7 +218,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private void Deny()
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
 
             // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);
@@ -243,6 +255,11 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         {
             _broken = true;
             TrySetVisualState(VendingMachineVisualState.Broken);
+
+            if (Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent))
+            {
+                advertiseComponent.Pause();
+            }
         }
 
         public enum Wires

@@ -7,8 +7,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -29,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private SolutionContainerComponent _internalSolution;
+        [ViewVariables] private SolutionContainerComponent _internalSolution = default!;
 
         /// <summary>
         ///     Empty volume of internal solution
@@ -70,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
 
         public void PumpToxins(GasMixture to)
         {
-            if (!Owner.TryGetComponent(out MetabolismComponent metabolism))
+            if (!Owner.TryGetComponent(out MetabolismComponent? metabolism))
             {
                 to.Merge(Air);
                 Air.Clear();

@@ -1,0 +1,32 @@
+- type: entity
+  parent: BaseItem
+  id: Bucket
+  name: bucket
+  description: It's a boring old bucket.
+  components:
+  - type: Drink
+    isOpen: true
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/bucket.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Tools/bucket.rsi
+    Slots:
+    - Helmet
+  - type: Bucket
+  - type: SolutionContainer
+    maxVol: 500
+  - type: SolutionTransfer
+    transferAmount: 50
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 5
+      mask:
+      - Impassable
+  - type: Spillable

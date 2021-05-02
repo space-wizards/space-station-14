@@ -18,10 +18,11 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
-      layer: [Clickable]
       mask:
       - Impassable
       - MobImpassable
+    linearDamping: 0
+    angularDamping: 0
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
@@ -73,11 +74,29 @@
   - type: StunnableProjectile
     paralyzeAmount: 2
 
+# Energy projectiles
 - type: entity
-  name : taser
+  name : taser bolt
   id: BulletTaser
+  parent: BulletBase
   abstract: true
   components:
+  - type: Sprite
+    directional: false
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      mask:
+          - Impassable
+          - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
@@ -89,22 +108,35 @@
   - type: StunnableProjectile
     stunAmount: 5
     knockdownAmount: 5
+
+- type: entity
+  name: emitter bolt
+  id: EmitterBolt
+  parent: BulletBase
+  abstract: true
+  components:
   - type: Sprite
-    noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
-    layers:
-    - state: spark
-      shader: unshaded
+    sprite: Constructible/Power/Singularity/emitter.rsi
+    state: 'projectile'
   - type: Physics
-    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
-      layer: 32
-      mask: 30
+      layer:
+        - Impassable
+        - MobImpassable
+      mask:
+        - Opaque
+  - type: Projectile
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damages:
+      Heat: 20
+  - type: Tag
+    tags:
+    - EmitterBolt
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
@@ -119,7 +151,7 @@
     state: frag
   - type: ExplosiveProjectile
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -141,7 +173,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
     soundHit: /Audio/Effects/gen_hit.ogg
   - type: StunnableProjectile
     paralyzeAmount: 8
@@ -158,7 +190,7 @@
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -176,7 +208,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
     soundHit: /Audio/Effects/flash_bang.ogg
   - type: FlashProjectile
     range: 7
@@ -194,7 +226,7 @@
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
-    delete_on_collide: false
+    deleteOnCollide: false
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1
@@ -212,7 +244,7 @@
     sprite: Objects/Fun/toys.rsi
     state: foamdart
   - type: Projectile
-    delete_on_collide: true
+    deleteOnCollide: true
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Blunt: 2
@@ -228,6 +260,27 @@
     sprite: Objects/Fun/toys.rsi
     state: capbullet
   - type: Projectile
-    delete_on_collide: true
+    deleteOnCollide: true
     damages:
       Piercing: 0
+
+- type: entity
+  id: BulletCreampie
+  name: cream pie
+  parent: BulletBase
+  description: get creampied, honk!!
+  abstract: true
+  components:
+    - type: Projectile
+      deleteOnCollide: false # CreamPie component handles this.
+    - type: CreamPie
+    - type: ThrownItem
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Consumable/Food/pie.rsi
+      state: icon
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 8

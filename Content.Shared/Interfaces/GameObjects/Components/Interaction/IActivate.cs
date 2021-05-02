@@ -18,13 +18,20 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Called when this component is activated by another entity who is in range.
         /// </summary>
+        [Obsolete("Use ActivateInWorldMessage instead")]
         void Activate(ActivateEventArgs eventArgs);
     }
 
     public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public IEntity Target { get; set; }
+        public ActivateEventArgs(IEntity user, IEntity target)
+        {
+            User = user;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public IEntity Target { get; }
     }
 
     /// <summary>

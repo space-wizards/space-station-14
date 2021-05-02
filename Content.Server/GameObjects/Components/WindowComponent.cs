@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -10,9 +10,11 @@ using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -129,8 +131,8 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>()
-                .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(eventArgs.Target), "/Audio/Effects/glass_knock.ogg",
+                eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

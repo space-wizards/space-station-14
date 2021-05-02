@@ -12,9 +12,9 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] public readonly IRobustRandom Random = default!;
 
-        public AudioSystem AudioSystem { get; private set; }
+        public AudioSystem AudioSystem { get; private set; } = default!;
 
-        public ActSystem ActSystem { get; private set; }
+        public ActSystem ActSystem { get; private set; } = default!;
 
         public override void Initialize()
         {

@@ -1,0 +1,16 @@
+- type: vendingMachineInventory
+  id: SecTechInventory
+  name: SecTech
+  description: "A vending machine containing Security equipment. A label reads \"SECURITY PERSONNEL ONLY\"."
+  animationDuration: 2.8
+  spriteName: sec
+  startingInventory:
+    Handcuffs: 8
+    GrenadeFlashBang: 4
+    Flash: 5
+    FoodDonut: 12
+    FoodContainerDonutBox: 2
+    FlashlightLantern: 4 #seclite
+    ClothingEyesGlassesSunglasses: 2
+    ClothingBeltSecurityWebbing: 5
+    #box evidence

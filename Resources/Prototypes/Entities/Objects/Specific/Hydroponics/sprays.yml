@@ -13,7 +13,7 @@
     caps: Drainable
     contents:
       reagents:
-        - ReagentId: chem.PlantBGone
+        - ReagentId: PlantBGone
           Quantity: 100
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
@@ -34,7 +34,7 @@
     caps: Drainable
     contents:
       reagents:
-        - ReagentId: chem.WeedKiller
+        - ReagentId: WeedKiller
           Quantity: 50
   - type: Spillable
   - type: ItemCooldown
@@ -57,7 +57,7 @@
     caps: Drainable
     contents:
       reagents:
-        - ReagentId: chem.PestKiller
+        - ReagentId: PestKiller
           Quantity: 50
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -10,9 +10,11 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -183,7 +185,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
 
             if (StartCuffSound != null)
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(StartCuffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound, Owner);
 
             TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
             return true;
@@ -221,7 +223,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 if (cuffs.TryAddNewCuffs(user, Owner))
                 {
                     if (EndCuffSound != null)
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity(EndCuffSound, Owner);
+                        SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound, Owner);
 
                     user.PopupMessage(Loc.GetString("You successfully cuff {0:theName}.", target));
                     target.PopupMessage(Loc.GetString("You have been cuffed by {0:theName}!", user));

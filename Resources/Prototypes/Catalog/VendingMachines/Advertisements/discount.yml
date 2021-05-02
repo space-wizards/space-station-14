@@ -1,0 +1,11 @@
+﻿- type: advertisementsPack
+  id: DiscountDansAds
+  advertisements:
+  - advertisement-discount-1
+  - advertisement-discount-2
+  - advertisement-discount-3
+  - advertisement-discount-4
+  - advertisement-discount-5
+  - advertisement-discount-6
+  - advertisement-discount-7
+  - advertisement-discount-8

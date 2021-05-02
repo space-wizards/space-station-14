@@ -28,6 +28,9 @@ namespace Content.Client.GameObjects.Components.Power.AME
             IoCManager.InjectDependencies(this);
 
             Title = "Antimatter Control Unit";
+
+            MinSize = SetSize = (250, 250);
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =

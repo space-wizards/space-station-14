@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
@@ -16,8 +16,6 @@ namespace Content.Server.GameObjects.Components.Botany
     [RegisterComponent]
     public class ProduceComponent : Component, ISerializationHooks
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Produce";
 
         [DataField("seed")]

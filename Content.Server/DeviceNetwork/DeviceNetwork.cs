@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Interfaces;
 using Robust.Shared.IoC;
-using System.Collections.Generic;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
@@ -21,14 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         public DeviceNetworkConnection Register(int netId, int frequency, OnReceiveNetMessage messageHandler, bool receiveAll = false)
         {
             var address = GenerateValidAddress(netId, frequency);
-
-            var device = new NetworkDevice
-            {
-                Address = address,
-                Frequency = frequency,
-                ReceiveAll = receiveAll,
-                ReceiveNetMessage = messageHandler
-            };
+            var device = new NetworkDevice(frequency, address, messageHandler, receiveAll);
 
             AddDevice(netId, device);
 
@@ -62,16 +56,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             if (!_devices.ContainsKey(netId))
                 return false;
 
-            var package = new NetworkPackage()
-            {
-                NetId = netId,
-                Frequency = frequency,
-                Address = address,
-                Broadcast = broadcast,
-                Data = data,
-                Sender = sender,
-                Metadata = metadata
-            };
+            var package = new NetworkPackage(netId, frequency, address, broadcast, data, metadata, sender);
 
             _packages.Enqueue(package);
             return true;
@@ -79,20 +64,28 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public void RemoveDevice(int netId, int frequency, string address)
         {
-            var device = DeviceWithAddress(netId, frequency, address);
-            _devices[netId].Remove(device);
+            if (TryDeviceWithAddress(netId, frequency, address, out var device))
+            {
+                _devices[netId].Remove(device);
+            }
         }
 
         public void SetDeviceReceiveAll(int netId, int frequency, string address, bool receiveAll)
         {
-            var device = DeviceWithAddress(netId, frequency, address);
-            device.ReceiveAll = receiveAll;
+            if (TryDeviceWithAddress(netId, frequency, address, out var device))
+            {
+                device.ReceiveAll = receiveAll;
+            }
         }
 
         public bool GetDeviceReceiveAll(int netId, int frequency, string address)
         {
-            var device = DeviceWithAddress(netId, frequency, address);
-            return device.ReceiveAll;
+            if (TryDeviceWithAddress(netId, frequency, address, out var device))
+            {
+                return device.ReceiveAll;
+            }
+
+            return false;
         }
 
         private string GenerateValidAddress(int netId, int frequency)
@@ -128,13 +121,19 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             return result;
         }
 
-        private NetworkDevice DeviceWithAddress(int netId, int frequency, string address)
+        private NetworkDevice? DeviceWithAddress(int netId, int frequency, string address)
         {
             var devices = DevicesForFrequency(netId, frequency);
 
             var device = devices.Find(dvc => dvc.Address == address);
 
             return device;
+        }
+
+        private bool TryDeviceWithAddress(int netId, int frequency, string address,
+            [NotNullWhen(true)] out NetworkDevice? device)
+        {
+            return (device = DeviceWithAddress(netId, frequency, address)) != null;
         }
 
         private List<NetworkDevice> DevicesWithReceiveAll(int netId, int frequency)
@@ -156,18 +155,19 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         private void SendPackage(NetworkPackage package)
         {
             var devices = DevicesWithReceiveAll(package.NetId, package.Frequency);
-            var device = DeviceWithAddress(package.NetId, package.Frequency, package.Address);
 
-            devices.Add(device);
+            if (TryDeviceWithAddress(package.NetId, package.Frequency, package.Address, out var device))
+            {
+                devices.Add(device);
+            }
 
             SendToDevices(devices, package, false);
         }
 
         private void SendToDevices(List<NetworkDevice> devices, NetworkPackage package, bool broadcast)
         {
-            for (var index = 0; index < devices.Count; index++)
+            foreach (var device in devices)
             {
-                var device = devices[index];
                 if (device.Address == package.Sender)
                     continue;
 
@@ -177,6 +177,14 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         internal class NetworkDevice
         {
+            internal NetworkDevice(int frequency, string address, OnReceiveNetMessage receiveNetMessage, bool receiveAll)
+            {
+                Frequency = frequency;
+                Address = address;
+                ReceiveNetMessage = receiveNetMessage;
+                ReceiveAll = receiveAll;
+            }
+
             public int Frequency;
             public string Address;
             public OnReceiveNetMessage ReceiveNetMessage;
@@ -185,6 +193,24 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         internal class NetworkPackage
         {
+            internal NetworkPackage(
+                int netId,
+                int frequency,
+                string address,
+                bool broadcast,
+                IReadOnlyDictionary<string, string> data,
+                Metadata metadata,
+                string sender)
+            {
+                NetId = netId;
+                Frequency = frequency;
+                Address = address;
+                Broadcast = broadcast;
+                Data = data;
+                Metadata = metadata;
+                Sender = sender;
+            }
+
             public int NetId;
             public int Frequency;
             public string Address;

@@ -14,11 +14,11 @@
   idealLight: 8
   nutrientConsumption: 0.15
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 20
       PotencyDivisor: 20
-    chem.Flour:
+    Flour:
       Min: 5
       Max: 20
       PotencyDivisor: 20
@@ -40,7 +40,7 @@
   waterConsumption: 6
   idealHeat: 298
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 20
       PotencyDivisor: 20
@@ -61,7 +61,7 @@
   growthStages: 3
   waterConsumption: 6
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 20
       PotencyDivisor: 20
@@ -82,7 +82,7 @@
   potency: 10
   idealLight: 8
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 20
       PotencyDivisor: 20
@@ -103,7 +103,7 @@
   growthStages: 4
   waterConsumption: 6
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -125,7 +125,7 @@
   growthStages: 3
   idealHeat: 298
   chemicals:
-    chem.Sugar:
+    Sugar:
       Min: 4
       Max: 5
       PotencyDivisor: 5
@@ -170,7 +170,7 @@
   juicy: true
   splatPrototype: PuddleSplatter
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -192,7 +192,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -213,7 +213,7 @@
   potency: 10
   idealLight: 6
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -236,7 +236,7 @@
   waterConsumption: 6
   idealHeat: 298
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -260,7 +260,7 @@
   waterConsumption: 6
   idealHeat: 288
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 25
       PotencyDivisor: 25
@@ -282,7 +282,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    chem.Nutriment:
+    Nutriment:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -305,7 +305,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    chem.THC:
+    THC:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -328,7 +328,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    chem.Nicotine:
+    Nicotine:
       Min: 1
       Max: 10
       PotencyDivisor: 10

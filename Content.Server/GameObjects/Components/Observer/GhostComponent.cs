@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
@@ -40,31 +40,39 @@ namespace Content.Server.GameObjects.Components.Observer
             }
         }
 
-        public override void Initialize()
+        /// <inheritdoc />
+        protected override void Startup()
         {
-            base.Initialize();
+            base.Startup();
 
-            Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
+            // Allow this entity to be seen by other ghosts.
+            Owner.EnsureComponent<VisibilityComponent>().Layer |= (int) VisibilityFlags.Ghost;
+
+            // Allows this entity to see other ghosts.
+            Owner.EnsureComponent<EyeComponent>().VisibilityMask |= (uint) VisibilityFlags.Ghost;
+
             _timeOfDeath = _gameTimer.RealTime;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
-            base.HandleMessage(message, component);
-
-            switch (message)
+            //Perf: If the entity is deleting itself, no reason to change these back.
+            if(Owner.LifeStage < EntityLifeStage.Terminating)
             {
-                case PlayerAttachedMsg msg:
-                    msg.NewPlayer.VisibilityMask |= (int) VisibilityFlags.Ghost;
-                    Dirty();
-                    break;
-                case PlayerDetachedMsg msg:
-                    msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
-                    break;
+                // Entity can't be seen by ghosts anymore.
+                if (Owner.TryGetComponent<VisibilityComponent>(out var visComp))
+                    visComp.Layer &= ~(int) VisibilityFlags.Ghost;
+
+                // Entity can't see ghosts anymore.
+                if (Owner.TryGetComponent<EyeComponent>(out var eyeComp))
+                    eyeComp.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
             }
+
+            base.Shutdown();
         }
+
+        public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
         {
@@ -84,13 +92,12 @@ namespace Content.Server.GameObjects.Components.Observer
                     {
                         var o = actor.playerSession.ContentData()!.Mind;
                         o?.UnVisit();
-                        Owner.Delete();
                     }
                     break;
                 }
                 case ReturnToCloneComponentMessage _:
 
-                    if (Owner.TryGetComponent(out VisitingMindComponent? mind))
+                    if (Owner.TryGetComponent(out VisitingMindComponent? mind) && mind.Mind != null)
                     {
                         Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     }
@@ -158,6 +165,11 @@ namespace Content.Server.GameObjects.Components.Observer
                     var warpName = new List<string>();
                     foreach (var point in warpPoints)
                     {
+                        if (point.Location == null)
+                        {
+                            continue;
+                        }
+
                         warpName.Add(point.Location);
                     }
                     SendNetworkMessage(new GhostReplyWarpPointData(warpName));

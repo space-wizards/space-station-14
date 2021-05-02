@@ -14,6 +14,8 @@ namespace Content.Client.Command
     {
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
         private readonly CancellationTokenSource _timerCancelTokenSource = new();
+        private LineEdit _messageInput { get; set; }
+        public readonly Button AnnounceButton;
         public readonly Button EmergencyShuttleButton;
         private readonly RichTextLabel _countdownLabel;
 
@@ -25,13 +27,27 @@ namespace Content.Client.Command
             Title = Loc.GetString("Communications Console");
             Owner = owner;
 
+            _messageInput = new LineEdit
+            {
+                PlaceHolder = Loc.GetString("Announcement"),
+                HorizontalExpand = true,
+                SizeFlagsStretchRatio = 1
+            };
+            AnnounceButton = new Button();
+            AnnounceButton.Text = "Announce";
+            AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(_messageInput.Text.Trim());
+            AnnounceButton.Disabled = !owner.CanAnnounce;
+
             _countdownLabel = new RichTextLabel(){MinSize = new Vector2(0, 200)};
             EmergencyShuttleButton = new Button();
             EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
             EmergencyShuttleButton.Disabled = !owner.CanCall;
 
             var vbox = new VBoxContainer() {HorizontalExpand = true, VerticalExpand = true};
-
+            vbox.AddChild(_messageInput);
+            vbox.AddChild(new Control(){MinSize = new Vector2(0,10), HorizontalExpand = true});
+            vbox.AddChild(AnnounceButton);
+            vbox.AddChild(new Control(){MinSize = new Vector2(0,10), HorizontalExpand = true});
             vbox.AddChild(_countdownLabel);
             vbox.AddChild(EmergencyShuttleButton);
 

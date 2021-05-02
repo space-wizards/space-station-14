@@ -64,7 +64,7 @@ namespace Content.Server.Holiday
 
         public bool IsCurrentlyHoliday(string holiday)
         {
-            if (!_prototypeManager.TryIndex(holiday, out HolidayPrototype prototype))
+            if (!_prototypeManager.TryIndex(holiday, out HolidayPrototype? prototype))
                 return false;
 
             return _currentHolidays.Contains(prototype);

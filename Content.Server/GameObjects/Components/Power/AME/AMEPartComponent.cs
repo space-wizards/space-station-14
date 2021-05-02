@@ -7,10 +7,12 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -38,8 +40,8 @@ namespace Content.Server.GameObjects.Components.Power.AME
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))
                 return false; // No AME in space.
 
-            var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
-            if (mapGrid.GetSnapGridCell(snapPos, SnapGridOffset.Center).Any(sc => sc.Owner.HasComponent<AMEShieldComponent>()))
+            var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
+            if (mapGrid.GetAnchoredEntities(snapPos).Any(sc => _serverEntityManager.ComponentManager.HasComponent<AMEShieldComponent>(sc)))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
                 return true;
@@ -48,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
             ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_unwrap, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _unwrap, Owner);
 
             Owner.Delete();
 

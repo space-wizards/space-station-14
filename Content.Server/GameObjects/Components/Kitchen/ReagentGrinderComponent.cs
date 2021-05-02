@@ -19,6 +19,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -164,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void SetAppearance()
@@ -328,7 +329,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch (program)
             {
                 case GrinderProgram.Grind:
-                    _audioSystem.PlayFromEntity("/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
                     //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
                     Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
@@ -349,7 +350,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     break;
 
                 case GrinderProgram.Juice:
-                    _audioSystem.PlayFromEntity("/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
                     Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
                         foreach (var item in _chamber.ContainedEntities.ToList())

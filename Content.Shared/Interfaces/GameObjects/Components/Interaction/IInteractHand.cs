@@ -15,13 +15,20 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Called when a player directly interacts with an empty hand when user is in range of the target entity.
         /// </summary>
+        [Obsolete("Use AttackHandMessage instead")]
         bool InteractHand(InteractHandEventArgs eventArgs);
     }
 
     public class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public IEntity Target { get; set; }
+        public InteractHandEventArgs(IEntity user, IEntity target)
+        {
+            User = user;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public IEntity Target { get; }
     }
 
 

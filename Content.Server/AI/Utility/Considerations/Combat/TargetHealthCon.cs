@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || target.Deleted || !target.TryGetComponent(out IDamageableComponent damageableComponent))
+            if (target == null || target.Deleted || !target.TryGetComponent(out IDamageableComponent? damageableComponent))
             {
                 return 0.0f;
             }

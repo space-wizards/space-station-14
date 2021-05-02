@@ -26,23 +26,28 @@ namespace Content.Server.Commands.Mobs
             }
 
             var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (mgr.TryGetSessionByUsername(args[0], out var data))
-            {
-                var mind = data.ContentData().Mind;
-
-                var builder = new StringBuilder();
-                builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedComponent?.Owner?.Uid);
-                foreach (var role in mind.AllRoles)
-                {
-                    builder.AppendFormat("{0} ", role.Name);
-                }
-
-                shell.WriteLine(builder.ToString());
-            }
-            else
+            if (!mgr.TryGetSessionByUsername(args[0], out var data))
             {
                 shell.WriteLine("Can't find that mind");
+                return;
             }
+
+            var mind = data.ContentData()?.Mind;
+
+            if (mind == null)
+            {
+                shell.WriteLine("Can't find that mind");
+                return;
+            }
+
+            var builder = new StringBuilder();
+            builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedComponent?.Owner?.Uid);
+            foreach (var role in mind.AllRoles)
+            {
+                builder.AppendFormat("{0} ", role.Name);
+            }
+
+            shell.WriteLine(builder.ToString());
         }
     }
 }

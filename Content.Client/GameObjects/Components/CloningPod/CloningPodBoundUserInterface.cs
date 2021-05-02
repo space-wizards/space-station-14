@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             base.Open();
 
 
-            _window = new CloningPodWindow(new Dictionary<int, string>());
+            _window = new CloningPodWindow(new Dictionary<int, string?>());
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ =>
             {

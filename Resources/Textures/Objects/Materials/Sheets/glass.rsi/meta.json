@@ -8,102 +8,102 @@
   },
   "states": [
     {
-        "name": "glass"
+      "name": "glass"
     },
     {
-        "name": "glass_2"
+      "name": "glass_2"
     },
     {
-        "name": "glass_3"
+      "name": "glass_3"
     },
     {
-        "name": "glass-inhand-left",
-        "directions": 4
+      "name": "glass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "pglass"
+      "name": "pglass"
     },
     {
-        "name": "pglass_2"
+      "name": "pglass_2"
     },
     {
-        "name": "pglass_3"
+      "name": "pglass_3"
     },
     {
-        "name": "pglass-inhand-left",
-        "directions": 4
+      "name": "pglass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "pglass-inhand-right",
-        "directions": 4
+      "name": "pglass-inhand-right",
+      "directions": 4
     },
     {
-        "name": "plastitaniumglass"
+      "name": "plastitaniumglass"
     },
     {
-        "name": "plastitaniumglass_2"
+      "name": "plastitaniumglass_2"
     },
     {
-        "name": "plastitaniumglass_3"
+      "name": "plastitaniumglass_3"
     },
     {
-        "name": "plastitaniumglass-inhand-left",
-        "directions": 4
+      "name": "plastitaniumglass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "plastitaniumglass-inhand-right",
-        "directions": 4
+      "name": "plastitaniumglass-inhand-right",
+      "directions": 4
     },
     {
-        "name": "rpglass"
+      "name": "rpglass"
     },
     {
-        "name": "rpglass_2"
+      "name": "rpglass_2"
     },
     {
-        "name": "rpglass_3"
+      "name": "rpglass_3"
     },
     {
-        "name": "rpglass-inhand-left",
-        "directions": 4
+      "name": "rpglass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "rpglass-inhand-right",
-        "directions": 4
+      "name": "rpglass-inhand-right",
+      "directions": 4
     },
     {
-        "name": "rglass"
+      "name": "rglass"
     },
     {
-        "name": "rglass_2"
+      "name": "rglass_2"
     },
     {
-        "name": "rglass_3"
+      "name": "rglass_3"
     },
     {
-        "name": "rglass-inhand-left",
-        "directions": 4
+      "name": "rglass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "rglass-inhand-right",
-        "directions": 4
+      "name": "rglass-inhand-right",
+      "directions": 4
     },
     {
-        "name": "titaniumglass"
+      "name": "titaniumglass"
     },
     {
-        "name": "titaniumglass_2"
+      "name": "titaniumglass_2"
     },
     {
-        "name": "titaniumglass_3"
+      "name": "titaniumglass_3"
     },
     {
-        "name": "titaniumglass-inhand-left",
-        "directions": 4
+      "name": "titaniumglass-inhand-left",
+      "directions": 4
     },
     {
-        "name": "titaniumglass-inhand-right",
-        "directions": 4
+      "name": "titaniumglass-inhand-right",
+      "directions": 4
     }
   ]
 }

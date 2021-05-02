@@ -9,8 +9,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -59,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Headset
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!container.Owner.TryGetComponent(out IActorComponent actor))
+                if (!container.Owner.TryGetComponent(out IActorComponent? actor))
                     return;
 
                 var playerChannel = actor.playerSession.ConnectedClient;
@@ -68,7 +66,8 @@ namespace Content.Server.GameObjects.Components.Headset
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", channel), ("name", source.Name));
+                //Square brackets are added here to avoid issues with escaping
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"[{channel}]"), ("name", source.Name));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }

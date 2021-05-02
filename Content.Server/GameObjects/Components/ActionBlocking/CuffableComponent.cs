@@ -12,11 +12,13 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
@@ -228,15 +230,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (isOwner)
             {
                 if (cuff.StartBreakoutSound != null)
-                    audio.PlayFromEntity(cuff.StartBreakoutSound, Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound, Owner);
             }
             else
             {
                 if (cuff.StartUncuffSound != null)
-                    audio.PlayFromEntity(cuff.StartUncuffSound, Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound, Owner);
             }
-
-
+            
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
@@ -256,7 +257,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (result != DoAfterStatus.Cancelled)
             {
                 if (cuff.EndUncuffSound != null)
-                    audio.PlayFromEntity(cuff.EndUncuffSound, Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound, Owner);
 
                 Container.ForceRemove(cuffsToRemove);
                 cuffsToRemove.Transform.AttachToGridOrMap();

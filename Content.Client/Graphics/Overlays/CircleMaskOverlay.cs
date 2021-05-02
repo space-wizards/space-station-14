@@ -22,12 +22,14 @@ namespace Content.Client.Graphics.Overlays
             _shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             if (!CritOverlay.LocalPlayerHasState(_playerManager, false, true))
                 return;
-            handle.UseShader(_shader);
-            var worldHandle = (DrawingHandleWorld)handle;
+
+
+            var worldHandle = args.WorldHandle;
+            worldHandle.UseShader(_shader);
             var viewport = _eyeManager.GetWorldViewport();
             worldHandle.DrawRect(viewport, Color.White);
         }

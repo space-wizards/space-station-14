@@ -10,6 +10,24 @@
     tags:
     - Teleportable
     - FootstepSound
+  - type: Reactive
+    reactions:
+    - !type:ExtinguishReaction
+      touch: true
+      reagents:
+      - Water
+    - !type:FlammableReaction
+      touch: true
+      reagents:
+      - WeldingFuel
+      - Thermite
+      - Plasma
+      - Ethanol
+    - !type:WashCreamPieReaction
+      touch: true
+      reagents:
+      - Water
+      - SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -117,16 +135,17 @@
     - map: [ "enum.Slots.HEAD" ]
   - type: Physics
     bodyType: KinematicController
-    mass: 70
-    fixtures:
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
-          radius: 0.35
+        radius: 0.35
+      mass: 70
       restitution: 0.0
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
@@ -144,7 +163,6 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Metabolism
@@ -300,11 +318,12 @@
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
-      mass: 85
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable
@@ -316,7 +335,6 @@
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
-      centerSlot: torso
     - type: Damageable
       damageContainer: biologicalDamageContainer
     - type: MobState

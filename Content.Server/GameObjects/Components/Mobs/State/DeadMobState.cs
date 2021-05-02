@@ -14,24 +14,24 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }
 
-            if (entity.TryGetComponent(out ServerAlertsComponent status))
+            if (entity.TryGetComponent(out ServerAlertsComponent? status))
             {
                 status.ShowAlert(AlertType.HumanDead);
             }
 
-            if (entity.TryGetComponent(out StunnableComponent stun))
+            if (entity.TryGetComponent(out StunnableComponent? stun))
             {
                 stun.CancelAll();
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out IPhysBody physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             base.ExitState(entity);
 
-            if (entity.TryGetComponent(out IPhysBody physics))
+            if (entity.TryGetComponent(out IPhysBody? physics))
             {
                 physics.CanCollide = true;
             }

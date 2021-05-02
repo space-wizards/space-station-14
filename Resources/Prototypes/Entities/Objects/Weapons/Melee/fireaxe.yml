@@ -8,7 +8,7 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 30
+    damage: 25
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/fireaxe.rsi

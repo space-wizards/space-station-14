@@ -8,12 +8,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 25
       mask:
       - Impassable
       - VaultImpassable
@@ -22,7 +22,6 @@
       - Opaque
       - MobImpassable
   - type: SnapGrid
-    offset: Center
   - type: Lathe
   - type: MaterialStorage
   - type: Anchorable
@@ -76,20 +75,13 @@
     recipes:
       - Brutepack
       - Ointment
-      - LightTube
-      - LightBulb
-      - SheetSteel
-      - GlassStack
       - Wirecutter
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
       - Crowbar
       - Multitool
       - MiniHoe
-      - Scythe
-      - Hatchet
       - Shovel
       - Spade
   - type: Appearance

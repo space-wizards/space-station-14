@@ -15,3 +15,32 @@
       - MouseMob_Content
       - MouseMob1_Content
       - MouseMob2_Content
+
+- type: entity
+  name: Cat Spawner
+  id: SpawnMobCat
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - CatMob_Content
+      - CatCalicoMob_Content
+      - CatCaracalMob_Content
+
+- type: entity
+  name: Corgi Spawner
+  id: SpawnMobCorgi
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - CorgiMob_Content
+      - IanMob_Content

@@ -83,7 +83,7 @@ namespace Content.Server.Sandbox
             }
         }
 
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.Connected || e.OldStatus != SessionStatus.Connecting)
             {
@@ -123,14 +123,14 @@ namespace Content.Server.Sandbox
                 .EnumeratePrototypes<AccessLevelPrototype>()
                 .Select(p => p.ID).ToArray();
 
-            if (player.AttachedEntity.TryGetComponent(out InventoryComponent inv)
-                && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent wornItem))
+            if (player.AttachedEntity.TryGetComponent(out InventoryComponent? inv)
+                && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent? wornItem))
             {
                 if (wornItem.Owner.HasComponent<AccessComponent>())
                 {
                     UpgradeId(wornItem.Owner);
                 }
-                else if (wornItem.Owner.TryGetComponent(out PDAComponent pda))
+                else if (wornItem.Owner.TryGetComponent(out PDAComponent? pda))
                 {
                     if (pda.ContainedID == null)
                     {
@@ -156,7 +156,7 @@ namespace Content.Server.Sandbox
                 var access = id.GetComponent<AccessComponent>();
                 access.SetTags(allAccess);
 
-                if (id.TryGetComponent(out SpriteComponent sprite))
+                if (id.TryGetComponent(out SpriteComponent? sprite))
                 {
                     sprite.LayerSetState(0, "gold");
                 }

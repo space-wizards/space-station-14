@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -10,6 +10,8 @@ using Robust.Shared.Serialization;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -165,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (!string.IsNullOrWhiteSpace(_pickupSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _pickupSound, Owner);
             }
 
             return true;

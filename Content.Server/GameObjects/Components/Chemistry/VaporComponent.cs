@@ -9,8 +9,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _target = target;
             _aliveTime = aliveTime;
             // Set Move
-            if (Owner.TryGetComponent(out PhysicsComponent physics))
+            if (Owner.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(dir * speed);
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
                 return;
 
             if (!_running)
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {
                 return false;
             }
@@ -115,15 +115,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
                 return;
 
-            contents.Solution.DoEntityReaction(otherBody.Entity, ReactionMethod.Touch);
+            contents.Solution.DoEntityReaction(otherFixture.Body.Owner, ReactionMethod.Touch);
 
             // Check for collision with a impassable object (e.g. wall) and stop
-            if ((otherBody.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && otherBody.Hard)
+            if ((otherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && otherFixture.Hard)
             {
                 Owner.Delete();
             }

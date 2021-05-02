@@ -182,7 +182,7 @@ namespace Content.Server.Preferences
                 {
                     PrefsLoaded = Task.CompletedTask,
                     Prefs = new PlayerPreferences(
-                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Default())},
+                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Random())},
                         0, Color.Transparent)
                 };
 
@@ -249,7 +249,7 @@ namespace Content.Server.Preferences
             var prefs = await _db.GetPlayerPreferencesAsync(userId);
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Default());
+                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random());
             }
 
             return SanitizePreferences(prefs);

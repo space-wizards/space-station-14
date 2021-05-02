@@ -59,6 +59,8 @@ namespace Content.Client.Arcade
             Title = Loc.GetString("Nanotrasen Block Game");
             _owner = owner;
 
+            MinSize = SetSize = (410, 490);
+
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 

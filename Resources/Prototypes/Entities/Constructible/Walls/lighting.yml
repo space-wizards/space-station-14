@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WallLight
   name: unpowered light
   description: "An unpowered light."
@@ -9,6 +9,7 @@
     graph: lightFixture
     node: tubeLight
   - type: Physics
+    canCollide: false
     fixtures:
     - shape:
         !type:PhysShapeAabb

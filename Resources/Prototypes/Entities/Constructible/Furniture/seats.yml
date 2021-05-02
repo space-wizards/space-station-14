@@ -9,7 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    bodyType: Static
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -22,7 +22,6 @@
     sprite: Constructible/Misc/furniture.rsi
   - type: Strap
     position: Stand
-  - type: Anchorable
   - type: Pullable
   - type: Damageable
     resistances: metallicResistances
@@ -34,17 +33,21 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
 
 - type: entity
   name: chair
   id: Chair
   parent: SeatBase
   components:
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: chair
     color: "#8e9799"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -53,6 +56,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chair
 
 - type: entity
   name: stool
@@ -60,10 +66,12 @@
   parent: SeatBase
   description: Apply butt.
   components:
+  - type: Anchorable
   - type: Sprite
     state: stool_base
     color: "#8e9799"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -72,16 +80,20 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: stool
 
 - type: entity
   name: bar stool
   id: StoolBar
   parent: SeatBase
   components:
+  - type: Anchorable
   - type: Sprite
     state: bar_stool
-    color: "white"
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -90,6 +102,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: stoolBar
 
 - type: entity
   name: white office chair
@@ -109,6 +124,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairOffice
 
 - type: entity
   name: dark office chair
@@ -117,6 +135,9 @@
   components:
   - type: Sprite
     state: officechair_dark
+  - type: Construction
+    graph: seat
+    node: chairOfficeDark
 
 - type: entity
   name: comfy chair
@@ -124,9 +145,11 @@
   parent: SeatBase
   description: It looks comfy.
   components:
+  - type: Anchorable
   - type: Sprite
     state: comfychair_preview
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -135,6 +158,9 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairComfy
 
 - type: entity
   name: wooden chair
@@ -153,3 +179,21 @@
       - Impassable
       - VaultImpassable
       - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairWood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1

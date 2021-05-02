@@ -2,11 +2,13 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 #nullable enable
@@ -159,7 +161,7 @@ namespace Content.Server.StationEvents
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
                 atmos?.HotspotExpose(700f, 50f, true);
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/sparks4.ogg", _targetCoords);
+                SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
             }
         }
 

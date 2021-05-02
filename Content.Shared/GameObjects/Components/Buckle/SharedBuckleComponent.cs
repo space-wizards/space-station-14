@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -43,7 +43,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            if (collidedwith.Entity.Uid == LastEntityBuckledTo)
+            if (collidedwith.Owner.Uid == LastEntityBuckledTo)
             {
                 IsOnStrapEntityThisFrame = true;
                 return Buckled || DontCollide;

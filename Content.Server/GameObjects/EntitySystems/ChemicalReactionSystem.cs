@@ -1,8 +1,9 @@
 #nullable enable
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.EntitySystems.NewFolder
 {
@@ -13,7 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.NewFolder
             base.OnReaction(reaction, owner, unitReactions);
 
             if (reaction.Sound != null)
-                Get<AudioSystem>().PlayAtCoords(reaction.Sound, owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(owner), reaction.Sound, owner.Transform.Coordinates);
         }
     }
 }

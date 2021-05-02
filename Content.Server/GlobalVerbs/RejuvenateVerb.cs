@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.Components.Damage;
@@ -26,6 +26,7 @@ namespace Content.Server.GlobalVerbs
             data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
+            data.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
@@ -56,37 +57,37 @@ namespace Content.Server.GlobalVerbs
 
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out IDamageableComponent damage))
+            if (target.TryGetComponent(out IDamageableComponent? damage))
             {
                 damage.Heal();
             }
 
-            if (target.TryGetComponent(out IMobStateComponent mobState))
+            if (target.TryGetComponent(out IMobStateComponent? mobState))
             {
                 mobState.UpdateState(0);
             }
 
-            if (target.TryGetComponent(out HungerComponent hunger))
+            if (target.TryGetComponent(out HungerComponent? hunger))
             {
                 hunger.ResetFood();
             }
 
-            if (target.TryGetComponent(out ThirstComponent thirst))
+            if (target.TryGetComponent(out ThirstComponent? thirst))
             {
                 thirst.ResetThirst();
             }
 
-            if (target.TryGetComponent(out StunnableComponent stun))
+            if (target.TryGetComponent(out StunnableComponent? stun))
             {
                 stun.ResetStuns();
             }
 
-            if (target.TryGetComponent(out FlammableComponent flammable))
+            if (target.TryGetComponent(out FlammableComponent? flammable))
             {
                 flammable.Extinguish();
             }
 
-            if (target.TryGetComponent(out CreamPiedComponent creamPied))
+            if (target.TryGetComponent(out CreamPiedComponent? creamPied))
             {
                 creamPied.Wash();
             }

@@ -35,7 +35,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/4no_raisins.rsi
@@ -51,7 +51,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/aesirsalad.rsi
@@ -66,7 +66,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/amanita_pie.rsi
@@ -83,7 +83,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/amanitajelly.rsi
@@ -113,7 +113,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_cake_slice.rsi
@@ -128,7 +128,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_pie.rsi
@@ -157,7 +157,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/badrecipe.rsi
@@ -172,7 +172,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/baguette.rsi
@@ -189,7 +189,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/breadslice.rsi
@@ -206,7 +206,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/bananabreadslice.rsi
@@ -224,10 +224,14 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pie.rsi
+  - type: Ammo
+    caliber: CreamPie
+    caseless: true
+    projectile: BulletCreampie
 
 
 #- type: entity
@@ -254,7 +258,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/beetsoup.rsi
@@ -271,7 +275,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/berryclafoutis.rsi
@@ -288,7 +292,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/birthday_cake_slice.rsi
@@ -305,7 +309,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/spaghettiboiled.rsi
@@ -322,7 +326,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/brain_cake_slice.rsi
@@ -339,7 +343,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/candy.rsi
@@ -355,7 +359,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/candy_corn.rsi
@@ -372,7 +376,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotcake_slice.rsi
@@ -389,7 +393,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotfries.rsi
@@ -406,7 +410,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/chawanmushi.rsi
@@ -421,7 +425,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/cheeseburger.rsi
@@ -439,7 +443,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesecake_slice.rsi
@@ -454,7 +458,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesewedge.rsi
@@ -471,7 +475,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesie_honkers.rsi
@@ -488,7 +492,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesyfries.rsi
@@ -503,7 +507,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cherrypie.rsi
@@ -520,7 +524,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/chips.rsi
@@ -538,7 +542,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatebar.rsi
@@ -555,7 +559,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatecake_slice.rsi
@@ -570,7 +574,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolateegg.rsi
@@ -585,7 +589,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/clownburger.rsi
@@ -601,7 +605,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/clownstears.rsi
@@ -632,7 +636,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/coldchili.rsi
@@ -661,7 +665,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/cookie!!!.rsi
@@ -676,7 +680,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/cracker.rsi
@@ -693,7 +697,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/creamcheesebreadslice.rsi
@@ -710,7 +714,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/cubancarp.rsi
@@ -739,7 +743,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/donkpocket.rsi
@@ -754,7 +758,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/donut1.rsi
@@ -770,7 +774,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/donut2.rsi
@@ -786,7 +790,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-blue.rsi
@@ -802,7 +806,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-green.rsi
@@ -818,7 +822,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-mime.rsi
@@ -834,7 +838,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-orange.rsi
@@ -850,7 +854,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-purple.rsi
@@ -866,7 +870,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-rainbow.rsi
@@ -882,7 +886,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-red.rsi
@@ -898,7 +902,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-yellow.rsi
@@ -914,7 +918,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
@@ -934,7 +938,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/eggplantparm.rsi
@@ -965,7 +969,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/enchiladas.rsi
@@ -1008,7 +1012,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fishandchips.rsi
@@ -1023,7 +1027,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/fishburger.rsi
@@ -1053,7 +1057,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fishfingers.rsi
@@ -1082,7 +1086,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fortune_cookie.rsi
@@ -1097,7 +1101,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/friedegg.rsi
@@ -1114,7 +1118,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/fries.rsi
@@ -1131,7 +1135,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/gappletart.rsi
@@ -1148,7 +1152,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/toastedsandwich.rsi
@@ -1163,7 +1167,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
@@ -1181,7 +1185,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/herbsalad.rsi
@@ -1212,7 +1216,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/hotchili.rsi
@@ -1227,7 +1231,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hotdog.rsi
@@ -1256,7 +1260,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/hugemushroomslice.rsi
@@ -1273,7 +1277,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
@@ -1288,7 +1292,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/jdonut1.rsi
@@ -1303,7 +1307,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/jdonut2.rsi
@@ -1318,7 +1322,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/jellyburger.rsi
@@ -1336,7 +1340,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/jellysandwich.rsi
@@ -1353,7 +1357,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/jellytoast.rsi
@@ -1371,7 +1375,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
@@ -1416,7 +1420,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/lemoncake_slice.rsi
@@ -1433,7 +1437,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/limecake_slice.rsi
@@ -1448,7 +1452,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/liquidfood.rsi
@@ -1463,7 +1467,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/loadedbakedpotato.rsi
@@ -1478,7 +1482,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
@@ -1493,7 +1497,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/meatball.rsi
@@ -1511,7 +1515,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/meatballsoup.rsi
@@ -1528,7 +1532,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/meatballspaghetti.rsi
@@ -1545,7 +1549,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/meatbreadslice.rsi
@@ -1562,7 +1566,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpie.rsi
@@ -1577,7 +1581,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpizzaslice.rsi
@@ -1594,7 +1598,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/meatsteak.rsi
@@ -1611,7 +1615,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/milosoup.rsi
@@ -1626,7 +1630,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/mimeburger.rsi
@@ -1641,7 +1645,7 @@
   - type: SolutionContainer
     contents:
       reagents: # TODO: mint toxin
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/mint.rsi
@@ -1670,7 +1674,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
@@ -1688,7 +1692,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeysdelight.rsi
@@ -1731,7 +1735,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroompizzaslice.rsi
@@ -1748,7 +1752,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroomsoup.rsi
@@ -1766,7 +1770,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Food/mysterysoup.rsi
@@ -1783,7 +1787,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/nettlesoup.rsi
@@ -1814,7 +1818,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/omelette.rsi
@@ -1831,7 +1835,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/orangecake_slice.rsi
@@ -1848,7 +1852,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/pastatomato.rsi
@@ -1877,7 +1881,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/phelmbiscuit.rsi
@@ -1892,7 +1896,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pizzamargheritaslice.rsi
@@ -1909,7 +1913,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/plaincake_slice.rsi
@@ -1924,7 +1928,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/plump_pie.rsi
@@ -1941,7 +1945,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/popcorn.rsi
@@ -1956,7 +1960,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/poppypretzel.rsi
@@ -1973,7 +1977,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/pumpkinpieslice.rsi
@@ -2003,7 +2007,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/roburger.rsi
@@ -2020,7 +2024,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/rofflewaffles.rsi
@@ -2065,7 +2069,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/rpudding.rsi
@@ -2082,7 +2086,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/sandwich.rsi
@@ -2125,7 +2129,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/sausage.rsi
@@ -2168,7 +2172,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/sosjerky.rsi
@@ -2186,7 +2190,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soydope.rsi
@@ -2203,7 +2207,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soylent_green.rsi
@@ -2221,7 +2225,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soylent_yellow.rsi
@@ -2250,7 +2254,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/space_twinkie.rsi
@@ -2267,7 +2271,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/spacylibertyduff.rsi
@@ -2282,7 +2286,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/spaghetti.rsi
@@ -2297,7 +2301,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/spellburger.rsi
@@ -2313,7 +2317,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/spesslaw.rsi
@@ -2328,7 +2332,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
@@ -2345,7 +2349,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/stewedsoymeat.rsi
@@ -2360,7 +2364,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/stuffing.rsi
@@ -2403,7 +2407,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/superbiteburger.rsi
@@ -2420,7 +2424,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/syndi_cakes.rsi
@@ -2435,7 +2439,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
@@ -2452,7 +2456,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tastybread.rsi
@@ -2469,7 +2473,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/toastedsandwich.rsi
@@ -2484,7 +2488,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/tofu.rsi
@@ -2501,7 +2505,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tofubreadslice.rsi
@@ -2516,7 +2520,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tofuburger.rsi
@@ -2534,7 +2538,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
@@ -2549,7 +2553,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 24
   - type: Sprite
     sprite: Objects/Consumable/Food/tofurkey.rsi
@@ -2564,7 +2568,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/tomatomeat.rsi
@@ -2581,7 +2585,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/tomatosoup.rsi
@@ -2596,7 +2600,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/twobread.rsi
@@ -2613,7 +2617,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/validsalad.rsi
@@ -2628,7 +2632,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablepizzaslice.rsi
@@ -2645,7 +2649,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablesoup.rsi
@@ -2662,7 +2666,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/waffles.rsi
@@ -2677,7 +2681,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/watermelonslice.rsi
@@ -2694,7 +2698,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/wingfangchu.rsi
@@ -2711,7 +2715,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/wishsoup.rsi
@@ -2726,7 +2730,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/xburger.rsi
@@ -2744,7 +2748,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenobreadslice.rsi
@@ -2759,7 +2763,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeat.rsi
@@ -2776,7 +2780,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeatpie.rsi
@@ -2793,7 +2797,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Bleach
+      - ReagentId: Bleach
         Quantity: 15
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
@@ -2811,7 +2815,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/milkape.rsi
@@ -2827,7 +2831,7 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 9999999999
     - type: Sprite
       sprite: Objects/Consumable/Food/memoryleek.rsi
@@ -2846,7 +2850,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_cake.rsi
@@ -2864,7 +2868,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/bananabread.rsi
@@ -2882,7 +2886,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/birthdaycake.rsi
@@ -2900,7 +2904,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/braincake.rsi
@@ -2918,7 +2922,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/bread.rsi
@@ -2936,7 +2940,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotcake.rsi
@@ -2954,7 +2958,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesecake.rsi
@@ -2972,7 +2976,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_cake.rsi
@@ -2990,7 +2994,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatecake.rsi
@@ -3008,7 +3012,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/creamcheesebread.rsi
@@ -3026,7 +3030,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/lemoncake.rsi
@@ -3044,7 +3048,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/limecake.rsi
@@ -3062,7 +3066,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/meatbread.rsi
@@ -3081,7 +3085,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 48
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpizza.rsi
@@ -3100,7 +3104,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 48
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroompizza.rsi
@@ -3118,7 +3122,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/orangecake.rsi
@@ -3137,7 +3141,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 48
   - type: Sprite
     sprite: Objects/Consumable/Food/pizzamargherita.rsi
@@ -3155,7 +3159,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/plaincake.rsi
@@ -3173,7 +3177,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/pumpkinpie.rsi
@@ -3194,7 +3198,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/tofubread.rsi
@@ -3213,7 +3217,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 48
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablepizza.rsi
@@ -3231,7 +3235,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Nutriment
+      - ReagentId: Nutriment
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeatbread.rsi

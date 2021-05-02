@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Verbs
     public static class VerbCategories
     {
         public static readonly VerbCategoryData Debug =
-            ("Debug", "/Textures/Interface/VerbIcons/debug.svg.96dpi.png");
+            ("Debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
 
         public static readonly VerbCategoryData Rotate = ("Rotate", null);
         public static readonly VerbCategoryData Construction = ("Construction", null);

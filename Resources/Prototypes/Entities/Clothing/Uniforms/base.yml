@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingUniformBase
-  abstract: true
   components:
   - type: Sprite
     state: icon
@@ -9,9 +9,9 @@
     Slots: [innerclothing]
 
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingUniformSkirtBase
-  abstract: true
   components:
   - type: Sprite
     state: icon

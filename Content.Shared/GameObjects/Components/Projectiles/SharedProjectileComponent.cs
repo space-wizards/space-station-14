@@ -41,7 +41,7 @@ namespace Content.Shared.GameObjects.Components.Projectiles
 
         public bool PreventCollide(IPhysBody collidedwith)
         {
-            return IgnoreShooter && collidedwith.Entity.Uid == Shooter;
+            return IgnoreShooter && collidedwith.Owner.Uid == Shooter;
         }
     }
 }

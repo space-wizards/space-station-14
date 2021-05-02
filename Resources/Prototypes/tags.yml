@@ -5,6 +5,9 @@
   id: ConveyorAssembly
 
 - type: Tag
+  id: DoorElectronics
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -45,3 +48,6 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: EmitterBolt

@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class MachineFrameComplete : IEdgeCondition
+    public class MachineFrameComplete : IGraphCondition
     {
         public async Task<bool> Condition(IEntity entity)
         {

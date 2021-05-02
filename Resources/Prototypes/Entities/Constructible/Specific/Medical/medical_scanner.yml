@@ -18,18 +18,16 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 25
       layer:
       - Impassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: Anchorable
-    snap: true
   - type: Pullable
   - type: MedicalScanner
   - type: Damageable

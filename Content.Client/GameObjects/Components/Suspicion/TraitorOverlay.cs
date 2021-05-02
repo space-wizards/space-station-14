@@ -35,17 +35,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
-        {
-            switch (currentSpace)
-            {
-                case OverlaySpace.ScreenSpace:
-                    DrawScreen((DrawingHandleScreen) handle);
-                    break;
-            }
-        }
-
-        private void DrawScreen(DrawingHandleScreen screen)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             var viewport = _eyeManager.GetWorldViewport();
 
@@ -75,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 }
 
                 // all entities have a TransformComponent
-                var transform = physics.Entity.Transform;
+                var transform = physics.Owner.Transform;
 
                 // if not on the same map, continue
                 if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)
@@ -91,8 +81,8 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var screenCoordinates = _eyeManager.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
-                DrawString(screen, _font, screenCoordinates, _traitorText, Color.OrangeRed);
+                var screenCoordinates = args.ViewportControl!.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
+                DrawString(args.ScreenHandle, _font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }
 
@@ -100,9 +90,9 @@ namespace Content.Client.GameObjects.Components.Suspicion
         {
             var baseLine = new Vector2(pos.X, font.GetAscent(1) + pos.Y);
 
-            foreach (var chr in str)
+            foreach (var rune in str.EnumerateRunes())
             {
-                var advance = font.DrawChar(handle, chr, baseLine, 1, color);
+                var advance = font.DrawChar(handle, rune, baseLine, 1, color);
                 baseLine += new Vector2(advance, 0);
             }
         }
