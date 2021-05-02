@@ -9,7 +9,7 @@
 - type: stack
   id: PizzaBox
   name: pizza box
-  icon: Objects/Consumable/Food/pizza.rsi/box.png
+  icon: Objects/Consumable/Food/Baked/pizza.rsi/box.png
   spawn: FoodPizzaBox
 
 # Smokeables
