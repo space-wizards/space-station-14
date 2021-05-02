@@ -19,15 +19,15 @@
   solids:
     ClothingMaskClown: 1
 
-- type: microwaveMealRecipe
-  id: RecipeTofuBurger
-  name: tofu burger recipe
-  result: FoodBurgerTofu
-  time: 5
-  reagents:
-    Flour: 15
-  solids:
-    FoodTofu: 1
+# - type: microwaveMealRecipe
+#   id: RecipeTofuBurger
+#   name: tofu burger recipe
+#   result: FoodBurgerTofu
+#   time: 5
+#   reagents:
+#     Flour: 15
+#   solids:
+#     FoodTofu: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
