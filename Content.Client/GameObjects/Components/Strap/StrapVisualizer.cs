@@ -4,9 +4,8 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Strap;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Strap
 {
@@ -26,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Strap
         /// [state] becomes [state][suffix],
         /// default suffix is _buckled, so chair becomes chair_buckled
         /// </summary>
-        [DataField("buckledSuffix", required: false)]
+        [ViewVariables][DataField("buckledSuffix", required: false)]
         private string? _buckledSuffix = "_buckled";
 
         // This array keeps the original layers' states of the sprite

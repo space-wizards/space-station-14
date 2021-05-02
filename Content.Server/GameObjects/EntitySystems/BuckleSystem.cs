@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var strapPosition = strap.Owner.Transform.Coordinates.Offset(buckle.BuckleOffset);
 
-            if (ev.NewPosition.InRange(EntityManager, strapPosition, 0.2f))
+            if (ev.NewPosition.InRange(EntityManager, strapPosition, strap.MaxBuckleDistance))
             {
                 return;
             }

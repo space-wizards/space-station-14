@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Buckle;
@@ -12,6 +13,7 @@ using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -38,6 +40,26 @@ namespace Content.Server.GameObjects.Components.Strap
         /// </summary>
         [ViewVariables] [DataField("size")] private int _size = 100;
         private int _occupiedSize;
+
+        /// <summary>
+        /// The buckled entity will be offset by this amount from the center of the strap object.
+        /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
+        /// </summary>
+        [DataField("offsetX", required: false)]
+        private float _strapOffsetX = 0;
+
+        [DataField("offsetY", required: false)]
+        private float _strapOffsetY = 0;
+
+        [DataField("buckleOffset", required: false)]
+        private Vector2 _buckleOffset = Vector2.Zero;
+
+        /// <summary>
+        /// The distance above which a buckled entity will be automatically unbuckled.
+        /// Don't change it unless you really have to
+        /// </summary>
+        [DataField("maxBuckleDistance", required: false)]
+        public float MaxBuckleDistance = 0.2f;
 
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
@@ -72,10 +94,24 @@ namespace Content.Server.GameObjects.Components.Strap
         public AlertType BuckledAlertType { get; } = AlertType.Buckled;
 
         /// <summary>
+        /// You can specify the offset the entity will have after unbuckling.
+        /// </summary>
+        [DataField("unbuckleOffset", required: false)]
+        public Vector2 UnbuckleOffset = Vector2.Zero;
+
+        /// <summary>
         /// The sum of the sizes of all the buckled entities in this strap
         /// </summary>
         [ViewVariables]
         public int OccupiedSize => _occupiedSize;
+
+        /// <summary>
+        /// Gets and clamps the strap offset to MaxBuckleDistance
+        /// </summary>
+        public Vector2 BuckleOffset => Vector2.Clamp(
+            _buckleOffset,
+            Vector2.One * -MaxBuckleDistance,
+            Vector2.One * MaxBuckleDistance);
 
         /// <summary>
         ///     Checks if this strap has enough space for a new occupant.
