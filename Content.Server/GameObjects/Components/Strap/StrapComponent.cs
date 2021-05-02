@@ -112,6 +112,13 @@ namespace Content.Server.GameObjects.Components.Strap
 
             buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
+            // Update the visuals of the strap object
+            if (this.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            {
+                appearance.SetData(StrapVisuals.BuckledState, true);
+            }
+
+            // This should be changed for an Entity Message
             SendMessage(new StrapMessage(buckle.Owner, Owner));
 
             return true;
@@ -127,6 +134,14 @@ namespace Content.Server.GameObjects.Components.Strap
             if (_buckledEntities.Remove(buckle.Owner))
             {
                 _occupiedSize -= buckle.Size;
+
+                // Update the visuals of the strap object
+                if (this.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+                {
+                    appearance.SetData(StrapVisuals.BuckledState, false);
+                }
+
+                // This should be changed for an Entity Message
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));
             }
         }

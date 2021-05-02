@@ -60,9 +60,11 @@ namespace Content.Shared.GameObjects.Components.Strap
     [Serializable, NetSerializable]
     public enum StrapVisuals
     {
-        RotationAngle
+        RotationAngle,
+        BuckledState
     }
 
+    // TODO : Convert this to an Entity Message. Careful, it will Break ShuttleControllerComponent (only place where it's used)
     [Serializable, NetSerializable]
     public abstract class StrapChangeMessage : ComponentMessage
     {
