@@ -1,5 +1,7 @@
-﻿using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+﻿using System;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components
 {
@@ -11,5 +13,11 @@ namespace Content.Shared.GameObjects.Components
     public abstract class SharedFoldableComponent : Component
     {
         public override string Name => "Foldable";
+    }
+
+    [Serializable, NetSerializable]
+    public enum FoldableVisuals
+    {
+        FoldedState
     }
 }

@@ -50,12 +50,12 @@
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
-    - type: Foldable
     - type: Item
       size: 5
     - type: Sprite
       sprite: Constructible/Misc/furniture.rsi
       state: rollerbed
+      netsync: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg
@@ -94,9 +94,11 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.3"
+    - type: Foldable
     - type: Appearance
       visuals:
         - type: StrapVisualizer
+        - type: FoldableVisualizer
 
 - type: entity
   id: CheapRollerBed

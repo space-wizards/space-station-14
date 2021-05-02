@@ -54,6 +54,22 @@ namespace Content.Server.GameObjects.Components.Strap
         [DataField("buckleOffset", required: false)]
         private Vector2 _buckleOffset = Vector2.Zero;
 
+        private bool _enabled = true;
+
+        /// <summary>
+        /// If disabled, nothing can be buckled on this object, and it will unbuckle anything that's already buckled
+        /// </summary>
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                if (_enabled) return;
+                RemoveAll();
+            }
+        }
+
         /// <summary>
         /// The distance above which a buckled entity will be automatically unbuckled.
         /// Don't change it unless you really have to
@@ -134,6 +150,8 @@ namespace Content.Server.GameObjects.Components.Strap
         /// <returns>True if added, false otherwise</returns>
         public bool TryAdd(BuckleComponent buckle, bool force = false)
         {
+            if (!Enabled) return false;
+
             if (!force && !HasSpace(buckle))
             {
                 return false;
