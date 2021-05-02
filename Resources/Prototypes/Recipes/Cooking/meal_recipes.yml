@@ -37,7 +37,7 @@
   reagents:
     Flour: 5
   solids:
-    FoodXenomeat: 1
+    FoodMeatXeno: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeSuperBiteBurger
