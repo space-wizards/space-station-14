@@ -221,6 +221,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
+            // TODO: update once ComponentReference works with directed event bus.
             if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
                 return;
 
@@ -230,7 +231,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             var dir = puller.Transform.WorldPosition - pulled.Transform.WorldPosition;
             if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
             {
-                var oldAngle = pulled.Transform.LocalRotation;
+                var oldAngle = pulled.Transform.WorldRotation;
                 var newAngle = Angle.FromWorldVec(dir);
 
                 var diff = newAngle - oldAngle;
