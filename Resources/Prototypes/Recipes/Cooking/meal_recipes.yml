@@ -108,7 +108,7 @@
   reagents:
     Flour: 15
   solids:
-    FoodCheeseWedge: 2
+    FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeBananaBread
