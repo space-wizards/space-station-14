@@ -50,7 +50,7 @@
 #    chem.Pepper: 5
 #  solids:
 #    FoodMeat: 5
-#    FoodCheeseWedge: 3
+#    FoodCheeseSlice: 3
 #    FoodTomato: 4
 #    FoodEgg: 2
 
@@ -71,7 +71,7 @@
 #   solids:
 #     FoodBreadSlice: 2
 #     FoodMeatSteak: 1
-#     FoodCheeseWedge: 1
+#     FoodCheeseSlice: 1
 
 # - type: microwaveMealRecipe
 #   id: RecipeToastedSandwich
@@ -88,7 +88,7 @@
 #   time: 5
 #   solids:
 #     FoodBreadSlice: 2
-#     FoodCheeseWedge: 1
+#     FoodCheeseSlice: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeBaguette
@@ -153,7 +153,7 @@
     Flour: 10
   solids:
     FoodMeat: 3
-    FoodCheeseWedge: 1
+    FoodCheeseSlice: 1
     FoodTomato: 1
 
 - type: microwaveMealRecipe
@@ -246,7 +246,7 @@
 #    chem.Flour: 10 #This should be 10 units of rice.
 #    chem.Wine: 5
 #  solids:
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeBruschetta
@@ -258,7 +258,7 @@
 #    chem.Salt: 2
 #  solids:
 #    FoodGarlic: 1
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 #    FoodTomato: 1
 
 #- type: microwaveMealRecipe
@@ -270,7 +270,7 @@
 #    FoodBlueTomato: 1
 #    FoodGarlic: 1
 #    FoodEgg: 1
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeLasagna
@@ -283,7 +283,7 @@
 #    FoodFlatDough: 2
 #    FoodMeat: 2
 #    FoodEggplant: 1
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 
 #Soups & Stew
 - type: microwaveMealRecipe
