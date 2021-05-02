@@ -63,6 +63,7 @@ namespace Content.Server.GameObjects.Components
                 }
 
                 data.Text = component.IsFolded ? Loc.GetString("Unfold") : Loc.GetString("Fold");
+                data.IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, FoldableComponent component)
