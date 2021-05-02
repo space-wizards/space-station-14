@@ -1,27 +1,25 @@
 ﻿{
-    "version": 1,
-    "license": "CC BY-SA 3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation at commit 9bebd81ae0b0a7f952b59886a765c681205de31f",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC BY-SA 3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at commit 9bebd81ae0b0a7f952b59886a765c681205de31f",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "fire_extinguisher_open",
     },
-    "states": [
-        {
-            "name": "fire_extinguisher_open",
-
-        },
-        {
-            "name": "fire_extinguisher_closed",
-
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-        }
-    ]
+    {
+      "name": "fire_extinguisher_closed",
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    }
+  ]
 }

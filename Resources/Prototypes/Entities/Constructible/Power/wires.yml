@@ -14,7 +14,6 @@
         - Underplating
   - type: InteractionOutline
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     drawdepth: BelowFloor
   - type: IconSmooth
@@ -166,7 +165,6 @@
     mode: SnapgridCenter
   components:
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     drawdepth: BelowFloor
   - type: IconSmooth
