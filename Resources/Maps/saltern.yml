@@ -428,14 +428,14 @@ entities:
     parent: 853
     type: Transform
 - uid: 44
-  type: FoodBananaCreamPie
+  type: FoodPieBananaCream
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.509874,-9.279623
     parent: 853
     type: Transform
 - uid: 45
-  type: FoodBananaCreamPie
+  type: FoodPieBananaCream
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -18.947374,-9.467123
@@ -672,7 +672,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 75
-  type: FoodDonkPocket
+  type: FoodDonkpocket
   components:
   - pos: 33.274685,-1.5622956
     parent: 853
@@ -699,7 +699,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 79
-  type: FoodDonkPocket
+  type: FoodDonkpocket
   components:
   - pos: 33.66531,-1.3435456
     parent: 853
@@ -942,7 +942,7 @@ entities:
   - caps: Refillable, Drainable
     type: SolutionContainer
 - uid: 114
-  type: BoxDonkpocket
+  type: FoodBoxDonkpocket
   components:
   - pos: -7.4998503,-29.362736
     parent: 853
@@ -1041,7 +1041,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 127
-  type: BoxDonkpocket
+  type: FoodBoxDonkpocket
   components:
   - pos: 33.477264,-2.2359364
     parent: 853
@@ -42315,7 +42315,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 4254
-  type: BoxDonkpocket
+  type: FoodBoxDonkpocket
   components:
   - pos: -5.4874,13.702112
     parent: 853

@@ -1,1 +1,169 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi", "states": [{"name": "icon"}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alpha"
+    },
+    {
+      "name": "bacon"
+    },
+    {
+      "name": "bacon2"
+    },
+    {
+      "name": "bacon-cooked"
+    },
+    {
+      "name": "bacon2-cooked"
+    },
+    {
+      "name": "bear"
+    },
+    {
+      "name": "bird"
+    },
+    {
+      "name": "bird-cooked"
+    },
+    {
+      "name": "clump"
+    },
+    {
+      "name": "chicken-fried"
+    },
+    {
+      "name": "chicken2-fried"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "crab"
+    },
+    {
+      "name": "crab-cooked"
+    },
+    {
+      "name": "crab-rangoon"
+    },
+    {
+      "name": "cutlet"
+    },
+    {
+      "name": "cutlet-alpha"
+    },
+    {
+      "name": "cutlet-cooked"
+    },
+    {
+      "name": "meatball"
+    },
+    {
+      "name": "meatball-cooked"
+    },
+    {
+      "name": "meatball-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "meatball-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "fish"
+    },
+    {
+      "name": "golem"
+    },
+    {
+      "name": "goliath"
+    },
+    {
+      "name": "goliath-cooked"
+    },
+    {
+      "name": "lizard"
+    },
+    {
+      "name": "lizard-cooked"
+    },
+    {
+      "name": "lizard-tail"
+    },
+    {
+      "name": "plate-meat"
+    },
+    {
+      "name": "plain"
+    },
+    {
+      "name": "plain-cooked"
+    },
+    {
+      "name": "plant"
+    },
+    {
+      "name": "product"
+    },
+    {
+      "name": "product-cooked"
+    },
+    {
+      "name": "rotten",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "salami"
+    },
+    {
+      "name": "salami-slice"
+    },
+    {
+      "name": "sausage"
+    },
+    {
+      "name": "spider"
+    },
+    {
+      "name": "spiderleg"
+    },
+    {
+      "name": "spiderleg-cooked"
+    },
+    {
+      "name": "tomato"
+    },
+    {
+      "name": "xeno"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
   name: cheeseburger recipe
-  result: FoodCheeseburger
+  result: FoodBurgerCheese
   time: 5
   reagents:
     Flour: 5
@@ -12,32 +12,32 @@
 - type: microwaveMealRecipe
   id: RecipeClownBurger
   name: clownburger recipe
-  result: FoodClownBurger
+  result: FoodBurgerClown
   time: 5
   reagents:
     Flour: 5
   solids:
     ClothingMaskClown: 1
 
-- type: microwaveMealRecipe
-  id: RecipeTofuBurger
-  name: tofu burger recipe
-  result: FoodTofuBurger
-  time: 5
-  reagents:
-    Flour: 15
-  solids:
-    FoodTofu: 1
+# - type: microwaveMealRecipe
+#   id: RecipeTofuBurger
+#   name: tofu burger recipe
+#   result: FoodBurgerTofu
+#   time: 5
+#   reagents:
+#     Flour: 15
+#   solids:
+#     FoodTofu: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
   name: xenoburger recipe
-  result: FoodXenoburger
+  result: FoodBurgerXeno
   time: 5
   reagents:
     Flour: 5
   solids:
-    FoodXenomeat: 1
+    FoodMeatXeno: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeSuperBiteBurger
@@ -50,7 +50,7 @@
 #    chem.Pepper: 5
 #  solids:
 #    FoodMeat: 5
-#    FoodCheeseWedge: 3
+#    FoodCheeseSlice: 3
 #    FoodTomato: 4
 #    FoodEgg: 2
 
@@ -58,37 +58,37 @@
 - type: microwaveMealRecipe
   id: RecipeBread
   name: bread recipe
-  result: FoodBread
+  result: FoodBreadPlain
   time: 15
   reagents:
     Flour: 15
 
-- type: microwaveMealRecipe
-  id: RecipeSandwich
-  name: sandwich recipe
-  result: FoodSandwich
-  time: 10
-  solids:
-    FoodBreadSlice: 2
-    FoodMeatSteak: 1
-    FoodCheeseWedge: 1
+# - type: microwaveMealRecipe
+#   id: RecipeSandwich
+#   name: sandwich recipe
+#   result: FoodSandwich
+#   time: 10
+#   solids:
+#     FoodBreadSlice: 2
+#     FoodMeatSteak: 1
+#     FoodCheeseSlice: 1
 
-- type: microwaveMealRecipe
-  id: RecipeToastedSandwich
-  name: toasted sandwich recipe
-  result: FoodToastedSandwich
-  time: 5
-  solids:
-    FoodSandwich: 1
+# - type: microwaveMealRecipe
+#   id: RecipeToastedSandwich
+#   name: toasted sandwich recipe
+#   result: FoodToastedSandwich
+#   time: 5
+#   solids:
+#     FoodSandwich: 1
 
-- type: microwaveMealRecipe
-  id: RecipeGrilledCheese
-  name: grilled cheese recipe
-  result: FoodGrilledCheese
-  time: 5
-  solids:
-    FoodBreadSlice: 2
-    FoodCheeseWedge: 1
+# - type: microwaveMealRecipe
+#   id: RecipeGrilledCheese
+#   name: grilled cheese recipe
+#   result: FoodGrilledCheese
+#   time: 5
+#   solids:
+#     FoodBreadSlice: 2
+#     FoodCheeseSlice: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeBaguette
@@ -103,17 +103,17 @@
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
   name: cream cheese bread recipe
-  result: FoodCreamCheeseBread
+  result: FoodBreadCreamcheese
   time: 20
   reagents:
     Flour: 15
   solids:
-    FoodCheeseWedge: 2
+    FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeBananaBread
   name: banana bread recipe
-  result: FoodBananaBread
+  result: FoodBreadBanana
   time: 25
   reagents:
     Flour: 15
@@ -126,18 +126,18 @@
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: margherita pizza recipe
-  result: FoodMargheritaPizza
+  result: FoodPizzaMargherita
   time: 30
   reagents:
     Flour: 10
   solids:
-    FoodCheeseWedge: 4
+    FoodCheeseSlice: 4
     FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
   name: mushroom pizza recipe
-  result: FoodMushroomPizza
+  result: FoodPizzaMushroom
   time: 25
   reagents:
     Flour: 10
@@ -147,19 +147,19 @@
 - type: microwaveMealRecipe
   id: RecipeMeatPizza
   name: meat pizza recipe
-  result: FoodMeatPizza
+  result: FoodPizzaMeat
   time: 30
   reagents:
     Flour: 10
   solids:
     FoodMeat: 3
-    FoodCheeseWedge: 1
+    FoodCheeseSlice: 1
     FoodTomato: 1
 
 - type: microwaveMealRecipe
   id: RecipeVegetablePizza
   name: vegetable pizza recipe
-  result: FoodVegetablePizza
+  result: FoodPizzaVegetable
   time: 30
   reagents:
     Flour: 10
@@ -170,45 +170,45 @@
     FoodTomato: 1
 
 #Italian
-- type: microwaveMealRecipe
-  id: RecipeSpaghetti
-  name:  spaghetti recipe
-  result: FoodSpaghetti
-  time: 1
-  reagents:
-    Flour: 5
+# - type: microwaveMealRecipe
+#   id: RecipeSpaghetti
+#   name:  spaghetti recipe
+#   result: FoodSpaghetti
+#   time: 1
+#   reagents:
+#     Flour: 5
 
-- type: microwaveMealRecipe
-  id: RecipeBoiledSpaghetti
-  name: boiled spaghetti recipe
-  result: FoodSpaghettiBoiled
-  time: 5
-  reagents:
-    Water: 5
-  solids:
-    FoodSpaghetti: 1
+# - type: microwaveMealRecipe
+#   id: RecipeBoiledSpaghetti
+#   name: boiled spaghetti recipe
+#   result: FoodSpaghettiBoiled
+#   time: 5
+#   reagents:
+#     Water: 5
+#   solids:
+#     FoodSpaghetti: 1
 
 - type: microwaveMealRecipe
   id: RecipePastaTomato
   name: pasta tomato recipe
-  result: FoodPastaTomato
+  result: FoodNoodles
   time: 10
   reagents:
     Water: 5
   solids:
-    FoodSpaghetti: 1
+    FoodNoodlesBoiled: 1
     FoodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeMeatballSpaghetti
   name: spaghetti & meatballs recipe
-  result: FoodMeatballSpaghetti
+  result: FoodNoodlesMeatball
   time: 10
   reagents:
     Water: 5
   solids:
-    FoodSpaghetti: 1
-    FoodMeatball: 2
+    FoodNoodlesBoiled: 1
+    FoodMeatMeatball: 2
 
 #- type: microwaveMealRecipe
 #  id: RecipeCrabSpaghetti
@@ -246,7 +246,7 @@
 #    chem.Flour: 10 #This should be 10 units of rice.
 #    chem.Wine: 5
 #  solids:
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeBruschetta
@@ -258,7 +258,7 @@
 #    chem.Salt: 2
 #  solids:
 #    FoodGarlic: 1
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 #    FoodTomato: 1
 
 #- type: microwaveMealRecipe
@@ -270,7 +270,7 @@
 #    FoodBlueTomato: 1
 #    FoodGarlic: 1
 #    FoodEgg: 1
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 
 #- type: microwaveMealRecipe
 #  id: RecipeLasagna
@@ -283,18 +283,18 @@
 #    FoodFlatDough: 2
 #    FoodMeat: 2
 #    FoodEggplant: 1
-#    FoodCheeseWedge: 1
+#    FoodCheeseSlice: 1
 
 #Soups & Stew
 - type: microwaveMealRecipe
   id: RecipeMeatballSoup
   name: meatball soup recipe
-  result: FoodMeatballSoup
+  result: FoodSoupMeatball
   time: 10
   reagents:
     Water: 10
   solids:
-    FoodMeatball: 1
+    FoodMeatMeatball: 1
     FoodCarrot: 1
     FoodPotato: 1
 
@@ -330,25 +330,16 @@
   reagents:
     Cola: 5
   solids:
-    FoodMiloSoup: 1
+    FoodSoupMiso: 1
 
 - type: microwaveMealRecipe
   id: RecipeLoadedBakedPotato
   name: loaded baked potato recipe
-  result: FoodLoadedBakedPotato
+  result: FoodMealPotatoLoaded
   time: 10
   solids:
     FoodPotato: 1
-    FoodCheeseWedge: 1
-
-- type: microwaveMealRecipe
-  id: RecipeCandyCorn
-  name: candy corn recipe
-  result: FoodCandyCorn
-  time: 5
-  solids:
-      FoodCorn: 1
-      Sugarcane: 1
+    FoodCheeseSlice: 1
 
 #  Reagent version (Reagents are broken)
 #- type: microwaveMealRecipe
@@ -364,7 +355,7 @@
 - type: microwaveMealRecipe
   id: RecipePopcorn
   name: popcorn recipe
-  result: FoodPopcorn
+  result: FoodSnackPopcorn
   time: 5
   solids:
     FoodCorn: 1
@@ -372,7 +363,7 @@
 - type: microwaveMealRecipe
   id: RecipeBananaCreamPie
   name: banana cream pie
-  result: FoodBananaCreamPie
+  result: FoodPieBananaCream
   time: 15
   reagents:
     Flour: 10

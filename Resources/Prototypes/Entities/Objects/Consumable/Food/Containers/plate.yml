@@ -1,0 +1,164 @@
+# Plate
+# In the future, I (Swept) want a system for putting stuff on plates and it'll provide more nutrition
+# If it's on that plate. I've modified all load/slices to fit on the plate, so all we need
+# is that system. Ideally, food on plates would have a system where when thrown, it would
+# break the plate and the loaf would fall off.
+
+# Bread Plate
+
+- type: entity
+  name: plate
+  parent: BaseItem
+  id: FoodPlate
+  description: A large plate, excellent for bread.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate
+    netsync: false
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodPlateTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken plate
+  parent: BaseItem
+  id: FoodPlateTrash
+  description: A large plate, broken and useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-trash
+    netsync: false
+
+# Small Plate
+
+- type: entity
+  name: plate
+  parent: Plate
+  id: FoodPlateSmall
+  description: A small plate. Delicate.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small
+# Needs the full thing because inherting is dumb sometimes.
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PlateSmallTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken plate
+  parent: BaseItem
+  id: FoodPlateSmallTrash
+  description: A broken plate. Useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-trash
+    netsync: false
+
+# A second small plate for different purposes.
+
+- type: entity
+  name: plate
+  parent: Plate
+  id: FoodPlateSmall2
+  description: A small plate, excellent for a tart.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-tart
+# Needs the full thing because inherting is dumb sometimes.
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PlateSmall2Trash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken plate
+  parent: BaseItem
+  id: FoodPlateSmall2Trash
+  description: A broken plate. Useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-trash
+    netsync: false
+
+# Plastic Plate
+
+- type: entity
+  name: plastic plate
+  parent: BaseItem
+  id: FoodPlatePlastic
+  description: A large blue plastic plate, excellent for a birthday cake.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-plastic
+    netsync: false
+
+- type: entity
+  name: plastic plate
+  parent: BaseItem
+  id: FoodPlateSmallPlastic
+  description: A blue plastic plate, excellent for slices of birthday cake.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-plastic
+    netsync: false
+
+# Pie Tin
+
+- type: entity
+  name: pie tin
+  parent: BaseItem
+  id: FoodPlateTin
+  description: A cheap, foil tin for pies.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+    netsync: false

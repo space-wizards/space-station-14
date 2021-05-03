@@ -1,5 +1,5 @@
 - type: entity
-  parent: FoodBase
+  parent: BaseItem
   id: MonkeyCube
   name: monkey cube
   description: Just add water!
@@ -12,7 +12,8 @@
     maxVol: 11 # needs room for water
     caps: Refillable
   - type: Sprite
-    sprite: Objects/Consumable/Food/monkeycube.rsi
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction

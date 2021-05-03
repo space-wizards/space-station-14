@@ -1,0 +1,28 @@
+- type: entity
+  name: banana peel
+  parent: TrashBase
+  id: TrashBananaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+  - type: Slippery
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      name: "slips"
+      hard: false
+      layer:
+        - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      mask:
+        - SmallImpassable

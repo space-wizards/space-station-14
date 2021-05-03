@@ -1,0 +1,241 @@
+# Base
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: FoodTinBase
+  name: tin
+  description: A tin of something, sealed tight.
+  components:
+  - type: SolutionContainer
+    maxVol: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    netsync: false
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    HeldPrefix: packet
+    color: gray
+  - type: DamageOnLand
+    amount: 3
+  - type: DamageOtherOnHit
+    amount: 3
+  - type: Damageable
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: FoodTinBaseTrash
+  name: empty tin
+  description: An empty tin. Could get a bit of metal from this.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    netsync: false
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    HeldPrefix: packet
+    color: gray
+
+# Tins
+
+# Need something that you can open these tins with. I suggest a prying or cutting tool.
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinPeaches
+  name: tinned peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
+  components:
+  - type: Sprite
+    state: peachtin
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 6
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: canOpenSounds
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodTinPeachesOpen:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinPeachesOpen
+  name: tinned peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
+  components:
+  - type: Sprite
+    state: peachtin-open
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+  - type: LoopingSound
+  - type: Food
+    trash: FoodTinPeachesTrash
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinPeachesTrash
+  name: tinned peaches
+  components:
+  - type: Sprite
+    state: peachtin-empty
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinPeachesMaint
+  name: Maintenance Peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
+  components:
+  - type: Sprite
+    state: peachtinmaint
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 6
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: canOpenSounds
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodTinPeachesMaintOpen:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinPeachesMaintOpen
+  name: Maintenance Peaches
+  description: Just a nice can of ripe peaches swimming in their own juices.
+  components:
+  - type: Sprite
+    state: peachtinmaint-open
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+  - type: LoopingSound
+  - type: Food
+    trash: FoodTinPeachesMaintTrash
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinPeachesMaintTrash
+  name: Maintenance Peaches
+  components:
+  - type: Sprite
+    state: peachtinmaint-empty
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinBeans
+  name: tin of beans
+  description: Musical fruit in a slightly less musical container.
+  components:
+  - type: Sprite
+    state: beans
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 6
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: canOpenSounds
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodTinBeansOpen:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinBeansOpen
+  name: tin of beans
+  description: Musical fruit in a slightly less musical container.
+  components:
+  - type: Sprite
+    state: beans-open
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+  - type: LoopingSound
+  - type: Food
+    trash: FoodTinBeansTrash
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinBeansTrash
+  name: tin of beans
+  components:
+  - type: Sprite
+    state: beans-empty
+
+# MRE can
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinMRE
+  name: tinned meat
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/mre.rsi
+    state: tin-closed
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 6
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: canOpenSounds
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodTinMREOpen:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinMREOpen
+  name: tinned meat
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/mre.rsi
+    state: tin-open
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+  - type: LoopingSound
+  - type: Food
+    trash: FoodTinMRETrash
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinMRETrash
+  name: tinned meat
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/mre.rsi
+    state: tin-trash

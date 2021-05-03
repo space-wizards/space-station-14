@@ -1,0 +1,210 @@
+- type: reagent
+  id: Absinthe
+  name: absinthe
+  desc: One sip of this and you just know you're gonna have a good time.
+  spritePath: absintheglass.rsi
+  color: "#33EE00"
+  physicalDesc: strong-smelling
+
+- type: reagent
+  id: Whiskey
+  name: whiskey
+  desc: An alcoholic beverage made from fermented grain mash
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: whiskeyglass.rsi
+
+- type: reagent
+  id: Ale
+  name: ale
+  desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
+  physicalDesc: bubbly
+  color: "#663100"
+  spritePath: aleglass.rsi
+
+- type: reagent
+  id: Wine
+  name: wine
+  desc: An alcoholic drink made from fermented grapes
+  physicalDesc: translucent
+  color: "#7E4043"
+  spritePath: wineglass.rsi
+
+- type: reagent
+  id: Beer
+  name: beer
+  desc: A cold pint of pale lager.
+  physicalDesc: bubbly
+  color: "#cfa85f"
+  spritePath: beerglass.rsi
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.25
+    - !type:AdjustWater
+      amount: 0.7
+
+- type: reagent
+  id: Vodka
+  name: vodka
+  desc: The glass contain wodka. Хуета.
+  physicalDesc: strong-smelling
+  color: "#d1d1d155"
+  spritePath: ginvodkaglass.rsi
+
+- type: reagent
+  id: Gin
+  name: gin
+  desc: A crystal clear glass of Griffeater gin.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: ginvodkaglass.rsi
+
+- type: reagent
+  id: Rum
+  name: rum
+  desc: Popular with the sailors. Not very popular with anyone else.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: rumglass.rsi
+
+- type: reagent
+  id: Moonshine
+  name: moonshine
+  desc: Artisanal homemade liquor. What could go wrong?
+  physicalDesc: strong-smelling
+  color: "#d1d7d155"
+
+- type: reagent
+  id: Tequila
+  name: tequila
+  desc: This stuff will get you fucked up.
+  physicalDesc: strong-smelling
+  color: "#d7d1d155"
+
+- type: reagent
+  id: Kahlua
+  name: kahlua
+  desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
+  physicalDesc: cloudy
+  color: "#664300"
+  spritePath: kahluaglass.rsi
+
+- type: reagent
+  id: Cognac
+  name: cognac
+  desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
+  physicalDesc: strong-smelling
+  color: "#AB3C05"
+  spritePath: cognacglass.rsi
+
+- type: reagent
+  id: ManlyDorf
+  name: manly dorf
+  desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
+  physicalDesc: bubbly
+  color: "#664300"
+  spritePath: manlydorfglass.rsi
+
+- type: reagent
+  id: CubaLibre
+  name: cuba libre
+  desc: A classic mix of rum and cola.
+  physicalDesc: bubbly
+  color: "#3E1B00"
+  spritePath: cubalibreglass.rsi
+
+- type: reagent
+  id: IrishCarBomb
+  name: irish car bomb
+  desc: A troubling mixture of irish cream and ale.
+  physicalDesc: bubbly
+  color: "#2E6671"
+  spritePath: irishcarbomb.rsi
+
+- type: reagent
+  id: IrishCoffee
+  name: irish coffee
+  desc: Coffee served with irish cream. Regular cream just isn't the same!
+  physicalDesc: cloudy
+  color: "#664300"
+  spritePath: irishcoffeeglass.rsi
+
+- type: reagent
+  id: IrishCream
+  name: irish cream
+  desc: Whiskey-imbued cream. What else could you expect from the Irish.
+  physicalDesc: creamy
+  color: "#664300"
+  spritePath: irishcreamglass.rsi
+
+- type: reagent
+  id: B52
+  name: b-52
+  desc: Coffee, irish cream, and cognac. You will get bombed.
+  physicalDesc: bubbly
+  color: "#664300"
+  spritePath: b52glass.rsi
+
+- type: reagent
+  id: AtomicBomb
+  name: atomic bomb
+  desc: Nuclear proliferation never tasted so good.
+  physicalDesc: cloudy
+  color: "#666300"
+  spritePath: atomicbombglass.rsi
+
+- type: reagent
+  id: WhiskeyCola
+  name: whiskey cola
+  desc: An innocent-looking mixture of cola and whiskey. Delicious.
+  physicalDesc: bubbly
+  color: "#3E1B00"
+  spritePath: whiskeycolaglass.rsi
+
+- type: reagent
+  id: SyndicateBomb
+  name: syndicate bomb
+  desc: Somebody set us up the bomb!
+  physicalDesc: opaque
+  color: "#2E6660"
+  spritePath: syndicatebomb.rsi
+
+- type: reagent
+  id: Antifreeze
+  name: antifreeze
+  desc: The ultimate refreshment.
+  physicalDesc: translucent
+  color: "#ff7d63"
+  spritePath: antifreeze.rsi
+
+- type: reagent
+  id: CreamyDelight
+  name: creamy delight
+  desc: A combination of cream, wine and moonshine. Why would you do this?
+  physicalDesc: foul
+  color: "#a6969a"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: Lean
+  name: lean
+  desc: Turn up for days.
+  physicalDesc: bubbly
+  color: "#9400D3"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: LeanShine
+  name: leanshine
+  desc: Lean mixed with moonshine. Turn up for months.
+  physicalDesc: bubbly
+  color: "#9d5fb8"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+  
