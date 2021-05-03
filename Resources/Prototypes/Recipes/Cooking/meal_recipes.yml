@@ -191,7 +191,7 @@
 - type: microwaveMealRecipe
   id: RecipePastaTomato
   name: pasta tomato recipe
-  result: FoodPastaTomato
+  result: FoodNoodlesTomato
   time: 10
   reagents:
     Water: 5
