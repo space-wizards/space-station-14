@@ -59,7 +59,7 @@ namespace Content.Client.UserInterface
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
-                                    .OpenContextMenu(item, new ScreenCoordinates(_uiMgr.ScreenToUIPosition(args.PointerLocation)));
+                                    .OpenContextMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {

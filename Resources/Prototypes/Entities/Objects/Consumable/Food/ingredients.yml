@@ -1,0 +1,351 @@
+# Lots of misc stuff in here, hard to parent it.
+
+# Reagent Containers
+
+- type: entity
+  parent: BaseItem
+  id: ReagentContainerBase
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/ingredients.rsi
+  - type: SolutionContainer
+    maxVol: 50
+  - type: SolutionTransfer
+    transferAmount: 5
+  - type: Drink
+    openSounds: packetOpenSounds
+    useSound: eating
+  - type: Spillable
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerFlour
+  name: flour bag
+  description: A big bag of flour. Good for baking!
+  components:
+  - type: Sprite
+    state: flour-big
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Flour
+        Quantity: 50
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerFlourSmall
+  name: flour pack
+  description: A pack of flour. Good for baking!
+  components:
+  - type: Sprite
+    state: flour-small
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Flour
+        Quantity: 20
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerRice
+  name: rice bag
+  description: A big bag of rice. Good for cooking!
+  components:
+  - type: Sprite
+    state: rice-big
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 50
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerRiceSmall
+  name: rice pack
+  description: A pack of rice. Good for cooking!
+  components:
+  - type: Sprite
+    state: rice-small
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Rice
+        Quantity: 20
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerSugar
+  name: sugar bag
+  description: A big bag of tasty spacey sugar.
+  components:
+  - type: Sprite
+    state: sugar-big
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 50
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerSugarSmall
+  name: sugar pack
+  description: A pack of tasty spacey sugar.
+  components:
+  - type: Sprite
+    state: sugar-small
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 20
+
+# Milk
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerMilk
+  name: milk
+  description: It's milk. White and nutritious goodness!
+  components:
+  - type: Sprite
+    state: milk
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 20
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerMilkSoy
+  name: soy milk
+  description: It's soy milk. White and nutritious goodness!
+  components:
+  - type: Sprite
+    state: milk-soy
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: MilkSoy
+        Quantity: 20
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerMilkOat
+  name: oat milk
+  description: It's oat milk. Tan and nutritious goodness!
+  components:
+  - type: Sprite
+    state: milk-oat
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: MilkOat
+        Quantity: 20
+
+# Misc
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerOliveoil
+  name: olive oil
+  description: Olive oil. From space olives presumably.
+  components:
+  - type: Sprite
+    state: oliveoil
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: OilOlive
+        Quantity: 20
+
+# - type: entity
+#   parent: ReagentContainerBase
+#   id: ReagentContainerMayo
+#   name: mayonnaise
+#   description:
+#   components:
+#   - type: Sprite
+#     state: mayo
+#   - type: SolutionContainer
+#     maxVol: 10
+#     contents:
+#       reagents:
+#       - ReagentId: Mayo
+#         Quantity: 10
+
+# - type: entity
+#   parent: ReagentContainerBase
+#   id: ReagentContainerAllspice
+#   name: all-spice
+#   description:
+#   components:
+#   - type: Sprite
+#     state: spice
+#   - type: SolutionContainer
+#     maxVol: 10
+#     contents:
+#       reagents:
+#       - ReagentId: Allspice
+#         Quantity: 10
+
+# Baking
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: FoodBakingBase
+  description: Used in various recipes.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    netsync: false
+  - type: Food
+  - type: SolutionContainer
+    maxVol: 15
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+
+- type: entity
+  name: dough
+  parent: FoodBakingBase
+  id: FoodDough
+  description: A piece of dough.
+  components:
+  - type: Sprite
+    state: dough
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughSlice
+
+- type: entity
+  name: dough slice
+  parent: FoodBakingBase
+  id: FoodDoughSlice
+  description: A slice of dough. Can be cooked into a bun.
+  components:
+  - type: Sprite
+    state: dough-slice
+
+- type: entity
+  name: bun
+  parent: FoodBakingBase
+  id: FoodDoughBun
+  description: A base for any self-respecting burger.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    state: bun
+
+- type: entity
+  name: raw pastry base
+  parent: FoodBakingBase
+  id: FoodDoughPastryBaseRaw
+  description: Must be cooked before use.
+  components:
+  - type: Sprite
+    state: dough-pastry
+
+- type: entity
+  name: pastry base
+  parent: FoodBakingBase
+  id: FoodDoughPastryBase
+  description: A base for any self-respecting pastry.
+  components:
+  - type: Sprite
+    state: dough-pastry-baked
+
+- type: entity
+  name: pie dough
+  parent: FoodBakingBase
+  id: FoodDoughPie
+  description: Cook it to get a pie.
+  components:
+  - type: Sprite
+    state: dough-pie
+
+- type: entity
+  name: flat dough
+  parent: FoodBakingBase
+  id: FoodDoughFlat
+  description: A flattened dough.
+  components:
+  - type: Sprite
+    state: dough-flat
+
+- type: entity
+  name: pizza bread
+  parent: FoodBakingBase
+  id: FoodDoughPizzaBaked
+  description: Add ingredients to make a pizza.
+  components:
+  - type: Sprite
+    state: pizzabread
+
+- type: entity
+  name: cake batter
+  parent: FoodBakingBase
+  id: FoodCakeBatter
+  description: Cook it to get a cake.
+  components:
+  - type: Sprite
+    state: cakebatter
+
+- type: entity
+  name: stick of butter
+  parent: FoodBakingBase
+  id: FoodButter
+  description: A stick of delicious, golden, fatty goodness.
+  components:
+  - type: Sprite
+    state: butter
+
+- type: entity
+  name: cheese wheel
+  parent: FoodBakingBase
+  id: FoodCheese
+  description: A big wheel of delcious Cheddar.
+  components:
+  - type: Sprite
+    state: cheesewheel
+  - type: SliceableFood
+    count: 3
+    slice: FoodCheeseSlice
+
+- type: entity
+  name: cheese wedge
+  parent: FoodBakingBase
+  id: FoodCheeseSlice
+  description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
+  components:
+  - type: Sprite
+    state: cheesewedge
+
+- type: entity
+  name: burned mess
+  parent: FoodBakingBase
+  id: FoodBadRecipe
+  description: Someone should be demoted from cook for this.
+  components:
+  - type: Sprite
+    state: badrecipe
+  - type: SolutionContainer
+    maxVol: 5
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+      - ReagentId: chem.Toxin
+        Quantity: 3

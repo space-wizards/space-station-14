@@ -96,7 +96,7 @@
       currentSelector: Single
       allSelectors:
         - Single
-      fillPrototype: FoodBananaCreamPie
+      fillPrototype: FoodPieBananaCream
       fireRate: 5
       capacity: 5
       soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg

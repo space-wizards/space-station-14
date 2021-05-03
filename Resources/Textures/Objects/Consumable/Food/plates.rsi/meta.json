@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plate"
+    },
+    {
+      "name": "plate-trash"
+    },
+    {
+      "name": "plate-pizza"
+    },
+    {
+      "name": "plate-plastic"
+    },
+    {
+      "name": "plate-slice-shading"
+    },
+    {
+      "name": "plate-small"
+    },
+    {
+      "name": "plate-small-trash"
+    },
+    {
+      "name": "plate-tart"
+    },
+    {
+      "name": "plate-small-plastic"
+    },
+    {
+      "name": "tin"
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "tray-trash"
+    }
+  ]
+}
