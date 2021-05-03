@@ -8,13 +8,13 @@
     contents:
       - name: ClothingMaskBreath
         amount: 2
-      - name: FoodChocolateBar
+      - name: FoodSnackChocolate
       - name: FlashlightLantern
         amount: 2
       - name: HarmonicaInstrument
         prob: 0.15
         orGroup: HarmonicaOrChocolate
-      - name: FoodChocolateBar
+      - name: FoodSnackChocolate
         orGroup: HarmonicaOrChocolate
 
 - type: entity

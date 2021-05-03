@@ -72,7 +72,7 @@ namespace Content.Client.State
             var renderScale = 1;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp)
             {
-                var mousePosWorld = vp.ScreenToMap(InputManager.MouseScreenPosition);
+                var mousePosWorld = vp.ScreenToMap(InputManager.MouseScreenPosition.Position);
                 entityToClick = GetEntityUnderPosition(mousePosWorld);
 
                 if (vp is ScalingViewport svp)

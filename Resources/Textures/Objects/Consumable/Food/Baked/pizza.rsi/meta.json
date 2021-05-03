@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alpha-filling"
+    },
+    {
+      "name": "alpha-slice-filling"
+    },
+    {
+      "name": "arnold"
+    },
+    {
+      "name": "arnold-slice"
+    },
+    {
+      "name": "base-1"
+    },
+    {
+      "name": "base-2"
+    },
+    {
+      "name": "base-3"
+    },
+    {
+      "name": "base-4"
+    },
+    {
+      "name": "base-5"
+    },
+    {
+      "name": "base-6"
+    },
+    {
+      "name": "base-7"
+    },
+    {
+      "name": "base-8"
+    },
+    {
+      "name": "dank"
+    },
+    {
+      "name": "dank-slice"
+    },
+    {
+      "name": "donkpocket"
+    },
+    {
+      "name": "donkpocket-slice"
+    },
+    {
+      "name": "meat"
+    },
+    {
+      "name": "meat-slice"
+    },
+    {
+      "name": "moldy-slice"
+    },
+    {
+      "name": "mushroom"
+    },
+    {
+      "name": "mushroom-slice"
+    },
+    {
+      "name": "pineapple"
+    },
+    {
+      "name": "pineapple-slice"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "box1"
+    },
+    {
+      "name": "box2"
+    },
+    {
+      "name": "box3"
+    },
+    {
+      "name": "box4"
+    },
+    {
+      "name": "box-messy-overlay"
+    },
+    {
+      "name": "box-open"
+    },
+    {
+      "name": "box-bomb-overlay"
+    },
+    {
+      "name": "box-bomb-overlay-active"
+    },
+    {
+      "name": "box-tag-overlay"
+    },
+    {
+      "name": "plate-pizza"
+    },
+    {
+      "name": "plate-slice"
+    },
+    {
+      "name": "margherita"
+    },
+    {
+      "name": "margherita-slice"
+    },
+    {
+      "name": "sassysage"
+    },
+    {
+      "name": "sassysage-slice"
+    },
+    {
+      "name": "vegetable"
+    },
+    {
+      "name": "vegetable-slice"
+    }
+  ]
+}

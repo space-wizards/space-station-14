@@ -1,0 +1,291 @@
+# Base
+
+- type: Tag
+  id: Donut
+
+- type: entity
+  parent: BaseItem
+  id: FoodDonutBase
+  abstract: true
+  description: Goes great with robust coffee.
+  components:
+  - type: Food
+  - type: Tag
+    tags:
+      - Donut
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 5
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 3
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    size: 1
+# Tastes like donut.
+
+# The sprinkles are now an overlay, so you can put them on any donut! If we really
+# wanted to go for EXTREME roleplay we could apply a different color to the sprinkles
+# Since it's technically an alpha layer.
+
+# You'll be able to bake the plain donuts, then mix up different glazes for them to
+# apply with a brush or something.
+
+# Plain Donuts
+
+- type: entity
+  name: plain donut
+  parent: FoodDonutBase
+  id: FoodDonutPlain
+  components:
+  - type: Sprite
+    state: plain
+
+- type: entity
+  name: plain jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyPlain
+  components:
+  - type: Sprite
+    state: jelly-plain
+
+# Donuts
+
+- type: entity
+  name: donut
+  parent: FoodDonutBase
+  id: FoodDonutHomer
+  components:
+  - type: Sprite
+    state: homer
+  - type: Item
+    HeldPrefix: pink
+
+- type: entity
+  name: chaos donut
+  parent: FoodDonutBase
+  id: FoodDonutChaos
+  description: Like life, it never quite tastes the same.
+  components:
+  - type: Sprite
+    state: chaos
+# Tastes like donut, chaos.
+
+- type: entity
+  name: meat donut
+  parent: FoodDonutBase
+  id: FoodDonutMeat
+  description: Tastes as gross as it looks.
+  components:
+  - type: Sprite
+    state: meat
+# Tastes like meat.
+
+- type: entity
+  name: pink donut
+  parent: FoodDonutBase
+  id: FoodDonutPink
+  description: Goes great with a soy latte.
+  components:
+  - type: Sprite
+    state: pink
+  - type: Item
+    HeldPrefix: pink
+
+- type: entity
+  name: spaceman's donut
+  parent: FoodDonutBase
+  id: FoodDonutSpaceman
+  description: Goes great with a cold beaker of malk.
+  components:
+  - type: Sprite
+    state: purple
+# Tastes like donut, violets.
+
+- type: entity
+  name: apple donut
+  parent: FoodDonutBase
+  id: FoodDonutApple
+  description: Goes great with a shot of cinnamon schnapps.
+  components:
+  - type: Sprite
+    state: green
+# Tastes like donut, green apples.
+
+- type: entity
+  name: caramel donut
+  parent: FoodDonutBase
+  id: FoodDonutCaramel
+  description: Goes great with a mug of hot coco.
+  components:
+  - type: Sprite
+    state: beige
+# Tastes like donut, buttery sweetness.
+
+- type: entity
+  name: chocolate donut
+  parent: FoodDonutBase
+  id: FoodDonutChocolate
+  description: Goes great with a glass of warm milk.
+  components:
+  - type: Sprite
+    state: choc
+# Tastes like donut, bitterness.
+
+- type: entity
+  name: blumpkin donut
+  parent: FoodDonutBase
+  id: FoodDonutBlumpkin
+  description: Goes great with a mug of soothing drunken blumpkin.
+  components:
+  - type: Sprite
+    state: blue
+# Tastes like donut, blumpkin.
+
+- type: entity
+  name: bungo donut
+  parent: FoodDonutBase
+  id: FoodDonutBungo
+  description: Goes great with a mason jar of hippie's delight.
+  components:
+  - type: Sprite
+    state: yellow
+# Tastes like donut, tropical sweetness.
+
+- type: entity
+  name: matcha donut
+  parent: FoodDonutBase
+  id: FoodDonut
+  description: The L-theanine in this donut is relaxing, yet not euphoric. Goes great with a cup of tea.
+  components:
+  - type: Sprite
+    state: olive
+# Tastes like donut, matcha.
+
+- type: entity
+  name: sweet pea donut
+  parent: FoodDonutBase
+  id: FoodDonutSweetpea
+  description: Goes great with a bottle of Bastion Burbon!
+  components:
+  - type: Sprite
+    state: laugh
+# Tastes like donut, fizzy tutti frutti.
+
+# Jelly Donuts
+
+- type: entity
+  name: jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyHomer
+  description: You jelly?
+  components:
+  - type: Sprite
+    state: jelly-homer
+  - type: Item
+    HeldPrefix: pink
+
+- type: entity
+  name: pink jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyPink
+  description: Goes great with a soy latte.
+  components:
+  - type: Sprite
+    state: jelly-pink
+  - type: Item
+    HeldPrefix: pink
+
+- type: entity
+  name: spaceman's jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellySpaceman
+  description: Goes great with a cold beaker of malk.
+  components:
+  - type: Sprite
+    state: jelly-purple
+# Tastes like jelly-donut, violets.
+
+- type: entity
+  name: apple jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyApple
+  description: Goes great with a shot of cinnamon schnapps.
+  components:
+  - type: Sprite
+    state: jelly-green
+# Tastes like jelly-donut, green apples.
+
+- type: entity
+  name: caramel jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyCaramel
+  description: Goes great with a mug of hot coco.
+  components:
+  - type: Sprite
+    state: jelly-beige
+# Tastes like jelly-donut, buttery sweetness.
+
+- type: entity
+  name: chocolate jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyChocolate
+  description: Goes great with a glass of warm milk.
+  components:
+  - type: Sprite
+    state: jelly-choc
+# Tastes like jelly-donut, bitterness.
+
+- type: entity
+  name: blumpkin jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyBlumpkin
+  description: Goes great with a mug of soothing drunken blumpkin.
+  components:
+  - type: Sprite
+    state: jelly-blue
+# Tastes like jelly-donut, blumpkin.
+
+- type: entity
+  name: bungo jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellyBungo
+  description: Goes great with a mason jar of hippie's delight.
+  components:
+  - type: Sprite
+    state: jelly-yellow
+# Tastes like jelly-donut, tropical sweetness.
+
+- type: entity
+  name: matcha jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJelly
+  description: The L-theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
+  components:
+  - type: Sprite
+    state: jelly-olive
+# Tastes like jelly-donut, matcha.
+
+- type: entity
+  name: sweet pea jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellySweetpea
+  description: Goes great with a bottle of Bastion Burbon!
+  components:
+  - type: Sprite
+    state: jelly-laugh
+# Tastes like jelly-donut, fizzy tutti frutti.
+
+- type: entity
+  name: slugcat jelly-donut
+  parent: FoodDonutBase
+  id: FoodDonutJellySlugcat
+  description: No holes in this donut incase a suspicious looking pole shows up.
+  components:
+  - type: Sprite
+    state: jelly-slug
+# Tastes like jelly-donut, fizzy tutti frutti.

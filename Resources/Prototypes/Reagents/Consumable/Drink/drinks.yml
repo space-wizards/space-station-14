@@ -1,0 +1,64 @@
+- type: reagent
+  id: Coffee
+  name: coffee
+  desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
+  physicalDesc: aromatic
+  color: "#664300"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: Tea
+  name: tea
+  desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
+  physicalDesc: aromatic
+  color: "#8a5a3a"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: Cream
+  name: cream
+  desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
+  physicalDesc: creamy
+  color: "#DFD7AF"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: Milk
+  name: milk
+  desc: An opaque white liquid produced by the mammary glands of mammals.
+  physicalDesc: opaque
+  color: "#DFDFDF"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 0.9
+
+- type: reagent
+  id: SpoiledMilk
+  name: spoiled milk
+  desc: This milk has gone rancid.
+  physicalDesc: putrid
+  color: "#faffba"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: MilkOat
+  name: oat milk
+  desc: Surprisingly tasty.
+  physicalDesc: refreshing
+  color: "#302000"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1

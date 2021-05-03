@@ -6,26 +6,24 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Consumable/Trash/candy.rsi/icon.png
+        - texture: Objects/Consumable/Food/snacks.rsi/pistachio-trash.png
     - type: RandomSpawner
       rarePrototypes:
         - PuddleVomit
-        - TrashPlate
-        - TrashSnackBowl
+        - FoodPlateSmallTrash
+        - FoodBowlBigTrash
       rareChance: 0.03
       prototypes:
-        - TrashRaisins
-        - TrashCandy
-        - TrashCheesieHonkers
-        - TrashChips
-        - TrashLiquidFood
-        - TrashPistachiosPack
-        - TrashPlasticBag
-        - TrashPopcorn
-        - TrashSemkiPack
-        - TrashSOSJerky
-        - TrashSyndiCakes
-        - TrashTastyBread
+#        - TrashCandy
+        - FoodPacketCheesieTrash
+        - FoodPacketChipsTrash
+        - FoodPacketPistachioTrash
+#        - TrashPlasticBag
+        - FoodPacketPopcornTrash
+        - FoodPacketRaisinsTrash
+        - FoodPacketSemkiTrash
+        - FoodPacketSusTrash
+        - FoodPacketSyndiTrash
       chance: 0.5
       offset: 0.2
   placement:

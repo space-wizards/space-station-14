@@ -1,0 +1,359 @@
+# Donut
+
+# There is a newer, better version of the donutbox from tgstation included in the
+# donut.rsi. The reason it isn't implemented is it requires a StackVisualizer offsetting
+# the layer sprite by a couple pixels everytime a new donut is added. It also requires
+# an alpha color which -Y- said he would implement.
+
+- type: entity
+  parent: BaseItem
+  id: FoodBoxDonut
+  name: donutbox
+  description: Mmm, Donuts.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    state: box
+  - type: Storage
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    size: 6
+    HeldPrefix: box
+  - type: StorageFill
+    contents:
+      - name: FoodDonutPink
+        amount: 3
+      - name: FoodDonutPlain
+        amount: 3
+  - type: StorageCounter
+    countTag: Donut
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: box-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - box1
+          - pink-box2
+          - box3
+          - pink-box4
+          - box5
+          - pink-box6
+
+# Egg
+
+- type: entity
+  parent: BaseItem
+  id: FoodContainerEgg
+  name: eggbox
+  description: Don't drop 'em!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: box-closed
+  - type: Storage
+    capacity: 12
+  - type: Item
+    sprite: Objects/Consumable/Food/egg.rsi
+    size: 12
+  - type: StorageFill
+    contents:
+      - name: FoodEgg
+        amount: 12
+  - type: StorageCounter
+    countTag: Egg
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: box-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - box1
+          - box2
+          - box3
+          - box4
+          - box5
+          - box6
+          - box7
+          - box8
+          - box9
+          - box10
+          - box11
+          - box12
+  # Someday...
+  # - type: LoopingSound
+  # - type: DamageOnLand
+  #   amount: 5
+  # - type: DamageOtherOnHit
+  #   amount: 5
+  # - type: Damageable
+  # - type: Destructible
+  #   thresholds:
+  #   - trigger:
+  #       !type:DamageTrigger
+  #       damage: 10
+  #     behaviors:
+  #     - !type:PlaySoundCollectionBehavior
+  #       soundCollection: desecration
+  #     - !type:SpawnEntitiesBehavior
+  #       spawn:
+  #         EggBoxBroken:
+  #           min: 1
+  #           max: 1
+  #         PuddleEgg:
+  #           min: 1
+  #           max: 12
+  #     - !type:DoActsBehavior
+  #       acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodContainerEgg
+  id: EggBoxBroken
+  components:
+  - type: StorageFill
+    contents:
+      - name: Eggshells
+        amount: 12
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+
+# Pizza
+
+# This - is pretty hacky. It works, but you can't have stuff like messy pizza box
+# layers after a pizza has been in. Also pizza box stacking, but this is impossible
+# Since you could open pizza boxes in the stack.
+
+- type: entity
+  parent: BaseItem
+  id: FoodBoxPizza
+  name: pizza box
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    drawdepth: FloorObjects
+    layers:
+    - state: box
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
+  - type: EntityStorage
+    Capacity: 8
+    CanWeldShut: false
+  - type: PlaceableSurface
+    placeCentered: true
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    HeldPrefix: box
+  # - type: Stack
+  #   count: 1
+  #   max: 5
+  #   stackType: PizzaBox
+  - type: Appearance
+    visuals:
+      - type: StorageVisualizer
+        state_open: box-open
+        state_closed: box
+      # - type: StackVisualizer
+      #   stackLayers:
+      #     - box
+      #     - box1
+      #     - box2
+      #     - box3
+      #     - box4
+
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizza
+  id: FoodBoxPizzaFilled
+  suffix: Filled
+  components:
+  - type: Sprite
+    layers:
+    - state: box
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: StorageFill
+    contents:
+    - name: FoodPizzaArnold
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaDank
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaSassysage
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaMargherita
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaMeat
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaMushroom
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaPineapple
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaVegetable
+      prob: 0.15
+      orGroup: Pizza
+    - name: FoodPizzaDonkpocket
+      prob: 0.15
+      orGroup: Pizza
+
+# Nugget
+
+- type: entity
+  parent: BaseItem
+  id: FoodBoxNugget
+  name: chicken nuggets
+  description: You suddenly have an urge to trade on the intergalactic stock market.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/nuggets.rsi
+    state: box
+  - type: Storage
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/nuggets.rsi
+    size: 6
+    HeldPrefix: box
+  - type: StorageFill
+    contents:
+      - name: FoodBakedNugget
+        amount: 6
+  - type: StorageCounter
+    countTag: Nugget
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: box-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - box1
+          - box2
+          - box3
+          - box4
+          - box5
+          - box6
+
+# Donkpocket
+
+- type: entity
+  parent: BaseItem
+  id: FoodBoxDonkpocket
+  name: box of donk-pockets
+  description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: box
+  - type: Storage
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    size: 6
+    color: red
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocket
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketSpicy
+  name: box of spicy-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: spicy-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketSpicy
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketTeriyaki
+  name: box of teriyaki-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: teriyaki-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketTeriyaki
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketPizza
+  name: box of pizza-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: pizza-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: white
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketPizza
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketGondola
+  name: box of gondola-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: gondola-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: brown
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketGondola
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketBerry
+  name: box of berry-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: berry-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketBerry
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketHonk
+  name: box of banana-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: banana-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: yellow
+  - type: StorageFill
+    contents:
+      - name: FoodDonkpocketHonk
+        amount: 6

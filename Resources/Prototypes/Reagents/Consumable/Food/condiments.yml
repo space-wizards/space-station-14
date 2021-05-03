@@ -1,0 +1,79 @@
+- type: reagent
+  id: Astrotame
+  name: Astrotame
+  desc: The sweetness of a thousand sugars but none of the calories.
+#  physicalDesc:
+  color: aquamarine
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: BbqSauce
+  name: BBQ sauce
+  desc: Hand wipes not included.
+  physicalDesc: Gloopy.
+  color: darkred
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Cornoil
+  name: corn oil
+  desc: Corn oil, A delicious oil used in cooking. Made from corn.
+#  physicalDesc:
+  color: yellow
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Frostoil
+  name: frostoil
+  desc: Leaves the tongue numb in its passage.
+#  physicalDesc:
+  color: skyblue
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: HorseradishSauce
+  name: horseradish sauce
+  desc: Smelly horseradish sauce.
+  physicalDesc: Overpowering.
+  color: gray
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Hotsauce
+  name: hotsauce
+  desc: Burns so good.
+#  physicalDesc:
+  color: red
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Ketchup
+  name: ketchup
+  desc: Made from pureed tomatoes and flavored with spices.
+#  physicalDesc:
+  color: red
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Soysauce
+  name: soy sauce
+  desc: A salty soy-based flavoring.
+#  physicalDesc:
+  color: saddlebrown
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
