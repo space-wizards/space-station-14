@@ -57,7 +57,8 @@
    castmessage: ASE'N'MRE!
    cooldown: 1
    NeedComponent: Mind
-   AddedComponent: BarnYardCurse
+   AddedComponent: CowAccent
+   duration: 5000
   
 - type: action
   actionType: SpellPie

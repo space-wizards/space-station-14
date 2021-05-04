@@ -19,16 +19,18 @@ namespace Content.Server.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class BarnYardCurse : Component
+    [RegisterComponent]
+    public class BarnYardCurse : TimerComponent
     {
         public override string Name => "BarnYardCurse";
 
-        public static Task DelayTask(this IEntity entity, int milliseconds = 100, CancellationToken cancellationToken = default)
+        public static Task DelayTask(IEntity entity, int milliseconds = 100, CancellationToken cancellationToken = default)
         {
+            entity.AddComponent<CowAccentComponent>();
             return entity
                 .EnsureComponent<TimerComponent>()
                 .Delay(milliseconds, cancellationToken);
-            entity.AddComponent<CowAccentComponent>(); 
+            
         }
 
     }

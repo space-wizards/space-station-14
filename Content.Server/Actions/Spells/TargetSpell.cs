@@ -23,7 +23,9 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("NeedComponent")] public string TargetType { get; set; } = "Mind";
         [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
-        [ViewVariables] [DataField("castsound")] public string castSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
+
+        [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
+        [ViewVariables] [DataField("castsound")] public string CastSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
 
         public Type? RegisteredTargetType;
 
@@ -70,6 +72,7 @@ namespace Content.Server.Actions
             compInducedFinal.Owner = target;
            // EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, caster);
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
+            target.SpawnTimer(SpellDuration, () => target.EntityManager.ComponentManager.RemoveComponent(target.Uid, compInducedFinal));
         }
 
     }

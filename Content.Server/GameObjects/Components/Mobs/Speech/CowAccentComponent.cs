@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
         public override string Name => "CowAccent";
 
         private static readonly IReadOnlyList<string> Moo = new List<string>{
-            "Moo!", "Mooo!", "Mu-Moo!", "Moo-mu!", "Mooo!" 
+            "Moo!", "Mooo!", "Mooooo!", "Moo-mu!", "Mu-moo!" 
         }.AsReadOnly();
 
         public string Accentuate(string message)
