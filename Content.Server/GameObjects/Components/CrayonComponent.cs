@@ -17,8 +17,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components
         public int Charges { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [field: DataField("capacity")]
+        [DataField("capacity")]
         public int Capacity { get; set; } = 30;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);

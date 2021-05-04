@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.BarSign
         private string _name = "";
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
 

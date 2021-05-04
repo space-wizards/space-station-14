@@ -22,7 +22,7 @@ namespace Content.Shared.Actions
         /// Icon representing this action in the UI.
         /// </summary>
         [ViewVariables]
-        [field: DataField("icon")]
+        [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Content.Shared.Actions
         /// the action will simply be highlighted when turned on.
         /// </summary>
         [ViewVariables]
-        [field: DataField("iconOn")]
+        [DataField("iconOn")]
         public SpriteSpecifier IconOn { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
@@ -42,14 +42,14 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Description to show in UI. Accepts formatting.
         /// </summary>
-        [field: DataField("description")]
+        [DataField("description")]
         public FormattedMessage Description { get; } = new();
 
         /// <summary>
         /// Requirements message to show in UI. Accepts formatting, but generally should be avoided
         /// so the requirements message isn't too prominent in the tooltip.
         /// </summary>
-        [field: DataField("requires")]
+        [DataField("requires")]
         public string Requires { get; } = string.Empty;
 
         /// <summary>
@@ -63,21 +63,21 @@ namespace Content.Shared.Actions
         /// selected after it is used, so it can be continuously re-used. If this is false,
         /// the action will be deselected after one use.
         /// </summary>
-        [field: DataField("repeat")]
+        [DataField("repeat")]
         public bool Repeat { get; }
 
         /// <summary>
         /// For TargetEntity/TargetPoint actions, should the action be de-selected if currently selected (choosing a target)
         /// when it goes on cooldown. Defaults to false.
         /// </summary>
-        [field: DataField("deselectOnCooldown")]
+        [DataField("deselectOnCooldown")]
         public bool DeselectOnCooldown { get; }
 
         /// <summary>
         /// For TargetEntity actions, should the action be de-selected if the user doesn't click an entity when
         /// selecting a target. Defaults to false.
         /// </summary>
-        [field: DataField("deselectWhenEntityNotClicked")]
+        [DataField("deselectWhenEntityNotClicked")]
         public bool DeselectWhenEntityNotClicked { get; }
 
         [DataField("filters")] private List<string> _filters = new();

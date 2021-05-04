@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Mining
     [UsedImplicitly]
     public class AsteroidRockVisualizer : AppearanceVisualizer
     {
-        [field: DataField("layer")]
+        [DataField("layer")]
         private int Layer { get; } = 0;
 
         public override void InitializeEntity(IEntity entity)

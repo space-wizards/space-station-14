@@ -9,7 +9,7 @@ namespace Content.Shared.Construction
     [DataDefinition]
     public class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        [field: DataField("prototype")] public string Prototype { get; } = string.Empty;
+        [DataField("prototype")] public string Prototype { get; } = string.Empty;
 
         public override bool EntityValid(IEntity entity)
         {

@@ -11,13 +11,13 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class ConditionalAction : IGraphAction
     {
-        [field: DataField("passUser")] public bool PassUser { get; } = false;
+        [DataField("passUser")] public bool PassUser { get; } = false;
 
-        [field: DataField("condition", required:true)] public IGraphCondition? Condition { get; } = null;
+        [DataField("condition", required:true)] public IGraphCondition? Condition { get; } = null;
 
-        [field: DataField("action", required:true)] public IGraphAction? Action { get; } = null;
+        [DataField("action", required:true)] public IGraphAction? Action { get; } = null;
 
-        [field: DataField("else")] public IGraphAction? Else { get; } = null;
+        [DataField("else")] public IGraphAction? Else { get; } = null;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

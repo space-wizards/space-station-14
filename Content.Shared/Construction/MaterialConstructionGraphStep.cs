@@ -16,9 +16,9 @@ namespace Content.Shared.Construction
     {
         // TODO: Make this use the material system.
         // TODO TODO: Make the material system not shit.
-        [field: DataField("material")] public string MaterialPrototypeId { get; } = "Steel";
+        [DataField("material")] public string MaterialPrototypeId { get; } = "Steel";
 
-        [field: DataField("amount")] public int Amount { get; } = 1;
+        [DataField("amount")] public int Amount { get; } = 1;
 
         public StackPrototype MaterialPrototype =>
             IoCManager.Resolve<IPrototypeManager>().Index<StackPrototype>(MaterialPrototypeId);
