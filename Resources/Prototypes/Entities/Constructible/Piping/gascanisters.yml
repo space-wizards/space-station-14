@@ -7,7 +7,6 @@
   components:
   - type: InteractionOutline
   - type: SnapGrid
-    offset: Center
   - type: Sprite
   - type: Damageable
     resistances: metallicResistances

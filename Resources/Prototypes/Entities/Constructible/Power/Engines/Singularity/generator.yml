@@ -23,6 +23,5 @@
       mask:
       - MobImpassable
   - type: SnapGrid
-    offset: Center
   - type: Anchorable
   - type: Pullable

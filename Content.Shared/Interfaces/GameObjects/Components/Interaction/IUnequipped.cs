@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
@@ -17,6 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IUnequipped
     {
+        [Obsolete("Use UnequippedMessage instead")]
         void Unequipped(UnequippedEventArgs eventArgs);
     }
 

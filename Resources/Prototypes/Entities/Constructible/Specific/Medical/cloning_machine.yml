@@ -28,7 +28,6 @@
         - MobImpassable
         - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: CloningPod
   - type: Damageable
     resistances: metallicResistances

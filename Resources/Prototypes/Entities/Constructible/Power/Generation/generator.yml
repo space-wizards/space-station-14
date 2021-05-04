@@ -26,7 +26,6 @@
       - VaultImpassable
       - SmallImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: generator

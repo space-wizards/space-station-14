@@ -1,0 +1,96 @@
+# Base
+
+- type: Tag
+  id: Egg
+
+- type: entity
+  parent: BaseItem
+  id: FoodEggBase
+  description: An egg!
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Egg
+  - type: Food
+    trash: Eggshells
+  - type: Sprite
+    sprite: Objects/Consumable/Food/egg.rsi
+  - type: Item
+    sprite: Objects/Consumable/Food/egg.rsi
+    netsync: false
+    size: 1
+  - type: SolutionContainer
+    maxVol: 5
+    contents:
+      reagents:
+      - ReagentId: chem.Egg
+        Quantity: 5
+  - type: LoopingSound
+  - type: DamageOnLand
+    amount: 1
+  - type: DamageOtherOnHit
+    amount: 1
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Eggshells:
+            min: 1
+            max: 1
+          PuddleEgg:
+            min: 1
+            max: 2
+          # Wow double-yolk you're so lucky!
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Splat
+
+- type: entity
+  name: egg
+  id: PuddleEgg
+  parent: PuddleBase
+  description: If the floor was a little hotter this would fry.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: egg-0
+  - type: Puddle
+    variants: 4
+
+- type: entity
+  name: eggshells
+  parent: BaseItem
+  id: Eggshells
+  description: You're walkin' on 'em bud.
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: eggshells
+    netsync: false
+  - type: Item
+    size: 1
+
+# Egg
+
+- type: entity
+  parent: FoodEggBase
+  id: FoodEgg
+  name: egg
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: icon
+  - type: RandomSpriteState
+    spriteStates:
+      - icon
+      - white

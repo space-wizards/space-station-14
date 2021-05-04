@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Manager.Result;
-using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
@@ -15,31 +15,31 @@ namespace Content.Shared.Construction
     {
         private Type? GetType(MappingDataNode node)
         {
-            if (node.HasNode("material"))
+            if (node.Has("material"))
             {
                 return typeof(MaterialConstructionGraphStep);
             }
-            else if (node.HasNode("tool"))
+            else if (node.Has("tool"))
             {
                 return typeof(ToolConstructionGraphStep);
             }
-            else if (node.HasNode("prototype"))
+            else if (node.Has("prototype"))
             {
                 return typeof(PrototypeConstructionGraphStep);
             }
-            else if (node.HasNode("component"))
+            else if (node.Has("component"))
             {
                 return typeof(ComponentConstructionGraphStep);
             }
-            else if (node.HasNode("tag"))
+            else if (node.Has("tag"))
             {
                 return typeof(TagConstructionGraphStep);
             }
-            else if (node.HasNode("allTags") || node.HasNode("anyTags"))
+            else if (node.Has("allTags") || node.Has("anyTags"))
             {
                 return typeof(MultipleTagsConstructionGraphStep);
             }
-            else if (node.HasNode("steps"))
+            else if (node.Has("steps"))
             {
                 return typeof(NestedConstructionGraphStep);
             }

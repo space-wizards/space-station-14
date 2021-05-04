@@ -1,0 +1,39 @@
+# Food
+
+- type: stack
+  id: Pancake
+  name: pancake
+
+# Food Containers
+
+- type: stack
+  id: PizzaBox
+  name: pizza box
+  icon: Objects/Consumable/Food/Baked/pizza.rsi/box.png
+  spawn: FoodPizzaBox
+
+# Smokeables
+
+- type: stack
+  id: PaperRolling
+  name: paper rolling
+
+- type: stack
+  id: CigaretteFilter
+  name: cigarette filter
+
+- type: stack
+  id: GroundTobacco
+  name: ground tobacco
+
+- type: stack
+  id: GroundCannabis
+  name: ground cannabis
+
+- type: stack
+  id: LeavesTobaccoDried
+  name: dried tobacco leaves
+
+- type: stack
+  id: LeavesCannabisDried
+  name: dried cannabis leaves

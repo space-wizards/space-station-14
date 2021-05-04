@@ -1,0 +1,280 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodPizzaBase
+  abstract: true
+  components:
+  - type: Food
+    trash: Plate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 15
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+  - type: SliceableFood
+    count: 8
+  - type: Item
+    size: 8
+
+- type: entity
+  parent: FoodPizzaBase
+  id: FoodPizzaSliceBase
+  abstract: true
+  components:
+  - type: Food
+    trash: PlateTart
+  - type: SolutionContainer
+    maxVol: 5
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Item
+    size: 1
+
+# Pizza
+
+- type: entity
+  name: margherita pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaMargherita
+  description: The cheesiest pizza in the galaxy.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: margherita
+  - type: SliceableFood
+    slice: FoodPizzaMargheritaSlice
+
+- type: entity
+  name: slice of margherita pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMargheritaSlice
+  description: A slice of the cheesiest pizza in the galaxy.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: margherita-slice
+# Tastes like crust, tomato, cheese.
+
+- type: entity
+  name: meat pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaMeat
+  description: Greasy pizza with delicious meat.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: meat
+  - type: SliceableFood
+    slice: FoodPizzaMeatSlice
+
+- type: entity
+  name: slice of meat pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMeatSlice
+  description: A nutritious slice of meatpizza.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: meat-slice
+# Tastes like crust, tomato, cheese, meat.
+
+- type: entity
+  name: mushroom pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaMushroom
+  description: Very special pizza.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: mushroom
+  - type: SliceableFood
+    slice: FoodPizzaMushroomSlice
+
+- type: entity
+  name: slice of mushroom pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMushroomSlice
+  description: Maybe it is the last slice of pizza in your life.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: mushroom-slice
+# Tastes like crust, tomato, cheese, mushroom.
+
+- type: entity
+  name: vegetable pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaVegetable
+  description: The station's vegetarians will thank you for making this.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: vegetable
+  - type: SliceableFood
+    slice: FoodPizzaVegetableSlice
+
+- type: entity
+  name: slice of vegetable pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaVegetableSlice
+  description: A slice of this is enough to satisfy even the pickiest station personnel.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: vegetable-slice
+# Tastes like crust, tomato, cheese, carrot.
+
+- type: entity
+  name: donk-pocket pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaDonkpocket
+  description: Who thought this would be a good idea?
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: donkpocket
+  - type: SliceableFood
+    slice: FoodPizzaDonkpocketSlice
+
+- type: entity
+  name: slice of donk-pocket pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaDonkpocketSlice
+  description: Smells like donk-pocket.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: donkpocket-slice
+# Tastes like crust, tomato, cheese, meat, laziness.
+
+- type: entity
+  name: dank pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaDank
+  description: The hippie's pizza of choice.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: dank
+  - type: SliceableFood
+    slice: FoodPizzaDankSlice
+
+- type: entity
+  name: slice of dank pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaDankSlice
+  description: So good, man...
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: dank-slice
+# Tastes like crust, tomato, cheese, meat, satisfaction.
+
+- type: entity
+  name: sassysage pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaSassysage
+  description: You can really smell the sassiness.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: sassysage
+  - type: SliceableFood
+    slice: FoodPizzaSassysageSlice
+
+- type: entity
+  name: slice of sassysage pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaSassysageSlice
+  description: Deliciously sassy.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: sassysage-slice
+# Tastes like crust, tomato, cheese, sausage, sass.
+
+- type: entity
+  name: Hawaiian pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaPineapple
+  description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: pineapple
+  - type: SliceableFood
+    slice: FoodPizzaPineappleSlice
+
+- type: entity
+  name: slice of pineapple pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaPineappleSlice
+  description: A slice of joy/sin.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: pineapple-slice
+# Tastes like crust, tomato, cheese, pineapple, ham.
+
+#TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
+- type: entity
+  name: Arnold's pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaArnold
+  description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-pizza
+    - state: arnold
+  - type: SliceableFood
+    slice: FoodPizzaArnoldSlice
+
+- type: entity
+  name: slice of Arnold's pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaArnoldSlice
+  description: I come over, maybe I give you a pizza, maybe I break off your arm.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: arnold-slice
+# Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
+
+#TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
+- type: entity
+  name: slice of moldy pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMoldySlice
+  description: Once a perfectly good slice of pizza pie, but now it lies here, rancid and bursting with spores.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-slice
+    - state: moldy-slice
+# Tastes like stale crust, rancid cheese, mushroom.

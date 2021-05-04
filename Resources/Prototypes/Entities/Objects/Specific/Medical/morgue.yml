@@ -54,12 +54,12 @@
 #   snap: Center
 
 - type: entity
+  parent: BaseItem
   id: Ash
   name: ash
   description: This used to be something, but now it's not.
-  parent: BaseItem
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Consumable/Trash/ash.rsi
-    state: icon
+    sprite: Objects/Materials/materials.rsi
+    state: ash

@@ -12,6 +12,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IDropped
     {
+        [Obsolete("Use DroppedMessage instead")]
         void Dropped(DroppedEventArgs eventArgs);
     }
 
