@@ -21,9 +21,8 @@ We are happy to accept contributions from anybody. Get in Discord if you want to
 ## Building
 
 1. Clone this repo.
-2. In the root folder run `git submodule update --init --recursive`
-3. Copy the two files from the `Hooks` folder to `.git/hooks`
-4. Compile the solution.
+2. Run `RUN_THIS.py` to init submodules and download the engine.
+3. Compile the solution.
 
 [More detailed instructions on building the project.](https://hackmd.io/@ss14/docs/%2FBZkI4RlUQbm09QWrXCZ3kg)
 
