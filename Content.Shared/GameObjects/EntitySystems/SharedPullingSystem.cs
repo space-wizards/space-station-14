@@ -236,7 +236,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 var diff = newAngle - oldAngle;
                 if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
-                    pulled.Transform.LocalRotation = newAngle;
+                    pulled.Transform.WorldRotation = newAngle;
             }
         }
     }
