@@ -1,8 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -20,10 +18,10 @@ namespace Content.Shared.Chemistry
         [DataField("effects", serverOnly: true)] private List<IReactionEffect> _effects = new();
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         /// <summary>

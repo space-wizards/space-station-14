@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private bool _defaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(2);
+        public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Opened

@@ -21,7 +21,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
         private List<string> _inventory = new();
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         public List<string> Inventory => _inventory;

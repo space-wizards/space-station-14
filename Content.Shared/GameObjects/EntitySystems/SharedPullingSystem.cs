@@ -1,7 +1,9 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Pulling;
+using Content.Shared.GameObjects.Components.Rotatable;
 using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
@@ -11,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Players;
@@ -28,6 +31,20 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private readonly HashSet<SharedPullableComponent> _moving = new();
         private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
+
+        /// <summary>
+        ///     If distance between puller and pulled entity lower that this threshold,
+        ///     pulled entity will not change its rotation.
+        ///     Helps with small distance jittering
+        /// </summary>
+        private const float ThresholdRotDistance = 1;
+
+        /// <summary>
+        ///     If difference between puller and pulled angle  lower that this threshold,
+        ///     pulled entity will not change its rotation.
+        ///     Helps with diagonal movement jittering
+        /// </summary>
+        private const float ThresholdRotAngle = 30;
 
         public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
@@ -89,6 +106,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void PullerMoved(MoveEvent ev)
         {
+            var puller = ev.Sender;
             if (!TryGetPulled(ev.Sender, out var pulled))
             {
                 return;
@@ -98,6 +116,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 return;
             }
+
+            UpdatePulledRotation(puller, pulled);
 
             physics.WakeBody();
 
@@ -197,6 +217,27 @@ namespace Content.Shared.GameObjects.EntitySystems
         public bool IsPulling(IEntity puller)
         {
             return _pullers.ContainsKey(puller);
+        }
+
+        private void UpdatePulledRotation(IEntity puller, IEntity pulled)
+        {
+            // TODO: update once ComponentReference works with directed event bus.
+            if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
+                return;
+
+            if (!rotatable.RotateWhilePulling)
+                return;
+
+            var dir = puller.Transform.WorldPosition - pulled.Transform.WorldPosition;
+            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
+            {
+                var oldAngle = pulled.Transform.WorldRotation;
+                var newAngle = Angle.FromWorldVec(dir);
+
+                var diff = newAngle - oldAngle;
+                if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
+                    pulled.Transform.WorldRotation = newAngle;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -17,15 +16,15 @@ namespace Content.Shared.Chemistry
     public abstract class ReagentEntityReaction
     {
         [ViewVariables]
-        [field: DataField("touch")]
+        [DataField("touch")]
         public bool Touch { get; } = false;
 
         [ViewVariables]
-        [field: DataField("injection")]
+        [DataField("injection")]
         public bool Injection { get; } = false;
 
         [ViewVariables]
-        [field: DataField("ingestion")]
+        [DataField("ingestion")]
         public bool Ingestion { get; } = false;
 
         public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution? source)

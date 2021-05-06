@@ -533,7 +533,7 @@ namespace Content.Client.UserInterface
             if (Locked || DragDropHelper.Dragged?.Action == null) return false;
 
             _dragShadow.Texture = DragDropHelper.Dragged.Action.Icon.Frame0();
-            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled.Position - (32, 32));
             DragDropHelper.Dragged.CancelPress();
             return true;
         }
@@ -544,7 +544,7 @@ namespace Content.Client.UserInterface
             if (Locked || DragDropHelper.Dragged?.Action == null) return false;
 
             // keep dragged entity centered under mouse
-            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled.Position - (32, 32));
             // we don't set this visible until frameupdate, otherwise it flickers
             _dragShadow.Visible = true;
             return true;

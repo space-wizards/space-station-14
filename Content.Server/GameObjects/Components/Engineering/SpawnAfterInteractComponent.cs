@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Engineering
         public override uint? NetID => ContentNetIDs.SPAWN_AFTER_INTERACT;
 
         [ViewVariables]
-        [field: DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; }
 
         [ViewVariables]

@@ -1,0 +1,26 @@
+- type: entity
+  parent: FoodContainerBase
+  name: monkey cube box
+  id: MonkeyCubeBox
+  description: Drymate brand monkey cubes. Just add water!
+  components:
+  - type: FoodContainer
+    prototypes:
+      MonkeyCubeWrapper: 100
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box
+
+- type: entity
+  parent: FoodContainerBase
+  name: monkey cube
+  id: MonkeyCubeWrapper
+  description: Unwrap this to get a monkey cube.
+  components:
+  - type: FoodContainer
+    capacity: 1
+    prototypes:
+      MonkeyCube: 100
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: wrapper

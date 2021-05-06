@@ -9,3 +9,13 @@
   id: bottleOpenSounds
   files:
   - /Audio/Items/bottle_open1.ogg
+
+- type: soundCollection
+  id: packetOpenSounds
+  files:
+  - /Audio/Effects/packetrip.ogg
+
+- type: soundCollection
+  id: pop
+  files:
+  - /Audio/Items/pop.ogg
