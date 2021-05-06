@@ -14,16 +14,10 @@
     intersectPercentage: 0.2
   - type: CollisionWake
     enabled: false
+  - type: SteppedOnTrigger
   - type: Physics
     bodyType: Dynamic
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.3,-0.4,0.3,0.4"
-      name: "slips"
-      hard: false
-      layer:
-      - SmallImpassable
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.3,-0.4,0.3,0.4"

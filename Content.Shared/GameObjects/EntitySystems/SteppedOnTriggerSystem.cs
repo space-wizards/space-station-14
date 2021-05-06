@@ -1,6 +1,4 @@
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
@@ -11,21 +9,27 @@ namespace Content.Shared.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<TagComponent, StartCollideEvent>(HandleCollision);
+            SubscribeLocalEvent<SteppedOnTriggerComponent, StartCollideEvent>(HandleCollision);
         }
 
-        private void HandleCollision(EntityUid uid, TagComponent component, StartCollideEvent args)
+        private void HandleCollision(EntityUid uid, SteppedOnTriggerComponent component, StartCollideEvent args)
         {
-            if (!component.HasTag("SteppedOnTrigger") ||
-                !args.OtherFixture.Body.Owner.TryGetComponent(out IBody? body) ||
-                !body.HasPartOfType(BodyPartType.Foot)) return;
-
-            RaiseLocalEvent(uid, new SteppedOnEvent());
+            var otherOwner = args.OtherFixture.Body.Owner;
+            if (!args.OurFixture.Name.Equals(SteppedOnTriggerComponent.SteppedOnFixture)) return;
+            RaiseLocalEvent(uid, new SteppedOnEvent(otherOwner));
         }
     }
 
     /// <summary>
     /// Raised if this entity has a SteppedOnTrigger tag and is collided with.
     /// </summary>
-    public sealed class SteppedOnEvent : EntityEventArgs {}
+    public sealed class SteppedOnEvent : EntityEventArgs
+    {
+        public IEntity By { get; }
+
+        public SteppedOnEvent(IEntity by)
+        {
+            By = by;
+        }
+    }
 }

@@ -4,6 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -12,6 +13,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     public abstract class SharedSteppedOnSoundSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         /// <summary>
@@ -34,7 +36,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (component.LastStep.TotalSeconds + StepCooldown > currentTime.TotalSeconds) return;
 
             component.LastStep = currentTime;
-            SoundSystem.Play(GetFilter(component.Owner), _robustRandom.Pick(component.SoundCollection.PickFiles), component.Owner, AudioHelpers.WithVariation(0.01f));
+            // TODO: If SoundCollectionPrototype is serializable then just store SoundCollectionPrototype directly on the entity
+            SoundSystem.Play(GetFilter(component.Owner), _robustRandom.Pick(_prototypeManager.Index<SoundCollectionPrototype>(component.SoundCollection).PickFiles), component.Owner, AudioHelpers.WithVariation(0.01f));
         }
 
         protected virtual bool CanPlaySound(EntityUid uid)

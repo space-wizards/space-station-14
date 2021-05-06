@@ -1,9 +1,6 @@
 using System;
-using Content.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -19,7 +16,7 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "SteppedOnSound";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public SoundCollectionPrototype SoundCollection
+        public string SoundCollection
         {
             get => _soundCollection;
             private set
@@ -31,7 +28,7 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [DataField("soundCollection")]
-        private SoundCollectionPrototype _soundCollection = default!;
+        private string _soundCollection = default!;
 
         /// <summary>
         /// This is to prevent the sound being spammed every frame.
@@ -41,16 +38,22 @@ namespace Content.Shared.GameObjects.Components
         /// </remarks>
         public TimeSpan LastStep { get; set; } = TimeSpan.Zero;
 
+        protected override void Startup()
+        {
+            base.Startup();
+            Owner.EnsureComponentWarn<SteppedOnTriggerComponent>();
+        }
+
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new SteppedOnSoundComponentState(_soundCollection.ID);
+            return new SteppedOnSoundComponentState(_soundCollection);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
             if (curState is not SteppedOnSoundComponentState stepOnMe) return;
-            SoundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(stepOnMe.Sound);
+            SoundCollection = stepOnMe.Sound;
         }
 
         [Serializable, NetSerializable]

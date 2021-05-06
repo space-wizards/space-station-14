@@ -7,13 +7,17 @@
   description: A cute toy that resembles an even cuter programmer.
   components:
   - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
+  - type: CollisionWake
+    enabled: false
+  - type: SteppedOnTrigger
+  - type: SteppedOnSound
+    soundCollection: "ToySqueak"
 
 - type: entity
   parent: BaseItem

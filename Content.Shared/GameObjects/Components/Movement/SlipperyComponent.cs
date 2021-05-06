@@ -2,19 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces;
-using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,10 +14,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    public class SlipperyComponent : Component, IStartCollide
+    public class SlipperyComponent : Component
     {
-        [Dependency] private IModuleManager _moduleManager = default!;
-
         public sealed override string Name => "Slippery";
         public override uint? NetID => ContentNetIDs.SLIP;
 
@@ -150,83 +139,10 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        private bool TrySlip(IPhysBody ourBody, IPhysBody otherBody)
+        protected override void Startup()
         {
-            if (!Slippery
-                || Owner.IsInContainer()
-                ||  _slipped.Contains(otherBody.Owner.Uid)
-                ||  !otherBody.Owner.TryGetComponent(out SharedStunnableComponent? stun))
-            {
-                return false;
-            }
-
-            if (otherBody.LinearVelocity.Length < RequiredSlipSpeed || stun.KnockedDown)
-            {
-                return false;
-            }
-
-            var percentage = otherBody.GetWorldAABB().IntersectPercentage(ourBody.GetWorldAABB());
-
-            if (percentage < IntersectPercentage)
-            {
-                return false;
-            }
-
-            if (!EffectBlockerSystem.CanSlip(otherBody.Owner))
-            {
-                return false;
-            }
-
-            otherBody.LinearVelocity *= LaunchForwardsMultiplier;
-
-            stun.Paralyze(5);
-            _slipped.Add(otherBody.Owner.Uid);
-            Dirty();
-
-            if (!string.IsNullOrEmpty(SlipSound) && _moduleManager.IsServerModule)
-            {
-                SoundSystem.Play(Filter.Broadcast(), SlipSound, Owner, AudioHelpers.WithVariation(0.2f));
-            }
-
-            return true;
-        }
-
-        void IStartCollide.CollideWith(Fixture _, Fixture otherFixture, in Manifold manifold)
-        {
-            _colliding.Add(otherFixture.Body.Owner.Uid);
-        }
-
-        public void Update()
-        {
-            if (!Slippery)
-                return;
-
-            var physics = Owner.GetComponent<IPhysBody>();
-
-            foreach (var uid in _colliding.ToArray())
-            {
-                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
-                {
-                    _colliding.Remove(uid);
-                    _slipped.Remove(uid);
-                    Dirty();
-                    continue;
-                }
-
-                var entity = Owner.EntityManager.GetEntity(uid);
-                var otherPhysics = entity.GetComponent<IPhysBody>();
-
-                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
-                {
-                    _colliding.Remove(uid);
-                    _slipped.Remove(uid);
-                    Dirty();
-                    continue;
-                }
-
-                if (!_slipped.Contains(uid))
-                    TrySlip(physics, otherPhysics);
-            }
+            base.Startup();
+            Owner.EnsureComponentWarn<SteppedOnTriggerComponent>();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

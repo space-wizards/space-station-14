@@ -44,9 +44,6 @@
   id: Shovel
 
 - type: Tag
-  id: SteppedOnTrigger
-
-- type: Tag
   id: Teleportable
 
 - type: Tag

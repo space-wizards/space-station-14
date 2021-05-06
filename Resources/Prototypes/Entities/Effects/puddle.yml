@@ -13,17 +13,9 @@
   - type: LoopingSound
   - type: Clickable
   - type: Slippery
+  # Physics is here just so SteppedOnTrigger has something to add the fixture to
   - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-      layer:
-        - SmallImpassable
-      mask:
-        - SmallImpassable
-        - MobImpassable
-      hard: false
+  - type: SteppedOnTrigger
 
 - type: entity
   name: puddle

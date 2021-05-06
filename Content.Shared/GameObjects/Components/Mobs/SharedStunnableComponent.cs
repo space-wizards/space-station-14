@@ -6,6 +6,7 @@ using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,7 +19,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
-    public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand
+    public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand, IEffectBlocker
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -63,6 +64,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         [ViewVariables] protected float WalkModifierOverride = 0f;
         [ViewVariables] protected float RunModifierOverride = 0f;
+
+        public bool CanSlip()
+        {
+            return !KnockedDown;
+        }
 
         private float StunTimeModifier
         {
