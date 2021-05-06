@@ -32,6 +32,7 @@ namespace Content.Client.GameObjects.Components
         {
             base.OnChangeData(appearance);
 
+            // TODO : Stop caching components
             // Do nothing if the object doesn't have a SpriteComponent
             if (_sprite == null)
                 if (appearance.Owner.TryGetComponent(out ISpriteComponent? s))

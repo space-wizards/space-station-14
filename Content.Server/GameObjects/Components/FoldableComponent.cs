@@ -24,28 +24,25 @@ namespace Content.Server.GameObjects.Components
     public class FoldableComponent : SharedFoldableComponent
     {
         [ViewVariables]
-        public bool IsFolded { get => _isFolded; set => SetFoldedState(value); }
+        public bool IsFolded
+        {
+            get => _isFolded;
+            set
+            {
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                    appearance.SetData(FoldableVisuals.FoldedState, value);
+                _isFolded = value;
+            }
+        }
+
         private bool _isFolded = false;
 
-        /// <summary>
-        /// If false, the fold action can't be performed
-        /// </summary>
         public bool CanBeFolded = true;
-
-        private AppearanceComponent? _appearance;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            Owner.TryGetComponent(out this._appearance);
             IsFolded = false;
-        }
-
-        private void SetFoldedState(bool value)
-        {
-            _appearance?.SetData(FoldableVisuals.FoldedState, value);
-            _isFolded = value;
         }
 
         /// <summary>
