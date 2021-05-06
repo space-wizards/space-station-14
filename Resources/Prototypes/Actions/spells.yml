@@ -8,7 +8,7 @@
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
    castmessage: ONI SOMA! 
-   spellprojectile:  FireBallbullet
+   spellprojectile: FireBallbullet
    speed: 15
    cooldown: 1
    ignorecaster: true
@@ -57,7 +57,7 @@
    castmessage: ASE'N'MRE!
    cooldown: 1
    NeedComponent: Mind
-   AddedComponent: CowAccent
+   AddedComponent: MagicStatue
    duration: 5000
   
 - type: action

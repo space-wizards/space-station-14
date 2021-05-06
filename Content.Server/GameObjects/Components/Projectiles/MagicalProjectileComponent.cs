@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
 
+        [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
+
         public Type? RegisteredTargetType;
 
         public Type? RegisteredInduceType;
@@ -51,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Component compInducedFinal = (Component) componentInduced;
             compInducedFinal.Owner = target;
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
+            target.SpawnTimer(SpellDuration, () => target.EntityManager.ComponentManager.RemoveComponent(target.Uid, compInducedFinal));
         }
     }
 }
