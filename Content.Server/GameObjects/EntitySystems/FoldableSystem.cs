@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             SubscribeLocalEvent<FoldableComponent, AttackHandMessage>(OnPickup);
             SubscribeLocalEvent<FoldableComponent, UseInHandMessage>(OnUse);
-            SubscribeLocalEvent<FoldableComponent, InteractUsingMessage>(OnInteractUsing);
             SubscribeLocalEvent<FoldableComponent, DroppedMessage>(OnDropped);
         }
 
@@ -35,9 +34,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<FoldableComponent, AttackHandMessage>(OnPickup);
-            UnsubscribeLocalEvent<FoldableComponent, UseInHandMessage>(OnUse);
-            UnsubscribeLocalEvent<FoldableComponent, InteractUsingMessage>(OnInteractUsing);
+            UnsubscribeLocalEvent<FoldableComponent, AttackHandMessage>();
+            UnsubscribeLocalEvent<FoldableComponent, UseInHandMessage>();
         }
 
 
@@ -103,23 +101,6 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             Deploy(component, args.User, offsetCoords);
-        }
-
-
-        // When you have the foldable in your active hand and you click somewhere, unfold it there
-        private void OnInteractUsing(EntityUid uid, FoldableComponent component, InteractUsingMessage args)
-        {
-            // TODO : Make this work
-            // Check if the mouse location isn't obstructed and is close enough
-            if (!args.User.InRangeUnobstructed(args.ClickLocation,
-                collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable))
-            {
-                var message = Loc.GetString("comp-foldable-deploy-fail", ("object", component.Owner.Name));
-                args.User.PopupMessage(message);
-                return;
-            }
-
-            Deploy(component, args.User, args.ClickLocation);
         }
 
 
