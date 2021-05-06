@@ -83,8 +83,8 @@ namespace Content.Shared.GameObjects.Components.Damage
             _supportedDamageTypes.Clear();
 
             DamageContainerId = damageContainerPrototype.ID;
-            _supportedDamageGroups.UnionWith(damageContainerPrototype.SupportedClasses);
-            _supportedDamageTypes.UnionWith(damageContainerPrototype.SupportedTypes);
+            _supportedDamageGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
+            _supportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
             var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
@@ -143,7 +143,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
             var damage = 0;
 
-            foreach (var type in damageGroup.Types)
+            foreach (var type in damageGroup.DamageTypes)
             {
                 damage += GetDamage(type);
             }
@@ -267,7 +267,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 return false;
             }
 
-            var types = damageGroup.Types;
+            var types = damageGroup.DamageTypes;
 
             if (amount < 0)
             {

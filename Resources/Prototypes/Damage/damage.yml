@@ -1,6 +1,4 @@
-# Todo break out into damage_type,
-# damage_class, damage_container yml files
-# when we support loading prototypes by priority.
+# Silver: Todo break out into damage_type,damage_class, damage_container yml files when we support loading prototypes by priority.
 - type: damageType
   id: Blunt
 
@@ -64,22 +62,22 @@
   id: Genetic
   damageTypes:
     - Cellular
-
-- type: damageContainer
-  id: allDamageContainer
-  supportAll: true
-
-- type: damageContainer
-  id: biologicalDamageContainer
-  supportedClasses:
-    - Brute
-    - Burn
-    - Toxin
-    - Airloss
-    - Genetic
-
-- type: damageContainer
-  id: metallicDamageContainer
-  supportedClasses:
-    - Brute
-    - Burn
+#
+#- type: damageContainer
+#  id: allDamageContainer
+#  supportAll: true
+#
+#- type: damageContainer
+#  id: biologicalDamageContainer
+#  supportedClasses:
+#    - Brute
+#    - Burn
+#    - Toxin
+#    - Airloss
+#    - Genetic
+#
+#- type: damageContainer
+#  id: metallicDamageContainer
+#  supportedClasses:
+#    - Brute
+#    - Burn

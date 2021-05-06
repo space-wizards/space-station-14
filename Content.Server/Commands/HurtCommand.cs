@@ -31,10 +31,10 @@ namespace Content.Server.Commands
             foreach (var damageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
             {
                 msg.Append($"\n{damageGroup.ID}");
-                if (damageGroup.Types.Any())
+                if (damageGroup.DamageTypes.Any())
                 {
                     msg.Append(": ");
-                    msg.AppendJoin('|', damageGroup.Types);
+                    msg.AppendJoin('|', damageGroup.DamageTypes);
                 }
             }
             return $"Damage Types:{msg}";
