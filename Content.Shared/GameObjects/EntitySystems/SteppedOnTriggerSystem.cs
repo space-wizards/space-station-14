@@ -1,3 +1,5 @@
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
@@ -14,7 +16,10 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void HandleCollision(EntityUid uid, TagComponent component, StartCollideEvent args)
         {
-            if (!component.HasTag("SteppedOnTrigger")) return;
+            if (!component.HasTag("SteppedOnTrigger") ||
+                !args.OtherFixture.Body.Owner.TryGetComponent(out IBody? body) ||
+                !body.HasPartOfType(BodyPartType.Foot)) return;
+
             RaiseLocalEvent(uid, new SteppedOnEvent());
         }
     }
