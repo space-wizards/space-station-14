@@ -47,27 +47,43 @@
 - type: action
   actionType: SpellTarget
   icon: Mobs/Species/Human/organs.rsi/brain.png
-  name: "Instagib"
+  name: "Pacify"
   filters:
     - spells
-  description: "Instantly give a sentient creature a good shock"
+  description: "Give your target a hug, so they won't be to harm you!"
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
-   castrange: 5
+   castrange: 2
    castmessage: ASE'N'MRE!
    cooldown: 1
    NeedComponent: Mind
-   AddedComponent: MagicStatue
+   AddedComponent: MagicPacify
    duration: 5000
   
 - type: action
   actionType: SpellPie
-  icon: Objects/Consumable/Food/pie.rsi/icon.png
+  icon: Objects/Consumable/Food/Baked/pie.rsi/plain.png
   name: "Pie"
   filters:
     - spells
   description: "Give me a pie, I dare you!"
   behaviorType: Instant
   behavior: !type:InstantSpell
+    spellitem: FoodPieBananaCream
     castmessage: I NEED A PIE!
     cooldown: 1
+    
+- type: action
+  actionType: SpellBarnYardSpeak
+  icon: Objects/Consumable/Food/Baked/pie.rsi/plain.png
+  name: "Barnyard curse"
+  filters:
+    - spells
+  description: "Make the target communicate in moos"
+  behaviorType: TargetPoint
+  behavior: !type:ProjectileSpell
+   castmessage: KN'A`FTAGHU,`PUCK`'BTHNK!
+   spellprojectile: BarnYardCurseBolt
+   speed: 30
+   cooldown: 1
+   ignorecaster: true

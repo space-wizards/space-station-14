@@ -20,7 +20,7 @@ namespace Content.Server.Actions
     {
         [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "I CAST SPELL";
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("spellitem")] public string ItemProto { get; set; } = "FoodBananaCreamPie";
+        [ViewVariables] [DataField("spellitem")] public string ItemProto { get; set; } = "FoodPieBananaCream";
 
         [ViewVariables] [DataField("castSound")] public string CastSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
 
