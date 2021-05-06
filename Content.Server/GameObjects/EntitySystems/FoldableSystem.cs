@@ -28,14 +28,16 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<FoldableComponent, AttackHandMessage>(OnPickup);
             SubscribeLocalEvent<FoldableComponent, UseInHandMessage>(OnUse);
             SubscribeLocalEvent<FoldableComponent, InteractUsingMessage>(OnInteractUsing);
-            SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+            SubscribeLocalEvent<FoldableComponent, DroppedMessage>(OnDropped);
         }
-
 
         public override void Shutdown()
         {
             base.Shutdown();
+
             UnsubscribeLocalEvent<FoldableComponent, AttackHandMessage>(OnPickup);
+            UnsubscribeLocalEvent<FoldableComponent, UseInHandMessage>(OnUse);
+            UnsubscribeLocalEvent<FoldableComponent, InteractUsingMessage>(OnInteractUsing);
         }
 
 
@@ -75,6 +77,8 @@ namespace Content.Server.GameObjects.EntitySystems
             // Deploy the foldable in the looking direction
             component.Owner.Transform.Coordinates = newPos;
             SetFolded(component, false);
+
+            component.CanBeFolded = true;
         }
 
         #endregion
@@ -143,18 +147,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            // If it's already folded we don't interrupt the event
-            if (component.Owner.TryGetComponent(out PhysicsComponent? phys))
-            {
-                // TODO : Disable collisions
-            }
+            // Else, pick it up and prevent the fold verb to be used
+            component.CanBeFolded = false;
         }
 
-
-
-        private void OnContainerModified(EntityUid uid, StrapComponent component, EntInsertedIntoContainerMessage args)
+        private void OnDropped(EntityUid uid, FoldableComponent component, DroppedMessage args)
         {
-
+            component.CanBeFolded = true;
         }
 
         #endregion

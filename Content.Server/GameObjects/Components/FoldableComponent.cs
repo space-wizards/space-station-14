@@ -53,12 +53,13 @@ namespace Content.Server.GameObjects.Components
         {
             protected override void GetData(IEntity user, FoldableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!ActionBlockerSystem.CanInteract(user) || !component.CanBeFolded)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
+                data.Visibility = VerbVisibility.Visible;
                 data.Text = component.IsFolded ? Loc.GetString("Unfold") : Loc.GetString("Fold");
                 data.IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png";
             }
