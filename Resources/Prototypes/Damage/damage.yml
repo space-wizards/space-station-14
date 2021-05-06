@@ -1,0 +1,85 @@
+# Todo break out into damage_type,
+# damage_class, damage_container yml files
+# when we support loading prototypes by priority.
+- type: damageType
+  id: Blunt
+
+- type: damageType
+  id: Slash
+
+- type: damageType
+  id: Piercing
+
+- type: damageType
+  id: Heat
+
+- type: damageType
+  id: Shock
+
+- type: damageType
+  id: Cold
+
+- type: damageType
+  id: Poison
+
+- type: damageType
+  id: Radiation
+
+- type: damageType
+  id: Asphyxiation
+
+- type: damageType
+  id: Bloodloss
+
+- type: damageType
+  id: Cellular
+
+- type: damageGroup
+  id: Brute
+  damageTypes:
+    - Blunt
+    - Slash
+    - Piercing
+
+- type: damageGroup
+  id: Burn
+  damageTypes:
+    - Heat
+    - Shock
+    - Cold
+
+- type: damageGroup
+  id: Toxin
+  damageTypes:
+    - Poison
+    - Radiation
+
+- type: damageGroup
+  id: Airloss
+  damageTypes:
+    - Asphyxiation
+    - Bloodloss
+
+- type: damageGroup
+  id: Genetic
+  damageTypes:
+    - Cellular
+
+- type: damageContainer
+  id: allDamageContainer
+  supportAll: true
+
+- type: damageContainer
+  id: biologicalDamageContainer
+  supportedClasses:
+    - Brute
+    - Burn
+    - Toxin
+    - Airloss
+    - Genetic
+
+- type: damageContainer
+  id: metallicDamageContainer
+  supportedClasses:
+    - Brute
+    - Burn
