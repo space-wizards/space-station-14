@@ -20,13 +20,16 @@ namespace Content.Shared.Damage.DamageContainer
         private readonly IPrototypeManager _prototypeManager = default!;
 
         [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<DamageGroupPrototype> _supportedClasses = new();
-        [DataField("supportedTypes")] private HashSet<DamageTypePrototype> _supportedTypes = new();
+        [DataField("supportedClasses")] private HashSet<string> _supportedDamageGroupsButAsStrings = new();
+        [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypesButAsStrings = new();
+
+        private HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
+        private HashSet<DamageTypePrototype> _supportedDamageTypes = new();
 
         // TODO NET 5 IReadOnlySet
-        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedClasses => _supportedClasses;
+        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedDamageGroups => _supportedDamageGroups;
 
-        [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedTypes => _supportedTypes;
+        [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedDamageTypes => _supportedDamageTypes;
 
         [ViewVariables]
         [DataField("id", required: true)]
@@ -41,29 +44,30 @@ namespace Content.Shared.Damage.DamageContainer
 
                 foreach (var DamageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
-                    _supportedClasses.Add(DamageGroup);
-                    foreach (var DamageType in DamageGroup.Types)
+                    _supportedDamageGroups.Add(DamageGroup);
+                    foreach (var SupportedDamageType in DamageGroup.DamageTypes)
                     {
-                        _supportedTypes.Add(DamageType);
+                        _supportedDamageTypes.Add(SupportedDamageType);
                     }
                 }
 
                 return;
             }
 
-            foreach (var supportedClass in _supportedClasses)
+            foreach (var supportedClassID in _supportedDamageGroupsButAsStrings)
             {
-                foreach (var supportedType in supportedClass.Types)
+                var resolvedDamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
+                foreach (var supportedType in resolvedDamageGroup.DamageTypes)
                 {
-                    _supportedTypes.Add(supportedType);
+                    _supportedDamageTypes.Add(supportedType);
                 }
             }
 
 
-            //ask smug about this
-            foreach (var originalType in _supportedTypes)
+            //reverse link type to group because smug said so ask him
+            foreach (var originalType in _supportedDamageTypes)
             {
-                _supportedTypes.Add(originalType);
+                _supportedDamageTypes.Add(originalType);
             }
         }
     }

@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                 {
                     text.Append($"\n{Loc.GetString("{0}: {1}", damageGroup, damageAmount)}");
 
-                    foreach (var type in damageGroup.Types)
+                    foreach (var type in damageGroup.DamageTypes)
                     {
                         if (!state.DamageTypes.TryGetValue(type, out var typeAmount))
                         {

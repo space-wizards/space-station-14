@@ -114,7 +114,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 {
                     Assert.That(sDamageableComponent.SupportsDamageClass(damageGroup));
 
-                    var types = damageGroup.Types;
+                    var types = damageGroup.DamageTypes;
 
                     foreach (var type in types)
                     {

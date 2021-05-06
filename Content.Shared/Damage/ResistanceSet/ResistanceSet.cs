@@ -18,8 +18,7 @@ namespace Content.Shared.Damage.ResistanceSet
     public class ResistanceSet : ISerializationHooks
     {
         [ViewVariables]
-        private Dictionary<DamageTypePrototype, ResistanceSetSettings> _resistances =
-            new();
+        private Dictionary<DamageTypePrototype, ResistanceSetSettings> _resistances = new();
 
         public ResistanceSet()
         {

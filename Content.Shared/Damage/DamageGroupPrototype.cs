@@ -28,13 +28,13 @@ namespace Content.Shared.Damage
         [field: DataField(tag: "damageTypes", required: true)]
         public List<string> TypeIds { get; } = default!;
 
-        public IEnumerable<DamageTypePrototype> Types = default!;
+        public IEnumerable<DamageTypePrototype> DamageTypes = default!;
 
         public void AfterSerialization()
         {
             foreach (var typeid in TypeIds)
             {
-                Types = Types.Concat(new []{_prototypeManager.Index<DamageTypePrototype>(typeid)});
+                DamageTypes = DamageTypes.Concat(new []{_prototypeManager.Index<DamageTypePrototype>(typeid)});
             }
         }
 

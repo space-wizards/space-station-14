@@ -1,5 +1,7 @@
 - type: resistanceSet
   id: defaultResistances
+  DamageType:
+
   coefficients:
     Blunt: 1.0
     Slash: 1.0
