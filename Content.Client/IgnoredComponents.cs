@@ -254,6 +254,7 @@ namespace Content.Client
             "DisassembleOnActivate",
             "ExplosionLaunched",
             "Advertise",
+            "Foldable"
         };
     }
 }
