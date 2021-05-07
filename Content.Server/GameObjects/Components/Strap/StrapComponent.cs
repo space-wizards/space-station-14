@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Strap
             buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
             // Update the visuals of the strap object
-            if (this.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
                 appearance.SetData(StrapVisuals.BuckledState, true);
             }

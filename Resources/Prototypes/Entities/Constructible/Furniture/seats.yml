@@ -22,7 +22,7 @@
     sprite: Constructible/Misc/furniture.rsi
   - type: Strap
     position: Stand
-    buckleOffset: "0,.15"
+    buckleOffset: "0,0.15"
   - type: Pullable
   - type: Damageable
     resistances: metallicResistances

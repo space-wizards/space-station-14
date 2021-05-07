@@ -42,7 +42,8 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            IsFolded = false;
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(FoldableVisuals.FoldedState, _isFolded);
         }
 
         /// <summary>
