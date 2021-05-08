@@ -4,10 +4,10 @@
 # is that system. Ideally, food on plates would have a system where when thrown, it would
 # break the plate and the loaf would fall off.
 
-# Bread Plate
+# Large Plate
 
 - type: entity
-  name: plate
+  name: large plate
   parent: BaseItem
   id: FoodPlate
   description: A large plate, excellent for bread.
@@ -51,7 +51,7 @@
 # Small Plate
 
 - type: entity
-  name: plate
+  name: small plate
   parent: Plate
   id: FoodPlateSmall
   description: A small plate. Delicate.
@@ -80,45 +80,6 @@
   name: broken plate
   parent: BaseItem
   id: FoodPlateSmallTrash
-  description: A broken plate. Useless.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: plate-small-trash
-    netsync: false
-
-# A second small plate for different purposes.
-
-- type: entity
-  name: plate
-  parent: Plate
-  id: FoodPlateSmall2
-  description: A small plate, excellent for a tart.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: plate-tart
-# Needs the full thing because inherting is dumb sometimes.
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PlateSmall2Trash:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
-- type: entity
-  name: broken plate
-  parent: BaseItem
-  id: FoodPlateSmall2Trash
   description: A broken plate. Useless.
   components:
   - type: Sprite

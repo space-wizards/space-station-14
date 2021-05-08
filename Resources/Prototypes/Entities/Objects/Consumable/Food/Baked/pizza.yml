@@ -28,7 +28,7 @@
   abstract: true
   components:
   - type: Food
-    trash: PlateTart
+    trash: FoodPlateSmall
   - type: SolutionContainer
     maxVol: 5
     contents:
