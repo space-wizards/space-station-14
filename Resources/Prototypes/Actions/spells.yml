@@ -46,7 +46,7 @@
 
 - type: action
   actionType: SpellTarget
-  icon: Mobs/Species/Human/organs.rsi/brain.png
+  icon: Interface/Actions/Spells/pacify.png
   name: "Pacify"
   filters:
     - spells
@@ -58,7 +58,7 @@
    cooldown: 1
    NeedComponent: Mind
    AddedComponent: MagicPacify
-   duration: 5000
+   duration: 8000
   
 - type: action
   actionType: SpellPie
@@ -72,10 +72,11 @@
     spellitem: FoodPieBananaCream
     castmessage: I NEED A PIE!
     cooldown: 1
+    castsound: /Audio/Effects/Chemistry/bubbles.ogg
     
 - type: action
   actionType: SpellBarnYardSpeak
-  icon: Objects/Consumable/Food/Baked/pie.rsi/plain.png
+  icon: Interface/Actions/Spells/barnyardcurse.png
   name: "Barnyard curse"
   filters:
     - spells

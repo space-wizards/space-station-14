@@ -5,8 +5,10 @@ using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -25,7 +27,7 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
 
         [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
-        [ViewVariables] [DataField("castsound")] public string CastSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
+        [ViewVariables] [DataField("castsound")] public string? _castsound { get; set; } = "/Audio/Weapons/emitter.ogg";
 
         public Type? RegisteredTargetType;
 
@@ -70,9 +72,13 @@ namespace Content.Server.Actions
             var componentInduced = compFactory.GetComponent(RegisteredInduceType);
             Component compInducedFinal = (Component)componentInduced;
             compInducedFinal.Owner = target;
-           // EntitySystem.Get<AudioSystem>().PlayFromEntity(castSound, caster);
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
             target.SpawnTimer(SpellDuration, () => target.EntityManager.ComponentManager.RemoveComponent(target.Uid, compInducedFinal));
+            if (_castsound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(caster), _castsound, caster);
+            }
+            else return;
         }
 
     }

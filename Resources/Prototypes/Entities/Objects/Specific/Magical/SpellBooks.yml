@@ -1,7 +1,7 @@
 - type: entity
-  name: Debug SpellBook
+  name: Urban Legends
   parent: BaseItem
-  id: Urban legends
+  id: Debug Spellbook
   description: 'penned by "Beyond Occult Rituals Typography"'
   components:
   - type: Sprite

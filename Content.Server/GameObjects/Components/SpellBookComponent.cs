@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components
                 actions.Grant(spell);
             }
             eventArgs.User.PopupMessage(UseMessage);
+            Owner.Delete();
             return true;
         }
     }

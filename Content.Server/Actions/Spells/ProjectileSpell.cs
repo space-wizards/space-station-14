@@ -6,8 +6,10 @@ using Content.Shared.Physics;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -27,7 +29,7 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("ignorecaster")] public bool IgnoreCaster { get; set; } = false;
 
-        [ViewVariables] [DataField("castSound")] public string CastSound { get; set; } = "/Audio/Effects/Fluids/slosh.ogg";
+        [ViewVariables] [DataField("castsound")] public string? _castsound { get; set; } = "/Audio/Weapons/emitter.ogg";
 
         public ProjectileSpell()
         {
@@ -36,15 +38,14 @@ namespace Content.Server.Actions
 
         public void DoTargetPointAction(TargetPointActionEventArgs args)
         {
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            var caster = args.Performer;
+            if (!caster.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown)); //Set the spell on cooldown
             var playerPosition = args.Performer.Transform.LocalPosition; //Set relative position of the entity of the spell (used later)
             var direction = (args.Target.Position - playerPosition).Normalized * 2; //Decides the general direction of the spell (used later) + how far it goes
             var coords = args.Performer.Transform.Coordinates.WithPosition(playerPosition + direction);
 
-            args.Performer.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
-
-           // EntitySystem.Get<AudioSystem>().PlayFromEntity(CastSound, args.Performer); //play the sound
+            caster.PopupMessageEveryone(CastMessage); //Speak the cast message out loud
 
             var spawnedSpell = _entityManager.SpawnEntity(Projectile, coords);
 
@@ -59,6 +60,11 @@ namespace Content.Server.Actions
                 .LinearVelocity = direction * VelocityMult;
             }
               spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;
+            if (_castsound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(caster), _castsound, caster);
+            }
+            else return;
         }
     }
 }

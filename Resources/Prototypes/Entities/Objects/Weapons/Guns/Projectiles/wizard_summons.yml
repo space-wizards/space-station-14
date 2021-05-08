@@ -8,6 +8,14 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/fireball.rsi
     state: fireball
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 1
+    lightImpactRange: 4
+    flashRange: 25
   - type: Physics
     bodyType: Dynamic
     status: InAir
@@ -48,8 +56,8 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/fireball.rsi
-    state: fireball
+    sprite: Objects/Weapons/Guns/Projectiles/magicboltfizzy.rsi
+    state: magicboltfizzy
   - type: Physics
     bodyType: Dynamic
     status: InAir
@@ -66,4 +74,8 @@
   - type: MagicalProjectile
     NeedComponent: Mind
     AddedComponent: CowAccent
-    duration: 12000
+    duration: 30000
+  - type: Projectile
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damages:
+      Piercing: 0
