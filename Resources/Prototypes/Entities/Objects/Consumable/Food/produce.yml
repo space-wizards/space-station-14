@@ -261,7 +261,7 @@
   description: Needs some butter! And some cooking...
   components:
   - type: Food
-    trash: TrashCornCob
+    trash: FoodCornTrash
   - type: SolutionContainer
     contents:
       reagents:
@@ -271,6 +271,19 @@
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
     seed: corn
+
+- type: entity
+  name: corn cob
+  parent: BaseItem
+  id: FoodCornTrash
+  description: Not a dang kernel left.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/corn.rsi
+    state: cob
+    netsync: false
+  - type: Item
+    size: 1
 
 - type: entity
   name: onion

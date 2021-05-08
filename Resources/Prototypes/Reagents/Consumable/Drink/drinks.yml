@@ -54,6 +54,16 @@
       rate: 1
 
 - type: reagent
+  id: MilkSoy
+  name: soy milk
+  desc: Surprisingly tasty.
+  physicalDesc: refreshing
+  color: "#302000"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
   id: MilkOat
   name: oat milk
   desc: Surprisingly tasty.
