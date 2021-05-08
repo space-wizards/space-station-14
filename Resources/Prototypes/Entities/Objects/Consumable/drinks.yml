@@ -183,7 +183,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: BerryJuice
+        - ReagentId: JuiceBerry
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
@@ -670,7 +670,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: GrapeJuice
+        - ReagentId: JuiceGrape
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grapejuice.rsi
@@ -1189,7 +1189,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: PoisonBerryJuice
+        - ReagentId: JuiceBerryPoison
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
