@@ -172,15 +172,16 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
-            var position = item.Owner.Transform.Coordinates;
+            var oldParent = item.Owner.Transform.Parent;
+            var oldPosition = item.Owner.Transform.Coordinates;
             var contained = item.Owner.IsInContainer();
             var success = hand.Container.Insert(item.Owner);
             if (success)
             {
                 //If the entity isn't in a container, and it isn't located exactly at our position (i.e. in our own storage), then we can safely play the animation
-                if (position != Owner.Transform.Coordinates && !contained)
+                if (oldParent != Owner.Transform && !contained)
                 {
-                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, position));
+                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, oldPosition));
                 }
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
                 OnItemChanged?.Invoke();
