@@ -71,9 +71,9 @@
     linearDamping: 0
     angularDamping: 0
   - type: MagicalProjectile
-    NeedComponent: Mind
-    AddedComponent: CowAccent
-    duration: 30000
+     NeedComponent: Mind
+     AddedComponent: CowAccent
+     duration: 30000
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
