@@ -17,7 +17,6 @@
       - CombatMode
       - Disarm
       - HumanScream
-  - type: OverlayEffectsUI
   - type: Eye
   - type: CameraRecoil
   - type: Examiner
