@@ -291,7 +291,7 @@ namespace Content.Server.GameObjects.Components.GUI
         public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
             var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
+            if (!CanDrop(slot, doMobChecks) || !coords.IsValid(Owner.EntityManager) || hand?.Entity == null)
             {
                 return false;
             }
