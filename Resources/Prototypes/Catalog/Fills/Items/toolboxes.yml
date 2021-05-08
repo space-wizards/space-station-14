@@ -6,6 +6,8 @@
   components:
   - type: StorageFill
     contents:
+      - name: CrowbarRed
+        amount: 1
       - name: ClothingMaskBreath
         amount: 2
       - name: FoodSnackChocolate
