@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         private const int DefaultCapacity = 6;
-        [field: DataField("capacity")]
+        [DataField("capacity")]
         public override int Capacity { get; } = DefaultCapacity;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner

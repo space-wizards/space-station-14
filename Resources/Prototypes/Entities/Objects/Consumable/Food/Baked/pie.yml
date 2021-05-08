@@ -275,7 +275,7 @@
   description: A tasty dessert that reminds you of the wine you didn't make.
   components:
   - type: Food
-    trash: FoodPlateSmall2
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart
@@ -289,7 +289,7 @@
   description: "\"      \""
   components:
   - type: Food
-    trash: FoodPlateSmall2
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart
@@ -303,7 +303,7 @@
   description: A tasty dessert that won't make it through a metal detector.
   components:
   - type: Food
-    trash: FoodPlateSmall2
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart
@@ -317,7 +317,7 @@
   description: A tasty dessert made of chocolate, with a liquid core.
   components:
   - type: Food
-    trash: FoodPlateSmall2
+    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart

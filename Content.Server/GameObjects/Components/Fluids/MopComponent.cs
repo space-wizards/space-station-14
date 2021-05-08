@@ -1,20 +1,17 @@
 #nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -52,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
-        [field: DataField("pickup_amount")]
+        [DataField("pickup_amount")]
         public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
         [DataField("pickup_sound")]

@@ -41,13 +41,13 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         /// <summary>
         ///     We will smooth with other objects with the same key.
         /// </summary>
-        [field: DataField("key")]
+        [DataField("key")]
         public string? SmoothKey { get; }
 
         /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
-        [field: DataField("base")]
+        [DataField("base")]
         public string StateBase { get; } = string.Empty;
 
         /// <summary>

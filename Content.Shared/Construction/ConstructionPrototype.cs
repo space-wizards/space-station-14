@@ -15,37 +15,37 @@ namespace Content.Shared.Construction
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
         /// </summary>
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     "Useful" description displayed in the construction GUI.
         /// </summary>
-        [field: DataField("description")]
+        [DataField("description")]
         public string Description { get; } = string.Empty;
 
         /// <summary>
         ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
         /// </summary>
-        [field: DataField("graph")]
+        [DataField("graph")]
         public string Graph { get; } = string.Empty;
 
         /// <summary>
         ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
         /// </summary>
-        [field: DataField("targetNode")]
+        [DataField("targetNode")]
         public string TargetNode { get; } = string.Empty;
 
         /// <summary>
         ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
         /// </summary>
-        [field: DataField("startNode")]
+        [DataField("startNode")]
         public string StartNode { get; } = string.Empty;
 
         /// <summary>
         ///     Texture path inside the construction GUI.
         /// </summary>
-        [field: DataField("icon")]
+        [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
@@ -59,16 +59,16 @@ namespace Content.Shared.Construction
         [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("placementMode")]
+        [DataField("placementMode")]
         public string PlacementMode { get; } = "PlaceFree";
 
         /// <summary>
         ///     Whether this construction can be constructed rotated or not.
         /// </summary>
-        [field: DataField("canRotate")]
+        [DataField("canRotate")]
         public bool CanRotate { get; } = true;
 
         public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
