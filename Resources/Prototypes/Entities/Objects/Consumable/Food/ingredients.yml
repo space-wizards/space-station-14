@@ -15,7 +15,7 @@
     transferAmount: 5
   - type: Drink
     openSounds: packetOpenSounds
-    useSound: eating
+    useSound: /Audio/Items/eating_1.ogg
   - type: Spillable
 
 - type: entity
