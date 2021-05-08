@@ -260,7 +260,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: CarrotJuice
+        - ReagentId: JuiceCarrot
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carrotjuice.rsi
@@ -577,7 +577,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: LimeJuice
+        - ReagentId: JuiceLime
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi
@@ -594,7 +594,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: OrangeJuice
+        - ReagentId: JuiceOrange
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_orange.rsi
@@ -610,7 +610,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: LemonJuice
+        - ReagentId: JuiceLemon
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_yellow.rsi
@@ -627,7 +627,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: TomatoJuice
+        - ReagentId: JuiceTomato
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_red.rsi
@@ -944,7 +944,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: LemonJuice
+        - ReagentId: JuiceLemon
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
@@ -961,9 +961,9 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: LemonJuice
+        - ReagentId: JuiceLemon
           Quantity: 10
-        - ReagentId: LimeJuice
+        - ReagentId: JuiceLime
           Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonlime.rsi
@@ -980,7 +980,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: LimeJuice
+        - ReagentId: JuiceLime
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
@@ -1161,7 +1161,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: OrangeJuice
+        - ReagentId: JuiceOrange
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
@@ -1597,7 +1597,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: TomatoJuice
+        - ReagentId: JuiceTomato
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
@@ -1691,7 +1691,7 @@
     maxVol: 20
     contents:
       reagents:
-        - ReagentId: WatermelonJuice
+        - ReagentId: JuiceWatermelon
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/watermelon.rsi
