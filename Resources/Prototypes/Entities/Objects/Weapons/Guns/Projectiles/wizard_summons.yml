@@ -15,7 +15,6 @@
     devastationRange: 0
     heavyImpactRange: 1
     lightImpactRange: 4
-    flashRange: 25
   - type: Physics
     bodyType: Dynamic
     status: InAir
