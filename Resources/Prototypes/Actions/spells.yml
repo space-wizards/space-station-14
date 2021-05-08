@@ -15,7 +15,7 @@
 
 - type: action
   actionType: SpellTraps
-  icon: Interface/Actions/Spells/traps.png
+  icon: Interface/Actions/Spells/trap.png
   name: "Traps!"
   filters:
     - spells
