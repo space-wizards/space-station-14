@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -236,6 +237,7 @@ namespace Content.Server.Mobs
             if (Session != null && !alreadyAttached && VisitingEntity == null)
             {
                 Session.AttachToEntity(entity);
+                Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
             }
         }
 
@@ -293,6 +295,8 @@ namespace Content.Server.Mobs
 
             var comp = entity.AddComponent<VisitingMindComponent>();
             comp.Mind = this;
+
+            Logger.Info($"Session {Session?.Name} visiting entity {entity}.");
         }
 
         public void UnVisit()
