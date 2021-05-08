@@ -21,6 +21,10 @@
       "directions": 4
     },
     {
+      "name": "glass-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "pglass"
     },
     {
