@@ -347,5 +347,5 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 2
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 3
