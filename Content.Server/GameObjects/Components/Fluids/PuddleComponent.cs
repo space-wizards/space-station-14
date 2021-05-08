@@ -104,6 +104,9 @@ namespace Content.Server.GameObjects.Components.Fluids
         [DataField("recolor")]
         private bool _recolor = default;
 
+        [DataField("state")]
+        private string _spriteState = "puddle";
+
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
         public override void Initialize()
@@ -122,10 +125,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (_spriteComponent.BaseRSIPath != null)
             {
-                var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
-
-                _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
-
+                _spriteComponent.LayerSetState(0, $"{_spriteState}-{randomVariant}"); // TODO: Remove hardcode
             }
 
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here

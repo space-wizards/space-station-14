@@ -214,6 +214,39 @@
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 10
+  - type: DamageOnLand
+    amount: 1
+  - type: DamageOtherOnHit
+    amount: 1
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PuddleTomato:
+            min: 1
+            max: 1
+          # Wow double-yolk you're so lucky!
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: tomato
+  id: PuddleTomato
+  parent: PuddleBase
+  description: Splat.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tomato.rsi
+    state: puddle-0
+  - type: Puddle
+    variants: 3
 
 - type: entity
   name: eggplant
