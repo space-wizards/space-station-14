@@ -687,9 +687,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            if(item.TryGetComponent<ITransformComponent>(out var transformComponent))
-                transformComponent.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
-
+            item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
 
             var comps = item.GetAllComponents<IDropped>().ToList();
 
