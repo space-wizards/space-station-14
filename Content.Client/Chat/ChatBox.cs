@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -454,6 +454,7 @@ namespace Content.Client.Chat
             {
                 SelectedChannel = toSelect;
                 _channelSelector.Text = ChannelSelectorName(toSelect);
+                _channelSelector.Modulate = ChatHelper.ChatColor(toSelect);
                 return true;
             }
             // keep current setting

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Client.Administration;
 using Content.Client.GameObjects.Components.Observer;
 using Content.Client.Interfaces.Chat;
+using Content.Client.Utility;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -366,15 +367,7 @@ namespace Content.Client.Chat
             }
             else
             {
-                color = message.Channel switch
-                {
-                    ChatChannel.Server => Color.Orange,
-                    ChatChannel.Radio => Color.Green,
-                    ChatChannel.OOC => Color.LightSkyBlue,
-                    ChatChannel.Dead => Color.MediumPurple,
-                    ChatChannel.AdminChat => Color.Red,
-                    _ => color
-                };
+                color = ChatHelper.ChatColor(message.Channel);
             }
 
             if (CurrentChatBox == null) return;
