@@ -1,0 +1,345 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodBreadBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+
+- type: entity
+  parent: FoodBreadBase
+  id: FoodBreadSliceBase
+  abstract: true
+  components:
+  - type: SolutionContainer
+    maxVol: 7
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 7
+
+# Custom Bread Example
+
+- type: entity
+  name: volcanic loaf
+  parent: FoodBreadBase
+  id: FoodBreadVolcanic
+  description: A dark loaf. Resembles pumice.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: alpha
+      color: "#281415"
+    - state: alpha-filling
+      color: "#FF613F"
+  - type: SliceableFood
+    slice: FoodBreadVolcanicSlice
+
+- type: entity
+  name: volcanic slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadVolcanicSlice
+  description: A slice of dark loaf. Resembles pumice.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: alpha-slice
+      color: "#281415"
+    - state: alpha-slice-filling
+      color: "#FF613F"
+
+# Bread
+
+- type: entity
+  name: bread
+  parent: FoodBreadBase
+  id: FoodBreadPlain
+  description: Some plain old earthen bread.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: plain
+  - type: SliceableFood
+    slice: FoodBreadPlainSlice
+
+- type: entity
+  name: bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadPlainSlice
+  description: A slice of home.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: plain-slice
+
+- type: entity
+  name: meatbread loaf
+  parent: FoodBreadBase
+  id: FoodBreadMeat
+  description: The culinary base of every self-respecting eloquen/tg/entleman.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: meat
+  - type: SliceableFood
+    slice: FoodBreadMeatSlice
+# Tastes like bread, meat.
+
+- type: entity
+  name: meatbread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMeatSlice
+  description: A slice of delicious meatbread.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: meat-slice
+
+- type: entity
+  name: xeno-meat bread
+  parent: FoodBreadBase
+  id: FoodBreadMeatXeno
+  description: Reassuringly green meatloaf made from xeno meat. Extra heretical.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: xenomeat
+  - type: SliceableFood
+    slice: FoodBreadMeatXenoSlice
+# Tastes like bread, acid.
+
+- type: entity
+  name: xeno-meatbread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMeatXenoSlice
+  description: A slice of delicious meatbread. Extra heretical.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: xenomeat-slice
+
+- type: entity
+  name: spider-meatbread
+  parent: FoodBreadBase
+  id: FoodBreadMeatSpider
+  description: Reassuringly green meatloaf made from spider meat.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: spidermeat
+  - type: SliceableFood
+    slice: FoodBreadMeatSpiderSlice
+# Tastes like bread, cobwebs.
+
+- type: entity
+  name: spider-meatbread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMeatSpiderSlice
+  description: A slice of meatloaf made from an animal that most likely still wants you dead.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: spidermeat-slice
+
+- type: entity
+  name: banana-nut bread
+  parent: FoodBreadBase
+  id: FoodBreadBanana
+  description: A heavenly and filling treat.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: banana
+  - type: SliceableFood
+    slice: FoodBreadBananaSlice
+# Tastes like bread, banana, nut.
+
+- type: entity
+  name: banana-nut bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadBananaSlice
+  description: A slice of delicious banana bread.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: banana-slice
+
+- type: entity
+  name: tofu bread
+  parent: FoodBreadBase
+  id: FoodBreadTofu
+  description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: tofu
+  - type: SliceableFood
+    slice: FoodBreadTofuSlice
+# Tastes like bread, tofu.
+
+- type: entity
+  name: tofu bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadTofuSlice
+  description: A slice of delicious tofu bread.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: tofu-slice
+
+- type: entity
+  name: cream cheese bread
+  parent: FoodBreadBase
+  id: FoodBreadCreamcheese
+  description: Yum yum yum!
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: creamcheese
+  - type: SliceableFood
+    slice: FoodBreadCreamcheeseSlice
+# Tastes like bread, cheese.
+
+- type: entity
+  name: cream cheese bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadCreamcheeseSlice
+  description: A slice of yum!
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: creamcheese-slice
+
+- type: entity
+  name: mimana bread
+  parent: FoodBreadBase
+  id: FoodBreadMimana
+  description: Best eaten in silence.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: mimana
+  - type: SliceableFood
+    slice: FoodBreadMimanaSlice
+# Tastes like bread, cheese.
+
+- type: entity
+  name: Mimana bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMimanaSlice
+  description: A slice of silence!
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: mimana-slice
+
+# Other than bread/slices
+
+- type: entity
+  name: moldy slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMoldySlice
+  description: Entire stations have been ripped apart over arguing whether this is still good to eat.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: moldy-slice
+# Tastes like decaying fungus.
+
+- type: entity
+  name: baguette
+  parent: FoodBreadBase
+  id: FoodBreadBaguette
+  description: Bon appétit!
+  components:
+  - type: Sprite
+    state: baguette
+# Tastes like France.
+
+- type: entity
+  name: garlic bread
+  parent: FoodBreadSliceBase
+  id: FoodBreadGarlicSlice
+  description: Alas, it is limited.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: garlic-slice
+# Tastes like garlic, Italy.
+
+- type: entity
+  name: buttered toast
+  parent: FoodBreadSliceBase
+  id: FoodBreadButteredToast
+  description: Crunchy.
+  components:
+  - type: Sprite
+    state: buttered-toast
+# Tastes like bread, butter.

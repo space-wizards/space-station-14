@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -13,9 +12,9 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class SpawnPrototypeAtContainer : IGraphAction
     {
-        [field: DataField("prototype")] public string Prototype { get; } = string.Empty;
-        [field: DataField("container")] public string Container { get; } = string.Empty;
-        [field: DataField("amount")] public int Amount { get; } = 1;
+        [DataField("prototype")] public string Prototype { get; } = string.Empty;
+        [DataField("container")] public string Container { get; } = string.Empty;
+        [DataField("amount")] public int Amount { get; } = 1;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

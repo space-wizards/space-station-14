@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -734,7 +734,7 @@ namespace Content.Client.Chat
 
             var formatted = new FormattedMessage(3);
             formatted.PushColor(color);
-            formatted.AddText(message);
+            formatted.AddMarkup(message);
             formatted.Pop();
             Contents.AddMessage(formatted);
         }

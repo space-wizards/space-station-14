@@ -12,11 +12,11 @@ namespace Content.Shared.Prototypes.EntityList
     public class EntityListPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public ImmutableList<string> EntityIds { get; } = ImmutableList<string>.Empty;
 
         public IEnumerable<EntityPrototype> Entities(IPrototypeManager? prototypeManager = null)

@@ -76,7 +76,7 @@ namespace Content.Server.Botany
         private const string SeedPrototype = "SeedBase";
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; private init; } = default!;
 
         /// <summary>

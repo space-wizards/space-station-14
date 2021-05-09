@@ -13,8 +13,8 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class MoveContainer : IGraphAction
     {
-        [field: DataField("from")] public string? FromContainer { get; } = null;
-        [field: DataField("to")] public string? ToContainer { get; } = null;
+        [DataField("from")] public string? FromContainer { get; } = null;
+        [DataField("to")] public string? ToContainer { get; } = null;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

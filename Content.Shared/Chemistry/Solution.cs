@@ -12,6 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -327,7 +328,7 @@ namespace Content.Shared.Chemistry
         [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
-            [DataField("ReagentId")]
+            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
             public readonly string ReagentId;
             [DataField("Quantity")]
             public readonly ReagentUnit Quantity;

@@ -16,7 +16,7 @@ namespace Content.Server.Holiday
         [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables]

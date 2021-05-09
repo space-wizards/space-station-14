@@ -35,7 +35,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        [field: DataField("behaviorSets")]
+        [DataField("behaviorSets")]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();
