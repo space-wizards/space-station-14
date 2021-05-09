@@ -12,7 +12,6 @@ using System;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
-    [DataDefinition]
     [RegisterComponent]
     public class MagicalProjectileComponent : Component, IStartCollide
     {
