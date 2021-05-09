@@ -323,7 +323,9 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 Owner.Transform.AttachParentToContainerOrGrid();
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
-                Owner.Transform.WorldPosition += oldBuckledTo.UnbuckleOffset;
+
+                if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
+                    Owner.Transform.WorldPosition += oldBuckledTo.UnbuckleOffset;
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);

@@ -45,12 +45,6 @@ namespace Content.Server.GameObjects.Components.Strap
         /// The buckled entity will be offset by this amount from the center of the strap object.
         /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
         /// </summary>
-        [DataField("offsetX", required: false)]
-        private float _strapOffsetX = 0;
-
-        [DataField("offsetY", required: false)]
-        private float _strapOffsetY = 0;
-
         [DataField("buckleOffset", required: false)]
         private Vector2 _buckleOffset = Vector2.Zero;
 
@@ -188,12 +182,6 @@ namespace Content.Server.GameObjects.Components.Strap
             if (_buckledEntities.Remove(buckle.Owner))
             {
                 _occupiedSize -= buckle.Size;
-
-                // Update the visuals of the strap object
-                if (this.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
-                {
-                    appearance.SetData(StrapVisuals.BuckledState, false);
-                }
 
                 // This should be changed for an Entity Message
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));

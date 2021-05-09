@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Strap;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -13,21 +15,24 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics.Dynamics;
 
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class FoldableSystem : EntitySystem
+    public sealed class FoldableSystem : EntitySystem
     {
+        private InteractionSystem _interactionSystem => EntitySystemManager.GetEntitySystem<InteractionSystem>();
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<FoldableComponent, AttackHandMessage>(OnPickup);
             SubscribeLocalEvent<FoldableComponent, UseInHandMessage>(OnUse);
-            SubscribeLocalEvent<FoldableComponent, DroppedMessage>(OnDropped);
         }
 
         public override void Shutdown()
@@ -66,17 +71,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 physicsComponent.CanCollide = !component.IsFolded;
         }
 
-        private static void Deploy(FoldableComponent component, IEntity user, EntityCoordinates newPos)
+        private static void Deploy(FoldableComponent component, IEntity user, MapCoordinates newPos)
         {
             // When used, drop the foldable and unfold it
-            user.TryGetComponent(out HandsComponent? hands);
-            hands?.Drop(component.Owner);
+            if (user.TryGetComponent(out HandsComponent? hands));
+                hands?.Drop(component.Owner);
 
             // Deploy the foldable in the looking direction
-            component.Owner.Transform.Coordinates = newPos;
+            component.Owner.Transform.LocalPosition = newPos.Position;
             SetFolded(component, false);
-
-            component.CanBeFolded = true;
         }
 
         #endregion
@@ -88,12 +91,14 @@ namespace Content.Server.GameObjects.EntitySystems
         // When clicked in hand, unfold in front of the user
         private void OnUse(EntityUid uid, FoldableComponent component, UseInHandMessage args)
         {
+            var userTransform = args.User.Transform;
             var offsetCoords =
-                args.User.Transform.Coordinates.Offset(args.User.Transform.LocalRotation.GetCardinalDir());
+                new MapCoordinates(userTransform.MapPosition.Position + userTransform.LocalRotation.ToWorldVec(), userTransform.MapID);
 
             // Check nothing blocks the way
-            if (!args.User.InRangeUnobstructed(offsetCoords,
-                collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable))
+            if (_interactionSystem.UnobstructedDistance(
+                userTransform.MapPosition, offsetCoords, predicate: (IEntity entity) => entity.Equals(args.User))
+                >= 1.5f)
             {
                 var message = Loc.GetString("comp-foldable-deploy-fail", ("object", component.Owner.Name));
                 args.User.PopupMessage(message);
@@ -114,10 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 // If an entity is buckled to the object we can't pick it up or fold it
                 if (strap.BuckledEntities.Any())
-                {
-                    args.Handled = true;
                     return;
-                }
             }
 
             // Then if there is no buckled entity we can fold it
@@ -128,13 +130,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            // Else, pick it up and prevent the fold verb to be used
-            component.CanBeFolded = false;
-        }
-
-        private void OnDropped(EntityUid uid, FoldableComponent component, DroppedMessage args)
-        {
-            component.CanBeFolded = true;
+            // Else, pick it up
         }
 
         #endregion

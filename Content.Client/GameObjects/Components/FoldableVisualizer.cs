@@ -23,11 +23,6 @@ namespace Content.Client.GameObjects.Components
         [ViewVariables][DataField("foldedSuffix", required: false)]
         private string? _foldedSuffix = "_folded";
 
-        // This keeps a reference to the entity's SpriteComponent to avoid fetching it each time
-        private ISpriteComponent? _sprite;
-
-        private bool? _isFolded;
-
         public override void OnChangeData(AppearanceComponent appearance)
         {
             base.OnChangeData(appearance);
@@ -37,12 +32,10 @@ namespace Content.Client.GameObjects.Components
             // Get appearance data, and check if the folded state has changed
             if (!appearance.TryGetData(FoldableVisuals.FoldedState, out bool folded)) return;
 
-            _isFolded = folded;
-
 
             // Set all the layers state to [state]_folded if it exists, or back to the default [state]
-
             var i = 0;
+
             foreach (var layer in sprite.AllLayers)
             {
                 var newState = folded

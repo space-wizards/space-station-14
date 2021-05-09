@@ -1,13 +1,8 @@
-﻿using System.Runtime.CompilerServices;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces.GameObjects.Components;
-using NFluidsynth;
 using Robust.Server.GameObjects;
-using Robust.Server.Placement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
@@ -23,28 +18,6 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(SharedFoldableComponent))]
     public class FoldableComponent : SharedFoldableComponent
     {
-        [ViewVariables]
-        public bool IsFolded
-        {
-            get => _isFolded;
-            set
-            {
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                    appearance.SetData(FoldableVisuals.FoldedState, value);
-                _isFolded = value;
-            }
-        }
-
-        private bool _isFolded = false;
-
-        public bool CanBeFolded = true;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(FoldableVisuals.FoldedState, _isFolded);
-        }
 
         /// <summary>
         /// Allows folding/unfolding via a verb.

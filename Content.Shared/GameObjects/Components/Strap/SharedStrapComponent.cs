@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Strap
     }
 
     [Serializable, NetSerializable]
-    public enum StrapVisuals
+    public enum StrapVisuals : byte
     {
         RotationAngle,
         BuckledState
