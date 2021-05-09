@@ -670,11 +670,6 @@ namespace Content.Server.GameObjects.Components.GUI
                         else
                         {
                             var entity = hand.Entity;
-                            if (!Drop(entity))
-                            {
-                                break;
-                            }
-
                             interactionSystem.Interaction(Owner, entity);
                         }
                     }
