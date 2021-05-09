@@ -21,9 +21,10 @@ namespace Content.Server.Chemistry.Metabolism
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         //How much damage is done/healed when 1u of the reagent is metabolized
-        [DataField("HealthChange")]
+        [DataField("healthChange")]
         public float HealthChange { get; set; } = 30.0f;
 
+        //type of damage changed 
         [DataField("damageType")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
         
