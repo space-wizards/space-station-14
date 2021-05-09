@@ -33,7 +33,7 @@ namespace Content.Server.Chemistry.Metabolism
         //Remove reagent at set rate, changes damage if a DamageableComponent can be found
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            var metabolismAmount = MetabolismRate * tickTime;
+            var metabolismAmount = ReagentUnit.New(MetabolismRate.Float() * tickTime * 100);
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
                 health.ChangeDamage(DamageType, (int) (metabolismAmount.Float() * HealthChange), true);
 
