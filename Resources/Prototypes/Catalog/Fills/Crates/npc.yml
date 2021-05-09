@@ -29,7 +29,7 @@
     contents:
       - name: CatMob_Content
         amount: 1
-       
+
 
 - type: entity
   id: CrateNPCChicken
@@ -40,8 +40,8 @@
     contents:
       - name: ChickenMob_Content
         amount: 4
-       
-        
+
+
 - type: entity
   id: CrateNPCCorgi
   name: corgi crate
@@ -51,7 +51,7 @@
     contents:
       - name: CorgiMob_Content
         amount: 1
-        
+
 - type: entity
   id: CrateNPCCow
   name: cow crate
@@ -62,7 +62,7 @@
       - name: CowMob_Content
         amount: 1
 
-   
+
 - type: entity
   id: CrateNPCGoat
   name: goat crate
@@ -94,12 +94,12 @@
     contents:
       - name: GorillaMob_Content
         amount: 1
-        
-        
+
+
 - type: entity
   id: CrateNPCMonkeyCube
   name: monkey cube crate
-  parent: BoxBase
+  parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
