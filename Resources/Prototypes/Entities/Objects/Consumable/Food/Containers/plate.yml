@@ -52,7 +52,7 @@
 
 - type: entity
   name: small plate
-  id: FoodPlate
+  parent: FoodPlate
   id: FoodPlateSmall
   description: A small plate. Delicate.
   components:
