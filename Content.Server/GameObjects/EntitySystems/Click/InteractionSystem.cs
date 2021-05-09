@@ -26,6 +26,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
 {
@@ -36,6 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -684,6 +686,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 return;
             }
+
+            if(item.TryGetComponent<ITransformComponent>(out var transformComponent))
+                transformComponent.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
+
 
             var comps = item.GetAllComponents<IDropped>().ToList();
 
