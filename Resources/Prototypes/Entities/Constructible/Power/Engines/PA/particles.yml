@@ -20,7 +20,8 @@
           !type:PhysShapeAabb
             bounds: "-0.48,-0.48,0.48,0.48"
         hard: false
-        layer: [None]
-        mask:
-        - MobMask
+        layer:
+          # Has to hit mobs, singularity, and singularity generator
+          - MobMask
+        mask: [None]
     - type: ParticleProjectile
