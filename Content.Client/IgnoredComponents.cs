@@ -255,6 +255,7 @@ namespace Content.Client
             "ExplosionLaunched",
             "Advertise",
             "MagicalProjectile",
+            "SpellBook",
         };
     }
 }
