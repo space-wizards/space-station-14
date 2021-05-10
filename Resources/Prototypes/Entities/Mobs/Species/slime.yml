@@ -1,35 +1,10 @@
-# Both slimes and NPCs inherit from this.
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
-  save: false
   name: Slime Person
-  id: BaseSlimeMob_Content
+  parent: HumanMob_Content
+  id: BaseSlimePerson
   description: A miserable pile of slime.
   abstract: true
   components:
-    - type: Tag
-      tags:
-        - Teleportable
-        - FootstepSound
-    - type: Flashable
-    - type: Hands
-    - type: MovementSpeedModifier
-    - type: MovedByPressure
-    - type: Barotrauma
-    - type: DamageOnHighSpeedImpact
-      soundHit: /Audio/Effects/hit_kick.ogg
-    - type: Hunger
-    - type: Thirst
-    # Organs
-    - type: SolutionContainer
-      maxVol: 250
-      caps: Injectable, Drawable
-    # StatusEffects
-    - type: Stunnable
-    # Other
-    - type: Inventory
-    - type: Clickable
-    - type: InteractionOutline
     - type: Icon
       sprite: Mobs/Species/Slime/parts.rsi
       state: full
@@ -38,11 +13,11 @@
       drawdepth: Mobs
       layers:
         - map: [ "enum.HumanoidVisualLayers.Chest" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: torso_m
         - map: [ "enum.HumanoidVisualLayers.Head" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: head_m
         - map: [ "enum.HumanoidVisualLayers.Eyes" ]
@@ -50,19 +25,19 @@
           sprite: Mobs/Customization/eyes.rsi
           state: eyes
         - map: [ "enum.HumanoidVisualLayers.RArm" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: r_arm
         - map: [ "enum.HumanoidVisualLayers.LArm" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: l_arm
         - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: r_leg
         - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: l_leg
         - shader: StencilClear
@@ -76,19 +51,19 @@
         - map: [ "enum.Slots.INNERCLOTHING" ]
           shader: StencilDraw
         - map: [ "enum.HumanoidVisualLayers.LHand" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: l_hand
         - map: [ "enum.HumanoidVisualLayers.RHand" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: r_hand
         - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: l_foot
         - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-          color: "#e8b59b"
+          color: "#b8b8b8"
           sprite: Mobs/Species/Slime/parts.rsi
           state: r_foot
         - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -115,100 +90,6 @@
         - map: [ "enum.Slots.HEAD" ]
         - map: [ "enum.Slots.POCKET1" ]
         - map: [ "enum.Slots.POCKET2" ]
-    - type: Physics
-      bodyType: Dynamic
-      fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.35,-0.35,0.35,0.35"
-        mass: 85
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-        layer:
-          - Opaque
-    - type: PlayerInputMover
-    - type: AtmosExposed
-    - type: Flammable
-      fireSpread: true
-      canResistFire: true
-    - type: Temperature
-      heatDamageThreshold: 360
-      coldDamageThreshold: 260
-      currentTemperature: 310.15
-      specificHeat: 42
-      tempDamageCoefficient: 0.1
-    - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
-    - type: Damageable
-      damageContainer: biologicalDamageContainer
-    - type: Metabolism
-      metabolismHeat: 5000
-      radiatedHeat: 400
-      implicitHeatRegulation: 5000
-      sweatHeatRegulation: 5000
-      shiveringHeatRegulation: 5000
-      normalBodyTemperature: 310.15
-      thermalRegulationTemperatureThreshold: 25
-      needsGases:
-        Oxygen: 0.00060763888
-      producesGases:
-        Oxygen: 0.00045572916
-        CarbonDioxide: 0.00015190972
-    - type: Internals
-    - type: MobState
-      thresholds:
-        0: !type:NormalMobState {}
-        100: !type:CriticalMobState {}
-        200: !type:DeadMobState {}
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTypeTrigger
-            type: Blunt
-            damage: 400
-          behaviors:
-            - !type:GibBehavior { }
-    - type: HeatResistance
-    - type: Appearance
-      visuals:
-        - type: RotationVisualizer
-        - type: BuckleVisualizer
-        - type: FireVisualizer
-          sprite: Mobs/Effects/onfire.rsi
-          normalState: Generic_mob_burning
-          alternateState: Standing
-          fireStackAlternateState: 3
-        - type: CreamPiedVisualizer
-          state: creampie_human
-    - type: CombatMode
-    - type: Climbing
-    - type: Cuffable
-    - type: CharacterInfo
-    - type: AnimationPlayer
-    - type: Buckle
-    - type: UnarmedCombat
-      range: 0.8
-      arcwidth: 30
-      arc: fist
-    - type: Grammar
-      proper: true
-    - type: Pullable
-    - type: DoAfter
-    - type: CreamPied
-    - type: Stripping
-    - type: Strippable
-    - type: UserInterface
-      interfaces:
-        - key: enum.StrippingUiKey.Key
-          type: StrippableBoundUserInterface
-    - type: Puller
-    - type: Butcherable
-      meat: FoodMeat
-    - type: Recyclable
-      safe: false
-    - type: Speech
-    - type: Emoting
