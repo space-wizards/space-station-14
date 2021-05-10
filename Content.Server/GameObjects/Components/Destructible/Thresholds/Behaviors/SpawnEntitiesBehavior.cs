@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
-                    var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates);
+                    var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
                     var stack = spawned.GetComponent<StackComponent>();
                     stack.Count = count;
                     spawned.RandomOffset(0.5f);
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates);
+                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
                         spawned.RandomOffset(0.5f);
                     }
                 }

@@ -1,5 +1,5 @@
 - type: entity
-  parent: FoodContainerBase
+  parent: BaseItem
   name: monkey cube box
   id: MonkeyCubeBox
   description: Drymate brand monkey cubes. Just add water!
@@ -12,7 +12,7 @@
     state: box
 
 - type: entity
-  parent: FoodContainerBase
+  parent: BaseItem
   name: monkey cube
   id: MonkeyCubeWrapper
   description: Unwrap this to get a monkey cube.

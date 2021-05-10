@@ -16,7 +16,7 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 5
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
   - type: Item
     size: 5
@@ -46,7 +46,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
   - type: SliceableFood
     count: 3
@@ -71,7 +71,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -88,7 +88,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
   - type: SliceableFood
     count: 3
@@ -108,7 +108,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
   - type: SliceableFood
     count: 3
@@ -128,7 +128,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
   - type: SliceableFood
     count: 3
@@ -148,7 +148,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -165,7 +165,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 5
 
 - type: entity
@@ -182,7 +182,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
   - type: SliceableFood
     count: 3
@@ -211,7 +211,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 20
 
 - type: entity
@@ -228,7 +228,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 20
   - type: SliceableFood
     count: 3
@@ -248,7 +248,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 10
 
 - type: entity
@@ -265,7 +265,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -282,7 +282,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.SulfuricAcid
+      - ReagentId: SulfuricAcid
         Quantity: 20
   - type: SliceableFood
     count: 3
@@ -612,7 +612,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -633,7 +633,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -652,7 +652,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -671,7 +671,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -693,7 +693,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 1
 
 - type: entity
@@ -715,7 +715,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.Toxin
+      - ReagentId: Toxin
         Quantity: 20
 
 - type: entity
@@ -737,7 +737,7 @@
   - type: SolutionContainer
     contents:
       reagents:
-      - ReagentId: chem.SulfuricAcid
+      - ReagentId: SulfuricAcid
         Quantity: 20
 
 - type: entity
