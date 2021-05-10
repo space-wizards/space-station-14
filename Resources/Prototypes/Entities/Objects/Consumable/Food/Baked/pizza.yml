@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Food
-    trash: Plate
+    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
@@ -28,7 +28,7 @@
   abstract: true
   components:
   - type: Food
-    trash: PlateTart
+    trash: FoodPlateSmall
   - type: SolutionContainer
     maxVol: 5
     contents:

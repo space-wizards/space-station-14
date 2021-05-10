@@ -108,6 +108,35 @@
         Quantity: 10
 
 - type: entity
+  name: banana peel
+  parent: BaseItem
+  id: TrashBananaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+  - type: Slippery
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      name: "slips"
+      hard: false
+      layer:
+        - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      mask:
+        - SmallImpassable
+
+- type: entity
   name: carrot
   parent: ProduceBase
   id: FoodCarrot
@@ -261,7 +290,7 @@
   description: Needs some butter! And some cooking...
   components:
   - type: Food
-    trash: TrashCornCob
+    trash: FoodCornTrash
   - type: SolutionContainer
     contents:
       reagents:
@@ -271,6 +300,19 @@
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
     seed: corn
+
+- type: entity
+  name: corn cob
+  parent: BaseItem
+  id: FoodCornTrash
+  description: Not a dang kernel left.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/corn.rsi
+    state: cob
+    netsync: false
+  - type: Item
+    size: 1
 
 - type: entity
   name: onion

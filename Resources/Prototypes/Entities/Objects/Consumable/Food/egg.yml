@@ -24,7 +24,7 @@
     maxVol: 5
     contents:
       reagents:
-      - ReagentId: chem.Egg
+      - ReagentId: Egg
         Quantity: 5
   - type: LoopingSound
   - type: DamageOnLand

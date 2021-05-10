@@ -45,9 +45,9 @@
 #  result: FoodSuperBiteBurger
 #  time: 20
 #  reagents:
-#    chem.Flour: 15
-#    chem.Salt: 5
-#    chem.Pepper: 5
+#    Flour: 15
+#    Salt: 5
+#    Pepper: 5
 #  solids:
 #    FoodMeat: 5
 #    FoodCheeseSlice: 3
@@ -96,9 +96,9 @@
 #  result: FoodBaguette
 #  time: 10
 #  reagents:
-#    chem.Flour: 15
-#    chem.Salt: 1
-#    chem.Pepper: 1
+#    Flour: 15
+#    Salt: 1
+#    Pepper: 1
 
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
@@ -216,7 +216,7 @@
 #  result: FoodCrabSpaghetti
 #  time: 10
 #  reagents:
-#    chem.Water: 5
+#    Water: 5
 #  solids:
 #    FoodCrabMeat: 2
 
@@ -234,7 +234,7 @@
 #   result: FoodMoMMISpaghetti
 #   time: 10
 #   reagents:
-#     chem.Flour: 5
+#     Flour: 5
 #   solids:
 
 #- type: microwaveMealRecipe
@@ -243,8 +243,8 @@
 #  result: FoodRisotto
 #  time: 10
 #  reagents:
-#    chem.Flour: 10 #This should be 10 units of rice.
-#    chem.Wine: 5
+#    Flour: 10 #This should be 10 units of rice.
+#    Wine: 5
 #  solids:
 #    FoodCheeseSlice: 1
 
@@ -254,8 +254,8 @@
 #  result: FoodBruschetta
 #  time: 10
 #  reagents:
-#    chem.Flour: 10
-#    chem.Salt: 2
+#    Flour: 10
+#    Salt: 2
 #  solids:
 #    FoodGarlic: 1
 #    FoodCheeseSlice: 1
@@ -278,7 +278,7 @@
 #  result: FoodLasagna
 #  time: 15
   # reagents:
-  #   chem.TomatoJuice: 15
+  #   TomatoJuice: 15
 #  solids:
 #    FoodFlatDough: 2
 #    FoodMeat: 2
@@ -304,7 +304,7 @@
 #  result: FoodNettleSoup
 #  time: 10
 #  reagents:
-#    chem.Water: 10
+#    Water: 10
 #  solids:
 #    FoodNettle: 1
 #    FoodEgg: 1
@@ -317,8 +317,8 @@
 #  result: FoodMeatSteak
 #  time: 10
 #  reagents:
-#    chem.Salt: 1
-#    chem.Pepper: 1
+#    Salt: 1
+#    Pepper: 1
 #  solids:
 #    FoodMeat: 1
 
@@ -348,7 +348,7 @@
 #  result: FoodCandyCorn
 #  time: 5
 #  reagents:
-#    chem.Glucose: 5
+#    Glucose: 5
 #  solids:
 #    FoodCorn: 1
 
