@@ -227,8 +227,9 @@
   color: "#d49a2f"
   Metabolism:
     - !type:HealthChangeMetabolism 
-      healthChange: 5 #you probably need something else for the "two units is deadly".
+      healthChange: 3 #you probably need something else for the "two units is deadly".
       damageType: Toxin
+      rate: 0.2 
 
 - type: reagent
   id: Tramadol
@@ -320,7 +321,7 @@
   color: "#2690b5"
 
 - type: reagent
-  id: MindbreakerToxin 
+  id: MindbreakerToxin
   name: mindbreaker toxin
   desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
   physicalDesc: opaque
