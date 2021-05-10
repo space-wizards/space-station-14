@@ -19,7 +19,7 @@
   physicalDesc: translucent
   color: "#3a1d8a"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -1
       damageType: Toxin
   plantMetabolism:
@@ -35,10 +35,10 @@
   physicalDesc: cloudy
   color: "#bd5902"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -1
       damageType: Toxin #I think you need multiple of these components for different types of damage so I'll maybe change it to work better in the future 
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: 0.5
       damageType: Brute
 
@@ -49,7 +49,7 @@
   physicalDesc: opaque
   color: "#ffaa00"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -2
       damageType: Brute
 
@@ -91,7 +91,7 @@
   physicalDesc: translucent
   color: "#215263"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -3
       damageType: Burn
 
@@ -102,7 +102,7 @@
   physicalDesc: opaque
   color: "#0041a8"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -1
       damageType: Airloss #this may be asphyxiation
       
@@ -113,7 +113,7 @@
   physicalDesc: cloudy
   color: "#4da0bd"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -3
       damageType: Airloss
 
@@ -166,7 +166,7 @@
   physicalDesc: strong-smelling
   color: "#bf3d19"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: -1
       damageType: Burn
 
@@ -226,7 +226,7 @@
   physicalDesc: pungent
   color: "#d49a2f"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: 5 #you probably need something else for the "two units is deadly".
       damageType: Toxin
 
@@ -289,7 +289,7 @@
     - !type:AdjustToxins
       amount: 10
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: 1
       damageType: Airloss
 
@@ -307,7 +307,7 @@
   physicalDesc: pungent
   color: "#6b0007"
   Metabolism:
-    - !type:DamageMetabolism
+    - !type:HealthChangeMetabolism 
       healthChange: 7
       damageType: Airloss
 

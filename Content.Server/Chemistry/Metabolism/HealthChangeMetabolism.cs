@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.Metabolism
     /// and to update its damage values.
     /// </summary>
     [DataDefinition]
-    public class DamageMetabolism : IMetabolizable
+    public class HealthChangeMetabolism : IMetabolizable
     {
         //Rate of metabolism in units / second
         [DataField("rate")]
