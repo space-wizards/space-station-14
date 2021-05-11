@@ -191,14 +191,14 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
             if (!Powered)
                 return;
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void UpdateUIState()

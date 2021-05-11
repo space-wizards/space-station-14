@@ -57,10 +57,10 @@ namespace Content.Server.GameObjects.Components.Headset
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!container.Owner.TryGetComponent(out IActorComponent? actor))
+                if (!container.Owner.TryGetComponent(out ActorComponent? actor))
                     return;
 
-                var playerChannel = actor.playerSession.ConnectedClient;
+                var playerChannel = actor.PlayerSession.ConnectedClient;
 
                 var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 

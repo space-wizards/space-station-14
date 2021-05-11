@@ -156,10 +156,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)

@@ -40,10 +40,10 @@ namespace Content.Server.Actions
 
             if (disarmedActs.Length == 0)
             {
-                if (args.Performer.TryGetComponent(out IActorComponent? actor))
+                if (args.Performer.TryGetComponent(out ActorComponent? actor))
                 {
                     // Fall back to a normal interaction with the entity
-                    var player = actor.playerSession;
+                    var player = actor.PlayerSession;
                     var coordinates = args.Target.Transform.Coordinates;
                     var target = args.Target.Uid;
                     EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);

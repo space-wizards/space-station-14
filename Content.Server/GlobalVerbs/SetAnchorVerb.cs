@@ -21,14 +21,14 @@ namespace Content.Server.GlobalVerbs
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
                 if (!target.TryGetComponent(out PhysicsComponent? physics))
                 {
                     return;
                 }
 
-                if (groupController.CanCommand(player.playerSession, "setanchor"))
+                if (groupController.CanCommand(player.PlayerSession, "setanchor"))
                 {
                     data.Text = physics.Anchored ? "Unanchor" : "Anchor";
                     data.Visibility = VerbVisibility.Visible;
@@ -38,10 +38,10 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
                 var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!groupController.CanCommand(player.playerSession, "setanchor"))
+                if (!groupController.CanCommand(player.PlayerSession, "setanchor"))
                     return;
 
                 if (target.TryGetComponent(out PhysicsComponent? physics))

@@ -271,23 +271,23 @@ namespace Content.Server.GameObjects.Components.PDA
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
             UpdatePDAAppearance();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return false;
             }
 
-            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
             UpdatePDAAppearance();
             return true;
         }

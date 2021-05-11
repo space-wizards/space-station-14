@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <param name="uid"></param>
         internal void UseItemInHand(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
-            if (entity.HasComponent<BasicActorComponent>())
+            if (entity.HasComponent<ActorComponent>())
             {
                 throw new InvalidOperationException();
             }

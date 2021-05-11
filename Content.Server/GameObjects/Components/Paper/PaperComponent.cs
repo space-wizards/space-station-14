@@ -47,12 +47,12 @@ namespace Content.Server.GameObjects.Components.Paper
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Read;
             UpdateUserInterface();
-            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
             return true;
         }
 
@@ -77,12 +77,12 @@ namespace Content.Server.GameObjects.Components.Paper
         {
             if (!eventArgs.Using.HasTag("Write"))
                 return false;
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Write;
             UpdateUserInterface();
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
             return true;
         }
     }

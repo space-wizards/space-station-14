@@ -129,12 +129,12 @@ namespace Content.Server.GameObjects.Components.Medical
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!Powered ||
-                !eventArgs.User.TryGetComponent(out IActorComponent? actor))
+                !eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)

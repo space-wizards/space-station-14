@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Command
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 /*
             if (!Powered)
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Command
                 return;
             }
 */
-            OpenUserInterface(actor.playerSession);
+            OpenUserInterface(actor.PlayerSession);
         }
     }
 }

@@ -270,10 +270,10 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
         {
-            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out BasicActorComponent? actor))
+            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            var session = actor.playerSession;
+            var session = actor.PlayerSession;
 
             if (session.Status != SessionStatus.InGame) return;
 
@@ -289,21 +289,21 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
+            if (Handheld || !eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
 
             if (InstrumentPlayer != null) return;
 
-            InstrumentPlayer = actor.playerSession;
-            OpenUserInterface(actor.playerSession);
+            InstrumentPlayer = actor.PlayerSession;
+            OpenUserInterface(actor.PlayerSession);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
 
-            if (InstrumentPlayer == actor.playerSession)
+            if (InstrumentPlayer == actor.PlayerSession)
             {
-                OpenUserInterface(actor.playerSession);
+                OpenUserInterface(actor.PlayerSession);
             }
 
             return false;

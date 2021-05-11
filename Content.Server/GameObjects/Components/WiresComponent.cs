@@ -489,9 +489,9 @@ namespace Content.Server.GameObjects.Components
                (tool.HasQuality(ToolQuality.Cutting) ||
                 tool.HasQuality(ToolQuality.Multitool)))
             {
-                if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+                if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 {
-                    OpenInterface(actor.playerSession);
+                    OpenInterface(actor.PlayerSession);
                     return true;
                 }
             }

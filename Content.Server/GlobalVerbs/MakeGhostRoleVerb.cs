@@ -28,8 +28,8 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            if (!user.TryGetComponent(out IActorComponent? actor) ||
-                !groupController.CanCommand(actor.playerSession, "makeghostrole"))
+            if (!user.TryGetComponent(out ActorComponent? actor) ||
+                !groupController.CanCommand(actor.PlayerSession, "makeghostrole"))
             {
                 return;
             }
@@ -49,14 +49,14 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            if (!user.TryGetComponent(out IActorComponent? actor) ||
-                !groupController.CanCommand(actor.playerSession, "makeghostrole"))
+            if (!user.TryGetComponent(out ActorComponent? actor) ||
+                !groupController.CanCommand(actor.PlayerSession, "makeghostrole"))
             {
                 return;
             }
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
-            ghostRoleSystem.OpenMakeGhostRoleEui(actor.playerSession, target.Uid);
+            ghostRoleSystem.OpenMakeGhostRoleEui(actor.PlayerSession, target.Uid);
         }
     }
 }
