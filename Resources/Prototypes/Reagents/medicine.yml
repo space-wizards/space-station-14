@@ -21,7 +21,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageType: Toxin
+      damageClass: Toxin
   plantMetabolism:
     - !type:AdjustToxins
       amount: -10
@@ -37,10 +37,10 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageType: Toxin #I think you need multiple of these components for different types of damage so I'll maybe change it to work better in the future 
+      damageClass: Toxin #I think you need multiple of these components for different types of damage so I'll maybe change it to work better in the future 
     - !type:HealthChangeMetabolism 
       healthChange: 0.5
-      damageType: Brute
+      damageClass: Brute
 
 - type: reagent
   id: Bicaridine
@@ -51,7 +51,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -2
-      damageType: Brute
+      damageClass: Brute
 
 - type: reagent
   id: Cryoxadone
@@ -93,7 +93,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -3
-      damageType: Burn
+      damageClass: Burn
 
 - type: reagent
   id: Dexalin
@@ -104,7 +104,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageType: Airloss #this may be asphyxiation
+      damageClass: Airloss #this may be asphyxiation
       
 - type: reagent
   id: DexalinPlus
@@ -115,7 +115,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -3
-      damageType: Airloss
+      damageClass: Airloss
 
 - type: reagent
   id: Ethylredoxrazine
@@ -168,7 +168,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageType: Burn
+      damageClass: Burn
 
 - type: reagent
   id: Leporazine
@@ -228,7 +228,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: 3 #you probably need something else for the "two units is deadly".
-      damageType: Toxin
+      damageClass: Toxin
       rate: 0.2 
 
 - type: reagent
@@ -292,7 +292,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: 1
-      damageType: Airloss
+      damageClass: Airloss
 
 - type: reagent
   id: Impedrezene
@@ -310,7 +310,7 @@
   Metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: 7
-      damageType: Airloss
+      damageClass: Airloss
 
 
 - type: reagent

@@ -16,16 +16,16 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class HealthChangeMetabolism : IMetabolizable
     {
-        //Rate of metabolism in units / second
+        // TODO: Rate of metabolism in units / second
         [DataField("rate")]
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         //How much damage is done/healed when 1u of the reagent is metabolized
         [DataField("healthChange")]
-        public float HealthChange { get; set; } = 30.0f;
+        public float HealthChange { get; set; } = 1.0f;
 
         //type of damage changed 
-        [DataField("damageType")]
+        [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
         
 
