@@ -12,6 +12,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IHandSelected
     {
+        [Obsolete("Use HandSelectedMessage instead")]
         void HandSelected(HandSelectedEventArgs eventArgs);
     }
 

@@ -1,12 +1,12 @@
 ﻿- type: entity
   id: TableBase
-  name: "table"
+  parent: BaseConstructible
+  name: table
   description: A square piece of metal standing on four metal legs.
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
+  - type: Damageable
+    resistances: metallicResistances
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
@@ -16,22 +16,12 @@
   - type: IconSmooth
     key: state
     base: state_
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - VaultImpassable
-      mask:
-      - Impassable
-  - type: SnapGrid
-    offset: Center
   - type: Climbable
 
 - type: entity
   id: TableFrame
   parent: TableBase
-  name: "table frame"
+  name: table frame
   description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
@@ -62,7 +52,7 @@
 - type: entity
   id: Table
   parent: TableBase
-  name: "table"
+  name: table
   description: A square piece of metal standing on four metal legs.
   components:
   - type: Sprite
@@ -93,15 +83,13 @@
 - type: entity
   id: TableBar
   parent: TableBase
-  name: "bar table"
-  description: "Fancy table. Perfect for serving drinks."
+  name: bar table
+  description: Fancy table. Perfect for serving drinks.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/bar.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/bar.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -127,15 +115,13 @@
 - type: entity
   id: TableMetal
   parent: TableBase
-  name: "metal table"
-  description: "Just a metal table."
+  name: metal table
+  description: Just a metal table.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/metal.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/metal.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -155,15 +141,13 @@
 - type: entity
   id: TableReinforced
   parent: TableBase
-  name: "reinforced table"
-  description: "A square piece of metal standing on four metal legs. Extra robust."
+  name: reinforced table
+  description: A square piece of metal standing on four metal legs. Extra robust.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/reinforced.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -186,15 +170,13 @@
 - type: entity
   id: TableGlass
   parent: TableBase
-  name: "glass table"
-  description: "A square piece of glass, standing on four metal legs."
+  name: glass table
+  description: A square piece of glass, standing on four metal legs.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/glass.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -217,15 +199,13 @@
 - type: entity
   id: TableReinforcedGlass
   parent: TableBase
-  name: "reinforced glass table"
-  description: "A square piece of glass, standing on four metal legs. Extra robust."
+  name: reinforced glass table
+  description: A square piece of glass, standing on four metal legs. Extra robust.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/r_glass.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -251,15 +231,13 @@
 - type: entity
   id: TableWood
   parent: TableBase
-  name: "wood table"
+  name: wood table
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/wood.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/wood.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -282,15 +260,13 @@
 - type: entity
   id: TableCarpet
   parent: TableBase
-  name: "gambling table"
+  name: gambling table
   description: Play em' cowboy.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/carpet.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -316,15 +292,13 @@
 - type: entity
   id: TableStone
   parent: TableBase
-  name: "stone table"
+  name: stone table
   description: Literally the sturdiest thing you have ever seen.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/stone.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/stone.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -339,15 +313,14 @@
 - type: entity
   id: TableDebug
   parent: TableBase
-  name: "debug table"
+  name: table
   description: PUT ON THEM CODERSOCKS!!
+  suffix: DEBUG
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/debug.rsi
   - type: Icon
     sprite: Constructible/Structures/Tables/debug.rsi
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:

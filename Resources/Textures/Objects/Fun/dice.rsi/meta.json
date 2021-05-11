@@ -1,1 +1,227 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "d10010", "delays": [[1.0]]}, {"name": "d100100", "delays": [[1.0]]}, {"name": "d10020", "delays": [[1.0]]}, {"name": "d10030", "delays": [[1.0]]}, {"name": "d10040", "delays": [[1.0]]}, {"name": "d10050", "delays": [[1.0]]}, {"name": "d10060", "delays": [[1.0]]}, {"name": "d10070", "delays": [[1.0]]}, {"name": "d10080", "delays": [[1.0]]}, {"name": "d10090", "delays": [[1.0]]}, {"name": "d101", "delays": [[1.0]]}, {"name": "d1010", "delays": [[1.0]]}, {"name": "d102", "delays": [[1.0]]}, {"name": "d103", "delays": [[1.0]]}, {"name": "d104", "delays": [[1.0]]}, {"name": "d105", "delays": [[1.0]]}, {"name": "d106", "delays": [[1.0]]}, {"name": "d107", "delays": [[1.0]]}, {"name": "d108", "delays": [[1.0]]}, {"name": "d109", "delays": [[1.0]]}, {"name": "d121", "delays": [[1.0]]}, {"name": "d1210", "delays": [[1.0]]}, {"name": "d1211", "delays": [[1.0]]}, {"name": "d1212", "delays": [[1.0]]}, {"name": "d122", "delays": [[1.0]]}, {"name": "d123", "delays": [[1.0]]}, {"name": "d124", "delays": [[1.0]]}, {"name": "d125", "delays": [[1.0]]}, {"name": "d126", "delays": [[1.0]]}, {"name": "d127", "delays": [[1.0]]}, {"name": "d128", "delays": [[1.0]]}, {"name": "d129", "delays": [[1.0]]}, {"name": "d201", "delays": [[1.0]]}, {"name": "d2010", "delays": [[1.0]]}, {"name": "d2011", "delays": [[1.0]]}, {"name": "d2012", "delays": [[1.0]]}, {"name": "d2013", "delays": [[1.0]]}, {"name": "d2014", "delays": [[1.0]]}, {"name": "d2015", "delays": [[1.0]]}, {"name": "d2016", "delays": [[1.0]]}, {"name": "d2017", "delays": [[1.0]]}, {"name": "d2018", "delays": [[1.0]]}, {"name": "d2019", "delays": [[1.0]]}, {"name": "d202", "delays": [[1.0]]}, {"name": "d2020", "delays": [[1.0]]}, {"name": "d203", "delays": [[1.0]]}, {"name": "d204", "delays": [[1.0]]}, {"name": "d205", "delays": [[1.0]]}, {"name": "d206", "delays": [[1.0]]}, {"name": "d207", "delays": [[1.0]]}, {"name": "d208", "delays": [[1.0]]}, {"name": "d209", "delays": [[1.0]]}, {"name": "d41", "delays": [[1.0]]}, {"name": "d42", "delays": [[1.0]]}, {"name": "d43", "delays": [[1.0]]}, {"name": "d44", "delays": [[1.0]]}, {"name": "d61", "delays": [[1.0]]}, {"name": "d62", "delays": [[1.0]]}, {"name": "d63", "delays": [[1.0]]}, {"name": "d64", "delays": [[1.0]]}, {"name": "d65", "delays": [[1.0]]}, {"name": "d66", "delays": [[1.0]]}, {"name": "d81", "delays": [[1.0]]}, {"name": "d82", "delays": [[1.0]]}, {"name": "d83", "delays": [[1.0]]}, {"name": "d84", "delays": [[1.0]]}, {"name": "d85", "delays": [[1.0]]}, {"name": "d86", "delays": [[1.0]]}, {"name": "d87", "delays": [[1.0]]}, {"name": "d88", "delays": [[1.0]]}, {"name": "dicebag", "delays": [[1.0]]}, {"name": "magicdicebag", "delays": [[1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "d10010"
+    },
+    {
+      "name": "d100100"
+    },
+    {
+      "name": "d10020"
+    },
+    {
+      "name": "d10030"
+    },
+    {
+      "name": "d10040"
+    },
+    {
+      "name": "d10050"
+    },
+    {
+      "name": "d10060"
+    },
+    {
+      "name": "d10070"
+    },
+    {
+      "name": "d10080"
+    },
+    {
+      "name": "d10090"
+    },
+    {
+      "name": "d101"
+    },
+    {
+      "name": "d1010"
+    },
+    {
+      "name": "d102"
+    },
+    {
+      "name": "d103"
+    },
+    {
+      "name": "d104"
+    },
+    {
+      "name": "d105"
+    },
+    {
+      "name": "d106"
+    },
+    {
+      "name": "d107"
+    },
+    {
+      "name": "d108"
+    },
+    {
+      "name": "d109"
+    },
+    {
+      "name": "d121"
+    },
+    {
+      "name": "d1210"
+    },
+    {
+      "name": "d1211"
+    },
+    {
+      "name": "d1212"
+    },
+    {
+      "name": "d122"
+    },
+    {
+      "name": "d123"
+    },
+    {
+      "name": "d124"
+    },
+    {
+      "name": "d125"
+    },
+    {
+      "name": "d126"
+    },
+    {
+      "name": "d127"
+    },
+    {
+      "name": "d128"
+    },
+    {
+      "name": "d129"
+    },
+    {
+      "name": "d201"
+    },
+    {
+      "name": "d2010"
+    },
+    {
+      "name": "d2011"
+    },
+    {
+      "name": "d2012"
+    },
+    {
+      "name": "d2013"
+    },
+    {
+      "name": "d2014"
+    },
+    {
+      "name": "d2015"
+    },
+    {
+      "name": "d2016"
+    },
+    {
+      "name": "d2017"
+    },
+    {
+      "name": "d2018"
+    },
+    {
+      "name": "d2019"
+    },
+    {
+      "name": "d202"
+    },
+    {
+      "name": "d2020"
+    },
+    {
+      "name": "d203"
+    },
+    {
+      "name": "d204"
+    },
+    {
+      "name": "d205"
+    },
+    {
+      "name": "d206"
+    },
+    {
+      "name": "d207"
+    },
+    {
+      "name": "d208"
+    },
+    {
+      "name": "d209"
+    },
+    {
+      "name": "d41"
+    },
+    {
+      "name": "d42"
+    },
+    {
+      "name": "d43"
+    },
+    {
+      "name": "d44"
+    },
+    {
+      "name": "d61"
+    },
+    {
+      "name": "d62"
+    },
+    {
+      "name": "d63"
+    },
+    {
+      "name": "d64"
+    },
+    {
+      "name": "d65"
+    },
+    {
+      "name": "d66"
+    },
+    {
+      "name": "d81"
+    },
+    {
+      "name": "d82"
+    },
+    {
+      "name": "d83"
+    },
+    {
+      "name": "d84"
+    },
+    {
+      "name": "d85"
+    },
+    {
+      "name": "d86"
+    },
+    {
+      "name": "d87"
+    },
+    {
+      "name": "d88"
+    },
+    {
+      "name": "dicebag"
+    },
+    {
+      "name": "magicdicebag"
+    }
+  ]
+}

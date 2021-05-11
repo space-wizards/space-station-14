@@ -90,6 +90,7 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
+    size: 15
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
@@ -109,6 +110,7 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/crowbar_red.rsi
+    size: 5
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool

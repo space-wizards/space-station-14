@@ -18,10 +18,11 @@
         !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
-      layer: [Clickable]
       mask:
       - Impassable
       - MobImpassable
+    linearDamping: 0
+    angularDamping: 0
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
@@ -281,5 +282,5 @@
     - type: SolutionContainer
       contents:
         reagents:
-          - ReagentId: chem.Nutriment
+          - ReagentId: Nutriment
             Quantity: 8

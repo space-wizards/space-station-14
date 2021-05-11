@@ -1,3 +1,4 @@
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -10,9 +11,10 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public sealed class AtmosPlaqueComponent : Component, IMapInit
     {
+        public override string Name => "AtmosPlaque";
+
         [DataField("plaqueType")]
         private PlaqueType _type = PlaqueType.Unset;
-        public override string Name => "AtmosPlaque";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public PlaqueType Type
@@ -82,11 +84,11 @@ namespace Content.Server.GameObjects.Components
                 _ => "Uhm",
             };
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 var state = _type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 
-                sprite.LayerSetState(0, state);
+                appearance.SetData(AtmosPlaqueVisuals.State, state);
             }
         }
 

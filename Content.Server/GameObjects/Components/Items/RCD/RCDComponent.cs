@@ -31,10 +31,10 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int maxAmmo = 5;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int MaxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
-        private DoAfterSystem doAfterSystem = default!;
+        private DoAfterSystem _doAfterSystem = default!;
 
         ///Enum to store the different mode states for clarity.
         private enum RcdMode
@@ -48,8 +48,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public override void Initialize()
         {
             base.Initialize();
-            _ammo = maxAmmo;
-            doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            _ammo = MaxAmmo;
+            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         ///<summary>
@@ -96,12 +96,16 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)
         {
+            // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
+            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager) || !eventArgs.ClickLocation.GetGridId(Owner.EntityManager).IsValid())
+                return false;
+
             //No changing mode mid-RCD
             var startingMode = _mode;
 
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-            var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+            var snapPos = mapGrid.TileIndicesFor(eventArgs.ClickLocation);
 
             //Using an RCD isn't instantaneous
             var cancelToken = new CancellationTokenSource();
@@ -113,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 ExtraCheck = () => IsRCDStillValid(eventArgs, mapGrid, tile, snapPos, startingMode) //All of the sanity checks are here
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
             if (result == DoAfterStatus.Cancelled)
             {
                 return true;
@@ -138,8 +142,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
-                    var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
-                    ent.Transform.LocalRotation = Angle.South; // Walls always need to point south.
+                    var ent = _serverEntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
+                    ent.Transform.LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:
                     var airlock = _serverEntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));

@@ -9,11 +9,11 @@ namespace Content.Shared.Construction
     [DataDefinition]
     public class ToolConstructionGraphStep : ConstructionGraphStep
     {
-        [field: DataField("tool")] public ToolQuality Tool { get; } = ToolQuality.None;
+        [DataField("tool")] public ToolQuality Tool { get; } = ToolQuality.None;
 
-        [field: DataField("fuel")] public float Fuel { get; } = 10;
+        [DataField("fuel")] public float Fuel { get; } = 10;
 
-        [field: DataField("examine")] public string ExamineOverride { get; } = string.Empty;
+        [DataField("examine")] public string ExamineOverride { get; } = string.Empty;
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {

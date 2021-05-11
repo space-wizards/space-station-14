@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,7 +19,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef GetTileRef(this Vector2i Vector2i, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this Vector2i vector2i, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return default;
@@ -29,7 +29,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(gridId, out var grid))
                 return default;
 
-            if (!grid.TryGetTileRef(Vector2i, out var tile))
+            if (!grid.TryGetTileRef(vector2i, out var tile))
                 return default;
 
             return tile;
@@ -58,9 +58,9 @@ namespace Content.Shared.Maps
             return tile;
         }
 
-        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            return (turf = coordinates.GetTileRef()) != null;
+            return (turf = coordinates.GetTileRef(entityManager, mapManager)) != null;
         }
 
         /// <summary>
@@ -149,32 +149,32 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
-            return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
             if (turf == null)
                 return Enumerable.Empty<IEntity>();
 
-            return GetEntitiesInTile(turf.Value, approximate, entityManager);
+            return GetEntitiesInTile(turf.Value, approximate, lookupSystem);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
-            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, entityManager);
+            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, lookupSystem);
         }
 
         /// <summary>

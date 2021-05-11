@@ -1,22 +1,13 @@
 ﻿- type: entity
   id: Mirror
+  parent: BaseConstructible
   name: mirror
   description: 'Mirror mirror on the wall , who''s the most robust of them all?'
   components:
   - type: Sprite
     sprite: Constructible/Misc/mirror.rsi
     state: mirror
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer: [Clickable]
-  - type: Clickable
   - type: InteractionOutline
-  - type: SnapGrid
-    offset: Center
   - type: MagicMirror
   - type: UserInterface
     interfaces:

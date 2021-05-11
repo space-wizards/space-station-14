@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -12,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -19,12 +21,14 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastClang;
@@ -43,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         /// <summary>
         ///     The directions that this tube can connect to others from
@@ -66,12 +70,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent? NextTube(DisposalHolderComponent holder)
         {
             var nextDirection = NextDirection(holder);
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
 
-            foreach (var entity in snapGrid.GetInDir(nextDirection))
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            foreach (var entity in grid.GetInDir(position, nextDirection))
             {
-                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
                 {
                     continue;
                 }
@@ -196,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (physics.Anchored)
+            if (physics.BodyType == BodyType.Static)
             {
                 OnAnchor();
             }
@@ -230,7 +235,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent<PhysicsComponent>().Anchored)
+            Owner.EnsureComponent<PhysicsComponent>(out var physicsComponent);
+            if (physicsComponent.BodyType != BodyType.Static)
             {
                 return;
             }

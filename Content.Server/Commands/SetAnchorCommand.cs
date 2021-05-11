@@ -1,9 +1,11 @@
 #nullable enable
 using Content.Server.Administration;
+using Content.Server.GameObjects.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 
 namespace Content.Server.Commands
 {
@@ -13,7 +15,7 @@ namespace Content.Server.Commands
         public string Command => "setanchor";
         public string Description => "Sets the anchoring state of an entity.";
         public string Help => "setanchor <entity id> <value (optional)>";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0 || args.Length > 2)
             {
@@ -31,7 +33,7 @@ namespace Content.Server.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(entId, out var entity) || entity.Deleted || !entity.TryGetComponent(out PhysicsComponent? physics))
+            if (!entityManager.TryGetEntity(entId, out var entity) || entity.Deleted || !entity.TryGetComponent(out AnchorableComponent? anchorable))
             {
                 shell.WriteLine("Invalid entity specified!");
                 return;
@@ -45,11 +47,14 @@ namespace Content.Server.Commands
                     return;
                 }
 
-                physics.Anchored = value;
+                if (value)
+                    await anchorable.TryAnchor(default, force: true);
+                else
+                    await anchorable.TryUnAnchor(default, force: true);
                 return;
             }
 
-            physics.Anchored = !physics.Anchored;
+            await anchorable.TryToggleAnchor(default, force: true);
         }
     }
 }

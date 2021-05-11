@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
     [DataDefinition]
     public class OrTrigger : IThresholdTrigger
     {
-        [field: DataField("triggers")]
+        [DataField("triggers")]
         public List<IThresholdTrigger> Triggers { get; } = new();
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)

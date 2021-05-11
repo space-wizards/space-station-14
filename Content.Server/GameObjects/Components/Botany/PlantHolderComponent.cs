@@ -36,7 +36,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IReagentReaction, IExamine
+    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
@@ -805,24 +805,6 @@ namespace Content.Server.GameObjects.Components.Botany
             }
 
             return false;
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            if(_solutionContainer == null)
-                return ReagentUnit.Zero;
-
-            _solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted);
-            return accepted;
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            if(_solutionContainer == null)
-                return ReagentUnit.Zero;
-
-            _solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted);
-            return accepted;
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

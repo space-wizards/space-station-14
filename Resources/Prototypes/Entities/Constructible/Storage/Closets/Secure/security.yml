@@ -22,7 +22,7 @@
     - type: StorageVisualizer
       state: warden
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Security"]] # TODO access [["Brig"]]
 
 # Security Officer
 - type: entity
@@ -48,4 +48,4 @@
     - type: StorageVisualizer
       state: cabinet
   - type: AccessReader
-    access: [["Detective"]]
+    access: [["Service"]] # TODO access [["Detective"]]

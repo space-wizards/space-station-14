@@ -7,9 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -22,8 +20,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [RegisterComponent]
     public class PowerReceiverComponent : Component, IExamine
     {
-        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-
         [ViewVariables] [ComponentDependency] private readonly IPhysBody? _physicsComponent = null;
 
         public override string Name => "PowerReceiver";
@@ -131,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private bool TryFindAvailableProvider(out IPowerProvider foundProvider)
         {
-            var nearbyEntities = _serverEntityManager
+            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(Owner, PowerReceptionRange);
 
             foreach (var entity in nearbyEntities)
@@ -140,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 {
                     if (provider.Connectable)
                     {
-                        if (provider.Owner.Transform.Coordinates.TryDistance(_serverEntityManager, Owner.Transform.Coordinates, out var distance))
+                        if (provider.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance))
                         {
                             if (distance < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
                             {

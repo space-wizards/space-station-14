@@ -1,10 +1,10 @@
 #nullable enable
+using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -52,13 +52,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
-                Logger.Error($"{nameof(PipeHeaterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(PipeHeaterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} did not have a {nameof(NodeContainerComponent)}.");
                 return;
             }
             _heaterPipe = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (_heaterPipe == null)
             {
-                Logger.Error($"{nameof(PipeHeaterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                Logger.Warning($"{nameof(PipeHeaterComponent)} on {Owner?.Prototype?.ID}, Uid {Owner?.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
         }

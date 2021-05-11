@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override string Name => "CreamPie";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [field: DataField("paralyzeTime")]
+        [DataField("paralyzeTime")]
         public float ParalyzeTime { get; set; } = 1f;
 
         public void PlaySound()

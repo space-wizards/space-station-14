@@ -56,7 +56,6 @@ namespace Content.Client
             "Drink",
             "Food",
             "FoodContainer",
-            "Rotatable",
             "MagicMirror",
             "FloorTile",
             "ShuttleController",
@@ -233,6 +232,7 @@ namespace Content.Client
             "FoamSolutionAreaEffect",
             "GasFilter",
             "Recyclable",
+            "LightReplacer",
             "SecretStash",
             "Toilet",
             "ClusterFlash",
@@ -250,6 +250,10 @@ namespace Content.Client
             "ToySpawner",
             "FigureSpawner",
             "RandomSpawner",
+            "SpawnAfterInteract",
+            "DisassembleOnActivate",
+            "ExplosionLaunched",
+            "Advertise",
         };
     }
 }

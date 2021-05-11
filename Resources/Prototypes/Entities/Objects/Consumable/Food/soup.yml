@@ -1,0 +1,521 @@
+- type: entity
+  parent: BaseItem
+  id: FoodBowlBase
+  abstract: true
+  components:
+  - type: Food
+    trash: FoodBowlBig
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+    trash: BowlBigTrash
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    netsync: false
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
+  - type: Spillable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BowlBigTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Custom Soup Example
+
+- type: entity
+  name: pea soup
+  parent: FoodBowlBase
+  id: FoodSoupPea
+  description: A humble split pea soup.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+    - state: alpha-filling
+      color: green
+# Tastes like creamy peas.
+
+# Salad
+
+- type: entity
+  name: aesir salad
+  parent: FoodBowlBase
+  id: FoodSaladAesir
+  description: Probably too incredible for mortals to fully enjoy.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: aesir
+# Tastes like leaves
+
+- type: entity
+  name: herb salad
+  parent: FoodBowlBase
+  id: FoodSaladHerb
+  description: A tasty salad with apples on top.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: herb
+# Tastes like leaves, apples.
+
+- type: entity
+  name: valid salad
+  parent: FoodBowlBase
+  id: FoodSaladValid
+  description: It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: valid
+# Tastes like leaves, potato, meat, valids.
+
+- type: entity
+  name: fruit salad
+  parent: FoodBowlBase
+  id: FoodSaladFruit
+  description: Your standard fruit salad.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: fruit
+# Tastes like fruit.
+
+- type: entity
+  name: jungle salad
+  parent: FoodBowlBase
+  id: FoodSaladJungle
+  description: Exotic fruits in a bowl.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: fruit
+# Tastes like fruit, the jungle.
+
+- type: entity
+  name: citrus salad
+  parent: FoodBowlBase
+  id: FoodSaladCitrus
+  description: Citrus overload!
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: citrusdelight
+# Tastes like sourness, leaves.
+
+- type: entity
+  name: salad of eden
+  parent: FoodBowlBase
+  id: FoodSaladEden
+  description: A salad brimming with untapped potential.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: eden
+# Tastes like extreme bitterness, hope.
+
+# Rice
+
+- type: entity
+  name: boiled rice
+  parent: FoodBowlBase
+  id: FoodRiceBoiled
+  description: A warm bowl of rice.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: rice
+# Tastes like rice.
+
+- type: entity
+  name: egg-fried rice
+  parent: FoodBowlBase
+  id: FoodRiceEgg
+  description: A bowl of rice with a fried egg.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: rice-egg
+# Tastes like rice, egg. Egg =/= Meat -Swept 2020
+- type: entity
+  name: rice and pork
+  parent: FoodBowlBase
+  id: FoodRicePork
+  description: Well, it looks like pork...
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: rice-pork
+# Tastes like rice, meat.
+
+- type: entity
+  name: rice pudding
+  parent: FoodBowlBase
+  id: FoodRicePudding
+  description: Everybody loves rice pudding!
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: rice-pudding
+# Tastes like rice, sweetness.
+
+- type: entity
+  name: black-eyed gumbo
+  parent: FoodBowlBase
+  id: FoodRiceGumbo
+  description: A spicy and savory meat and rice dish.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: gumbo
+# Tastes like building heat, savory meat, savory vegetables, suppressed rice.
+
+# Misc
+
+- type: entity
+  name: oatmeal
+  parent: FoodBowlBase
+  id: FoodOatmeal
+  description: A nice bowl of oatmeal.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: oatmeal
+# Tastes like oats, milk.
+
+- type: entity
+  name: space liberty duff
+  parent: FoodBowlBase
+  id: FoodJellyDuff
+  description: Jello gelatin, from Alfred Hubbard's cookbook.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: spacelibertyduff
+# Tastes like jelly, mushroom.
+
+# Soup
+
+- type: entity
+  name: meatball soup
+  parent: FoodBowlBase
+  id: FoodSoupMeatball
+  description: You've got balls kid, BALLS!
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: meatball
+# Tastes like meatballs.
+
+- type: entity
+  name: slime soup
+  parent: FoodBowlBase
+  id: FoodSoupSlime
+  description: If no water is available, you may substitute tears.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: slime
+# Tastes like slime.
+
+- type: entity
+  name: tomato soup
+  parent: FoodBowlBase
+  id: FoodSoupTomatoBlood
+  description: Smells like copper... is that a bone?
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: tomato
+# Tastes like iron.
+
+- type: entity
+  name: wing fang chu
+  parent: FoodBowlBase
+  id: FoodSoupWingFangChu
+  description: A savory dish of alien wing wang in soy.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: wingfangchu
+# Tastes like soy.
+
+- type: entity
+  name: clown's tears
+  parent: FoodBowlBase
+  id: FoodSoupClown
+  description: Not very funny.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: clowntears
+# Tastes like a bad joke.
+
+- type: entity
+  name: vegetable soup
+  parent: FoodBowlBase
+  id: FoodSoupVegetable
+  description: A true vegan meal.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: vegetable
+# Tastes like vegetables, sadness.
+
+- type: entity
+  name: nettle soup
+  parent: FoodBowlBase
+  id: FoodSoupNettle
+  description: To think, the botanist would've beat you to death with one of these.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: nettle
+# Tastes like nettles.
+
+- type: entity
+  name: mystery soup
+  parent: FoodBowlBase
+  id: FoodSoupMystery
+  description: The mystery is, why aren't you eating it?
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: mystery
+# Tastes like chaos.
+
+- type: entity
+  name: hot chili
+  parent: FoodBowlBase
+  id: FoodSoupChiliHot
+  description: A Texan five-alarm chili!
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: chili-hot
+# Tastes like hot peppers.
+
+- type: entity
+  name: cold chili
+  parent: FoodBowlBase
+  id: FoodSoupChiliCold
+  description: This slush is barely a liquid!
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: chili-cold
+# Tastes like tomato, mint.
+
+- type: entity
+  name: chili con carnival
+  parent: FoodBowlBase
+  id: FoodSoupChiliClown
+  description: A delicious stew of meat, chilies, and salty, salty clown tears.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: chili-clown
+# Tastes like tomato, hot peppers, clown feet, kind of funny, someone's parents.
+
+- type: entity
+  name: monkey's delight
+  parent: FoodBowlBase
+  id: FoodSoupMonkey
+  description: A delicious soup with hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: monkeydelight
+# Tastes like the jungle, banana.
+
+- type: entity
+  name: tomato soup
+  parent: FoodBowlBase
+  id: FoodSoupTomato
+  description: Drinking this feels like being a vampire! A tomato vampire...
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: tomato
+# Tastes like tomato.
+
+- type: entity
+  name: eyeball soup
+  parent: FoodBowlBase
+  id: FoodSoupEyeball
+  description: It's looking back at you...
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: eyeball
+# Tastes like tomato, squirming.
+
+- type: entity
+  name: miso soup
+  parent: FoodBowlBase
+  id: FoodSoupMiso
+  description: Salty, fishy soup, best had with ramen.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl2
+    - state: milo
+  - type: SolutionContainer
+    trash: FoodBowlFancy
+# Tastes like miso.
+
+- type: entity
+  name: mushroom soup
+  parent: FoodBowlBase
+  id: FoodSoupMushroom
+  description: A delicious and hearty mushroom soup.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: mushroom
+# Tastes like mushroom.
+
+- type: entity
+  name: beet soup
+  parent: FoodBowlBase
+  id: FoodSoupBeet
+  description: Wait, how do you spell it again..?
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: beet
+# Tastes like borsch, bortsch, borstch, borsh, borshch, borscht.
+
+- type: entity
+  name: red beet soup
+  parent: FoodBowlBase
+  id: FoodSoupBeetRed
+  description: Quite a delicacy.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: redbeet
+# Tastes like
+
+- type: entity
+  name: stew
+  parent: FoodBowlBase
+  id: FoodSoupStew
+  description: A nice and warm stew. Healthy and strong.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: stew
+# Tastes like tomato, carrot.
+
+- type: entity
+  name: sweet potato soup
+  parent: FoodBowlBase
+  id: FoodSoupPotato
+  description: Delicious sweet potato in soup form.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: sweetpotato
+# Tastes like sweet potato.
+
+- type: entity
+  name: french onion soup
+  parent: FoodBowlBase
+  id: FoodSoupOnion
+  description: Good enough to make a grown mime cry.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: onion
+# Tastes like onion, france.
+
+- type: entity
+  name: bisque
+  parent: FoodBowlBase
+  id: FoodSoupBisque
+  description: A classic entrée from Space France.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: bisque
+# Tastes like cream, crab.
+
+- type: entity
+  name: electron soup
+  parent: FoodBowlBase
+  id: FoodSoupElectron
+  description: A gastronomic curiosity of ethereal origin.
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: electron
+# Tastes like mushroom, electrons.
+
+- type: entity
+  name: bungo curry
+  parent: FoodBowlBase
+  id: FoodSoupBungo
+  description: A spicy vegetable curry made with the humble bungo fruit, Exotic!
+  components:
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: bungo
+# Tastes like bungo, hot curry, tropical sweetness.

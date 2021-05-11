@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainer
@@ -12,7 +11,6 @@
     spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: LoopingSound
-  - type: InteractionOutline
   - type: Clickable
   - type: Slippery
   - type: Physics

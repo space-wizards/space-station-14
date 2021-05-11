@@ -28,6 +28,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -44,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "DisposalUnit";
 
@@ -87,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Delay from trying to shove someone else into disposals.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _draggedEntryDelay;
+        private float _draggedEntryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -130,13 +132,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         }
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
-
-        private DisposalUnitBoundUserInterfaceState? _lastUiState;
-
-        /// <summary>
-        ///     Store the translated state.
-        /// </summary>
-        private (PressureState State, string Localized) _locState;
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
@@ -267,17 +262,17 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var entry = snapGrid
-                .GetLocal()
-                .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            var entry = grid.GetLocal(coords)
+                .FirstOrDefault(entity => Owner.EntityManager.ComponentManager.HasComponent<DisposalEntryComponent>(entity));
 
-            if (entry == null)
+            if (entry == default)
             {
                 return false;
             }
 
-            var entryComponent = entry.GetComponent<DisposalEntryComponent>();
+            var entryComponent = Owner.EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
 
             if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
                 tileAtmos.Air != null &&
@@ -290,7 +285,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
                 atmosSystem
-                    .GetGridAtmosphere(Owner.Transform.GridID)?
+                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
                     .Invalidate(tileAtmos.GridIndices);
             }
 
@@ -328,33 +323,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private DisposalUnitBoundUserInterfaceState GetInterfaceState()
+        private void UpdateInterface()
         {
             string stateString;
 
-            if (_locState.State != State)
-            {
-                stateString = Loc.GetString($"{State}");
-                _locState = (State, stateString);
-            }
-            else
-            {
-                stateString = _locState.Localized;
-            }
-
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
-        }
-
-        private void UpdateInterface()
-        {
-            var state = GetInterfaceState();
-
-            if (_lastUiState != null && _lastUiState.Equals(state))
-            {
-                return;
-            }
-
-            _lastUiState = state;
+            stateString = Loc.GetString($"{State}");
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -488,7 +462,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            UpdateInterface();
+            // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
+            if (_pressure < 1.0f || oldPressure < 1.0f && _pressure >= 1.0f)
+            {
+                UpdateInterface();
+            }
         }
 
         private void PowerStateChanged(PowerChangedMessage args)
@@ -531,6 +509,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             UpdateVisualState();
+            UpdateInterface();
         }
 
         public override void OnRemove()

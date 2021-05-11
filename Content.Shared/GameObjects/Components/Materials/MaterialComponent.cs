@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.GameObjects.Components.Materials
 {
@@ -45,7 +46,7 @@ namespace Content.Shared.GameObjects.Components.Materials
             [DataField("key", required: true)]
             public string StringKey = default!;
 
-            [DataField("mat", required: true)]
+            [DataField("mat", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MaterialPrototype>))]
             public string Value = default!;
 
             void ISerializationHooks.AfterDeserialization()

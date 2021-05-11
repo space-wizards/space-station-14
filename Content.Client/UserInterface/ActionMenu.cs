@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -198,14 +198,14 @@ namespace Content.Client.UserInterface
         {
             _dragShadow.Texture = _dragDropHelper.Dragged!.Action.Icon.Frame0();
             // don't make visible until frameupdate, otherwise it'll flicker
-            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled.Position - (32, 32));
             return true;
         }
 
         private bool OnContinueActionDrag(float frameTime)
         {
             // keep dragged entity centered under mouse
-            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled - (32, 32));
+            LayoutContainer.SetPosition(_dragShadow, UserInterfaceManager.MousePositionScaled.Position - (32, 32));
             // we don't set this visible until frameupdate, otherwise it flickers
             _dragShadow.Visible = true;
             return true;
@@ -510,7 +510,7 @@ namespace Content.Client.UserInterface
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
-            base.Update(args);
+            base.FrameUpdate(args);
             _dragDropHelper.Update(args.DeltaSeconds);
         }
     }

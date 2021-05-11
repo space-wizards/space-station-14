@@ -22,7 +22,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: GasGenerator
   - type: PipeNetDevice
 
@@ -41,7 +40,8 @@
     - state: gasGenerator
   - type: NodeContainer
     nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Fourway
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
 

@@ -22,10 +22,10 @@ namespace Content.Client.Graphics.Overlays
             _shader = _prototypeManager.Index<ShaderPrototype>("ColoredScreenBorder").Instance();
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
-            handle.UseShader(_shader);
-            var worldHandle = (DrawingHandleWorld)handle;
+            var worldHandle = args.WorldHandle;
+            worldHandle.UseShader(_shader);
             var viewport = _eyeManager.GetWorldViewport();
             worldHandle.DrawRect(viewport, Color.White);
         }

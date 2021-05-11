@@ -19,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -140,9 +141,9 @@ namespace Content.Server.GameObjects.Components.Recycling
             return true;
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            Recycle(otherBody.Entity);
+            Recycle(otherFixture.Body.Owner);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

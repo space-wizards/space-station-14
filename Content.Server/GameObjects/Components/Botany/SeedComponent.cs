@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Botany;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -15,8 +15,6 @@ namespace Content.Server.GameObjects.Components.Botany
     [RegisterComponent]
     public class SeedComponent : Component, IExamine
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Seed";
 
         [DataField("seed")]

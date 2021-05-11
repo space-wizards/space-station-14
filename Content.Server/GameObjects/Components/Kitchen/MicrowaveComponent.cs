@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         #region YAMLSERIALIZE
         [DataField("cookTime")]
-        private int _cookTimeDefault = 5;
+        private uint _cookTimeDefault = 5;
         [DataField("cookTimeMultiplier")]
         private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
         [DataField("failureResult")]
@@ -78,6 +78,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             base.Initialize();
 
+            _currentCookTimerTime = _cookTimeDefault;
+
             Owner.EnsureComponent<SolutionContainerComponent>();
 
             _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container", out var existed);
@@ -99,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch (message.Message)
             {
                 case MicrowaveStartCookMessage msg :
-                    wzhzhzh();
+                    Wzhzhzh();
                     break;
                 case MicrowaveEjectMessage msg :
                     if (_hasContents)
@@ -251,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once IdentifierTypo
-        private void wzhzhzh()
+        private void Wzhzhzh()
         {
             if (!_hasContents)
             {
@@ -467,19 +469,26 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (victim.TryGetComponent<IBody>(out var body))
             {
-                var heads = body.GetPartsOfType(BodyPartType.Head);
-                foreach (var head in heads)
+                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
+
+                foreach (var slot in headSlots)
                 {
-                    if (!body.TryDropPart(head, out var dropped))
+                    var part = slot.Part;
+
+                    if (part == null ||
+                        !body.TryDropPart(slot, out var dropped))
                     {
                         continue;
                     }
 
-                    var droppedHeads = dropped.Where(p => p.PartType == BodyPartType.Head);
-
-                    foreach (var droppedHead in droppedHeads)
+                    foreach (var droppedPart in dropped.Values)
                     {
-                        _storage.Insert(droppedHead.Owner);
+                        if (droppedPart.PartType != BodyPartType.Head)
+                        {
+                            continue;
+                        }
+
+                        _storage.Insert(droppedPart.Owner);
                         headCount++;
                     }
                 }
@@ -500,7 +509,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _currentCookTimerTime = 10;
             ClickSound();
             _uiDirty = true;
-            wzhzhzh();
+            Wzhzhzh();
             return SuicideKind.Heat;
         }
     }

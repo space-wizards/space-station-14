@@ -131,13 +131,12 @@ namespace Content.Server.GameObjects.EntitySystems
             // Get players that are in range and whose visibility layer matches the arrow's.
             var viewers = _playerManager.GetPlayersBy((playerSession) =>
             {
-                if ((playerSession.VisibilityMask & layer) == 0)
-                    return false;
-
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                return ent != null
-                       && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) != 0))
+                    return false;
+                
+                return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
             });
 
             string selfMessage;

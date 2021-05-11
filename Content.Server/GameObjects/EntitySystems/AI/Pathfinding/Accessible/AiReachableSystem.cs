@@ -90,7 +90,23 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _mapManager.OnGridRemoved += GridRemoved;
         }
 
-        private void GridRemoved(GridId gridId)
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _queuedUpdates.Clear();
+            _regions.Clear();
+            _cachedAccessible.Clear();
+            _queuedCacheDeletions.Clear();
+
+            _mapManager.OnGridRemoved -= GridRemoved;
+
+            UnsubscribeLocalEvent<PathfindingChunkUpdateMessage>();
+            UnsubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>();
+            UnsubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>();
+        }
+
+        private void GridRemoved(MapId mapId, GridId gridId)
         {
             _regions.Remove(gridId);
         }
@@ -124,20 +140,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             }
 
             _queuedCacheDeletions.Clear();
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _queuedUpdates.Clear();
-            _regions.Clear();
-            _cachedAccessible.Clear();
-            _queuedCacheDeletions.Clear();
-            _mapManager.OnGridRemoved -= GridRemoved;
-            UnsubscribeLocalEvent<PathfindingChunkUpdateMessage>();
-            UnsubscribeLocalEvent<PlayerAttachSystemMessage>();
-            UnsubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>();
-            UnsubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>();
         }
 
 #if DEBUG
@@ -423,6 +425,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         public PathfindingRegion? GetRegion(IEntity entity)
         {
+            if (!entity.Transform.GridID.IsValid())
+            {
+                return null;
+            }
+
             var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);

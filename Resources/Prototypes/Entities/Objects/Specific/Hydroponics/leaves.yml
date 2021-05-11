@@ -1,0 +1,113 @@
+# Leaves
+
+- type: entity
+  name: cannabis leaves
+  parent: ProduceBase
+  id: LeavesCannabis
+  description: "Recently legalized in most galaxies."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi
+  - type: Produce
+    seed: cannabis
+  - type: Food
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: THCOil
+        Quantity: 5
+
+- type: entity
+  name: dried cannabis leaves
+  parent: BaseItem
+  id: LeavesCannabisDried
+  description: "Dried cannabis leaves, ready to be ground."
+  components:
+  - type: Stack
+    stackType: LeavesCannabisDried
+    max: 5
+    count: 1
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: THC
+        Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tobacco.rsi
+    state: dried
+
+- type: entity
+  name: ground cannabis
+  parent: BaseItem
+  id: GroundCannabis
+  description: "Ground cannabis, ready to take you on a trip."
+  components:
+  - type: Stack
+    stackType: GroundCannabis
+    max: 5
+    count: 1
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: THC
+        Quantity: 10
+  - type: Sprite
+    sprite: Objects/Misc/reageant_fillings.rsi
+    state: powderpile
+    color: darkgreen
+  - type: Construction
+    graph: smokeableGroundCannabis
+    node: ground
+
+- type: entity
+  name: tobacco leaves
+  parent: ProduceBase
+  id: LeavesTobacco
+  description: "Dry them out to make some smokes."
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tobacco.rsi
+    - type: Produce
+      seed: tobacco
+
+- type: entity
+  name: dried tobacco leaves
+  parent: BaseItem
+  id: LeavesTobaccoDried
+  description: "Dried tobacco leaves, ready to be ground."
+  components:
+    - type: Stack
+      stackType: LeavesTobaccoDried
+      max: 5
+      count: 1
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 2
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tobacco.rsi
+      state: dried
+
+- type: entity
+  name: ground tobacco
+  parent: BaseItem
+  id: GroundTobacco
+  description: "Ground tobacco, perfect for hand-rolled cigarettes."
+  components:
+    - type: Stack
+      stackType: GroundTobacco
+      max: 5
+      count: 1
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+    - type: Sprite
+      sprite: Objects/Misc/reageant_fillings.rsi
+      state: powderpile
+      color: brown
+    - type: Construction
+      graph: smokeableGroundTobacco
+      node: ground

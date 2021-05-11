@@ -23,6 +23,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of oat seeds
+  id: OatSeeds
+  components:
+    - type: Seed
+      seed: oat
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/oat.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of banana seeds
   id: BananaSeeds
   components:
@@ -50,6 +60,16 @@
       seed: lemon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/lemon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pineapple seeds
+  id: PineappleSeeds
+  components:
+    - type: Seed
+      seed: pineapple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pineapple.rsi
 
 - type: entity
   parent: SeedBase

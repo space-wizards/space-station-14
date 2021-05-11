@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,6 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -314,15 +316,11 @@ namespace Content.Shared.Chemistry
 
         public void DoEntityReaction(IEntity entity, ReactionMethod method)
         {
-            var proto = IoCManager.Resolve<IPrototypeManager>();
+            var chemistry = EntitySystem.Get<ChemistrySystem>();
 
             foreach (var (reagentId, quantity) in _contents.ToArray())
             {
-                if (!proto.TryIndex(reagentId, out ReagentPrototype? reagent))
-                    continue;
-
-                var removedAmount = reagent.ReactionEntity(entity, method, quantity);
-                RemoveReagent(reagentId, removedAmount);
+                chemistry.ReactionEntity(entity, method, reagentId, quantity, this);
             }
         }
 
@@ -330,7 +328,7 @@ namespace Content.Shared.Chemistry
         [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
-            [DataField("ReagentId")]
+            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
             public readonly string ReagentId;
             [DataField("Quantity")]
             public readonly ReagentUnit Quantity;

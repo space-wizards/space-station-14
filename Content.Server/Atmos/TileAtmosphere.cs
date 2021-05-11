@@ -139,51 +139,6 @@ namespace Content.Server.Atmos
             _temperatureArchived = Temperature;
         }
 
-        public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
-        {
-            if (Air == null)
-                return;
-
-            var oxygen = Air.GetMoles(Gas.Oxygen);
-
-            if (oxygen < 0.5f)
-                return;
-
-            var plasma = Air.GetMoles(Gas.Plasma);
-            var tritium = Air.GetMoles(Gas.Tritium);
-
-            if (Hotspot.Valid)
-            {
-                if (soh)
-                {
-                    if (plasma > 0.5f || tritium > 0.5f)
-                    {
-                        if (Hotspot.Temperature < exposedTemperature)
-                            Hotspot.Temperature = exposedTemperature;
-                        if (Hotspot.Volume < exposedVolume)
-                            Hotspot.Volume = exposedVolume;
-                    }
-                }
-
-                return;
-            }
-
-            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f))
-            {
-                Hotspot = new Hotspot
-                {
-                    Volume = exposedVolume * 25f,
-                    Temperature = exposedTemperature,
-                    SkippedFirstProcess = _currentCycle > _gridAtmosphereComponent.UpdateCounter
-                };
-
-                Hotspot.Start();
-
-                _gridAtmosphereComponent.AddActiveTile(this);
-                _gridAtmosphereComponent.AddHotspotTile(this);
-            }
-        }
-
         public void HighPressureMovements()
         {
             // TODO ATMOS finish this
@@ -205,7 +160,7 @@ namespace Content.Server.Atmos
                     || entity.IsInContainer())
                     continue;
 
-                var pressureMovements = physics.Entity.EnsureComponent<MovedByPressureComponent>();
+                var pressureMovements = physics.Owner.EnsureComponent<MovedByPressureComponent>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
                     pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(GridIndex, _mapManager) ?? EntityCoordinates.Invalid);
@@ -640,7 +595,7 @@ namespace Content.Server.Atmos
             // Can't process a tile without air
             if (Air == null)
             {
-                Excited = false;
+                _gridAtmosphereComponent.RemoveActiveTile(this);
                 return;
             }
 
@@ -744,6 +699,11 @@ namespace Content.Server.Atmos
                 return;
             }
 
+            if (!Excited)
+            {
+                _gridAtmosphereComponent.AddActiveTile(this);
+            }
+
             if (!Hotspot.SkippedFirstProcess)
             {
                 Hotspot.SkippedFirstProcess = true;
@@ -794,7 +754,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null || !Hotspot.Valid) return;
 
-            Hotspot.Bypassing = Hotspot.SkippedFirstProcess && (Hotspot.Volume > Atmospherics.CellVolume*0.95);
+            Hotspot.Bypassing = Hotspot.SkippedFirstProcess && Hotspot.Volume > Air.Volume*0.95f;
 
             if (Hotspot.Bypassing)
             {
@@ -820,6 +780,51 @@ namespace Content.Server.Atmos
 
                     fireAct.FireAct(Hotspot.Temperature, Hotspot.Volume);
                 }
+            }
+        }
+
+        public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
+        {
+            if (Air == null)
+                return;
+
+            var oxygen = Air.GetMoles(Gas.Oxygen);
+
+            if (oxygen < 0.5f)
+                return;
+
+            var plasma = Air.GetMoles(Gas.Plasma);
+            var tritium = Air.GetMoles(Gas.Tritium);
+
+            if (Hotspot.Valid)
+            {
+                if (soh)
+                {
+                    if (plasma > 0.5f || tritium > 0.5f)
+                    {
+                        if (Hotspot.Temperature < exposedTemperature)
+                            Hotspot.Temperature = exposedTemperature;
+                        if (Hotspot.Volume < exposedVolume)
+                            Hotspot.Volume = exposedVolume;
+                    }
+                }
+
+                return;
+            }
+
+            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f))
+            {
+                Hotspot = new Hotspot
+                {
+                    Volume = exposedVolume * 25f,
+                    Temperature = exposedTemperature,
+                    SkippedFirstProcess = _currentCycle > _gridAtmosphereComponent.UpdateCounter
+                };
+
+                Hotspot.Start();
+
+                _gridAtmosphereComponent.AddActiveTile(this);
+                _gridAtmosphereComponent.AddHotspotTile(this);
             }
         }
 

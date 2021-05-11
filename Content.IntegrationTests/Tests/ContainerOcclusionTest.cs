@@ -1,10 +1,10 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -37,15 +37,31 @@ namespace Content.IntegrationTests.Tests
 
         private async Task<(ClientIntegrationInstance c, ServerIntegrationInstance s)> Start()
         {
-            var optsServer = new ServerIntegrationOptions {ExtraPrototypes = ExtraPrototypes};
-            var optsClient = new ClientIntegrationOptions {ExtraPrototypes = ExtraPrototypes};
+            var optsServer = new ServerIntegrationOptions
+            {
+                CVarOverrides =
+                {
+                    {CVars.NetPVS.Name, "false"}
+                },
+                ExtraPrototypes = ExtraPrototypes
+            };
+            var optsClient = new ClientIntegrationOptions
+            {
+
+                CVarOverrides =
+                {
+                    {CVars.NetPVS.Name, "false"}
+                },
+                ExtraPrototypes = ExtraPrototypes
+            };
 
             var (c, s) = await StartConnectedServerDummyTickerClientPair(optsClient, optsServer);
 
             s.Post(() =>
             {
                 IoCManager.Resolve<IPlayerManager>()
-                    .GetAllPlayers().Single()
+                    .GetAllPlayers()
+                    .Single()
                     .JoinGame();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();

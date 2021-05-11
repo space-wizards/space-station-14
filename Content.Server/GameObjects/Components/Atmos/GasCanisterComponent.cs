@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
@@ -11,6 +12,8 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Physics;
@@ -24,6 +27,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [ComponentReference(typeof(IActivate))]
     public class GasCanisterComponent : Component, IGasMixtureHolder, IActivate
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override string Name => "GasCanister";
 
         private const int MaxLabelLength = 32;
@@ -114,9 +119,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void TryConnectToPort()
         {
-            if (!Owner.TryGetComponent<SnapGridComponent>(out var snapGrid)) return;
-            var port = snapGrid.GetLocal()
-                .Select(entity => entity.TryGetComponent<GasCanisterPortComponent>(out var port) ? port : null)
+            if (!Owner.Transform.Anchored) return;
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            var port = grid.GetLocal(coords)
+                .Select(entity => Owner.EntityManager.ComponentManager.TryGetComponent<GasCanisterPortComponent>(entity, out var port) ? port : null)
                 .Where(port => port != null)
                 .Where(port => !port!.ConnectedToCanister)
                 .FirstOrDefault();

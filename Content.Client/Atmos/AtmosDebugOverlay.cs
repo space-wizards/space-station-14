@@ -28,9 +28,9 @@ namespace Content.Client.Atmos
             _atmosDebugOverlaySystem = EntitySystem.Get<AtmosDebugOverlaySystem>();
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace overlay)
+        protected override void Draw(in OverlayDrawArgs args)
         {
-            var drawHandle = (DrawingHandleWorld) handle;
+            var drawHandle = args.WorldHandle;
 
             var mapId = _eyeManager.CurrentMap;
             var eye = _eyeManager.CurrentEye;

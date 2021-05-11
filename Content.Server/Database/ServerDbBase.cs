@@ -26,6 +26,7 @@ namespace Content.Server.Database
                 .Preference
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
+                .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
 
             if (prefs is null) return null;
@@ -197,9 +198,9 @@ namespace Content.Server.Database
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
                 Gender = humanoid.Gender.ToString(),
-                HairName = appearance.HairStyleName,
+                HairName = appearance.HairStyleId,
                 HairColor = appearance.HairColor.ToHex(),
-                FacialHairName = appearance.FacialHairStyleName,
+                FacialHairName = appearance.FacialHairStyleId,
                 FacialHairColor = appearance.FacialHairColor.ToHex(),
                 EyeColor = appearance.EyeColor.ToHex(),
                 SkinColor = appearance.SkinColor.ToHex(),

@@ -29,22 +29,22 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         [ViewVariables]
-        [field: DataField("centerSlot")]
+        [DataField("centerSlot")]
         public string CenterSlot { get; } = string.Empty;
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots => new(_slots);
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; set; } = new();
+        public Dictionary<string, HashSet<string>> Connections { get; set; } = new();
 
         [ViewVariables]
         public Dictionary<string, string> Layers => new(_layers);
@@ -56,11 +56,11 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         {
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, List<string>>();
+            var cleanedConnections = new Dictionary<string, HashSet<string>>();
 
             foreach (var targetSlotName in _slots.Keys)
             {
-                var tempConnections = new List<string>();
+                var tempConnections = new HashSet<string>();
                 foreach (var (slotName, slotConnections) in _rawConnections)
                 {
                     if (slotName == targetSlotName)

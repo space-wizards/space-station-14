@@ -17,11 +17,11 @@ namespace Content.Shared.Construction
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("start")]
+        [DataField("start")]
         public string? Start { get; }
 
         [DataField("graph", priority: 0)]

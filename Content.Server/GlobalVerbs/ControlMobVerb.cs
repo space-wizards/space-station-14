@@ -55,13 +55,9 @@ namespace Content.Server.GlobalVerbs
             var userMind = player.ContentData()?.Mind;
 
             var targetMind = target.GetComponent<MindComponent>();
-            var oldEntity = userMind?.CurrentEntity;
 
             targetMind.Mind?.TransferTo(null);
             userMind?.TransferTo(target);
-
-            if (oldEntity != null && oldEntity.HasComponent<GhostComponent>())
-                oldEntity.Delete();
         }
     }
 }

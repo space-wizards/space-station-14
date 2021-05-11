@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
@@ -13,25 +14,26 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            if (!Owner.TryGetComponent(out SnapGridComponent? grid))
+            if (!Owner.Transform.Anchored)
                 yield break;
 
-            var cells = grid.GetCardinalNeighborCells();
-
-            foreach (var cell in cells)
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            foreach (var cell in grid.GetCardinalNeighborCells(coords))
             {
-                foreach (var entity in cell.GetLocal())
+                foreach (var entity in grid.GetLocal(Owner.EntityManager.GetEntity(cell).Transform.Coordinates))
                 {
-                    if (entity.TryGetComponent<NodeContainerComponent>(out var container))
+                    if (!Owner.EntityManager.GetEntity(entity).TryGetComponent<NodeContainerComponent>(out var container))
+                        continue;
+
+                    foreach (var node in container.Nodes.Values)
                     {
-                        foreach (var node in container.Nodes)
+                        if (node != null && node != this)
                         {
-                            if (node != null && node != this)
-                            {
-                                yield return node;
-                            }
+                            yield return node;
                         }
                     }
+
                 }
             }
         }

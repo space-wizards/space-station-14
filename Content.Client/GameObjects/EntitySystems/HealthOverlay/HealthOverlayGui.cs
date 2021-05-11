@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -69,10 +69,8 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
             Panel.Visible = val;
         }
 
-        protected override void Update(FrameEventArgs args)
+        private void MoreFrameUpdate(FrameEventArgs args)
         {
-            base.Update(args);
-
             if (Entity.Deleted)
             {
                 return;
@@ -137,6 +135,8 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
         {
             base.FrameUpdate(args);
 
+            MoreFrameUpdate(args);
+
             if (Entity.Deleted ||
                 _eyeManager.CurrentMap != Entity.Transform.MapID)
             {
@@ -147,7 +147,7 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
             Visible = true;
 
             var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
-            var playerPosition = new ScreenCoordinates(screenCoordinates.X / UIScale, screenCoordinates.Y / UIScale);
+            var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
             LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));
         }
 
