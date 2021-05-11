@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Headset
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"[{channel}]"), ("name", source.Name));
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", source.Name));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }

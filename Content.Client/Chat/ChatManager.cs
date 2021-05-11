@@ -355,7 +355,7 @@ namespace Content.Client.Chat
             }
 
             var color = Color.DarkGray;
-            var messageText = message.Message;
+            var messageText = FormattedMessage.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
                 messageText = string.Format(message.MessageWrap, messageText);
