@@ -6,6 +6,7 @@
   description: A miserable pile of secrets.
   components:
   - type: Mind
+    showExamineInfo: true
   - type: Input
     context: "human"
   - type: PlayerMobMover

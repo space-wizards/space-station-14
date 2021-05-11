@@ -5,6 +5,7 @@
   id: Vox
   components:
     - type: Mind
+      showExamineInfo: true
     - type: Input
       context: "human"
     - type: Alerts
