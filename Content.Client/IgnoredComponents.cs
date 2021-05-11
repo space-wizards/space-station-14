@@ -56,7 +56,6 @@ namespace Content.Client
             "Drink",
             "Food",
             "FoodContainer",
-            "Rotatable",
             "MagicMirror",
             "FloorTile",
             "ShuttleController",

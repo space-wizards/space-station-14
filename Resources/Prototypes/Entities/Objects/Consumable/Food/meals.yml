@@ -1,0 +1,239 @@
+# A bunch of different meals. This stuff doesn't come off their plates because
+# it's assembled on them. Or they just don't have plates.
+
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodMealBase
+  abstract: true
+  description: A delicious meal, cooked with love.
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/meals.rsi
+    netsync: false
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+
+# Meals
+
+- type: entity
+  name: loaded baked potato
+  parent: FoodMealBase
+  id: FoodMealPotatoLoaded
+  description: Totally baked.
+  components:
+  - type: Sprite
+    state: loadedbakedpotato
+# Tastes like potato.
+
+- type: entity
+  name: space fries
+  parent: FoodMealBase
+  id: FoodMealFries
+  description: AKA, French Fries, Freedom Fries, etc.
+  components:
+  - type: Sprite
+    state: fries
+# Tastes like fries, salt.
+
+- type: entity
+  name: cheesy fries
+  parent: FoodMealBase
+  id: FoodMealFriesCheesy
+  description: Fries. Covered in cheese. Duh.
+  components:
+  - type: Sprite
+    state: fries-cheesy
+# Tastes like fries, cheese.
+
+- type: entity
+  name: carrot fries
+  parent: FoodMealBase
+  id: FoodMealFriesCarrot
+  description: Tasty fries from fresh carrots.
+  components:
+  - type: Sprite
+    state: fries-carrot
+# Tastes like carrots, salt.
+
+- type: entity
+  name: nachos
+  parent: FoodMealBase
+  id: FoodMealNachos
+  description: Chips from Space Mexico.
+  components:
+  - type: Sprite
+    state: nachos
+# Tastes like nachos.
+
+- type: entity
+  name: cheesy nachos
+  parent: FoodMealBase
+  id: FoodMealNachosCheesy
+  description: The delicious combination of nachos and melting cheese.
+  components:
+  - type: Sprite
+    state: nachos-cheesy
+# Tastes like nachos, cheese.
+
+- type: entity
+  name: Cuban nachos
+  parent: FoodMealBase
+  id: FoodMealNachosCuban
+  description: That's some dangerously spicy nachos.
+  components:
+  - type: Sprite
+    state: nachos-cuban
+# Tastes like nachos, hot pepper.
+
+- type: entity
+  name: mint
+  parent: FoodMealBase
+  id: FoodMealMint
+  description: It's wafer thin.
+  components:
+  - type: Sprite
+    state: mint
+  - type: SolutionContainer
+    maxVol: 1
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 1
+# Tastes like parsnips, salt.
+
+- type: entity
+  name: eggplant parmigiana
+  parent: FoodMealBase
+  id: FoodMealEggplantParm
+  description: The only good recipe for eggplant.
+  components:
+  - type: Sprite
+    state: eggplantparm
+# Tastes like eggplant, cheese.
+
+- type: entity
+  name: yaki imo
+  parent: FoodMealBase
+  id: FoodMealPotatoYaki
+  description: Made with roasted sweet potatoes!
+  components:
+  - type: Sprite
+    state: yakiimo
+# Tastes like sweet potato.
+
+- type: entity
+  name: Cuban carp
+  parent: FoodMealBase
+  id: FoodMealCubancarp
+  description: A grifftastic sandwich that burns your tongue and then leaves it numb!
+  components:
+  - type: Sprite
+    state: cubancarp
+# Tastes like fish, batter, hot peppers.
+
+- type: entity
+  name: corned beef and cabbage
+  parent: FoodMealBase
+  id: FoodMealCornedbeef
+  description: Now you can feel like a real tourist vacationing in Ireland.
+  components:
+  - type: Sprite
+    state: cornedbeef
+# Tastes like meat, cabbage.
+
+- type: entity
+  name: Filet migrawr
+  parent: FoodMealBase
+  id: FoodMealBearsteak
+  description: Because eating bear wasn't manly enough.
+  components:
+  - type: Sprite
+    state: bearsteak
+# Tastes like meat, salmon.
+
+- type: entity
+  name: pig in a blanket
+  parent: FoodMealBase
+  id: FoodMealPigblanket
+  description: A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it.
+  components:
+  - type: Sprite
+    state: pigblanket
+# Tastes like meat, butter.
+
+- type: entity
+  name: bbq ribs
+  parent: FoodMealBase
+  id: FoodMealRibs
+  description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
+  components:
+  - type: Sprite
+    state: ribs
+# Tastes like meat, smokey sauce.
+
+- type: entity
+  name: eggs benedict
+  parent: FoodMealBase
+  id: FoodMealEggsbenedict
+  description: There is only one egg on this, how rude.
+  components:
+  - type: Sprite
+    state: benedict
+# Tastes like eggs, bacon, bun.
+
+- type: entity # FUCK THE FRENCH
+  name: omelette du fromage
+  parent: FoodMealBase
+  id: FoodMealOmelette
+  description: That's all you can say!
+  components:
+  - type: Sprite
+    state: omelette
+# Tastes like egg, cheese.
+
+- type: entity
+  name: fried egg
+  parent: FoodMealBase
+  id: FoodMealFriedegg
+  description: A fried egg, with a touch of salt and pepper.
+  components:
+  - type: Sprite
+    state: friedegg
+# Tastes like egg, salt, pepper.
+
+- type: entity
+  name: milk ape
+  parent: FoodMealBase
+  id: FoodMealMilkape
+  description: The king of Jungle Thick.
+  components:
+  - type: Sprite
+    state: milkape
+# Tastes like milk, chocolate, the jungle.
+
+- type: entity
+  name: memory leek
+  parent: FoodMealBase
+  id: FoodMealMemoryleek
+  description: This should refresh your memory.
+  components:
+  - type: Sprite
+    state: memoryLeek
+# Tastes like pain.
+
+- type: entity
+  name: salty sweet miso cola soup
+  parent: FoodMealBase
+  id: DisgustingSweptSoup
+  description: Jesus christ.
+  components:
+  - type: Sprite
+    state: saltysweet
+# Tastes awesome.

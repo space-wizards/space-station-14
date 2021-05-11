@@ -454,6 +454,7 @@ namespace Content.Client.Chat
             {
                 SelectedChannel = toSelect;
                 _channelSelector.Text = ChannelSelectorName(toSelect);
+                _channelSelector.Modulate = ChatHelper.ChatColor(toSelect);
                 return true;
             }
             // keep current setting
@@ -734,7 +735,7 @@ namespace Content.Client.Chat
 
             var formatted = new FormattedMessage(3);
             formatted.PushColor(color);
-            formatted.AddText(message);
+            formatted.AddMarkup(message);
             formatted.Pop();
             Contents.AddMessage(formatted);
         }

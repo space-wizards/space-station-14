@@ -56,7 +56,7 @@ namespace Content.Shared.GameObjects.Components
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
         [ViewVariables]
-        [field: DataField("stackType")]
+        [DataField("stackType")]
         public string StackTypeId { get; } = string.Empty;
 
         public StackPrototype StackType => _prototypeManager.Index<StackPrototype>(StackTypeId);

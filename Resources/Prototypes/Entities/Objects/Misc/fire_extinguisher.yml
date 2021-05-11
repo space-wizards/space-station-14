@@ -29,6 +29,7 @@
       sprayVelocity: 2.0
       sprayTimeAlive: 1.5
       transferAmount: 5
+      impulse: 50.0
     - type: FireExtinguisher
     - type: Appearance
       visuals:

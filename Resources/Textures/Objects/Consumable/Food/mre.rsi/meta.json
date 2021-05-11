@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "box1"
+    },
+    {
+      "name": "box2"
+    },
+    {
+      "name": "box3"
+    },
+    {
+      "name": "box4"
+    },
+    {
+      "name": "box5"
+    },
+    {
+      "name": "box-trash"
+    },
+    {
+      "name": "tin-closed"
+    },
+    {
+      "name": "tin-hot",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "tin-open"
+    },
+    {
+      "name": "tin-trash"
+    },
+    {
+      "name": "candy"
+    },
+    {
+      "name": "candy-open"
+    },
+    {
+      "name": "cracker"
+    },
+    {
+      "name": "cracker-dip",
+      "delays": [
+        [
+          0.6,
+          0.6,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "erp-closed"
+    },
+    {
+      "name": "erp-open"
+    },
+    {
+      "name": "mre-closed"
+    },
+    {
+      "name": "mre-hot",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "mre-open"
+    },
+    {
+      "name": "paste"
+    }
+  ]
+}

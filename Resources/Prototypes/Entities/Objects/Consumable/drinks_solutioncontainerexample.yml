@@ -12,7 +12,7 @@
     maxVol: 30
     contents:
       reagents:
-        - ReagentId: WatermelonJuice
+        - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
     netsync: false
@@ -41,7 +41,7 @@
     maxVol: 30
     contents:
       reagents:
-        - ReagentId: WatermelonJuice
+        - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
     netsync: false

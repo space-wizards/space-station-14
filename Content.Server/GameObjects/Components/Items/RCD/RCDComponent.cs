@@ -96,6 +96,10 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)
         {
+            // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
+            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager) || !eventArgs.ClickLocation.GetGridId(Owner.EntityManager).IsValid())
+                return false;
+
             //No changing mode mid-RCD
             var startingMode = _mode;
 
@@ -138,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
-                    var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
+                    var ent = _serverEntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     ent.Transform.LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:

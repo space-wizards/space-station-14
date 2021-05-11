@@ -144,8 +144,12 @@ namespace Content.Server.Chat
 
             message = message.Trim();
 
-            var pos = source.Transform.Coordinates;
-            var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+            var mapPos = source.Transform.MapPosition;
+
+            var clients = _playerManager.GetPlayersBy((x) => x.AttachedEntity != null
+                    && (x.AttachedEntity.HasComponent<GhostComponent>()
+                    || mapPos.InRange(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
+                .Select(p => p.ConnectedClient).ToList();
 
             if (message.StartsWith(';'))
             {
@@ -184,7 +188,7 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("{0} says, \"{{0}}\"", source.Name);
             msg.SenderEntity = source.Uid;
-            _netManager.ServerSendToMany(msg, clients.ToList());
+            _netManager.ServerSendToMany(msg, clients);
         }
 
         public void EntityMe(IEntity source, string action)

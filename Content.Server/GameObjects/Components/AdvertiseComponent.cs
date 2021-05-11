@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components
         /// Minimum time to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.
         /// </summary>
         [ViewVariables]
-        [field: DataField("minWait")]
+        [DataField("minWait")]
         private int MinWait { get; } = 480; // 8 minutes
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace Content.Server.GameObjects.Components
         /// to <see cref="MinWait"/>
         /// </summary>
         [ViewVariables]
-        [field: DataField("maxWait")]
+        [DataField("maxWait")]
         private int MaxWait { get; } = 600; // 10 minutes
 
-        [field: DataField("pack")]
+        [DataField("pack")]
         private string PackPrototypeId { get; } = string.Empty;
 
         private List<string> _advertisements = new();

@@ -16,13 +16,13 @@ namespace Content.Shared.Roles
         private string _name = string.Empty;
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         /// <summary>
@@ -49,15 +49,15 @@ namespace Content.Shared.Roles
         [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 
-        [field: DataField("icon")] public string Icon { get; } = string.Empty;
+        [DataField("icon")] public string Icon { get; } = string.Empty;
 
         [DataField("special")]
         public JobSpecial? Special { get; private set; }
 
-        [field: DataField("departments")]
+        [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        [field: DataField("access")]
+        [DataField("access")]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

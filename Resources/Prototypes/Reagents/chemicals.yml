@@ -178,21 +178,9 @@
   plantMetabolism:
     - !type:AdjustToxins
       amount: 10
-
-- type: reagent
-  id: Sugar
-  name: sugar
-  desc: Sweet.
-  color: "#ffffff"
-  physicalDesc: opaque
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWeeds
-      amount: 2
-    - !type:AdjustPests
-      amount: 2
-
+    - !type:AdjustHealth
+      amount: -5
+      
 - type: reagent
   id: SulfuricAcid
   name: sulfuric acid
@@ -207,7 +195,7 @@
     - !type:AdjustWeeds
       amount: -2
     - !type:AdjustHealth
-      amount: -4
+      amount: -5
 
 - type: reagent
   id: UnstableMutagen
@@ -259,4 +247,3 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
-

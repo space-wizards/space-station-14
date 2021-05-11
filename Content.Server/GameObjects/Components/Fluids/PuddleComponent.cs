@@ -345,6 +345,10 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             puddle = default;
 
+            // We're most likely in space, do nothing.
+            if (!Owner.Transform.GridID.IsValid())
+                return false;
+
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
             var coords = Owner.Transform.Coordinates;
 
