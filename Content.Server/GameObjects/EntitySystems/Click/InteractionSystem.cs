@@ -324,13 +324,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            // If in a container
-            if (player.IsInContainer())
-            {
-                return;
-            }
-
-
             // In a container where the attacked entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
                 attacked != playerContainer.Owner)
@@ -789,7 +782,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
+        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
         {
             // Verify player is on the same map as the entity he clicked on
             if (coordinates.GetMapId(EntityManager) != player.Transform.MapID)
@@ -807,7 +800,25 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, target);
+            if (!EntityManager.TryGetEntity(targetUid, out var target))
+            {
+                target = null;
+            }
+
+            // In a container where the target entity is not the container's owner
+            if (player.TryGetContainer(out var playerContainer) &&
+                target != playerContainer.Owner)
+            {
+                // Either the target entity is null, not contained or in a different container
+                if (target == null ||
+                    !target.TryGetContainer(out var attackedContainer) ||
+                    attackedContainer != playerContainer)
+                {
+                    return;
+                }
+            }
+
+            var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, targetUid);
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))
@@ -826,7 +837,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if(EntityManager.TryGetEntity(target, out var targetEnt))
+                    if(EntityManager.TryGetEntity(targetUid, out var targetEnt))
                     {
                         if (targetEnt.HasComponent<ItemComponent>())
                         {
