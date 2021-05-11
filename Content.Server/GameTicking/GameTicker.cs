@@ -649,18 +649,15 @@ namespace Content.Server.GameTicking
                     if (equipmentStr != "")
                     {
                         var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
-                        ItemComponent itemComponent;
-                        try
+
+                        if (equipmentEntity.TryGetComponent(out ItemComponent? itemComponent))
                         {
-                            itemComponent = equipmentEntity.GetComponent<ItemComponent>();
+                            inventory.Equip(slot, itemComponent);
                         }
-                        catch (KeyNotFoundException exception)
+                        else
                         {
                             Logger.Error("Equipment Entity " + equipmentEntity.Uid + " does not have ItemComponent, not equipping!");
-                            continue;
                         }
-
-                        inventory.Equip(slot, itemComponent);
                     }
                 }
             }
