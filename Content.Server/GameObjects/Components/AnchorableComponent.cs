@@ -89,8 +89,6 @@ namespace Content.Server.GameObjects.Components
             if (attempt.Cancelled)
                 return false;
 
-            _physicsComponent.BodyType = BodyType.Static;
-
             // Snap rotation to cardinal (multiple of 90)
             var rot = Owner.Transform.LocalRotation;
             Owner.Transform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
@@ -105,6 +103,8 @@ namespace Content.Server.GameObjects.Components
 
             if (Snap)
                 Owner.SnapToGrid(Owner.EntityManager);
+
+            _physicsComponent.BodyType = BodyType.Static;
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredMessage(), false);
 
