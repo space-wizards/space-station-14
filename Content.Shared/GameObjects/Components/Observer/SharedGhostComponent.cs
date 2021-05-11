@@ -81,13 +81,6 @@ namespace Content.Shared.GameObjects.Components.Observer
             Directed = true;
         }
     }
-
-
-    [Serializable, NetSerializable]
-    public class ReturnToCloneComponentMessage : ComponentMessage
-    {
-        public ReturnToCloneComponentMessage() => Directed = true;
-    }
 }
 
 

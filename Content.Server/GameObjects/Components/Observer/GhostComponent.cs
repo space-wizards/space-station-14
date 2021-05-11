@@ -95,13 +95,6 @@ namespace Content.Server.GameObjects.Components.Observer
                     }
                     break;
                 }
-                case ReturnToCloneComponentMessage _:
-
-                    if (Owner.TryGetComponent(out VisitingMindComponent? mind) && mind.Mind != null)
-                    {
-                        Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
-                    }
-                    break;
                 case GhostWarpToLocationRequestMessage warp:
                 {
                     if (session?.AttachedEntity != Owner)
@@ -190,16 +183,6 @@ namespace Content.Server.GameObjects.Components.Observer
             var deathTimeInfo = timeSinceDeath.Minutes > 0 ? Loc.GetString($"{timeSinceDeath.Minutes} minutes ago") : Loc.GetString($"{timeSinceDeath.Seconds} seconds ago");
 
             message.AddMarkup(Loc.GetString("Died [color=yellow]{0}[/color].", deathTimeInfo));
-        }
-
-        public class GhostReturnMessage : EntityEventArgs
-        {
-            public GhostReturnMessage(Mind sender)
-            {
-                Sender = sender;
-            }
-
-            public Mind Sender { get; }
         }
     }
 }

@@ -253,6 +253,7 @@ namespace Content.Client
             "SpawnAfterInteract",
             "DisassembleOnActivate",
             "ExplosionLaunched",
+            "BeingCloned",
             "Advertise",
         };
     }
