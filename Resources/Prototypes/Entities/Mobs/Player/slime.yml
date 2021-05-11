@@ -4,7 +4,6 @@
   id: SlimePerson
   components:
     - type: Mind
-      showExamineInfo: true
     - type: Input
       context: "human"
     - type: Alerts
