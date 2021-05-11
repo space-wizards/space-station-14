@@ -28,3 +28,5 @@
   innerclothingskirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationCommand

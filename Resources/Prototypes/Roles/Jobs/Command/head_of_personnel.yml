@@ -30,3 +30,5 @@
   innerclothingskirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationCommand

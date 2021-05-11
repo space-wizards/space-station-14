@@ -23,3 +23,5 @@
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
   duffelbag: ClothingBackpackDuffelFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationOperations

@@ -571,3 +571,49 @@
     sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi
+
+# Federation Alt Uniforms
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationCommand
+  name: federation command jumpsuit
+  description: The red denotes command- not cannon fodder.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_command.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_command.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationOperations
+  name: federation operations jumpsuit
+  description: This gold makes you feel like you can give her all she's got.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_operations.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_operations.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationSciences
+  name: federation science jumpsuit
+  description: Please state the nature of your medical emergency.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_sciences.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_sciences.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationCadet
+  name: federation cadet jumpsuit
+  description: Maybe not top of the class, but maybe with some field experience...
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_cadet.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_cadet.rsi

@@ -166,6 +166,10 @@ namespace Content.Server.Database
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
 
+            var crewUniform = CrewUniformPreference.Default;
+            if (Enum.TryParse<CrewUniformPreference>(profile.CrewUniform, true, out var crewUniformVal))
+                crewUniform = crewUniformVal;
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Age,
@@ -184,7 +188,8 @@ namespace Content.Server.Database
                 backpack,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
-                antags.ToList()
+                antags.ToList(),
+                crewUniform
             );
         }
 
@@ -207,7 +212,8 @@ namespace Content.Server.Database
                 Clothing = humanoid.Clothing.ToString(),
                 Backpack = humanoid.Backpack.ToString(),
                 Slot = slot,
-                PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
+                PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable,
+                CrewUniform = humanoid.CrewUniform.ToString()
             };
             entity.Jobs.AddRange(
                 humanoid.JobPriorities

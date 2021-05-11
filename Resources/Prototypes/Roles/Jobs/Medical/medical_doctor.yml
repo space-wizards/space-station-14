@@ -24,3 +24,5 @@
   innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationSciences

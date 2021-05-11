@@ -20,3 +20,5 @@
   innerclothingskirt: ClothingUniformJumpskirtColorGrey
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationCadet

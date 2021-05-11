@@ -38,7 +38,8 @@ namespace Content.Shared.Preferences
             BackpackPreference backpack,
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
-            List<string> antagPreferences)
+            List<string> antagPreferences,
+            CrewUniformPreference uniformPreference)
         {
             Name = name;
             Age = age;
@@ -50,6 +51,7 @@ namespace Content.Shared.Preferences
             _jobPriorities = jobPriorities;
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
+            CrewUniform = uniformPreference;
         }
 
         /// <summary>Copy constructor but with overridable references (to prevent useless copies)</summary>
@@ -58,7 +60,7 @@ namespace Content.Shared.Preferences
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences)
             : this(other.Name, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
-                jobPriorities, other.PreferenceUnavailable, antagPreferences)
+                jobPriorities, other.PreferenceUnavailable, antagPreferences, other.CrewUniform)
         {
         }
 
@@ -78,9 +80,10 @@ namespace Content.Shared.Preferences
             BackpackPreference backpack,
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
-            IReadOnlyList<string> antagPreferences)
+            IReadOnlyList<string> antagPreferences,
+            CrewUniformPreference uniformPreference)
             : this(name, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
-                preferenceUnavailable, new List<string>(antagPreferences))
+                preferenceUnavailable, new List<string>(antagPreferences), uniformPreference)
         {
         }
 
@@ -99,7 +102,8 @@ namespace Content.Shared.Preferences
                     {SharedGameTicker.OverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.SpawnAsOverflow,
-                new List<string>());
+                new List<string>(),
+                CrewUniformPreference.Default);
         }
 
         public static HumanoidCharacterProfile Random()
@@ -118,7 +122,7 @@ namespace Content.Shared.Preferences
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
-                }, PreferenceUnavailableMode.StayInLobby, new List<string>());
+                }, PreferenceUnavailableMode.StayInLobby, new List<string>(), CrewUniformPreference.Default);
         }
 
         public string Name { get; private set; }
@@ -132,6 +136,7 @@ namespace Content.Shared.Preferences
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; }
+        public CrewUniformPreference CrewUniform { get; private set; }
 
         public HumanoidCharacterProfile WithName(string name)
         {
@@ -213,6 +218,12 @@ namespace Content.Shared.Preferences
                 }
             }
             return new(this, _jobPriorities, list);
+        }
+
+        public HumanoidCharacterProfile WithCrewUniformPreference(CrewUniformPreference preference)
+        {
+            CrewUniform = preference;
+            return new HumanoidCharacterProfile(this);
         }
 
         public string Summary =>

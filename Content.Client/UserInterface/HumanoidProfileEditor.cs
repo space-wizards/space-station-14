@@ -55,6 +55,7 @@ namespace Content.Client.UserInterface
         private readonly Dictionary<string, VBoxContainer> _jobCategories;
 
         private readonly List<AntagPreferenceSelector> _antagPreferences;
+        private readonly List<Control> _otherPreferences;
 
         private readonly IEntity _previewDummy;
         private readonly SpriteView _previewSprite;
@@ -549,6 +550,43 @@ namespace Content.Client.UserInterface
 
             #endregion Antags
 
+            #region OtherPreferences
+
+            var otherPreferenceList = new VBoxContainer();
+
+            var otherPreferencesVBox = new VBoxContainer
+            {
+                Children =
+                {
+                    new ScrollContainer
+                    {
+                        VerticalExpand = true,
+                        Children =
+                        {
+                            otherPreferenceList
+                        }
+                    }
+                }
+            };
+
+            tabContainer.AddChild(otherPreferencesVBox);
+
+            tabContainer.SetTabTitle(3, Loc.GetString("Other"));
+
+            _otherPreferences = new List<Control>();
+
+            var crewUniformSelector = new CrewUniformPreferenceSelector();
+            _otherPreferences.Add(crewUniformSelector);
+            otherPreferenceList.AddChild(crewUniformSelector);
+
+            crewUniformSelector.CrewUniformPreferenceChanged += preference =>
+            {
+                Profile = Profile?.WithCrewUniformPreference(preference);
+                IsDirty = true;
+            };
+
+            #endregion OtherPreferences
+
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
 
@@ -843,6 +881,7 @@ namespace Content.Client.UserInterface
             UpdateSaveButton();
             UpdateJobPriorities();
             UpdateAntagPreferences();
+            UpdateCaptainUniformPreference();
 
             UpdatePreview();
 
@@ -933,6 +972,12 @@ namespace Content.Client.UserInterface
             }
         }
 
+        private void UpdateCaptainUniformPreference()
+        {
+            ((CrewUniformPreferenceSelector)_otherPreferences[0]).UniformPreference =
+                Profile?.CrewUniform ?? CrewUniformPreference.Default;
+        }
+
         private class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
@@ -965,6 +1010,54 @@ namespace Content.Client.UserInterface
             private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
             {
                 PreferenceChanged?.Invoke(Preference);
+            }
+        }
+
+        private class CrewUniformPreferenceSelector : Control
+        {
+            private readonly RadioOptions<int> _optionButton;
+
+            public event Action<CrewUniformPreference>? CrewUniformPreferenceChanged;
+
+            public CrewUniformPreference UniformPreference
+            {
+                get => (CrewUniformPreference) _optionButton.SelectedValue;
+                set => _optionButton.SelectByValue((int) value);
+            }
+
+            public CrewUniformPreferenceSelector()
+            {
+                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
+                {
+                    FirstButtonStyle = StyleBase.ButtonOpenRight,
+                    ButtonStyle = StyleBase.ButtonOpenBoth,
+                    LastButtonStyle = StyleBase.ButtonOpenLeft
+                };
+
+                _optionButton.AddItem(Loc.GetString("Default"), (int) CrewUniformPreference.Default);
+                _optionButton.AddItem(Loc.GetString("Federation"), (int) CrewUniformPreference.Federation);
+
+                _optionButton.OnItemSelected += args =>
+                {
+                    _optionButton.Select(args.Id);
+                    CrewUniformPreferenceChanged?.Invoke(UniformPreference);
+                };
+
+                var icon = new TextureRect
+                {
+                    TextureScale = (2, 2),
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                };
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        icon,
+                        new Label {Text = Loc.GetString("Crew Uniform Style"), MinSize = (175, 0)},
+                        _optionButton
+                    }
+                });
             }
         }
     }

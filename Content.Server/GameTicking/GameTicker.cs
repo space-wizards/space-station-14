@@ -134,6 +134,7 @@ namespace Content.Server.GameTicking
 
         private SoundCollectionPrototype _lobbyCollection = default!;
         [ViewVariables] public string LobbySong { get; private set; } = default!;
+        [ViewVariables] public CrewUniformPreference CaptainUniformPreference = CrewUniformPreference.Default;
 
         public override void Initialize()
         {
@@ -304,6 +305,15 @@ namespace Content.Server.GameTicking
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
                     assignedJobs.Add(player, OverflowJob);
+                }
+            }
+
+            // If there's a Captain, enforce his style
+            foreach (var (player, job) in assignedJobs)
+            {
+                if (job == "Captain")
+                {
+                    CaptainUniformPreference = profiles[player.UserId].CrewUniform;
                 }
             }
 
@@ -635,11 +645,22 @@ namespace Content.Server.GameTicking
             {
                 foreach (var slot in AllSlots)
                 {
-                    var equipmentStr = startingGear.GetGear(slot, profile);
+                    var equipmentStr = startingGear.GetGear(slot, profile, CaptainUniformPreference);
                     if (equipmentStr != "")
                     {
                         var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
-                        inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                        ItemComponent itemComponent;
+                        try
+                        {
+                            itemComponent = equipmentEntity.GetComponent<ItemComponent>();
+                        }
+                        catch (KeyNotFoundException exception)
+                        {
+                            Logger.Error("Equipment Entity " + equipmentEntity.Uid + " does not have ItemComponent, not equipping!");
+                            continue;
+                        }
+
+                        inventory.Equip(slot, itemComponent);
                     }
                 }
             }
@@ -759,6 +780,7 @@ namespace Content.Server.GameTicking
             _spawnedPositions.Clear();
             _manifest.Clear();
             DisallowLateJoin = false;
+            CaptainUniformPreference = CrewUniformPreference.Default;
         }
 
         private string GetMap()

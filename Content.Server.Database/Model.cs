@@ -108,6 +108,8 @@ namespace Content.Server.Database
 
         [Column("preference_id")] public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
+
+        [Column("crew_uniform")] public string CrewUniform { get; set; } = null!;
     }
 
     [Table("job")]

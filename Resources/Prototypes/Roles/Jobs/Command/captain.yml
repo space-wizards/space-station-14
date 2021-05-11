@@ -42,3 +42,5 @@
     ears: ClothingHeadsetAltCommand
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationCommand

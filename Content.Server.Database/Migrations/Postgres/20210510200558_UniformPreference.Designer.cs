@@ -4,15 +4,17 @@ using System.Net;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    partial class PostgresServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210510200558_UniformPreference")]
+    partial class UniformPreference
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -23,3 +23,5 @@
   innerclothingskirt: ClothingUniformJumpskirtScientist
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationSciences

@@ -59,7 +59,8 @@ namespace Content.Tests.Server.Preferences
                     {SharedGameTicker.OverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.StayInLobby,
-                new List<string> ()
+                new List<string> (),
+                CrewUniformPreference.Default
             );
         }
 

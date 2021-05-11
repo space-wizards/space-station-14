@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.Shared.Preferences;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -36,10 +37,23 @@ namespace Content.Shared.Roles
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
+        public IReadOnlyDictionary<string, string> UniformAlternates => _uniformAlternates;
+        [DataField("uniformalternates")]
+        private Dictionary<string, string> _uniformAlternates = new(0);
+
+        public string GetGear(Slots slot, HumanoidCharacterProfile? profile, CrewUniformPreference? crewUniformPreference = CrewUniformPreference.Default)
         {
             if (profile != null)
             {
+                if (crewUniformPreference != null && crewUniformPreference != CrewUniformPreference.Default)
+                {
+                    var preference = crewUniformPreference.ToString();
+                    if (slot == Slots.INNERCLOTHING && preference != null && _uniformAlternates.ContainsKey(preference))
+                    {
+                        return _uniformAlternates[preference];
+                    }
+                }
+
                 if ((slot == Slots.INNERCLOTHING) && (profile.Clothing == ClothingPreference.Jumpskirt) && (_innerClothingSkirt != ""))
                     return _innerClothingSkirt;
                 if ((slot == Slots.BACKPACK) && (profile.Backpack == BackpackPreference.Satchel) && (_satchel != ""))

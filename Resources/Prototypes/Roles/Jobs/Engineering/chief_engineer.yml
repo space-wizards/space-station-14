@@ -27,3 +27,5 @@
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled
+  uniformalternates:
+    Federation: ClothingUniformFederationCommand
