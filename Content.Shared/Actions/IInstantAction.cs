@@ -21,7 +21,6 @@ namespace Content.Shared.Actions
     {
         public InstantActionEventArgs(IEntity performer, ActionType actionType) : base(performer, actionType)
         {
-
         }
     }
 }
