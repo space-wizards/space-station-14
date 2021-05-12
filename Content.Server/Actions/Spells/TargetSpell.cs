@@ -33,8 +33,6 @@ namespace Content.Server.Actions
 
         public Type? RegisteredInduceType;
 
-        public IComponent? CheckedComponent;
-
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
             var compFactory = IoCManager.Resolve<IComponentFactory>();
