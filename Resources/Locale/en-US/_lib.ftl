@@ -9,3 +9,9 @@ zzzz-fmt-pressure = { TOSTRING($divided, "G3") } { $places ->
     [4] PBa
     *[5] ???
 }
+
+# Used internally by the THE() function.
+zzzz-the = { PROPER($ent) ->
+    *[false] the
+     [true] {""}
+    } { $ent }
