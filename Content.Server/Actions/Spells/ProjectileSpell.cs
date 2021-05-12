@@ -41,7 +41,7 @@ namespace Content.Server.Actions
             var caster = args.Performer;
             if (!caster.TryGetComponent<SharedActionsComponent>(out var actions)) return;
             actions.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown)); //Set the spell on cooldown
-            var playerPosition = args.Performer.Transform.LocalPosition; //Set relative position of the entity of the spell (used later)
+            var playerPosition = args.Performer.Transform.WorldPosition; //Set relative position of the entity of the spell (used later)
             var direction = (args.Target.Position - playerPosition).Normalized * 2; //Decides the general direction of the spell (used later) + how far it goes
             var coords = args.Performer.Transform.Coordinates.WithPosition(playerPosition + direction);
 
