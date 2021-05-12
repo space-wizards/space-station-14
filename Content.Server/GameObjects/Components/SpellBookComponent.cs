@@ -13,7 +13,7 @@ using Component = Robust.Shared.GameObjects.Component;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class SpellBookComponent : Component, IUse
+    public class SpellBookComponent : Component
     {
         [ViewVariables] [DataField("usemessage")] private readonly string UseMessage = "You're a wiznerd, Garry!";
 
