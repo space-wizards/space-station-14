@@ -49,12 +49,12 @@ namespace Content.Server.GameObjects.EntitySystems
         private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldMessage args)
         {
             if (!component.Powered ||
-                !args.User.TryGetComponent(out IActorComponent? actor))
+                !args.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            component.UserInterface?.Open(actor.playerSession);
+            component.UserInterface?.Open(actor.PlayerSession);
         }
 
         private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
