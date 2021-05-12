@@ -88,7 +88,7 @@ namespace Content.Server.Actions
                     return;
             }
 
-            SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Effects/thudswoosh.ogg", args.Performer,
+            SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Effects/thudswoosh.ogg", args.Performer.Transform.Coordinates,
                 AudioHelpers.WithVariation(0.025f));
         }
     }
