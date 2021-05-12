@@ -257,9 +257,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return true;
             }
 
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                OpenInterface(actor.playerSession, eventArgs.ClickLocation);
+                OpenInterface(actor.PlayerSession, eventArgs.ClickLocation);
             }
 
             return true;
@@ -269,17 +269,17 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                CloseInterface(actor.playerSession);
+                CloseInterface(actor.PlayerSession);
             }
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                ToggleInterface(actor.playerSession);
+                ToggleInterface(actor.PlayerSession);
                 return true;
             }
             return false;

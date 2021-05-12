@@ -47,7 +47,7 @@ namespace Content.Server.Physics.Controllers
 
                 foreach (var (singularity, physics) in ComponentManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
                 {
-                    if (singularity.Owner.HasComponent<BasicActorComponent>()) continue;
+                    if (singularity.Owner.HasComponent<ActorComponent>()) continue;
 
                     // TODO: Need to essentially use a push vector in a random direction for us PLUS
                     // Any entity colliding with our larger circlebox needs to have an impulse applied to itself.

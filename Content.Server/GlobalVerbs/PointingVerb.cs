@@ -20,7 +20,7 @@ namespace Content.Server.GlobalVerbs
             data.Visibility = VerbVisibility.Invisible;
             data.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
 
-            if (!user.HasComponent<IActorComponent>())
+            if (!user.HasComponent<ActorComponent>())
             {
                 return;
             }
@@ -42,12 +42,12 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            EntitySystem.Get<PointingSystem>().TryPoint(actor.playerSession, target.Transform.Coordinates, target.Uid);
+            EntitySystem.Get<PointingSystem>().TryPoint(actor.PlayerSession, target.Transform.Coordinates, target.Uid);
         }
     }
 }

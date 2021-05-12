@@ -292,9 +292,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (user.TryGetComponent<IActorComponent>(out var player))
+                if (user.TryGetComponent<ActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
                     {
                         data.Visibility = VerbVisibility.Visible;
                     }
@@ -305,9 +305,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (user.TryGetComponent<IActorComponent>(out var player))
+                if (user.TryGetComponent<ActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
                     {
                         component.PopupDirections(user);
                     }

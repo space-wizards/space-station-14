@@ -126,12 +126,12 @@ namespace Content.Server.Chat
             }
 
             // Check if message exceeds the character limit if the sender is a player
-            if (source.TryGetComponent(out IActorComponent? actor) &&
+            if (source.TryGetComponent(out ActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
                 var feedback = Loc.GetString(MaxLengthExceededMessage, MaxMessageLength);
 
-                DispatchServerMessage(actor.playerSession, feedback);
+                DispatchServerMessage(actor.PlayerSession, feedback);
 
                 return;
             }
@@ -199,7 +199,7 @@ namespace Content.Server.Chat
             }
 
             // Check if entity is a player
-            if (!source.TryGetComponent(out IActorComponent? actor))
+            if (!source.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -207,7 +207,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (action.Length > MaxMessageLength)
             {
-                DispatchServerMessage(actor.playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(actor.PlayerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
 

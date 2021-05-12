@@ -213,10 +213,10 @@ namespace Content.Server.Mobs
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
 
-                if (entity.TryGetComponent(out IActorComponent? actor))
+                if (entity.TryGetComponent(out ActorComponent? actor))
                 {
                     // Happens when transferring to your currently visited entity.
-                    if (actor.playerSession != Session)
+                    if (actor.PlayerSession != Session)
                     {
                         throw new ArgumentException("Visit target already has a session.", nameof(entity));
                     }

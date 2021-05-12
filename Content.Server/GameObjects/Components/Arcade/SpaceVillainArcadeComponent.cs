@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -67,16 +67,16 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
+            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
 
             _game ??= new SpaceVillainGame(this);
 
             if (_wiresComponent?.IsPanelOpen == true)
             {
-                _wiresComponent.OpenInterface(actor.playerSession);
+                _wiresComponent.OpenInterface(actor.PlayerSession);
             } else
             {
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
             }
         }
 

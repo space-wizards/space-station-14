@@ -220,14 +220,14 @@ namespace Content.Server.GameObjects.Components.PA
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
             {
-                wires.OpenInterface(actor.playerSession);
+                wires.OpenInterface(actor.PlayerSession);
             }
             else
             {
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.Components.PA
                     return;
                 }
 
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
                 UpdateUI();
             }
         }

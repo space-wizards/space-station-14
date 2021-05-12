@@ -28,7 +28,7 @@ namespace Content.Server
 
         public override void PopupMessage(IEntity source, IEntity viewer, string message)
         {
-            if (!viewer.TryGetComponent(out IActorComponent? actor))
+            if (!viewer.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -37,12 +37,12 @@ namespace Content.Server
             netMessage.Entity = source.Uid;
             netMessage.Message = message;
 
-            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
+            _netManager.ServerSendMessage(netMessage, actor.PlayerSession.ConnectedClient);
         }
 
         public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
         {
-            if (!viewer.TryGetComponent(out IActorComponent? actor))
+            if (!viewer.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -51,12 +51,12 @@ namespace Content.Server
             netMessage.Coordinates = coordinates;
             netMessage.Message = message;
 
-            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
+            _netManager.ServerSendMessage(netMessage, actor.PlayerSession.ConnectedClient);
         }
 
         public override void PopupMessageCursor(IEntity viewer, string message)
         {
-            if (!viewer.TryGetComponent(out IActorComponent? actor))
+            if (!viewer.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -64,7 +64,7 @@ namespace Content.Server
             var netMessage = _netManager.CreateNetMessage<MsgDoNotifyCursor>();
             netMessage.Message = message;
 
-            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
+            _netManager.ServerSendMessage(netMessage, actor.PlayerSession.ConnectedClient);
         }
     }
 }
