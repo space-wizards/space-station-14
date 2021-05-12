@@ -2,18 +2,14 @@ using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Utility;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Physics;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Server.Actions
 {

@@ -7,7 +7,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Server.GameObjects.Components
