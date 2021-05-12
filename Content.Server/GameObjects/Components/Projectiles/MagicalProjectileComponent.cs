@@ -29,13 +29,6 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public Type? RegisteredTargetType;
 
         public Type? RegisteredInduceType;
-      
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-        }
 
         void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
