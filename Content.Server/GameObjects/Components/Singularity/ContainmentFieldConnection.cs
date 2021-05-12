@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Robust.Shared.GameObjects;
@@ -94,41 +94,40 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysBody>(out var collidableComponent)) return;
 
             return;
-            // TODO: Fix containment field repel
-            //var speed = 5;
+            var speed = 5;
             //var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
 
-            //if (!CanRepell(toRepell))
-            //{
-            //    Dispose();
-            //    return;
-            //}
+            if (!CanRepell(toRepell))
+            {
+                Dispose();
+                return;
+            }
 
-            //if (Math.Abs(repellFrom.Transform.WorldRotation.Degrees + 90f) < 0.1f ||
-            //    Math.Abs(repellFrom.Transform.WorldRotation.Degrees - 90f) < 0.1f)
-            //{
-            //    if (repellFrom.Transform.WorldPosition.X.CompareTo(toRepell.Transform.WorldPosition.X) > 0)
-            //    {
-            //        //containmentFieldRepellController.Repell(Direction.West, speed);
-            //    }
-            //    else
-            //    {
-            //        //containmentFieldRepellController.Repell(Direction.East, speed);
-            //    }
-            //}
-            //else
-            //{
-            //    if (repellFrom.Transform.WorldPosition.Y.CompareTo(toRepell.Transform.WorldPosition.Y) > 0)
-            //    {
-            //        //containmentFieldRepellController.Repell(Direction.South, speed);
-            //    }
-            //    else
-            //    {
-            //        //containmentFieldRepellController.Repell(Direction.North, speed);
-            //    }
-            //}
+            if (Math.Abs(repellFrom.Transform.WorldRotation.Degrees + 90f) < 0.1f ||
+                Math.Abs(repellFrom.Transform.WorldRotation.Degrees - 90f) < 0.1f)
+            {
+                if (repellFrom.Transform.WorldPosition.X.CompareTo(toRepell.Transform.WorldPosition.X) > 0)
+                {
+                    //containmentFieldRepellController.Repell(Direction.West, speed);
+                }
+                else
+                {
+                    //containmentFieldRepellController.Repell(Direction.East, speed);
+                }
+            }
+            else
+            {
+                if (repellFrom.Transform.WorldPosition.Y.CompareTo(toRepell.Transform.WorldPosition.Y) > 0)
+                {
+                    //containmentFieldRepellController.Repell(Direction.South, speed);
+                }
+                else
+                {
+                    //containmentFieldRepellController.Repell(Direction.North, speed);
+                }
+            }
 
-            //return;
+            return;
         }
 
         public void Dispose()
