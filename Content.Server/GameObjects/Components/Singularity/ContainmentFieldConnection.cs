@@ -94,6 +94,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysBody>(out var collidableComponent)) return;
 
             return;
+            // TODO: Fix containment field repel
             //var speed = 5;
             //var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
 

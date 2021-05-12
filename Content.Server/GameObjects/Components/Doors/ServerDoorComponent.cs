@@ -157,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         //[ViewVariables(VVAccess.ReadWrite)]
         //[DataField("canCrush")]
-        //private bool _canCrush = true;
+        //private bool _canCrush = true; // TODO implement door crushing
 
         protected override void Startup()
         {
@@ -231,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Doors
             // Disabled because it makes it suck hard to walk through double doors.
 
                 TryOpen(otherFixture.Body.Owner);
-            
+
         }
 
         #region Opening
