@@ -39,6 +39,7 @@
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
+  - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
     nodes:
@@ -95,6 +96,7 @@
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
+  - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
     nodes:
@@ -148,6 +150,7 @@
   - type: Battery
     maxCharge: 10000
     startingCharge: 10000
+  - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
     nodes:
