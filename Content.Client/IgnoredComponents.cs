@@ -88,6 +88,7 @@ namespace Content.Client
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
+            "ExaminableBattery",
             "PottedPlantHide",
             "SecureEntityStorage",
             "PresetIdCard",
