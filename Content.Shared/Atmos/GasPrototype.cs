@@ -8,13 +8,13 @@ namespace Content.Shared.Atmos
     [Prototype("gas")]
     public class GasPrototype : IPrototype
     {
-        [field: DataField("name")] public string Name { get; } = string.Empty;
+        [DataField("name")] public string Name { get; } = string.Empty;
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum amount of moles for this gas to be visible.
         /// </summary>
-        [field: DataField("gasMolesVisible")]
+        [DataField("gasMolesVisible")]
         public float GasMolesVisible { get; } = 0.25f;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
         /// </summary>
-        [field: DataField("gasOverlayTexture")]
+        [DataField("gasOverlayTexture")]
         public string GasOverlayTexture { get; } = string.Empty;
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace Content.Shared.Atmos
         /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
-        [field: DataField("overlayPath")]
+        [DataField("overlayPath")]
         public string OverlayPath { get; } = string.Empty;
 
-        [field: DataField("color")] public string Color { get; } = string.Empty;
+        [DataField("color")] public string Color { get; } = string.Empty;
     }
 }

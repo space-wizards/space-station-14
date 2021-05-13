@@ -79,7 +79,7 @@ namespace Content.Client.UserInterface.ContextMenu
 
             _userInterfaceManager.ModalRoot.AddChild(rootContextMenu);
             var size = rootContextMenu.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled, size);
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, size);
             rootContextMenu.Open(box);
         }
         public void AddChildMenu(IEnumerable<IEntity> entities, Vector2 position, StackContextElement? stack)

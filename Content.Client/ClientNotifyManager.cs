@@ -104,14 +104,14 @@ namespace Content.Client
             label.Measure(Vector2.Infinity);
             var minimumSize = label.DesiredSize;
 
-            label.InitialPos = (coordinates.Position / _userInterfaceManager.UIScale) - minimumSize / 2;
+            label.InitialPos = (coordinates.Position / label.UIScale) - minimumSize / 2;
             LayoutContainer.SetPosition(label, label.InitialPos);
             _aliveLabels.Add(label);
         }
 
         public void PopupMessage(string message)
         {
-            PopupMessage(new ScreenCoordinates(_userInterfaceManager.MousePositionScaled), message);
+            PopupMessage(_userInterfaceManager.MousePositionScaled, message);
         }
 
         public void FrameUpdate(FrameEventArgs eventArgs)

@@ -90,7 +90,7 @@ namespace Content.Server.Commands.GameTicking
                     continue;
                 }
 
-                if (!childEntity.TryGetComponent(out SnapGridComponent? snapGrid))
+                if (!childEntity.Transform.Anchored)
                 {
                     continue;
                 }

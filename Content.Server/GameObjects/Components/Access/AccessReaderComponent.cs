@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Access
         ///     List of access lists to check allowed against. For an access check to pass
         ///     there has to be an access list that is a subset of the access in the checking list.
         /// </summary>
-        [field: DataField("access")]
+        [DataField("access")]
         [ViewVariables]
         public List<HashSet<string>> AccessLists { get; } = new();
 

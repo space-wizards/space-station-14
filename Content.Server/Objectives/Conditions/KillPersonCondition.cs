@@ -18,12 +18,37 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
 
-        public float Progress => Target?
-            .OwnedEntity?
-            .GetComponentOrNull<IMobStateComponent>()?
-            .IsDead() ?? false
-            ? 1f
-            : 0f;
+        public float Progress
+        {
+            get
+            {
+                // This is written explicitly so that the logic can be understood.
+                // The previous form was "cleaner" but also didn't work because any failure meant the person was "not dead".
+                // It may be an idea to move all this logic to Mind, as, say, "Mind.CharacterDead".
+                // But it's also weird and potentially situational.
+                // Specific considerations when updating this:
+                //  + Does being turned into a borg (if/when implemented) count as dead?
+                //  + Is being transformed into a donut 'dead'?
+                //  + *Ghost roles definitely shouldn't count as alive.*
+                //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
+                //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
+
+                // This shouldn't be possible but assume dead just so the invalid goal doesn't do anything annoying.
+                if (Target == null)
+                    return 1f;
+                var targetOwnedEntity = Target.OwnedEntity;
+                // This can be null if they're deleted (spike / brain nom)
+                if (targetOwnedEntity == null)
+                    return 1f;
+                var targetMobState = targetOwnedEntity.GetComponentOrNull<IMobStateComponent>();
+                // This can be null if it's a brain (this happens very often)
+                // Brains are the result of gibbing so should definitely count as dead
+                if (targetMobState == null)
+                    return 1f;
+                // They might actually be alive.
+                return targetMobState.IsDead() ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 2f;
 

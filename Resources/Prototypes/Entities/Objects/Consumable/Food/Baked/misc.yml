@@ -1,0 +1,326 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodBakedBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 5
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Item
+    size: 1
+
+# Muffins/Buns
+
+- type: entity
+  name: muffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffin
+  description: A delicious and spongy little cake.
+  components:
+  - type: Sprite
+    state: muffin
+
+- type: entity
+  name: berry muffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffinBerry
+  description: A delicious and spongy little cake, with berries.
+  components:
+  - type: Sprite
+    state: muffin-berry
+
+- type: entity
+  name: cherry muffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffinCherry
+  description: A sweet muffin with cherry bits.
+  components:
+  - type: Sprite
+    state: muffin-cherry
+
+- type: entity
+  name: bluecherry muffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffinBluecherry
+  description: Blue cherries inside a delicious muffin.
+  components:
+  - type: Sprite
+    state: muffin-bluecherry
+
+- type: entity
+  name: honey bun
+  parent: FoodBakedBase
+  id: FoodBakedBunHoney
+  description: A sticky pastry bun glazed with honey.
+  components:
+  - type: Sprite
+    state: bun-honey
+
+- type: entity
+  name: hotcross bun
+  parent: FoodBakedBase
+  id: FoodBakedBunHotX
+  description: A sticky pastry bun glazed with a distinct white cross.
+  components:
+  - type: Sprite
+    state: bun-hotcross
+
+- type: entity
+  name: meat bun
+  parent: FoodBakedBase
+  id: FoodBakedBunMeat
+  description: Has the potential to not be dog.
+  components:
+  - type: Sprite
+    state: bun-meat
+
+# Cookies
+
+- type: entity
+  name: cookie
+  parent: FoodBakedBase
+  id: FoodBakedCookie
+  description: COOKIE!!!
+  components:
+  - type: Sprite
+    state: COOKIE!!!
+
+- type: entity
+  name: fortune cookie
+  parent: FoodBakedBase
+  id: FoodBakedCookieFortune
+  description: A true prophecy in each cookie!
+  components:
+  # - Food:
+  #   trash: PaperFortune
+  - type: Sprite
+    state: cookie-fortune
+
+- type: entity
+  name: oatmeal cookie
+  parent: FoodBakedBase
+  id: FoodBakedCookieOatmeal
+  description: The best of both cookie and oat.
+  components:
+  - type: Sprite
+    state: cookie-oatmeal
+
+- type: entity
+  name: raisin cookie
+  parent: FoodBakedBase
+  id: FoodBakedCookieRaisin
+  description: Why would you put raisins in a cookie?
+  components:
+  - type: Sprite
+    state: cookie-raisin
+
+- type: entity
+  name: sugar cookie
+  parent: FoodBakedBase
+  id: FoodBakedCookieSugar
+  description: Just like your mom used to make.
+  components:
+  - type: Sprite
+    state: cookie-sugar
+
+# Nuggets
+
+- type: Tag
+  id: Nugget
+
+- type: entity
+  name: chicken nugget
+  parent: FoodBakedBase
+  id: FoodBakedNugget
+  description: A "chicken" nugget vaguely shaped into an object. # Should change depending on name.
+  components:
+  - type: Tag
+    tags:
+      - Nugget
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/nuggets.rsi
+    state: tendie
+    netsync: true
+  - type: RandomSpriteState
+    spriteStates:
+      - tendie
+      - lizard
+      - star
+      - corgi
+
+# Waffles/Pancakes
+
+# Once StackVisualizer is updated you should be able to mix/match stacks of pancakes.
+
+- type: entity
+  name: pancake
+  parent: FoodBakedBase
+  id: FoodBakedPancake
+  description: A fluffy pancake. The softer, superior relative of the waffle.
+  components:
+  # - type: Food
+  #   trash: FoodPlateSmall
+  - type: Stack
+    stackType: Pancake
+    max: 9
+    count: 1
+  - type: Sprite
+    state: pancakes1
+  # - type: Sprite
+  #   layers:
+  #     - state: plate-small
+  #     - state: pancakes1
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - pancakes1
+          - pancakes2
+          - pancakes3
+          - pancakes4
+          - pancakes5
+          - pancakes6
+          - pancakes7
+          - pancakes8
+          - pancakes9
+
+- type: entity
+  name: blueberry pancake
+  parent: FoodBakedBase
+  id: FoodBakedPancakeBb
+  description: A fluffy and delicious blueberry pancake.
+  components:
+  # - type: Food
+  #   trash: FoodPlateSmall
+  - type: Stack
+    stackType: Pancake
+    max: 3
+    count: 1
+  - type: Sprite
+    state: pancakesbb1
+  # - type: Sprite
+  #   layers:
+  #     - state: plate-small
+  #     - state: pancakesbb1
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - pancakesbb1
+          - pancakesbb2
+          - pancakesbb3
+
+- type: entity
+  name: chocolate chip pancake
+  parent: FoodBakedBase
+  id: FoodBakedPancakeCc
+  description: A fluffy and delicious chocolate chip pancake.
+  components:
+  # - type: Food
+  #   trash: FoodPlateSmall
+  - type: Stack
+    stackType: Pancake
+    max: 3
+    count: 1
+  - type: Sprite
+    state: pancakescc1
+  # - type: Sprite
+  #   layers:
+  #     - state: plate-small
+  #     - state: pancakescc1
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - pancakescc1
+          - pancakescc2
+          - pancakescc3
+
+- type: entity
+  name: waffles
+  parent: FoodBakedBase
+  id: FoodBakedWaffle
+  description: Mmm, waffles.
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+
+- type: entity
+  name: soy waffles
+  parent: FoodBakedWaffle
+  id: FoodBakedWaffleSoy
+  description: You feel healthier and - more feminine?
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles-soy
+
+- type: entity
+  name: soylent waffles
+  parent: FoodBakedWaffle
+  id: FoodBakedWaffleSoylent
+  description: Not made of people. Honest. # Definitely people
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles-soylent
+
+- type: entity
+  name: roffle waffles
+  parent: FoodBakedWaffle
+  id: FoodBakedWaffleRoffle
+  description: Waffles from Roffle. Co.
+  components:
+  - type: Sprite
+    layers:
+      - state: tray
+      - state: waffles-roffle
+
+# Misc
+
+- type: entity
+  name: poppy pretzel
+  parent: FoodBakedBase
+  id: FoodBakedPretzel
+  description: It's all twisted up!
+  components:
+  - type: Sprite
+    state: pretzel
+
+- type: entity
+  name: cannoli
+  parent: FoodBakedBase
+  id: FoodBakedCannoli
+  description: A sicilian treat that makes you into a wise guy.
+  components:
+  - type: Sprite
+    state: cannoli
+  - type: SolutionContainer
+    maxVol: 15
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15

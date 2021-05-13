@@ -9,13 +9,3 @@
     state: soda_dispenser
   - type: ReagentDispenser
     pack: SodaDispenserInventory
-
-- type: reagentDispenserInventory
-  id: SodaDispenserInventory
-  inventory:
-  - Coffee
-  - Cola
-  - Cream
-  - Ice
-  - Tea
-  - Water

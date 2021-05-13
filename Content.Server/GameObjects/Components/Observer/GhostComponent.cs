@@ -72,26 +72,6 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Shutdown();
         }
 
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            if (Owner.TryGetComponent<MindComponent>(out var mind))
-            {
-                mind.GhostOnShutdown = false;
-            }
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            if (Owner.TryGetComponent<MindComponent>(out var mind))
-            {
-                mind.GhostOnShutdown = true;
-            }
-        }
-
         public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
@@ -102,26 +82,19 @@ namespace Content.Server.GameObjects.Components.Observer
             {
                 case ReturnToBodyComponentMessage:
                 {
-                    if (!Owner.TryGetComponent(out IActorComponent? actor) ||
+                    if (!Owner.TryGetComponent(out ActorComponent? actor) ||
                         !CanReturnToBody)
                     {
                         break;
                     }
 
-                    if (netChannel == actor.playerSession.ConnectedClient)
+                    if (netChannel == actor.PlayerSession.ConnectedClient)
                     {
-                        var o = actor.playerSession.ContentData()!.Mind;
+                        var o = actor.PlayerSession.ContentData()!.Mind;
                         o?.UnVisit();
                     }
                     break;
                 }
-                case ReturnToCloneComponentMessage _:
-
-                    if (Owner.TryGetComponent(out VisitingMindComponent? mind) && mind.Mind != null)
-                    {
-                        Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
-                    }
-                    break;
                 case GhostWarpToLocationRequestMessage warp:
                 {
                     if (session?.AttachedEntity != Owner)
@@ -149,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         break;
                     }
 
-                    if (!Owner.TryGetComponent(out IActorComponent? actor))
+                    if (!Owner.TryGetComponent(out ActorComponent? actor))
                     {
                         break;
                     }
@@ -160,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Observer
                         break;
                     }
 
-                    if (!_playerManager.TryGetSessionByChannel(actor.playerSession.ConnectedClient, out var player) ||
+                    if (!_playerManager.TryGetSessionByChannel(actor.PlayerSession.ConnectedClient, out var player) ||
                         player.AttachedEntity != entity)
                     {
                         break;
@@ -210,16 +183,6 @@ namespace Content.Server.GameObjects.Components.Observer
             var deathTimeInfo = timeSinceDeath.Minutes > 0 ? Loc.GetString($"{timeSinceDeath.Minutes} minutes ago") : Loc.GetString($"{timeSinceDeath.Seconds} seconds ago");
 
             message.AddMarkup(Loc.GetString("Died [color=yellow]{0}[/color].", deathTimeInfo));
-        }
-
-        public class GhostReturnMessage : EntityEventArgs
-        {
-            public GhostReturnMessage(Mind sender)
-            {
-                Sender = sender;
-            }
-
-            public Mind Sender { get; }
         }
     }
 }

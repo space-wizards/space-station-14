@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class AtmosPlaqueVisualizer : AppearanceVisualizer
     {
-        [field: DataField("layer")]
+        [DataField("layer")]
         private int Layer { get; }
 
         public override void InitializeEntity(IEntity entity)

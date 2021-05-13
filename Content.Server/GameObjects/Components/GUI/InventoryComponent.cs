@@ -705,8 +705,8 @@ namespace Content.Server.GameObjects.Components.GUI
             private static bool CanCommand(IEntity user)
             {
                 var groupController = IoCManager.Resolve<IConGroupController>();
-                return user.TryGetComponent<IActorComponent>(out var player) &&
-                       groupController.CanCommand(player.playerSession, "setoutfit");
+                return user.TryGetComponent<ActorComponent>(out var player) &&
+                       groupController.CanCommand(player.PlayerSession, "setoutfit");
             }
         }
     }

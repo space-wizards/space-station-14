@@ -1,0 +1,236 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodFrozenBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/frozen.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20 # For sprinkles or something? Idk.
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+
+# Ice-cream
+
+- type: entity
+  name: ice-cream sandwich
+  parent: FoodFrozenBase
+  id: FoodFrozenSandwich
+  description: Portable ice-cream in its own packaging.
+  components:
+  - type: Sprite
+    state: sandwich
+
+- type: entity
+  name: strawberry ice-cream sandwich
+  parent: FoodFrozenBase
+  id: FoodFrozenSandwichStrawberry
+  description: Portable ice-cream in its own packaging of the strawberry variety.
+  components:
+  - type: Sprite
+    state: sandwich-strawberry
+
+- type: entity
+  name: space freezy
+  parent: FoodFrozenBase
+  id: FoodFrozenFreezy
+  description: The best ice-cream in space.
+  components:
+  - type: Sprite
+    state: spacefreezy
+
+- type: entity
+  name: ice-cream sundae
+  parent: FoodFrozenBase
+  id: FoodFrozenSundae
+  description: A classic dessert.
+  components:
+  - type: Sprite
+    state: spacefreezy
+
+- type: entity
+  name: cornuto
+  parent: FoodFrozenBase
+  id: FoodFrozenCornuto
+  description: A neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
+  components:
+  - type: Sprite
+    state: cornuto
+
+# Popsicle
+
+- type: entity
+  name: orange creamsicle
+  parent: FoodFrozenBase
+  id: FoodFrozenPopsicleOrange
+  description: A classic orange creamsicle. A sunny frozen treat.
+  components:
+  - type: Sprite
+    layers:
+    - state: stick
+    - state: popsicle-base
+    - state: popsicle
+      color: orange
+  - type: Food
+    trash: FoodFrozenPopsicleTrash
+
+- type: entity
+  name: berry creamsicle
+  parent: FoodFrozenBase
+  id: FoodFrozenPopsicleBerry
+  description: A vibrant berry creamsicle. A berry good frozen treat.
+  components:
+  - type: Sprite
+    layers:
+    - state: stick
+    - state: popsicle-base
+    - state: popsicle
+      color: red
+  - type: Food
+    trash: FoodFrozenPopsicleTrash
+
+- type: entity
+  name: jumbo ice-cream
+  parent: FoodFrozenBase
+  id: FoodFrozenPopsicleJumbo
+  description: A luxurious ice-cream covered in rich chocolate. It's smaller than you remember.
+  components:
+  - type: Sprite
+    layers:
+    - state: stick
+    - state: jumbo
+  - type: Food
+    trash: FoodFrozenPopsicleTrash
+
+- type: entity
+  name: nogga black
+  parent: FoodFrozenBase
+  id: FoodFrozenPopsicleNogga
+  description: A salty licorice ice-cream. Those who cannot remember the past are doomed to repeat it.
+  components:
+  - type: Sprite
+    layers:
+    - state: stick
+    - state: nogga
+  - type: Food
+    trash: FoodFrozenPopsicleTrash
+
+# Snowcone
+
+# Use this one as a base for other colored snowcones. Apply a color to the alpha
+# layer depending on soda/syrup/waterever. Name and description will also have
+# to be modified.
+- type: entity
+  name: flavorless snowcone
+#  name: [Flavor] snowcone
+  parent: FoodFrozenBase
+  id: FoodFrozenSnowcone
+  description: It's just shaved ice. Still fun to chew on.
+#  description: [Liquid] drizzled over a snowball in a paper cup.
+  components:
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: alpha-filling
+#      color: foo
+  - type: Food
+    trash: FoodFrozenSnowconeTrash
+
+- type: entity
+  name: berry snowcone
+  parent: FoodFrozenBase
+  id: FoodFrozenSnowconeBerry
+  description: Berry syrup drizzled over a snowball in a paper cup.
+  components:
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: berry
+  - type: Food
+    trash: FoodFrozenSnowconeTrash
+
+- type: entity
+  name: fruit salad snowcone
+  parent: FoodFrozenBase
+  id: FoodFrozenSnowconeFruit
+  description: A delightful mix of citrus syrups drizzled over a snowball in a paper cup.
+  components:
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: fruitsalad
+  - type: Food
+    trash: FoodFrozenSnowconeTrash
+
+- type: entity
+  name: clowncone
+  parent: FoodFrozenBase
+  id: FoodFrozenSnowconeClown
+  description: Laughter drizzled over a snowball in a paper cup.
+  components:
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: clown
+  - type: Food
+    trash: FoodFrozenSnowconeTrash
+
+- type: entity
+  name: mime snowcone
+  parent: FoodFrozenBase
+  id: FoodFrozenSnowconeMime
+  description: ...
+  components:
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: mime
+  - type: Food
+    trash: FoodFrozenSnowconeTrash
+
+- type: entity
+  name: rainbow snowcone
+  parent: FoodFrozenBase
+  id: FoodFrozenSnowconeRainbow
+  description: A very colorful snowball in a paper cup.
+  components:
+  - type: Sprite
+    layers:
+    - state: cone
+    - state: rainbow
+  - type: Food
+    trash: FoodFrozenSnowconeTrash
+
+# Trash
+
+- type: entity
+  name: paper cone
+  parent: BaseItem
+  id: FoodFrozenSnowconeTrash
+  description: A crumpled paper cone used for an icy treat. Worthless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/frozen.rsi
+    state: cone-trash
+    netsync: false
+
+- type: entity
+  name: popsicle stick
+  parent: BaseItem
+  id: FoodFrozenPopsicleTrash
+  description: Once held a delicious treat. Now, 'tis barren.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/frozen.rsi
+    state: stick
+  - type: RandomSpriteState
+    spriteStates:
+    - stick
+    - stick2

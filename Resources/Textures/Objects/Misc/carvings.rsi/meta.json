@@ -1,11 +1,11 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "@Bright#2366",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "",
-  "copyright": "By Bright",
   "states": [
     {
       "name": "hello"

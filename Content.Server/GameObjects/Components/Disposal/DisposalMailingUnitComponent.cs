@@ -26,6 +26,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
@@ -43,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private const string HolderPrototypeId = "DisposalHolder";
 
@@ -184,9 +186,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             TryQueueEngage();
 
-            if (entity.TryGetComponent(out IActorComponent? actor))
+            if (entity.TryGetComponent(out ActorComponent? actor))
             {
-                UserInterface?.Close(actor.playerSession);
+                UserInterface?.Close(actor.PlayerSession);
             }
 
             UpdateVisualState();
@@ -277,17 +279,17 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var entry = snapGrid
-                .GetLocal()
-                .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            var entry = grid.GetLocal(coords)
+                .FirstOrDefault(entity => Owner.EntityManager.ComponentManager.HasComponent<DisposalEntryComponent>(entity));
 
-            if (entry == null)
+            if (entry == default)
             {
                 return false;
             }
 
-            var entryComponent = entry.GetComponent<DisposalEntryComponent>();
+            var entryComponent = Owner.EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
             var entities = _container.ContainedEntities.ToList();
             foreach (var entity in _container.ContainedEntities.ToList())
             {
@@ -443,7 +445,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _tag = tag;
         }
 
-        private void UpdateVisualState()
+        public void UpdateVisualState()
         {
             UpdateVisualState(false);
         }
@@ -618,10 +620,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     Remove(msg.Entity);
                     break;
 
-                case AnchoredChangedMessage:
-                    UpdateVisualState();
-                    break;
-
                 case PowerChangedMessage powerChanged:
                     PowerStateChanged(powerChanged);
                     break;
@@ -686,7 +684,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return false;
             }
@@ -697,7 +695,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 UpdateTargetList();
                 UpdateInterface();
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
                 return true;
             }
 
@@ -706,14 +704,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             if (IsValidInteraction(eventArgs))
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
             }
 
             return;

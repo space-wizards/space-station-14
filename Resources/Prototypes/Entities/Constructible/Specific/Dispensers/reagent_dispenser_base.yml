@@ -24,7 +24,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: ReagentDispenser
   - type: PowerReceiver
   - type: UserInterface

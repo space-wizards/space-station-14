@@ -11,39 +11,39 @@ namespace Content.Shared.GameObjects.Components.Weapons.Melee
     public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("state")]
+        [DataField("state")]
         public string State { get; } = string.Empty;
 
         [ViewVariables]
-        [field: DataField("prototype")]
+        [DataField("prototype")]
         public string Prototype { get; } = "WeaponArc";
 
         [ViewVariables]
-        [field: DataField("length")]
+        [DataField("length")]
         public TimeSpan Length { get; } = TimeSpan.FromSeconds(0.5f);
 
         [ViewVariables]
-        [field: DataField("speed")]
+        [DataField("speed")]
         public float Speed { get; } = 1;
 
         [ViewVariables]
-        [field: DataField("color")]
+        [DataField("color")]
         public Vector4 Color { get; } = new(1,1,1,1);
 
         [ViewVariables]
-        [field: DataField("colorDelta")]
+        [DataField("colorDelta")]
         public Vector4 ColorDelta { get; } = Vector4.Zero;
 
         [ViewVariables]
-        [field: DataField("arcType")]
+        [DataField("arcType")]
         public WeaponArcType ArcType { get; } = WeaponArcType.Slash;
 
         [ViewVariables]
-        [field: DataField("width")]
+        [DataField("width")]
         public float Width { get; } = 90;
     }
 

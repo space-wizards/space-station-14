@@ -1,9 +1,9 @@
 - type: entity
-  id: base_wall
+  abstract: true
   parent: BaseConstructible
+  id: WallBase
   name: basewall
   description: Keeps the air in and the greytide out.
-  abstract: true
   placement:
     mode: SnapgridCenter
     snap:
@@ -42,9 +42,9 @@
     base: solid
 
 - type: entity
-  id: brick_wall
+  parent: WallBase
+  id: WallBrick
   name: brick wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/brick.rsi
@@ -68,9 +68,9 @@
     base: brick
 
 - type: entity
-  id: clock_wall
+  parent: WallBase
+  id: WallClock
   name: clock wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/clock.rsi
@@ -94,9 +94,9 @@
     base: clock
 
 - type: entity
-  id: clown_wall
+  parent: WallBase
+  id: WallClown
   name: clown wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/clown.rsi
@@ -121,9 +121,9 @@
 
 
 - type: entity
-  id: cult_wall
+  parent: WallBase
+  id: WallCult
   name: cult wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/cult.rsi
@@ -147,9 +147,9 @@
     base: cult
 
 - type: entity
-  id: debug_wall
+  parent: WallBase
+  id: WallDebug
   name: debug wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/debug.rsi
@@ -173,9 +173,9 @@
     base: debug
 
 - type: entity
-  id: diamond_wall
+  parent: WallBase
+  id: WallDiamond
   name: diamond wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/diamond.rsi
@@ -198,11 +198,10 @@
     key: walls
     base: diamond
 
-
 - type: entity
-  id: gold_wall
+  parent: WallBase
+  id: WallGold
   name: gold wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/gold.rsi
@@ -226,9 +225,9 @@
     base: gold
 
 - type: entity
-  id: ice_wall
+  parent: WallBase
+  id: WallIce
   name: ice wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/ice.rsi
@@ -252,9 +251,9 @@
     base: ice
 
 - type: entity
-  id: metal_wall
+  parent: WallBase
+  id: WallMetal
   name: metal wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/metal.rsi
@@ -278,9 +277,9 @@
     base: metal
 
 - type: entity
-  id: plasma_wall
+  parent: WallBase
+  id: WallPlasma
   name: plasma wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/plasma.rsi
@@ -304,9 +303,9 @@
     base: plasma
 
 - type: entity
-  id: plastic_wall
+  parent: WallBase
+  id: WallPlastic
   name: plastic wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/plastic.rsi
@@ -330,9 +329,9 @@
     base: plastic
 
 - type: entity
-  id: reinforced_wall
+  parent: WallBase
+  id: WallReinforced
   name: reinforced wall
-  parent: base_wall
   components:
   - type: Sprite
     color: "#889192"
@@ -363,9 +362,9 @@
 
 # Riveting
 - type: entity
-  id: riveted_wall
+  parent: WallBase
+  id: WallRiveted
   name: riveted wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/riveted.rsi
@@ -389,9 +388,9 @@
     base: riveted
 
 - type: entity
-  id: sandstone_wall
+  parent: WallBase
+  id: WallSandstone
   name: sandstone wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/sandstone.rsi
@@ -415,9 +414,9 @@
     base: sandstone
 
 - type: entity
-  id: silver_wall
+  parent: WallBase
+  id: WallSilver
   name: silver wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/silver.rsi
@@ -441,9 +440,9 @@
     base: silver
 
 - type: entity
-  id: solid_wall
+  parent: WallBase
+  id: WallSolid
   name: solid wall
-  parent: base_wall
   components:
   - type: Sprite
     color: "#889192"
@@ -471,9 +470,9 @@
     base: solid
 
 - type: entity
-  id: uranium_wall
+  parent: WallBase
+  id: WallUranium
   name: uranium wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/uranium.rsi
@@ -497,9 +496,9 @@
     base: uranium
 
 - type: entity
-  id: wood_wall
+  parent: WallBase
+  id: WallWood
   name: wood wall
-  parent: base_wall
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/wood.rsi

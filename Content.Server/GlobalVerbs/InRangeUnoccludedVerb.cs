@@ -18,13 +18,13 @@ namespace Content.Server.GlobalVerbs
         {
             data.Visibility = VerbVisibility.Invisible;
 
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (!groupController.CanCommand(actor.playerSession, "inrangeunoccluded"))
+            if (!groupController.CanCommand(actor.PlayerSession, "inrangeunoccluded"))
             {
                 return;
             }
@@ -36,13 +36,13 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (!groupController.CanCommand(actor.playerSession, "inrangeunoccluded"))
+            if (!groupController.CanCommand(actor.PlayerSession, "inrangeunoccluded"))
             {
                 return;
             }

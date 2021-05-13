@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility
         ///     Name of the BehaviorSet.
         /// </summary>
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>

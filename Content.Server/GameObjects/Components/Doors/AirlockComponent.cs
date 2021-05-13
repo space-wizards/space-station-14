@@ -156,9 +156,9 @@ namespace Content.Server.GameObjects.Components.Doors
         bool IDoorCheck.BlockActivate(ActivateEventArgs eventArgs)
         {
             if (_wiresComponent != null && _wiresComponent.IsPanelOpen &&
-                eventArgs.User.TryGetComponent(out IActorComponent? actor))
+                eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                _wiresComponent.OpenInterface(actor.playerSession);
+                _wiresComponent.OpenInterface(actor.PlayerSession);
                 return true;
             }
             return false;

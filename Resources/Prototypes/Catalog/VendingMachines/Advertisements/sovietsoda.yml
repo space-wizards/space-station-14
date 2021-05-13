@@ -1,0 +1,8 @@
+﻿- type: advertisementsPack
+  id: BodaAds
+  advertisements:
+  - advertisement-sovietsoda-1
+  - advertisement-sovietsoda-2
+  - advertisement-sovietsoda-3
+  - advertisement-sovietsoda-4
+  - advertisement-sovietsoda-5

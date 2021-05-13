@@ -8,58 +8,58 @@
   },
   "states": [
     {
-        "name": "black"
+      "name": "black"
     },
     {
-        "name": "blue"
+      "name": "blue"
     },
     {
-        "name": "box"
+      "name": "box"
     },
     {
-        "name": "green"
+      "name": "green"
     },
     {
-        "name": "mime"
+      "name": "mime"
     },
     {
-        "name": "orange"
+      "name": "orange"
     },
     {
-        "name": "purple"
+      "name": "purple"
     },
     {
-        "name": "rainbow"
+      "name": "rainbow"
     },
     {
-        "name": "red"
+      "name": "red"
     },
     {
-        "name": "white"
+      "name": "white"
     },
     {
-        "name": "yellow"
+      "name": "yellow"
     },
     {
-        "name": "green_box"
+      "name": "green_box"
     },
     {
-        "name": "orange_box"
+      "name": "orange_box"
     },
     {
-        "name": "purple_box"
+      "name": "purple_box"
     },
     {
-        "name": "red_box"
+      "name": "red_box"
     },
     {
-        "name": "yellow_box"
+      "name": "yellow_box"
     },
     {
-        "name": "black_box"
+      "name": "black_box"
     },
     {
-        "name": "blue_box"
+      "name": "blue_box"
     }
   ]
 }

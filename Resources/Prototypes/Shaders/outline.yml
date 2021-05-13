@@ -3,7 +3,6 @@
   kind: source
   path: "/Textures/Shaders/outline.swsl"
   params:
-    outline_width: 2
     outline_color: "#FF000055"
 
 - type: shader
@@ -11,5 +10,4 @@
   kind: source
   path: "/Textures/Shaders/outline.swsl"
   params:
-    outline_width: 2
     outline_color: "#00FF0055"

@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and baystation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and https://github.com/Baystation12/Baystation12/commit/a6067826de7fd8f698793f6d84e6c2f1f9b1f188",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "badrecipe"
+    },
+    {
+      "name": "butter"
+    },
+    {
+      "name": "cakebatter"
+    },
+    {
+      "name": "cheesewedge"
+    },
+    {
+      "name": "cheesewheel"
+    },
+    {
+      "name": "dough"
+    },
+    {
+      "name": "dough-pastry"
+    },
+    {
+      "name": "dough-pastry-baked"
+    },
+    {
+      "name": "dough-pie"
+    },
+    {
+      "name": "dough-flat"
+    },
+    {
+      "name": "dough-slice"
+    },
+    {
+      "name": "flour-big"
+    },
+    {
+      "name": "flour-small"
+    },
+    {
+      "name": "mayo"
+    },
+    {
+      "name": "milk"
+    },
+    {
+      "name": "milk-soy"
+    },
+    {
+      "name": "milk-oat"
+    },
+    {
+      "name": "oliveoil"
+    },
+    {
+      "name": "pizzabread"
+    },
+    {
+      "name": "rice-big"
+    },
+    {
+      "name": "rice-small"
+    },
+    {
+      "name": "soylent-green"
+    },
+    {
+      "name": "soylent-yellow"
+    },
+    {
+      "name": "spice"
+    },
+    {
+      "name": "sugar-big"
+    },
+    {
+      "name": "sugar-small"
+    }
+  ]
+}

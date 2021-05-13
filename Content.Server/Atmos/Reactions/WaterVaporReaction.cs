@@ -5,7 +5,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Reactions
@@ -14,13 +13,13 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public class WaterVaporReaction : IGasReactionEffect
     {
-        [field: DataField("reagent")] public string? Reagent { get; } = null;
+        [DataField("reagent")] public string? Reagent { get; } = null;
 
-        [field: DataField("gas")] public int GasId { get; } = 0;
+        [DataField("gas")] public int GasId { get; } = 0;
 
-        [field: DataField("molesPerUnit")] public float MolesPerUnit { get; } = 1;
+        [DataField("molesPerUnit")] public float MolesPerUnit { get; } = 1;
 
-        [field: DataField("puddlePrototype")] public string? PuddlePrototype { get; } = "PuddleSmear";
+        [DataField("puddlePrototype")] public string? PuddlePrototype { get; } = "PuddleSmear";
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
         {

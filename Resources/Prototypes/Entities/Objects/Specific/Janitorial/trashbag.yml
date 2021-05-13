@@ -1,0 +1,32 @@
+- type: entity
+  name: trash bag
+  id: TrashBag
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    state: icon-3
+  - type: Item
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+  - type: Storage
+    capacity: 125
+    quickInsert: true
+    areaInsert: true
+    storageSoundCollection: trashBagRustle
+
+- type: entity
+  name: trash bag
+  id: TrashBagBlue
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    state: blue-icon-3
+  - type: Item
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    HeldPrefix: blue
+  - type: Storage
+    capacity: 125
+    quickInsert: true
+    areaInsert: true
+    storageSoundCollection: trashBagRustle

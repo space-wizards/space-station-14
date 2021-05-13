@@ -1,0 +1,56 @@
+# Bowls
+
+- type: entity
+  name: bowl
+  parent: BaseItem
+  id: FoodBowlBig
+  description: A simple bowl, used for soups and salads.
+  components:
+  - type: SolutionContainer
+    maxVol: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    state: bowl
+    netsync: false
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
+  - type: Spillable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodBowlBigTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken bowl
+  parent: BaseItem
+  id: FoodBowlBigTrash
+  description: A simple bowl, broken and useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    state: bowl-trash
+    netsync: false
+
+- type: entity
+  name: bowl
+  parent: FoodBowlBig
+  id: FoodBowlFancy
+  description: A fancy bowl, used for SPECIAL soups and salads.
+  components:
+  - type: Sprite
+    state: bowl2

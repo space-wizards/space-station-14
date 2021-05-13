@@ -181,13 +181,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) || !Powered)
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor) || !Powered)
             {
                 return;
             }
 
             _uiDirty = true;
-            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

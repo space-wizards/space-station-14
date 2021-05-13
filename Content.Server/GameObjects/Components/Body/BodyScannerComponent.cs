@@ -18,12 +18,12 @@ namespace Content.Server.GameObjects.Components.Body
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            var session = actor.playerSession;
+            var session = actor.PlayerSession;
 
             if (session.AttachedEntity == null)
             {

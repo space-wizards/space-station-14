@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: BaseSign
   id: PlaqueAtmos
-  name: Atmos Plaque
+  name: atmos plaque
   components:
   - type: Physics
     fixtures:

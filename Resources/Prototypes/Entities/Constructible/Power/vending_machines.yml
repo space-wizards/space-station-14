@@ -2,7 +2,7 @@
 - type: entity
   id: VendingMachine
   parent: BaseConstructible
-  name: vending machine
+  name: Vending machine
   abstract: true
   components:
   - type: InteractionOutline
@@ -49,12 +49,14 @@
   id: VendingMachineAmmo
   name: Liberation Station
   description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
-# Ads cause I remember somebody was working on these
-# product_slogans = "Liberation Station: Your one-stop shop for all things second amendment!;Be a patriot today, pick up a gun!;Quality weapons for cheap prices!;Better dead than red!"
-# product_ads = "Float like an astronaut, sting like a bullet!;Express your second amendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
   components:
   - type: VendingMachine
-    pack: AmmoVend
+    pack: AmmoVendInventory
+  - type: Advertise
+    pack: AmmoVendAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/ammo.rsi
     layers:
@@ -78,9 +80,40 @@
   name: Booze-O-Mat
   components:
   - type: VendingMachine
-    pack: Booze-O-Mat
+    pack: BoozeOMatInventory
+  - type: Advertise
+    pack: BoozeOMatAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingBarDrobe
+  name: BarDrobe
+  components:
+  - type: VendingMachine
+    pack: BarDrobe
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/bardrobe.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -104,7 +137,7 @@
   name: PTech
   components:
   - type: VendingMachine
-    pack: PTech
+    pack: PTechInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cart.rsi
     layers:
@@ -127,10 +160,15 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCigs
-  name: cigarette machine
+  name: Cigarette machine
   components:
   - type: VendingMachine
-    pack: Cigarette machine
+    pack: CigaretteMachineInventory
+  - type: Advertise
+    pack: CigaretteMachineAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cigs.rsi
     layers:
@@ -156,7 +194,12 @@
   name: ClothesMate
   components:
   - type: VendingMachine
-    pack: ClothesMate
+    pack: ClothesMateInventory
+  - type: Advertise
+    pack: ClothesMateAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/clothing.rsi
     layers:
@@ -174,15 +217,19 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
-# slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this swag!;Why leave style up to fate? Use the ClothesMate!"
 
 - type: entity
   parent: VendingMachine
   id: VendingMachineCoffee
-  name: hot drinks machine
+  name: Hot drinks machine
   components:
   - type: VendingMachine
-    pack: Hot Drinks machine
+    pack: HotDrinksMachineInventory
+  - type: Advertise
+    pack: HotDrinksMachineAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/coffee.rsi
     layers:
@@ -212,7 +259,12 @@
   name: Robust Softdrinks
   components:
   - type: VendingMachine
-    pack: Robust Softdrinks
+    pack: RobustSoftdrinksInventory
+  - type: Advertise
+    pack: RobustSoftdrinksAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cola.rsi
     layers:
@@ -238,7 +290,7 @@
   name: Dinnerware
   components:
   - type: VendingMachine
-    pack: Dinnerware
+    pack: DinnerwareInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
     layers:
@@ -265,7 +317,12 @@
   name: Discount Dan's
   components:
   - type: VendingMachine
-    pack: Discount Dan's
+    pack: DiscountDansInventory
+  - type: Advertise
+    pack: DiscountDansAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/discount.rsi
     layers:
@@ -289,7 +346,7 @@
   name: Engi-Vend
   components:
   - type: VendingMachine
-    pack: Engi-Vend
+    pack: EngiVendInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/engivend.rsi
     layers:
@@ -317,7 +374,7 @@
   name: NanoMed Plus
   components:
   - type: VendingMachine
-    pack: NanoMed Plus
+    pack: NanoMedPlusInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/medical.rsi
     layers:
@@ -345,7 +402,7 @@
   name: NutriMax
   components:
   - type: VendingMachine
-    pack: NutriMax
+    pack: NutriMaxInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/nutri.rsi
     layers:
@@ -373,7 +430,7 @@
   name: SecTech
   components:
   - type: VendingMachine
-    pack: SecTech
+    pack: SecTechInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sec.rsi
     layers:
@@ -400,7 +457,7 @@
   name: MegaSeed Servitor
   components:
   - type: VendingMachine
-    pack: MegaSeed Servitor
+    pack: MegaSeedServitorInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/seeds.rsi
     layers:
@@ -427,7 +484,12 @@
   name: SmartFridge
   components:
   - type: VendingMachine
-    pack: SmartFridge
+    pack: SmartFridgeInventory
+  - type: Advertise
+    pack: SmartFridgeAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
     layers:
@@ -451,7 +513,12 @@
   name: Getmore Chocolate Corp
   components:
   - type: VendingMachine
-    pack: Getmore Chocolate Corp
+    pack: GetmoreChocolateCorpInventory
+  - type: Advertise
+    pack: GetmoreChocolateCorpAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
     layers:
@@ -477,7 +544,12 @@
   name: BODA
   components:
   - type: VendingMachine
-    pack: BODA
+    pack: BodaInventory
+  - type: Advertise
+    pack: BodaAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
     layers:
@@ -503,7 +575,12 @@
   name: AutoDrobe
   components:
   - type: VendingMachine
-    pack: AutoDrobe
+    pack: AutoDrobeInventory
+  - type: Advertise
+    pack: AutoDrobeAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/theater.rsi
     layers:
@@ -533,7 +610,12 @@
   name: Vendomat
   components:
   - type: VendingMachine
-    pack: Vendomat
+    pack: VendomatInventory
+  - type: Advertise
+    pack: VendomatAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
+  - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vendomat.rsi
     layers:
@@ -560,7 +642,7 @@
   name: NanoMed
   components:
   - type: VendingMachine
-    pack: NanoMed
+    pack: NanoMedInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/wallmed.rsi
     layers:
@@ -587,7 +669,7 @@
   name: YouTool
   components:
   - type: VendingMachine
-    pack: YouTool
+    pack: YouToolInventory
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/youtool.rsi
     layers:

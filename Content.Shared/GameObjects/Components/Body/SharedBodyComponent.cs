@@ -33,11 +33,11 @@ namespace Content.Shared.GameObjects.Components.Body
         public override uint? NetID => ContentNetIDs.BODY;
 
         [ViewVariables]
-        [field: DataField("template", required: true)]
+        [DataField("template", required: true)]
         private string? TemplateId { get; } = default;
 
         [ViewVariables]
-        [field: DataField("preset", required: true)]
+        [DataField("preset", required: true)]
         private string? PresetId { get; } = default;
 
         [ViewVariables]
