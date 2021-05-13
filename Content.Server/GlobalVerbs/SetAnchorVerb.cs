@@ -4,6 +4,7 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -30,7 +31,7 @@ namespace Content.Server.GlobalVerbs
 
                 if (groupController.CanCommand(player.PlayerSession, "setanchor"))
                 {
-                    data.Text = physics.Anchored ? "Unanchor" : "Anchor";
+                    data.Text = physics.BodyType == BodyType.Static ? "Unanchor" : "Anchor";
                     data.Visibility = VerbVisibility.Visible;
                 }
             }
@@ -46,7 +47,7 @@ namespace Content.Server.GlobalVerbs
 
                 if (target.TryGetComponent(out PhysicsComponent? physics))
                 {
-                    physics.Anchored = !physics.Anchored;
+                    physics.BodyType = physics.BodyType == BodyType.Static ? BodyType.Dynamic : BodyType.Static;
                 }
             }
         }

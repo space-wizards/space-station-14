@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -58,9 +59,9 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (moveProb > ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
                                              && !float.IsPositiveInfinity(MoveResist)
-                                             && (!physics.Anchored
+                                             && (physics.BodyType != BodyType.Static
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
-                || (physics.Anchored && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
+                || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
 
                 if (physics.Owner.HasComponent<IMobStateComponent>())
