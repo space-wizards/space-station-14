@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private bool _fixAirBlockedDirectionInitialize = true;
 
         [ViewVariables]
-        [field: DataField("noAirWhenFullyAirBlocked")]
+        [DataField("noAirWhenFullyAirBlocked")]
         public bool NoAirWhenFullyAirBlocked { get; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -82,6 +82,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
+
+            // Adding this component will immediately anchor the entity, because the atmos system
+            // requires airtight entities to be anchored for performance.
+            Owner.Transform.Anchored = true;
 
             UpdatePosition();
         }
