@@ -957,3 +957,80 @@ Entries:
   - {message: nerfed melee weapons, type: Fix}
   id: 170
   time: '2021-04-28T21:14:28.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: 'Adds a ton of food, ingredients and condiments from different codebases',
+    type: Add}
+  - {message: Removes some old/duplicate food items, type: Remove}
+  - {message: You will never bite into food only to find it's empty again, type: Fix}
+  id: 171
+  time: '2021-05-03T11:17:22.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Chairs and other object will change their direction when you pull them.,
+    type: Tweak}
+  id: 172
+  time: '2021-05-05T03:29:26.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed food wrappers playing the pickup animation when they weren't supposed
+      to., type: Fix}
+  - {message: Fixed bottles and lightbulb glass getting stuck on the player., type: Fix}
+  id: 173
+  time: '2021-05-08T18:27:20.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pull-to-location velocity control is more stable. (Won't send items
+      flying all the time.), type: Fix}
+  id: 174
+  time: '2021-05-11T08:32:11.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added global hearing for ghosts., type: Add}
+  id: 175
+  time: '2021-05-11T08:37:40.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed cloning pod neural activity indicator, type: Fix}
+  - {message: Cloning timer reduced to 30 seconds, type: Tweak}
+  id: 176
+  time: '2021-05-11T23:16:08.0000000+00:00'
+- author: StrawberryMoses
+  changes:
+  - {message: Fixed beard saving in character creation, type: Fix}
+  id: 177
+  time: '2021-05-12T01:12:27.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed items with no inhands showing the error sprite., type: Fix}
+  id: 178
+  time: '2021-05-12T22:43:53.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Added a battery charge indicator on examination of substations, APCs,
+      and SMESes.', type: Add}
+  id: 179
+  time: '2021-05-12T23:10:58.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: '"Kill X" traitor goal will no longer consider gibbed bodies (brains)
+      "alive"', type: Fix}
+  id: 180
+  time: '2021-05-12T23:11:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix underfloor wires sprites, type: Fix}
+  id: 181
+  time: '2021-05-12T23:11:49.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Added a command, drainallbatteries, so admins can drain all the batteries.
+      Useful for local testing and/or training of Station Engineers on what to do
+      in a power outage...', type: Add}
+  id: 182
+  time: '2021-05-12T23:12:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes radio messages not sending., type: Fix}
+  id: 183
+  time: '2021-05-13T16:23:49.015456+00:00'
