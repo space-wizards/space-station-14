@@ -94,17 +94,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    AnchorUpdate();
-                    break;
-            }
-        }
-
         #region Connector port methods
 
         public override void OnRemove()
@@ -139,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             ConnectedPort = null;
         }
 
-        private void AnchorUpdate()
+        public void AnchorUpdate()
         {
             if (Anchored)
             {

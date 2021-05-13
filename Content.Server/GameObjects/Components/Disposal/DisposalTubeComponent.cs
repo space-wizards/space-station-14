@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
         }
 
-        private void AnchoredChanged()
+        public void AnchoredChanged()
         {
             if (!Owner.TryGetComponent(out PhysicsComponent? physics))
             {
@@ -266,10 +266,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastClang = _gameTiming.CurTime;
                     SoundSystem.Play(Filter.Pvs(Owner), _clangSound, Owner.Transform.Coordinates);
-                    break;
-
-                case AnchoredChangedMessage:
-                    AnchoredChanged();
                     break;
             }
         }

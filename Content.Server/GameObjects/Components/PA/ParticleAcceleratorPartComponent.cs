@@ -16,17 +16,6 @@ namespace Content.Server.GameObjects.Components.PA
             Owner.Transform.Anchored = true;
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    OnAnchorChanged();
-                    break;
-            }
-        }
-
         public void OnAnchorChanged()
         {
             RescanIfPossible();

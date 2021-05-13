@@ -445,7 +445,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _tag = tag;
         }
 
-        private void UpdateVisualState()
+        public void UpdateVisualState()
         {
             UpdateVisualState(false);
         }
@@ -618,10 +618,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
-                    break;
-
-                case AnchoredChangedMessage:
-                    UpdateVisualState();
                     break;
 
                 case PowerChangedMessage powerChanged:
