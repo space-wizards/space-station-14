@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Paper
@@ -43,8 +44,14 @@ namespace Content.Server.GameObjects.Components.Paper
         {
             if (!inDetailsRange)
                 return;
+            if (Content == "")
+                return;
 
-            message.AddText(Content);
+            message.AddMarkup(
+                Loc.GetString(
+                    "paper-component-examine-detail-has-words"
+                )
+            );
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
