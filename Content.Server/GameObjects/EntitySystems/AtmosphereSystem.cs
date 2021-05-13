@@ -102,12 +102,12 @@ namespace Content.Server.GameObjects.EntitySystems
             _mapManager.MapCreated -= OnMapCreated;
             _mapManager.TileChanged -= OnTileChanged;
 
-            UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(OnAirtightPositionChanged);
-            UnsubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
+            UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>();
+            UnsubscribeLocalEvent<AirtightComponent, RotateEvent>();
 
-            UnsubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>(OnDeviceBodyTypeChanged);
-            UnsubscribeLocalEvent<AtmosDeviceComponent, AtmosDeviceUpdateEvent>(OnDeviceAtmosProcess);
-            UnsubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
+            UnsubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>();
+            UnsubscribeLocalEvent<AtmosDeviceComponent, AtmosDeviceUpdateEvent>();
+            UnsubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>();
         }
 
         #region CVars

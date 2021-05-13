@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -14,6 +15,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private (GridId, Vector2i) _lastPosition;
         private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -77,11 +80,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            // Using the SnapGrid is critical for performance, and thus if it is absent the component
-            // will not be airtight. A warning is much easier to track down than the object magically
-            // not being airtight, so log one if the SnapGrid component is missing.
-            Owner.EnsureComponentWarn(out SnapGridComponent _);
-
             if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
 
@@ -128,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _airBlocked = false;
 
-            UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
+            InvalidatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
             {
@@ -139,24 +137,28 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void OnSnapGridMove(SnapGridPositionChangedEvent ev)
         {
             // Invalidate old position.
-            UpdatePosition(ev.OldGrid, ev.OldPosition);
+            InvalidatePosition(ev.OldGrid, ev.OldPosition);
 
             // Update and invalidate new position.
             _lastPosition = (ev.NewGrid, ev.Position);
-            UpdatePosition(ev.NewGrid, ev.Position);
+            InvalidatePosition(ev.NewGrid, ev.Position);
         }
 
         private void UpdatePosition()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
-                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
-            }
+            if (!Owner.Transform.Anchored || !Owner.Transform.GridID.IsValid())
+                return;
+
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+            InvalidatePosition(_lastPosition.Item1, _lastPosition.Item2);
         }
 
-        private void UpdatePosition(GridId gridId, Vector2i pos)
+        private void InvalidatePosition(GridId gridId, Vector2i pos)
         {
+            if (!gridId.IsValid())
+                return;
+
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
 
             gridAtmos?.UpdateAdjacentBits(pos);

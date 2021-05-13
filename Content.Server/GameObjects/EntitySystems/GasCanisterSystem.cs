@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems
             GasCanisterComponent component,
             PhysicsBodyTypeChangedEvent args)
         {
-            component.AnchorUpdate();
+            //component.AnchorUpdate();
         }
 
         public override void Update(float frameTime)
