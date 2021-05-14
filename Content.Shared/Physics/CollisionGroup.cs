@@ -28,6 +28,12 @@ namespace Content.Shared.Physics
 
         MobMask = Impassable | MobImpassable | VaultImpassable | SmallImpassable,
         ThrownItem = MobImpassable | Impassable,
+
+        ProjectileMask = Impassable | MobImpassable, // will be damaged by bullets, arrows or other projectile
+        LaserMask = Opaque, // will be damaged by laser ray from laser gun
+        WeaponMask  = ProjectileMask | LaserMask, // will be damaged by any long range weapon (laser or projectile)
+
+
         // 32 possible groups
         AllMask = -1,
     }

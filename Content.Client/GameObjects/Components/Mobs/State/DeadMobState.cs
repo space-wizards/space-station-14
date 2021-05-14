@@ -18,11 +18,6 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics.CanCollide = false;
-            }
         }
 
         public override void ExitState(IEntity entity)
@@ -30,11 +25,6 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             base.ExitState(entity);
 
             EntitySystem.Get<StandingStateSystem>().Standing(entity);
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics.CanCollide = true;
-            }
         }
     }
 }

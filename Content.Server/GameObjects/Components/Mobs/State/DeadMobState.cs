@@ -2,6 +2,7 @@
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
@@ -33,7 +34,10 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out IPhysBody? physics))
             {
-                physics.CanCollide = false;
+                // remove mob from layers where they can be hit by ranged weapon
+                // other layers will stay unchanged
+                foreach (var fixture in physics.Fixtures)
+                    fixture.CollisionLayer &= (int) ~CollisionGroup.WeaponMask;
             }
         }
 
@@ -43,7 +47,11 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out IPhysBody? physics))
             {
-                physics.CanCollide = true;
+                // this will make mob penetred by ranged weapon again
+                // it will force-rewrite possible weapon immunity
+                // other layers will stay unchanged
+                foreach (var fixture in physics.Fixtures)
+                    fixture.CollisionLayer |= (int) CollisionGroup.WeaponMask;
             }
         }
     }
