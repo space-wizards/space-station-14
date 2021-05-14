@@ -78,6 +78,7 @@
   parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
+  description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
@@ -109,9 +110,14 @@
   parent: VendingMachine
   id: VendingBarDrobe
   name: BarDrobe
+  description: A stylish vendor to dispense the most stylish bar clothing!
   components:
   - type: VendingMachine
     pack: BarDrobe
+  - type: Advertise
+    pack: BarDrobeAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/bardrobe.rsi
     layers:
@@ -135,6 +141,7 @@
   parent: VendingMachine
   id: VendingMachineCart
   name: PTech
+  description: Cartridges for PDAs.
   components:
   - type: VendingMachine
     pack: PTechInventory
@@ -160,7 +167,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCigs
-  name: Cigarette machine
+  name: ShadyCigs Deluxe
+  description: If you want to get cancer, might as well do it in style.
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
@@ -192,6 +200,7 @@
   parent: VendingMachine
   id: VendingMachineClothing
   name: ClothesMate
+  description: A vending machine for clothing.
   components:
   - type: VendingMachine
     pack: ClothesMateInventory
@@ -221,7 +230,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCoffee
-  name: Hot drinks machine
+  name: Solar's Best Hot Drinks
+  description: A vending machine which dispenses hot drinks.
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
@@ -257,6 +267,7 @@
   parent: VendingMachine
   id: VendingMachineCola
   name: Robust Softdrinks
+  description: A softdrink vendor provided by Robust Industries, LLC.
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
@@ -287,10 +298,15 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDinnerware
-  name: Dinnerware
+  name: Plasteel Chef's Dinnerware Vendor
+  description: A kitchen and restaurant equipment vendor.
   components:
   - type: VendingMachine
     pack: DinnerwareInventory
+  - type: Advertise
+    pack: DinnerwareAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
     layers:
@@ -344,6 +360,7 @@
   parent: VendingMachine
   id: VendingMachineEngivend
   name: Engi-Vend
+  description: Spare tool vending. What? Did you expect some witty description?
   components:
   - type: VendingMachine
     pack: EngiVendInventory
@@ -372,9 +389,14 @@
   parent: VendingMachine
   id: VendingMachineMedical
   name: NanoMed Plus
+  description: Medical drug dispenser.
   components:
   - type: VendingMachine
     pack: NanoMedPlusInventory
+  - type: Advertise
+    pack: NanoMedAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/medical.rsi
     layers:
@@ -400,9 +422,14 @@
   parent: VendingMachine
   id: VendingMachineNutri
   name: NutriMax
+  description: A plant nutrients vendor.
   components:
   - type: VendingMachine
     pack: NutriMaxInventory
+  - type: Advertise
+    pack: NutriMaxAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/nutri.rsi
     layers:
@@ -431,6 +458,10 @@
   components:
   - type: VendingMachine
     pack: SecTechInventory
+  - type: Advertise
+    pack: SecTechAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sec.rsi
     layers:
@@ -458,6 +489,10 @@
   components:
   - type: VendingMachine
     pack: MegaSeedServitorInventory
+  - type: Advertise
+    pack: MegaSeedAds
+    minWait: 480 # 8 minutes
+    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/seeds.rsi
     layers:
