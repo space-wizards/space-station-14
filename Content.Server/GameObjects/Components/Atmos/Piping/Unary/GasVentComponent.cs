@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         [ViewVariables(VVAccess.ReadWrite)]
         public float InternalPressureBound = 0f;
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             // TODO ATMOS: Weld shut.
             if (!_enabled)

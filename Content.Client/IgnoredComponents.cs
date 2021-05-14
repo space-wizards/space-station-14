@@ -149,6 +149,7 @@ namespace Content.Client
             "GasVolumePump",
             "GasPassiveGate",
             "GasValve",
+            "GasThermoMachine",
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",

@@ -79,3 +79,43 @@
     mode: SnapgridCenter
   components:
     - type: GasOutletInjector
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasThermoMachineBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/thermomachine.rsi
+      layers:
+        - state: heaterPipe
+        - state: heater
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasThermoMachine
+
+
+- type: entity
+  parent: GasThermoMachineBase
+  id: GasThermoMachineFreezer
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasThermoMachine
+      mode: Freezer
+      minTemperature: 73.15
+
+- type: entity
+  parent: GasThermoMachineBase
+  id: GasThermoMachineHeater
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasThermoMachine
+      mode: Heater
+      maxTemperature: 573.15 # This is changed when parts are refreshed.
+

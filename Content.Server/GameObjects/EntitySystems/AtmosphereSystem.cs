@@ -192,11 +192,9 @@ namespace Content.Server.GameObjects.EntitySystems
             if (component.Atmosphere == null)
                 return; // Shouldn't really happen, but just in case...
 
-            var time = (float)component.DeltaTime.TotalSeconds;
-
             foreach (var process in ComponentManager.GetComponents<IAtmosProcess>(uid))
             {
-                process.ProcessAtmos(time, component.Atmosphere);
+                process.ProcessAtmos(component.Atmosphere);
             }
         }
 

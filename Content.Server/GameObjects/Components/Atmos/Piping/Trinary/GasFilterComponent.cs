@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
             set => _transferRate = Math.Min(value, Atmospherics.MaxTransferRate);
         }
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             if (!_enabled)
                 return;
@@ -62,8 +62,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
             if (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure)
                 return; // No need to transfer if target is full.
 
-            // We take time into account here, transfer rates are L/s, after all.
-            var transferRatio = _transferRate * time / inletNode.Air.Volume;
+            // SUS: Maybe this should take time into account, transfer rate is L/s...
+            var transferRatio = _transferRate / inletNode.Air.Volume;
 
             if (transferRatio <= 0)
                 return;

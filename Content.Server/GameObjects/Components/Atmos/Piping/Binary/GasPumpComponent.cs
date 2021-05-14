@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
         [ViewVariables(VVAccess.ReadWrite)]
         private float _targetPressure = Atmospherics.OneAtmosphere;
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             if (!_enabled)
                 return;

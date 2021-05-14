@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
         [ViewVariables(VVAccess.ReadWrite)]
         private float _inletTwoConcentration = 0.5f;
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             // TODO ATMOS: Cache total moles since it's expensive.
 

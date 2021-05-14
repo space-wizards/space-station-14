@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         [ViewVariables(VVAccess.ReadWrite)]
         public bool WideNet { get; private set; } = false;
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             if (!_enabled)
                 return;

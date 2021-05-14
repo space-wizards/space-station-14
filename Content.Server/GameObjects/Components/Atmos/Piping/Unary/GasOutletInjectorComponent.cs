@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         [DataField("inlet")]
         private string _inletName = "pipe";
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             _injecting = false;
 

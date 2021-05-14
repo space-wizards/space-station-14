@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Other
             return true;
         }
 
-        public void ProcessAtmos(float time, IGridAtmosphereComponent atmosphere)
+        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
         {
             if (!CheckOperation(out var tile) || !_enabled || SpawnGas <= Gas.Invalid || SpawnAmount <= 0f)
                 return;

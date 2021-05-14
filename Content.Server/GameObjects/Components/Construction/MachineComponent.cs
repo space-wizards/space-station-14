@@ -119,6 +119,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public void MapInit()
         {
             CreateBoardAndStockParts();
+            RefreshParts();
         }
     }
 }
