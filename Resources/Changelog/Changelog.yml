@@ -1034,3 +1034,8 @@ Entries:
   - {message: Fixes radio messages not sending., type: Fix}
   id: 183
   time: '2021-05-13T16:23:49.015456+00:00'
+- author: StrawberryMoses
+  changes:
+  - {message: Added missing flavor text to vending machines, type: Add}
+  id: 184
+  time: '2021-05-14T00:41:05.0000000+00:00'
