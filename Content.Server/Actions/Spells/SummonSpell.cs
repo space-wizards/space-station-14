@@ -37,6 +37,7 @@ namespace Content.Server.Actions
             if (!caster.TryGetComponent<HandsComponent>(out var hands))
             {
                 caster.PopupMessage("You don't have hands!");
+                return;
             }
             caster.GetComponent<HandsComponent>().PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>());
             if (CastSound != null)

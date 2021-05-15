@@ -68,7 +68,7 @@
     - spells
   description: "Give me a pie, I dare you!"
   behaviorType: Instant
-  behavior: !type:InstantSpell
+  behavior: !type:SummonSpell
     spellitem: FoodPieBananaCream
     castmessage: I NEED A PIE!
     cooldown: 1

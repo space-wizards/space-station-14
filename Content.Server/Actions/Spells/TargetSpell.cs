@@ -48,7 +48,7 @@ namespace Content.Server.Actions
             var targetCoords = target.Transform.WorldPosition;
             var effectiveRange = (casterCoords - targetCoords).Length;
             if (!caster.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (CastRange < effectiveRange && CastRange != 0)
+            if (CastRange != 0 && CastRange < effectiveRange)
             {
                 caster.PopupMessage("This spell cannot reach this far!");
                 return;
