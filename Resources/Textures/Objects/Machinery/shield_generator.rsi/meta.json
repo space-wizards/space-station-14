@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2528a7fd89dca1369da7ce56378e6cb2ddd01161",
+    "states": [
+        {
+            "name": "shieldoff",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "shieldoffbr",
+            "directions": 1,
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "shieldon",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "shieldonbr",
+            "directions": 1,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.4,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        }
+    ]
+}
