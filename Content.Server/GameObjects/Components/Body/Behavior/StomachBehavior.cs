@@ -68,8 +68,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             }
 
             // Transfer digested reagents to bloodstream
-            if (transferSolution.TotalVolume > 0)
-                bloodstream.TryTransferSolution(transferSolution);
+            bloodstream.TryTransferSolution(transferSolution);
         }
 
         /// <summary>
