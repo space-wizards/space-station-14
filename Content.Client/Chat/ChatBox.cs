@@ -7,6 +7,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
+using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
@@ -503,6 +504,25 @@ namespace Content.Client.Chat
             UserInterfaceManager.KeyboardFocused?.ReleaseKeyboardFocus();
         }
 
+        public void CycleChatChannel(bool forward)
+        {
+            Input.IgnoreNext = true;
+            var channels = SelectableChannels;
+            var idx = channels.IndexOf(SelectedChannel);
+            if (forward)
+            {
+                idx++;
+                idx = MathHelper.Mod(idx, channels.Count());
+            }
+            else
+            {
+                idx--;
+                idx = MathHelper.Mod(idx, channels.Count());
+            }
+
+            SelectChannel(channels[idx]);
+        }
+
         private void InputKeyBindDown(GUIBoundKeyEventArgs args)
         {
             if (args.Function == EngineKeyFunctions.TextReleaseFocus)
@@ -512,9 +532,22 @@ namespace Content.Client.Chat
                 return;
             }
 
+            if (args.Function == ContentKeyFunctions.CycleChatChannelForward)
+            {
+                CycleChatChannel(true);
+                args.Handle();
+                return;
+            }
+
+            if (args.Function == ContentKeyFunctions.CycleChatChannelBackward)
+            {
+                CycleChatChannel(false);
+                args.Handle();
+                return;
+            }
+
             // if we temporarily selected another channel via a prefx, undo that when we backspace on an empty input
-            if (Input.Text.Length == 0 && _savedSelectedChannel.HasValue &&
-                args.Function == EngineKeyFunctions.TextBackspace)
+            if (args.Function == EngineKeyFunctions.TextBackspace && Input.Text.Length == 0 && _savedSelectedChannel.HasValue)
             {
                 SafelySelectChannel(_savedSelectedChannel.Value);
                 _savedSelectedChannel = null;
