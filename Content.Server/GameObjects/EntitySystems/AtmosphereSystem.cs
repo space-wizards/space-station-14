@@ -22,6 +22,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -204,7 +205,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!component.RequireAnchored)
                 return;
 
-            if (args.Anchored)
+            if (args.New == BodyType.Static)
                 component.JoinAtmosphere();
             else
                 component.LeaveAtmosphere();
