@@ -7,6 +7,7 @@ using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chat;
+using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
@@ -59,7 +60,7 @@ namespace Content.Client.Chat
         /// <summary>
         /// Will be Unspecified if set to Console
         /// </summary>
-        public ChatChannel SelectedChannel;
+        public ChatChannel SelectedChannel = ChatChannel.Unspecified;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -279,7 +280,7 @@ namespace Content.Client.Chat
         /// entries (which should not be presented to the user)</param>
         /// <param name="unreadMessages">unread message counts for each disabled channel, values 10 or higher will show as 9+</param>
         public void SetChannelPermissions(List<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
-            IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
+            IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages, bool switchIfConsole)
         {
             SelectableChannels = selectableChannels;
             // update the channel selector
@@ -305,10 +306,15 @@ namespace Content.Client.Chat
                 _savedSelectedChannel = null;
             }
 
-            if (!selectableChannels.Contains(SelectedChannel) && SelectedChannel != ChatChannel.Unspecified)
+            if (!selectableChannels.Contains(SelectedChannel) && (switchIfConsole || SelectedChannel != ChatChannel.Unspecified))
             {
-                // our previously selected channel no longer exists, default back to OOC, which should always be available
-                if (selectableChannels.Contains(ChatChannel.OOC))
+                // our previously selected channel no longer exists or we are still on console channel because we just joined
+                if ((SelectedChannel & ChatChannel.IC) != 0 || SelectedChannel == ChatChannel.Unspecified)
+                {
+                    if (!SafelySelectChannel(ChatChannel.Local))
+                        SafelySelectChannel(ChatChannel.Dead);
+                }
+                else if (selectableChannels.Contains(ChatChannel.OOC))
                 {
                     SafelySelectChannel(ChatChannel.OOC);
                 }
@@ -498,6 +504,24 @@ namespace Content.Client.Chat
             UserInterfaceManager.KeyboardFocused?.ReleaseKeyboardFocus();
         }
 
+        public void CycleChatChannel(bool forward)
+        {
+            Input.IgnoreNext = true;
+            var channels = SelectableChannels;
+            var idx = channels.IndexOf(SelectedChannel);
+            if (forward)
+            {
+                idx++;
+            }
+            else
+            {
+                idx--;
+            }
+            idx = MathHelper.Mod(idx, channels.Count);
+
+            SelectChannel(channels[idx]);
+        }
+
         private void InputKeyBindDown(GUIBoundKeyEventArgs args)
         {
             if (args.Function == EngineKeyFunctions.TextReleaseFocus)
@@ -507,9 +531,22 @@ namespace Content.Client.Chat
                 return;
             }
 
+            if (args.Function == ContentKeyFunctions.CycleChatChannelForward)
+            {
+                CycleChatChannel(true);
+                args.Handle();
+                return;
+            }
+
+            if (args.Function == ContentKeyFunctions.CycleChatChannelBackward)
+            {
+                CycleChatChannel(false);
+                args.Handle();
+                return;
+            }
+
             // if we temporarily selected another channel via a prefx, undo that when we backspace on an empty input
-            if (Input.Text.Length == 0 && _savedSelectedChannel.HasValue &&
-                args.Function == EngineKeyFunctions.TextBackspace)
+            if (args.Function == EngineKeyFunctions.TextBackspace && Input.Text.Length == 0 && _savedSelectedChannel.HasValue)
             {
                 SafelySelectChannel(_savedSelectedChannel.Value);
                 _savedSelectedChannel = null;

@@ -14,7 +14,7 @@
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltBandolier
-  name: assault belt
+  name: bandolier
   description: "A bandolier for holding shotgun ammunition."
   components:
   - type: Sprite
@@ -47,6 +47,7 @@
     sprite: Clothing/Belt/champion.rsi
   - type: Clothing
     sprite: Clothing/Belt/champion.rsi
+    QuickEquip: true
 
 - type: entity
   parent: ClothingBeltBase
@@ -138,7 +139,10 @@
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Storage
-    capacity: 40
+    capacity: 15
+  - type: StorageFill
+    contents:
+      - name: CaptainSabre
 
 - type: entity
   parent: ClothingBeltBase
@@ -151,6 +155,7 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Belt/suspenders.rsi
+    QuickEquip: true
 
 - type: entity
   parent: ClothingBeltBase
@@ -163,4 +168,4 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
-    capacity: 40 # Full tool loadout is 35, plus an extra
+    capacity: 40

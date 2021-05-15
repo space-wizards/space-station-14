@@ -1,0 +1,7 @@
+﻿- type: advertisementsPack
+  id: MegaSeedAds
+  advertisements:
+    - advertisement-megaseed-1
+    - advertisement-megaseed-2
+    - advertisement-megaseed-3
+    - advertisement-megaseed-4
