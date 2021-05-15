@@ -59,7 +59,7 @@ namespace Content.Client.Chat
         /// <summary>
         /// Will be Unspecified if set to Console
         /// </summary>
-        public ChatChannel SelectedChannel;
+        public ChatChannel SelectedChannel = ChatChannel.Unspecified;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -279,7 +279,7 @@ namespace Content.Client.Chat
         /// entries (which should not be presented to the user)</param>
         /// <param name="unreadMessages">unread message counts for each disabled channel, values 10 or higher will show as 9+</param>
         public void SetChannelPermissions(List<ChatChannel> selectableChannels, IReadOnlySet<ChatChannel> filterableChannels,
-            IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages)
+            IReadOnlyDictionary<ChatChannel, bool> channelFilters, IReadOnlyDictionary<ChatChannel, byte> unreadMessages, bool switchIfConsole)
         {
             SelectableChannels = selectableChannels;
             // update the channel selector
@@ -305,10 +305,15 @@ namespace Content.Client.Chat
                 _savedSelectedChannel = null;
             }
 
-            if (!selectableChannels.Contains(SelectedChannel) && SelectedChannel != ChatChannel.Unspecified)
+            if (!selectableChannels.Contains(SelectedChannel) && (switchIfConsole || SelectedChannel != ChatChannel.Unspecified))
             {
-                // our previously selected channel no longer exists, default back to OOC, which should always be available
-                if (selectableChannels.Contains(ChatChannel.OOC))
+                // our previously selected channel no longer exists or we are still on console channel because we just joined
+                if ((SelectedChannel & ChatChannel.IC) != 0 || SelectedChannel == ChatChannel.Unspecified)
+                {
+                    if (!SafelySelectChannel(ChatChannel.Local))
+                        SafelySelectChannel(ChatChannel.Dead);
+                }
+                else if (selectableChannels.Contains(ChatChannel.OOC))
                 {
                     SafelySelectChannel(ChatChannel.OOC);
                 }
