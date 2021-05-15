@@ -139,7 +139,6 @@ namespace Content.Client.State
             chat.SelectChannel(channel);
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
-
         }
 
         public override void FrameUpdate(FrameEventArgs e)
