@@ -509,16 +509,9 @@ namespace Content.Client.Chat
             Input.IgnoreNext = true;
             var channels = SelectableChannels;
             var idx = channels.IndexOf(SelectedChannel);
-            if (forward)
-            {
-                idx++;
-                idx = MathHelper.Mod(idx, channels.Count());
-            }
-            else
-            {
-                idx--;
-                idx = MathHelper.Mod(idx, channels.Count());
-            }
+            if (forward) idx++;
+            else idx--;
+            idx = MathHelper.Mod(idx, channels.Count);
 
             SelectChannel(channels[idx]);
         }
