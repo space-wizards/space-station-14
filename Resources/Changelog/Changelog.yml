@@ -1060,3 +1060,8 @@ Entries:
   - {message: Stay Alive / Die A Glorious Death don't treat brains as alive., type: Fix}
   id: 187
   time: '2021-05-15T15:46:56.0000000+00:00'
+- author: Hardly
+  changes:
+  - {message: R&D Now starts with crates of materials, type: Add}
+  id: 188
+  time: '2021-05-15T17:45:32.0000000+00:00'
