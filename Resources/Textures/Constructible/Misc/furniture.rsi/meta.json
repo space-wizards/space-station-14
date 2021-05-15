@@ -1,12 +1,21 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
+  "copyright": "Taken from cev-eris and tgstation at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0 and https://github.com/tgstation/tgstation/commit/2528a7fd89dca1369da7ce56378e6cb2ddd01161",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "abed",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
     {
       "name": "armchair_preview",
       "directions": 4
@@ -50,12 +59,60 @@
       "directions": 4
     },
     {
+      "name": "dirty_mattress",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "dogbed",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
       "name": "officechair_dark",
       "directions": 4
     },
     {
       "name": "officechair_white",
       "directions": 4
+    },
+    {
+      "name": "pews",
+      "directions": 8,
+      "delays": [
+        [
+          1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          1.0
+        ]
+      ]
     },
     {
       "name": "psychbed"
@@ -66,6 +123,15 @@
     {
       "name": "shuttle_chair",
       "directions": 4
+    },
+    {
+      "name": "spirit_board",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
     },
     {
       "name": "stool_base"
