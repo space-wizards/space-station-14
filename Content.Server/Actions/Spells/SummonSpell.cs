@@ -17,11 +17,11 @@ namespace Content.Server.Actions
     [DataDefinition]
     public class SummonSpell : IInstantAction
     {
-        [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "I CAST SPELL";
-        [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("spellitem")] public string ItemProto { get; set; } = "FoodPieBananaCream";
+        [ViewVariables] [DataField("castMessage")] public string CastMessage { get; set; } = "I CAST SPELL";
+        [ViewVariables] [DataField("coolDown")] public float CoolDown { get; set; } = 1f;
+        [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = "FoodPieBananaCream";
 
-        [ViewVariables] [DataField("castsound")] public string? CastSound { get; set; } = "Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = "Audio/Weapons/emitter.ogg";
 
         //Rubber-band snapping items into player's hands, originally was a workaround, later found it works quite well with stuns
         //Not sure if needs fixing

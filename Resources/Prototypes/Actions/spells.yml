@@ -7,11 +7,11 @@
   description: "Puts the fire at your fingertips! And explosive power!"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
-   castmessage: ONI SOMA! 
-   spellprojectile: FireBallbullet
+   castMessage: ONI SOMA! 
+   spellProjectile: FireBallbullet
    speed: 15
-   cooldown: 1
-   ignorecaster: true
+   coolDown: 1
+   ignoreCaster: true
 
 - type: action
   actionType: SpellTraps
@@ -22,11 +22,11 @@
   description: "Snare your enemies with a magical trap! Semi-transperent."
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
-   castmessage: CAVERE INSIDIAS!
-   spellprojectile: TrapsEntitiy
+   castMessage: CAVERE INSIDIAS!
+   spellProjectile: TrapsEntitiy
    speed: 0
-   cooldown: 1
-   ignorecaster: false
+   coolDown: 1
+   ignoreCaster: false
    
 - type: action
   actionType: SpellCarp
@@ -37,12 +37,12 @@
   description: "Open a portal into space dragon's lair to summon a carp imbued with magic!"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
-   castmessage: RI'FATA!
-   spellprojectile:  MagicarpMob_Content
+   castMessage: RI'FATA!
+   spellProjectile:  MagicarpMob_Content
    range: 2
    speed: 0
-   cooldown: 1
-   ignorecaster: true
+   coolDown: 1
+   ignoreCaster: true
 
 - type: action
   actionType: SpellTarget
@@ -54,8 +54,8 @@
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
    castrange: 2
-   castmessage: ASE'N'MRE!
-   cooldown: 1
+   castMessage: ASE'N'MRE!
+   coolDown: 1
    NeedComponent: Mind
    AddedComponent: MagicPacify
    duration: 8000
@@ -69,9 +69,9 @@
   description: "Give me a pie, I dare you!"
   behaviorType: Instant
   behavior: !type:SummonSpell
-    spellitem: FoodPieBananaCream
-    castmessage: I NEED A PIE!
-    cooldown: 1
+    spellItem: FoodPieBananaCream
+    castMessage: I NEED A PIE!
+    coolDown: 1
     castsound: /Audio/Effects/Chemistry/bubbles.ogg
     
 - type: action
@@ -83,8 +83,8 @@
   description: "Make the target communicate in moos"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
-   castmessage: KN'A`FTAGHU,`PUCK`'BTHNK!
-   spellprojectile: BarnYardCurseBolt
+   castMessage: KN'A`FTAGHU,`PUCK`'BTHNK!
+   spellProjectile: BarnYardCurseBolt
    speed: 30
-   cooldown: 1
-   ignorecaster: true
+   coolDown: 1
+   ignoreCaster: true

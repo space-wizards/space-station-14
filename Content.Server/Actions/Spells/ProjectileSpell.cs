@@ -19,13 +19,13 @@ namespace Content.Server.Actions
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "Instant action used.";
-        [ViewVariables] [DataField("spellprojectile")] public string Projectile { get; set; } = "FireBallbullet";
+        [ViewVariables] [DataField("castMessage")] public string CastMessage { get; set; } = "Instant action used.";
+        [ViewVariables] [DataField("spellProjectile")] public string Projectile { get; set; } = "FireBallbullet";
         [ViewVariables] [DataField("speed")] public float VelocityMult { get; set; } = 0f;
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("ignorecaster")] public bool IgnoreCaster { get; set; } = false;
+        [ViewVariables] [DataField("ignoreCaster")] public bool IgnoreCaster { get; set; } = false;
 
-        [ViewVariables] [DataField("castsound")] public string? CastSound { get; set; } = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = "/Audio/Weapons/emitter.ogg";
 
         public ProjectileSpell()
         {

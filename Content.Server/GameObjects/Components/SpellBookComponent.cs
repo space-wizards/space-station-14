@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class SpellBookComponent : Component
     {
-        [ViewVariables] [DataField("usemessage")] private readonly string _useMessage = "You're a wiznerd, Garry!";
+        [ViewVariables] [DataField("useMessage")] private readonly string _useMessage = "You're a wiznerd, Garry!";
 
         [ViewVariables] [DataField("spells")] private readonly List<ActionType>? _grantedSpells = new();
 
