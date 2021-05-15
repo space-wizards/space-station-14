@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -78,13 +79,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (_meatParts > 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("The spike already has something on it, finish collecting its meat first!"));
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-collect"));
                 return false;
             }
 
             if (!victim.TryGetComponent(out butcherable))
             {
-                Owner.PopupMessage(user, Loc.GetString("{0:theName} can't be butchered on the spike.", victim));
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
                 return false;
             }
 
@@ -96,18 +97,21 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var victimUid = victim.Uid;
             if (_beingButchered.Contains(victimUid)) return;
 
+            if (!victim.TryGetComponent<IMobStateComponent>(out var state)
+                || !state.IsDead())
+            {
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
+                return;
+            }
+
             SharedButcherableComponent? butcherable;
 
             if (!Spikeable(user, victim, out butcherable)) return;
 
             if (user != victim)
-            {
-                Owner.PopupMessage(victim, Loc.GetString("{0:theName} begins dragging you onto {1:theName}!", user, Owner));
-            }
+                Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", Owner)));
             else
-            {
-                Owner.PopupMessage(user, Loc.GetString("You begin dragging yourself onto {0:theName}!", Owner));
-            }
+                Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", Owner)));
 
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
@@ -133,11 +137,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _meatPrototype = butcherable.MeatPrototype;
             _meatParts = 5;
-            _meatSource1p = Loc.GetString("You remove some meat from {0:theName}.", victim);
-            _meatSource0 = Loc.GetString("You remove the last piece of meat from {0:theName}!", victim);
+            _meatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victim));
+            _meatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victim));
             // TODO: This could stand to be improved somehow, but it'd require Name to be much 'richer' in detail than it presently is.
             // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
-            _meatName = Loc.GetString("{0:name} meat", victim);
+            _meatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victim));
 
             // TODO: Visualizer
             if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
@@ -145,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 sprite.LayerSetState(0, "spikebloody");
             }
 
-            Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", user, victim));
+            Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             victim.Delete();
 
@@ -155,10 +159,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            var othersMessage = Loc.GetString("{0:theName} has thrown themselves on a meat spike!", victim);
+            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
             victim.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("You throw yourself on a meat spike!");
+            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
             victim.PopupMessage(selfMessage);
 
             return SuicideKind.Piercing;
