@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (_meatParts > 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-collect"));
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-collect", ("this", Owner)));
                 return false;
             }
 
@@ -97,16 +97,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var victimUid = victim.Uid;
             if (_beingButchered.Contains(victimUid)) return;
 
-            if (!victim.TryGetComponent<IMobStateComponent>(out var state)
-                || !state.IsDead())
-            {
-                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
-                return;
-            }
-
             SharedButcherableComponent? butcherable;
 
-            if (!Spikeable(user, victim, out butcherable)) return;
+            if (!Spikeable(user, victim, out butcherable))
+                return;
 
             if (user != victim)
                 Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", Owner)));
@@ -133,7 +127,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (result == DoAfterStatus.Cancelled)
                 return;
 
-            if (!Spikeable(user, victim, out butcherable)) return;
+            if (!Spikeable(user, victim, out butcherable))
+                return;
 
             _meatPrototype = butcherable.MeatPrototype;
             _meatParts = 5;
