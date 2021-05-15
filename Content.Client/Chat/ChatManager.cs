@@ -242,7 +242,7 @@ namespace Content.Client.Chat
             }
 
             // let our chatbox know all the new settings
-            CurrentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
+            CurrentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages, true);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Content.Client.Chat
                 CurrentChatBox.FilterToggled += OnFilterButtonToggled;
                 CurrentChatBox.OnResized += ChatBoxOnResized;
 
-                CurrentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
+                CurrentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages, false);
             }
 
             RepopulateChat(_filteredHistory);
