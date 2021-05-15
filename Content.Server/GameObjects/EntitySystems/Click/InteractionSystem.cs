@@ -800,14 +800,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            if (!EntityManager.TryGetEntity(targetUid, out var target))
-            {
-                target = null;
-            }
 
             // In a container where the target entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
-                target != playerContainer.Owner)
+                (!EntityManager.TryGetEntity(targetUid, out var target) ||
+                target != playerContainer.Owner))
             {
                 // Either the target entity is null, not contained or in a different container
                 if (target == null ||
@@ -837,7 +834,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if(EntityManager.TryGetEntity(targetUid, out var targetEnt))
+                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt))
                     {
                         if (targetEnt.HasComponent<ItemComponent>())
                         {
