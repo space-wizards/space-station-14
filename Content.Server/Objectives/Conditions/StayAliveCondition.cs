@@ -26,12 +26,7 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/skub.rsi"), "icon"); //didn't know what else would have been a good icon for staying alive
 
-        public float Progress => _mind?
-            .OwnedEntity?
-            .GetComponentOrNull<IMobStateComponent>()?
-            .IsDead() ?? false
-            ? 0f
-            : 1f;
+        public float Progress => (_mind?.CharacterDeadIC ?? false) ? 0f : 1f;
 
         public float Difficulty => 1f;
 
