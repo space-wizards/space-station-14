@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -29,6 +30,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; private set; } = true;
+
+        /// <summary>
+        ///     Whether this device will cause all pressure in the pipenet to be released into the atmosphere when unanchored
+        ///     Requires <see cref="AnchorableComponent"/> and <see cref="NodeContainerComponent"/>.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("unsafeUnanchoring")]
+        public bool UnsafeUnanchoring { get; private set; } = false;
 
         public IGridAtmosphereComponent? Atmosphere { get; private set; }
 

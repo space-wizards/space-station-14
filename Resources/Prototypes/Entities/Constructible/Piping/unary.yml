@@ -98,7 +98,6 @@
         - type: PipeConnectorVisualizer
     - type: GasThermoMachine
 
-
 - type: entity
   parent: GasThermoMachineBase
   id: GasThermoMachineFreezer

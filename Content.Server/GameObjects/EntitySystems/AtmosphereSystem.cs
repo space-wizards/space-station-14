@@ -7,19 +7,23 @@ using System.Reflection.Metadata.Ecma335;
 using System.Xml.Schema;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Interfaces;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -93,7 +97,68 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<AtmosDeviceComponent, AtmosDeviceUpdateEvent>(OnDeviceAtmosProcess);
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
 
+            // Atmos unsafe unanchoring.
+            SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UnanchoredMessage>(OnUnanchored);
+            SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UnanchorAttemptMessage>(OnUnanchorAttempt);
+
             #endregion
+        }
+
+        private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptMessage args)
+        {
+            if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+                return;
+
+            if (!component.Owner.Transform.Coordinates.TryGetTileAir(out var environment, EntityManager))
+                return;
+
+            foreach (var node in nodes.Nodes.Values)
+            {
+                if (node is not PipeNode pipe) continue;
+
+                if ((pipe.Air.Pressure - environment.Pressure) > 2 * Atmospherics.OneAtmosphere)
+                {
+                    args.User?.PopupMessageCursor(Loc.GetString("comp-atmos-unsafe-unanchor-warning"));
+                    return; // Show the warning only once.
+                }
+            }
+        }
+
+        private void OnUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchoredMessage args)
+        {
+            if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+                return;
+
+            if (!component.Owner.Transform.Coordinates.TryGetTileAtmosphere(out var environment))
+                environment = null;
+
+            var environmentPressure = environment?.Air?.Pressure ?? 0f;
+            var environmentVolume = environment?.Air?.Volume ?? Atmospherics.CellVolume;
+            var environmentTemperature = environment?.Air?.Volume ?? Atmospherics.TCMB;
+
+            var lost = 0f;
+            var timesLost = 0;
+
+            foreach (var node in nodes.Nodes.Values)
+            {
+                if (node is not PipeNode pipe) continue;
+
+                var difference = pipe.Air.Pressure - environmentPressure;
+                lost += difference * environmentVolume / (environmentTemperature * Atmospherics.R);
+                timesLost++;
+            }
+
+            var sharedLoss = lost / timesLost;
+            var buffer = new GasMixture();
+
+            foreach (var node in nodes.Nodes.Values)
+            {
+                if (node is not PipeNode pipe) continue;
+
+                buffer.Merge(pipe.Air.Remove(sharedLoss));
+            }
+
+            environment?.AssumeAir(buffer);
         }
 
         public override void Shutdown()

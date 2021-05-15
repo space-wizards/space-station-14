@@ -45,24 +45,20 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, can be null if forcing it</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity? user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
+        private async Task<bool> Valid(IEntity? user, IEntity? utilizing, bool anchoring, [NotNullWhen(true)] bool force = false)
         {
-            if (!Owner.HasComponent<IPhysBody>())
-            {
-                return false;
-            }
+            if (user == null || utilizing == null || force)
+                return true;
 
-            if (user != null && !force)
-            {
-                if (utilizing == null ||
-                    !utilizing.TryGetComponent(out ToolComponent? tool) ||
-                    !(await tool.UseTool(user, Owner, 0.5f, Tool)))
-                {
-                    return false;
-                }
-            }
+            AnchorableBaseCancellableMessage attempt =
+                anchoring ? new AnchorAttemptMessage(user, utilizing)
+                    : new UnanchorAttemptMessage(user, utilizing);
 
-            return true;
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
+
+            return !attempt.Cancelled
+                   && utilizing.TryGetComponent(out ToolComponent? tool)
+                   && await tool.UseTool(user, Owner, 0.5f, Tool);
         }
 
         /// <summary>
@@ -74,19 +70,12 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if anchored, false otherwise</returns>
         public async Task<bool> TryAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
-            if (!(await Valid(user, utilizing, force)))
+            if (!(await Valid(user, utilizing, true, force)))
             {
                 return false;
             }
 
             if (_physicsComponent == null)
-                return false;
-
-            var attempt = new AnchorAttemptMessage();
-
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
-
-            if (attempt.Cancelled)
                 return false;
 
             // Snap rotation to cardinal (multiple of 90)
@@ -104,9 +93,10 @@ namespace Content.Server.GameObjects.Components
             if (Snap)
                 Owner.SnapToGrid(Owner.EntityManager);
 
-            _physicsComponent.BodyType = BodyType.Static;
+            // User and utilizing can't be null since Valid checks.
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredMessage(user!, utilizing!), false);
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredMessage(), false);
+            _physicsComponent.BodyType = BodyType.Static;
 
             return true;
         }
@@ -120,7 +110,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if unanchored, false otherwise</returns>
         public async Task<bool> TryUnAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
         {
-            if (!(await Valid(user, utilizing, force)))
+            if (!(await Valid(user, utilizing, false, force)))
             {
                 return false;
             }
@@ -128,16 +118,10 @@ namespace Content.Server.GameObjects.Components
             if (_physicsComponent == null)
                 return false;
 
-            var attempt = new UnanchorAttemptMessage();
-
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
-
-            if (attempt.Cancelled)
-                return false;
+            // User and utilizing can't be null since Valid checks.
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredMessage(user!, utilizing!), false);
 
             _physicsComponent.BodyType = BodyType.Dynamic;
-
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredMessage(), false);
 
             return true;
         }
@@ -165,9 +149,47 @@ namespace Content.Server.GameObjects.Components
         }
     }
 
-    public class AnchorAttemptMessage : CancellableEntityEventArgs { }
-    public class UnanchorAttemptMessage : CancellableEntityEventArgs { }
+    public abstract class AnchorableBaseMessage : EntityEventArgs
+    {
+        public IEntity User { get; }
+        public IEntity Using { get; }
 
-    public class AnchoredMessage : EntityEventArgs {}
-    public class UnanchoredMessage : EntityEventArgs {}
+        public AnchorableBaseMessage(IEntity user, IEntity @using)
+        {
+            User = user;
+            Using = @using;
+        }
+    }
+
+    public abstract class AnchorableBaseCancellableMessage : CancellableEntityEventArgs
+    {
+        public IEntity User { get; }
+        public IEntity Using { get; }
+
+        public AnchorableBaseCancellableMessage(IEntity user, IEntity @using)
+        {
+            User = user;
+            Using = @using;
+        }
+    }
+
+    public class AnchorAttemptMessage : AnchorableBaseCancellableMessage
+    {
+        public AnchorAttemptMessage(IEntity user, IEntity @using) : base(user, @using) { }
+    }
+
+    public class UnanchorAttemptMessage : AnchorableBaseCancellableMessage
+    {
+        public UnanchorAttemptMessage(IEntity user, IEntity @using) : base(user, @using) { }
+    }
+
+    public class AnchoredMessage : AnchorableBaseMessage
+    {
+        public AnchoredMessage(IEntity user, IEntity @using) : base(user, @using) { }
+    }
+
+    public class UnanchoredMessage : AnchorableBaseMessage
+    {
+        public UnanchoredMessage(IEntity user, IEntity @using) : base(user, @using) { }
+    }
 }
