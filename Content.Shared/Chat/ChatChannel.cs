@@ -65,6 +65,6 @@ namespace Content.Shared.Chat
         /// <summary>
         ///     Channels considered to be IC.
         /// </summary>
-        IC = Local | Radio | Damage | Radio | Visual | Emotes | Dead,
+        IC = Local | Radio | Dead | Emotes | Damage | Visual,
     }
 }
