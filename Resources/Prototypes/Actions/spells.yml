@@ -10,7 +10,7 @@
    castMessage: ONI SOMA! 
    spellProjectile: FireBallbullet
    speed: 15
-   coolDown: 1
+   cooldown: 1
    ignoreCaster: true
 
 - type: action
@@ -25,7 +25,7 @@
    castMessage: CAVERE INSIDIAS!
    spellProjectile: TrapsEntitiy
    speed: 0
-   coolDown: 1
+   cooldown: 1
    ignoreCaster: false
    
 - type: action
@@ -41,7 +41,7 @@
    spellProjectile:  MagicarpMob_Content
    range: 2
    speed: 0
-   coolDown: 1
+   cooldown: 1
    ignoreCaster: true
 
 - type: action
@@ -55,7 +55,7 @@
   behavior: !type:TargetSpell
    castrange: 2
    castMessage: ASE'N'MRE!
-   coolDown: 1
+   cooldown: 1
    NeedComponent: Mind
    AddedComponent: MagicPacify
    duration: 8000
@@ -71,7 +71,7 @@
   behavior: !type:SummonSpell
     spellItem: FoodPieBananaCream
     castMessage: I NEED A PIE!
-    coolDown: 1
+    cooldown: 1
     castsound: /Audio/Effects/Chemistry/bubbles.ogg
     
 - type: action
@@ -86,5 +86,5 @@
    castMessage: KN'A`FTAGHU,`PUCK`'BTHNK!
    spellProjectile: BarnYardCurseBolt
    speed: 30
-   coolDown: 1
+   cooldown: 1
    ignoreCaster: true

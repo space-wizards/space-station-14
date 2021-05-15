@@ -15,13 +15,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
     {
         public override string Name => "MagicalProjectile";
 
-        [ViewVariables] [DataField("NeedComponent")] public string TargetType { get; set; } = "Mind";
+        [ViewVariables] [DataField("NeedComponent")] public string TargetType { get; set; } = default!;
 
-        [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
+        [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = default!;
 
         [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
 
-        [ViewVariables] [DataField("castsound")] private string? CastSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castsound")] private string? CastSound = default!;
 
 
         public Type? RegisteredTargetType;

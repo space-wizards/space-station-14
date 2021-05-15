@@ -25,7 +25,7 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("ignoreCaster")] public bool IgnoreCaster { get; set; } = false;
 
-        [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = default!;
 
         public ProjectileSpell()
         {

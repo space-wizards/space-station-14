@@ -23,11 +23,11 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("castmessage")] public string CastMessage { get; set; } = "Instant action used.";
         [ViewVariables] [DataField("castrange")] public float CastRange { get; set; } = 5f;
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("NeedComponent")] public string TargetType { get; set; } = "Mind";
-        [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
+        [ViewVariables] [DataField("NeedComponent")] public string TargetType { get; set; } = default!;
+        [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = default!;
 
         [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
-        [ViewVariables] [DataField("castsound")] public string? CastSound { get; set; } = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castsound")] public string? CastSound { get; set; } = default!;
 
         public Type? RegisteredTargetType;
 
