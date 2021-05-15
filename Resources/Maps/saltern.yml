@@ -47786,4 +47786,40 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 4894
+  type: CrateMaterialSteel
+  components:
+  - pos: -17.5,-18.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4895
+  type: CrateMaterialPlastic
+  components:
+  - pos: -17.5,-19.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4896
+  type: CrateMaterialGlass
+  components:
+  - pos: -17.5,-20.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
