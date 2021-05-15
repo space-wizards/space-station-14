@@ -132,7 +132,7 @@
     - state: green-unlit
       shader: unshaded
   - type: Clothing
-    size: 10
+    size: 5
     sprite: Objects/Tools/multitool.rsi
     QuickEquip: false
     Slots:
