@@ -356,12 +356,15 @@ namespace Content.Server.GameObjects.Components.Metabolism
         {
             Suffocating = false;
 
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            if (Owner.TryGetComponent(out IDamageableComponent? damageable)
+                && damageable.TryGetDamage(DamageType.Asphyxiation, out var damage)
+                && damage > 0)
             {
                 damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
             }
 
-            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent)
+                && alertsComponent.IsShowingAlert(AlertType.LowOxygen))
             {
                 alertsComponent.ClearAlert(AlertType.LowOxygen);
             }
