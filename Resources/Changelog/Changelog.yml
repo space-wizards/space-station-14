@@ -1046,3 +1046,10 @@ Entries:
   - {message: Focus channel keybinds now actually focus the chatbox., type: Fix}
   id: 185
   time: '2021-05-15T10:28:05.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Paper can't be used to create exceptions by writing bad markup inside
+      it and then examining it., type: Fix}
+  - {message: Examining paper no longer shows the contents., type: Remove}
+  id: 186
+  time: '2021-05-15T15:43:19.0000000+00:00'
