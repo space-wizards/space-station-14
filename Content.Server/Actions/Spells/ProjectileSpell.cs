@@ -25,7 +25,7 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("ignorecaster")] public bool IgnoreCaster { get; set; } = false;
 
-        [ViewVariables] [DataField("castsound")] public string? _castsound { get; set; } = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castsound")] public string? CastSound { get; set; } = "/Audio/Weapons/emitter.ogg";
 
         public ProjectileSpell()
         {
@@ -56,9 +56,9 @@ namespace Content.Server.Actions
                 .LinearVelocity = direction * VelocityMult;
             }
               spawnedSpell.Transform.LocalRotation = args.Performer.Transform.LocalRotation;
-            if (_castsound != null)
+            if (CastSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(caster), _castsound, caster);
+                SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
             }
             else return;
         }

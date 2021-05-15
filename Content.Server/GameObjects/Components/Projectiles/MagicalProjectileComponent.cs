@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
 
-        [ViewVariables] [DataField("castsound")] private string? _castsound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castsound")] private string? CastSound = "/Audio/Weapons/emitter.ogg";
 
 
         public Type? RegisteredTargetType;
@@ -51,9 +51,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             compInducedFinal.Owner = target;
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
             target.SpawnTimer(SpellDuration, () => target.EntityManager.ComponentManager.RemoveComponent(target.Uid, compInducedFinal));
-            if (_castsound != null)
+            if (CastSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _castsound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), CastSound, Owner);
             }
             else return;
         }

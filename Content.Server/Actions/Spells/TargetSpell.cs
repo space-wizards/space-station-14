@@ -27,7 +27,7 @@ namespace Content.Server.Actions
         [ViewVariables] [DataField("AddedComponent")] public string InduceComponent { get; set; } = "RadiatonPulse";
 
         [ViewVariables] [DataField("duration")] public int SpellDuration { get; set; } = 100;
-        [ViewVariables] [DataField("castsound")] public string? _castsound { get; set; } = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("castsound")] public string? CastSound { get; set; } = "/Audio/Weapons/emitter.ogg";
 
         public Type? RegisteredTargetType;
 
@@ -72,9 +72,9 @@ namespace Content.Server.Actions
             compInducedFinal.Owner = target;
             target.EntityManager.ComponentManager.AddComponent(target, compInducedFinal);
             target.SpawnTimer(SpellDuration, () => target.EntityManager.ComponentManager.RemoveComponent(target.Uid, compInducedFinal));
-            if (_castsound != null)
+            if (CastSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(caster), _castsound, caster);
+                SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
             }
             else return;
         }

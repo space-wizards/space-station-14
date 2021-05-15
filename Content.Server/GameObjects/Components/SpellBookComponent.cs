@@ -14,21 +14,21 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class SpellBookComponent : Component
     {
-        [ViewVariables] [DataField("usemessage")] private readonly string UseMessage = "You're a wiznerd, Garry!";
+        [ViewVariables] [DataField("usemessage")] private readonly string _useMessage = "You're a wiznerd, Garry!";
 
-        [ViewVariables] [DataField("spells")] private readonly List<ActionType>? GrantedSpells = new();
+        [ViewVariables] [DataField("spells")] private readonly List<ActionType>? _grantedSpells = new();
 
         public override string Name => "SpellBook";
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actions)) return false;
-            if (GrantedSpells == null) return false;
-            foreach(var spell in GrantedSpells)
+            if (_grantedSpells == null) return false;
+            foreach(var spell in _grantedSpells)
             {
                 actions.Grant(spell);
             }
-            eventArgs.User.PopupMessage(UseMessage);
+            eventArgs.User.PopupMessage(_useMessage);
             Owner.Delete();
             return true;
         }
