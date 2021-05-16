@@ -46,8 +46,7 @@ def update_submodules():
         return
 
     if shutil.which("git") is None:
-        print("Error: git not found in PATH")
-        return
+        raise FileNotFoundError("git not found in PATH")
 
     # If the status doesn't match, force VS to reload the solution.
     # status = run_command(["git", "submodule", "status"], capture=True)
