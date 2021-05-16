@@ -113,7 +113,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
 
-            _collidableComponent!.Hard = false;
             Level = 1;
         }
 
