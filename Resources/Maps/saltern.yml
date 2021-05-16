@@ -611,8 +611,6 @@ entities:
 - uid: 68
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - pos: -11.5,-17.5
     parent: 853
     type: Transform
@@ -6992,8 +6990,6 @@ entities:
 - uid: 758
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
-    type: MetaData
   - pos: 12.5,7.5
     parent: 853
     type: Transform
@@ -12249,8 +12245,6 @@ entities:
 - uid: 874
   type: VendingMachineCigs
   components:
-  - name: Cigarette machine
-    type: MetaData
   - pos: -7.5,1.5
     parent: 853
     type: Transform
@@ -13052,8 +13046,6 @@ entities:
 - uid: 985
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,23.5
     parent: 853
@@ -13113,8 +13105,6 @@ entities:
 - uid: 992
   type: VendingMachineDinnerware
   components:
-  - name: Dinnerware
-    type: MetaData
   - pos: -13.5,1.5
     parent: 853
     type: Transform
@@ -23947,8 +23937,6 @@ entities:
 - uid: 2383
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-13.5
     parent: 853
