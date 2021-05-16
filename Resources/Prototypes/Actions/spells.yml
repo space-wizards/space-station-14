@@ -4,7 +4,7 @@
   name: "Fireball"
   filters:
     - spells
-  description: "Puts the fire at your fingertips! And explosive power!"
+  description: "Puts fire at your fingertips! And explosive power!"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
    castMessage: ONI SOMA! 
@@ -19,7 +19,7 @@
   name: "Traps!"
   filters:
     - spells
-  description: "Snare your enemies with a magical trap! Semi-transperent."
+  description: "Snare your enemies with a magical trap! Semi-transparent. [color=yellow]Lasts for a limited time[/color]"
   behaviorType: TargetPoint
   behavior: !type:ProjectileSpell
    castMessage: CAVERE INSIDIAS!
@@ -50,7 +50,7 @@
   name: "Pacify"
   filters:
     - spells
-  description: "Give your target a hug, so they won't be to harm you!"
+  description: "Give your target a hug, so they won't be able to harm you!"
   behaviorType: TargetEntity
   behavior: !type:TargetSpell
    castrange: 2
