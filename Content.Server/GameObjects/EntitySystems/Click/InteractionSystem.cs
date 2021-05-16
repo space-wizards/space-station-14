@@ -287,7 +287,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return pull.TogglePull(player);
         }
 
-        private async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
+        public async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
@@ -782,7 +782,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
+        public void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
         {
             // Verify player is on the same map as the entity he clicked on
             if (coordinates.GetMapId(EntityManager) != player.Transform.MapID)
