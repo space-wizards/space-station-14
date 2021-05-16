@@ -4,17 +4,18 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Interfaces;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -24,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Medical
     [RegisterComponent]
     public class CloningPodComponent : SharedCloningPodComponent
     {
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly EuiManager _euiManager = null!;
 
@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.Components.Medical
         [ViewVariables] public float CloningProgress = 0;
         [DataField("cloningTime")]
         [ViewVariables] public float CloningTime = 30f;
+        // Used to prevent as many duplicate UI messages as possible
+        [ViewVariables] public bool UiKnownPowerState = false;
 
         [ViewVariables]
         public CloningPodStatus Status;
@@ -56,8 +58,7 @@ namespace Content.Server.GameObjects.Components.Medical
             BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-bodyContainer");
 
             //TODO: write this so that it checks for a change in power events for GORE POD cases
-            if (UserInterface != null)
-                EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
+            EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
         }
 
         public override void OnRemove()
@@ -85,15 +86,27 @@ namespace Content.Server.GameObjects.Components.Medical
             switch (message.Button)
             {
                 case UiButton.Clone:
-                    if (message.ScanId == null || BodyContainer.ContainedEntity != null)
+                    if (BodyContainer.ContainedEntity != null)
+                    {
+                        obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-occupied"));
                         return;
+                    }
+
+                    if (message.ScanId == null)
+                    {
+                        obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-no-selection"));
+                        return;
+                    }
 
                     var cloningSystem = EntitySystem.Get<CloningSystem>();
 
-                    if (!cloningSystem.Minds.TryGetValue(message.ScanId.Value, out var mind))
+                    if (!cloningSystem.IdToDNA.TryGetValue(message.ScanId.Value, out var dna))
                     {
+                        obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-bad-selection"));
                         return; // ScanId is not in database
                     }
+
+                    var mind = dna.Mind;
 
                     if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var cloneUid))
                     {
@@ -102,7 +115,10 @@ namespace Content.Server.GameObjects.Components.Medical
                             !cloneState.IsDead() &&
                             clone.TryGetComponent(out MindComponent? cloneMindComp) &&
                             (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
+                        {
+                            obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-cloning"));
                             return; // Mind already has clone
+                        }
 
                         cloningSystem.ClonesWaitingForMind.Remove(mind);
                     }
@@ -110,17 +126,22 @@ namespace Content.Server.GameObjects.Components.Medical
                     if (mind.OwnedEntity != null &&
                         mind.OwnedEntity.TryGetComponent<IMobStateComponent>(out var state) &&
                         !state.IsDead())
+                    {
+                        obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-alive"));
                         return; // Body controlled by mind is not dead
+                    }
 
-                    // TODO: Implement ClonerDNAEntry and get the profile appearance and name when scanned
+                    // Yes, we still need to track down the client because we need to open the Eui
                     if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
-                        return;
+                    {
+                        obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-user-offline"));
+                        return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
+                    }
 
                     var mob = Owner.EntityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
 
-                    var profile = GetPlayerProfileAsync(client.UserId);
-                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
-                    mob.Name = profile.Name;
+                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(dna.Profile);
+                    mob.Name = dna.Profile.Name;
 
                     var cloneMindReturn = mob.AddComponent<BeingClonedComponent>();
                     cloneMindReturn.Mind = mind;
@@ -164,11 +185,6 @@ namespace Content.Server.GameObjects.Components.Medical
             Status = status;
             UpdateAppearance();
             EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
-        }
-
-        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
-        {
-            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
         }
     }
 }
