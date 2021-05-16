@@ -148,7 +148,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// <returns>If the solution could be added.</returns>
         public bool TryAddSolution(Solution solution)
         {
-            if (!CanAddSolution(solution))
+            if (!CanAddSolution(solution) || solution.TotalVolume == 0)
                 return false;
 
             Solution.AddSolution(solution);
