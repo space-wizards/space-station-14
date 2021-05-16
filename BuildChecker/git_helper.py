@@ -45,6 +45,9 @@ def update_submodules():
     if os.path.isfile("DISABLE_SUBMODULE_AUTOUPDATE"):
         return
 
+    if shutil.which("git") is None:
+        raise FileNotFoundError("git not found in PATH")
+
     # If the status doesn't match, force VS to reload the solution.
     # status = run_command(["git", "submodule", "status"], capture=True)
     run_command(["git", "submodule", "update", "--init", "--recursive"])
