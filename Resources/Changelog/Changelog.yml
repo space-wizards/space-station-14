@@ -1070,3 +1070,9 @@ Entries:
   - {message: Reduced deadliness of Boda machine., type: Fix}
   id: 189
   time: '2021-05-17T07:39:37.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed the meat spike only working on things that are alive., type: Tweak}
+  - {message: Changed the meat spike so that it works when not in combat mode., type: Tweak}
+  id: 190
+  time: '2021-05-17T09:12:17.0000000+00:00'
