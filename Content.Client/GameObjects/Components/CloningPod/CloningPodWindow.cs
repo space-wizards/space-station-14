@@ -127,6 +127,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             {
                 TimeSpan sinceReference = IoCManager.Resolve<IGameTiming>().CurTime - _lastUpdate.ReferenceTime;
                 simulatedProgress += (float) sinceReference.TotalSeconds;
+                simulatedProgress = MathHelper.Clamp(simulatedProgress, 0f, _lastUpdate.Maximum);
             }
             var percentage = simulatedProgress / _cloningProgressBar.MaxValue * 100;
             _progressLabel.Text = $"{percentage:0}%";

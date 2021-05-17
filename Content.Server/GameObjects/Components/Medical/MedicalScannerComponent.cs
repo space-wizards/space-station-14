@@ -278,21 +278,21 @@ namespace Content.Server.GameObjects.Components.Medical
                     {
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
 
-                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mind) || mind.Mind == null)
+                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mindComp) || mindComp.Mind == null)
                         {
                             obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
                             break;
                         }
 
                         // Null suppression based on above check. Yes, it's explicitly needed
-                        var aMind = mind.Mind!;
+                        var mind = mindComp.Mind!;
 
                         // We need the HumanoidCharacterProfile
                         // TODO: Move this further 'outwards' into a DNAComponent or somesuch.
                         // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
-                        var aMindUser = aMind.UserId;
+                        var mindUser = mind.UserId;
 
-                        if (aMindUser == null)
+                        if (mindUser == null)
                         {
                             // For now assume this means soul departed
                             obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
@@ -300,8 +300,8 @@ namespace Content.Server.GameObjects.Components.Medical
                         }
 
                         // has to be explicit cast like this, IDK why, null suppression operators seem to not work
-                        var profile = GetPlayerProfileAsync((NetUserId) aMindUser);
-                        cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind.Mind, profile));
+                        var profile = GetPlayerProfileAsync((NetUserId) mindUser);
+                        cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
                     }
 
                     break;
