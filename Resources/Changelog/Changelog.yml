@@ -1081,3 +1081,9 @@ Entries:
   - {message: Fixed clicking a locker when the player is inside of said locker., type: Fix}
   id: 191
   time: '2021-05-17T09:31:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: You feel as if the essence of things that are erased lingers for an
+      extra moment before disappearing. Creepy., type: Fix}
+  id: 192
+  time: '2021-05-17T11:14:29.0000000+00:00'
