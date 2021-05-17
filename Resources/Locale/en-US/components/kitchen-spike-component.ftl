@@ -1,5 +1,6 @@
 comp-kitchen-spike-deny-collect = { THE($this) } already has something on it, finish collecting its meat first!
 comp-kitchen-spike-deny-butcher = { THE($victim) } can't be butchered on { THE($this) }.
+comp-kitchen-spike-deny-not-dead = { THE($victim) } can't be butchered. { THE($victim) } is not dead!.
 
 comp-kitchen-spike-begin-hook-victim = { THE($user) } begins dragging you onto { THE($this) }!
 comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($this) }!

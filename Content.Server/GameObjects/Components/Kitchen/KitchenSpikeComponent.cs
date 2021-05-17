@@ -89,6 +89,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return false;
             }
 
+            if (butcherable.MeatPrototype == null)
+                return false;
+
             return true;
         }
 
@@ -101,6 +104,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (!Spikeable(user, victim, out butcherable))
                 return;
+
+            // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
+            if (victim.TryGetComponent<IMobStateComponent>(out var state) &&
+                !state.IsDead())
+            {
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
+                return;
+            }
 
             if (user != victim)
                 Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", Owner)));
