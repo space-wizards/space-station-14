@@ -1076,3 +1076,8 @@ Entries:
   - {message: Changed the meat spike so that it works when not in combat mode., type: Tweak}
   id: 190
   time: '2021-05-17T09:12:17.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed clicking a locker when the player is inside of said locker., type: Fix}
+  id: 191
+  time: '2021-05-17T09:31:10.0000000+00:00'
