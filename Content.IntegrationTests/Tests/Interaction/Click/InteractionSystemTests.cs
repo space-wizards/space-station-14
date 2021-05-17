@@ -1,4 +1,3 @@
-using Content.IntegrationTests;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -10,7 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
-using System;
 using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
@@ -63,9 +61,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             IEntity other = null;
             IEntity containerEntity = null;
             IContainer container = null;
-            IComponent component = null;
-            EntityCoordinates entityCoordinates = default;
-            MapCoordinates mapCoordinates = default;
 
             server.Assert(() =>
             {
@@ -77,9 +72,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 other = entityManager.SpawnEntity(null, coordinates);
                 containerEntity = entityManager.SpawnEntity(null, coordinates);
                 container = ContainerHelpers.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
-                component = containerEntity.Transform;
-                entityCoordinates = containerEntity.Transform.Coordinates;
-                mapCoordinates = containerEntity.Transform.MapPosition;
             });
 
             await server.WaitIdleAsync();
