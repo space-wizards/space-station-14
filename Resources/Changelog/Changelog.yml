@@ -1065,3 +1065,8 @@ Entries:
   - {message: R&D Now starts with crates of materials, type: Add}
   id: 188
   time: '2021-05-15T17:45:32.0000000+00:00'
+- author: Timrod
+  changes:
+  - {message: Reduced deadliness of Boda machine., type: Fix}
+  id: 189
+  time: '2021-05-17T07:39:37.0000000+00:00'
