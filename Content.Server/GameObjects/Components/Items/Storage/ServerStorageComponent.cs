@@ -246,7 +246,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             PlaySoundCollection(StorageSoundCollection);
             EnsureInitialCalculated();
 
-            var userSession = entity.GetComponent<BasicActorComponent>().playerSession;
+            var userSession = entity.GetComponent<ActorComponent>().PlayerSession;
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) \"used\" by player session (UID {userSession.AttachedEntityUid}).");
 

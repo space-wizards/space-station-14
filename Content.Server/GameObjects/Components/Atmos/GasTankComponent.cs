@@ -159,15 +159,15 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
-            OpenInterface(actor.playerSession);
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
+            OpenInterface(actor.PlayerSession);
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
-            OpenInterface(actor.playerSession);
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            OpenInterface(actor.PlayerSession);
         }
 
         public void ConnectToInternals()
@@ -330,7 +330,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
-                if (!user.HasComponent<IActorComponent>())
+                if (!user.HasComponent<ActorComponent>())
                 {
                     return;
                 }
@@ -341,12 +341,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             protected override void Activate(IEntity user, GasTankComponent component)
             {
-                if (!user.TryGetComponent<IActorComponent>(out var actor))
+                if (!user.TryGetComponent<ActorComponent>(out var actor))
                 {
                     return;
                 }
 
-                component.OpenInterface(actor.playerSession);
+                component.OpenInterface(actor.PlayerSession);
             }
         }
     }

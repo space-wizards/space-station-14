@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -15,6 +15,15 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<WindowSmoothDirtyEvent>(HandleDirtyEvent);
+            SubscribeLocalEvent<WindowComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<WindowSmoothDirtyEvent>();
+            UnsubscribeLocalEvent<WindowComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
         private void HandleDirtyEvent(WindowSmoothDirtyEvent ev)
@@ -23,6 +32,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _dirtyEntities.Enqueue(ev.Sender);
             }
+        }
+
+        private static void HandleSnapGridMove(EntityUid uid, WindowComponent component, SnapGridPositionChangedEvent args)
+        {
+            component.SnapGridOnPositionChanged();
         }
 
         public override void FrameUpdate(float frameTime)

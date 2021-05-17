@@ -172,15 +172,16 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Dirty();
 
-            var position = item.Owner.Transform.Coordinates;
+            var oldParent = item.Owner.Transform.Parent;
+            var oldPosition = item.Owner.Transform.Coordinates;
             var contained = item.Owner.IsInContainer();
             var success = hand.Container.Insert(item.Owner);
             if (success)
             {
                 //If the entity isn't in a container, and it isn't located exactly at our position (i.e. in our own storage), then we can safely play the animation
-                if (position != Owner.Transform.Coordinates && !contained)
+                if (oldParent != Owner.Transform && !contained)
                 {
-                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, position));
+                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, oldPosition));
                 }
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
                 OnItemChanged?.Invoke();
@@ -291,7 +292,7 @@ namespace Content.Server.GameObjects.Components.GUI
         public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
         {
             var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
+            if (!CanDrop(slot, doMobChecks) || !coords.IsValid(Owner.EntityManager) || hand?.Entity == null)
             {
                 return false;
             }
@@ -669,11 +670,6 @@ namespace Content.Server.GameObjects.Components.GUI
                         else
                         {
                             var entity = hand.Entity;
-                            if (!Drop(entity))
-                            {
-                                break;
-                            }
-
                             interactionSystem.Interaction(Owner, entity);
                         }
                     }

@@ -10,22 +10,22 @@ namespace Content.Shared.Prototypes.PDA
     public class UplinkStoreListingPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("itemId")]
+        [DataField("itemId")]
         public string ItemId { get; } = string.Empty;
 
-        [field: DataField("price")]
+        [DataField("price")]
         public int Price { get; } = 5;
 
-        [field: DataField("category")]
+        [DataField("category")]
         public UplinkCategory Category { get; } = UplinkCategory.Utility;
 
-        [field: DataField("description")]
+        [DataField("description")]
         public string Description { get; } = string.Empty;
 
-        [field: DataField("listingName")]
+        [DataField("listingName")]
         public string ListingName { get; } = string.Empty;
     }
 }

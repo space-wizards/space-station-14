@@ -13,7 +13,7 @@ namespace Content.Shared.Access
     public class AccessLevelPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>

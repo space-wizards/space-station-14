@@ -191,6 +191,13 @@ namespace Content.Shared
             CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
+         * HUD
+         */
+
+        public static readonly CVarDef<int> HudTheme =
+            CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /*
          * AI
          */
 
@@ -305,5 +312,30 @@ namespace Content.Shared
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
             CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
 
+        /*
+         * BAN
+         */
+
+        public static readonly CVarDef<bool> BanHardwareIds =
+            CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
+        /*
+         * VIEWPORT
+         */
+
+        public static readonly CVarDef<bool> ViewportStretch =
+            CVarDef.Create("viewport.stretch", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> ViewportFixedScaleFactor =
+            CVarDef.Create("viewport.fixed_scale_factor", 2, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        // This default is basically specifically chosen so fullscreen/maximized 1080p hits a 2x snap and does NN.
+        public static readonly CVarDef<int> ViewportSnapToleranceMargin =
+            CVarDef.Create("viewport.snap_tolerance_margin", 64, CVar.CLIENTONLY);
+
+        public static readonly CVarDef<int> ViewportSnapToleranceClip =
+            CVarDef.Create("viewport.snap_tolerance_clip", 32, CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> ViewportScaleRender =
+            CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
     }
 }

@@ -144,8 +144,8 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
             if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
-                BodyPartSlotRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
+                OpenSurgeryUI(eventArgs.User.GetComponent<ActorComponent>().PlayerSession);
+                BodyPartSlotRequest(eventArgs.User.GetComponent<ActorComponent>().PlayerSession,
                     toSend);
                 _surgeonCache = eventArgs.User;
                 _owningBodyCache = body;
@@ -164,12 +164,12 @@ namespace Content.Server.GameObjects.Components.Body.Part
         private void ReceiveBodyPartSlot(int key)
         {
             if (_surgeonCache == null ||
-                !_surgeonCache.TryGetComponent(out IActorComponent? actor))
+                !_surgeonCache.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            CloseSurgeryUI(actor.playerSession);
+            CloseSurgeryUI(actor.PlayerSession);
 
             if (_owningBodyCache == null)
             {
@@ -233,14 +233,14 @@ namespace Content.Server.GameObjects.Components.Body.Part
                     return;
                 }
 
-                if (!user.TryGetComponent(out IActorComponent? actor))
+                if (!user.TryGetComponent(out ActorComponent? actor))
                 {
                     return;
                 }
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (!groupController.CanCommand(actor.playerSession, "attachbodypart"))
+                if (!groupController.CanCommand(actor.PlayerSession, "attachbodypart"))
                 {
                     return;
                 }

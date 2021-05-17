@@ -1,0 +1,507 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodCakeBase
+  abstract: true
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+
+- type: entity
+  parent: FoodCakeBase
+  id: FoodCakeSliceBase
+  abstract: true
+  description: Just a slice of cake, it is enough for everyone.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: SolutionContainer
+    maxVol: 7
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 7
+
+# Custom Cake Example
+
+- type: entity
+  name: blueberry cake
+  parent: FoodCakeBase
+  id: FoodCakeBlueberry
+  description: Stains your teeth.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: plain
+    - state: alpha-filling
+      color: blue
+  - type: SliceableFood
+    slice: FoodCakeBlueberrySlice
+
+- type: entity
+  name: blueberry slice
+  parent: FoodCakeSliceBase
+  id: FoodCakeBlueberrySlice
+  description: Stains your teeth.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: blue
+
+# Cake
+
+- type: entity
+  name: cake
+  parent: FoodCakeBase
+  id: FoodCakePlain
+  description: A plain cake, not a lie.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: plain
+  - type: SliceableFood
+    slice: FoodCakePlainSlice
+
+- type: entity
+  name: slice of cake
+  parent: FoodCakeSliceBase
+  id: FoodCakePlainSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: plain-slice
+# Tastes like sweetness, cake.
+
+- type: entity
+  name: carrot cake
+  parent: FoodCakeBase
+  id: FoodCakeCarrot
+  description: A favorite desert of a certain wascally wabbit.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: carrot
+  - type: SliceableFood
+    slice: FoodCakeCarrotSlice
+
+- type: entity
+  name: slice of carrot cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeCarrotSlice
+  description: Carrotty slice of carrot cake. Carrots are good for your eyes!
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: carrot-slice
+# Tastes like sweetness, cake, carrot.
+
+- type: entity
+  name: brain cake
+  parent: FoodCakeBase
+  id: FoodCakeBrain
+  description: A squishy cake-thing.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: brain
+  - type: SliceableFood
+    slice: FoodCakeBrainSlice
+
+- type: entity
+  name: slice of brain cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeBrainSlice
+  description: Lemme tell you something about prions. THEY'RE DELICIOUS.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: brain-slice
+# Tastes like sweetness, cake, brains.
+
+- type: entity
+  name: cheese cake
+  parent: FoodCakeBase
+  id: FoodCakeCheese
+  description: DANGEROUSLY cheesy.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: cheese
+  - type: SliceableFood
+    slice: FoodCakeCheeseSlice
+
+- type: entity
+  name: slice of cheese cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeCheeseSlice
+  description: Slice of pure cheestisfaction.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: cheese-slice
+# Tastes like sweetness, cream cheese.
+
+- type: entity
+  name: orange cake
+  parent: FoodCakeBase
+  id: FoodCakeOrange
+  description: A cake with added orange.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: orange
+  - type: SliceableFood
+    slice: FoodCakeOrangeSlice
+
+- type: entity
+  name: slice of orange cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeOrangeSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: orange-slice
+# Tastes like sweetness, cake, oranges.
+
+- type: entity
+  name: lime cake
+  parent: FoodCakeBase
+  id: FoodCakeLime
+  description: A cake with added lime.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: lime
+  - type: SliceableFood
+    slice: FoodCakeLimeSlice
+
+- type: entity
+  name: slice of lime cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeLimeSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: lime-slice
+# Tastes like sweetness, cake, limes.
+
+- type: entity
+  name: lemon cake
+  parent: FoodCakeBase
+  id: FoodCakeLemon
+  description: A cake with added lemon.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: lemon
+  - type: SliceableFood
+    slice: FoodCakeLemonSlice
+
+- type: entity
+  name: slice of lemon cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeLemonSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: lemon-slice
+# Tastes like sweetness, cake, lemons.
+
+- type: entity
+  name: chocolate cake
+  parent: FoodCakeBase
+  id: FoodCakeChocolate
+  description: A cake with added chocolate.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: chocolate
+  - type: SliceableFood
+    slice: FoodCakeChocolateSlice
+
+- type: entity
+  name: slice of chocolate cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeChocolateSlice
+  components:
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: chocolate-slice
+# Tastes like sweetness, cake, chocolate.
+
+- type: entity
+  name: apple cake
+  parent: FoodCakeBase
+  id: FoodCakeApple
+  description: A cake centred with apple.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: apple
+  - type: SliceableFood
+    slice: FoodCakeAppleSlice
+
+- type: entity
+  name: slice of apple cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeAppleSlice
+  description: A slice of heavenly cake.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: apple-slice
+# Tastes like sweetness, cake, slime.
+
+- type: entity
+  name: slime cake
+  parent: FoodCakeBase
+  id: FoodCakeSlime
+  description: A cake made of slimes. Probably not electrified.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: slime
+  - type: SliceableFood
+    slice: FoodCakeSlimeSlice
+
+- type: entity
+  name: slice of slime cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeSlimeSlice
+  description: A slice of slime cake.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: slime-slice
+# Tastes like sweetness, cake, slime.
+
+- type: entity
+  name: pumpkin-spice cake
+  parent: FoodCakeBase
+  id: FoodCakePumpkin
+  description: A hollow cake with real pumpkin.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: pumpkinspice
+  - type: SliceableFood
+    slice: FoodCakePumpkinSlice
+
+- type: entity
+  name: slice of pumpkin-spice cake
+  parent: FoodCakeSliceBase
+  id: FoodCakePumpkinSlice
+  description: A spicy slice of pumpkin goodness.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: pumpkinspice-slice
+# Tastes like sweetness, cake, pumpkin.
+
+- type: entity
+  name: christmas cake
+  parent: FoodCakeBase
+  id: FoodCakeChristmas
+  description: A cake made of christmas.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: christmas
+  - type: SliceableFood
+    slice: FoodCakeChristmasSlice
+
+- type: entity
+  name: slice of christmas cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeChristmasSlice
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: christmas-slice
+# Tastes like sweetness, cake, christmas.
+
+- type: entity
+  name: birthday cake
+  parent: FoodCakeBase
+  id: FoodCakeBirthday
+  description: Happy Birthday little clown...
+  components:
+  - type: Food
+    trash: FoodPlatePlastic
+  - type: Sprite
+    layers:
+    - state: plate-plastic
+    - state: birthday
+  - type: SliceableFood
+    slice: FoodCakeBirthdaySlice
+
+- type: entity
+  name: slice of birthday cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeBirthdaySlice
+  description: A slice of your birthday.
+  components:
+  - type: Food
+    trash: FoodPlateSmallPlastic
+  - type: Sprite
+    layers:
+    - state: plate-small-plastic
+    - state: birthday-slice
+# Tastes like sweetness, cake, christmas.
+
+- type: entity
+  name: vanilla cake
+  parent: FoodCakeBase
+  id: FoodCakeVanilla
+  description: A vanilla frosted cake.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: vanilla
+  - type: SliceableFood
+    slice: FoodCakeVanillaSlice
+
+- type: entity
+  name: slice of vanilla cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeVanillaSlice
+  description: A slice of vanilla frosted cake.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: vanilla-slice
+# Tastes like sweetness, cake, vanilla.
+
+- type: entity
+  name: clown cake
+  parent: FoodCakeBase
+  id: FoodCakeClown
+  description: A funny cake with a clown face on it.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: clown
+  - type: SliceableFood
+    slice: FoodCakeClownSlice
+
+- type: entity
+  name: slice of clown cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeClownSlice
+  description: A slice of bad jokes, and silly props.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: clown-slice
+# Tastes like sweetness, cake, clown.
+
+- type: entity
+  name: spaceman's cake
+  parent: FoodCakeBase
+  id: FoodCakeSpaceman
+  description: A spaceman's trumpet frosted cake.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: trumpet
+  - type: SliceableFood
+    slice: FoodCakeSpacemanSlice
+
+- type: entity
+  name: slice of spaceman's cake
+  parent: FoodCakeSliceBase
+  id: FoodCakeSpacemanSlice
+  description: A spaceman's trumpet frosted cake.
+  components:
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-small
+    - state: plate-slice-shading
+    - state: trumpet-slice
+# Tastes like sweetness, cake, jam.

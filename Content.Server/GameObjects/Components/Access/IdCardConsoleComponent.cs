@@ -214,12 +214,12 @@ namespace Content.Server.GameObjects.Components.Access
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

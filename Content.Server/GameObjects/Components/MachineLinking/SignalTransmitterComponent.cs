@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         /// 0 is unlimited range
         /// </summary>
         [ViewVariables]
-        [field: DataField("range")]
+        [DataField("range")]
         public float Range { get; private set; } = 10;
 
         [DataField("signalReceivers")] private List<EntityUid> _receiverIds = new();

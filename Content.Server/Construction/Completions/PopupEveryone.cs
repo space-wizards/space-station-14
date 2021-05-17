@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class PopupEveryone : IGraphAction
     {
-        [field: DataField("text")] public string Text { get; } = string.Empty;
+        [DataField("text")] public string Text { get; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

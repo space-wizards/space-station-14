@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Maps;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -70,12 +69,10 @@ namespace Content.Server.GameObjects.EntitySystems
             if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !stack.Use(1))
                 return;
 
-            EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid, SnapGridOffset.Center));
+            EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
             if (component.RemoveOnInteract && stack == null && !component.Owner.Deleted)
                 component.Owner.Delete();
-
-            return;
         }
     }
 }

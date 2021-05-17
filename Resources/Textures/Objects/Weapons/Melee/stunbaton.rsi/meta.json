@@ -1,107 +1,103 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stunbaton_off"
     },
-    "license": "CC BY-SA 3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at b8758256b31013946fdbd320ca043a663c399656",
-    "states":
-    [
-        {
-            "name": "off-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "equipped-BELT",
-            "directions": 4
-        },
-        {
-            "name": "off-inhand-right",
-            "directions": 4
-	},
-        {
-            "name": "on-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-            ]
-        },
-            {
-            "name": "on-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ],
-            ]
-        },
-        {
-            "name": "stunbaton_off",
-
-        },
-                {
-            "name": "stunbaton_nocell",
-
-        },
-                {
-            "name": "stunbaton_on",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                ]
-            ]
-        }
-
-    ]
+    {
+      "name": "stunbaton_nocell"
+    },
+    {
+      "name": "stunbaton_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ]
+      ]
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "off-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ]
+      ]
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+        ]
+      ]
+    }
+  ]
 }

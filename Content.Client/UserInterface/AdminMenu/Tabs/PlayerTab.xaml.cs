@@ -32,7 +32,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
             OnPlayerListRefresh?.Invoke();
         }
 
-        public void RefreshPlayerList(Dictionary<string, string> namesToPlayers)
+        public void RefreshPlayerList(IEnumerable<AdminMenuPlayerListMessage.PlayerInfo> players)
         {
             PlayerList.RemoveAllChildren();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
@@ -49,16 +49,23 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                 {
                     new Label
                     {
-                        Text = "Name",
+                        Text = "Username",
                         SizeFlagsStretchRatio = 2f,
                         HorizontalExpand = true
                     },
                     new VSeparator(),
                     new Label
                     {
-                        Text = "Player",
+                        Text = "Character",
                         SizeFlagsStretchRatio = 2f,
                         HorizontalExpand = true
+                    },
+                    new VSeparator(),
+                    new Label()
+                    {
+                        Text = "Antagonist",
+                        SizeFlagsStretchRatio = 2f,
+                        HorizontalExpand = true,
                     }
                 }
             };
@@ -76,7 +83,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
             PlayerList.AddChild(new HSeparator());
 
             var useAltColor = false;
-            foreach (var (name, player) in namesToPlayers)
+            foreach (var player in players)
             {
                 var hBox = new HBoxContainer
                 {
@@ -86,7 +93,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                     {
                         new Label
                         {
-                            Text = name,
+                            Text = player.Username,
                             SizeFlagsStretchRatio = 2f,
                             HorizontalExpand = true,
                             ClipText = true
@@ -94,10 +101,18 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs
                         new VSeparator(),
                         new Label
                         {
-                            Text = player,
+                            Text = player.CharacterName,
                             SizeFlagsStretchRatio = 2f,
                             HorizontalExpand = true,
                             ClipText = true
+                        },
+                        new VSeparator(),
+                        new Label()
+                        {
+                            Text = player.Antag ? "YES" : "NO",
+                            SizeFlagsStretchRatio = 2f,
+                            HorizontalExpand = true,
+                            ClipText = true,
                         }
                     }
                 };

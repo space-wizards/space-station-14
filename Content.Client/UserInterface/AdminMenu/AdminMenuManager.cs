@@ -70,7 +70,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         private void HandlePlayerListMessage(AdminMenuPlayerListMessage msg)
         {
-            _window?.RefreshPlayerList(msg.NamesToPlayers);
+            _window?.RefreshPlayerList(msg.PlayersInfo);
         }
 
         private void RequestTicketList()

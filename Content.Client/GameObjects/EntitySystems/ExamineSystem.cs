@@ -96,7 +96,7 @@ namespace Content.Client.GameObjects.EntitySystems
             panel.Measure(Vector2.Infinity);
             var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos.Position, size));
 
             FormattedMessage message;
             if (entity.Uid.IsClientSide())

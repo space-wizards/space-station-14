@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
     {
         public override string Name => "Reactive";
 
-        [field: DataField("reactions", true, serverOnly:true)]
+        [DataField("reactions", true, serverOnly:true)]
         public ReagentEntityReaction[] Reactions { get; } = Array.Empty<ReagentEntityReaction>();
     }
 }

@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "aesir"
+    },
+    {
+      "name": "alpha-filling"
+    },
+    {
+      "name": "alpha2-filling"
+    },
+    {
+      "name": "ambrosiavulgaris"
+    },
+    {
+      "name": "beet"
+    },
+    {
+      "name": "bisque"
+    },
+    {
+      "name": "bowl"
+    },
+    {
+      "name": "bowl2"
+    },
+    {
+      "name": "bowl-trash"
+    },
+    {
+      "name": "bungo"
+    },
+    {
+      "name": "chili-clown"
+    },
+    {
+      "name": "chili-cold"
+    },
+    {
+      "name": "chili-hot"
+    },
+    {
+      "name": "citrusdelight"
+    },
+    {
+      "name": "clowntears"
+    },
+    {
+      "name": "eden"
+    },
+    {
+      "name": "electron",
+      "directions": 1,
+      "delays": [
+        [
+          1.4,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "eyeball"
+    },
+    {
+      "name": "fruit"
+    },
+    {
+      "name": "gumbo"
+    },
+    {
+      "name": "herb"
+    },
+    {
+      "name": "jungle"
+    },
+    {
+      "name": "meatball"
+    },
+    {
+      "name": "milo"
+    },
+    {
+      "name": "monkeydelight"
+    },
+    {
+      "name": "mushroom"
+    },
+    {
+      "name": "mystery"
+    },
+    {
+      "name": "nettle"
+    },
+    {
+      "name": "oatmeal"
+    },
+    {
+      "name": "onion"
+    },
+    {
+      "name": "redbeet"
+    },
+    {
+      "name": "rice"
+    },
+    {
+      "name": "rice-egg"
+    },
+    {
+      "name": "rice-pork"
+    },
+    {
+      "name": "rice-pudding"
+    },
+    {
+      "name": "slime"
+    },
+    {
+      "name": "spacelibertyduff",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stew"
+    },
+    {
+      "name": "sweetpotato"
+    },
+    {
+      "name": "tomato"
+    },
+    {
+      "name": "valid"
+    },
+    {
+      "name": "vegetable"
+    },
+    {
+      "name": "wingfangchu"
+    }
+  ]
+}

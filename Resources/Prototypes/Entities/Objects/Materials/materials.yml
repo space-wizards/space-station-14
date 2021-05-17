@@ -264,7 +264,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialHideCorgi
-  name: corgi hid
+  name: corgi hide
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi

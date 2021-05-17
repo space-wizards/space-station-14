@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
+        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
 
         [ViewVariables]
         public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_solutionComponent == null)
                 return false;
 
-            var succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+            var succeeded = _solutionComponent.TryRemoveReagent("WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
@@ -251,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+            _solutionComponent?.TryRemoveReagent("WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
             Owner.Transform.Coordinates
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);

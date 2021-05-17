@@ -58,9 +58,9 @@ namespace Content.Client.UserInterface.AdminMenu
                 _gameHud.AdminButtonDown = false;
         }
 
-        public void RefreshPlayerList(Dictionary<string, string> namesToPlayers)
+        public void RefreshPlayerList(IEnumerable<AdminMenuPlayerListMessage.PlayerInfo> players)
         {
-            PlayerTabControl.RefreshPlayerList(namesToPlayers);
+            PlayerTabControl.RefreshPlayerList(players);
         }
 
         public void RefreshTicketList(IEnumerable<AdminMenuTicketListMessage.TicketInfo> tickets)

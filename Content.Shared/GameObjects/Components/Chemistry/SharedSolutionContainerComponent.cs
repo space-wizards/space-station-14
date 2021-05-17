@@ -70,6 +70,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
         public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            UpdateAppearance();
+        }
+
         public void RemoveAllSolution()
         {
             if (CurrentVolume == 0)
@@ -142,7 +148,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// <returns>If the solution could be added.</returns>
         public bool TryAddSolution(Solution solution)
         {
-            if (!CanAddSolution(solution))
+            if (!CanAddSolution(solution) || solution.TotalVolume == 0)
                 return false;
 
             Solution.AddSolution(solution);

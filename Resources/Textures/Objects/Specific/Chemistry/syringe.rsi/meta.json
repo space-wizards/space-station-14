@@ -1,11 +1,11 @@
 {
 	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from cev-eris https://github.com/discordia-space/CEV-Eris/commit/989b7b343045f30120c198ee100c9fee7ff8a989",
 	"size": {
 		"x": 32,
 		"y": 32
 	},
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/syringe.dmi",	
 	"states": [
 		{
 			"name": "syringe_base0"
@@ -41,12 +41,12 @@
 			"name": "syringe4"
 		},
 		{
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
-        }
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
 	]
 }

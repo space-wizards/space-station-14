@@ -26,6 +26,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
 {
@@ -36,6 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -190,7 +192,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <param name="uid"></param>
         internal void UseItemInHand(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
-            if (entity.HasComponent<BasicActorComponent>())
+            if (entity.HasComponent<ActorComponent>())
             {
                 throw new InvalidOperationException();
             }
@@ -285,7 +287,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return pull.TogglePull(player);
         }
 
-        private async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
+        public async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
@@ -321,13 +323,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 return;
             }
-
-            // If in a container
-            if (player.IsInContainer())
-            {
-                return;
-            }
-
 
             // In a container where the attacked entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
@@ -685,6 +680,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
+            item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
+
             var comps = item.GetAllComponents<IDropped>().ToList();
 
             // Call Land on all components that implement the interface
@@ -785,7 +782,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
+        public void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
         {
             // Verify player is on the same map as the entity he clicked on
             if (coordinates.GetMapId(EntityManager) != player.Transform.MapID)
@@ -803,7 +800,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, target);
+
+            // In a container where the target entity is not the container's owner
+            if (player.TryGetContainer(out var playerContainer) &&
+                (!EntityManager.TryGetEntity(targetUid, out var target) ||
+                target != playerContainer.Owner))
+            {
+                // Either the target entity is null, not contained or in a different container
+                if (target == null ||
+                    !target.TryGetContainer(out var attackedContainer) ||
+                    attackedContainer != playerContainer)
+                {
+                    return;
+                }
+            }
+
+            var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, targetUid);
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))
@@ -822,7 +834,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if(EntityManager.TryGetEntity(target, out var targetEnt))
+                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt))
                     {
                         if (targetEnt.HasComponent<ItemComponent>())
                         {

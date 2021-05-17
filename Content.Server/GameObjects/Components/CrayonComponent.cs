@@ -17,8 +17,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components
         public int Charges { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [field: DataField("capacity")]
+        [DataField("capacity")]
         public int Capacity { get; set; } = 30;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
@@ -95,10 +95,10 @@ namespace Content.Server.GameObjects.Components
         // Opens the selection window
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                UserInterface?.Toggle(actor.playerSession);
-                if (UserInterface?.SessionHasOpen(actor.playerSession) == true)
+                UserInterface?.Toggle(actor.PlayerSession);
+                if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
                 {
                     // Tell the user interface the selected stuff
                     UserInterface.SetState(
@@ -146,8 +146,8 @@ namespace Content.Server.GameObjects.Components
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
-                UserInterface?.Close(actor.playerSession);
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                UserInterface?.Close(actor.PlayerSession);
         }
     }
 }

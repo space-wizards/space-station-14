@@ -32,7 +32,13 @@ ui-options-scale-125 = 125%
 ui-options-scale-150 = 150%
 ui-options-scale-175 = 175%
 ui-options-scale-200 = 200%
-ui-options-placeholder-viewport = Viewport settings
+ui-options-hud-theme = HUD Theme:
+ui-options-hud-theme-default = Default
+ui-options-hud-theme-modernized = Modernized
+ui-options-hud-theme-classic = Classic
+ui-options-vp-stretch = Stretch viewport to fit game window?
+ui-options-vp-scale = Fixed viewport scale: x{ $scale }
+ui-options-vp-low-res = Low-resolution viewport?
 
 ## Controls menu
 ui-options-binds-reset-all = Reset ALL keybinds
@@ -72,9 +78,13 @@ ui-options-function-move-pulled-object = Move pulled object
 ui-options-function-release-pulled-object = Release pulled object
 ui-options-function-point = Point at location
 
-ui-options-function-focus-chat-window = Focus chat
+ui-options-function-focus-chat-input-window = Focus chat
+ui-options-function-focus-local-chat-window = Focus chat (IC)
+ui-options-function-focus-radio-window = Focus chat (Radio)
 ui-options-function-focus-ooc-window = Focus chat (OOC)
-ui-options-function-focus-admin-chat-window = Focus chat (admin)
+ui-options-function-focus-admin-chat-window = Focus chat (Admin)
+ui-options-function-cycle-chat-channel-forward = Cycle channel (Forward)
+ui-options-function-cycle-chat-channel-backward = Cycle channel (Backward)
 ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu

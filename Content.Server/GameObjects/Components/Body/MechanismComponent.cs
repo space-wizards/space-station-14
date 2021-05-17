@@ -79,10 +79,10 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             if (OptionsCache.Count > 0 &&
-                eventArgs.User.TryGetComponent(out IActorComponent? actor))
+                eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                OpenSurgeryUI(actor.playerSession);
-                UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
+                OpenSurgeryUI(actor.PlayerSession);
+                UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
                 PerformerCache = eventArgs.User;
                 BodyCache = body;
             }
@@ -99,12 +99,12 @@ namespace Content.Server.GameObjects.Components.Body
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out IActorComponent? actor))
+                !PerformerCache.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            CloseSurgeryUI(actor.playerSession);
+            CloseSurgeryUI(actor.PlayerSession);
 
             if (BodyCache == null)
             {

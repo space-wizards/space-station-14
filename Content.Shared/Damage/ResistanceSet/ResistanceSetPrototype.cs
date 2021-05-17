@@ -16,18 +16,18 @@ namespace Content.Shared.Damage.ResistanceSet
     public class ResistanceSetPrototype : IPrototype, ISerializationHooks
     {
         [ViewVariables]
-        [field: DataField("coefficients")]
+        [DataField("coefficients")]
         public Dictionary<DamageType, float> Coefficients { get; } = new();
 
         [ViewVariables]
-        [field: DataField("flatReductions")]
+        [DataField("flatReductions")]
         public Dictionary<DamageType, int> FlatReductions { get; } = new();
 
         [ViewVariables]
         public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; } = new();
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         void ISerializationHooks.AfterDeserialization()

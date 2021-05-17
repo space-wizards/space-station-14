@@ -15,19 +15,19 @@
     - !type:ExtinguishReaction
       touch: true
       reagents:
-      - chem.Water
+      - Water
     - !type:FlammableReaction
       touch: true
       reagents:
-      - chem.WeldingFuel
-      - chem.Thermite
-      - chem.Plasma
-      - chem.Ethanol
+      - WeldingFuel
+      - Thermite
+      - Plasma
+      - Ethanol
     - !type:WashCreamPieReaction
       touch: true
       reagents:
-      - chem.Water
-      - chem.SpaceCleaner
+      - Water
+      - SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -133,6 +133,8 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
+    - map: [ "enum.Slots.POCKET1" ]
+    - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
     bodyType: KinematicController
     fixtures: # TODO: This needs a second fixture just for mob collisions.
@@ -314,6 +316,8 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: ["enum.Slots.MASK"]
       - map: ["enum.Slots.HEAD"]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics

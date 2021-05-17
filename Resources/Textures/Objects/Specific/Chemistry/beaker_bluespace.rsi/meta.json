@@ -1,20 +1,20 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
-    },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi",
-    "states": [
-        {
-            "name": "beakerbluespace",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
-        }
-    ]
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beakerbluespace",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
 }

@@ -22,7 +22,6 @@
     sprite: Constructible/Tiles/catwalk.rsi
     state: catwalk_preview
   - type: SnapGrid
-    offset: Center
   - type: IconSmooth
     key: catwalk
     base: catwalk_

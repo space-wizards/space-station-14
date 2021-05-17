@@ -514,6 +514,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             return _mapGridComponent.Grid.GetTileRef(indices).IsSpace();
         }
 
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(EntityCoordinates coordinates, bool includeAirBlocked = false)
+        {
+            return GetAdjacentTiles(coordinates.ToVector2i(_serverEntityManager, _mapManager), includeAirBlocked);
+        }
+
         public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)
         {
             var sides = new Dictionary<AtmosDirection, TileAtmosphere>();

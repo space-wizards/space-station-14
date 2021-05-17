@@ -454,6 +454,13 @@ namespace Content.IntegrationTests.Tests.Networking
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
             }
 
+            public override void Shutdown()
+            {
+                base.Shutdown();
+                UnsubscribeNetworkEvent<SetFooMessage>();
+                UnsubscribeLocalEvent<SetFooMessage>();
+            }
+
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
                 var entity = EntityManager.GetEntity(message.Uid);

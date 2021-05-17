@@ -121,12 +121,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _isWeldedShut;
             set
             {
-                _isWeldedShut = value;
+                if (_isWeldedShut == value) return;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(StorageVisuals.Welded, value);
-                }
+                _isWeldedShut = value;
+                UpdateAppearance();
             }
         }
 
@@ -137,14 +135,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             get => _canWeldShut;
             set
             {
-                if (_canWeldShut == value)
-                    return;
+                if (_canWeldShut == value) return;
 
                 _canWeldShut = value;
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(StorageVisuals.CanWeld, value);
-                }
+                UpdateAppearance();
             }
         }
 
@@ -152,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(EntityStorageComponent));
+            Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             EntityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
@@ -162,6 +156,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 placeableSurfaceComponent.IsPlaceable = Open;
             }
+
+            UpdateAppearance();
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -235,6 +231,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             EmptyContents();
             ModifyComponents();
             SoundSystem.Play(Filter.Pvs(Owner), _openSound, Owner);
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
+                appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
+            }
         }
 
         private void ModifyComponents()

@@ -86,14 +86,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
-            
+
             if (entities.Count != 0)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, entities.First());
+                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, entities.First().Transform.Coordinates);
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User);
+                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User.Transform.Coordinates);
             }
 
             var hitEntities = new List<IEntity>();
@@ -190,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 var castAngle = new Angle(baseAngle + increment * i);
                 var res = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(mapId,
-                    new CollisionRay(position, castAngle.ToVec(),
+                    new CollisionRay(position, castAngle.ToWorldVec(),
                         (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), Range, ignore).ToList();
 
                 if (res.Count != 0)

@@ -16,7 +16,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Called when we try to interact with an entity out of range
         /// </summary>
-        /// <returns></returns>
+        [Obsolete("Use RangedInteractMessage instead")]
         bool RangedInteract(RangedInteractEventArgs eventArgs);
     }
 

@@ -1,5 +1,5 @@
 - type: reagent
-  id: chem.EZNutrient
+  id: EZNutrient
   name: EZ nutrient
   desc: Give your plants some of those EZ nutrients!
   color: "#664330"
@@ -9,7 +9,7 @@
       amount: 1
 
 - type: reagent
-  id: chem.Left4Zed
+  id: Left4Zed
   name: left-4-zed
   desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
   color: "#5b406c"
@@ -24,7 +24,7 @@
       amount: 0.2
 
 - type: reagent
-  id: chem.PestKiller
+  id: PestKiller
   name: pest killer
   desc: A mixture that targets pests.
   color: "#9e9886"
@@ -36,7 +36,7 @@
       amount: -6
 
 - type: reagent
-  id: chem.PlantBGone
+  id: PlantBGone
   name: plant-B-gone
   desc: A harmful toxic mixture to kill plantlife. Do not ingest!
   color: "#49002E"
@@ -52,7 +52,7 @@
       amount: 0.1
 
 - type: reagent
-  id: chem.RobustHarvest
+  id: RobustHarvest
   name: robust harvest
   desc: Plant-enhancing hormones, good for increasing potency.
   color: "#3e901c"
@@ -70,7 +70,7 @@
     - !type:RobustHarvest {}
 
 - type: reagent
-  id: chem.WeedKiller
+  id: WeedKiller
   name: weed killer
   desc: A mixture that targets weeds.
   color: "#968395"
@@ -82,7 +82,7 @@
       amount: -6
 
 - type: reagent
-  id: chem.THC
+  id: THC
   name: THC
   desc: The main psychoactive compound in cannabis.
   color: "#808080"
@@ -94,7 +94,7 @@
       amount: -1
 
 - type: reagent
-  id: chem.Nicotine
+  id: Nicotine
   name: Nicotine
   desc: Dangerous and highly addictive.
   color: "#C0C0C0"

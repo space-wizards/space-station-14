@@ -71,6 +71,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -154,6 +155,10 @@ namespace Content.Server.GameObjects.Components.Mobs
     }
 
     public class MindRemovedMessage : EntityEventArgs
+    {
+    }
+
+    public class MindAddedMessage : EntityEventArgs
     {
     }
 }

@@ -1,1 +1,28 @@
-{"version":1,"size":{"x":32,"y":32},"states":[{"name":"cutters","directions":1,"delays":[[1.0]]},{"name":"cutters-cutty-thingy","directions":1,"delays":[[1.0]]},{"name":"cutters-map","directions":1,"delays":[[1.0]]},{"name":"inhand-left","directions":4,"delays":[[1.0],[1.0],[1.0],[1.0]]},{"name":"inhand-right","directions":4,"delays":[[1.0],[1.0],[1.0],[1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cutters"
+    },
+    {
+      "name": "cutters-cutty-thingy"
+    },
+    {
+      "name": "cutters-map"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}
