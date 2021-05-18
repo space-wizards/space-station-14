@@ -1087,3 +1087,9 @@ Entries:
       extra moment before disappearing. Creepy., type: Fix}
   id: 192
   time: '2021-05-17T11:14:29.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bug where reconnecting wouldn't let you interact with anything.,
+    type: Fix}
+  id: 193
+  time: '2021-05-18T16:00:48.095633+00:00'
