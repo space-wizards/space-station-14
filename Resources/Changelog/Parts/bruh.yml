@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix # One of the following: Add, Remove, Tweak, Fix
+    message: Fixes bug where reconnecting wouldn't let you interact with anything.
