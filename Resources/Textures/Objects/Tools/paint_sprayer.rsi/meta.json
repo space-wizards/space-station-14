@@ -8,7 +8,7 @@
     "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2528a7fd89dca1369da7ce56378e6cb2ddd01161",
     "states": [
         {
-            "name": "paint sprayer",
+            "name": "icon",
             "directions": 1,
             "delays": [
                 [
