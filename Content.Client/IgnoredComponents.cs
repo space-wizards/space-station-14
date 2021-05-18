@@ -34,6 +34,7 @@ namespace Content.Client
             "Smes",
             "LightBulb",
             "Healing",
+            "Material",
             "RangedMagazine",
             "Ammo",
             "HitscanWeaponCapacitor",
