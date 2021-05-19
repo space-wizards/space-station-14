@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.GitHub;
@@ -93,7 +94,7 @@ namespace Content.MapRenderer
             var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
             var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
             var writer = new GitHubClient(repo);
-            var message = writer.Write(new [] {"https://i.imgur.com/ZYBplkB.png"});
+            var message = writer.Write(images.Select(i => i.Link));
 
             writer.Send(prNumber, message);
         }
