@@ -18,6 +18,7 @@
   parent: SheetOtherBase
   id: SheetPaper
   name: paper
+  suffix: Full
   components:
   - type: Stack
     stackType: Paper

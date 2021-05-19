@@ -1,7 +1,9 @@
 #nullable enable
+using Content.Shared.Stacks;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -12,7 +14,6 @@ namespace Content.Shared.Materials
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
     [Prototype("material")]
-    [DataDefinition]
     public class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
@@ -28,7 +29,7 @@ namespace Content.Shared.Materials
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [DataField("stack")]
+        [DataField("stack", customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string? StackId { get; } = null;
 
         [ViewVariables]

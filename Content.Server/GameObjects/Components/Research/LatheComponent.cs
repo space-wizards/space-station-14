@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Research
             }
 
             State = LatheState.Inserting;
-            switch (material.Materials.First().ID)
+            switch (material.Materials.FirstOrDefault()?.ID)
             {
                 case "Steel":
                     SetAppearance(LatheVisualState.InsertingMetal);

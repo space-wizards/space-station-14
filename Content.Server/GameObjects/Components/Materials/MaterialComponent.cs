@@ -4,10 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
@@ -32,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Materials
         ///     Returns all materials which make up this entity.
         ///     This property has an IoC resolve and is generally slow, so be sure to cache the results if needed.
         /// </summary>
+        [ViewVariables]
         public IEnumerable<MaterialPrototype> Materials
         {
             get
