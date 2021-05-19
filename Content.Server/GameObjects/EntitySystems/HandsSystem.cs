@@ -122,6 +122,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.ActiveHand == null || handsComp.GetActiveHand == null)
                 return false;
 
+            // It's important to note that the calculations are done in map coordinates (they're absolute).
+            // They're translated back to EntityCoordinates at the end.
             var entMap = ent.Transform.MapPosition;
             var targetPos = coords.ToMapPos(EntityManager);
             var dropVector = targetPos - entMap.Position;
@@ -130,12 +132,14 @@ namespace Content.Server.GameObjects.EntitySystems
             if (dropVector != Vector2.Zero)
             {
                 var targetLength = MathF.Min(dropVector.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-                var newCoords = coords.WithPosition(dropVector.Normalized * targetLength + entMap.Position).ToMap(EntityManager);
+                var newCoords = new MapCoordinates(dropVector.Normalized * targetLength + entMap.Position, entMap.MapId);
                 var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(entMap, newCoords, ignoredEnt: ent);
                 targetVector = dropVector.Normalized * rayLength;
             }
 
-            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entMap.Position + targetVector));
+            var resultMapCoordinates = new MapCoordinates(entMap.Position + targetVector, entMap.MapId);
+            var resultEntCoordinates = EntityCoordinates.FromMap(coords.GetParent(EntityManager), resultMapCoordinates);
+            handsComp.Drop(handsComp.ActiveHand, resultEntCoordinates);
 
             return true;
         }
