@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.GitHub;
 using Content.MapRenderer.Imgur.Client;
-using Content.MapRenderer.Imgur.Response;
 using Content.MapRenderer.Painters;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -76,14 +74,17 @@ namespace Content.MapRenderer
 
             Console.WriteLine($"Creating images for {maps.Count} maps");
 
-            var images = new List<ImgurUploadResponse>();
+            var links = new List<string>();
 
             foreach (var map in maps)
             {
+                Console.WriteLine($"Painting map {map}");
+
                 await foreach (var grid in MapPainter.Paint(map))
                 {
+                    Console.WriteLine($"Uploading grid of size {grid.Width}x{grid.Height}");
                     var image = await ImgurClient.Upload(grid);
-                    images.Add(image);
+                    links.Add(image.Link);
 
                     grid.Dispose();
                 }
@@ -92,7 +93,7 @@ namespace Content.MapRenderer
             var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
             var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
             var writer = new GitHubClient(repo);
-            var message = writer.Write(images.Select(i => i.Link));
+            var message = writer.Write(links);
 
             writer.Send(prNumber, message);
         }
