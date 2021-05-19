@@ -90,6 +90,8 @@ namespace Content.MapRenderer
                 }
             }
 
+            Console.WriteLine($"Got {links.Count} links");
+
             var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
             var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
             var writer = new GitHubClient(repo);
