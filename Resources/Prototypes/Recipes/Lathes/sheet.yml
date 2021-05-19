@@ -17,3 +17,15 @@
   completetime: 500
   materials:
     glass: 100
+
+- type: latheRecipe
+  id: SheetPlastic
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: plastic
+  result: SheetPlastic1
+  completetime: 500
+  materials:
+    plastic: 100
+
+

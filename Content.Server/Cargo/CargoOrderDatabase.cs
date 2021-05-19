@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Prototypes.Cargo;
@@ -15,7 +15,7 @@ namespace Content.Server.Cargo
         {
             Id = id;
             CurrentOrderSize = 0;
-            MaxOrderSize = 20;
+            MaxOrderSize = 25;
         }
 
         public int Id { get; private set; }
