@@ -9,9 +9,7 @@ using Content.MapRenderer.GitHub;
 using Content.MapRenderer.Imgur.Client;
 using Content.MapRenderer.Imgur.Response;
 using Content.MapRenderer.Painters;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using SixLabors.ImageSharp;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.MapRenderer
@@ -97,22 +95,6 @@ namespace Content.MapRenderer
             var message = writer.Write(images.Select(i => i.Link));
 
             writer.Send(prNumber, message);
-        }
-
-        private async void Save(Image image, string to)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Restart();
-
-            var file = new ResourcePath($"MapImages/{to.Substring(5, to.Length - 9)}.png");
-            var mapImages = DirectoryExtensions.MapImages();
-            var path = $"{mapImages.FullName}/{file.Filename}";
-
-            Console.WriteLine($"Saving {file.Filename} to {path}");
-
-            await image.SaveAsync(path);
-
-            Console.WriteLine($"Saved map image for {to} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
     }
 }
