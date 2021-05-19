@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
-        protected Container Contents = default!;
+        public Container Contents = default!;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.

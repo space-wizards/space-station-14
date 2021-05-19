@@ -36,22 +36,11 @@
       state_open: open_overlay
       state_closed: bag
     - type: BodyBagVisualizer
+    - type: FoldableVisualizer
+      foldedSuffix: _folded
   - type: Pullable
+  - type: Foldable
 
-- type: entity
-  id: BodyBag_Item
-  name: body bag
-  description: A plastic bag designed for the storage and transportation of cadavers.
-  parent: BaseItem
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
-    state: item
-#  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
-# - type: Placeable
-#   prototype: someId
-#   snap: Center
 
 - type: entity
   parent: BaseItem

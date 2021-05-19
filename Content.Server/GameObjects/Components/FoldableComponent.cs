@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, FoldableComponent component)
             {
-                FoldableSystem.ToggleFold(component);
+                EntitySystem.Get<FoldableSystem>().ToggleFold(component);
             }
         }
     }

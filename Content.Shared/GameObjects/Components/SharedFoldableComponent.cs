@@ -48,4 +48,15 @@ namespace Content.Shared.GameObjects.Components
     {
         FoldedState
     }
+
+    [Serializable, NetSerializable]
+    public class FoldedMessage : EntityEventArgs
+    {
+        public bool Folded;
+
+        public FoldedMessage(bool folded)
+        {
+            Folded = folded;
+        }
+    }
 }
