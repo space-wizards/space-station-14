@@ -1093,3 +1093,8 @@ Entries:
     type: Fix}
   id: 193
   time: '2021-05-18T16:00:48.095633+00:00'
+- author: 20kdc
+  changes:
+  - {message: Fixed dropping being offset on a translated grid, type: Fix}
+  id: 194
+  time: '2021-05-19T17:26:02.0000000+00:00'
