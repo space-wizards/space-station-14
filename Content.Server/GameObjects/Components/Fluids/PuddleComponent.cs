@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (_spriteComponent.BaseRSIPath != null)
             {
-                _spriteComponent.LayerSetState(0, $"{_spriteState}-{randomVariant}"); // TODO: Remove hardcode
+                _spriteComponent.LayerSetState(0, $"{_spriteState}-{randomVariant}");
             }
 
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
