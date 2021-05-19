@@ -38,8 +38,10 @@ namespace Content.MapRenderer.GitHub
             return client;
         }
 
-        public string Write(IEnumerable<string> links)
+        public string Write(List<string> links)
         {
+            Console.Write($"Writing {links.Count} links");
+
             var message = new StringBuilder();
 
             foreach (var link in links)
