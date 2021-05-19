@@ -67,7 +67,7 @@ namespace Content.MapRenderer.GitHub
 
             try
             {
-                response = Client.SendAsync(request).Result;
+                response = Client.Send(request);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception)
