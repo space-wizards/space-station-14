@@ -1,0 +1,4 @@
+author: Swept
+changes:
+  - type: Fix # One of the following: Add, Remove, Tweak, Fix
+    message: Fix holes in Captain's jumpsuit
