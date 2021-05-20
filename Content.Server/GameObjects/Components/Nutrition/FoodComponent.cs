@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
-            trueTarget.PopupMessage(user, Loc.GetString("No"));
+            trueTarget.PopupMessage(user, Loc.GetString("Nom"));
 
             // If utensils were used
             if (utensils != null)
