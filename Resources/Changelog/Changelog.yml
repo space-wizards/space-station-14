@@ -1098,3 +1098,7 @@ Entries:
   - {message: Fixed dropping being offset on a translated grid, type: Fix}
   id: 194
   time: '2021-05-19T17:26:02.0000000+00:00'
+- author: scrato
+  changes: []
+  id: 195
+  time: '2021-05-20T12:58:29.0000000+00:00'
