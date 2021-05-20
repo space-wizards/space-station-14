@@ -162,6 +162,7 @@
       - Bucket
       - Mop
       - FireExtinguisher
+      - KitchenKnife
 
   - type: UserInterface
     interfaces:
