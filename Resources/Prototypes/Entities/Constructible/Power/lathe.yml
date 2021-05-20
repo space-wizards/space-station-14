@@ -159,6 +159,9 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - Bucket
+      - Mop
+      - FireExtinguisher
 
   - type: UserInterface
     interfaces:

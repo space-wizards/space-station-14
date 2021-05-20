@@ -27,6 +27,9 @@
   unlockedRecipes:
     - Scythe
     - Hatchet
+    - Bucket
+    - Mop
+    - FireExtinguisher
 
 - type: technology
   name: "advanced botany"

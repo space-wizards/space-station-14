@@ -15,7 +15,7 @@ namespace Content.Server.Cargo
         {
             Id = id;
             CurrentOrderSize = 0;
-            MaxOrderSize = 25;
+            MaxOrderSize = 20;
         }
 
         public int Id { get; private set; }

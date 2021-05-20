@@ -114,3 +114,36 @@
   materials:
     steel: 500
     plastic: 250
+
+- type: latheRecipe
+  id: Bucket
+  icon:
+    sprite: Objects/Tools/bucket.rsi
+    state: icon
+  result: Bucket
+  completetime: 500
+  materials:
+    steel: 150
+
+- type: latheRecipe
+  id: Mop
+  icon:
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
+  result: MopItem
+  completetime: 500
+  materials:
+    steel: 200
+    plastic: 100
+
+- type: latheRecipe
+  id: FireExtinguisher
+  icon:
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    state: fire_extinguisher_closed
+  result: FireExtinguisher 
+  completetime: 500
+  materials:
+    steel: 400
+
+ 
