@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
@@ -142,6 +143,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!used.TryGetComponent(out IActivate? activateComp))
             {
                 return;
+            }
+
+            // check if powered, if not: Don't activate
+            if (used.TryGetComponent(out PowerReceiverComponent? needPower))
+            {
+                if (!needPower.Powered) return;
             }
 
             // all activates should only fire when in range / unbostructed
