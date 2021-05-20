@@ -1,78 +1,65 @@
 - type: material
-  id: MetalMaterialBase
-  density: 7700
-  electricResistivity: 6.9e-7
-  thermalConductivity: 18
-  specificHeat: 500
-
-- type: material
-  id: steel
+  id: Steel
+  stack: Steel
   name: steel
   icon: Objects/Materials/Sheets/metal.rsi/steel.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: adamantine
+  id: Adamantine
+  stack: Adamantine
   name: adamantine
   icon: Objects/Materials/ingots.rsi/adamantine.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: copper
+  id: Copper
+  stack: Copper
   name: copper
   icon: Objects/Materials/ingots.rsi/copper.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: gold
+  id: Gold
+  stack: Gold
   name: gold
   icon: Objects/Materials/ingots.rsi/gold.png
-  density: 10000
-  electricResistivity: 8.0e-9
-  thermalConductivity: 30
-  specificHeat: 1000
 
 - type: material
-  id: hydrogen
+  id: Hydrogen
+  stack: Hydrogen
   name: hydrogen
   icon: Objects/Materials/ingots.rsi/hydrogen.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: iron
+  id: Iron
+  stack: Iron
   name: iron
   icon: Objects/Materials/ingots.rsi/iron.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: silver
+  id: Silver
+  stack: Silver
   name: silver
   icon: Objects/Materials/ingots.rsi/silver.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: plasteel
+  id: Plasteel
+  stack: Plasteel
   name: plasteel
   icon: Objects/Materials/Sheets/metal.rsi/plasteel.png
-  density: 15400 # literally arbitrary values...
-  electricResistivity: 6.9e-7
-  thermalConductivity: 18
-  specificHeat: 200
 
 - type: material
-  id: brass
+  id: Brass
+  stack: Brass
   name: brass
   icon: Objects/Materials/Sheets/metal.rsi/brass.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: titanium
+  id: Titanium
+  stack: Titanium
   name: titanium
   icon: Objects/Materials/Sheets/metal.rsi/titanium.png
-  parent: MetalMaterialBase
 
 - type: material
-  id: plastitanium
+  id: Plastitanium
+  stack: Plastitanium
   name: plastitanium
   icon: Objects/Materials/Sheets/metal.rsi/plastitanium.png
-  parent: MetalMaterialBase
