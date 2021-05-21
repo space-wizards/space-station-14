@@ -150,11 +150,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!EntityManager.TryGetEntity(uid, out var used))
                 return false;
 
-            if (!playerEnt.Transform.Coordinates.InRange(EntityManager, used.Transform.Coordinates, InteractionRange))
-            {
-                return false;
-            }
-
             InteractionActivate(playerEnt, used);
             return true;
         }
@@ -165,30 +160,26 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void TryInteractionActivate(IEntity? user, IEntity? used)
         {
-            if (user != null && used != null && ActionBlockerSystem.CanUse(user))
-            {
-                InteractionActivate(user, used);
-            }
+            if (user == null || used == null || !ActionBlockerSystem.CanUse(user))
+                return;
+
+            InteractionActivate(user, used);
         }
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
+            // all activates should only fire when in range / unbostructed
             if (!InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
                 return;
 
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
-            {
                 return;
-            }
 
             if (!used.TryGetComponent(out IActivate? activateComp))
-            {
                 return;
-            }
 
-            // all activates should only fire when in range / unbostructed
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
         }
