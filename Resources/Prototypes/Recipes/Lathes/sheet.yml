@@ -6,7 +6,7 @@
   result: SheetSteel1
   completetime: 500
   materials:
-    steel: 100
+    Steel: 100
 
 - type: latheRecipe
   id: GlassStack
@@ -16,7 +16,7 @@
   result: SheetGlass1
   completetime: 500
   materials:
-    glass: 100
+    Glass: 100
 
 - type: latheRecipe
   id: SheetRGlass
@@ -26,7 +26,7 @@
   result: SheetRGlass1
   completetime: 500
   materials:
-    glass: 200
+    Glass: 200
 
 - type: latheRecipe
   id: SheetPlastic
@@ -36,4 +36,4 @@
   result: SheetPlastic1
   completetime: 500
   materials:
-    plastic: 100
+    Plastic: 100
