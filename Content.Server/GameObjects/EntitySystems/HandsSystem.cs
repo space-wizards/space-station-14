@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                stackComp.Use(1);
+                Get<StackSystem>().Use(stackComp, 1);
                 throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype?.ID, playerEnt.Transform.Coordinates);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.

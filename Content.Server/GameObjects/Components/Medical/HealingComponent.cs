@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             if (Owner.TryGetComponent(out StackComponent? stack) &&
-                !stack.Use(1))
+                !EntitySystem.Get<StackSystem>().Use(stack, 1))
             {
                 return true;
             }

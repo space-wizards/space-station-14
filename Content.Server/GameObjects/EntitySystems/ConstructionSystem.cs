@@ -163,12 +163,10 @@ namespace Content.Server.GameObjects.EntitySystems
                     case MaterialConstructionGraphStep materialStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!materialStep.EntityValid(entity, out var sharedStack))
+                            if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var stack = (StackComponent) sharedStack;
-
-                            if (!stack.Split(materialStep.Amount, user.ToCoordinates(), out var newStack))
+                            if (!Get<StackSystem>().Split(stack, materialStep.Amount, user.ToCoordinates(), out var newStack))
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))

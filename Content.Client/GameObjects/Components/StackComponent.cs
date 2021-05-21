@@ -1,9 +1,6 @@
-#nullable enable
-
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -17,38 +14,17 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IItemStatus
     {
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _uiUpdateNeeded;
 
-        public Control MakeControl() => new StatusControl(this);
-
-        public override int Count
+        public Control MakeControl()
         {
-            get => base.Count;
-            set
-            {
-                var valueChanged = value != Count;
-                base.Count = value;
-
-                if (valueChanged)
-                {
-                    _appearanceComponent?.SetData(StackVisuals.Actual, Count);
-
-                }
-
-                _uiUpdateNeeded = true;
-            }
+            return new StatusControl(this);
         }
 
-        public override void Initialize()
+        public void DirtyUI()
         {
-            base.Initialize();
-
-            if (!Owner.Deleted)
-            {
-                _appearanceComponent?.SetData(StackVisuals.MaxCount, MaxCount);
-                _appearanceComponent?.SetData(StackVisuals.Hide, false);
-            }
+            _uiUpdateNeeded = true;
         }
 
         private sealed class StatusControl : Control

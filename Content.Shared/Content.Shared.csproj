@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="GameObjects\Components\Trigger\" />
     <EmbeddedResource Include="Text\Names\*.txt" />
-    <Folder Include="GameObjects\Components\Visualizers" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 

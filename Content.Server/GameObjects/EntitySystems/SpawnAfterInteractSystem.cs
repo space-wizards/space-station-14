@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
 
             StackComponent? stack = null;
-            if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !stack.Use(1))
+            if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !Get<StackSystem>().Use(stack, 1))
                 return;
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
