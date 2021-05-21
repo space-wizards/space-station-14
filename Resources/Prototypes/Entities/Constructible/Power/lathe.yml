@@ -135,6 +135,7 @@
       - LightBulb
       - SheetSteel
       - GlassStack
+      - SheetRGlass
       - SheetPlastic
       - CableStack
       - ConveyorAssembly
@@ -163,6 +164,7 @@
       - Mop
       - FireExtinguisher
       - KitchenKnife
+      - FlashlightLantern
 
   - type: UserInterface
     interfaces:

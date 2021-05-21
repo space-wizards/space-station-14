@@ -8,11 +8,13 @@
 
 - type: latheRecipe
   id: KitchenKnife
-  icon: Objects/Weapons/Melee/kitchen_knife.rsi
-  result: KitchenKnife
-  completetime: 400
+  icon:
+    sprite: Objects/Weapons/Melee/Kitchen_knife.rsi
+    state: icon
+  result: KitchenKnife 
+  completetime: 500
   materials:
-    steel: 200
+    steel: 300
 
 - type: latheRecipe
   id: DrinkMug

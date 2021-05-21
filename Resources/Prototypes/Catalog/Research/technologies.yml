@@ -171,6 +171,7 @@
     - ConveyorAssembly
     - RCD
     - RCDAmmo
+    - FlashlightLantern
 
 - type: technology
   name: material sheet printing
@@ -183,7 +184,9 @@
   unlockedRecipes:
     - SheetSteel
     - SheetPlastic
+    - SheetRGlass
     - GlassStack
+
       
 
 # Electromagnetic Theory Technology Tree
