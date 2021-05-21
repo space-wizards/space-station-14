@@ -616,14 +616,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
-        public override bool CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool CanDragDropOn(DragDropEvent eventArgs)
         {
             // Base is redundant given this already calls the base CanInsert
             // If that changes then update this
             return CanInsert(eventArgs.Dragged);
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;

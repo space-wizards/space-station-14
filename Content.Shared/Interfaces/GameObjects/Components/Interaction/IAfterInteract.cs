@@ -51,22 +51,22 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when clicking on another object and no attack event was handled.
     /// </summary>
     [PublicAPI]
-    public class AfterInteractMessage : HandledEntityEventArgs
+    public class AfterInteractEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     Entity that triggered the attack.
+        ///     Entity that triggered the interaction.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Entity that the User attacked with.
+        ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity ItemInHand { get; set; }
+        public IEntity Used { get; }
 
         /// <summary>
-        ///     Entity that was attacked. This can be null if the attack did not click on an entity.
+        ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
         /// </summary>
-        public IEntity? Attacked { get; }
+        public IEntity? Target { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
@@ -79,13 +79,13 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public bool CanReach { get; }
 
-        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity? attacked,
+        public AfterInteractEvent(IEntity user, IEntity used, IEntity? target,
             EntityCoordinates clickLocation, bool canReach)
         {
             User = user;
-            Attacked = attacked;
+            Used = used;
+            Target = target;
             ClickLocation = clickLocation;
-            ItemInHand = itemInHand;
             CanReach = canReach;
         }
     }

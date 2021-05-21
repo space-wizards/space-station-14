@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private bool HasUses => _uses > 0;
 
-        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEvent eventArgs)
         {
             if (entities.Count == 0)
             {

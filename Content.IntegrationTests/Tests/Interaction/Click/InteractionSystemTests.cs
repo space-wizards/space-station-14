@@ -20,24 +20,24 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Reflect(false)]
         private class TestAttackEntitySystem : EntitySystem
         {
-            public EntityEventHandler<AttackEventArgs> AttackEvent;
-            public EntityEventHandler<InteractUsingMessage> InteractUsingEvent;
-            public EntityEventHandler<AttackHandMessage> InteractHandEvent;
+            public EntityEventHandler<AttackEvent> AttackEvent;
+            public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
+            public EntityEventHandler<AttackHandEvent> InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
-                SubscribeLocalEvent<AttackEventArgs>((e) => AttackEvent?.Invoke(e));
-                SubscribeLocalEvent<InteractUsingMessage>((e) => InteractUsingEvent?.Invoke(e));
-                SubscribeLocalEvent<AttackHandMessage>((e) => InteractHandEvent?.Invoke(e));
+                SubscribeLocalEvent<AttackEvent>((e) => AttackEvent?.Invoke(e));
+                SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
+                SubscribeLocalEvent<AttackHandEvent>((e) => InteractHandEvent?.Invoke(e));
             }
 
             public override void Shutdown()
             {
                 base.Shutdown();
-                UnsubscribeLocalEvent<AttackEventArgs>();
-                UnsubscribeLocalEvent<InteractUsingMessage>();
-                UnsubscribeLocalEvent<AttackHandMessage>();
+                UnsubscribeLocalEvent<AttackEvent>();
+                UnsubscribeLocalEvent<InteractUsingEvent>();
+                UnsubscribeLocalEvent<AttackHandEvent>();
             }
         }
 
@@ -95,12 +95,12 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 };
                 testAttackEntitySystem.InteractUsingEvent = (ev) =>
                 {
-                    Assert.That(ev.Attacked, Is.EqualTo(containerEntity));
+                    Assert.That(ev.Target, Is.EqualTo(containerEntity));
                     interactUsing = true;
                 };
                 testAttackEntitySystem.InteractHandEvent = (ev) =>
                 {
-                    Assert.That(ev.Attacked, Is.EqualTo(containerEntity));
+                    Assert.That(ev.Target, Is.EqualTo(containerEntity));
                     interactHand = true;
                 };
 
