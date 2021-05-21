@@ -23,9 +23,9 @@
     HeldPrefix: box
   - type: StorageFill
     contents:
-      - name: FoodDonutPink
+      - id: FoodDonutPink
         amount: 3
-      - name: FoodDonutPlain
+      - id: FoodDonutPlain
         amount: 3
   - type: StorageCounter
     countTag: Donut
@@ -62,7 +62,7 @@
     size: 12
   - type: StorageFill
     contents:
-      - name: FoodEgg
+      - id: FoodEgg
         amount: 12
   - type: StorageCounter
     countTag: Egg
@@ -117,7 +117,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: Eggshells
+      - id: Eggshells
         amount: 12
   - type: Destructible
     thresholds:
@@ -182,31 +182,31 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: StorageFill
     contents:
-    - name: FoodPizzaArnold
+    - id: FoodPizzaArnold
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaDank
+    - id: FoodPizzaDank
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaSassysage
+    - id: FoodPizzaSassysage
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaMargherita
+    - id: FoodPizzaMargherita
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaMeat
+    - id: FoodPizzaMeat
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaMushroom
+    - id: FoodPizzaMushroom
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaPineapple
+    - id: FoodPizzaPineapple
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaVegetable
+    - id: FoodPizzaVegetable
       prob: 0.15
       orGroup: Pizza
-    - name: FoodPizzaDonkpocket
+    - id: FoodPizzaDonkpocket
       prob: 0.15
       orGroup: Pizza
 
@@ -230,7 +230,7 @@
     HeldPrefix: box
   - type: StorageFill
     contents:
-      - name: FoodBakedNugget
+      - id: FoodBakedNugget
         amount: 6
   - type: StorageCounter
     countTag: Nugget
@@ -268,7 +268,7 @@
     color: red
   - type: StorageFill
     contents:
-      - name: FoodDonkpocket
+      - id: FoodDonkpocket
         amount: 6
 
 - type: entity
@@ -282,7 +282,7 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
-      - name: FoodDonkpocketSpicy
+      - id: FoodDonkpocketSpicy
         amount: 6
 
 - type: entity
@@ -296,7 +296,7 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
-      - name: FoodDonkpocketTeriyaki
+      - id: FoodDonkpocketTeriyaki
         amount: 6
 
 - type: entity
@@ -311,7 +311,7 @@
     color: white
   - type: StorageFill
     contents:
-      - name: FoodDonkpocketPizza
+      - id: FoodDonkpocketPizza
         amount: 6
 
 - type: entity
@@ -326,7 +326,7 @@
     color: brown
   - type: StorageFill
     contents:
-      - name: FoodDonkpocketGondola
+      - id: FoodDonkpocketGondola
         amount: 6
 
 - type: entity
@@ -340,7 +340,7 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
-      - name: FoodDonkpocketBerry
+      - id: FoodDonkpocketBerry
         amount: 6
 
 - type: entity
@@ -355,5 +355,5 @@
     color: yellow
   - type: StorageFill
     contents:
-      - name: FoodDonkpocketHonk
+      - id: FoodDonkpocketHonk
         amount: 6
