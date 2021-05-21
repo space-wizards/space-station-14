@@ -46,7 +46,7 @@ namespace Content.Server.Actions
                     var player = actor.PlayerSession;
                     var coordinates = args.Target.Transform.Coordinates;
                     var target = args.Target.Uid;
-                    EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);
+                    EntitySystem.Get<InteractionSystem>().HandleUse(player, coordinates, target);
                     return;
                 }
 

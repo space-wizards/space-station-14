@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleClientUseItemInHand))
+                    new PointerInputCmdHandler(HandleUse))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -229,7 +229,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        public bool HandleClientUseItemInHand(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleUse(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!ValidateInput(session, coords, uid, out var userEntity))
