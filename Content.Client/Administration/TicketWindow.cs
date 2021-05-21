@@ -20,7 +20,7 @@ namespace Content.Client.Administration
         public readonly Button ResolveTicketButton;
 
         public Ticket? Ticket;
-        public IPlayerSession? Session;
+        public ICommonSession? Session;
         public bool IsAdmin = false;
         public TicketStatus WindowStatus = TicketStatus.Unclaimed;
 
