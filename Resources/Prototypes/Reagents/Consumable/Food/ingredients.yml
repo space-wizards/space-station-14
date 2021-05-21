@@ -1,0 +1,95 @@
+- type: reagent
+  id: Flour
+  name: flour
+  desc: Used for baking.
+  physicalDesc: powdery
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Oats
+  name: oats
+  desc: Used for a variety of tasty purposes.
+  physicalDesc: coarse
+  color: tan
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Enzyme
+  name: universal enzyme
+  desc: Used in cooking various dishes.
+  color: "#009900"
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Egg
+  name: egg
+  desc: Used for baking.
+  physicalDesc: mucus-like
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Sugar
+  name: sugar
+  desc: Tasty spacey sugar!
+  physicalDesc:
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Salt
+  name: salt
+  desc: Salt. From space oceans, presumably.
+  physicalDesc: Coarse.
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Blackpepper
+  name: black pepper
+  desc: Often used to flavor food or make people sneeze.
+  physicalDesc: Grainy.
+  color: black
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Vinegar
+  name: vinegar
+  desc: Often used to flavor food.
+  color: tan
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: Rice
+  name: rice
+  desc: Hard, small white grains.
+  color: white
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
+
+- type: reagent
+  id: OilOlive
+  name: olive oil
+  desc: Viscous and fragrant.
+  color: olive
+  metabolism:
+    - !type:DefaultFood
+      rate: 1

@@ -1,6 +1,7 @@
 {
   "version": 1,
-  "copyright": "Taken from https://github.com/tgstation/tgstation",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/a929584d9db319eb7484113221be25cfa1d5dc09",
   "size": {
     "x": 32,
     "y": 32

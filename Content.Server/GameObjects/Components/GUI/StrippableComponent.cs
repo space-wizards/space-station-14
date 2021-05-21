@@ -76,9 +76,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override bool Drop(DragDropEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent? actor)) return false;
+            if (!args.User.TryGetComponent(out ActorComponent? actor)) return false;
 
-            OpenUserInterface(actor.playerSession);
+            OpenUserInterface(actor.PlayerSession);
             return true;
         }
 
@@ -445,12 +445,12 @@ namespace Content.Server.GameObjects.Components.GUI
 
             protected override void Activate(IEntity user, StrippableComponent component)
             {
-                if (!user.TryGetComponent(out IActorComponent? actor))
+                if (!user.TryGetComponent(out ActorComponent? actor))
                 {
                     return;
                 }
 
-                component.OpenUserInterface(actor.playerSession);
+                component.OpenUserInterface(actor.PlayerSession);
             }
         }
     }

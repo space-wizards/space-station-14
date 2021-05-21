@@ -14,7 +14,7 @@ namespace Content.Shared.Prototypes.Tag
     public class TagPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
     }
 }

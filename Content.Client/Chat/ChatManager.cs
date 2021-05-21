@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Client.Administration;
 using Content.Client.GameObjects.Components.Observer;
 using Content.Client.Interfaces.Chat;
+using Content.Client.Utility;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -241,7 +242,7 @@ namespace Content.Client.Chat
             }
 
             // let our chatbox know all the new settings
-            CurrentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
+            CurrentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages, true);
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace Content.Client.Chat
                 CurrentChatBox.FilterToggled += OnFilterButtonToggled;
                 CurrentChatBox.OnResized += ChatBoxOnResized;
 
-                CurrentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages);
+                CurrentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages, false);
             }
 
             RepopulateChat(_filteredHistory);
@@ -354,7 +355,7 @@ namespace Content.Client.Chat
             }
 
             var color = Color.DarkGray;
-            var messageText = message.Message;
+            var messageText = FormattedMessage.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
                 messageText = string.Format(message.MessageWrap, messageText);
@@ -366,15 +367,7 @@ namespace Content.Client.Chat
             }
             else
             {
-                color = message.Channel switch
-                {
-                    ChatChannel.Server => Color.Orange,
-                    ChatChannel.Radio => Color.Green,
-                    ChatChannel.OOC => Color.LightSkyBlue,
-                    ChatChannel.Dead => Color.MediumPurple,
-                    ChatChannel.AdminChat => Color.Red,
-                    _ => color
-                };
+                color = ChatHelper.ChatColor(message.Channel);
             }
 
             if (CurrentChatBox == null) return;

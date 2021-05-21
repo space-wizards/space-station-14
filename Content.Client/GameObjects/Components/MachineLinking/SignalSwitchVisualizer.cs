@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.MachineLinking
     [UsedImplicitly]
     public class SignalSwitchVisualizer : AppearanceVisualizer
     {
-        [field: DataField("layer")]
+        [DataField("layer")]
         private int Layer { get; }
 
         public override void InitializeEntity(IEntity entity)

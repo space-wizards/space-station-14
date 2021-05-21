@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -52,6 +53,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         private bool _hasSafety;
         [DataField("safety")]
         private bool _safety = true;
+        [DataField("impulse")]
+        private float _impulse = 0f;
 
         /// <summary>
         ///     The amount of solution to be sprayer from this solution when using it
@@ -159,6 +162,11 @@ namespace Content.Server.GameObjects.Components.Fluids
                 vaporComponent.TryAddSolution(solution);
 
                 vaporComponent.Start(rotation.ToVec(), _sprayVelocity, target, _sprayAliveTime);
+
+                if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
+                {
+                    body.ApplyLinearImpulse(-direction * _impulse);
+                }
             }
 
             //Play sound

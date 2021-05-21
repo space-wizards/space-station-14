@@ -1,0 +1,309 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodBurgerBase
+  abstract: true
+  components:
+  - type: Food
+    transferAmount: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 15
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+  - type: Item
+    sprite: Objects/Consumable/Food/burger.rsi
+
+# Custom Burger Example
+
+- type: entity
+  name: jelly burger
+  parent: FoodBurgerBase
+  id: FoodBurgerJelly
+  description: Culinary delight..?
+  components:
+  - type: Sprite
+    layers:
+    - state: custburg-bottom
+    - state: custburg-filling
+      color: red
+    - state: custburg-top
+
+# Burger
+
+- type: entity
+  name: appendix burger
+  parent: FoodBurgerBase
+  id: FoodBurgerAppendix
+  description: Tastes like appendicitis.
+  components:
+  - type: Sprite
+    state: appendix
+# Tastes like bun, grass.
+
+- type: entity
+  name: fillet -o- carp burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCarp
+  description: Almost like a carp is yelling somewhere...
+  components:
+  - type: Sprite
+    state: fish
+# Tastes like bun, fish.
+
+- type: entity
+  name: tofu burger
+  parent: FoodBurgerBase
+  id: FoodBurgerTofu
+  description: What... is that meat?
+  components:
+  - type: Sprite
+    state: tofu
+# Tastes like bun, tofu.
+
+- type: entity
+  name: roburger
+  parent: FoodBurgerBase
+  id: FoodBurgerRobot
+  description: The lettuce is the only organic component. Beep.
+  components:
+  - type: Sprite
+    state: ro
+# Tastes like bun, lettuce, sludge.
+
+- type: entity
+  name: xenoburger
+  parent: FoodBurgerBase
+  id: FoodBurgerXeno
+  description: Smells caustic. Tastes like heresy.
+  components:
+  - type: Sprite
+    state: x
+# Tastes like bun, acid.
+
+- type: entity
+  name: bearger
+  parent: FoodBurgerBase
+  id: FoodBurgerBear
+  description: Best served rawr.
+  components:
+  - type: Sprite
+    state: bearger
+
+- type: entity
+  name: clown burger
+  parent: FoodBurgerBase
+  id: FoodBurgerClown
+  description: This tastes funny...
+  components:
+  - type: Sprite
+    state: clown
+
+- type: entity
+  name: mime burger
+  parent: FoodBurgerBase
+  id: FoodBurgerMime
+  description: Its taste defies language.
+  components:
+  - type: Sprite
+    state: mime
+# Tastes like  .
+
+- type: entity
+  name: brain burger
+  parent: FoodBurgerBase
+  id: FoodBurgerBrain
+  description: A strange looking burger. It looks almost sentient.
+  components:
+  - type: Sprite
+    state: brain
+# Tastes like bun, brains.
+
+- type: entity
+  name: ghost burger
+  parent: FoodBurgerBase
+  id: FoodBurgerGhost
+  description: Too spooky!
+  components:
+  - type: Sprite
+    state: ghost
+# Tastes like bun, ectoplasm.
+
+# Note: I would put a bunch of colored burgers here as listed in the tg .dm but
+# I'd rather wait for a custom burger component.
+
+- type: entity
+  name: spell burger
+  parent: FoodBurgerBase
+  id: FoodBurgerSpell
+  description: This is absolutely Ei Nath.
+  components:
+  - type: Sprite
+    state: spell
+# Tastes like bun, silver.
+
+- type: entity
+  name: big bite burger
+  parent: FoodBurgerBase
+  id: FoodBurgerBig
+  description: Forget the Big Mac. THIS is the future!
+  components:
+  - type: SolutionContainer
+    maxVol: 25
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 25
+  - type: Sprite
+    state: bigbite
+# Tastes like bun, silver, magic.
+
+- type: entity
+  name: super bite burger
+  parent: FoodBurgerBase
+  id: FoodBurgerSuper
+  description: This is a mountain of a burger. FOOD!
+  components:
+  - type: SolutionContainer
+    maxVol: 40
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 40
+  - type: Sprite
+    state: superbite
+# Tastes like bun, diabetes.
+
+- type: entity
+  name: five alarm burger
+  parent: FoodBurgerBase
+  id: FoodBurgerFive
+  description: HOT! HOT! HOT!
+  components:
+  - type: Sprite
+    state: fivealarm
+# Tastes like bun, HEAT.
+
+- type: entity
+  name: rat burger
+  parent: FoodBurgerBase
+  id: FoodBurgerRat
+  description: Pretty much what you'd expect...
+  components:
+  - type: Sprite
+    state: rat
+# Tastes like bun, HEAT.
+
+- type: entity
+  name: home run baseball burger
+  parent: FoodBurgerBase
+  id: FoodBurgerBaseball
+  description: It's still warm. The steam coming off of it smells kinda sweaty.
+  components:
+  - type: Sprite
+    state: baseball
+# Tastes like bun, victory.
+
+- type: entity
+  name: bacon burger
+  parent: FoodBurgerBase
+  id: FoodBurgerBacon
+  description: The perfect combination of all things American.
+  components:
+  - type: Sprite
+    state: bacon
+# Tastes like bun, bacon.
+
+- type: entity
+  name: empowered burger
+  parent: FoodBurgerBase
+  id: FoodBurgerEmpowered
+  description: It's shockingly good, if you live off of electricity that is.
+  components:
+  - type: Sprite
+    state: empowered
+# Tastes like bun, pure electricity.
+
+- type: entity
+  name: empowered burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCrab
+  description: A delicious patty of the crabby kind, slapped in between a bun.
+  components:
+  - type: Sprite
+    state: crab
+# Tastes like bun, crab meat.
+
+- type: entity
+  name: soylent burger
+  parent: FoodBurgerBase
+  id: FoodBurgerSoy
+  description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
+  components:
+  - type: Sprite
+    state: soylent
+# Tastes like bun, redditors.
+
+- type: entity
+  name: mcrib
+  parent: FoodBurgerBase
+  id: FoodBurgerMcrib
+  description: An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it.
+  components:
+  - type: Sprite
+    state: mcrib
+# Tastes like bun, pork patty.
+
+- type: entity
+  name: mcguffin
+  parent: FoodBurgerBase
+  id: FoodBurgerMcguffin
+  description: A cheap and greasy imitation of an eggs Benedict.
+  components:
+  - type: Sprite
+    state: mcguffin
+# Tastes like muffin, bacon.
+
+- type: entity
+  name: chicken sandwich # Burger for you euro-cucks
+  parent: FoodBurgerBase
+  id: FoodBurgerChicken
+  description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
+  components:
+  - type: Sprite
+    state: chicken
+# Tastes like bun, chicken.
+
+- type: entity
+  name: cheese burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCheese
+  description: This noble burger stands proudly clad in golden cheese.
+  components:
+  - type: Sprite
+    state: cheese
+# TODO: Make this work.
+  # - type: Sprite
+  #   state: plate
+  # - type: RandomSpriteState
+  #   spriteLayer: 1
+  #   spriteStates:
+  #     - cheese
+  #     - cheesealt
+# Tastes like bun, beef patty, cheese.
+
+- type: entity
+  name: crazy hamburger # Burger for you euro-cucks
+  parent: FoodBurgerBase
+  id: FoodBurgerCrazy
+  description: This looks like the sort of food that a demented clown in a trenchcoat would make.
+  components:
+  - type: Sprite
+    state: crazy
+# Tastes like bun, a smoking flare, chili.

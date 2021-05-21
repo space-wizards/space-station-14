@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.AI
         // These are immutable so any dynamic changes aren't saved back over.
         // AiFactionSystem will just read these and then store them.
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [DataField("hostile")]

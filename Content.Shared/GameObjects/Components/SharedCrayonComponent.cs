@@ -78,11 +78,11 @@ namespace Content.Shared.GameObjects.Components
     public class CrayonDecalPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("spritePath")] public string SpritePath { get; } = string.Empty;
+        [DataField("spritePath")] public string SpritePath { get; } = string.Empty;
 
-        [field: DataField("decals")] public List<string> Decals { get; } = new();
+        [DataField("decals")] public List<string> Decals { get; } = new();
     }
 }

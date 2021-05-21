@@ -1,1 +1,31 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "Taken from https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1", "copyright": "CC-BY-SA-3.0", "states": [{"name": "hypo", "directions": 1, "delays": [[1.0]]}, {"name": "inhand-left", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "inhand-right", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "borghypo"
+    },
+    {
+      "name": "borghypo_s"
+    },
+    {
+      "name": "combat_hypo"
+    },
+    {
+      "name": "hypo"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

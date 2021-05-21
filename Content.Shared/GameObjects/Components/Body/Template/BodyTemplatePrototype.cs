@@ -16,28 +16,28 @@ namespace Content.Shared.GameObjects.Components.Body.Template
     [Serializable, NetSerializable]
     public class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
-        [field: DataField("slots")]
+        [DataField("slots")]
         private Dictionary<string, BodyPartType> _slots = new();
 
-        [field: DataField("connections")]
+        [DataField("connections")]
         private Dictionary<string, List<string>> _rawConnections = new();
 
-        [field: DataField("layers")]
+        [DataField("layers")]
         private Dictionary<string, string> _layers = new();
 
-        [field: DataField("mechanismLayers")]
+        [DataField("mechanismLayers")]
         private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables]
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
         [ViewVariables]
-        [field: DataField("centerSlot")]
+        [DataField("centerSlot")]
         public string CenterSlot { get; } = string.Empty;
 
         [ViewVariables]

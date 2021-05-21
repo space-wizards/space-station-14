@@ -1,45 +1,35 @@
 - type: material
-  id: GlassMaterialBase
-  density: 2500
-  electricResistivity: 1.0e+13
-  thermalConductivity: 0.9
-  specificHeat: 840
-
-- type: material
-  id: glass
+  id: Glass
+  stack: Glass
   name: glass
   icon: Objects/Materials/Sheets/glass.rsi/glass.png
-  parent: GlassMaterialBase
 
 - type: material
-  id: rglass
+  id: ReinforcedGlass
+  stack: ReinforcedGlass
   name: reinforced glass
   icon: Objects/Materials/Sheets/glass.rsi/rglass.png
-  density: 5000
-  electricResistivity: 1.0e+13
-  thermalConductivity: 0.9
-  specificHeat: 5000
 
 - type: material
-  id: pglass
+  id: PlasmaGlass
+  stack: PlasmaGlass
   name: plasma glass
   icon: Objects/Materials/Sheets/glass.rsi/pglass.png
-  parent: GlassMaterialBase
 
 - type: material
-  id: rpglass
+  id: ReinforcedPlasmaGlass
+  stack: ReinforcedPlasmaGlass
   name: reinforced plasma glass
   icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
-  parent: GlassMaterialBase
 
 - type: material
-  id: titaniumglass
+  id: TitaniumGlass
+  stack: TitaniumGlass
   name: titanium glass
   icon: Objects/Materials/Sheets/glass.rsi/titaniumglass.png
-  parent: GlassMaterialBase
 
 - type: material
-  id: plastitaniumglass
+  id: PlastitaniumGlass
+  stack: PlastitaniumGlass
   name: plastitanium glass
   icon: Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png
-  parent: GlassMaterialBase

@@ -89,11 +89,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entities.Count != 0)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, entities.First());
+                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, entities.First().Transform.Coordinates);
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User);
+                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User.Transform.Coordinates);
             }
 
             var hitEntities = new List<IEntity>();

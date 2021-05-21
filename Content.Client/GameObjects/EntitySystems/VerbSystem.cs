@@ -119,7 +119,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public void OnContextButtonPressed(IEntity entity)
         {
-            OpenContextMenu(entity, new ScreenCoordinates(_userInterfaceManager.MousePositionScaled));
+            OpenContextMenu(entity, _userInterfaceManager.MousePositionScaled);
         }
 
         private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)

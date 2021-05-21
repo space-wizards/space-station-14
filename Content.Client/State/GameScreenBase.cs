@@ -72,7 +72,7 @@ namespace Content.Client.State
             var renderScale = 1;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp)
             {
-                var mousePosWorld = vp.ScreenToMap(InputManager.MouseScreenPosition);
+                var mousePosWorld = vp.ScreenToMap(InputManager.MouseScreenPosition.Position);
                 entityToClick = GetEntityUnderPosition(mousePosWorld);
 
                 if (vp is ScalingViewport svp)
@@ -214,10 +214,10 @@ namespace Content.Client.State
         ///     Converts a state change event from outside the simulation to inside the simulation.
         /// </summary>
         /// <param name="args">Event data values for a bound key state change.</param>
-        private void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
+        protected virtual void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
             // If there is no InputSystem, then there is nothing to forward to, and nothing to do here.
-            if(!EntitySystemManager.TryGetEntitySystem(out InputSystem inputSys))
+            if(!EntitySystemManager.TryGetEntitySystem(out InputSystem? inputSys))
                 return;
 
             var kArgs = args.KeyEventArgs;

@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _timer += frameTime;
             _reactTimer += frameTime;
 
-            if (_reactTimer >= ReactTime)
+            if (_reactTimer >= ReactTime && Owner.Transform.GridID.IsValid())
             {
                 _reactTimer = 0;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // Check for collision with a impassable object (e.g. wall) and stop
             if ((otherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && otherFixture.Hard)
             {
-                Owner.Delete();
+                Owner.QueueDelete();
             }
         }
     }

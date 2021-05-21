@@ -15,6 +15,7 @@
   parent: PartBase
   id: PartRodMetal
   name: metals rods
+  suffix: Full
   components:
   - type: Stack
     stackType: MetalRod
@@ -43,6 +44,7 @@
   parent: PartRodMetal
   id: PartRodMetal1
   name: metal rod
+  suffix: Single
   components:
   - type: Sprite
     state: rods

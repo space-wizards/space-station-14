@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             {
                 Exploding = true;
                 Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
-                Owner.Delete();
+                Owner.QueueDelete();
                 return true;
             }
         }

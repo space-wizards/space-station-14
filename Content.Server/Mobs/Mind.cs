@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Mobs.Roles;
@@ -11,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -102,6 +104,41 @@ namespace Content.Server.Mobs
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 playerMgr.TryGetSessionById(UserId.Value, out var ret);
                 return ret;
+            }
+        }
+
+        /// <summary>
+        ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
+        ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+        ///     "If administrators decide that zombies are dead, this returns true for zombies."
+        ///     (Maybe you were looking for the action blocker system?)
+        /// </summary>
+        [ViewVariables]
+        public bool CharacterDeadIC
+        {
+            get
+            {
+                // This is written explicitly so that the logic can be understood.
+                // But it's also weird and potentially situational.
+                // Specific considerations when updating this:
+                //  + Does being turned into a borg (if/when implemented) count as dead?
+                //    *If not, add specific conditions to users of this property where applicable.*
+                //  + Is being transformed into a donut 'dead'?
+                //    TODO: Consider changing the way ghost roles work.
+                //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
+                //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
+                //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
+
+                // This can be null if they're deleted (spike / brain nom)
+                if (OwnedEntity == null)
+                    return true;
+                var targetMobState = OwnedEntity.GetComponentOrNull<IMobStateComponent>();
+                // This can be null if it's a brain (this happens very often)
+                // Brains are the result of gibbing so should definitely count as dead
+                if (targetMobState == null)
+                    return true;
+                // They might actually be alive.
+                return targetMobState.IsDead();
             }
         }
 
@@ -212,10 +249,10 @@ namespace Content.Server.Mobs
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
 
-                if (entity.TryGetComponent(out IActorComponent? actor))
+                if (entity.TryGetComponent(out ActorComponent? actor))
                 {
                     // Happens when transferring to your currently visited entity.
-                    if (actor.playerSession != Session)
+                    if (actor.PlayerSession != Session)
                     {
                         throw new ArgumentException("Visit target already has a session.", nameof(entity));
                     }
@@ -236,6 +273,7 @@ namespace Content.Server.Mobs
             if (Session != null && !alreadyAttached && VisitingEntity == null)
             {
                 Session.AttachToEntity(entity);
+                Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
             }
         }
 
@@ -293,6 +331,8 @@ namespace Content.Server.Mobs
 
             var comp = entity.AddComponent<VisitingMindComponent>();
             comp.Mind = this;
+
+            Logger.Info($"Session {Session?.Name} visiting entity {entity}.");
         }
 
         public void UnVisit()

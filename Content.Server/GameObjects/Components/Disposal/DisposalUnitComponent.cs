@@ -166,9 +166,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             TryQueueEngage();
 
-            if (entity.TryGetComponent(out IActorComponent? actor))
+            if (entity.TryGetComponent(out ActorComponent? actor))
             {
-                UserInterface?.Close(actor.playerSession);
+                UserInterface?.Close(actor.PlayerSession);
             }
 
             UpdateVisualState();
@@ -382,7 +382,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private void UpdateVisualState()
+        public void UpdateVisualState()
         {
             UpdateVisualState(false);
         }
@@ -547,10 +547,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     Remove(msg.Entity);
                     break;
 
-                case AnchoredChangedMessage:
-                    UpdateVisualState();
-                    break;
-
                 case PowerChangedMessage powerChanged:
                     PowerStateChanged(powerChanged);
                     break;
@@ -584,7 +580,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return false;
             }
@@ -592,7 +588,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (IsValidInteraction(eventArgs))
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
                 return true;
             }
 
@@ -601,14 +597,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             if (IsValidInteraction(eventArgs))
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
             }
 
             return;

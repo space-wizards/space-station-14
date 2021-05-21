@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -58,10 +58,10 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
+            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
 
-            UserInterface?.Toggle(actor.playerSession);
-            RegisterPlayerSession(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
+            RegisterPlayerSession(actor.PlayerSession);
         }
 
         private void RegisterPlayerSession(IPlayerSession session)

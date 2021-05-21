@@ -1,6 +1,6 @@
 ﻿using Robust.Client.Input;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Map;
 
 namespace Content.Client.Utility
 {
@@ -33,7 +33,7 @@ namespace Content.Client.Utility
         /// <summary>
         /// Convenience method, current mouse screen position as provided by inputmanager.
         /// </summary>
-        public Vector2 MouseScreenPosition => _inputManager.MouseScreenPosition;
+        public ScreenCoordinates MouseScreenPosition => _inputManager.MouseScreenPosition;
 
         /// <summary>
         /// True if initiated a drag and currently dragging something.
@@ -48,7 +48,7 @@ namespace Content.Client.Utility
         public T? Dragged { get; private set; }
 
         // screen pos where the mouse down began for the drag
-        private Vector2 _mouseDownScreenPos;
+        private ScreenCoordinates _mouseDownScreenPos;
         private DragState _state = DragState.NotDragging;
 
         private enum DragState : byte
@@ -128,7 +128,7 @@ namespace Content.Client.Utility
                 case DragState.MouseDown:
                 {
                     var screenPos = _inputManager.MouseScreenPosition;
-                    if ((_mouseDownScreenPos - screenPos).Length > _deadzone)
+                    if ((_mouseDownScreenPos.Position - screenPos.Position).Length > _deadzone)
                     {
                         StartDragging();
                     }

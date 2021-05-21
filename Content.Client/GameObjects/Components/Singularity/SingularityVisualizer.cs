@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Singularity
     [UsedImplicitly]
     public class SingularityVisualizer : AppearanceVisualizer
     {
-        [field: DataField("layer")]
+        [DataField("layer")]
         private int Layer { get; } = 0;
 
         public override void InitializeEntity(IEntity entity)

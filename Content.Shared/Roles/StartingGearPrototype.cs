@@ -33,7 +33,7 @@ namespace Content.Shared.Roles
         private Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         public string GetGear(Slots slot, HumanoidCharacterProfile? profile)

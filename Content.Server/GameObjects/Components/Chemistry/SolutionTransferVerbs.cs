@@ -176,9 +176,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var adminManager = IoCManager.Resolve<IAdminManager>();
 
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
-                if (adminManager.HasAdminFlag(player.playerSession, ReqFlags))
+                if (adminManager.HasAdminFlag(player.PlayerSession, ReqFlags))
                 {
                     data.Visibility = VerbVisibility.Visible;
                 }
@@ -188,10 +188,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Activate(IEntity user, IEntity target)
         {
             var groupController = IoCManager.Resolve<IAdminManager>();
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
-                if (groupController.HasAdminFlag(player.playerSession, ReqFlags))
-                    OpenAddReagentMenu(player.playerSession, target);
+                if (groupController.HasAdminFlag(player.PlayerSession, ReqFlags))
+                    OpenAddReagentMenu(player.PlayerSession, target);
             }
         }
 

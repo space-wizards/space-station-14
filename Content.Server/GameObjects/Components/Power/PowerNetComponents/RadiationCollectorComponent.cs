@@ -25,18 +25,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default!;
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    OnAnchoredChanged();
-                    break;
-            }
-        }
-
-        private void OnAnchoredChanged()
+        public void OnAnchoredChanged()
         {
             if(_collidableComponent != null && _collidableComponent.BodyType == BodyType.Static)
                 Owner.SnapToGrid();

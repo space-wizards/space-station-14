@@ -8,115 +8,115 @@
   },
   "states": [
     {
-        "name": "adamantine"
+      "name": "adamantine"
     },
     {
-        "name": "adamantine_2"
+      "name": "adamantine_2"
     },
     {
-        "name": "adamantine_3"
+      "name": "adamantine_3"
     },
     {
-        "name": "adamantine-inhand-left",
-        "directions": 4
+      "name": "adamantine-inhand-left",
+      "directions": 4
     },
     {
-        "name": "adamantine-inhand-right",
-        "directions": 4
+      "name": "adamantine-inhand-right",
+      "directions": 4
     },
     {
-        "name": "alpha"
+      "name": "alpha"
     },
     {
-        "name": "alpha_2"
+      "name": "alpha_2"
     },
     {
-        "name": "alpha_3"
+      "name": "alpha_3"
     },
     {
-        "name": "copper"
+      "name": "copper"
     },
     {
-        "name": "copper_2"
+      "name": "copper_2"
     },
     {
-        "name": "copper_3"
+      "name": "copper_3"
     },
     {
-        "name": "copper-inhand-left",
-        "directions": 4
+      "name": "copper-inhand-left",
+      "directions": 4
     },
     {
-        "name": "copper-inhand-right",
-        "directions": 4
+      "name": "copper-inhand-right",
+      "directions": 4
     },
     {
-        "name": "gold"
+      "name": "gold"
     },
     {
-        "name": "gold_2"
+      "name": "gold_2"
     },
     {
-        "name": "gold_3"
+      "name": "gold_3"
     },
     {
-        "name": "gold-inhand-left",
-        "directions": 4
+      "name": "gold-inhand-left",
+      "directions": 4
     },
     {
-        "name": "gold-inhand-right",
-        "directions": 4
+      "name": "gold-inhand-right",
+      "directions": 4
     },
     {
-        "name": "hydrogen"
+      "name": "hydrogen"
     },
     {
-        "name": "hydrogen_2"
+      "name": "hydrogen_2"
     },
     {
-        "name": "hydrogen_3"
+      "name": "hydrogen_3"
     },
     {
-        "name": "hydrogen-inhand-left",
-        "directions": 4
+      "name": "hydrogen-inhand-left",
+      "directions": 4
     },
     {
-        "name": "hydrogen-inhand-right",
-        "directions": 4
+      "name": "hydrogen-inhand-right",
+      "directions": 4
     },
     {
-        "name": "iron"
+      "name": "iron"
     },
     {
-        "name": "iron_2"
+      "name": "iron_2"
     },
     {
-        "name": "iron_3"
+      "name": "iron_3"
     },
     {
-        "name": "iron-inhand-left",
-        "directions": 4
+      "name": "iron-inhand-left",
+      "directions": 4
     },
     {
-        "name": "iron-inhand-right",
-        "directions": 4
+      "name": "iron-inhand-right",
+      "directions": 4
     },
     {
-        "name": "silver"
+      "name": "silver"
     },
     {
-        "name": "silver_2"
+      "name": "silver_2"
     },
     {
-        "name": "silver_3"
+      "name": "silver_3"
     },
     {
-        "name": "silver-inhand-left",
-        "directions": 4
+      "name": "silver-inhand-left",
+      "directions": 4
     },
     {
-        "name": "silver-inhand-right",
-        "directions": 4
+      "name": "silver-inhand-right",
+      "directions": 4
     }
   ]
 }

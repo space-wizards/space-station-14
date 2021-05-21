@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -70,18 +69,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    OnAnchoredChanged();
-                    break;
-            }
-        }
-
-        private void OnAnchoredChanged()
+        public void OnAnchoredChanged()
         {
             if(_collidableComponent?.BodyType != BodyType.Static)
             {

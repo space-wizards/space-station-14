@@ -94,17 +94,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateAppearance();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    AnchorUpdate();
-                    break;
-            }
-        }
-
         #region Connector port methods
 
         public override void OnRemove()
@@ -139,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             ConnectedPort = null;
         }
 
-        private void AnchorUpdate()
+        public void AnchorUpdate()
         {
             if (Anchored)
             {
@@ -156,10 +145,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)

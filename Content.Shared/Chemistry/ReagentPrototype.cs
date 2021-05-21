@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Interfaces.Chemistry;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -29,34 +28,34 @@ namespace Content.Shared.Chemistry
         private readonly float _customPlantMetabolism = 1f;
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [field: DataField("desc")]
+        [DataField("desc")]
         public string Description { get; } = string.Empty;
 
-        [field: DataField("physicalDesc")]
+        [DataField("physicalDesc")]
         public string PhysicalDescription { get; } = string.Empty;
 
-        [field: DataField("color")]
+        [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
 
-        [field: DataField("toxin")]
+        [DataField("toxin")]
         public bool Toxin { get; }
 
-        [field: DataField("boozePower")]
+        [DataField("boozePower")]
         public int BoozePower { get; }
 
-        [field: DataField("boilingPoint")]
+        [DataField("boilingPoint")]
         public float? BoilingPoint { get; }
 
-        [field: DataField("meltingPoint")]
+        [DataField("meltingPoint")]
         public float? MeltingPoint { get; }
 
-        [field: DataField("spritePath")]
+        [DataField("spritePath")]
         public string SpriteReplacementPath { get; } = string.Empty;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
