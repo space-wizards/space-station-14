@@ -408,6 +408,26 @@ namespace Content.Shared.Utility
         }
 
         public static bool InRangeUnobstructed(
+            this AfterInteractEventArgs args,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
+        {
+            var user = args.User;
+            var target = args.Target;
+
+            if (target == null)
+                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            else
+                return SharedInteractionSystem.InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+
+        }
+        #endregion
+
+        #region EntityEventArgs
+        public static bool InRangeUnobstructed(
             this DragDropEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -429,26 +449,6 @@ namespace Content.Shared.Utility
         }
 
         public static bool InRangeUnobstructed(
-            this AfterInteractEventArgs args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var target = args.Target;
-
-            if (target == null)
-                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-            else
-                return SharedInteractionSystem.InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-
-        }
-        #endregion
-
-        #region EntityEventArgs
-        public static bool InRangeUnobstructed(
             this AfterInteractEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -457,7 +457,7 @@ namespace Content.Shared.Utility
             bool popup = false)
         {
             var user = args.User;
-            var target = args.Attacked;
+            var target = args.Target;
 
             if (target == null)
                 return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);

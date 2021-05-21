@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUse))
+                    new PointerInputCmdHandler(HandleUseInteraction))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -62,6 +62,38 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             base.Shutdown();
         }
 
+        #region Validation
+        private bool ValidateInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
+        {
+            userEntity = null;
+
+            if (!coords.IsValid(_entityManager))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            userEntity = ((IPlayerSession?) session)?.AttachedEntity;
+
+            if (userEntity == null || !userEntity.IsValid())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
+        #region Drag drop
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!ValidateInput(args.SenderSession, msg.DropLocation, msg.Target, out var userEntity))
@@ -104,7 +136,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
         }
+        #endregion
 
+        #region ActivateItemInWorld
         private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateInput(session, coords, uid, out var playerEnt))
@@ -122,35 +156,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             InteractionActivate(playerEnt, used);
-            return true;
-        }
-
-        private bool ValidateInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
-        {
-            userEntity = null;
-
-            if (!coords.IsValid(_entityManager))
-            {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return false;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return false;
-            }
-
-            userEntity = ((IPlayerSession?) session)?.AttachedEntity;
-
-            if (userEntity == null || !userEntity.IsValid())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with no attached entity. Session={session}");
-                return false;
-            }
-
             return true;
         }
 
@@ -187,6 +192,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
         }
+        #endregion
 
         private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
@@ -212,24 +218,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <param name="entity"></param>
         /// <param name="coords"></param>
         /// <param name="uid"></param>
-        internal void UseItemInHand(IEntity entity, EntityCoordinates coords, EntityUid uid)
+        internal void AiUseInteraction(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
             if (entity.HasComponent<ActorComponent>())
             {
                 throw new InvalidOperationException();
             }
 
-            if (entity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-            {
-                DoAttack(entity, coords, false, uid);
-            }
-            else
-            {
-                UserInteraction(entity, coords, uid);
-            }
+            UserInteraction(entity, coords, uid);
         }
 
-        public bool HandleUse(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!ValidateInput(session, coords, uid, out var userEntity))
@@ -238,10 +237,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent? combat) && combat.IsInCombatMode)
-                DoAttack(userEntity, coords, false, uid);
-            else
-                UserInteraction(userEntity, coords, uid);
+            UserInteraction(userEntity, coords, uid);
 
             return true;
         }
@@ -255,42 +251,35 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (!EntityManager.TryGetEntity(uid, out var pulledObject))
-            {
                 return false;
-            }
 
             if (userEntity == pulledObject)
-            {
                 return false;
-            }
 
             if (!pulledObject.TryGetComponent(out PullableComponent? pull))
-            {
                 return false;
-            }
 
             var dist = userEntity.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
             if (dist.LengthSquared > InteractionRangeSquared)
-            {
                 return false;
-            }
 
             return pull.TogglePull(userEntity);
         }
 
         public async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
-            // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
-            if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
+            if (player.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                attacked = null;
+                DoAttack(player, coordinates, false, clickedUid);
+                return;
             }
+
+            // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
+            EntityManager.TryGetEntity(clickedUid, out var attacked);
 
             // Verify player has a transform component
             if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
-            {
                 return;
-            }
 
             // Verify player is on the same map as the entity he clicked on
             if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
@@ -302,18 +291,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (!player.TryGetComponent<IHandsComponent>(out var hands))
-            {
                 return;
-            }
 
             var item = hands.GetActiveHand?.Owner;
 
             ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(player))
-            {
                 return;
-            }
 
             // In a container where the attacked entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
