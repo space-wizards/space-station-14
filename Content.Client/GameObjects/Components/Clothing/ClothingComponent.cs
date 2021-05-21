@@ -10,6 +10,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -56,6 +57,54 @@ namespace Content.Client.GameObjects.Components.Clothing
         {
             base.Initialize();
             ClothingEquippedPrefix = ClothingEquippedPrefix;
+
+            // Get parent RSIs to fill in missing sprites
+            if (!Owner.TryGetComponent(out SharedItemComponent? item))
+            {
+                return;
+            }
+
+            var rsiPath = item.RsiPath;
+            if (rsiPath == null)
+            {
+                return;
+            }
+
+            var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / rsiPath).RSI;
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            FillInParentSprites(prototypeManager, Owner.Prototype?.Parent, rsi);
+        }
+
+        private void FillInParentSprites(IPrototypeManager prototypeManager, string? parentPrototypeName, RSI rsi)
+        {
+            if (parentPrototypeName == null)
+            {
+                return;
+            }
+
+            var prototype = prototypeManager.Index<EntityPrototype>(parentPrototypeName);
+            if (!prototype.TryGetComponent("Clothing", out ClothingComponent? parentClothes) || parentClothes.RsiPath == null)
+            {
+                return;
+            }
+
+            var parentRsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / parentClothes.RsiPath).RSI;
+            var enumerator = parentRsi.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                var arg = enumerator.Current;
+
+                if (!rsi.TryGetState(arg.StateId, out var dummy))
+                {
+                    rsi.AddState(arg);
+                }
+            }
+            enumerator.Dispose();
+
+            FillInParentSprites(prototypeManager, prototype.Parent, rsi);
         }
 
         [ViewVariables(VVAccess.ReadWrite)]

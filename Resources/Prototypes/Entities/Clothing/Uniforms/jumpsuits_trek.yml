@@ -1,0 +1,162 @@
+﻿
+# Star Trek Alternative Uniforms
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorYellow
+  id: ClothingUniformTrekCommand
+  name: command uniform
+  description: The uniform worn by command officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_command.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_command.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorRed
+  id: ClothingUniformTrekEngSec
+  name: engsec uniform
+  description: The uniform worn by engineering/security officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_engsec.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_engsec.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorBlue
+  id: ClothingUniformTrekMedSci
+  name: medsci uniform
+  description: The uniform worn by medical/science officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_medsci.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_medsci.rsi
+
+# Next Generation Alt Uniforms
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorRed
+  id: ClothingUniformTrekNextCommand
+  name: command uniform
+  description: The uniform worn by command officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_next_command.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_next_command.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorYellow
+  id: ClothingUniformTrekNextEngSec
+  name: engsec uniform
+  description: The uniform worn by engineering/security officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_next_engsec.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_next_engsec.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorBlue
+  id: ClothingUniformTrekNextMedSci
+  name: medsci uniform
+  description: The uniform worn by medical/science officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_next_medsci.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_next_medsci.rsi
+
+# Enterprise Alt Uniforms
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorYellow
+  id: ClothingUniformTrekEnterpriseCommand
+  name: command uniform
+  description: The uniform worn by command officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_enterprise_command.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_enterprise_command.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorRed
+  id: ClothingUniformTrekEnterpriseEngSec
+  name: engsec uniform
+  description: The uniform worn by engineering/security officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_enterprise_engsec.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_enterprise_engsec.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorBlue
+  id: ClothingUniformTrekNextEnterpriseMedSci
+  name: medsci uniform
+  description: The uniform worn by medical/science officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_enterprise_medsci.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_enterprise_medsci.rsi
+
+# Federation Alt Uniforms
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationCommand
+  name: federation command jumpsuit
+  description: The red denotes command- not cannon fodder.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_command.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_command.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationOperations
+  name: federation operations jumpsuit
+  description: This gold makes you feel like you can give her all she's got.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_operations.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_operations.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationSciences
+  name: federation science jumpsuit
+  description: Please state the nature of your medical emergency.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_sciences.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_sciences.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformFederationCadet
+  name: federation cadet jumpsuit
+  description: Maybe not top of the class, but maybe with some field experience...
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/federation_cadet.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/federation_cadet.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorRed
+  id: ClothingUniformTrekQ
+  name: french marshall's uniform
+  description: Something about it feels off...
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/trek_q.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/trek_q.rsi
