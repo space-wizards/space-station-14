@@ -1,10 +1,12 @@
 #nullable enable
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
@@ -402,8 +404,7 @@ namespace Content.Shared.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            return SharedInteractionSystem.InRangeUnobstructed(args, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            return SharedInteractionSystem.InRangeUnobstructed(args.User, args.Target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -414,8 +415,17 @@ namespace Content.Shared.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            return SharedInteractionSystem.InRangeUnobstructed(args, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            var user = args.User;
+            var dropped = args.Dragged;
+            var target = args.Target;
+
+            if (!SharedInteractionSystem.InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker, popup))
+                return false;
+
+            if (!SharedInteractionSystem.InRangeUnobstructed(user, dropped, range, collisionMask, predicate, ignoreInsideBlocker, popup))
+                return false;
+
+            return true;
         }
 
         public static bool InRangeUnobstructed(
@@ -426,8 +436,14 @@ namespace Content.Shared.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            return SharedInteractionSystem.InRangeUnobstructed(args, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            var user = args.User;
+            var target = args.Target;
+
+            if (target == null)
+                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            else
+                return SharedInteractionSystem.InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+
         }
         #endregion
 
@@ -440,8 +456,13 @@ namespace Content.Shared.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            return SharedInteractionSystem.InRangeUnobstructed(args, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            var user = args.User;
+            var target = args.Attacked;
+
+            if (target == null)
+                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            else
+                return SharedInteractionSystem.InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
         #endregion
     }

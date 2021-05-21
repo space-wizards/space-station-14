@@ -168,6 +168,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
+            if (!InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
+                return;
+
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
@@ -182,10 +185,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             // all activates should only fire when in range / unbostructed
             var activateEventArgs = new ActivateEventArgs(user, used);
-            if (activateEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
-            {
-                activateComp.Activate(activateEventArgs);
-            }
+            activateComp.Activate(activateEventArgs);
         }
 
         private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
