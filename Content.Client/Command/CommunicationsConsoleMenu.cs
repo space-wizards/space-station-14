@@ -29,7 +29,7 @@ namespace Content.Client.Command
 
             _messageInput = new LineEdit
             {
-                PlaceHolder = Loc.GetString("communications-console-announcement"),
+                PlaceHolder = Loc.GetString("communications-console-announcement-placeholder"),
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };

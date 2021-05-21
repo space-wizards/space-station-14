@@ -1,6 +1,6 @@
 ﻿spacevillain-title = Space Villain
-spacevillain-player = Player
-spacevillain-action-attack = ATTACK
-spacevillain-action-heal = HEAL
-spacevillain-action-recharge = RECHARGE
-spacevillain-new-game = New Game
+spacevillain-label-player = Player
+spacevillain-button-attack = ATTACK
+spacevillain-button-heal = HEAL
+spacevillain-button-recharge = RECHARGE
+spacevillain-button-new-game = New Game

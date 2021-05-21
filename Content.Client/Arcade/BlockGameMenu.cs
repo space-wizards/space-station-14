@@ -160,7 +160,7 @@ namespace Content.Client.Arcade
 
             _newGameButton = new Button
             {
-                Text = Loc.GetString("blockgame-new-game"),
+                Text = Loc.GetString("blockgame-button-new-game"),
                 TextAlign = Label.AlignMode.Center
             };
             _newGameButton.OnPressed += (e) =>
@@ -172,7 +172,7 @@ namespace Content.Client.Arcade
 
             _scoreBoardButton = new Button
             {
-                Text = Loc.GetString("blockgame-scoreboard"),
+                Text = Loc.GetString("blockgame-button-scoreboard"),
                 TextAlign = Label.AlignMode.Center
             };
             _scoreBoardButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.ShowHighscores);
@@ -182,7 +182,7 @@ namespace Content.Client.Arcade
 
             _unpauseButton = new Button
             {
-                Text = Loc.GetString("blockgame-unpause"),
+                Text = Loc.GetString("blockgame-button-unpause"),
                 TextAlign = Label.AlignMode.Center,
                 Visible = false
             };
@@ -230,7 +230,7 @@ namespace Content.Client.Arcade
                 VerticalAlignment = VAlignment.Center
             };
 
-            gameOverMenuContainer.AddChild(new Label{Text = Loc.GetString("blockgame-game-over"),Align = Label.AlignMode.Center});
+            gameOverMenuContainer.AddChild(new Label{Text = Loc.GetString("blockgame-msg-game-over"),Align = Label.AlignMode.Center});
             gameOverMenuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
 
@@ -240,7 +240,7 @@ namespace Content.Client.Arcade
 
             _finalNewGameButton = new Button
             {
-                Text = Loc.GetString("blockgame-new-game"),
+                Text = Loc.GetString("blockgame-button-new-game"),
                 TextAlign = Label.AlignMode.Center
             };
             _finalNewGameButton.OnPressed += (e) =>
@@ -288,7 +288,7 @@ namespace Content.Client.Arcade
                 VerticalAlignment = VAlignment.Center
             };
 
-            menuContainer.AddChild(new Label{Text = Loc.GetString("blockgame-highscores")});
+            menuContainer.AddChild(new Label{Text = Loc.GetString("blockgame-label-highscores")});
             menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
             var highScoreBox = new HBoxContainer();
@@ -308,7 +308,7 @@ namespace Content.Client.Arcade
             menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
             _highscoreBackButton = new Button
             {
-                Text = Loc.GetString("blockgame-back"),
+                Text = Loc.GetString("blockgame-button-back"),
                 TextAlign = Label.AlignMode.Center
             };
             _highscoreBackButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.Pause);
@@ -403,7 +403,7 @@ namespace Content.Client.Arcade
             nextBlockPanel.AddChild(nextCenterContainer);
             grid.AddChild(nextBlockPanel);
 
-            grid.AddChild(new Label{Text = Loc.GetString("blockgame-next"), Align = Label.AlignMode.Center});
+            grid.AddChild(new Label{Text = Loc.GetString("blockgame-label-next"), Align = Label.AlignMode.Center});
 
             return grid;
         }
@@ -441,7 +441,7 @@ namespace Content.Client.Arcade
             holdBlockPanel.AddChild(holdCenterContainer);
             grid.AddChild(holdBlockPanel);
 
-            grid.AddChild(new Label{Text = Loc.GetString("blockgame-hold"), Align = Label.AlignMode.Center});
+            grid.AddChild(new Label{Text = Loc.GetString("blockgame-label-hold"), Align = Label.AlignMode.Center});
 
             return grid;
         }
@@ -517,12 +517,12 @@ namespace Content.Client.Arcade
 
         public void UpdatePoints(int points)
         {
-            _pointsLabel.Text = Loc.GetString("blockgame-points-label", ("points", points));
+            _pointsLabel.Text = Loc.GetString("blockgame-label-points", ("points", points));
         }
 
         public void UpdateLevel(int level)
         {
-            _levelLabel.Text = Loc.GetString("blockgame-level-label", ("level", level + 1));
+            _levelLabel.Text = Loc.GetString("blockgame-label-level", ("level", level + 1));
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,

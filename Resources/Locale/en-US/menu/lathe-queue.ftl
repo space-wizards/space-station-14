@@ -1,1 +1,1 @@
-﻿lathe-queue = Lathe Queue
+﻿lathe-queue-title = Lathe Queue

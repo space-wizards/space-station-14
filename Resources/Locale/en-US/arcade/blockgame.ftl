@@ -2,10 +2,10 @@
 ### UI
 
 # Current game score
-blockgame-points-label = Points: {$points}
+blockgame-label-points = Points: {$points}
 
 # Current game level
-blockgame-level-label = Level: {$level}
+blockgame-label-level = Level: {$level}
 
 # Game over information of your round
 blockgame-gameover-info = Global: {$global}
@@ -13,13 +13,13 @@ blockgame-gameover-info = Global: {$global}
     Points: {$points}
 
 blockgame-title = Nanotrasen Block Game
-blockgame-new-game = New Game
-blockgame-scoreboard = Scoreboard
-blockgame-unpause = Unpause
-blockgame-game-over = Game over!
-blockgame-highscores = Highscores
-blockgame-back = Back
-blockgame-next = Next
-blockgame-hold = Hold
+blockgame-button-new-game = New Game
+blockgame-button-scoreboard = Scoreboard
+blockgame-button-unpause = Unpause
+blockgame-msg-game-over = Game over!
+blockgame-label-highscores = Highscores
+blockgame-button-back = Back
+blockgame-label-next = Next
+blockgame-label-hold = Hold
 blockgame-station = Station
 blockgame-nanotrasen = Nanotrasen

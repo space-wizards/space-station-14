@@ -23,7 +23,7 @@ namespace Content.Client.Research
         {
             Owner = owner;
             SetSize = MinSize = (300, 450);
-            Title = Loc.GetString("lathe-queue");
+            Title = Loc.GetString("lathe-queue-title");
 
             var vBox = new VBoxContainer();
 

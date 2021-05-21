@@ -27,7 +27,7 @@ namespace Content.Client.Arcade
             var grid = new GridContainer {Columns = 1};
 
             var infoGrid = new GridContainer {Columns = 3};
-            infoGrid.AddChild(new Label{ Text = Loc.GetString("spacevillain-player"), Align = Label.AlignMode.Center });
+            infoGrid.AddChild(new Label{ Text = Loc.GetString("spacevillain-label-player"), Align = Label.AlignMode.Center });
             infoGrid.AddChild(new Label{ Text = "|", Align = Label.AlignMode.Center });
             _enemyNameLabel = new Label{ Align = Label.AlignMode.Center};
             infoGrid.AddChild(_enemyNameLabel);
@@ -49,15 +49,15 @@ namespace Content.Client.Arcade
 
             var buttonGrid = new GridContainer {Columns = 3};
             _gameButtons[0] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Attack)
-                {Text = Loc.GetString("spacevillain-action-attack")};
+                {Text = Loc.GetString("spacevillain-button-attack")};
             buttonGrid.AddChild(_gameButtons[0]);
 
             _gameButtons[1] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Heal)
-                {Text = Loc.GetString("spacevillain-action-heal")};
+                {Text = Loc.GetString("spacevillain-button-heal")};
             buttonGrid.AddChild(_gameButtons[1]);
 
             _gameButtons[2] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Recharge)
-                {Text = Loc.GetString("spacevillain-action-recharge")};
+                {Text = Loc.GetString("spacevillain-button-recharge")};
             buttonGrid.AddChild(_gameButtons[2]);
 
             centerContainer = new CenterContainer();
@@ -65,7 +65,7 @@ namespace Content.Client.Arcade
             grid.AddChild(centerContainer);
 
             var newGame = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.NewGame)
-                {Text = Loc.GetString("spacevillain-new-game")};
+                {Text = Loc.GetString("spacevillain-button-new-game")};
             grid.AddChild(newGame);
 
             Contents.AddChild(grid);

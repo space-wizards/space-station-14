@@ -154,7 +154,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     }),
                     (_serialLabel = new Label
                     {
-                        Text = "DEAD-BEAF",
+                        Text = "DEAD-BEEF",
                         FontOverride = fontSmall,
                         FontColorOverride = Color.Gray,
                         VerticalAlignment = VAlignment.Center,
