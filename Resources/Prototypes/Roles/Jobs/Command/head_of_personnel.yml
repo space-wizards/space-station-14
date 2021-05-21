@@ -31,4 +31,7 @@
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
   uniformalternates:
+    Trek: ClothingUniformTrekCommand
+    NextGen: ClothingUniformTrekNextCommand
+    Enterprise: ClothingUniformTrekEnterpriseCommand
     Federation: ClothingUniformFederationCommand

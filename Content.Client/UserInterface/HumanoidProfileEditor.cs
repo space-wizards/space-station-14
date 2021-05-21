@@ -1035,6 +1035,9 @@ namespace Content.Client.UserInterface
                 };
 
                 _optionButton.AddItem(Loc.GetString("Default"), (int) CrewUniformPreference.Default);
+                _optionButton.AddItem(Loc.GetString("Trek"), (int) CrewUniformPreference.Trek);
+                _optionButton.AddItem(Loc.GetString("Next Gen"), (int) CrewUniformPreference.NextGen);
+                _optionButton.AddItem(Loc.GetString("Enterprise"), (int) CrewUniformPreference.Enterprise);
                 _optionButton.AddItem(Loc.GetString("Federation"), (int) CrewUniformPreference.Federation);
 
                 _optionButton.OnItemSelected += args =>

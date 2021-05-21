@@ -24,4 +24,7 @@
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled
   uniformalternates:
+    Trek: ClothingUniformTrekMedSci
+    NextGen: ClothingUniformTrekNextMedSci
+    Enterprise: ClothingUniformTrekEnterpriseMedSci
     Federation: ClothingUniformFederationSciences

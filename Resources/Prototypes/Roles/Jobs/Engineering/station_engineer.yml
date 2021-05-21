@@ -27,4 +27,7 @@
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled
   uniformalternates:
+    Trek: ClothingUniformTrekEngSec
+    NextGen: ClothingUniformTrekNextEngSec
+    Enterprise: ClothingUniformTrekEnterpriseEngSec
     Federation: ClothingUniformFederationOperations
