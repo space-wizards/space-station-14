@@ -164,7 +164,7 @@ namespace Content.Client.Construction
                         continue;
                 }
 
-                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("All"))
+                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("construction-presenter-category-all"))
                 {
                     if (recipe.Category != category)
                         continue;
@@ -181,7 +181,7 @@ namespace Content.Client.Construction
             var uniqueCategories = new HashSet<string>();
 
             // hard-coded to show all recipes
-            uniqueCategories.Add(Loc.GetString("All"));
+            uniqueCategories.Add(Loc.GetString("construction-presenter-category-all"));
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -242,8 +242,8 @@ namespace Content.Client.Construction
                 if (firstNode)
                 {
                     stepList.AddItem(prototype.Type == ConstructionType.Item
-                        ? Loc.GetString($"{stepNumber++}. To craft this item, you need:")
-                        : Loc.GetString($"{stepNumber++}. To build this, first you need:"));
+                        ? Loc.GetString($"construction-presenter-to-craft", ("step-number", stepNumber++))
+                        : Loc.GetString($"construction-presenter-to-build", ("step-number", stepNumber++)));
                 }
 
                 foreach (var step in edge.Steps)
@@ -256,22 +256,37 @@ namespace Content.Client.Construction
                             stepList.AddItem(
                                 !firstNode
                                     ? Loc.GetString(
-                                        "{0}. Add {1}x {2}.", stepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name)
-                                    : Loc.GetString("      {0}x {1}", materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
+                                        "construction-presenter-material-step",
+                                        ("step-number", stepNumber++),
+                                        ("amount", materialStep.Amount),
+                                        ("material", materialStep.MaterialPrototype.Name))
+                                    : Loc.GetString(
+                                        "construction-presenter-material-first-step",
+                                        ("amount", materialStep.Amount),
+                                        ("material", materialStep.MaterialPrototype.Name)),
+                                    icon);
 
                             break;
 
                         case ToolConstructionGraphStep toolStep:
-                            stepList.AddItem(Loc.GetString("{0}. Use a {1}.", stepNumber++, toolStep.Tool.GetToolName()), icon);
+                            stepList.AddItem(Loc.GetString(
+                                                 "construction-presenter-tool-step",
+                                                 ("step-number", stepNumber++),
+                                                 ("tool", toolStep.Tool.GetToolName())),
+                                             icon);
                             break;
 
                         case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                            stepList.AddItem(Loc.GetString("{0}. Add {1}.", stepNumber++, arbitraryStep.Name), icon);
+                            stepList.AddItem(Loc.GetString(
+                                                 "construction-presenter-arbitrary-step",
+                                                 ("step-number", stepNumber++),
+                                                 ("name", arbitraryStep.Name)),
+                                             icon);
                             break;
 
                         case NestedConstructionGraphStep nestedStep:
                             var parallelNumber = 1;
-                            stepList.AddItem(Loc.GetString("{0}. In parallel...", stepNumber++));
+                            stepList.AddItem(Loc.GetString("construction-presenter-nested-step", ("step-number", stepNumber++)));
 
                             foreach (var steps in nestedStep.Steps)
                             {
@@ -284,15 +299,34 @@ namespace Content.Client.Construction
                                     switch (subStep)
                                     {
                                         case MaterialConstructionGraphStep materialStep:
-                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}x {4}.", stepNumber, parallelNumber, subStepNumber++, materialStep.Amount, materialStep.MaterialPrototype.Name), icon);
+                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString(
+                                                    "construction-presenter-material-substep",
+                                                    ("step-number", stepNumber),
+                                                    ("parallel-number", parallelNumber),
+                                                    ("substep-number", subStepNumber++),
+                                                    ("amount", materialStep.Amount),
+                                                    ("material", materialStep.MaterialPrototype.Name)),
+                                                icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
-                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Use a {3}.", stepNumber, parallelNumber, subStepNumber++, toolStep.Tool.GetToolName()), icon);
+                                            stepList.AddItem(Loc.GetString(
+                                                                 "construction-presenter-tool-substep",
+                                                                 ("step-number", stepNumber),
+                                                                 ("parallel-number", parallelNumber),
+                                                                 ("substep-number", subStepNumber++),
+                                                                 ("tool", toolStep.Tool.GetToolName())),
+                                                            icon);
                                             break;
 
                                         case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                                            stepList.AddItem(Loc.GetString("    {0}.{1}.{2}. Add {3}.", stepNumber, parallelNumber, subStepNumber++, arbitraryStep.Name), icon);
+                                            stepList.AddItem(Loc.GetString(
+                                                                 "construction-presenter-arbitrary-substep",
+                                                                 ("step-number", stepNumber),
+                                                                 ("parallel-number", parallelNumber),
+                                                                 ("substep-number", subStepNumber++),
+                                                                 ("name", arbitraryStep.Name)),
+                                                             icon);
                                             break;
                                     }
                                 }

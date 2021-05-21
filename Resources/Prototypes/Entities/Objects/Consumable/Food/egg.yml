@@ -65,7 +65,8 @@
     state: egg-0
   - type: Puddle
     variants: 4
-
+    state: egg
+    
 - type: entity
   name: eggshells
   parent: BaseItem
@@ -79,6 +80,12 @@
     netsync: false
   - type: Item
     size: 1
+  - type: SolutionContainer
+    maxVol: 1
+    contents:
+      reagents:
+      - ReagentId: Egg
+        Quantity: 1
 
 # Egg
 

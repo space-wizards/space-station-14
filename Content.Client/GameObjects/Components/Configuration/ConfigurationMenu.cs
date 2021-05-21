@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components.Configuration
 
             _inputs = new List<(string name, LineEdit input)>();
 
-            Title = Loc.GetString("Device Configuration");
+            Title = Loc.GetString("configuration-menu-device-title");
 
             _baseContainer = new VBoxContainer
             {
@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Configuration
 
             var confirmButton = new Button
             {
-                Text = Loc.GetString("Confirm"),
+                Text = Loc.GetString("configuration-menu-confirm"),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };

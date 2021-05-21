@@ -1098,3 +1098,32 @@ Entries:
   - {message: Fixed dropping being offset on a translated grid, type: Fix}
   id: 194
   time: '2021-05-19T17:26:02.0000000+00:00'
+- author: scrato
+  changes: []
+  id: 195
+  time: '2021-05-20T12:58:29.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Add jumpskirt for Captain, type: Add}
+  id: 196
+  time: '2021-05-20T16:23:06.352127+00:00'
+- author: Swept
+  changes:
+  - {message: Fix holes in Captain's jumpsuit, type: Fix}
+  id: 197
+  time: '2021-05-20T16:23:06.352876+00:00'
+- author: Swept
+  changes:
+  - {message: You can splat bags of flour and tomatoes., type: Add}
+  id: 198
+  time: '2021-05-21T00:19:18.0000000+00:00'
+- author: Hardly
+  changes:
+  - {message: Reduced Syndicate minibomb's radius, type: Tweak}
+  id: 199
+  time: '2021-05-21T11:26:10.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Removed solution transfer verbs., type: Remove}
+  id: 200
+  time: '2021-05-21T21:36:16.0000000+00:00'

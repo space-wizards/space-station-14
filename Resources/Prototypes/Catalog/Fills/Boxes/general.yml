@@ -6,7 +6,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: LightBulb
+      - id: LightBulb
         amount: 12
   - type: Sprite
     layers:
@@ -22,7 +22,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: LightTube
+      - id: LightTube
         amount: 12
   - type: Sprite
     layers:
@@ -38,9 +38,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: LightTube
+      - id: LightTube
         amount: 6
-      - name: LightBulb
+      - id: LightBulb
         amount: 6
   - type: Sprite
     layers:
@@ -56,7 +56,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: AssistantPDA
+      - id: AssistantPDA
         amount: 3
   - type: Sprite
     layers:
@@ -74,7 +74,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingEyesGlassesMeson
+      - id: ClothingEyesGlassesMeson
         amount: 4
   - type: Sprite
     layers:
@@ -92,8 +92,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingMaskBreath
-      - name: EmergencyOxygenTankFilled
+      - id: ClothingMaskBreath
+      - id: EmergencyOxygenTankFilled
       #- name: Injector
   - type: Sprite
     layers:

@@ -5,17 +5,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHelmetBombSuit
+      - id: ClothingHeadHelmetBombSuit
         amount: 1
-      - name: ClothingMaskGas
+      - id: ClothingMaskGas
         amount: 1
-      - name: Screwdriver
+      - id: Screwdriver
         amount: 1
-      - name: Wirecutter
+      - id: Wirecutter
         amount: 1
-      - name: Multitool
+      - id: Multitool
         amount: 1
-      - name: ClothingOuterSuitBomb
+      - id: ClothingOuterSuitBomb
         amount: 1
 
 - type: entity
@@ -25,17 +25,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: FlashlightLantern
+      - id: FlashlightLantern
         amount: 2
-      - name: FireExtinguisher
+      - id: FireExtinguisher
         amount: 2
-      - name: ClothingHeadHatHardhatRed
+      - id: ClothingHeadHatHardhatRed
         amount: 2
-      - name: ClothingMaskGas
+      - id: ClothingMaskGas
         amount: 2
-      - name: ClothingOuterSuitFire
+      - id: ClothingOuterSuitFire
         amount: 2
-      - name: RedOxygenTank
+      - id: RedOxygenTank
         amount: 2
 
 - type: entity
@@ -45,13 +45,13 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingMaskGas
+      - id: ClothingMaskGas
         amount: 3
-      - name: ClothingMaskBreath
+      - id: ClothingMaskBreath
         amount: 3
-      - name: OxygenTankFilled
+      - id: OxygenTankFilled
         amount: 3
-      - name: EmergencyOxygenTankFilled
+      - id: EmergencyOxygenTankFilled
         amount: 3
 
 - type: entity
@@ -61,13 +61,13 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingOuterSuitRad
+      - id: ClothingOuterSuitRad
         amount: 2
-      - name: ClothingHeadHatHoodRad
+      - id: ClothingHeadHatHoodRad
         amount: 2
-#     - name: GeigerCounter
+#     - id: GeigerCounter
 #        amount: 2
-      - name: DrinkVodkaBottleFull
+      - id: DrinkVodkaBottleFull
         amount: 1
-      - name: DrinkShotGlass
+      - id: DrinkShotGlass
         amount: 2

@@ -41,6 +41,7 @@
     state: gibblet-0
   - type: Puddle
     variants: 5
+    state: gibblet
 
 - type: entity
   name: puddle
@@ -53,6 +54,7 @@
     state: smear-0
   - type: Puddle
     variants: 7
+    state: smear
 
 - type: entity
   name: puddle
@@ -65,6 +67,7 @@
     state: splatter-0
   - type: Puddle
     variants: 6
+    state: splatter
 
 - type: entity
   name: vomit
@@ -79,6 +82,7 @@
     variants: 4
     recolor: false
     evaporate_threshold: -1
+    state: vomit
 
 - type: entity
   name: toxins vomit
@@ -92,6 +96,7 @@
   - type: Puddle
     variants: 4
     recolor: false
+    state: vomit_toxin
 
 - type: entity
   name: writing
@@ -104,3 +109,4 @@
     state: writing-0
   - type: Puddle
     variants: 5
+    state: writing
