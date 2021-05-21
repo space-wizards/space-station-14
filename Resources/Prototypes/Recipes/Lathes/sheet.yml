@@ -21,7 +21,7 @@
 - type: latheRecipe
   id: SheetRGlass
   icon:
-    sprite: Objects/Materials/Sheets/rglass.rsi
+    sprite: Objects/Materials/Sheets/glass.rsi
     state: rglass
   result: SheetRGlass1
   completetime: 500

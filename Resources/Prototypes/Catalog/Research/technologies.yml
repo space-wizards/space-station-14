@@ -187,8 +187,6 @@
     - SheetRGlass
     - GlassStack
 
-      
-
 # Electromagnetic Theory Technology Tree
 
 - type: technology
@@ -203,8 +201,8 @@
     - BasicResearch
   unlockedRecipes:
     - CableStack
-    - LightTube
     - LightBulb
+    - LightTube
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics

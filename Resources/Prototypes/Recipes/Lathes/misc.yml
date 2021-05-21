@@ -44,7 +44,8 @@
 - type: latheRecipe
   id: FlashlightLantern
   icon: 
-Objects/Tools/flashlight.rsi
+    sprite: Objects/Tools/flashlight.rsi
+    state: lantern_off
   result: FlashlightLantern
   completetime: 500
   materials:

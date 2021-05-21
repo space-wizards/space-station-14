@@ -17,11 +17,13 @@
 
 - type: latheRecipe
   id: Bucket
-  icon: Objects/Specific/Janitorial/janitorial.rsi
+  icon:
+    sprite: Objects/Tools/bucket.rsi
+    state: icon
   result: Bucket
   completetime: 500
   materials:
-    steel: 100
+    steel: 150
 
 - type: latheRecipe
   id: WetFloorSign
