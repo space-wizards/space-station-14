@@ -5,19 +5,19 @@
   components:
   - type: StorageFill
     contents:
-      - name: PlushieBee
+      - id: PlushieBee
         amount: 1
-      - name: PlushieNar
+      - id: PlushieNar
         amount: 1
-      - name: PlushieCarp
+      - id: PlushieCarp
         amount: 1
-      - name: PlushieNuke
+      - id: PlushieNuke
         amount: 1
-      - name: PlushieSlime
+      - id: PlushieSlime
         amount: 1
-      - name: PlushieSnake
+      - id: PlushieSnake
         amount: 1
-      - name: PlushieLizard
+      - id: PlushieLizard
         amount: 1
 
 - type: entity
@@ -28,31 +28,31 @@
   components:
   - type: StorageFill
     contents:
-      - name: SynthesizerInstrument
+      - id: SynthesizerInstrument
         amount: 1
-      - name: AcousticGuitarInstrument
+      - id: AcousticGuitarInstrument
         amount: 1
-      - name: ViolinInstrument
+      - id: ViolinInstrument
         amount: 1
-      - name: TrumpetInstrument
+      - id: TrumpetInstrument
         amount: 1
-      - name: ElectricGuitarInstrument
+      - id: ElectricGuitarInstrument
         amount: 1
-      - name: AccordionInstrument
+      - id: AccordionInstrument
         amount: 1
-      - name: HarmonicaInstrument
+      - id: HarmonicaInstrument
         amount: 1
-      - name: RecorderInstrument
+      - id: RecorderInstrument
         amount: 1
-      - name: TromboneInstrument
+      - id: TromboneInstrument
         amount: 1
-      - name: SaxophoneInstrument
+      - id: SaxophoneInstrument
         amount: 1
-      - name: GlockenspielInstrument
+      - id: GlockenspielInstrument
         amount: 1
-      - name: BanjoInstrument
+      - id: BanjoInstrument
         amount: 1
-      - name: BikeHornInstrument
+      - id: BikeHornInstrument
         amount: 1
 
 - type: entity
@@ -62,7 +62,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: CrayonBox
+      - id: CrayonBox
         amount: 1
-      - name: CrayonWhite
+      - id: CrayonWhite
         amount: 1

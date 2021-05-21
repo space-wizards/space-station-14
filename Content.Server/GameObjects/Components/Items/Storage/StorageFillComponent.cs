@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var alreadySpawnedGroups = new List<string>();
             foreach (var storageItem in _contents)
             {
-                if (string.IsNullOrEmpty(storageItem.PrototypeName)) continue;
+                if (string.IsNullOrEmpty(storageItem.PrototypeId)) continue;
                 if (!string.IsNullOrEmpty(storageItem.GroupId) && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
                 if (storageItem.SpawnProbability != 1f &&
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    storage.Insert(Owner.EntityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
+                    storage.Insert(Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
                 }
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
@@ -61,35 +61,38 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [DataDefinition]
         public struct StorageFillEntry : IPopulateDefaultValues
         {
-            [DataField("name", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-            public string? PrototypeName;
+            [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+            public string? PrototypeId;
 
             [DataField("prob")]
             public float SpawnProbability;
             /// <summary>
-            /// orGroup signifies to pick between multiple entities on spawn.
+            /// The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
+            /// </summary>
+            [DataField("orGroup")]
+            public string GroupId;
+            /// <summary>
+            /// orGroup signifies to pick between entities designated with an ID.
             ///
             /// <example>
-            /// <para>To define an orGroup in a StorageFill component
-            /// you need to add it to the entities you want to choose between.
+            /// <para>To define an orGroup in a StorageFill component you
+            /// need to add it to the entities you want to choose between and
+            /// add a prob field. In this example there is a 50% chance the storage
+            /// spawns with Y or Z.
+            /// 
             /// </para>
             /// <code>
             /// - type: StorageFill
             ///   contents: 
             ///     - name: X
             ///     - name: Y
+            ///       prob: 0.50
             ///       orGroup: YOrZ
             ///     - name: Z
             ///       orGroup: YOrZ
-            ///
-            ///
-            /// 
             /// </code>
             /// </example> 
             /// </summary>
-            [DataField("orGroup")]
-            public string GroupId;
-
             [DataField("amount")]
             public int Amount;
 

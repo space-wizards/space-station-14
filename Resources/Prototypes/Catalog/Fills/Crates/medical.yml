@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
 #    contents:
-#      - name: Defibrillator
+#      - id: Defibrillator
 #        amount: 1
 
 - type: entity
@@ -15,9 +15,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: MedkitFilled
+      - id: MedkitFilled
         amount: 2
-      - name: Gauze
+      - id: Gauze
         amount: 2
 
 - type: entity
@@ -27,19 +27,19 @@
   components:
   - type: StorageFill
     contents:
-      - name: Scalpel
+      - id: Scalpel
         amount: 1
-      - name: Retractor
+      - id: Retractor
         amount: 1
-      - name: Cautery
+      - id: Cautery
         amount: 1
-      - name: Drill
+      - id: Drill
         amount: 1
-      - name: Saw
+      - id: Saw
         amount: 1
-      - name: Hemostat
+      - id: Hemostat
         amount: 1
-      - name: ClothingMaskSterile
+      - id: ClothingMaskSterile
         amount: 1
 
 - type: entity
@@ -49,17 +49,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: UniformScrubsColorGreen
+      - id: UniformScrubsColorGreen
         amount: 1
-      - name: UniformScrubsColorPurple
+      - id: UniformScrubsColorPurple
         amount: 1
-      - name: UniformScrubsColorBlue
+      - id: UniformScrubsColorBlue
         amount: 1
-      - name: HatBandBlue
+      - id: HatBandBlue
         amount: 1
-      - name: HatBandRed
+      - id: HatBandRed
         amount: 1
-      - name: HatBandGreen
+      - id: HatBandGreen
         amount: 1
-      - name: ClothingMaskSterile
+      - id: ClothingMaskSterile
         amount: 3

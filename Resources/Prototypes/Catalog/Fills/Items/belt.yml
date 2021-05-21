@@ -5,12 +5,12 @@
   components:
   - type: StorageFill
     contents:
-      - name: Crowbar
-      - name: Wrench
-      - name: Screwdriver
-      - name: Wirecutter
-      - name: Welder
-      - name: Multitool
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: Multitool
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled
@@ -19,12 +19,12 @@
   components:
   - type: StorageFill
     contents:
-      - name: PowerDrill
-      - name: Wirecutter
-      - name: Crowbar
-      - name: WelderExperimental
-      - name: Multitool
-      - name: ApcExtensionCableStack
+      - id: PowerDrill
+      - id: Wirecutter
+      - id: Crowbar
+      - id: WelderExperimental
+      - id: Multitool
+      - id: ApcExtensionCableStack
 
 - type: entity
   id: ClothingBeltSecurityFilled
@@ -33,11 +33,11 @@
   components:
   - type: StorageFill
     contents:
-      - name: GrenadeFlashBang
-      - name: GrenadeFlashBang
-      - name: Stunbaton
-      - name: Handcuffs
-      - name: Handcuffs
+      - id: GrenadeFlashBang
+      - id: GrenadeFlashBang
+      - id: Stunbaton
+      - id: Handcuffs
+      - id: Handcuffs
 
 - type: entity
   id: ClothingBeltJanitorFilled
@@ -46,8 +46,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: Soap #Make a soap group and pick between when i'm not lazy
-      - name: SprayBottleSpaceCleaner
+      - id: Soap #Make a soap group and pick between when i'm not lazy
+      - id: SprayBottleSpaceCleaner
       #- name: GrenadeChem
       #- name: GrenadeChem
-      - name: FlashlightLantern
+      - id: FlashlightLantern

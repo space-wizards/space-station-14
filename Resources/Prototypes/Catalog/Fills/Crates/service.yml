@@ -6,17 +6,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: MopItem
+      - id: MopItem
         amount: 1
-      - name: MopBucket
+      - id: MopBucket
         amount: 1
-      - name: Bucket
+      - id: Bucket
         amount: 3
-      - name: WetFloorSign
+      - id: WetFloorSign
         amount: 2
-      - name: Soap
+      - id: Soap
         amount: 1
-      - name: SprayBottleSpaceCleaner
+      - id: SprayBottleSpaceCleaner
         amount: 2
 
 - type: entity
@@ -27,9 +27,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: BoxLighttube
+      - id: BoxLighttube
         amount: 1
-      - name: BoxLightbulb
+      - id: BoxLightbulb
         amount: 1
 
 - type: entity
@@ -40,20 +40,20 @@
   components:
   - type: StorageFill
     contents:
-      - name: CigCartonGreen
+      - id: CigCartonGreen
         prob: 0.50
         orGroup: CigCarton1
-      - name: CigCartonRed
+      - id: CigCartonRed
         orGroup: CigCarton1
-      - name: CigCartonBlue
+      - id: CigCartonBlue
         prob: 0.50
         orGroup: CigCarton2
-      - name: CigCartonBlack
+      - id: CigCartonBlack
         orGroup: CigCarton2
-      - name: CigarGoldCase
+      - id: CigarGoldCase
         prob: 0.05
         orGroup: Cigars
-      - name: CigarCase
+      - id: CigarCase
         orGroup: Cigars
-      - name: Matchbox
+      - id: Matchbox
         amount: 2
