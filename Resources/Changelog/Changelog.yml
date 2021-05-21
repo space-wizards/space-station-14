@@ -1122,3 +1122,8 @@ Entries:
   - {message: Reduced Syndicate minibomb's radius, type: Tweak}
   id: 199
   time: '2021-05-21T11:26:10.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Removed solution transfer verbs., type: Remove}
+  id: 200
+  time: '2021-05-21T21:36:16.0000000+00:00'
