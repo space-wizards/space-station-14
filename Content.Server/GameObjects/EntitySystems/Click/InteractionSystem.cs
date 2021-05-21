@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -41,7 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         public override void Initialize()
         {
-            SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropMessage);
+            SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
@@ -50,7 +51,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
-                .Bind(ContentKeyFunctions.TryPullObject, new PointerInputCmdHandler(HandleTryPullObject))
+                .Bind(ContentKeyFunctions.TryPullObject,
+                    new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
         }
 
@@ -60,19 +62,25 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             base.Shutdown();
         }
 
-        private void HandleDragDropMessage(DragDropRequestEvent msg, EntitySessionEventArgs args)
+        private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
-            var performer = args.SenderSession.AttachedEntity;
+            if (!ValidateInput(args.SenderSession, msg.DropLocation, msg.Target, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"DragDropRequestEvent input validation failed");
+                return;
+            }
 
-            if (performer == null) return;
-            if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped)) return;
-            if (!EntityManager.TryGetEntity(msg.Target, out var target)) return;
+            if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped))
+                return;
+            if (!EntityManager.TryGetEntity(msg.Target, out var target))
+                return;
 
-            var interactionArgs = new DragDropEvent(performer, msg.DropLocation, dropped, target);
+            var interactionArgs = new DragDropEvent(userEntity, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
             // Client also does this check but ya know we gotta validate it.
-            if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+                return;
 
             // trigger dragdrops on the dropped entity
             RaiseLocalEvent(dropped.Uid, interactionArgs);
@@ -99,15 +107,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!EntityManager.TryGetEntity(uid, out var used))
-                return false;
-
-            var playerEnt = ((IPlayerSession?) session)?.AttachedEntity;
-
-            if (playerEnt == null || !playerEnt.IsValid())
+            if (!ValidateInput(session, coords, uid, out var playerEnt))
             {
+                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
                 return false;
             }
+
+            if (!EntityManager.TryGetEntity(uid, out var used))
+                return false;
 
             if (!playerEnt.Transform.Coordinates.InRange(EntityManager, used.Transform.Coordinates, InteractionRange))
             {
@@ -115,6 +122,35 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             InteractionActivate(playerEnt, used);
+            return true;
+        }
+
+        private bool ValidateInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
+        {
+            userEntity = null;
+
+            if (!coords.IsValid(_entityManager))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            userEntity = ((IPlayerSession?) session)?.AttachedEntity;
+
+            if (userEntity == null || !userEntity.IsValid())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with no attached entity. Session={session}");
+                return false;
+            }
+
             return true;
         }
 
@@ -155,23 +191,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!coords.IsValid(_entityManager))
+            if (!ValidateInput(session, coords, uid, out var userEntity))
             {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return true;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent attack with client-side entity. Session={session}, Uid={uid}");
-                return true;
-            }
-
-            var userEntity = ((IPlayerSession?) session)?.AttachedEntity;
-
-            if (userEntity == null || !userEntity.IsValid())
-            {
+                Logger.InfoS("system.interaction", $"WideAttack input validation failed");
                 return true;
             }
 
@@ -210,23 +232,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         public bool HandleClientUseItemInHand(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!coords.IsValid(_entityManager))
+            if (!ValidateInput(session, coords, uid, out var userEntity))
             {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return true;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return true;
-            }
-
-            var userEntity = ((IPlayerSession?) session)?.AttachedEntity;
-
-            if (userEntity == null || !userEntity.IsValid())
-            {
+                Logger.InfoS("system.interaction", $"Use input validation failed");
                 return true;
             }
 
@@ -240,27 +248,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            // client sanitization
-            if (!coords.IsValid(_entityManager))
+            if (!ValidateInput(session, coords, uid, out var userEntity))
             {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
-                return false;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent pull interaction with client-side entity. Session={session}, Uid={uid}");
-                return false;
-            }
-
-            var player = session?.AttachedEntity;
-
-            if (player == null)
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent pulling interaction with no attached entity. Session={session}, Uid={uid}");
-                return false;
+                Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
+                return true;
             }
 
             if (!EntityManager.TryGetEntity(uid, out var pulledObject))
@@ -268,7 +259,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (player == pulledObject)
+            if (userEntity == pulledObject)
             {
                 return false;
             }
@@ -278,13 +269,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var dist = player.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
+            var dist = userEntity.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
             if (dist.LengthSquared > InteractionRangeSquared)
             {
                 return false;
             }
 
-            return pull.TogglePull(player);
+            return pull.TogglePull(userEntity);
         }
 
         public async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
