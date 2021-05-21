@@ -55,7 +55,7 @@ namespace Content.Tests.Shared.Utility
                 (3, 5, 2, 1),
                 (4, 5, 2, 2),
                 (5, 5, 2, 2),
- 
+
                 // Testing even counts
                 (0, 6, 5, 0),
                 (1, 6, 5, 1),
@@ -64,7 +64,7 @@ namespace Content.Tests.Shared.Utility
                 (4, 6, 5, 3),
                 (5, 6, 5, 4),
                 (6, 6, 5, 5),
-                
+
                 // Testing transparency disable use case
                 (0, 6, 6, 0),
                 (1, 6, 6, 1),
@@ -82,58 +82,6 @@ namespace Content.Tests.Shared.Utility
                 (320, 6, 5, 5),
             };
 
-        public static readonly IEnumerable<(double val, double max, int levels, int expected)> TestEqLvls = 
-            new (double, double, int, int)[]
-            {
-                // Testing odd max on even levels
-                (-10, 5, 2, 0),
-                (0, 5, 2, 0),
-                (1, 5, 2, 0),
-                (2, 5, 2, 0),
-                (3, 5, 2, 1),
-                (4, 5, 2, 1),
-                (5, 5, 2, 1),
- 
-                // Testing even max on odd levels
-                (0, 6, 3, 0),
-                (1, 6, 3, 0),
-                (2, 6, 3, 1),
-                (3, 6, 3, 1),
-                (4, 6, 3, 2),
-                (5, 6, 3, 2),
-                (6, 6, 3, 2),
-                
-                // Testing even max on even levels
-                (0, 4, 2, 0),
-                (1, 4, 2, 0),
-                (2, 4, 2, 1),
-                (3, 4, 2, 1),
-                (4, 4, 2, 1),
-                
-                // Testing odd max on odd levels
-                (0, 5, 3, 0),
-                (1, 5, 3, 0),
-                (2, 5, 3, 1),
-                (3, 5, 3, 1),
-                (4, 5, 3, 2),
-                // Largers odd max on odd levels
-                (0, 7, 3, 0),
-                (1, 7, 3, 0),
-                (2, 7, 3, 0),
-                (3, 7, 3, 1),
-                (4, 7, 3, 1),
-                (5, 7, 3, 2),
-                (6, 7, 3, 2),
-                (7, 7, 3, 2),
-                
-                // Testing edge cases
-                (0.1, 6, 5, 0),
-                (-32, 6, 5, 0),
-                (2.4, 6, 5, 1),
-                (2.5, 6, 5, 2),
-                (320, 6, 5, 4),
-            };
-        
         [Parallelizable]
         [Test]
         public void Test([ValueSource(nameof(TestData))] (double val, double max, int levels, int expected) data)
@@ -152,9 +100,51 @@ namespace Content.Tests.Shared.Utility
 
         [Parallelizable]
         [Test]
-        public void TestEqual([ValueSource(nameof(TestEqLvls))] (double val, double max, int size, int expected) data)
+        // Testing odd max on even levels
+        [TestCase(-10, 5, 2, 0)]
+        [TestCase(0, 5, 2, 0)]
+        [TestCase(1, 5, 2, 0)]
+        [TestCase(2, 5, 2, 0)]
+        [TestCase(3, 5, 2, 1)]
+        [TestCase(4, 5, 2, 1)]
+        [TestCase(5, 5, 2, 1)]
+        // Testing even max on odd levels
+        [TestCase(0, 6, 3, 0)]
+        [TestCase(1, 6, 3, 0)]
+        [TestCase(2, 6, 3, 1)]
+        [TestCase(3, 6, 3, 1)]
+        [TestCase(4, 6, 3, 2)]
+        [TestCase(5, 6, 3, 2)]
+        [TestCase(6, 6, 3, 2)]
+        // Testing even max on even levels
+        [TestCase(0, 4, 2, 0)]
+        [TestCase(1, 4, 2, 0)]
+        [TestCase(2, 4, 2, 1)]
+        [TestCase(3, 4, 2, 1)]
+        [TestCase(4, 4, 2, 1)]
+        // Testing odd max on odd levels
+        [TestCase(0, 5, 3, 0)]
+        [TestCase(1, 5, 3, 0)]
+        [TestCase(2, 5, 3, 1)]
+        [TestCase(3, 5, 3, 1)]
+        [TestCase(4, 5, 3, 2)]
+        // Larger odd max on odd levels
+        [TestCase(0, 7, 3, 0)]
+        [TestCase(1, 7, 3, 0)]
+        [TestCase(2, 7, 3, 0)]
+        [TestCase(3, 7, 3, 1)]
+        [TestCase(4, 7, 3, 1)]
+        [TestCase(5, 7, 3, 2)]
+        [TestCase(6, 7, 3, 2)]
+        [TestCase(7, 7, 3, 2)]
+        // Testing edge cases
+        [TestCase(0.1, 6, 5, 0)]
+        [TestCase(-32, 6, 5, 0)]
+        [TestCase(2.4, 6, 5, 1)]
+        [TestCase(2.5, 6, 5, 2)]
+        [TestCase(320, 6, 5, 4)]
+        public void TestEqual(double val, double max, int size, int expected)
         {
-            (double val, double max, int size, int expected) = data;
             Assert.That(ContentHelpers.RoundToEqualLevels(val, max, size), Is.EqualTo(expected));
         }
     }
