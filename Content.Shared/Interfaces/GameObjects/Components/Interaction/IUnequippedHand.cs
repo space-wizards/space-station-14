@@ -50,7 +50,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public SharedHand Hand { get; }
 
-        public UnequippedHandEvent(IEntity user, IEntity unequipped, HandState hand)
+        public UnequippedHandEvent(IEntity user, IEntity unequipped, SharedHand hand)
         {
             User = user;
             Unequipped = unequipped;
