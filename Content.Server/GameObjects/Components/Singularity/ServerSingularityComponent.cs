@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (otherEntity.IsInContainer())
                 return;
 
-            otherEntity.Delete();
+            otherEntity.QueueDelete();
             Energy++;
         }
 

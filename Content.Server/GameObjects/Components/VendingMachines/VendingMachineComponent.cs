@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -62,10 +62,10 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
             {
-                wires.OpenInterface(actor.playerSession);
+                wires.OpenInterface(actor.PlayerSession);
             } else
             {
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
             }
         }
 

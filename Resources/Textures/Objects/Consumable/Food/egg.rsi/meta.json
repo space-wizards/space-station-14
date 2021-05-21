@@ -1,50 +1,167 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
   "states": [
+    {
+      "name": "blue"
+    },
+    {
+      "name": "blue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "blue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "box1"
+    },
+    {
+      "name": "box2"
+    },
+    {
+      "name": "box3"
+    },
+    {
+      "name": "box4"
+    },
+    {
+      "name": "box5"
+    },
+    {
+      "name": "box6"
+    },
+    {
+      "name": "box7"
+    },
+    {
+      "name": "box8"
+    },
+    {
+      "name": "box9"
+    },
+    {
+      "name": "box10"
+    },
+    {
+      "name": "box11"
+    },
+    {
+      "name": "box12"
+    },
+    {
+      "name": "box-closed"
+    },
+    {
+      "name": "box-open"
+    },
+    {
+      "name": "box-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "box-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "eggshells"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "green-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "green-inhand-left",
+      "directions": 4
+    },
     {
       "name": "icon"
     },
     {
+      "name": "white"
+    },
+    {
       "name": "inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "orange-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "purple-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "purple-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "rainbow"
+    },
+    {
+      "name": "rainbow-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "rainbow-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "red-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "red-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "egg-0"
+    },
+    {
+      "name": "egg-1"
+    },
+    {
+      "name": "egg-2"
+    },
+    {
+      "name": "egg-3"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "yellow-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "yellow-inhand-left",
+      "directions": 4
     }
   ]
 }

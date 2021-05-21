@@ -18,6 +18,7 @@
   parent: SheetOtherBase
   id: SheetPaper
   name: paper
+  suffix: Full
   components:
   - type: Stack
     stackType: Paper
@@ -37,6 +38,7 @@
   parent: SheetPaper
   id: SheetPaper1
   name: paper
+  suffix: Single
   components:
   - type: Sprite
     state: paper
@@ -47,11 +49,11 @@
   parent: SheetOtherBase
   id: SheetPhoron
   name: phoron
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: phoron
+    - Phoron
   - type: Stack
     stackType: Phoron
   - type: Sprite
@@ -63,7 +65,7 @@
   parent: SheetPhoron
   id: SheetPhoron1
   name: phoron
-  suffix: 1
+  suffix: Single
   components:
   - type: Stack
     count: 1
@@ -72,11 +74,11 @@
   parent: SheetOtherBase
   id: SheetPlasma
   name: plasma
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: plasma
+    - Plasma
   - type: Stack
     stackType: Plasma
   - type: Sprite
@@ -95,6 +97,7 @@
   parent: SheetPlasma
   id: SheetPlasma1
   name: plasma
+  suffix: Single
   components:
   - type: Sprite
     state: plasma
@@ -105,11 +108,11 @@
   parent: SheetOtherBase
   id: SheetPlastic
   name: plastic
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: plastic
+    - Plastic
   - type: Stack
     stackType: Plastic
   - type: Sprite
@@ -128,6 +131,7 @@
   parent: SheetPlastic
   id: SheetPlastic1
   name: plastic
+  suffix: Single
   components:
   - type: Sprite
     state: plastic
@@ -138,6 +142,7 @@
   parent: SheetOtherBase
   id: SheetUranium
   name: uranium
+  suffix: Full
   components:
   - type: Stack
     stackType: Uranium
@@ -150,7 +155,7 @@
   parent: SheetUranium
   id: SheetUranium1
   name: uranium
-  suffix: 1
+  suffix: Single
   components:
   - type: Stack
     count: 1

@@ -79,10 +79,10 @@ namespace Content.Client.State
                 InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.AdminChat)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
-                InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, true)));
+                InputCmdHandler.FromDelegate(_ => _gameChat.CycleChatChannel(true)));
 
             _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
-                InputCmdHandler.FromDelegate(_ => CycleChatChannel(_gameChat, false)));
+                InputCmdHandler.FromDelegate(_ => _gameChat.CycleChatChannel(false)));
 
             SetupPresenters();
 
@@ -136,27 +136,9 @@ namespace Content.Client.State
                 return;
             }
 
-            chat.Input.IgnoreNext = true;
             chat.SelectChannel(channel);
-        }
-
-        internal static void CycleChatChannel(ChatBox chat, bool forward)
-        {
             chat.Input.IgnoreNext = true;
-            var channels = chat.SelectableChannels;
-            var idx = channels.IndexOf(chat.SelectedChannel);
-            if (forward)
-            {
-                idx++;
-                idx = MathHelper.Mod(idx, channels.Count());
-            }
-            else
-            {
-                idx--;
-                idx = MathHelper.Mod(idx, channels.Count());
-            }
-
-            chat.SelectChannel(channels[idx]);
+            chat.Input.GrabKeyboardFocus();
         }
 
         public override void FrameUpdate(FrameEventArgs e)
@@ -164,6 +146,14 @@ namespace Content.Client.State
             base.FrameUpdate(e);
 
             Viewport.Viewport.Eye = _eyeManager.CurrentEye;
+        }
+
+        protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
+        {
+            if (args.Viewport == null)
+                base.OnKeyBindStateChanged(new ViewportBoundKeyEventArgs(args.KeyEventArgs, Viewport.Viewport));
+            else
+                base.OnKeyBindStateChanged(args);
         }
     }
 }

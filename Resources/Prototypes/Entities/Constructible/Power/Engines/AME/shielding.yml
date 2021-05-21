@@ -37,7 +37,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SnapGrid
-    offset: Center
   - type: IconSmooth
     mode: CardinalFlags
     base: shield_

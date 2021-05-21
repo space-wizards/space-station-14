@@ -178,6 +178,9 @@ namespace Content.Client.GameObjects.Components.Items
                 var prefix = item.EquippedPrefix;
                 var state = prefix != null ? $"{prefix}-inhand-{handName}" : $"inhand-{handName}";
 
+                if (!rsi.TryGetState(state, out _))
+                    return;
+
                 var color = item.Color;
 
                 _sprite.LayerSetColor($"hand-{name}", color);

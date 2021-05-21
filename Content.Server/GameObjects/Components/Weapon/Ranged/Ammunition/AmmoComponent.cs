@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public override string Name => "Ammo";
 
-        [field: DataField("caliber")]
+        [DataField("caliber")]
         public BallisticCaliber Caliber { get; } = BallisticCaliber.Unspecified;
 
         public bool Spent
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// <summary>
         /// Used for something that is deleted when the projectile is retrieved
         /// </summary>
-        [field: DataField("caseless")]
+        [DataField("caseless")]
         public bool Caseless { get; }
 
         // Rather than managing bullet / case state seemed easier to just have 2 toggles
@@ -62,26 +62,26 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// <summary>
         /// For shotguns where they might shoot multiple entities
         /// </summary>
-        [field: DataField("projectilesFired")]
+        [DataField("projectilesFired")]
         public int ProjectilesFired { get; } = 1;
 
         [DataField("projectile")]
         private string? _projectileId;
 
         // How far apart each entity is if multiple are shot
-        [field: DataField("ammoSpread")]
+        [DataField("ammoSpread")]
         public float EvenSpreadAngle { get; } = default;
 
         /// <summary>
         /// How fast the shot entities travel
         /// </summary>
-        [field: DataField("ammoVelocity")]
+        [DataField("ammoVelocity")]
         public float Velocity { get; } = 20f;
 
         [DataField("muzzleFlash")]
         private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
-        [field: DataField("soundCollectionEject")]
+        [DataField("soundCollectionEject")]
         public string? SoundCollectionEject { get; } = "CasingEject";
 
         void ISerializationHooks.AfterDeserialization()

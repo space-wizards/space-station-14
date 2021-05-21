@@ -22,7 +22,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: GasGenerator
   - type: PipeNetDevice
 

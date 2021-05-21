@@ -126,12 +126,12 @@ namespace Content.Server.Chat
             }
 
             // Check if message exceeds the character limit if the sender is a player
-            if (source.TryGetComponent(out IActorComponent? actor) &&
+            if (source.TryGetComponent(out ActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
                 var feedback = Loc.GetString(MaxLengthExceededMessage, MaxMessageLength);
 
-                DispatchServerMessage(actor.playerSession, feedback);
+                DispatchServerMessage(actor.PlayerSession, feedback);
 
                 return;
             }
@@ -144,8 +144,12 @@ namespace Content.Server.Chat
 
             message = message.Trim();
 
-            var pos = source.Transform.Coordinates;
-            var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+            var mapPos = source.Transform.MapPosition;
+
+            var clients = _playerManager.GetPlayersBy((x) => x.AttachedEntity != null
+                    && (x.AttachedEntity.HasComponent<GhostComponent>()
+                    || mapPos.InRange(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
+                .Select(p => p.ConnectedClient).ToList();
 
             if (message.StartsWith(';'))
             {
@@ -184,7 +188,7 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("{0} says, \"{{0}}\"", source.Name);
             msg.SenderEntity = source.Uid;
-            _netManager.ServerSendToMany(msg, clients.ToList());
+            _netManager.ServerSendToMany(msg, clients);
         }
 
         public void EntityMe(IEntity source, string action)
@@ -195,7 +199,7 @@ namespace Content.Server.Chat
             }
 
             // Check if entity is a player
-            if (!source.TryGetComponent(out IActorComponent? actor))
+            if (!source.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -203,7 +207,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (action.Length > MaxMessageLength)
             {
-                DispatchServerMessage(actor.playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(actor.PlayerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
 

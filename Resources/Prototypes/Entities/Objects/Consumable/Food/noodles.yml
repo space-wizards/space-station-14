@@ -1,0 +1,104 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodNoodlesBase
+  abstract: true
+  description: Now that's a nice pasta!
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/noodles.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+
+# Noodles
+
+- type: entity
+  name: boiled spaghetti
+  parent: FoodNoodlesBase
+  id: FoodNoodlesBoiled
+  description: A plain dish of noodles, this needs more ingredients.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: boiled
+# Tastes like pasta.
+
+- type: entity
+  name: spaghetti
+  parent: FoodNoodlesBase
+  id: FoodNoodles
+  description: Spaghetti and crushed tomatoes. Just like your abusive father used to make!
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: tomato
+# Tastes like pasta, tomato.
+
+- type: entity
+  name: copypasta
+  parent: FoodNoodlesBase
+  id: FoodNoodlesCopy
+  description: You probably shouldn't try this, you always hear people talking about how bad it is...
+  components:
+  - type: Sprite
+    state: copypasta
+# Tastes like pasta, bad humor.
+
+- type: entity
+  name: spaghetti and meatballs
+  parent: FoodNoodlesBase
+  id: FoodNoodlesMeatball
+  description: Now that's a nica meatball!
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: meatball
+# Tastes like pasta, meat.
+
+- type: entity
+  name: spesslaw
+  parent: FoodNoodlesBase
+  id: FoodNoodlesSpesslaw
+  description: A lawyer's favourite.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: spesslaw
+# Tastes like pasta, meat.
+
+- type: entity
+  name: chow mein
+  parent: FoodNoodlesBase
+  id: FoodNoodlesChowmein
+  description: A nice mix of noodles and fried vegetables.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: chowmein
+# Tastes like pasta, tomato.
+
+- type: entity
+  name: butter noodles
+  parent: FoodNoodlesBase
+  id: FoodNoodlesButter
+  description: Noodles covered in savory butter. Simple and slippery, but delicious.
+  components:
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: butter
+# Tastes like pasta, butter.

@@ -1,1 +1,29 @@
-{"version":1,"size":{"x":32,"y":32},"license":"CC-BY-SA-3.0","copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi","states":[{"name":"large_grenade","directions":1,"delays":[[1]]},{"name":"large_grenade_armed","directions":1,"delays":[[0.1,0.1]]},{"name":"large_grenade_ass","directions":1,"delays":[[1]]},{"name":"large_grenade_locked","directions":1,"delays":[[1]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "large_grenade"
+    },
+    {
+      "name": "large_grenade_armed",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "large_grenade_ass"
+    },
+    {
+      "name": "large_grenade_locked"
+    }
+  ]
+}

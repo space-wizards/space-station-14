@@ -147,7 +147,7 @@ namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
             Visible = true;
 
             var screenCoordinates = _eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates);
-            var playerPosition = new ScreenCoordinates(screenCoordinates.X / UIScale, screenCoordinates.Y / UIScale);
+            var playerPosition = UserInterfaceManager.ScreenToUIPosition(screenCoordinates);
             LayoutContainer.SetPosition(this, new Vector2(playerPosition.X - Width / 2, playerPosition.Y - Height - 30.0f));
         }
 

@@ -24,7 +24,6 @@
       - MobImpassable
       - VaultImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     sprite: Constructible/Power/Singularity/emitter.rsi
     layers:

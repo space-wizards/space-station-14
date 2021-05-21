@@ -62,7 +62,8 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Required for airtight components.
-            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            SubscribeLocalEvent<RotateEvent>(RotateEvent);
+            SubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
 
             _cfg.OnValueChanged(CCVars.SpaceWind, OnSpaceWindChanged, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, OnMonstermosEqualizationChanged, true);
@@ -70,6 +71,11 @@ namespace Content.Server.GameObjects.EntitySystems
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, OnAtmosMaxProcessTimeChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, OnAtmosTickRateChanged, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, OnExcitedGroupsSpaceIsAllConsumingChanged, true);
+        }
+
+        private static void HandleSnapGridMove(EntityUid uid, AirtightComponent component, SnapGridPositionChangedEvent args)
+        {
+            component.OnTransformMove();
         }
 
         public bool SpaceWind { get; private set; }
@@ -115,7 +121,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _mapManager.MapCreated -= OnMapCreated;
 
-            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+            UnsubscribeLocalEvent<RotateEvent>();
+            UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
         private void RotateEvent(RotateEvent ev)

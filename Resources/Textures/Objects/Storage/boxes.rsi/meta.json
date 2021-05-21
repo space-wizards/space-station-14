@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "license": "CC-BY-SA 3",
+  "license": "CC-BY-SA-3.0",
   "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/17dc39d12005f3279a90212b5c61a781c08693a5",
   "size": {
     "x": 32,
@@ -30,9 +30,6 @@
     },
     {
       "name": "box_hug"
-    },
-    {
-      "name": "box_donk_pocket"
     },
     {
       "name": "box_id"

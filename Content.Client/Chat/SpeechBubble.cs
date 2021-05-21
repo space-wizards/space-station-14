@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.Interfaces.Chat;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -109,6 +109,9 @@ namespace Content.Client.Chat
             {
                 _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
+
+            if (!_senderEntity.Transform.Coordinates.IsValid(_senderEntity.EntityManager))
+                return;
 
             var worldPos = _senderEntity.Transform.WorldPosition;
             worldPos += (0, EntityVerticalOffset);

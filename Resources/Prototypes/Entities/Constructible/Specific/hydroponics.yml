@@ -44,7 +44,6 @@
     maxVol: 200
     caps: Refillable
   - type: SnapGrid
-    offset: Center
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction

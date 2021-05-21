@@ -1,8 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
@@ -12,29 +15,24 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedWindowComponent))]
     public sealed class WindowComponent : SharedWindowComponent
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         [DataField("base")]
         private string? _stateBase;
 
         private ISpriteComponent? _sprite;
-        private SnapGridComponent? _snapGrid;
 
         public override void Initialize()
         {
             base.Initialize();
 
             _sprite = Owner.GetComponent<ISpriteComponent>();
-            _snapGrid = Owner.GetComponent<SnapGridComponent>();
         }
 
         /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
-
-            if (_snapGrid != null)
-            {
-                _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-            }
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
 
@@ -67,18 +65,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        /// <inheritdoc />
-        protected override void Shutdown()
-        {
-            if (_snapGrid != null)
-            {
-                _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-            }
-
-            base.Shutdown();
-        }
-
-        private void SnapGridOnPositionChanged()
+        public void SnapGridOnPositionChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
         }
@@ -102,14 +89,14 @@ namespace Content.Client.GameObjects.Components
 
         private LowWallComponent? FindLowWall()
         {
-            if (_snapGrid == null)
-            {
+            if (!Owner.Transform.Anchored)
                 return null;
-            }
 
-            foreach (var entity in _snapGrid.GetLocal())
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            foreach (var entity in grid.GetLocal(coords))
             {
-                if (entity.TryGetComponent(out LowWallComponent? lowWall))
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }

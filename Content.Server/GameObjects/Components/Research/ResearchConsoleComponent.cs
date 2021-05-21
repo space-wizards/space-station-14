@@ -110,14 +110,14 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
             if (!Powered)
             {
                 return;
             }
 
-            OpenUserInterface(actor.playerSession);
+            OpenUserInterface(actor.PlayerSession);
             PlayKeyboardSound();
         }
 

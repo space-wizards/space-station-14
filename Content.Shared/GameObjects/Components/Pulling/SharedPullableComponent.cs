@@ -210,7 +210,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (_physics.Anchored)
+            if (_physics.BodyType == BodyType.Static)
             {
                 return false;
             }

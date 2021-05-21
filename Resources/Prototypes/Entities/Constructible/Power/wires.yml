@@ -14,8 +14,8 @@
         - Underplating
   - type: InteractionOutline
   - type: SnapGrid
-    offset: Center
   - type: Sprite
+    netsync: false
     drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
@@ -166,7 +166,6 @@
     mode: SnapgridCenter
   components:
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     drawdepth: BelowFloor
   - type: IconSmooth

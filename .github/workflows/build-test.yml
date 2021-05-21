@@ -19,7 +19,6 @@ jobs:
     - name: Setup submodule
       run: |
         git submodule update --init --recursive
-        touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
     - name: Update Engine Submodules

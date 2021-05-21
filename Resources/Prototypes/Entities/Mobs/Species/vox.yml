@@ -79,6 +79,8 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: [ "enum.Slots.MASK" ]
       - map: [ "enum.Slots.HEAD" ]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset

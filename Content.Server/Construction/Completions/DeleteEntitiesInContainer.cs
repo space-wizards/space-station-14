@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class DeleteEntitiesInContainer : IGraphAction
     {
-        [field: DataField("container")] public string Container { get; } = string.Empty;
+        [DataField("container")] public string Container { get; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

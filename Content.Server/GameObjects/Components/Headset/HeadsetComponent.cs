@@ -57,17 +57,17 @@ namespace Content.Server.GameObjects.Components.Headset
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!container.Owner.TryGetComponent(out IActorComponent? actor))
+                if (!container.Owner.TryGetComponent(out ActorComponent? actor))
                     return;
 
-                var playerChannel = actor.playerSession.ConnectedClient;
+                var playerChannel = actor.PlayerSession.ConnectedClient;
 
                 var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"[{channel}]"), ("name", source.Name));
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", source.Name));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }

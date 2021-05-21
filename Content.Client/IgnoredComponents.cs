@@ -34,6 +34,7 @@ namespace Content.Client
             "Smes",
             "LightBulb",
             "Healing",
+            "Material",
             "RangedMagazine",
             "Ammo",
             "HitscanWeaponCapacitor",
@@ -56,7 +57,6 @@ namespace Content.Client
             "Drink",
             "Food",
             "FoodContainer",
-            "Rotatable",
             "MagicMirror",
             "FloorTile",
             "ShuttleController",
@@ -89,6 +89,7 @@ namespace Content.Client
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
+            "ExaminableBattery",
             "PottedPlantHide",
             "SecureEntityStorage",
             "PresetIdCard",
@@ -254,6 +255,7 @@ namespace Content.Client
             "SpawnAfterInteract",
             "DisassembleOnActivate",
             "ExplosionLaunched",
+            "BeingCloned",
             "Advertise",
         };
     }

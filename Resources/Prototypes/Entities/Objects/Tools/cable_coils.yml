@@ -79,10 +79,6 @@
             - coillv-10
             - coillv-20
             - coillv-30
-    - type: Material
-      materials:
-        - key: enum.MaterialKeys.Stack
-          mat: Cable
 
 - type: entity
   parent: ApcExtensionCableStack
