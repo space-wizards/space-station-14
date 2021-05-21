@@ -1,1 +1,1 @@
-﻿wires-name-label = Wires
+﻿wires-menu-name-label = Wires

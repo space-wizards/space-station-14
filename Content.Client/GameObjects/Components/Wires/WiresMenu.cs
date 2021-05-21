@@ -147,7 +147,7 @@ namespace Content.Client.GameObjects.Components.Wires
                 {
                     (_nameLabel = new Label
                     {
-                        Text = Loc.GetString("wires-name-label"),
+                        Text = Loc.GetString("wires-menu-name-label"),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,

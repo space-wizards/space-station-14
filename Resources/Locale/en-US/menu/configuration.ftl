@@ -1,2 +1,2 @@
-﻿configuration-confirm = Confirm
-configuration-device-title = Device Configuration
+﻿configuration-menu-confirm = Confirm
+configuration-menu-device-title = Device Configuration
