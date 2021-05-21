@@ -66,7 +66,27 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             [DataField("prob")]
             public float SpawnProbability;
-
+            /// <summary>
+            /// orGroup signifies to pick between multiple entities on spawn.
+            ///
+            /// <example>
+            /// <para>To define an orGroup in a StorageFill component
+            /// you need to add it to the entities you want to choose between.
+            /// </para>
+            /// <code>
+            /// - type: StorageFill
+            ///   contents: 
+            ///     - name: X
+            ///     - name: Y
+            ///       orGroup: YOrZ
+            ///     - name: Z
+            ///       orGroup: YOrZ
+            ///
+            ///
+            /// 
+            /// </code>
+            /// </example> 
+            /// </summary>
             [DataField("orGroup")]
             public string GroupId;
 
