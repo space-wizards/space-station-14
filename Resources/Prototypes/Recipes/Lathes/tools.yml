@@ -114,14 +114,3 @@
   materials:
     Steel: 500
     Plastic: 250
-
-- type: latheRecipe
-  id: Mop
-  icon:
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
-  result: MopItem
-  completetime: 500
-  materials:
-    Steel: 200
-    Plastic: 100
