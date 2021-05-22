@@ -228,7 +228,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 BreakOnStun = true,
                 BreakOnTargetMove = false,
                 BreakOnUserMove = true,
-                NeedHand = true,
+                NeedHand = false,
             };
 
             if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
