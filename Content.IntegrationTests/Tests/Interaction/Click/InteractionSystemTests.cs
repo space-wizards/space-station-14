@@ -68,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
                 origin = entityManager.SpawnEntity(null, coordinates);
-                origin.EnsureComponent<HandsComponent>();
+                origin.EnsureComponent<HandsComponent>().AddHand("hand");
                 other = entityManager.SpawnEntity(null, coordinates);
                 containerEntity = entityManager.SpawnEntity(null, coordinates);
                 container = ContainerHelpers.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
@@ -126,7 +126,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
 
                 interactionSystem.UserInteraction(origin, containerEntity.Transform.Coordinates, containerEntity.Uid);
-                Assert.That(interactUsing);
+                Assert.That(interactUsing, Is.True);
             });
         }
     }
