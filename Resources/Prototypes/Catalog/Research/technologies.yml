@@ -12,6 +12,22 @@
     state: server-on
   requiredPoints: 2500
 
+#Cleaning Technology 
+
+- type: technology
+  name: "cleaning technology"
+  id: MopBucket 
+  description: Start to a shiny clean station
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - Bucket
+    - Mop
+
 # Biological Technology Tree
 
 - type: technology
@@ -28,9 +44,6 @@
     - Scythe
     - Hatchet
     - KitchenKnife  
-    - Bucket
-    - Mop
-    - FireExtinguisher
 
 - type: technology
   name: "advanced botany"
@@ -172,6 +185,8 @@
     - RCD
     - RCDAmmo
     - FlashlightLantern
+    - FireExtinguisher
+
 
 - type: technology
   name: material sheet printing
