@@ -4,7 +4,7 @@
   result: MopItem
   completetime: 500
   materials:
-    plastic: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: MopBucket
@@ -12,8 +12,8 @@
   result: MopBucket
   completetime: 500
   materials:
-    steel: 100
-    plastic: 100
+    Steel: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: Bucket
@@ -21,7 +21,7 @@
   result: Bucket
   completetime: 500
   materials:
-    steel: 100
+    Steel: 100
 
 - type: latheRecipe
   id: WetFloorSign
@@ -29,7 +29,7 @@
   result: WetFloorSign
   completetime: 500
   materials:
-    plastic: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: SprayBottle
@@ -37,7 +37,7 @@
   result: SprayBottle
   completetime: 500
   materials:
-    plastic: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: TrashBag
@@ -45,7 +45,7 @@
   result: TrashBag
   completetime: 300
   materials:
-    plastic: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: LightReplacer
@@ -53,5 +53,5 @@
   result: LightReplacer
   completetime: 600
   materials:
-    steel: 100
-    glass: 1000
+    Steel: 100
+    Glass: 1000

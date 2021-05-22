@@ -6,5 +6,5 @@
   result: ConveyorBeltAssembly
   completetime: 1000
   materials:
-    steel: 1000
-    glass: 50
+    Steel: 1000
+    Glass: 50
