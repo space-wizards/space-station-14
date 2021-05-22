@@ -57,6 +57,7 @@
     - BiologicalTechnology
   unlockedRecipes:
     - Shovel
+    - ButchCleaver
 
 - type: technology
   name: "advanced surgery"

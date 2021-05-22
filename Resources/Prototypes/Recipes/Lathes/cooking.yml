@@ -1,10 +1,12 @@
 - type: latheRecipe
   id: ButchCleaver
-  icon: Objects/Weapons/Melee/cleaver.rsi
+  icon: 
+     sprite: Objects/Weapons/Melee/cleaver.rsi
+     state: butch
   result: ButchCleaver
   completetime: 500
   materials:
-    Steel: 300
+    Steel: 600
 
 - type: latheRecipe
   id: KitchenKnife

@@ -164,6 +164,7 @@
       - Mop
       - FireExtinguisher
       - KitchenKnife
+      - ButchCleaver
       - FlashlightLantern
 
   - type: UserInterface
