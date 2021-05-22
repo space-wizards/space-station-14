@@ -28,7 +28,7 @@
   materials:
     Glass: 200
     Plastic: 100
-    
+
 - type: latheRecipe
   id: Syringe
   icon:

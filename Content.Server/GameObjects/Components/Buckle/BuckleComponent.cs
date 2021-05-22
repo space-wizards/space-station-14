@@ -256,11 +256,12 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             Appearance?.SetData(BuckleVisuals.Buckled, true);
 
+            ReAttach(strap);
+
             BuckledTo = strap;
             LastEntityBuckledTo = BuckledTo.Owner.Uid;
             DontCollide = true;
 
-            ReAttach(strap);
             UpdateBuckleStatus();
 
             SendMessage(new BuckleMessage(Owner, to));
