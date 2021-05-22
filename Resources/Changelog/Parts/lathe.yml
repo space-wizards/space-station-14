@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix # One of the following: Add, Remove, Tweak, Fix
-    message: Fixes lathes not printing any recipe.

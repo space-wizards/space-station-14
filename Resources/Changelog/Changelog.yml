@@ -1127,3 +1127,8 @@ Entries:
   - {message: Removed solution transfer verbs., type: Remove}
   id: 200
   time: '2021-05-21T21:36:16.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes lathes not printing any recipe., type: Fix}
+  id: 201
+  time: '2021-05-22T09:31:38.140827+00:00'
