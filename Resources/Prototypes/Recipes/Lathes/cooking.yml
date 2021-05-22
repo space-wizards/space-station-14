@@ -6,7 +6,7 @@
   result: ButchCleaver
   completetime: 500
   materials:
-    Steel: 600
+    Steel: 300
 
 - type: latheRecipe
   id: KitchenKnife
@@ -16,7 +16,7 @@
   result: KitchenKnife 
   completetime: 500
   materials:
-    Steel: 300
+    Steel: 200
 
 - type: latheRecipe
   id: DrinkMug

@@ -12,7 +12,7 @@
     state: server-on
   requiredPoints: 2500
 
-#Cleaning Technology 
+# Cleaning Technology Tree
 
 - type: technology
   name: "cleaning technology"
@@ -112,7 +112,23 @@
     - Handcuffs
     - Stunbaton
 
-# - type: technology
+- type: technology
+  name: "ballistic technology"
+  id: BallisticTechnology
+  description: Just a fancy term for guns.
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    state: icon
+  requiredPoints: 15000
+  requiredTechnologies:
+     - SecurityTechnology
+  unlockedRecipes:
+    - CartridgePistolBase
+    - ShellShotgunBase
+    - CartridgeLRifleBase
+    - CartridgeMagnumBase
+
+#- type: technology
 #   name: "ballistic technology"
 #   id: BallisticTechnology
 #   description: Just a fancy term for guns.
@@ -187,7 +203,6 @@
     - RCDAmmo
     - FlashlightLantern
     - FireExtinguisher
-
 
 - type: technology
   name: material sheet printing

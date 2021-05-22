@@ -157,6 +157,10 @@
       - Flash
       - Handcuffs
       - Stunbaton
+      - CartridgePistolBase
+      - ShellShotgunBase
+      - CartridgeLRifleBase
+      - CartridgeMagnumBase
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics

@@ -23,7 +23,7 @@
   result: Bucket
   completetime: 500
   materials:
-    Steel: 150
+    Steel: 100
 
 - type: latheRecipe
   id: WetFloorSign
