@@ -11,9 +11,9 @@
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
   - type: LightReplacer
     contents:
-    - name: LightTube
+    - id: LightTube
       amount: 8
       type: Tube
-    - name: LightBulb
+    - id: LightBulb
       amount: 5
       type: Bulb

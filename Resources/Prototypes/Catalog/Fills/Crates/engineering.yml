@@ -5,17 +5,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingBeltUtility
+      - id: ClothingBeltUtility
         amount: 2
-      - name: ClothingEyesGlassesMeson
+      - id: ClothingEyesGlassesMeson
         amount: 2
-      - name: ClothingHeadHatHardhatYellow
+      - id: ClothingHeadHatHardhatYellow
         amount: 2
-      - name: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
+      - id: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
         amount: 2
-      - name: ClothingOuterVestHazard
+      - id: ClothingOuterVestHazard
         amount: 3
-      - name: ClothingHandsGlovesColorYellow
+      - id: ClothingHandsGlovesColorYellow
         amount: 2
 
 - type: entity
@@ -25,9 +25,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: ToolboxMechanical
+      - id: ToolboxMechanical
         amount: 2
-      - name: ToolboxElectricalFilled
+      - id: ToolboxElectricalFilled
         amount: 2
 
 #- type: entity
@@ -37,11 +37,11 @@
 #  components:
 #  - type: StorageFill
 #    contents:
-#      - name: PowerCellLargeStandard
+#      - id: PowerCellLargeStandard
 #        amount: 3
-#      - name: PowerCellMediumStandard
+#      - id: PowerCellMediumStandard
 #        amount: 3
-#      - name: PowerCellSmallAutorecharge
+#      - id: PowerCellSmallAutorecharge
 #        amount: 3
 
 - type: entity
@@ -51,7 +51,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ApcExtensionCableStack
+      - id: ApcExtensionCableStack
         amount: 3
 
 - type: entity
@@ -61,7 +61,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: MVWireStack
+      - id: MVWireStack
         amount: 3
 
 - type: entity
@@ -71,7 +71,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: HVWireStack
+      - id: HVWireStack
         amount: 3
 
 - type: entity
@@ -81,9 +81,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: HVWireStack
+      - id: HVWireStack
         amount: 2
-      - name: MVWireStack
+      - id: MVWireStack
         amount: 2
-      - name: ApcExtensionCableStack
+      - id: ApcExtensionCableStack
         amount: 2

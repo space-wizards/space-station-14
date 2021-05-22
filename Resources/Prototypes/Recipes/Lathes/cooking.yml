@@ -4,7 +4,7 @@
   result: ButchCleaver
   completetime: 500
   materials:
-    steel: 300
+    Steel: 300
 
 - type: latheRecipe
   id: KitchenKnife
@@ -12,7 +12,7 @@
   result: KitchenKnife
   completetime: 400
   materials:
-    steel: 200
+    Steel: 200
 
 - type: latheRecipe
   id: DrinkMug
@@ -20,7 +20,7 @@
   result: DrinkMug
   completetime: 200
   materials:
-    glass: 50
+    Glass: 50
 
 - type: latheRecipe
   id: DrinkMugMetal
@@ -28,7 +28,7 @@
   result: DrinkMugMetal
   completetime: 200
   materials:
-    steel: 50
+    Steel: 50
 
 - type: latheRecipe
   id: DrinkGlass
@@ -36,4 +36,4 @@
   result: DrinkGlass
   completetime: 200
   materials:
-    glass: 50
+    Glass: 50

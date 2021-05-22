@@ -142,7 +142,7 @@
     capacity: 15
   - type: StorageFill
     contents:
-      - name: CaptainSabre
+      - id: CaptainSabre
 
 - type: entity
   parent: ClothingBeltBase

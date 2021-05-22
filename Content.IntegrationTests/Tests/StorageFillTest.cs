@@ -26,14 +26,14 @@ namespace Content.IntegrationTests.Tests
 
                     foreach (var entry in storage.Contents)
                     {
-                        var name = entry.PrototypeName;
+                        var id = entry.PrototypeId;
 
-                        if (name == null)
+                        if (id == null)
                         {
                             continue;
                         }
 
-                        Assert.That(protoManager.HasIndex<EntityPrototype>(name), $"Unable to find StorageFill prototype of {name} in prototype {proto.ID}");
+                        Assert.That(protoManager.HasIndex<EntityPrototype>(id), $"Unable to find StorageFill prototype of {id} in prototype {proto.ID}");
                         Assert.That(entry.Amount > 0, $"Specified invalid amount of {entry.Amount} for prototype {proto.ID}");
                         Assert.That(entry.SpawnProbability > 0, $"Specified invalid probability of {entry.SpawnProbability} for prototype {proto.ID}");
                     }
