@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Content.Doom</AssemblyName>
+  </PropertyGroup>
+
+<!--
+  <ItemGroup>
+    <PackageReference Include="MeltySynth" Version="1.0.3" />
+    <PackageReference Include="SFML.Net" Version="2.5.0" />
+  </ItemGroup>
+-->
+
+  <ItemGroup>
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
+  </ItemGroup>
+
+</Project>

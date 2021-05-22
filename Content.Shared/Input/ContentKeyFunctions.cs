@@ -75,5 +75,30 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote7 = "Vote7";
         public static readonly BoundKeyFunction Vote8 = "Vote8";
         public static readonly BoundKeyFunction Vote9 = "Vote9";
+
+        public static readonly BoundKeyFunction DoomEsc = "DoomEsc";
+        public static readonly BoundKeyFunction DoomEnter = "DoomEnter";
+        public static readonly BoundKeyFunction DoomW = "DoomW";
+        public static readonly BoundKeyFunction DoomS = "DoomS";
+        public static readonly BoundKeyFunction DoomA = "DoomA";
+        public static readonly BoundKeyFunction DoomD = "DoomD";
+        public static readonly BoundKeyFunction DoomUp = "DoomUp";
+        public static readonly BoundKeyFunction DoomDown = "DoomDown";
+        public static readonly BoundKeyFunction DoomLeft = "DoomLeft";
+        public static readonly BoundKeyFunction DoomRight = "DoomRight";
+        public static readonly BoundKeyFunction DoomLControl = "DoomLControl";
+        public static readonly BoundKeyFunction DoomRControl = "DoomRControl";
+        public static readonly BoundKeyFunction DoomSpace = "DoomSpace";
+        public static readonly BoundKeyFunction DoomLShift = "DoomLShift";
+        public static readonly BoundKeyFunction DoomRShift = "DoomRShift";
+        public static readonly BoundKeyFunction DoomLAlt = "DoomLAlt";
+        public static readonly BoundKeyFunction DoomRAlt = "DoomRAlt";
+        public static readonly BoundKeyFunction DoomNum1 = "DoomNum1";
+        public static readonly BoundKeyFunction DoomNum2 = "DoomNum2";
+        public static readonly BoundKeyFunction DoomNum3 = "DoomNum3";
+        public static readonly BoundKeyFunction DoomNum4 = "DoomNum4";
+        public static readonly BoundKeyFunction DoomNum5 = "DoomNum5";
+        public static readonly BoundKeyFunction DoomNum6 = "DoomNum6";
+        public static readonly BoundKeyFunction DoomNum7 = "DoomNum7";
     }
 }
