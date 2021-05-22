@@ -166,15 +166,19 @@ namespace Content.Server.GameObjects.EntitySystems
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            if (!Get<StackSystem>().Split(stack, materialStep.Amount, user.ToCoordinates(), out var newStack))
+                            var splitStack = new StackSplitEvent()
+                                {Amount = materialStep.Amount, SpawnPosition = user.ToCoordinates()};
+                            RaiseLocalEvent(entity.Uid, splitStack);
+
+                            if (splitStack.Result == null)
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(newStack))
+                                if (!container.Insert(splitStack.Result))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(newStack))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Result))
                                     continue;
 
                             handled = true;

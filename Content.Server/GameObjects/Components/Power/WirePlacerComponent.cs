@@ -50,8 +50,16 @@ namespace Content.Server.GameObjects.Components.Power
                     return true;
                 }
             }
-            if (Owner.TryGetComponent<StackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(stack, 1))
-                return true;
+
+            if (Owner.HasComponent<StackComponent>())
+            {
+                var stackUse = new StackUseEvent(){Amount = 1};
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                if(!stackUse.Result)
+                    return true;
+            }
+
             Owner.EntityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
             return true;
         }

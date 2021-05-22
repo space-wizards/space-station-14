@@ -268,7 +268,14 @@ namespace Content.Server.GameObjects.Components.Construction
                             if (materialStep.EntityValid(eventArgs.Using, out var stack)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
-                                valid = EntitySystem.Get<StackSystem>().Split(stack, materialStep.Amount, eventArgs.User.Transform.Coordinates, out entityUsing);
+                                var splitStack = new StackSplitEvent() {Amount = materialStep.Amount, SpawnPosition = eventArgs.User.Transform.Coordinates};
+                                Owner.EntityManager.EventBus.RaiseLocalEvent(stack.Owner.Uid, splitStack);
+
+                                if (splitStack.Result != null)
+                                {
+                                    entityUsing = splitStack.Result;
+                                    valid = true;
+                                }
                             }
 
                             break;

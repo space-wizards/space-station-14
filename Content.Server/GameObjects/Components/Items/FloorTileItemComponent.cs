@@ -79,8 +79,14 @@ namespace Content.Server.GameObjects.Components.Items
                     var tile = mapGrid.GetTileRef(location);
                     var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && EntitySystem.Get<StackSystem>().Use(stack, 1))
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
                     {
+                        var stackUse = new StackUseEvent() {Amount = 1};
+                        Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                        if (!stackUse.Result)
+                            continue;
+
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);
                         break;
                     }

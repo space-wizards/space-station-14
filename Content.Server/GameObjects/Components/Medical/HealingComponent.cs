@@ -42,10 +42,13 @@ namespace Content.Server.GameObjects.Components.Medical
                 return true;
             }
 
-            if (Owner.TryGetComponent(out StackComponent? stack) &&
-                !EntitySystem.Get<StackSystem>().Use(stack, 1))
+            if (Owner.HasComponent<StackComponent>())
             {
-                return true;
+                var stackUse = new StackUseEvent() {Amount = 1};
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                if(!stackUse.Result)
+                    return true;
             }
 
             foreach (var (type, amount) in Heal)
