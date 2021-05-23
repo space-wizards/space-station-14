@@ -29,6 +29,8 @@ namespace Content.Client
 
             var root = uiMgr.CreateWindowRoot(window);
 
+            window.DisposeOnClose = true;
+
             root.AddChild(new DoomControl((640, 400)));
         }
     }
@@ -58,8 +60,15 @@ namespace Content.Client
 
             _renderTarget = _clyde.CreateRenderTarget(size, RenderTargetColorFormat.Rgba8);
 
-            _application = new DoomApplication(new CommandLineArgs(Array.Empty<string>()), _renderTarget);
+            _application = new DoomApplication(new CommandLineArgs(new []{"-warp", "E1M1"}), _renderTarget);
             _stopwatch = Stopwatch.StartNew();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _application.Dispose();
         }
 
         public override void DrawInternal(IRenderHandle renderHandle)
