@@ -124,7 +124,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             var layers = args.Part.ToHumanoidLayers();
 
             // TODO BODY Layer color, sprite and state
-            foreach (var layer in layers) sprite.LayerSetVisible(layer, true);
+            foreach (var layer in layers)
+                sprite.LayerSetVisible(layer, true);
         }
 
         public void BodyPartRemoved(BodyPartRemovedEventArgs args)
@@ -142,7 +143,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             var layers = args.Part.ToHumanoidLayers();
 
             // TODO BODY Layer color, sprite and state
-            foreach (var layer in layers) sprite.LayerSetVisible(layer, false);
+            foreach (var layer in layers)
+                sprite.LayerSetVisible(layer, false);
         }
     }
 }
