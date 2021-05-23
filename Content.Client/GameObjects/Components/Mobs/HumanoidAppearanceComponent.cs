@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.ActionBlocking;
+using Content.Client.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -121,15 +121,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            var layer = args.Part.ToHumanoidLayer();
-
-            if (layer == null)
-            {
-                return;
-            }
+            var layers = args.Part.ToHumanoidLayers();
 
             // TODO BODY Layer color, sprite and state
-            sprite.LayerSetVisible(layer, true);
+            foreach (var layer in layers) sprite.LayerSetVisible(layer, true);
         }
 
         public void BodyPartRemoved(BodyPartRemovedEventArgs args)
@@ -144,15 +139,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            var layer = args.Part.ToHumanoidLayer();
-
-            if (layer == null)
-            {
-                return;
-            }
+            var layers = args.Part.ToHumanoidLayers();
 
             // TODO BODY Layer color, sprite and state
-            sprite.LayerSetVisible(layer, false);
+            foreach (var layer in layers) sprite.LayerSetVisible(layer, false);
         }
     }
 }
