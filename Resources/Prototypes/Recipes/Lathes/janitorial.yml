@@ -1,6 +1,8 @@
 - type: latheRecipe
   id: MopItem
-  icon: Objects/Specific/Janitorial/mop.rsi
+  icon: 
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
   result: MopItem
   completetime: 500
   materials:
