@@ -306,12 +306,7 @@ namespace ManagedDoom.Audio
 
                         var pitchWheel = data[p++];
 
-                        var pw2 = (pitchWheel << 7) / 2;
-                        var pw1 = pw2 & 127;
-                        pw2 >>= 7;
-                        me.Data1 = pw1;
-                        me.Data2 = pw2;
-
+                        me.Data1 = pitchWheel * 64;
                         break;
 
                     case 3: // SYSTEM EVENT
@@ -386,7 +381,7 @@ namespace ManagedDoom.Audio
                             {
                                 Type = 0xE0,
                                 Channel = (byte) me.Channel,
-                                Pitch = (byte) me.Data2
+                                Pitch = (short) me.Data1
                             });
                             // synthesizer.ProcessMidiMessage(me.Channel, 0xE0, me.Data1, me.Data2);
                             break;
