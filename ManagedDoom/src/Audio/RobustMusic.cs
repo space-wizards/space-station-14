@@ -170,6 +170,13 @@ namespace ManagedDoom.Audio
             // Called from the OnGetData with no timing data passed in?
             public void QueueAllEvents(IMidiRenderer synthesizer)
             {
+                synthesizer.ScheduleMidiEvent(new MidiEvent
+                {
+                    Type = 176,
+                    Control = 121,
+                    Value = 0,
+                }, 0, true);
+
                 var blockDuration = (double) BufferLength / SampleRate;
                 var scale = synthesizer.SequencerTimeScale;
                 var timeAbs = 0;
@@ -356,7 +363,7 @@ namespace ManagedDoom.Audio
                         case 0: // RELEASE NOTE
                             Send(new MidiEvent
                             {
-                                Type = 0x90,
+                                Type = 0x80,
                                 Channel = (byte) me.Channel,
                                 Key = (byte) me.Data1
                             });
@@ -366,7 +373,7 @@ namespace ManagedDoom.Audio
                         case 1: // PLAY NOTE
                             Send(new MidiEvent
                             {
-                                Type = 0x80,
+                                Type = 0x90,
                                 Channel = (byte) me.Channel,
                                 Key = (byte) me.Data1,
                                 Velocity = (byte) me.Data2
@@ -379,7 +386,7 @@ namespace ManagedDoom.Audio
                             {
                                 Type = 0xE0,
                                 Channel = (byte) me.Channel,
-                                Pitch = (byte) me.Data1
+                                Pitch = (byte) me.Data2
                             });
                             // synthesizer.ProcessMidiMessage(me.Channel, 0xE0, me.Data1, me.Data2);
                             break;
@@ -399,6 +406,12 @@ namespace ManagedDoom.Audio
                                     break;
 
                                 case 14: // RESET ALL CONTROLS
+                                    Send(new MidiEvent
+                                    {
+                                        Type = 176,
+                                        Control = 121,
+                                        Value = 0,
+                                    });
                                     // synthesizer.ResetAllControllers(me.Channel);
                                     break;
                             }
