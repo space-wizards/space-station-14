@@ -43,8 +43,8 @@ namespace ManagedDoom.Audio
             decoder.QueueAllEvents(_renderer);
 
             _renderer.Mono = true;
-            _renderer.MidiBank = 0;
-            _renderer.MidiProgram = 1;
+            // _renderer.MidiBank = 0;
+            // _renderer.MidiProgram = 1;
             _renderer.TrackingEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
             _renderer.DisablePercussionChannel = false;
             _renderer.DisableProgramChangeEvent = false;
