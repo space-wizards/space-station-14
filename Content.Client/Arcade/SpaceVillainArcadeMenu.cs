@@ -11,19 +11,22 @@ namespace Content.Client.Arcade
     {
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 
+        /*
         private readonly Label _enemyNameLabel;
         private readonly Label _playerInfoLabel;
         private readonly Label _enemyInfoLabel;
         private readonly Label _playerActionLabel;
         private readonly Label _enemyActionLabel;
+        */
 
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
-            MinSize = SetSize = (300, 225);
-            Title = Loc.GetString("spacevillain-menu-title");
+            MinSize = SetSize = (660, 450);
+            Title = "Doom Ultimate";
             Owner = owner;
 
+            /*
             var grid = new GridContainer {Columns = 1};
 
             var infoGrid = new GridContainer {Columns = 3};
@@ -69,27 +72,30 @@ namespace Content.Client.Arcade
             grid.AddChild(newGame);
 
             Contents.AddChild(grid);
+        */
+
+            Contents.AddChild(new DoomControl((640, 400), Close));
         }
 
         private void UpdateMetadata(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage message)
         {
-            Title = message.GameTitle;
+            /*Title = message.GameTitle;
             _enemyNameLabel.Text = message.EnemyName;
 
             foreach (var gameButton in _gameButtons)
             {
                 gameButton.Disabled = message.ButtonsDisabled;
-            }
+            }*/
         }
 
         public void UpdateInfo(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeDataUpdateMessage message)
         {
-            if(message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage metaMessage) UpdateMetadata(metaMessage);
+            /*if(message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage metaMessage) UpdateMetadata(metaMessage);
 
             _playerInfoLabel.Text = $"HP: {message.PlayerHP} MP: {message.PlayerMP}";
             _enemyInfoLabel.Text = $"HP: {message.EnemyHP} MP: {message.EnemyMP}";
             _playerActionLabel.Text = message.PlayerActionMessage;
-            _enemyActionLabel.Text = message.EnemyActionMessage;
+            _enemyActionLabel.Text = message.EnemyActionMessage;*/
         }
 
         private class ActionButton : Button
