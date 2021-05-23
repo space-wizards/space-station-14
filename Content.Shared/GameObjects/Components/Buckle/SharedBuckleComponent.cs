@@ -67,12 +67,12 @@ namespace Content.Shared.GameObjects.Components.Buckle
             return !Buckled;
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target.HasComponent<SharedStrapComponent>();
         }
 
-        bool IDraggable.Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEvent args)
         {
             return TryBuckle(args.User, args.Target);
         }

@@ -8,12 +8,12 @@ namespace Content.Client.GameObjects.Components.Body
     [ComponentReference(typeof(IBody))]
     public class BodyComponent : SharedBodyComponent, IDraggable
     {
-        bool IDraggable.CanStartDrag(StartDragDropEventArgs args)
+        bool IDraggable.CanStartDrag(StartDragDropEvent args)
         {
             return true;
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return true;
         }

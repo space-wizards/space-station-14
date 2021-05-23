@@ -17,48 +17,48 @@ namespace Content.Server.GameObjects.EntitySystems.Janitorial
         {
             base.Initialize();
 
-            SubscribeLocalEvent<LightReplacerComponent, InteractUsingMessage>(HandleInteract);
-            SubscribeLocalEvent<LightReplacerComponent, AfterInteractMessage>(HandleAfterInteract);
+            SubscribeLocalEvent<LightReplacerComponent, InteractUsingEvent>(HandleInteract);
+            SubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<LightReplacerComponent, InteractUsingMessage>(HandleInteract);
-            UnsubscribeLocalEvent<LightReplacerComponent, AfterInteractMessage>(HandleAfterInteract);
+            UnsubscribeLocalEvent<LightReplacerComponent, InteractUsingEvent>(HandleInteract);
+            UnsubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
         }
 
-        private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractMessage eventArgs)
+        private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
         {
             // standard interaction checks
             if (!ActionBlockerSystem.CanUse(eventArgs.User)) return;
             if (!eventArgs.CanReach) return;
 
             // behaviour will depends on target type
-            if (eventArgs.Attacked != null)
+            if (eventArgs.Target != null)
             {
                 // replace broken light in fixture?
-                if (eventArgs.Attacked.TryGetComponent(out PoweredLightComponent? fixture))
+                if (eventArgs.Target.TryGetComponent(out PoweredLightComponent? fixture))
                     component.TryReplaceBulb(fixture, eventArgs.User);
                 // add new bulb to light replacer container?
-                else if (eventArgs.Attacked.TryGetComponent(out LightBulbComponent? bulb))
+                else if (eventArgs.Target.TryGetComponent(out LightBulbComponent? bulb))
                     component.TryInsertBulb(bulb, eventArgs.User, true);
             }
         }
 
-        private void HandleInteract(EntityUid uid, LightReplacerComponent component, InteractUsingMessage eventArgs)
+        private void HandleInteract(EntityUid uid, LightReplacerComponent component, InteractUsingEvent eventArgs)
         {
             // standard interaction checks
             if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return;
 
-            if (eventArgs.ItemInHand != null)
+            if (eventArgs.Used != null)
             {
                 // want to insert a new light bulb?
-                if (eventArgs.ItemInHand.TryGetComponent(out LightBulbComponent? bulb))
+                if (eventArgs.Used.TryGetComponent(out LightBulbComponent? bulb))
                     component.TryInsertBulb(bulb, eventArgs.User, true);
                 // add bulbs from storage?
-                else if (eventArgs.ItemInHand.TryGetComponent(out ServerStorageComponent? storage))
+                else if (eventArgs.Used.TryGetComponent(out ServerStorageComponent? storage))
                     component.TryInsertBulb(storage, eventArgs.User);
             }
         }

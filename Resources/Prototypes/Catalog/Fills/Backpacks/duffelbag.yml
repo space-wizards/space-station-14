@@ -6,12 +6,12 @@
   components:
   - type: StorageFill
     contents:
-      - name: Hemostat
-      - name: Saw
-      - name: Drill
-      - name: Cautery
-      - name: Retractor
-      - name: Scalpel
+      - id: Hemostat
+      - id: Saw
+      - id: Drill
+      - id: Cautery
+      - id: Retractor
+      - id: Scalpel
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical
@@ -21,12 +21,12 @@
   components:
   - type: StorageFill
     contents:
-      - name: Hemostat
-      - name: Saw
-      - name: Drill
-      - name: Cautery
-      - name: Retractor
-      - name: Scalpel
+      - id: Hemostat
+      - id: Saw
+      - id: Drill
+      - id: Cautery
+      - id: Retractor
+      - id: Scalpel
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -36,10 +36,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: ShotgunBojevic
-      - name: MagazineShotgun
-      - name: MagazineShotgunBeanbag
-#     - name: ThermalImagingGoggles
+      - id: ShotgunBojevic
+      - id: MagazineShotgun
+      - id: MagazineShotgunBeanbag
+#     - id: ThermalImagingGoggles
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -49,10 +49,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: SmgC20r
-      - name: MagazinePistolSmg
+      - id: SmgC20r
+      - id: MagazinePistolSmg
         amount: 2
-#     - name: SMGSuppressor
+#     - id: SMGSuppressor
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -62,8 +62,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: LMGL6
-      - name: MagazineLRifleBox
+      - id: LMGL6
+      - id: MagazineLRifleBox
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -73,12 +73,12 @@
   components:
   - type: StorageFill
     contents:
-      - name: LauncherChinaLake
-      - name: GrenadeBlast
+      - id: LauncherChinaLake
+      - id: GrenadeBlast
         amount: 3
-      - name: GrenadeFlash
+      - id: GrenadeFlash
         amount: 3
-      - name: GrenadeFrag
+      - id: GrenadeFrag
         amount: 3
   - type: Storage
     capacity: 200
@@ -91,16 +91,16 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHatCaptain
-      - name: ClothingEyesGlassesSunglasses
-      - name: ClothingUniformJumpsuitCentcomOfficial
-      - name: ClothingShoesBootsJack
-      - name: ClothingHandsGlovesColorGray
-      - name: ClothingHeadsetService
-      - name: ClothingOuterVestKevlar
-      - name: Paper
-      - name: Pen
-      - name: CentcomPDA
+      - id: ClothingHeadHatCaptain
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingUniformJumpsuitCentcomOfficial
+      - id: ClothingShoesBootsJack
+      - id: ClothingHandsGlovesColorGray
+      - id: ClothingHeadsetService
+      - id: ClothingOuterVestKevlar
+      - id: Paper
+      - id: Pen
+      - id: CentcomPDA
 
 - type: entity
   parent: ClothingBackpackDuffelClown
@@ -110,9 +110,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingUniformJumpsuitClown
-      - name: ClothingShoesClown
-      - name: ClothingMaskClown
-      - name: BikeHorn
-      - name: ClownPDA
-      - name: ClothingHeadsetService
+      - id: ClothingUniformJumpsuitClown
+      - id: ClothingShoesClown
+      - id: ClothingMaskClown
+      - id: BikeHorn
+      - id: ClownPDA
+      - id: ClothingHeadsetService

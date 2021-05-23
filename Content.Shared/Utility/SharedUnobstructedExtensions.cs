@@ -407,7 +407,7 @@ namespace Content.Shared.Utility
         }
 
         public static bool InRangeUnobstructed(
-            this DragDropEventArgs args,
+            this DragDropEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
@@ -433,7 +433,7 @@ namespace Content.Shared.Utility
 
         #region EntityEventArgs
         public static bool InRangeUnobstructed(
-            this AfterInteractMessage args,
+            this AfterInteractEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,

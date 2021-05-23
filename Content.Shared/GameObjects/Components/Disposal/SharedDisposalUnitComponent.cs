@@ -187,11 +187,11 @@ namespace Content.Shared.GameObjects.Components.Disposal
             return true;
         }
 
-        public virtual bool CanDragDropOn(DragDropEventArgs eventArgs)
+        public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
             return CanInsert(eventArgs.Dragged);
         }
 
-        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

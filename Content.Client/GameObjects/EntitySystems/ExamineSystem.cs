@@ -84,7 +84,7 @@ namespace Content.Client.GameObjects.EntitySystems
             vBox.AddChild(hBox);
             if (entity.TryGetComponent(out ISpriteComponent? sprite))
             {
-                hBox.AddChild(new SpriteView {Sprite = sprite});
+                hBox.AddChild(new SpriteView {Sprite = sprite, OverrideDirection = Direction.South});
             }
 
             hBox.AddChild(new Label

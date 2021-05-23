@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.GUI
     [ComponentReference(typeof(SharedStrippableComponent))]
     public class StrippableComponent : SharedStrippableComponent
     {
-        public override bool Drop(DragDropEventArgs args)
+        public override bool Drop(DragDropEvent args)
         {
             // TODO: Prediction
             return false;

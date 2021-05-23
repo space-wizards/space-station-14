@@ -30,7 +30,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity item in a hand is deselected.
     /// </summary>
     [PublicAPI]
-    public class HandDeselectedMessage : HandledEntityEventArgs
+    public class HandDeselectedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the deselected hand.
@@ -38,11 +38,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity User { get; }
 
         /// <summary>
-        ///     The item in question.
+        ///     Item in the hand that was deselected.
         /// </summary>
         public IEntity Item { get; }
 
-        public HandDeselectedMessage(IEntity user, IEntity item)
+        public HandDeselectedEvent(IEntity user, IEntity item)
         {
             User = user;
             Item = item;

@@ -1,10 +1,12 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.Materials;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -32,7 +34,7 @@ namespace Content.Shared.Research
         [DataField("completetime")]
         private int _completeTime = 2500;
 
-        [DataField("materials")]
+        [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         private Dictionary<string, int> _requiredMaterials = new();
 
         /// <summary>

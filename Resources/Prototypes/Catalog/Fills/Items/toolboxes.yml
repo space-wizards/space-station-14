@@ -6,17 +6,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: CrowbarRed
+      - id: CrowbarRed
         amount: 1
-      - name: ClothingMaskBreath
+      - id: ClothingMaskBreath
         amount: 2
-      - name: FoodSnackChocolate
-      - name: FlashlightLantern
+      - id: FoodSnackChocolate
+      - id: FlashlightLantern
         amount: 2
-      - name: HarmonicaInstrument
+      - id: HarmonicaInstrument
         prob: 0.15
         orGroup: HarmonicaOrChocolate
-      - name: FoodSnackChocolate
+      - id: FoodSnackChocolate
         orGroup: HarmonicaOrChocolate
 
 - type: entity
@@ -27,15 +27,15 @@
   components:
   - type: StorageFill
     contents:
-      - name: Screwdriver
-      - name: Crowbar
-      - name: Wirecutter
-      - name: ApcExtensionCableStack
-      - name: MVWireStack
-      - name: ClothingHandsGlovesColorYellow
+      - id: Screwdriver
+      - id: Crowbar
+      - id: Wirecutter
+      - id: ApcExtensionCableStack
+      - id: MVWireStack
+      - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
-      - name: HVWireStack
+      - id: HVWireStack
         orGroup: GlovesOrWires
 
 - type: entity
@@ -46,13 +46,13 @@
   components:
   - type: StorageFill
     contents:
-      - name: Screwdriver
-      - name: Wrench
-      - name: Welder
-      - name: Crowbar
-      - name: Multitool
-      - name: Wirecutter
-      - name: ClothingHandsGlovesCombat
+      - id: Screwdriver
+      - id: Wrench
+      - id: Welder
+      - id: Crowbar
+      - id: Multitool
+      - id: Wirecutter
+      - id: ClothingHandsGlovesCombat
 
 - type: entity
   id: ToolboxGoldFilled
@@ -62,10 +62,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: IngotGold
+      - id: IngotGold
         amount: 5
-      - name: DrinkGoldenCup
+      - id: DrinkGoldenCup
         prob: 0.05
         orGroup: CupOrGold
-      - name: IngotGold
+      - id: IngotGold
         orGroup: CupOrGold

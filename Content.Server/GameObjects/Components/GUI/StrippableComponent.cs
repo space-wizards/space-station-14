@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.GUI
             UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
         }
 
-        public override bool Drop(DragDropEventArgs args)
+        public override bool Drop(DragDropEvent args)
         {
             if (!args.User.TryGetComponent(out ActorComponent? actor)) return false;
 
