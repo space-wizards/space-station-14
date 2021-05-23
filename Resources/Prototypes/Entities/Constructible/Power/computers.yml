@@ -207,7 +207,7 @@
   parent: ComputerBase
   id: ComputerComms
   name: communications computer
-  description: This can be used for various important functions. Still under developement.
+  description: This can be used for various important functions. Still under development.
   components:
   - type: Appearance
     visuals:
