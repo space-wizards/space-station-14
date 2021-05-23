@@ -230,7 +230,7 @@ namespace ManagedDoom.Audio
             for (var i = 0; i < infos.Length; i++)
             {
                 var info = infos[i];
-                var channel = channels[i];
+                ref var channel = ref channels[i];
 
                 if (info.Playing != Sfx.NONE)
                 {
