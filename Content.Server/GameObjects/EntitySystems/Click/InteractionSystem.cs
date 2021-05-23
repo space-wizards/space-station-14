@@ -250,8 +250,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!pulledObject.TryGetComponent(out PullableComponent? pull))
                 return false;
 
-            var dist = userEntity.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
-            if (dist.LengthSquared > InteractionRangeSquared)
+            if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
             return pull.TogglePull(userEntity);
@@ -268,12 +267,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             EntityManager.TryGetEntity(clickedUid, out var attacked);
 
-            // Verify player has a transform component
-            if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
-                return;
-
             // Verify player is on the same map as the entity he clicked on
-            if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
+            if (coordinates.GetMapId(_entityManager) != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
