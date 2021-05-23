@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.ActionBlocking;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -180,6 +181,11 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public async void TryUncuff(IEntity user, IEntity? cuffsToRemove = null)
         {
             if (_uncuffing) return;
+            if (user.TryGetComponent<IMobStateComponent>(out var state))
+            {
+                if(state.IsDead() || state.IsIncapacitated())
+                    return;
+            }
 
             var isOwner = user == Owner;
 
@@ -237,7 +243,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 if (cuff.StartUncuffSound != null)
                     SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound, Owner);
             }
-            
+
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
