@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
 using NUnit.Framework;
 using Robust.Shared.Containers;
@@ -68,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
                 origin = entityManager.SpawnEntity(null, coordinates);
-                origin.EnsureComponent<HandsComponent>().AddHand("hand");
+                origin.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 other = entityManager.SpawnEntity(null, coordinates);
                 containerEntity = entityManager.SpawnEntity(null, coordinates);
                 container = ContainerHelpers.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
