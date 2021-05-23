@@ -33,10 +33,10 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when removing the entity from an inventory slot.
+    ///     Raised when removing an entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class UnequippedMessage : HandledEntityEventArgs
+    public class UnequippedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -49,11 +49,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity Unequipped { get; }
 
         /// <summary>
-        ///     Slot where the item was removed from.
+        ///     Slot that the item was removed from.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public UnequippedMessage(IEntity user, IEntity unequipped, EquipmentSlotDefines.Slots slot)
+        public UnequippedEvent(IEntity user, IEntity unequipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
             Unequipped = unequipped;

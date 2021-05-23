@@ -4,8 +4,8 @@
   result: LightTube
   completetime: 500
   materials:
-    steel: 50
-    glass: 50
+    Steel: 50
+    Glass: 50
 
 - type: latheRecipe
   id: LightBulb
@@ -13,8 +13,8 @@
   result: LightBulb
   completetime: 500
   materials:
-    steel: 50
-    glass: 50
+    Steel: 50
+    Glass: 50
 
 - type: latheRecipe
   id: PowerCellSmallHigh
@@ -22,8 +22,8 @@
   result: PowerCellSmallHigh
   completetime: 500
   materials:
-    steel: 100
-    glass: 100
+    Steel: 100
+    Glass: 100
 
 - type: latheRecipe
   id: GlowStickRed
@@ -31,7 +31,7 @@
   result: GlowStickRed
   completetime: 500
   materials:
-    plastic: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: FlareBase
@@ -39,7 +39,7 @@
   result: FlareBase
   completetime: 500
   materials:
-    plastic: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: FlashLightLantern
@@ -47,9 +47,9 @@
   result: FlashLightLantern
   completetime: 500
   materials:
-    steel: 100
-    glass: 100
-    plastic: 100
+    Steel: 100
+    Glass: 100
+    Plastic: 100
 
 - type: latheRecipe
   id:  FireExtinguisher
@@ -57,7 +57,7 @@
   result: FireExtinguisher
   completetime: 500
   materials:
-    steel: 200
+    Steel: 200
 
 - type: latheRecipe
   id: Matchbox
@@ -65,4 +65,4 @@
   result: Matchbox
   completetime: 10
   materials:
-    wood: 100
+    Wood: 100

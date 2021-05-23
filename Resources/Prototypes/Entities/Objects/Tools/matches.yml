@@ -49,5 +49,5 @@
         - state: matchbox
     - type: StorageFill
       contents:
-        - name: Matchstick
+        - id: Matchstick
           amount: 6

@@ -6,7 +6,7 @@
   result: Handcuffs
   completetime: 500
   materials:
-    steel: 300
+    Steel: 300
 
 - type: latheRecipe
   id: Stunbaton
@@ -16,8 +16,8 @@
   result: Stunbaton
   completetime: 500
   materials:
-    steel: 300
-    plastic: 300
+    Steel: 300
+    Plastic: 300
 
 - type: latheRecipe
   id: Flash
@@ -27,6 +27,6 @@
   result: Flash
   completetime: 500
   materials:
-    glass: 100
-    plastic: 200
-    steel: 100
+    Glass: 100
+    Plastic: 200
+    Steel: 100

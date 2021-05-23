@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         public override void Initialize()
         {
-            SubscribeNetworkEvent<DragDropMessage>(HandleDragDropMessage);
+            SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropMessage);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             base.Shutdown();
         }
 
-        private void HandleDragDropMessage(DragDropMessage msg, EntitySessionEventArgs args)
+        private void HandleDragDropMessage(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
             var performer = args.SenderSession.AttachedEntity;
 
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped)) return;
             if (!EntityManager.TryGetEntity(msg.Target, out var target)) return;
 
-            var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
+            var interactionArgs = new DragDropEvent(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
             // Client also does this check but ya know we gotta validate it.
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
-            var activateMsg = new ActivateInWorldMessage(user, used);
+            var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
             {
@@ -404,7 +404,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         private async void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
-            var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
+            var message = new AfterInteractEvent(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(weapon.Uid, message);
             if (message.Handled)
             {
@@ -421,7 +421,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
-            var attackMsg = new InteractUsingMessage(user, weapon, attacked, clickLocation);
+            var attackMsg = new InteractUsingEvent(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(attacked.Uid, attackMsg);
             if (attackMsg.Handled)
                 return;
@@ -442,7 +442,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, true);
+            var afterAtkMsg = new AfterInteractEvent(user, weapon, attacked, clickLocation, true);
             RaiseLocalEvent(weapon.Uid, afterAtkMsg, false);
             if (afterAtkMsg.Handled)
             {
@@ -461,7 +461,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void Interaction(IEntity user, IEntity attacked)
         {
-            var message = new AttackHandMessage(user, attacked);
+            var message = new AttackHandEvent(user, attacked);
             RaiseLocalEvent(attacked.Uid, message);
             if (message.Handled)
                 return;
@@ -514,7 +514,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     delayComponent.BeginDelay();
             }
 
-            var useMsg = new UseInHandMessage(user, used);
+            var useMsg = new UseInHandEvent(user, used);
             RaiseLocalEvent(used.Uid, useMsg);
             if (useMsg.Handled)
             {
@@ -552,7 +552,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void ThrownInteraction(IEntity user, IEntity thrown)
         {
-            var throwMsg = new ThrownMessage(user, thrown);
+            var throwMsg = new ThrownEvent(user, thrown);
             RaiseLocalEvent(thrown.Uid, throwMsg);
             if (throwMsg.Handled)
             {
@@ -575,7 +575,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
         {
-            var equipMsg = new EquippedMessage(user, equipped, slot);
+            var equipMsg = new EquippedEvent(user, equipped, slot);
             RaiseLocalEvent(equipped.Uid, equipMsg);
             if (equipMsg.Handled)
             {
@@ -597,7 +597,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
         {
-            var unequipMsg = new UnequippedMessage(user, equipped, slot);
+            var unequipMsg = new UnequippedEvent(user, equipped, slot);
             RaiseLocalEvent(equipped.Uid, unequipMsg);
             if (unequipMsg.Handled)
             {
@@ -619,7 +619,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void EquippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
         {
-            var equippedHandMessage = new EquippedHandMessage(user, item, hand);
+            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, equippedHandMessage);
             if (equippedHandMessage.Handled)
             {
@@ -640,7 +640,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void UnequippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
         {
-            var unequippedHandMessage = new UnequippedHandMessage(user, item, hand);
+            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, unequippedHandMessage);
             if (unequippedHandMessage.Handled)
             {
@@ -673,7 +673,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedMessage(user, item, intentional);
+            var dropMsg = new DroppedEvent(user, item, intentional);
             RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
             {
@@ -697,7 +697,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
-            var handSelectedMsg = new HandSelectedMessage(user, item);
+            var handSelectedMsg = new HandSelectedEvent(user, item);
             RaiseLocalEvent(item.Uid, handSelectedMsg);
             if (handSelectedMsg.Handled)
             {
@@ -719,7 +719,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {
-            var handDeselectedMsg = new HandDeselectedMessage(user, item);
+            var handDeselectedMsg = new HandDeselectedEvent(user, item);
             RaiseLocalEvent(item.Uid, handDeselectedMsg);
             if (handDeselectedMsg.Handled)
             {
@@ -741,7 +741,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
-            var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
+            var rangedMsg = new RangedInteractEvent(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(attacked.Uid, rangedMsg);
             if (rangedMsg.Handled)
                 return;
@@ -759,7 +759,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, false);
+            var afterAtkMsg = new AfterInteractEvent(user, weapon, attacked, clickLocation, false);
             RaiseLocalEvent(weapon.Uid, afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
@@ -815,7 +815,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, targetUid);
+            var eventArgs = new AttackEvent(player, coordinates, wideAttack, targetUid);
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))

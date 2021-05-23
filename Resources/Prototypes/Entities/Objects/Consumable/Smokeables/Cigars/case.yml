@@ -16,7 +16,7 @@
       size: 8
     - type: StorageFill
       contents:
-        - name: Cigar
+        - id: Cigar
           amount: 8
     - type: StorageCounter
       countTag: Cigar
@@ -44,5 +44,5 @@
   components:
     - type: StorageFill
       contents:
-        - name: CigarGold
+        - id: CigarGold
           amount: 8

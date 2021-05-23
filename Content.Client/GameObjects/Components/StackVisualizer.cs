@@ -8,7 +8,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -60,8 +59,7 @@ namespace Content.Client.GameObjects.Components
         /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
         /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
-        [DataField("stackLayers")]
-        private readonly List<string> _spriteLayers = new();
+        [DataField("stackLayers")] private readonly List<string> _spriteLayers = new();
 
         /// <summary>
         /// Determines if the visualizer uses composite or non-composite layers for icons. Defaults to false.
@@ -76,10 +74,9 @@ namespace Content.Client.GameObjects.Components
         /// </list>
         ///
         /// </summary>
-        [DataField("composite")]
-        private bool _isComposite;
-        [DataField("sprite")]
-        private ResourcePath? _spritePath;
+        [DataField("composite")] private bool _isComposite;
+
+        [DataField("sprite")] private ResourcePath? _spritePath;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -126,7 +123,7 @@ namespace Content.Client.GameObjects.Components
                 maxCount = _spriteLayers.Count;
             }
 
-            var activeLayer = ContentHelpers.RoundToNearestLevels(actual, maxCount, _spriteLayers.Count - 1);
+            var activeLayer = ContentHelpers.RoundToEqualLevels(actual, maxCount, _spriteLayers.Count);
             spriteComponent.LayerSetState(IconLayer, _spriteLayers[activeLayer]);
         }
 

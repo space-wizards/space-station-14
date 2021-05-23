@@ -27,10 +27,10 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when an entity item in a hand is selected.
+    ///     Raised when an item entity held by a hand is selected.
     /// </summary>
     [PublicAPI]
-    public class HandSelectedMessage : HandledEntityEventArgs
+    public class HandSelectedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the selected hand.
@@ -38,11 +38,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity User { get; }
 
         /// <summary>
-        ///     The item in question.
+        ///     Item in the hand that was selected.
         /// </summary>
         public IEntity Item { get; }
 
-        public HandSelectedMessage(IEntity user, IEntity item)
+        public HandSelectedEvent(IEntity user, IEntity item)
         {
             User = user;
             Item = item;

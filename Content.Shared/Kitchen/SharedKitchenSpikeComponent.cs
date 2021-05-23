@@ -22,7 +22,7 @@ namespace Content.Shared.Kitchen
         [DataField("sound")]
         protected string? SpikeSound = "/Audio/Effects/Fluids/splat.ogg";
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!eventArgs.Dragged.HasComponent<SharedButcherableComponent>())
             {
@@ -33,6 +33,6 @@ namespace Content.Shared.Kitchen
             return true;
         }
 
-        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }
