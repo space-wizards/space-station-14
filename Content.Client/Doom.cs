@@ -1,16 +1,15 @@
 ﻿using System;
 using ManagedDoom;
-using Microsoft.CodeAnalysis.Operations;
 using Robust.Client;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using Stopwatch = System.Diagnostics.Stopwatch;
 
 namespace Content.Client
@@ -31,12 +30,13 @@ namespace Content.Client
 
             window.DisposeOnClose = true;
 
-            root.AddChild(new DoomControl((640, 400)));
+            root.AddChild(new DoomControl((640, 400), () => window.Dispose()));
         }
     }
 
     internal sealed class DoomControl : Control
     {
+        private readonly Action _onExit;
         private const int DoomFps = 35;
         private const double DoomSpf = 1f / DoomFps;
 
@@ -48,8 +48,9 @@ namespace Content.Client
         private readonly Stopwatch _stopwatch;
         private double _lastTime;
 
-        public DoomControl(Vector2i size)
+        public DoomControl(Vector2i size, Action onExit)
         {
+            _onExit = onExit;
             IoCManager.InjectDependencies(this);
 
             CanKeyboardFocus = true;
@@ -78,7 +79,11 @@ namespace Content.Client
             {
                 _lastTime += DoomSpf;
                 _application.DoEvents();
-                _application.UpdateAndRender(renderHandle);
+                var res = _application.UpdateAndRender(renderHandle);
+                if (res == UpdateResult.Completed)
+                {
+                    _onExit();
+                }
             }
 
             renderHandle.DrawingHandleScreen.DrawTexture(_renderTarget.Texture, Vector2.Zero);
