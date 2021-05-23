@@ -17,11 +17,17 @@
 
 using System;
 using System.Runtime.ExceptionServices;
+using Robust.Client.Audio;
+using Robust.Client.Graphics;
+using Robust.Shared.IoC;
 
 namespace ManagedDoom.Audio
 {
     public sealed class SfmlSound : ISound, IDisposable
     {
+        [Dependency]
+        private readonly IClydeAudio _clydeAudio = default!;
+
         private static readonly int channelCount = 8;
 
         private static readonly float fastDecay = (float)Math.Pow(0.5, 1.0 / (35 / 5));
@@ -33,15 +39,16 @@ namespace ManagedDoom.Audio
 
         private Config config;
 
-        //private SoundBuffer[] buffers;
+        private AudioStream[] buffers;
         private float[] amplitudes;
 
         private DoomRandom random;
 
-        //private Sound[] channels;
+        private IClydeAudioSource[] channels;
         private ChannelInfo[] infos;
 
-        //private Sound uiChannel;
+        private IClydeAudioSource uiChannel;
+        private AudioStream uiChannelBuffer;
         private Sfx uiReserved;
 
         private Mobj listener;
@@ -52,7 +59,8 @@ namespace ManagedDoom.Audio
 
         public SfmlSound(Config config, Wad wad)
         {
-            /*
+            IoCManager.InjectDependencies(this);
+
             try
             {
                 Console.Write("Initialize sound: ");
@@ -61,7 +69,7 @@ namespace ManagedDoom.Audio
 
                 config.audio_soundvolume = Math.Clamp(config.audio_soundvolume, 0, MaxVolume);
 
-                buffers = new SoundBuffer[DoomInfo.SfxNames.Length];
+                buffers = new AudioStream[DoomInfo.SfxNames.Length];
                 amplitudes = new float[DoomInfo.SfxNames.Length];
 
                 if (config.audio_randompitch)
@@ -83,20 +91,18 @@ namespace ManagedDoom.Audio
                     var samples = GetSamples(wad, name, out sampleRate, out sampleCount);
                     if (samples != null)
                     {
-                        buffers[i] = new SoundBuffer(samples, 1, (uint)sampleRate);
+                        buffers[i] = _clydeAudio.LoadAudioRaw(samples, 1, sampleRate);
                         amplitudes[i] = GetAmplitude(samples, sampleRate, sampleCount);
                     }
                 }
 
-                channels = new Sound[channelCount];
+                channels = new IClydeAudioSource[channelCount];
                 infos = new ChannelInfo[channelCount];
                 for (var i = 0; i < channels.Length; i++)
                 {
-                    channels[i] = new Sound();
                     infos[i] = new ChannelInfo();
                 }
 
-                uiChannel = new Sound();
                 uiReserved = Sfx.NONE;
 
                 masterVolumeDecay = (float)config.audio_soundvolume / MaxVolume;
@@ -111,10 +117,9 @@ namespace ManagedDoom.Audio
                 Dispose();
                 ExceptionDispatchInfo.Throw(e);
             }
-        */
+
         }
 
-        /*
         private static short[] GetSamples(Wad wad, string name, out int sampleRate, out int sampleCount)
         {
             var data = wad.ReadLump(name);
@@ -207,7 +212,6 @@ namespace ManagedDoom.Audio
             }
             return (float)max / 32768;
         }
-        */
 
         public void SetListener(Mobj listener)
         {
@@ -216,7 +220,6 @@ namespace ManagedDoom.Audio
 
         public void Update()
         {
-            /*
             var now = DateTime.Now;
             if ((now - lastUpdate).TotalSeconds < 0.01)
             {
@@ -231,7 +234,7 @@ namespace ManagedDoom.Audio
 
                 if (info.Playing != Sfx.NONE)
                 {
-                    if (channel.Status != SoundStatus.Stopped)
+                    if (channel is {IsPlaying: true})
                     {
                         if (info.Type == SfxType.Diffuse)
                         {
@@ -250,6 +253,10 @@ namespace ManagedDoom.Audio
                         {
                             info.Source = null;
                         }
+
+                        channel?.Dispose();
+                        channel = null;
+                        info.CurStream = null;
                     }
                 }
 
@@ -257,13 +264,16 @@ namespace ManagedDoom.Audio
                 {
                     if (info.Playing != Sfx.NONE)
                     {
-                        channel.Stop();
+                        channel?.Dispose();
                     }
 
-                    channel.SoundBuffer = buffers[(int)info.Reserved];
+                    var buffer = buffers[(int) info.Reserved];
+                    info.CurStream = buffer;
+                    channel = _clydeAudio.CreateAudioSource(buffer);
+                    channel.SetGlobal();
                     SetParam(channel, info);
-                    channel.Pitch = GetPitch(info.Type, info.Reserved);
-                    channel.Play();
+                    channel.SetPitch(GetPitch(info.Type, info.Reserved));
+                    channel.StartPlaying();
                     info.Playing = info.Reserved;
                     info.Reserved = Sfx.NONE;
                 }
@@ -271,30 +281,32 @@ namespace ManagedDoom.Audio
 
             if (uiReserved != Sfx.NONE)
             {
-                if (uiChannel.Status == SoundStatus.Playing)
+                if (uiChannel is {IsPlaying: true})
                 {
-                    uiChannel.Stop();
+                    uiChannel?.Dispose();
                 }
-                uiChannel.Volume = 100 * masterVolumeDecay;
-                uiChannel.SoundBuffer = buffers[(int)uiReserved];
-                uiChannel.Play();
+
+
+                var buffer = buffers[(int)uiReserved];
+                uiChannelBuffer = buffer;
+                uiChannel = _clydeAudio.CreateAudioSource(buffer);
+                uiChannel.SetGlobal();
+                uiChannel.SetVolumeDirect(masterVolumeDecay);
+                uiChannel.StartPlaying();
                 uiReserved = Sfx.NONE;
             }
 
             lastUpdate = now;
-        */
         }
 
         public void StartSound(Sfx sfx)
         {
-            /*
             if (buffers[(int)sfx] == null)
             {
                 return;
             }
 
             uiReserved = sfx;
-        */
         }
 
         public void StartSound(Mobj mobj, Sfx sfx, SfxType type)
@@ -304,7 +316,6 @@ namespace ManagedDoom.Audio
 
         public void StartSound(Mobj mobj, Sfx sfx, SfxType type, int volume)
         {
-            /*
             if (buffers[(int)sfx] == null)
             {
                 return;
@@ -370,12 +381,11 @@ namespace ManagedDoom.Audio
                 info.Type = type;
                 info.Volume = volume;
             }
-        */
         }
 
         public void StopSound(Mobj mobj)
         {
-            /*for (var i = 0; i < infos.Length; i++)
+            for (var i = 0; i < infos.Length; i++)
             {
                 var info = infos[i];
                 if (info.Source == mobj)
@@ -385,12 +395,11 @@ namespace ManagedDoom.Audio
                     info.Source = null;
                     info.Volume /= 5;
                 }
-            }*/
+            }
         }
 
         public void Reset()
         {
-            /*
             if (random != null)
             {
                 random.Clear();
@@ -398,52 +407,48 @@ namespace ManagedDoom.Audio
 
             for (var i = 0; i < infos.Length; i++)
             {
-                channels[i].Stop();
+                channels[i]?.Dispose();
+                channels[i] = null;
                 infos[i].Clear();
             }
 
             listener = null;
-        */
         }
 
         public void Pause()
         {
-            /*
             for (var i = 0; i < infos.Length; i++)
             {
                 var channel = channels[i];
+                var info = infos[i];
 
-                if (channel.Status == SoundStatus.Playing &&
-                    channel.SoundBuffer.Duration - channel.PlayingOffset > Time.FromMilliseconds(200))
+                if (channel is {IsPlaying: true} /*&&
+                    info.CurStream.Length - channel. > Time.FromMilliseconds(200)*/)
                 {
-                    channels[i].Pause();
+                    channels[i].StopPlaying();
                 }
             }
-        */
         }
 
         public void Resume()
         {
-            /*
             for (var i = 0; i < infos.Length; i++)
             {
                 var channel = channels[i];
 
-                if (channel.Status == SoundStatus.Paused)
+                if (channel is {IsPlaying: false})
                 {
-                    channel.Play();
+                    channel.StartPlaying();
                 }
             }
-        */
         }
 
-        /*
-        private void SetParam(Sound sound, ChannelInfo info)
+        private void SetParam(IClydeAudioSource sound, ChannelInfo info)
         {
             if (info.Type == SfxType.Diffuse)
             {
-                sound.Position = new Vector3f(0, 1, 0);
-                sound.Volume = masterVolumeDecay * info.Volume;
+                _ = sound.SetPosition((0, 1));
+                sound.SetVolumeDirect(masterVolumeDecay * info.Volume / 100);
             }
             else
             {
@@ -465,19 +470,18 @@ namespace ManagedDoom.Audio
 
                 if (Math.Abs(x) < 16 && Math.Abs(y) < 16)
                 {
-                    sound.Position = new Vector3f(0, 1, 0);
-                    sound.Volume = masterVolumeDecay * info.Volume;
+                    _ = sound.SetPosition((0, 1));
+                    sound.SetVolumeDirect(masterVolumeDecay * info.Volume / 100);
                 }
                 else
                 {
                     var dist = MathF.Sqrt(x * x + y * y);
                     var angle = MathF.Atan2(y, x) - (float)listener.Angle.ToRadian() + MathF.PI / 2;
-                    sound.Position = new Vector3f(MathF.Cos(angle), MathF.Sin(angle), 0);
-                    sound.Volume = masterVolumeDecay * GetDistanceDecay(dist) * info.Volume;
+                    _ = sound.SetPosition((MathF.Cos(angle), MathF.Sin(angle)));
+                    sound.SetVolumeDirect(masterVolumeDecay * GetDistanceDecay(dist) * info.Volume / 100);
                 }
             }
         }
-        */
 
         private float GetDistanceDecay(float dist)
         {
@@ -516,7 +520,7 @@ namespace ManagedDoom.Audio
 
         public void Dispose()
         {
-            /*Console.WriteLine("Shutdown sound.");
+            Console.WriteLine("Shutdown sound.");
 
             if (channels != null)
             {
@@ -524,7 +528,6 @@ namespace ManagedDoom.Audio
                 {
                     if (channels[i] != null)
                     {
-                        channels[i].Stop();
                         channels[i].Dispose();
                         channels[i] = null;
                     }
@@ -538,7 +541,8 @@ namespace ManagedDoom.Audio
                 {
                     if (buffers[i] != null)
                     {
-                        buffers[i].Dispose();
+                        // TODO: audiostream cannot be disposed right now
+                        // buffers[i].Dispose();
                         buffers[i] = null;
                     }
                 }
@@ -549,7 +553,7 @@ namespace ManagedDoom.Audio
             {
                 uiChannel.Dispose();
                 uiChannel = null;
-            }*/
+            }
         }
 
         public int MaxVolume
@@ -588,6 +592,8 @@ namespace ManagedDoom.Audio
             public Fixed LastX;
             public Fixed LastY;
 
+            public AudioStream CurStream;
+
             public void Clear()
             {
                 Reserved = Sfx.NONE;
@@ -598,6 +604,7 @@ namespace ManagedDoom.Audio
                 Volume = 0;
                 LastX = Fixed.Zero;
                 LastY = Fixed.Zero;
+                CurStream = null;
             }
         }
     }
