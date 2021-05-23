@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.Strap
     [ComponentReference(typeof(SharedStrapComponent))]
     public class StrapComponent : SharedStrapComponent
     {
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
         }

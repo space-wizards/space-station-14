@@ -21,17 +21,17 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractMessage>(HandleAfterInteract);
+            SubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractEvent>(HandleAfterInteract);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractMessage>(HandleAfterInteract);
+            UnsubscribeLocalEvent<SpawnAfterInteractComponent, AfterInteractEvent>(HandleAfterInteract);
         }
 
-        private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractMessage args)
+        private async void HandleAfterInteract(EntityUid uid, SpawnAfterInteractComponent component, AfterInteractEvent args)
         {
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
