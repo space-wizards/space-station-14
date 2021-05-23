@@ -1137,3 +1137,8 @@ Entries:
   - {message: StackVisualizer now correctly displays levels, type: Fix}
   id: 202
   time: '2021-05-23T04:05:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Hopefully fix power equipment disappearing., type: Fix}
+  id: 203
+  time: '2021-05-23T18:18:36.0000000+00:00'
