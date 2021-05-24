@@ -1,4 +1,4 @@
-﻿# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
+# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
 # The technology tree is using this layout - https://tgstation13.org/wiki//images/thumb/f/f4/ResearchTree.png/800px-ResearchTree.png
 
 # Base Technology
@@ -11,6 +11,22 @@
     sprite: Constructible/Power/server.rsi
     state: server-on
   requiredPoints: 2500
+
+# Cleaning Technology Tree
+
+- type: technology
+  name: "cleaning technology"
+  id: MopBucket 
+  description: Start to a shiny clean station
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - Bucket
+    - MopItem
 
 # Biological Technology Tree
 
@@ -27,6 +43,7 @@
   unlockedRecipes:
     - Scythe
     - Hatchet
+    - KitchenKnife  
 
 - type: technology
   name: "advanced botany"
@@ -40,6 +57,7 @@
     - BiologicalTechnology
   unlockedRecipes:
     - Shovel
+    - ButchCleaver
 
 - type: technology
   name: "advanced surgery"
@@ -94,7 +112,23 @@
     - Handcuffs
     - Stunbaton
 
-# - type: technology
+- type: technology
+  name: "ballistic technology"
+  id: BallisticTechnology
+  description: Just a fancy term for guns.
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    state: icon
+  requiredPoints: 15000
+  requiredTechnologies:
+     - SecurityTechnology
+  unlockedRecipes:
+    - CartridgePistolBase
+    - ShellShotgunBase
+    - CartridgeLRifleBase
+    - CartridgeMagnumBase
+
+#- type: technology
 #   name: "ballistic technology"
 #   id: BallisticTechnology
 #   description: Just a fancy term for guns.
@@ -167,6 +201,8 @@
     - ConveyorAssembly
     - RCD
     - RCDAmmo
+    - FlashlightLantern
+    - FireExtinguisher
 
 - type: technology
   name: material sheet printing
@@ -178,6 +214,8 @@
     - IndustrialEngineering
   unlockedRecipes:
     - SheetSteel
+    - SheetPlastic
+    - SheetRGlass
     - GlassStack
 
 # Electromagnetic Theory Technology Tree
@@ -194,8 +232,8 @@
     - BasicResearch
   unlockedRecipes:
     - CableStack
-    - LightTube
     - LightBulb
+    - LightTube
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
