@@ -7,7 +7,6 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.ActionBlocking;
-using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
