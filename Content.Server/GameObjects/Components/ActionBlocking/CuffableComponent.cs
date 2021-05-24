@@ -181,11 +181,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public async void TryUncuff(IEntity user, IEntity? cuffsToRemove = null)
         {
             if (_uncuffing) return;
-            if (user.TryGetComponent<IMobStateComponent>(out var state))
-            {
-                if(state.IsDead() || state.IsIncapacitated())
-                    return;
-            }
 
             var isOwner = user == Owner;
 
@@ -212,7 +207,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            if (!isOwner && !ActionBlockerSystem.CanInteract(user))
+            if (!ActionBlockerSystem.CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("You can't do that!"));
                 return;
