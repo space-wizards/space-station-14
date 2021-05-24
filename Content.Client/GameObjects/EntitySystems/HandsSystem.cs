@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems
             EntityManager.RaisePredictiveEvent(new SwapHandsMessage());
         }
 
-        private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid) //TODO: what are the implications of returning true/false from this?
+        private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             EntityManager.RaisePredictiveEvent(new DropMessage(coords));
             return true;

@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
@@ -208,6 +209,9 @@ namespace Content.Client.GameObjects.Components.Items
         private void RunPickupAnimation(PickupAnimationMessage msg)
         {
             if (!Owner.EntityManager.TryGetEntity(msg.EntityUid, out var entity))
+                return;
+
+            if (!IoCManager.Resolve<IGameTiming>().IsFirstTimePredicted)
                 return;
 
             ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.PickupDirection);
