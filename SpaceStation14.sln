@@ -94,6 +94,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Base", "RobustTool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Benchmarks", "RobustToolbox\Robust.Benchmarks\Robust.Benchmarks.csproj", "{8A21C7CA-2EB8-40E5-8043-33582C06D139}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedDoom", "ManagedDoom\ManagedDoom.csproj", "{C8F031C2-F2D7-4F2A-B568-754198803808}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +221,10 @@ Global
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F031C2-F2D7-4F2A-B568-754198803808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F031C2-F2D7-4F2A-B568-754198803808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F031C2-F2D7-4F2A-B568-754198803808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F031C2-F2D7-4F2A-B568-754198803808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
