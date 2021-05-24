@@ -11,7 +11,7 @@
 - type: latheRecipe
   id: KitchenKnife
   icon:
-    sprite: Objects/Weapons/Melee/Kitchen_knife.rsi
+    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     state: icon
   result: KitchenKnife 
   completetime: 500
