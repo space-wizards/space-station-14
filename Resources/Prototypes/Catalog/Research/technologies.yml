@@ -27,6 +27,7 @@
   unlockedRecipes:
     - Bucket
     - MopItem
+    - SprayBottle
 
 # Biological Technology Tree
 

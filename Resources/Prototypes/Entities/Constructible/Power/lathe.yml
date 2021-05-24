@@ -170,6 +170,7 @@
       - KitchenKnife
       - ButchCleaver
       - FlashlightLantern
+      - SprayBottle
 
   - type: UserInterface
     interfaces:
