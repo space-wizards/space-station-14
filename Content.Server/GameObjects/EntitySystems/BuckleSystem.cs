@@ -21,6 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems
             UpdatesAfter.Add(typeof(InputSystem));
 
             SubscribeLocalEvent<MoveEvent>(MoveEvent);
+            SubscribeLocalEvent<RotateEvent>(RotateEvent);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(ContainerModified);
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(ContainerModified);
 
@@ -32,6 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
 
             UnsubscribeLocalEvent<MoveEvent>();
+            UnsubscribeLocalEvent<RotateEvent>();
             UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
             UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
 
@@ -73,6 +75,25 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             buckle.TryUnbuckle(buckle.Owner, true);
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            // On rotation of a strap, reattach all buckled entities.
+            // This fixes buckle offsets and draw depths.
+            if (!ev.Sender.TryGetComponent(out StrapComponent? strap))
+            {
+                return;
+            }
+            foreach (var buckledEntity in strap.BuckledEntities)
+            {
+                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
+                {
+                    continue;
+                }
+                buckled.ReAttach(strap);
+                buckled.Dirty();
+            }
         }
 
         private void ContainerModified(ContainerModifiedMessage message)
