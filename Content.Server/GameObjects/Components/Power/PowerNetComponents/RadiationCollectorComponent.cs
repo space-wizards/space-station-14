@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
@@ -22,6 +23,16 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override string Name => "RadiationCollector";
         private bool _enabled;
         private TimeSpan _coolDownEnd;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Collecting {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                SetAppearance(_enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
+            }
+        }
 
         [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default!;
 
@@ -40,30 +51,18 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
             if (!_enabled)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The collector turns on."));
-                EnableCollection();
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-on"));
+                Collecting = true;
             }
             else
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The collector turns off."));
-                DisableCollection();
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-off"));
+                Collecting = false;
             }
 
             _coolDownEnd = curTime + TimeSpan.FromSeconds(0.81f);
 
             return true;
-        }
-
-        void EnableCollection()
-        {
-            _enabled = true;
-            SetAppearance(RadiationCollectorVisualState.Activating);
-        }
-
-        void DisableCollection()
-        {
-            _enabled = false;
-            SetAppearance(RadiationCollectorVisualState.Deactivating);
         }
 
         void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
