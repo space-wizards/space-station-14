@@ -1147,3 +1147,10 @@ Entries:
   - {message: Added new technologies and recipes to the lathe., type: Add}
   id: 204
   time: '2021-05-24T00:38:26.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Particle Accelerator particles actually affect singularity & singularity
+      generator again, type: Fix}
+  - {message: Singularity doesn't instantly escape all containment, type: Fix}
+  id: 205
+  time: '2021-05-24T04:14:15.0000000+00:00'
