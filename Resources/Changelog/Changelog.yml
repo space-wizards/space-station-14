@@ -1142,3 +1142,8 @@ Entries:
   - {message: Hopefully fix power equipment disappearing., type: Fix}
   id: 203
   time: '2021-05-23T18:18:36.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added new technologies and recipes to the lathe., type: Add}
+  id: 204
+  time: '2021-05-24T00:38:26.0000000+00:00'
