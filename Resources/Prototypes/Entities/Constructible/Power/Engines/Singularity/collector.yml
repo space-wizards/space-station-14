@@ -40,4 +40,5 @@
         nodeGroupID: HVPower
   - type: RadiationCollector
   - type: Anchorable
+  - type: Rotatable
   - type: Pullable
