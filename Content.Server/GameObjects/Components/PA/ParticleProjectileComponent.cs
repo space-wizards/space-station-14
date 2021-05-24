@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.PA
                     _ => 0
                 };
                 singularityComponent.Energy += 10 * multiplier;
-                Owner.Delete();
+                Owner.QueueDelete();
             }
             else if (otherFixture.Body.Owner.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
             {

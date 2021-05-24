@@ -32,7 +32,7 @@ namespace Content.Shared.GameObjects.Components.Strap
 
         public sealed override uint? NetID => ContentNetIDs.STRAP;
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!eventArgs.Dragged.TryGetComponent(out SharedBuckleComponent? buckleComponent)) return false;
             bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.Components.Strap
             return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }
 
-        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 
     [Serializable, NetSerializable]

@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SheetGlass
+      - id: SheetGlass
         amount: 3
 
 - type: entity
@@ -15,7 +15,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SheetSteel
+      - id: SheetSteel
         amount: 3
 
 - type: entity
@@ -25,7 +25,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SheetPlastic
+      - id: SheetPlastic
         amount: 3
 
 - type: entity
@@ -35,7 +35,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: MaterialWoodPlank
+      - id: MaterialWoodPlank
         amount: 1
 
 - type: entity
@@ -45,7 +45,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: WeldingFuelTank
+      - id: WeldingFuelTank
         amount: 1
 
 #- type: entity
@@ -55,7 +55,7 @@
 #  components:
 #  - type: StorageFill
 #    contents:
-#      - name: WeldingFuelTank
+#      - id: WeldingFuelTank
 #        amount: 1
 
 - type: entity
@@ -65,7 +65,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: WaterTankFull
+      - id: WaterTankFull
         amount: 1
 
 #- type: entity
@@ -75,7 +75,7 @@
 #  components:
 #  - type: StorageFill
 #    contents:
-#      - name: WaterTankFull
+#      - id: WaterTankFull
 #        amount: 1
 
 - type: entity
@@ -85,5 +85,5 @@
   components:
   - type: StorageFill
     contents:
-      - name: SheetPlasteel
+      - id: SheetPlasteel
         amount: 1

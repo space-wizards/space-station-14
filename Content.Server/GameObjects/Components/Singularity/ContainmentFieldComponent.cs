@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             if (Parent == null)
             {
-                Owner.Delete();
+                Owner.QueueDelete();
                 return;
             }
 

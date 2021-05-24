@@ -206,7 +206,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            if (!isOwner && !ActionBlockerSystem.CanInteract(user))
+            if (!ActionBlockerSystem.CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("You can't do that!"));
                 return;
@@ -237,7 +237,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 if (cuff.StartUncuffSound != null)
                     SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound, Owner);
             }
-            
+
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {

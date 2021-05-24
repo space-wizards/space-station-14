@@ -66,12 +66,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("clickAttackEffect")] public bool ClickAttackEffect { get; set; } = true;
 
-        protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
+        protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEvent eventArgs)
         {
             return true;
         }
 
-        bool IAttack.WideAttack(AttackEventArgs eventArgs)
+        bool IAttack.WideAttack(AttackEvent eventArgs)
         {
             if (!eventArgs.WideAttack) return true;
 
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        bool IAttack.ClickAttack(AttackEventArgs eventArgs)
+        bool IAttack.ClickAttack(AttackEvent eventArgs)
         {
             if (eventArgs.WideAttack) return false;
 

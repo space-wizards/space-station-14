@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Access
 {
@@ -33,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Access
         private ContainerSlot _targetIdContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
         private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
@@ -218,6 +220,7 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 return;
             }
+            if(!Powered) return;
 
             UserInterface?.Open(actor.PlayerSession);
         }

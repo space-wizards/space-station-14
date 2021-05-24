@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             if(DeleteOnCollide)
-                Owner.Delete();
+                Owner.QueueDelete();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

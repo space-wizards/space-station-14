@@ -135,6 +135,8 @@
       - LightBulb
       - SheetSteel
       - GlassStack
+      - SheetRGlass
+      - SheetPlastic
       - CableStack
       - ConveyorAssembly
       - RCD
@@ -155,9 +157,19 @@
       - Flash
       - Handcuffs
       - Stunbaton
+      - CartridgePistolBase
+      - ShellShotgunBase
+      - CartridgeLRifleBase
+      - CartridgeMagnumBase
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - Bucket
+      - MopItem
+      - FireExtinguisher
+      - KitchenKnife
+      - ButchCleaver
+      - FlashlightLantern
 
   - type: UserInterface
     interfaces:
