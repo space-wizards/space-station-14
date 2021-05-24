@@ -32,7 +32,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity that was thrown lands.
     /// </summary>
     [PublicAPI]
-    public class LandMessage : HandledEntityEventArgs
+    public class LandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that threw the item.
@@ -49,7 +49,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public EntityCoordinates LandLocation { get; }
 
-        public LandMessage(IEntity? user, IEntity thrown, EntityCoordinates landLocation)
+        public LandEvent(IEntity? user, IEntity thrown, EntityCoordinates landLocation)
         {
             User = user;
             Thrown = thrown;

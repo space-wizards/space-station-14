@@ -219,7 +219,7 @@ namespace Content.Server.GameObjects.Components.Strap
             }
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);

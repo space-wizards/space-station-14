@@ -2,6 +2,7 @@ using Content.Client.GameObjects.Components.IconSmoothing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Map;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components
@@ -35,11 +36,11 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        internal override void CalculateNewSprite()
+        internal override void CalculateNewSprite(IMapGrid grid)
         {
-            base.CalculateNewSprite();
+            base.CalculateNewSprite(grid);
 
-            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill();
+            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill(grid);
 
             if (Sprite != null)
             {

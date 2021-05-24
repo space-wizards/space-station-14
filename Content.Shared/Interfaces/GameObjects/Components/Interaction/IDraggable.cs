@@ -23,7 +23,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     The information about the drag, such as who is doing it.
         /// </param>
         /// <returns>True if the drag should be initiated, false otherwise.</returns>
-        bool CanStartDrag(StartDragDropEventArgs args)
+        bool CanStartDrag(StartDragDropEvent args)
         {
             return true;
         }
@@ -39,7 +39,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     True if target is a valid target to be dropped on by this component's
         ///     entity, false otherwise.
         /// </returns>
-        bool CanDrop(CanDropEventArgs args);
+        bool CanDrop(CanDropEvent args);
 
         /// <summary>
         ///     Invoked when this component's entity is being dropped on another.
@@ -52,73 +52,74 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     True if an interaction occurred and no further interaction should
         ///     be processed for this drop, false otherwise.
         /// </returns>
-        bool Drop(DragDropEventArgs args)
+        bool Drop(DragDropEvent args)
         {
             return false;
         }
     }
 
-    public class StartDragDropEventArgs : EntityEventArgs
+    public class StartDragDropEvent : EntityEventArgs
     {
         /// <summary>
-        ///     Creates a new instance of <see cref="StartDragDropEventArgs"/>.
-        /// </summary>
-        /// <param name="user">The entity doing the drag and drop.</param>
-        /// <param name="dragged">The entity that is being dragged and dropped.</param>
-        public StartDragDropEventArgs(IEntity user, IEntity dragged)
-        {
-            User = user;
-            Dragged = dragged;
-        }
-
-        /// <summary>
-        ///     The entity doing the drag and drop.
+        ///     Entity doing the drag and drop.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     The entity that is being dragged.
+        ///     Entity that is being dragged.
         /// </summary>
         public IEntity Dragged { get; }
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="StartDragDropEvent"/>.
+        /// </summary>
+        /// <param name="user">The entity doing the drag and drop.</param>
+        /// <param name="dragged">The entity that is being dragged and dropped.</param>
+        public StartDragDropEvent(IEntity user, IEntity dragged)
+        {
+            User = user;
+            Dragged = dragged;
+        }
     }
 
-    public class CanDropEventArgs : StartDragDropEventArgs
+    public class CanDropEvent : StartDragDropEvent
     {
         /// <summary>
-        ///     Creates a new instance of <see cref="CanDropEventArgs"/>.
+        ///     The entity that <see cref="StartDragDropEvent.Dragged"/>
+        ///     is being dropped onto.
+        /// </summary>
+        public IEntity Target { get; }
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="CanDropEvent"/>.
         /// </summary>
         /// <param name="user">The entity doing the drag and drop.</param>
         /// <param name="dragged">The entity that is being dragged and dropped.</param>
         /// <param name="target">The entity that <see cref="dropped"/> is being dropped onto.</param>
-        public CanDropEventArgs(IEntity user, IEntity dragged, IEntity target) : base(user, dragged)
+        public CanDropEvent(IEntity user, IEntity dragged, IEntity target) : base(user, dragged)
         {
             Target = target;
         }
-
-        /// <summary>
-        ///     The entity that <see cref="StartDragDropEventArgs.Dragged"/>
-        ///     is being dropped onto.
-        /// </summary>
-        public IEntity Target { get; }
     }
 
-    public class DragDropEventArgs : CanDropEventArgs
+    public class DragDropEvent : CanDropEvent
     {
         /// <summary>
-        ///     Creates a new instance of <see cref="DragDropEventArgs"/>.
+        ///     The location where <see cref="StartDragDropEvent.Dragged"/>
+        ///     is being dropped.
+        /// </summary>
+        public EntityCoordinates DropLocation { get; }
+
+        /// <summary>
+        ///     Creates a new instance of <see cref="DragDropEvent"/>.
         /// </summary>
         /// <param name="user">The entity doing the drag and drop.</param>
         /// <param name="dropLocation">The location where <see cref="dropped"/> is being dropped.</param>
         /// <param name="dragged">The entity that is being dragged and dropped.</param>
         /// <param name="target">The entity that <see cref="dropped"/> is being dropped onto.</param>
-        public DragDropEventArgs(IEntity user, EntityCoordinates dropLocation, IEntity dragged, IEntity target) : base(user, dragged, target)
+        public DragDropEvent(IEntity user, EntityCoordinates dropLocation, IEntity dragged, IEntity target) : base(user, dragged, target)
         {
             DropLocation = dropLocation;
         }
-        /// <summary>
-        ///     The location where <see cref="StartDragDropEventArgs.Dragged"/>
-        ///     is being dropped.
-        /// </summary>
-        public EntityCoordinates DropLocation { get; }
     }
 }

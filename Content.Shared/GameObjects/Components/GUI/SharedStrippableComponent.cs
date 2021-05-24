@@ -21,14 +21,14 @@ namespace Content.Shared.GameObjects.Components.GUI
                    && ActionBlockerSystem.CanInteract(by);
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target != args.Dragged
                    && args.Target == args.User
                    && CanBeStripped(args.User);
         }
 
-        public abstract bool Drop(DragDropEventArgs args);
+        public abstract bool Drop(DragDropEvent args);
 
         [NetSerializable, Serializable]
         public enum StrippingUiKey
