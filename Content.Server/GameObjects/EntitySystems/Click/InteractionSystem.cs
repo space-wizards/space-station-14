@@ -267,8 +267,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             EntityManager.TryGetEntity(clickedUid, out var attacked);
 
+            // Verify player has a transform component
+            if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
+                return;
+
             // Verify player is on the same map as the entity he clicked on
-            if (coordinates.GetMapId(_entityManager) != player.Transform.MapID)
+            if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -307,7 +311,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
-                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(EntityManager)).LengthSquared;
+                    var distSqrt = (player.Transform.WorldPosition - coordinates.ToMapPos(EntityManager)).LengthSquared;
                     InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
