@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void TryInteractionActivate(IEntity? user, IEntity? used)
         {
-            if (user == null || used == null || !ActionBlockerSystem.CanUse(user))
+            if (user == null || used == null)
                 return;
 
             InteractionActivate(user, used);
@@ -168,6 +168,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
+            if (!ActionBlockerSystem.CanInteract(user) || ! ActionBlockerSystem.CanUse(user))
+                return;
+
             // all activates should only fire when in range / unbostructed
             if (!InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
                 return;
@@ -195,9 +198,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (userEntity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-            {
                 DoAttack(userEntity, coords, true);
-            }
 
             return true;
         }
@@ -212,9 +213,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         internal void AiUseInteraction(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
             if (entity.HasComponent<ActorComponent>())
-            {
                 throw new InvalidOperationException();
-            }
 
             UserInteraction(entity, coords, uid);
         }
@@ -241,16 +240,16 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
+            if (userEntity.Uid == uid)
+                return false;
+
             if (!EntityManager.TryGetEntity(uid, out var pulledObject))
                 return false;
 
-            if (userEntity == pulledObject)
+            if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
             if (!pulledObject.TryGetComponent(out PullableComponent? pull))
-                return false;
-
-            if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
             return pull.TogglePull(userEntity);
@@ -263,9 +262,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 DoAttack(player, coordinates, false, clickedUid);
                 return;
             }
-
-            // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
-            EntityManager.TryGetEntity(clickedUid, out var attacked);
 
             // Verify player has a transform component
             if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
@@ -289,6 +285,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (!ActionBlockerSystem.CanInteract(player))
                 return;
+
+            // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
+            EntityManager.TryGetEntity(clickedUid, out var attacked);
 
             // In a container where the attacked entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
