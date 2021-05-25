@@ -143,11 +143,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _meatPrototype = butcherable.MeatPrototype;
             _meatParts = 5;
-            _meatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victim));
-            _meatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victim));
+            _meatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victim.Name));
+            _meatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victim.Name));
             // TODO: This could stand to be improved somehow, but it'd require Name to be much 'richer' in detail than it presently is.
             // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
-            _meatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victim));
+            _meatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victim.Name));
 
             // TODO: Visualizer
             if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
