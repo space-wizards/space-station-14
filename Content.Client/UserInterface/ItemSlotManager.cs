@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Storage;
+using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
@@ -102,6 +102,7 @@ namespace Content.Client.UserInterface
             }
 
             if (entity == null ||
+                entity.Deleted ||
                 !entity.TryGetComponent(out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)
