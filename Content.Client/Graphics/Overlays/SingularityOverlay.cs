@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using System.Collections.Generic;
 using Robust.Client.Graphics;
 using System.Linq;
+using System;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Content.Client.GameObjects.Components.Singularity;
@@ -17,7 +18,6 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -40,22 +40,28 @@ namespace Content.Client.Graphics.Overlays
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            SingularityQuery();
+            SingularityQuery(args.Viewport.Eye);
 
+            var viewportWB = args.WorldBounds;
+            // This is a blatant cheat.
+            // The correct way of doing this would be if the singularity shader performed the matrix transforms.
+            // I don't need to explain why I'm not doing that.
+            var resolution = Math.Max(0.125f, Math.Min(args.Viewport.RenderScale.X, args.Viewport.RenderScale.Y));
             foreach (SingularityShaderInstance instance in _singularities.Values)
             {
-                var tempCoords = _eyeManager.WorldToScreen(instance.CurrentMapCoords);
-                tempCoords.Y = _displayManager.ScreenSize.Y - tempCoords.Y;
+                // To be clear, this needs to use "inside-viewport" pixels.
+                // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
+                var tempCoords = args.Viewport.WorldToLocal(instance.CurrentMapCoords);
+                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
                 _shader?.SetParameter("positionInput", tempCoords);
                 if (ScreenTexture != null)
                     _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-                _shader?.SetParameter("intensity", LevelToIntensity(instance.Level));
-                _shader?.SetParameter("falloff", LevelToFalloff(instance.Level));
+                _shader?.SetParameter("intensity", instance.Intensity / resolution);
+                _shader?.SetParameter("falloff", instance.Falloff / resolution);
 
                 var worldHandle = args.WorldHandle;
                 worldHandle.UseShader(_shader);
-                var viewport = _eyeManager.GetWorldViewport();
-                worldHandle.DrawRect(viewport, Color.White);
+                worldHandle.DrawRect(viewportWB, Color.White);
             }
 
         }
@@ -64,19 +70,24 @@ namespace Content.Client.Graphics.Overlays
 
         //Queries all singulos on the map and either adds or removes them from the list of rendered singulos based on whether they should be drawn (in range? on the same z-level/map? singulo entity still exists?)
         private float _maxDist = 15.0f;
-        private void SingularityQuery()
+        private void SingularityQuery(IEye? currentEye)
         {
-            var currentEyeLoc = _eyeManager.CurrentEye.Position;
-            var currentMap = _eyeManager.CurrentMap; //TODO: support multiple viewports once it is added
+            if (currentEye == null)
+            {
+                _singularities.Clear();
+                return;
+            }
+            var currentEyeLoc = currentEye.Position;
+            var currentMap = currentEye.Position.MapId;
 
             var singuloComponents = _componentManager.EntityQuery<IClientSingularityInstance>();
             foreach (var singuloInterface in singuloComponents) //Add all singulos that are not added yet but qualify
             {
                 var singuloComponent = (Component)singuloInterface;
                 var singuloEntity = singuloComponent.Owner;
-                if (!_singularities.Keys.Contains(singuloEntity.Uid) && singuloEntity.Transform.MapID == currentMap && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
+                if (!_singularities.Keys.Contains(singuloEntity.Uid) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {
-                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(singuloEntity.Transform.MapPosition.Position, singuloInterface.Level));
+                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(singuloEntity.Transform.MapPosition.Position, singuloInterface.Intensity, singuloInterface.Falloff));
                 }
             }
 
@@ -85,7 +96,7 @@ namespace Content.Client.Graphics.Overlays
             {
                 if (_entityManager.TryGetEntity(activeSinguloUid, out IEntity? singuloEntity))
                 {
-                    if (singuloEntity.Transform.MapID != currentMap || !singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist))
+                    if (!SinguloQualifies(singuloEntity, currentEyeLoc))
                     {
                         _singularities.Remove(activeSinguloUid);
                     }
@@ -99,7 +110,8 @@ namespace Content.Client.Graphics.Overlays
                         {
                             var shaderInstance = _singularities[activeSinguloUid];
                             shaderInstance.CurrentMapCoords = singuloEntity.Transform.MapPosition.Position;
-                            shaderInstance.Level = singuloInterface.Level;
+                            shaderInstance.Intensity = singuloInterface.Intensity;
+                            shaderInstance.Falloff = singuloInterface.Falloff;
                         }
                     }
 
@@ -112,62 +124,21 @@ namespace Content.Client.Graphics.Overlays
 
         }
 
-
-
-
-        //I am lazy
-        private float LevelToIntensity(int level)
+        private bool SinguloQualifies(IEntity singuloEntity, MapCoordinates currentEyeLoc)
         {
-            switch (level)
-            {
-                case 0:
-                    return 0.0f;
-                case 1:
-                    return 2.7f;
-                case 2:
-                    return 14.4f;
-                case 3:
-                    return 47.2f;
-                case 4:
-                    return 180.0f;
-                case 5:
-                    return 600.0f;
-                case 6:
-                    return 800.0f;
-
-            }
-            return -1.0f;
-        }
-        private float LevelToFalloff(int level)
-        {
-            switch (level)
-            {
-                case 0:
-                    return 9999f;
-                case 1:
-                    return 6.4f;
-                case 2:
-                    return 7.0f;
-                case 3:
-                    return 8.0f;
-                case 4:
-                    return 10.0f;
-                case 5:
-                    return 12.0f;
-                case 6:
-                    return 12.0f;
-            }
-            return -1.0f;
+            return singuloEntity.Transform.MapID == currentEyeLoc.MapId && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist);
         }
 
         private sealed class SingularityShaderInstance
         {
             public Vector2 CurrentMapCoords;
-            public int Level;
-            public SingularityShaderInstance(Vector2 mapCoords, int level)
+            public float Intensity;
+            public float Falloff;
+            public SingularityShaderInstance(Vector2 mapCoords, float intensity, float falloff)
             {
                 CurrentMapCoords = mapCoords;
-                Level = level;
+                Intensity = intensity;
+                Falloff = falloff;
             }
         }
     }
