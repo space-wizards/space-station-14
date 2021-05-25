@@ -22,14 +22,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         {
             public EntityEventHandler<AttackEvent> AttackEvent;
             public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
-            public EntityEventHandler<AttackHandEvent> InteractHandEvent;
+            public EntityEventHandler<InteractHandEvent> InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
                 SubscribeLocalEvent<AttackEvent>((e) => AttackEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
-                SubscribeLocalEvent<AttackHandEvent>((e) => InteractHandEvent?.Invoke(e));
+                SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
             }
 
             public override void Shutdown()
@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 base.Shutdown();
                 UnsubscribeLocalEvent<AttackEvent>();
                 UnsubscribeLocalEvent<InteractUsingEvent>();
-                UnsubscribeLocalEvent<AttackHandEvent>();
+                UnsubscribeLocalEvent<InteractHandEvent>();
             }
         }
 

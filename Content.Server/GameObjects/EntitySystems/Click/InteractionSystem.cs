@@ -376,7 +376,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
 
-            // all AttackBys should only happen when in range / unobstructed, so no range check is needed
+            // all interactions should only happen when in range / unobstructed, so no range check is needed
             if (InRangeUnobstructed(user, attacked, ignoreInsideBlocker: true, popup: true))
             {
                 var attackMsg = new InteractUsingEvent(user, weapon, attacked, clickLocation);
@@ -405,8 +405,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
-            await DoAfterInteract(weapon, afterAttackEventArgs);
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (InRangeUnobstructed(user, attacked, ignoreInsideBlocker: true, popup: true))
             {
-                var message = new AttackHandEvent(user, attacked);
+                var message = new InteractHandEvent(user, attacked);
                 RaiseLocalEvent(attacked.Uid, message);
                 if (message.Handled)
                     return;
@@ -703,13 +703,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (rangedMsg.Handled)
                 return;
 
-            var rangedAttackBys = attacked.GetAllComponents<IRangedInteract>().ToList();
-            var rangedAttackByEventArgs = new RangedInteractEventArgs(user, weapon, clickLocation);
+            var rangedInteractions = attacked.GetAllComponents<IRangedInteract>().ToList();
+            var rangedInteractionEventArgs = new RangedInteractEventArgs(user, weapon, clickLocation);
 
             // See if we have a ranged attack interaction
-            foreach (var t in rangedAttackBys)
+            foreach (var t in rangedInteractions)
             {
-                if (t.RangedInteract(rangedAttackByEventArgs))
+                if (t.RangedInteract(rangedInteractionEventArgs))
                 {
                     // If an InteractUsing returns a status completion we finish our attack
                     return;
@@ -722,17 +722,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
 
             // See if we have a ranged attack interaction
-            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
-            await DoAfterInteract(weapon, afterAttackEventArgs);
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
-        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterInteractEventArgs)
         {
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
 
-            foreach (var afterAttack in afterAttacks)
+            foreach (var afterInteract in afterInteracts)
             {
-                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                if (await afterInteract.AfterInteract(afterInteractEventArgs))
                 {
                     return;
                 }

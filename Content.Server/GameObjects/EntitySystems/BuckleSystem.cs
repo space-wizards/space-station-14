@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(ContainerModified);
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(ContainerModified);
 
-            SubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
+            SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleAttackHand);
         }
 
         public override void Shutdown()
@@ -35,10 +35,10 @@ namespace Content.Server.GameObjects.EntitySystems
             UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
             UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
 
-            UnsubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
+            UnsubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleAttackHand);
         }
 
-        private void HandleAttackHand(EntityUid uid, BuckleComponent component, AttackHandEvent args)
+        private void HandleAttackHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
         {
             args.Handled = component.TryUnbuckle(args.User);
         }
