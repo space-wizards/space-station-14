@@ -163,7 +163,11 @@ namespace Content.Server.GameObjects.Components.Singularity
                 otherSingulo.BeingDeletedByAnotherSingularity = true;
 
             otherEntity.QueueDelete();
-            Energy++;
+
+            if (otherEntity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
+                Energy += singuloFood.Energy;
+            else
+                Energy++;
         }
 
         public override void OnRemove()

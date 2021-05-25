@@ -229,6 +229,7 @@ namespace Content.Client
             "GlassBeaker",
             "SliceableFood",
             "DamageOtherOnHit",
+            "SinguloFood",
             "DamageOnLand",
             "SmokeSolutionAreaEffect",
             "FoamSolutionAreaEffect",

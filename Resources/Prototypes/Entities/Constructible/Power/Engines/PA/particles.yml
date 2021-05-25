@@ -26,3 +26,7 @@
           - MobMask
           - Opaque
     - type: ParticleProjectile
+    - type: SinguloFood
+      # Gets setup by PA particles
+      energy: 1
+
