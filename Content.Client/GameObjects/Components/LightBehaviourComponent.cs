@@ -26,6 +26,8 @@ namespace Content.Client.GameObjects.Components
     [ImplicitDataDefinitionForInheritors]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
+        private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
+
         [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
@@ -72,7 +74,7 @@ namespace Content.Client.GameObjects.Components
 
             if (MinDuration > 0)
             {
-                MaxTime = (float) IoCManager.Resolve<IRobustRandom>().NextDouble() * (MaxDuration - MinDuration) + MinDuration;
+                MaxTime = (float) _random.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
             }
             else
             {
@@ -213,13 +215,11 @@ namespace Content.Client.GameObjects.Components
         private float _randomValue3;
         private float _randomValue4;
 
-        private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
-
         public override void OnInitialize()
         {
             _randomValue1 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
             _randomValue2 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
-            _randomValue3 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble()); 
+            _randomValue3 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
         }
 
         public override void OnStart()
