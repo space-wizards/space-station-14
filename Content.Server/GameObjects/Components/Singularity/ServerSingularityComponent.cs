@@ -7,6 +7,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -61,6 +62,11 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value > 6) value = 6;
 
                 _level = value;
+                if ((_level > 1) && (value <= 1))
+                {
+                    // Prevents it getting stuck (see SingularityController.MoveSingulo)
+                    if (_collidableComponent != null) _collidableComponent.LinearVelocity = Vector2.Zero;
+                }
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
