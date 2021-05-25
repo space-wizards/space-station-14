@@ -263,23 +263,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            // Verify player has a transform component
-            if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
-                return;
-
             // Verify player is on the same map as the entity he clicked on
-            if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
+            if (coordinates.GetMapId(_entityManager) != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
                 return;
             }
-
-            // Verify player has a hand, and find what object he is currently holding in his active hand
-            if (!player.TryGetComponent<IHandsComponent>(out var hands))
-                return;
-
-            var item = hands.GetActiveHand?.Owner;
 
             ClickFace(player, coordinates);
 
@@ -290,17 +280,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             EntityManager.TryGetEntity(clickedUid, out var attacked);
 
             // In a container where the attacked entity is not the container's owner
-            if (player.TryGetContainer(out var playerContainer) &&
-                attacked != playerContainer.Owner)
+            if (attacked != null)
             {
-                // Either the attacked entity is null, not contained or in a different container
-                if (attacked == null ||
-                    !attacked.TryGetContainer(out var attackedContainer) ||
-                    attackedContainer != playerContainer)
+                if (!player.IsInSameOrParentContainer(attacked))
                 {
+                    // Either the attacked entity is null, not contained or in a different container
+                    Logger.WarningS("system.interaction",
+                        $"Player named {player.Name} clicked on object {attacked.Name} that isn't in the same container");
                     return;
                 }
             }
+
+            // Verify player has a hand, and find what object he is currently holding in his active hand
+            if (!player.TryGetComponent<IHandsComponent>(out var hands))
+                return;
+
+            var item = hands.GetActiveHand?.Owner;
 
             // TODO: Check if client should be able to see that object to click on it in the first place
 
@@ -317,17 +312,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            // Verify attacked object is on the map if we managed to click on it somehow
-            if (!attacked.Transform.IsMapTransform)
-            {
-                Logger.WarningS("system.interaction",
-                    $"Player named {player.Name} clicked on object {attacked.Name} that isn't currently on the map somehow");
-                return;
-            }
-
             // RangedInteract/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function
             // TODO: have range based upon the item being used? or base it upon some variables of the player himself?
-            var distance = (playerTransform.WorldPosition - attacked.Transform.WorldPosition).LengthSquared;
+            var distance = (player.Transform.WorldPosition - attacked.Transform.WorldPosition).LengthSquared;
             if (distance > InteractionRangeSquared)
             {
                 if (item != null)
@@ -386,17 +373,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
-            var attackMsg = new InteractUsingEvent(user, weapon, attacked, clickLocation);
-            RaiseLocalEvent(attacked.Uid, attackMsg);
-            if (attackMsg.Handled)
+            if (!ActionBlockerSystem.CanInteract(user))
                 return;
 
-            var attackBys = attacked.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
-            var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, attacked);
-
             // all AttackBys should only happen when in range / unobstructed, so no range check is needed
-            if (attackByEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (InRangeUnobstructed(user, attacked, ignoreInsideBlocker: true, popup: true))
             {
+                var attackMsg = new InteractUsingEvent(user, weapon, attacked, clickLocation);
+                RaiseLocalEvent(attacked.Uid, attackMsg);
+                if (attackMsg.Handled)
+                    return;
+
+                var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, attacked);
+
+                var attackBys = attacked.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
                 foreach (var attackBy in attackBys)
                 {
                     if (await attackBy.InteractUsing(attackByEventArgs))
@@ -407,6 +397,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
+            // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
             var afterAtkMsg = new AfterInteractEvent(user, weapon, attacked, clickLocation, true);
             RaiseLocalEvent(weapon.Uid, afterAtkMsg, false);
             if (afterAtkMsg.Handled)
@@ -414,9 +405,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
             var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
-
             await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
@@ -426,16 +415,19 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void Interaction(IEntity user, IEntity attacked)
         {
-            var message = new AttackHandEvent(user, attacked);
-            RaiseLocalEvent(attacked.Uid, message);
-            if (message.Handled)
+            if (!ActionBlockerSystem.CanInteract(user))
                 return;
 
-            var attackHandEventArgs = new InteractHandEventArgs(user, attacked);
-
-            // all attackHands should only fire when in range / unobstructed
-            if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (InRangeUnobstructed(user, attacked, ignoreInsideBlocker: true, popup: true))
             {
+                var message = new AttackHandEvent(user, attacked);
+                RaiseLocalEvent(attacked.Uid, message);
+                if (message.Handled)
+                    return;
+
+                var attackHandEventArgs = new InteractHandEventArgs(user, attacked);
+
+                // all attackHands should only fire when in range / unobstructed
                 var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
                 foreach (var attackHand in attackHands)
                 {
