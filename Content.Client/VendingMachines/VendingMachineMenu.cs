@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -60,7 +61,8 @@ namespace Content.Client.VendingMachines
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }
 
-            SetSize = ((longestEntry.Length + 8) * 12, _items.Count * 40 + 50);
+            SetSize = (Math.Clamp((longestEntry.Length + 8) * 12, 300, 400),
+                Math.Clamp(_items.Count * 40 + 50, 200, 500));
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)

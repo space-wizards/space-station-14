@@ -274,6 +274,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     Amount = e.Count()
                 });
 
+                var longestEntry = "";
                 foreach (var group in storedGrouped)
                 {
                     var entity = group.Entity;
@@ -286,6 +287,9 @@ namespace Content.Client.GameObjects.Components.Storage
                     //Name and Size labels set
                     button.EntityName.Text = entity.Name;
 
+                    if (entity.Name.Length > longestEntry.Length)
+                        longestEntry = entity.Name;
+
                     button.EntitySize.Text = group.Amount.ToString();
 
                     //Gets entity sprite and assigns it to button texture
@@ -297,7 +301,11 @@ namespace Content.Client.GameObjects.Components.Storage
                     _entityList.AddChild(button);
                 }
 
-                //Sets information about entire storage container current capacity
+                // Set UI size based on # of items and length of longest item name
+                SetSize = (Math.Clamp((longestEntry.Length + 8) * 12, 200, 300),
+                    Math.Clamp(storedGrouped.Count() * 40 + 50, 200, 500));
+
+                // Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
                     _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
