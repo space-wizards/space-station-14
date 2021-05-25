@@ -2,11 +2,15 @@ using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -45,10 +49,21 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         protected void OnReceiveUnfilteredUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
         {
-            // For now this is the only test.
-            // Further "anti-cheats" would be put here or at some other level.
+            // "Across all computers" "anti-cheats" ought to be put here or at some parent level (BaseDeviceUserInterfaceComponent?)
             if (!Powered)
+                return; // Not powered, so this computer should probably do nothing.
+            // Determine some facts about the session.
+            var session = obj.Session;
+            var sessionEntity = session.AttachedEntity;
+            if (sessionEntity == null)
+                return; // No session entity, so we're probably not able to touch this.
+            // Can we interact?
+            if (!ActionBlockerSystem.CanInteract(sessionEntity))
+            {
+                sessionEntity.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
                 return;
+            }
+            // Good to go!
             OnReceiveUserInterfaceMessage(obj);
         }
 
