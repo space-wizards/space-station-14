@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components
     [ImplicitDataDefinitionForInheritors]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
-        private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
+        protected readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
 
         [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
 
