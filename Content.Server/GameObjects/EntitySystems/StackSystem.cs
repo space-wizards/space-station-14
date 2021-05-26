@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 // We do have enough things in the stack, so remove them and set the output result to true.
-                RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - args.Amount));
+                RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - args.Amount), false);
                 args.Result = true;
             }
         }
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 : stack.Owner.Prototype?.ID ?? null;
 
             // Remove the amount of things we want to split from the original stack...
-            RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - args.Amount));
+            RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - args.Amount), false);
 
             // Set the output parameter in the event instance to the newly split stack.
             args.Result = EntityManager.SpawnEntity(prototype, args.SpawnPosition);
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (args.Result.TryGetComponent(out StackComponent? stackComp))
             {
                 // Set the split stack's count.
-                RaiseLocalEvent(args.Result.Uid, new StackChangeCountEvent(args.Amount));
+                RaiseLocalEvent(args.Result.Uid, new StackChangeCountEvent(args.Amount), false);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var stack = args.Result.GetComponent<StackComponent>();
 
             // And finally, set the correct amount!
-            RaiseLocalEvent(args.Result.Uid, new StackChangeCountEvent(args.Amount));
+            RaiseLocalEvent(args.Result.Uid, new StackChangeCountEvent(args.Amount), false);
         }
 
         private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
@@ -109,8 +109,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
 
             var toTransfer = Math.Min(stack.Count, otherStack.AvailableSpace);
-            RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - toTransfer));
-            RaiseLocalEvent(args.Used.Uid, new StackChangeCountEvent(otherStack.Count + toTransfer));
+            RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - toTransfer), false);
+            RaiseLocalEvent(args.Used.Uid, new StackChangeCountEvent(otherStack.Count + toTransfer), false);
 
             var popupPos = args.ClickLocation;
             if (!popupPos.IsValid(EntityManager))

@@ -187,7 +187,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             message.PushColor(Color.DarkGray);
 
             // Raise the event and let things that subscribe to it change the message...
-            RaiseLocalEvent(entity.Uid, new ExaminedEvent(message, examiner, IsInDetailsRange(examiner, entity)));
+            RaiseLocalEvent(entity.Uid, new ExaminedEvent(message, entity, examiner, IsInDetailsRange(examiner, entity)));
 
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())
@@ -229,13 +229,19 @@ namespace Content.Shared.GameObjects.EntitySystems
         public IEntity Examiner { get; }
 
         /// <summary>
+        ///     Entity being examined, for broadcast event purposes.
+        /// </summary>
+        public IEntity Examined { get; }
+
+        /// <summary>
         ///     Whether the examiner is in range of the entity to get some extra details.
         /// </summary>
         public bool IsInDetailsRange { get; }
 
-        public ExaminedEvent(FormattedMessage message, IEntity examiner, bool isInDetailsRange)
+        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange)
         {
             Message = message;
+            Examined = examined;
             Examiner = examiner;
             IsInDetailsRange = isInDetailsRange;
         }
