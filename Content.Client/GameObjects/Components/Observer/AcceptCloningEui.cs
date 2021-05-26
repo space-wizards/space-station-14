@@ -35,6 +35,5 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             _window.Close();
         }
-
     }
 }

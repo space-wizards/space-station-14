@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -30,6 +32,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+
+        /// <summary>
+        ///     The minimum amount of solution that can be transferred at once from this solution.
+        /// </summary>
+        [DataField("minTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ReagentUnit MinimumTransferAmount { get; set; } = ReagentUnit.New(5);
+
+        /// <summary>
+        ///     The maximum amount of solution that can be transferred at once from this solution.
+        /// </summary>
+        [DataField("maxTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ReagentUnit MaximumTransferAmount { get; set; } = ReagentUnit.New(50);
 
         /// <summary>
         ///     Can this entity take reagent from reagent tanks?
@@ -117,6 +133,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
             target.Refill(solution);
 
             return actualAmount;
+        }
+
+        [Verb]
+        public sealed class TransferAmountVerb : Verb<SolutionTransferComponent>
+        {
+            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-name")
+            }
+
+            protected override void Activate(IEntity user, SolutionTransferComponent component)
+            {
+
+            }
         }
     }
 }
