@@ -13,7 +13,7 @@
   - type: SolutionContainer
     maxVol: 10
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 5
   - type: Drink
     isOpen: true
   - type: Spillable

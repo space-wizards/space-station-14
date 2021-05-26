@@ -9,7 +9,6 @@
   - type: SolutionContainer
     maxVol: 50
   - type: SolutionTransfer
-    transferAmount: 5
   - type: Drink
   - type: Sprite
     state: icon
@@ -56,7 +55,6 @@
   - type: SolutionContainer
     maxVol: 50
   - type: SolutionTransfer
-    transferAmount: 5
   - type: TransformableContainer
 
 - type: entity

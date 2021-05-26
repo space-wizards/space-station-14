@@ -20,6 +20,8 @@
     maxVol: 500
   - type: SolutionTransfer
     transferAmount: 50
+    maxTransferAmount: 100
+    minTransferAmount: 10
   - type: Physics
     bodyType: Dynamic
     fixtures:

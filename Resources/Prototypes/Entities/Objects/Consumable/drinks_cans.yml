@@ -14,7 +14,7 @@
       - ReagentId: Cola
         Quantity: 20
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 10
   - type: Sprite
     state: icon
 

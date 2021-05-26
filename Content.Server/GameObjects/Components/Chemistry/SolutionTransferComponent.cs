@@ -1,12 +1,18 @@
 ﻿#nullable enable
+using System;
 using System.Threading.Tasks;
+using Content.Server.Eui;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -61,6 +67,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanSend { get; set; } = true;
 
+        public void SetTransferAmount(ReagentUnit amount)
+        {
+            amount = ReagentUnit.New(Math.Clamp(amount.Int(), MinimumTransferAmount.Int(), MaximumTransferAmount.Int()));
+            TransferAmount = amount;
+        }
+
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.CanReach || eventArgs.Target == null)
@@ -83,10 +95,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     var toTheBrim = ownerSolution.RefillSpaceAvailable == 0;
                     var msg = toTheBrim
-                        ? "You fill {0:TheName} to the brim with {1}u from {2:theName}"
-                        : "You fill {0:TheName} with {1}u from {2:theName}";
+                        ? "comp-solution-transfer-fill-fully"
+                        : "comp-solution-transfer-fill-normal";
 
-                    target.PopupMessage(eventArgs.User, Loc.GetString(msg, Owner, transferred, target));
+                    target.PopupMessage(eventArgs.User, Loc.GetString(msg, ("take", Owner),
+                        ("amount", transferred.Int()),
+                        ("give", target)));
                     return true;
                 }
             }
@@ -97,8 +111,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if (transferred > 0)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You transfer {0}u to {1:theName}.",
-                        transferred, target));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-solution-transfer-transfer-solution",
+                        ("amount", transferred.Int()),
+                        ("solution", target)));
 
                     return true;
                 }
@@ -116,13 +131,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (source.DrainAvailable == 0)
             {
-                source.Owner.PopupMessage(user, Loc.GetString("{0:TheName} is empty!", source.Owner));
+                source.Owner.PopupMessage(user, Loc.GetString("comp-solution-transfer-is-empty", ("solution", source.Owner)));
                 return ReagentUnit.Zero;
             }
 
             if (target.RefillSpaceAvailable == 0)
             {
-                target.Owner.PopupMessage(user, Loc.GetString("{0:TheName} is full!", target.Owner));
+                target.Owner.PopupMessage(user, Loc.GetString("comp-solution-transfer-is-full", ("solution", target.Owner)));
                 return ReagentUnit.Zero;
             }
 
@@ -146,12 +161,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     return;
                 }
 
-                data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-name")
+                data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-name", ("amount", component.TransferAmount.Int()));
             }
 
             protected override void Activate(IEntity user, SolutionTransferComponent component)
             {
+                if (!user.TryGetComponent<ActorComponent>(out var actor))
+                {
+                    return;
+                }
 
+                var eui = IoCManager.Resolve<EuiManager>();
+                var amountEui = new TransferAmountEui(component);
+                eui.OpenEui(amountEui, actor.PlayerSession);
             }
         }
     }

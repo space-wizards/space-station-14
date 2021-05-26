@@ -15,7 +15,7 @@
     maxVol: 30
     caps: OpenContainer
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 30
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
@@ -29,7 +29,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-1
-      - state: bottle-1-1  
+      - state: bottle-1-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
@@ -47,7 +47,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-2
-      - state: bottle-2-1  
+      - state: bottle-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
@@ -65,7 +65,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-3
-      - state: bottle-3-1  
+      - state: bottle-3-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
@@ -83,7 +83,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-4
-      - state: bottle-4-1  
+      - state: bottle-4-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance

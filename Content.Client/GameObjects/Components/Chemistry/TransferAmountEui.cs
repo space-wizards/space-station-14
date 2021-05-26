@@ -1,4 +1,6 @@
-﻿using Content.Client.Eui;
+﻿using System;
+using Content.Client.Eui;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Observer;
 
@@ -14,14 +16,17 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             _window.applyButton.OnPressed += _ =>
             {
-                SendMessage(new TransferAmountEuiMessage((int)_window.amountSlider.Value));
-                _window.Close();
+                if (int.TryParse(_window.amountLineEdit.Text, out var i))
+                {
+                    SendMessage(new TransferAmountEuiMessage(ReagentUnit.New(i)));
+                    _window.Close();
+                }
             };
         }
 
         public override void Opened()
         {
-            _window.Open();
+            _window.OpenCentered();
         }
 
         public override void Closed()
