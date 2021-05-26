@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -14,9 +15,6 @@ namespace Content.Shared.GameObjects.Components
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
 
-        [DataField("count")]
-        private int _count = 30;
-
         [DataField("max")]
         private int _maxCount = 30;
 
@@ -24,26 +22,13 @@ namespace Content.Shared.GameObjects.Components
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
         public string StackTypeId { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Current stack count.
+        ///     Do NOT set this directly, raise the <see cref="StackChangeCountEvent"/> event instead.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Count
-        {
-            get => _count;
-            set
-            {
-                if (_count == value)
-                    return;
-
-                var old = _count;
-                _count = value;
-
-                if (_count > MaxCount)
-                    _count = MaxCount;
-
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new StackCountChangedEvent(){OldCount = old, NewCount = _count});
-
-                Dirty();
-            }
-        }
+        [DataField("count")]
+        public int Count { get; set; } = 30;
 
         [ViewVariables]
         public int MaxCount
@@ -72,7 +57,8 @@ namespace Content.Shared.GameObjects.Components
             if (curState is not StackComponentState cast)
                 return;
 
-            Count = cast.Count;
+            // This will change the count and call events.
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new StackChangeCountEvent(cast.Count));
             MaxCount = cast.MaxCount;
         }
 
@@ -89,11 +75,5 @@ namespace Content.Shared.GameObjects.Components
                 MaxCount = maxCount;
             }
         }
-    }
-
-    public class StackCountChangedEvent : EntityEventArgs
-    {
-        public int OldCount { get; init; }
-        public int NewCount { get; init; }
     }
 }

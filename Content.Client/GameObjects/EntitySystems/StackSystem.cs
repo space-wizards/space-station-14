@@ -9,14 +9,17 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class StackSystem : SharedStackSystem
     {
-        protected override void OnStackCountChanged(EntityUid uid, SharedStackComponent component, StackCountChangedEvent args)
+        public override void Initialize()
         {
-            base.OnStackCountChanged(uid, component, args);
+            base.Initialize();
 
-            if (component is not StackComponent stack)
-                return;
+            SubscribeLocalEvent<StackComponent, StackCountChangedEvent>(OnStackCountChanged);
+        }
 
-            stack.DirtyUI();
+        private void OnStackCountChanged(EntityUid uid, StackComponent component, StackCountChangedEvent args)
+        {
+            // Dirty the UI now that the stack count has changed.
+            component.DirtyUI();
         }
     }
 }

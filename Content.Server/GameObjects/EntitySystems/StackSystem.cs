@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StackComponent, InteractUsingMessage>(OnStackInteractUsing);
+            SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
 
             // The following subscriptions are basically the "method calls" of this entity system.
             SubscribeLocalEvent<StackComponent, StackUseEvent>(OnStackUse);
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 // We do have enough things in the stack, so remove them and set the output result to true.
-                stack.Count -= args.Amount;
+                RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - args.Amount));
                 args.Result = true;
             }
         }
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 : stack.Owner.Prototype?.ID ?? null;
 
             // Remove the amount of things we want to split from the original stack...
-            stack.Count -= args.Amount;
+            RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - args.Amount));
 
             // Set the output parameter in the event instance to the newly split stack.
             args.Result = EntityManager.SpawnEntity(prototype, args.SpawnPosition);
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (args.Result.TryGetComponent(out StackComponent? stackComp))
             {
                 // Set the split stack's count.
-                stackComp.Count = args.Amount;
+                RaiseLocalEvent(args.Result.Uid, new StackChangeCountEvent(args.Amount));
             }
         }
 
@@ -97,20 +97,20 @@ namespace Content.Server.GameObjects.EntitySystems
             var stack = args.Result.GetComponent<StackComponent>();
 
             // And finally, set the correct amount!
-            stack.Count = args.Amount;
+            RaiseLocalEvent(args.Result.Uid, new StackChangeCountEvent(args.Amount));
         }
 
-        private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingMessage args)
+        private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
         {
-            if (!args.ItemInHand.TryGetComponent<StackComponent>(out var otherStack))
+            if (!args.Used.TryGetComponent<StackComponent>(out var otherStack))
                 return;
 
             if (!otherStack.StackTypeId.Equals(stack.StackTypeId))
                 return;
 
             var toTransfer = Math.Min(stack.Count, otherStack.AvailableSpace);
-            stack.Count -= toTransfer;
-            otherStack.Count += toTransfer;
+            RaiseLocalEvent(uid, new StackChangeCountEvent(stack.Count - toTransfer));
+            RaiseLocalEvent(args.Used.Uid, new StackChangeCountEvent(otherStack.Count + toTransfer));
 
             var popupPos = args.ClickLocation;
             if (!popupPos.IsValid(EntityManager))
@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
                     if (otherStack.AvailableSpace == 0)
                     {
-                        args.ItemInHand.SpawnTimer(
+                        args.Used.SpawnTimer(
                             300,
                             () => popupPos.PopupMessage(
                                 args.User,
