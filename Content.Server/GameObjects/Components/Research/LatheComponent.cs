@@ -1,12 +1,11 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Materials;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -14,6 +13,7 @@ using Content.Shared.Research;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -30,9 +30,9 @@ namespace Content.Server.GameObjects.Components.Research
         [ViewVariables]
         public bool Producing { get; private set; }
 
-        private LatheState _state = LatheState.Base;
+        private LatheVisualState _state = LatheVisualState.Idle;
 
-        protected virtual LatheState State
+        protected virtual LatheVisualState State
         {
             get => _state;
             set => _state = value;
@@ -94,8 +94,6 @@ namespace Content.Server.GameObjects.Components.Research
 
                     break;
             }
-
-
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
@@ -115,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
 
-            State = LatheState.Producing;
+            State = LatheVisualState.Producing;
             SetAppearance(LatheVisualState.Producing);
 
             Owner.SpawnTimer(recipe.CompleteTime, () =>
@@ -124,8 +122,7 @@ namespace Content.Server.GameObjects.Components.Research
                 _producingRecipe = null;
                 Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
-                State = LatheState.Base;
-                SetAppearance(LatheVisualState.Idle);
+                State = LatheVisualState.Idle;
             });
 
             return true;
@@ -138,14 +135,15 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
+
             if (!Powered)
             {
                 return;
             }
 
-            OpenUserInterface(actor.PlayerSession);
+            OpenUserInterface(actor.playerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -160,44 +158,29 @@ namespace Content.Server.GameObjects.Components.Research
             var totalAmount = 0;
 
             // Check if it can insert all materials.
-            foreach (var mat in material.MaterialIds)
+            foreach (var (_, mat) in material.MaterialTypes)
             {
                 // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat, VolumePerSheet * multiplier)) return false;
+                if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * multiplier)) return false;
                 totalAmount += VolumePerSheet * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
             if (storage.CanTakeAmount(totalAmount)) return false;
 
-            foreach (var mat in material.MaterialIds)
+            foreach (var (_, mat) in material.MaterialTypes)
             {
-                storage.InsertMaterial(mat, VolumePerSheet * multiplier);
+                storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
             }
 
-            State = LatheState.Inserting;
-            switch (material.Materials.FirstOrDefault()?.ID)
-            {
-                case "Steel":
-                    SetAppearance(LatheVisualState.InsertingMetal);
-                    break;
-                case "Glass":
-                    SetAppearance(LatheVisualState.InsertingGlass);
-                    break;
-                case "Gold":
-                    SetAppearance(LatheVisualState.InsertingGold);
-                    break;
-                case "Plastic":
-                    SetAppearance(LatheVisualState.InsertingPlastic);
-                    break;
-                case "Plasma":
-                    SetAppearance(LatheVisualState.InsertingPlasma);
-                    break;
-            }
+            State = LatheVisualState.Inserting;
+            var color = "#ffff00";
+            SetAppearance(LatheVisualState.Inserting, color);
+
 
             Owner.SpawnTimer(InsertionTime, () =>
             {
-                State = LatheState.Base;
+                State = LatheVisualState.Idle;
                 SetAppearance(LatheVisualState.Idle);
             });
 
@@ -206,11 +189,13 @@ namespace Content.Server.GameObjects.Components.Research
             return true;
         }
 
-        private void SetAppearance(LatheVisualState state)
+        private void SetAppearance(LatheVisualState state, string materialColor = "#ffffff")
         {
+            var color = Color.FromHex(materialColor);
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+                appearance.SetData(LatheVisualData.State, state);
+                appearance.SetData(LatheVisualData.Color, color);
             }
         }
 
@@ -223,13 +208,6 @@ namespace Content.Server.GameObjects.Components.Research
             }
 
             return queue;
-        }
-
-        protected enum LatheState
-        {
-            Base,
-            Inserting,
-            Producing
         }
     }
 }

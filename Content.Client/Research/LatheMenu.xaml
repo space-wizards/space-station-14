@@ -1,0 +1,17 @@
+﻿<SS14Window xmlns="https://spacestation14.io">
+    <VBoxContainer VerticalExpand="True" SeparationOverride="5">
+        <HBoxContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1">
+            <Control HorizontalExpand="True" SizeFlagsStretchRatio="3"/>
+            <Button Name="QueueButton" TextAlign="Center" SizeFlagsStretchRatio="1"/>
+            <Button Name="ServerConnectButton" TextAlign="Center" SizeFlagsStretchRatio="1" Visible="False"/>
+            <Button Name="ServerSyncButton" TextAlign="Center" SizeFlagsStretchRatio="1" Visible="False"/>
+        </HBoxContainer>
+        <HBoxContainer>
+            <LineEdit Name="SearchBar" HorizontalExpand="True" SizeFlagsStretchRatio="3"/>
+            <Button Name="FilterButton" TextAlign="Center" SizeFlagsStretchRatio="1" Disabled="True"/>
+        </HBoxContainer>
+        <ItemList Name="ItemsItemList" VerticalExpand="True" SizeFlagsStretchRatio="8" SelectMode="Button"/>
+        <LineEdit Name="AmountLineEdit" HorizontalExpand="True"/>
+        <ItemList Name="MaterialsItemList" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+    </VBoxContainer>
+</SS14Window>

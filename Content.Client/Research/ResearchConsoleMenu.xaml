@@ -1,0 +1,26 @@
+﻿<SS14Window xmlns="https://spacestation14.io">
+    <VBoxContainer HorizontalExpand="True" VerticalExpand="True">
+        <HBoxContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2" SeparationOverride="10">
+            <ItemList Name="UnlockedTechnologies" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True"/>
+            <ItemList Name="UnlockableTechnologies" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True"/>
+            <ItemList Name="FutureTechnologies" SelectMode="Button" HorizontalExpand="True" VerticalExpand="True"/>
+        </HBoxContainer>
+        <HBoxContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1">
+            <TextureRect Name="TechnologyIcon" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1" Stretch="KeepAspectCentered"/>
+            <VBoxContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1">
+                <Label Name="TechnologyName"/>
+                <Label Name="TechnologyDescription"/>
+                <Label Name="TechnologyRequirements"/>
+            </VBoxContainer>
+            <VBoxContainer HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1">
+                <Label Name="PointLabel"/>
+                <Label Name="PointsPerSecondLabel"/>
+                <VBoxContainer Align="End" HorizontalExpand="True" VerticalExpand="True">
+                    <Button Name="ServerConnectButton"/>
+                    <Button Name="ServerSyncButton"/>
+                    <Button Name="UnlockButton" Disabled="True"/>
+                </VBoxContainer>
+            </VBoxContainer>
+        </HBoxContainer>
+    </VBoxContainer>
+</SS14Window>
