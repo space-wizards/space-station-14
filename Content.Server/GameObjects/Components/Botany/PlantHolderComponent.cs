@@ -655,7 +655,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     if (seeds.Seed == null)
                     {
                         user.PopupMessageCursor(Loc.GetString("The packet seems to be empty. You throw it away."));
-                        usingItem.Delete();
+                        usingItem.QueueDelete();
                         return false;
                     }
 
@@ -667,7 +667,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     Health = Seed.Endurance;
                     _lastCycle = _gameTiming.CurTime;
 
-                    usingItem.Delete();
+                    usingItem.QueueDelete();
 
                     CheckLevelSanity();
                     UpdateSprite();
@@ -799,7 +799,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     ForceUpdateByExternalCause();
                 }
 
-                usingItem.Delete();
+                usingItem.QueueDelete();
 
                 return true;
             }

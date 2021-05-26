@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     Owner.EntityManager.SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
                 }
-                Owner.Delete();
+                Owner.QueueDelete();
             });
         }
     }
