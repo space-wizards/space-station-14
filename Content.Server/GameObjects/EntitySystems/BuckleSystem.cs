@@ -33,23 +33,6 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<BuckleComponent, MoveEvent>();
-
-            UnsubscribeLocalEvent<StrapComponent, RotateEvent>();
-
-            UnsubscribeLocalEvent<BuckleComponent, EntInsertedIntoContainerMessage>();
-            UnsubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>();
-
-            UnsubscribeLocalEvent<BuckleComponent, EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>();
-
-            UnsubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
-        }
-
         private void HandleAttackHand(EntityUid uid, BuckleComponent component, AttackHandEvent args)
         {
             args.Handled = component.TryUnbuckle(args.User);
