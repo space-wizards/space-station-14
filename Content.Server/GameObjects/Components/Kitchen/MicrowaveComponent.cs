@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct
+    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct, IBreakAct
     {
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
@@ -53,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
 [ViewVariables]
         private bool _busy = false;
+        private bool _broken;
 
         /// <summary>
         /// This is a fixed offset of 5.
@@ -157,6 +158,17 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _uiDirty = true;
             }
 
+            if (_busy && _broken)
+            {
+                SetAppearance(MicrowaveVisualState.Broken);
+                //we broke while we were cooking/busy!
+                _lostPower = true;
+                VaporizeReagents();
+                EjectSolids();
+                _busy = false;
+                _uiDirty = true;
+            }
+
             if (_uiDirty && Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
@@ -173,10 +185,22 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SetAppearance(MicrowaveVisualState state)
         {
+            var finalState = state;
+            if (_broken)
+            {
+                finalState = MicrowaveVisualState.Broken;
+            }
+
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+                appearance.SetData(PowerDeviceVisuals.VisualState, finalState);
             }
+        }
+
+        public void OnBreak(BreakageEventArgs eventArgs)
+        {
+            _broken = true;
+            SetAppearance(MicrowaveVisualState.Broken);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -195,6 +219,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (!Powered)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("It has no power!"));
+                return false;
+            }
+
+            if (_broken)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's broken!"));
                 return false;
             }
 

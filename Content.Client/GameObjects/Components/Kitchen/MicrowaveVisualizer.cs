@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Sound;
+using Content.Client.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Kitchen;
@@ -25,6 +25,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
             switch (state)
             {
+                case MicrowaveVisualState.Broken:
+                    sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mwb");
+                    loopingSoundComponent?.StopAllSounds();
+                    break;
+
                 case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");

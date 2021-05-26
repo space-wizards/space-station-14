@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
@@ -89,7 +89,8 @@ namespace Content.Shared.Kitchen
     public enum MicrowaveVisualState
     {
         Idle,
-        Cooking
+        Cooking,
+        Broken
     }
 
     [NetSerializable, Serializable]
