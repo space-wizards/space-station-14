@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -264,11 +265,17 @@ namespace Content.Server.GameObjects.Components.Construction
                             break;
 
                         case MaterialConstructionGraphStep materialStep:
-                            if (materialStep.EntityValid(eventArgs.Using, out var sharedStack)
+                            if (materialStep.EntityValid(eventArgs.Using, out var stack)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
-                                var stack = (StackComponent) sharedStack;
-                                valid = stack.Split(materialStep.Amount, eventArgs.User.Transform.Coordinates, out entityUsing);
+                                var splitStack = new StackSplitEvent() {Amount = materialStep.Amount, SpawnPosition = eventArgs.User.Transform.Coordinates};
+                                Owner.EntityManager.EventBus.RaiseLocalEvent(stack.Owner.Uid, splitStack);
+
+                                if (splitStack.Result != null)
+                                {
+                                    entityUsing = splitStack.Result;
+                                    valid = true;
+                                }
                             }
 
                             break;
