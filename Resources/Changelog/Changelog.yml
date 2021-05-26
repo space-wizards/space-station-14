@@ -1132,3 +1132,34 @@ Entries:
   - {message: Fixes lathes not printing any recipe., type: Fix}
   id: 201
   time: '2021-05-22T09:31:38.140827+00:00'
+- author: Ygg01
+  changes:
+  - {message: StackVisualizer now correctly displays levels, type: Fix}
+  id: 202
+  time: '2021-05-23T04:05:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Hopefully fix power equipment disappearing., type: Fix}
+  id: 203
+  time: '2021-05-23T18:18:36.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added new technologies and recipes to the lathe., type: Add}
+  id: 204
+  time: '2021-05-24T00:38:26.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Particle Accelerator particles actually affect singularity & singularity
+      generator again, type: Fix}
+  - {message: Singularity doesn't instantly escape all containment, type: Fix}
+  id: 205
+  time: '2021-05-24T04:14:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Attempt 2 at fixing substation/apc/generator disappearances, type: Fix}
+  id: 206
+  time: '2021-05-24T14:39:58.0000000+00:00'
+- author: scrato
+  changes: []
+  id: 207
+  time: '2021-05-24T14:55:48.0000000+00:00'

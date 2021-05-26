@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent
     {
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
         }

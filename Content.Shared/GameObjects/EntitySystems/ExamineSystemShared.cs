@@ -148,7 +148,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(DragDropEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(DragDropEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
             var otherPos = args.DropLocation.ToMap(args.User.EntityManager);

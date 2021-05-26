@@ -78,7 +78,7 @@ namespace Content.Shared.Utility
         /// <param name="max">The maximum value of the scale.</param>
         /// <param name="levels">Number of segments the scale is subdivided into.</param>
         /// <returns>The segment <paramref name="actual"/> lies on.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">If level is 1 or less</exception>
         public static int RoundToNearestLevels(double actual, double max, int levels)
         {
             if (levels <= 1)
@@ -97,6 +97,43 @@ namespace Content.Shared.Utility
             }
 
             return (int) Math.Round(actual / max * levels, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// Basically helper for when you need to choose 0..N-1 element based on what
+        /// percentage does actual/max takes.
+        /// Example:
+        /// We have a stack of 30 <paramref name="max"/> elements.
+        /// When <paramref name="actual"/> is: 
+        /// - 0..9 we return 0.
+        /// - 10..19 we return 1.
+        /// - 20..30 we return 2.
+        ///
+        /// Useful when selecting N sprites for display in stacks, etc.
+        /// </summary>
+        /// <param name="actual">How many out of max elements are there</param>
+        /// <param name="max"></param>
+        /// <param name="levels"></param>
+        /// <returns>The </returns>
+        /// <exception cref="ArgumentException">if level is one or less</exception>
+        public static int RoundToEqualLevels(double actual, double max, int levels)
+        {
+            if (levels <= 1)
+            {
+                throw new ArgumentException("Levels must be greater than 1.", nameof(levels));
+            }
+
+            if (actual >= max)
+            {
+                return levels - 1;
+            }
+
+            if (actual <= 0)
+            {
+                return 0;
+            }
+
+            return (int) Math.Round(actual / max * levels, MidpointRounding.ToZero);
         }
     }
 }

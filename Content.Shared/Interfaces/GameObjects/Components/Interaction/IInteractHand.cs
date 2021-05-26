@@ -31,27 +31,26 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity Target { get; }
     }
 
-
     /// <summary>
-    ///      Raised when being clicked on or "attacked" by a user with an empty hand.
+    ///     Raised when a target entity is interacted with by a user with an empty hand.
     /// </summary>
     [PublicAPI]
-    public class AttackHandMessage : HandledEntityEventArgs
+    public class AttackHandEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     Entity that triggered the attack.
+        ///     Entity that triggered the interaction.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Entity that was attacked.
+        ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Attacked { get; }
+        public IEntity Target { get; }
 
-        public AttackHandMessage(IEntity user, IEntity attacked)
+        public AttackHandEvent(IEntity user, IEntity target)
         {
             User = user;
-            Attacked = attacked;
+            Target = target;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalMailingUnitComponent))]
     public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent
     {
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
         }

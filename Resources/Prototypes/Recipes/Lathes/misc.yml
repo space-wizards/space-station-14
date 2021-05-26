@@ -42,9 +42,11 @@
     Plastic: 50
 
 - type: latheRecipe
-  id: FlashLightLantern
-  icon: Objects/Tools/flashlight.rsi
-  result: FlashLightLantern
+  id: FlashlightLantern
+  icon: 
+    sprite: Objects/Tools/flashlight.rsi
+    state: lantern_off
+  result: FlashlightLantern
   completetime: 500
   materials:
     Steel: 100
@@ -52,9 +54,11 @@
     Plastic: 100
 
 - type: latheRecipe
-  id:  FireExtinguisher
-  icon: Objects/Misc/fire_extinguisher.rsi
-  result: FireExtinguisher
+  id: FireExtinguisher
+  icon:
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    state: fire_extinguisher_closed
+  result: FireExtinguisher 
   completetime: 500
   materials:
     Steel: 200
