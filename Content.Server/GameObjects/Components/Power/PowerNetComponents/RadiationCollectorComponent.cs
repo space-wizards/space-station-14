@@ -29,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             get => _enabled;
             set
             {
+                if (_enabled == value) return;
                 _enabled = value;
                 SetAppearance(_enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
             }

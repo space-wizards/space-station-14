@@ -27,6 +27,5 @@
           - Opaque
     - type: ParticleProjectile
     - type: SinguloFood
-      # Gets setup by PA particles
-      energy: 1
+      # Energy is setup by the PA particle fire function.
 
