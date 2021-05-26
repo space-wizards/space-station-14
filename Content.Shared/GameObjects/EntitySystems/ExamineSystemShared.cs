@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -14,6 +15,7 @@ using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
+    [Obsolete("Use ExaminedEvent instead.")]
     public interface IExamine
     {
         /// <summary>
@@ -210,7 +212,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
     /// <summary>
     ///     Raised when an entity is examined.
-    ///     Don't forget to add a newline at the end.
+    ///     You have to manually add a newline at the start, and perform cleanup (popping state) at the end.
     /// </summary>
     public class ExaminedEvent : EntityEventArgs
     {
