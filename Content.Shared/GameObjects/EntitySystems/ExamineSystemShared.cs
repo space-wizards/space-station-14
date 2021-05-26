@@ -164,7 +164,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
+        public FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
         {
             var message = new FormattedMessage();
 
@@ -184,6 +184,9 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             message.PushColor(Color.DarkGray);
 
+            // Raise the event and let things that subscribe to it change the message...
+            RaiseLocalEvent(entity.Uid, new ExaminedEvent(message, examiner, IsInDetailsRange(examiner, entity)));
+
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())
             {
@@ -202,6 +205,36 @@ namespace Content.Shared.GameObjects.EntitySystems
             message.Pop();
 
             return message;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity is examined.
+    ///     Don't forget to add a newline at the end.
+    /// </summary>
+    public class ExaminedEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     The message that will be displayed as the examine text.
+        ///     Use the methods it exposes to change it, and don't forget to add a newline at the start!
+        ///     Input/Output parameter.
+        /// </summary>
+        public FormattedMessage Message { get; }
+
+        /// <summary>
+        ///     The entity performing the examining.
+        /// </summary>
+        public IEntity Examiner { get; }
+
+        /// <summary>
+        ///     Whether the examiner is in range of the entity to get some extra details.
+        /// </summary>
+        public bool IsInDetailsRange { get; }
+
+        public ExaminedEvent(FormattedMessage message, IEntity examiner, bool isInDetailsRange)
+        {
+            Message = message;
+            Examiner = examiner;
         }
     }
 }
