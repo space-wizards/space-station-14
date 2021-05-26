@@ -106,17 +106,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case AnchoredChangedMessage:
-                    AnchorUpdate();
-                    break;
-            }
-        }
-
         public void ApcPowerChanged()
         {
             var oldPowered = Powered;
@@ -211,7 +200,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             }
         }
 
-        private void AnchorUpdate()
+        public void AnchorUpdate()
         {
             if (Anchored)
             {

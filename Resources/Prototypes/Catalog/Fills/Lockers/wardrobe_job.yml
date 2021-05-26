@@ -46,7 +46,7 @@
 #   components:
 #   - type: StorageFill
 #     contents:
-#       - name: ClothingHandsGlovesLatex
+#       - id: ClothingHandsGlovesLatex
 #         prob: 0.4
 
 # - type: entity

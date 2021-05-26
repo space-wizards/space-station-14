@@ -10,7 +10,7 @@
       size: 6
     - type: StorageFill
       contents:
-        - name: Cigarette
+        - id: Cigarette
           amount: 6
     - type: StorageCounter
       countTag: Cigarette

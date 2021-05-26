@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent? actor))
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Medical
             if (!Powered)
                 return;
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         [Verb]
@@ -284,7 +284,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             _bodyContainer.Insert(eventArgs.Dragged);
             return true;

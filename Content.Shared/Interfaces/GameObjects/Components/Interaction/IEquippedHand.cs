@@ -31,10 +31,10 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when putting the entity into a hand slot
+    ///     Raised when putting an entity into a hand slot
     /// </summary>
     [PublicAPI]
-    public class EquippedHandMessage : HandledEntityEventArgs
+    public class EquippedHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -47,11 +47,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity Equipped { get; }
 
         /// <summary>
-        ///     Hand the item is going into.
+        ///     Hand that the item was placed into.
         /// </summary>
         public SharedHand Hand { get; }
 
-        public EquippedHandMessage(IEntity user, IEntity equipped, SharedHand hand)
+        public EquippedHandEvent(IEntity user, IEntity equipped, SharedHand hand)
         {
             User = user;
             Equipped = equipped;

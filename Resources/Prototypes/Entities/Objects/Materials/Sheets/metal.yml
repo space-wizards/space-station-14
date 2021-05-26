@@ -18,11 +18,11 @@
   parent: SheetMetalBase
   id: SheetSteel
   name: steel
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: steel
+    - Steel
   - type: Stack
     stackType: Steel
   - type: Sprite
@@ -44,6 +44,7 @@
   parent: SheetSteel
   id: SheetSteel1
   name: steel
+  suffix: Single
   components:
   - type: Sprite
     state: steel
@@ -54,11 +55,11 @@
   parent: SheetMetalBase
   id: SheetPlasteel
   name: plasteel
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: plasteel
+    - Plasteel
   - type: Stack
     stackType: Plasteel
   - type: Sprite
@@ -77,6 +78,7 @@
   parent: SheetPlasteel
   id: SheetPlasteel1
   name: plasteel
+  suffix: Single
   components:
   - type: Sprite
     state: plasteel
@@ -87,11 +89,11 @@
   parent: SheetMetalBase
   id: SheetTitanium
   name: titanium
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: titanium
+    - Titanium
   - type: Stack
     stackType: Titanium
   - type: Sprite
@@ -110,6 +112,7 @@
   parent: SheetTitanium
   id: SheetTitanium1
   name: titanium
+  suffix: Single
   components:
   - type: Sprite
     state: titanium
@@ -120,11 +123,11 @@
   parent: SheetMetalBase
   id: SheetPlastitanium
   name: plastitanium
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: plastitanium
+    - Plastitanium
   - type: Stack
     stackType: Plastitanium
   - type: Sprite
@@ -143,6 +146,7 @@
   parent: SheetPlastitanium
   id: SheetPlastitanium1
   name: plastitanium
+  suffix: Single
   components:
   - type: Sprite
     state: plastitanium
@@ -153,11 +157,11 @@
   parent: SheetMetalBase
   id: SheetBrass
   name: brass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: brass
+    - Brass
   - type: Stack
     stackType: Brass
   - type: Sprite
@@ -176,6 +180,7 @@
   parent: SheetBrass
   id: SheetBrass1
   name: brass
+  suffix: Single
   components:
   - type: Sprite
     state: brass

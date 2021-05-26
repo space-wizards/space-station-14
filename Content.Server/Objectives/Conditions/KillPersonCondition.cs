@@ -18,12 +18,7 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
 
-        public float Progress => Target?
-            .OwnedEntity?
-            .GetComponentOrNull<IMobStateComponent>()?
-            .IsDead() ?? false
-            ? 1f
-            : 0f;
+        public float Progress => (Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 
         public float Difficulty => 2f;
 

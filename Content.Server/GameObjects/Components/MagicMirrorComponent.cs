@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
 
             var appearance = looks.Appearance;
 
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components
                 looks.CanColorHair,
                 looks.CanColorFacialHair);
 
-            UserInterface?.SendMessage(msg, actor.playerSession);
+            UserInterface?.SendMessage(msg, actor.PlayerSession);
         }
     }
 }

@@ -15,15 +15,43 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     {
         // Redirects to ClickAttack by default.
         [Obsolete("WideAttack")]
-        bool WideAttack(AttackEventArgs eventArgs) => ClickAttack(eventArgs);
+        bool WideAttack(AttackEvent eventArgs) => ClickAttack(eventArgs);
 
         [Obsolete("Use ClickAttack instead")]
-        bool ClickAttack(AttackEventArgs eventArgs);
+        bool ClickAttack(AttackEvent eventArgs);
     }
 
-    public class AttackEventArgs : EntityEventArgs
+    /// <summary>
+    ///     Raised when a target entity is attacked by a user.
+    /// </summary>
+    public class AttackEvent : EntityEventArgs
     {
-        public AttackEventArgs(IEntity user, EntityCoordinates clickLocation, bool wideAttack, EntityUid target = default)
+        /// <summary>
+        ///     Entity that triggered the attack.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     The original location that was clicked by the user.
+        /// </summary>
+        public EntityCoordinates ClickLocation { get; }
+
+        /// <summary>
+        ///     Indicates whether the attack creates a swing attack or attacks the target entity directly.
+        /// </summary>
+        public bool WideAttack { get; }
+
+        /// <summary>
+        ///     UID of the entity that was attacked.
+        /// </summary>
+        public EntityUid Target { get; }
+
+        /// <summary>
+        ///     Entity that was attacked.
+        /// </summary>
+        public IEntity? TargetEntity { get; }
+
+        public AttackEvent(IEntity user, EntityCoordinates clickLocation, bool wideAttack, EntityUid target = default)
         {
             User = user;
             ClickLocation = clickLocation;
@@ -33,11 +61,5 @@ namespace Content.Shared.Interfaces.GameObjects.Components
             IoCManager.Resolve<IEntityManager>().TryGetEntity(Target, out var targetEntity);
             TargetEntity = targetEntity;
         }
-
-        public IEntity User { get; }
-        public EntityCoordinates ClickLocation { get; }
-        public bool WideAttack { get; }
-        public EntityUid Target { get; }
-        public IEntity? TargetEntity { get; }
     }
 }

@@ -20,13 +20,13 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (!groupController.CanCommand(actor.playerSession, "attachtograndparent"))
+            if (!groupController.CanCommand(actor.PlayerSession, "attachtograndparent"))
             {
                 return;
             }
@@ -38,13 +38,13 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (!groupController.CanCommand(actor.playerSession, "attachtograndparent"))
+            if (!groupController.CanCommand(actor.PlayerSession, "attachtograndparent"))
             {
                 return;
             }

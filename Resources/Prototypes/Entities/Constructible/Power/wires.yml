@@ -15,6 +15,7 @@
   - type: InteractionOutline
   - type: SnapGrid
   - type: Sprite
+    netsync: false
     drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags

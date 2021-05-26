@@ -117,8 +117,8 @@ namespace Content.Shared.Preferences
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
 
-            var facialHairStyleId = appearance.HairStyleId;
-            if (!mgr.IsValidAccessoryInCategory(hairStyleId, SpriteAccessoryCategories.HumanFacialHair))
+            var facialHairStyleId = appearance.FacialHairStyleId;
+            if (!mgr.IsValidAccessoryInCategory(facialHairStyleId, SpriteAccessoryCategories.HumanFacialHair))
             {
                 facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }

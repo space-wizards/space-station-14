@@ -25,7 +25,7 @@ namespace Content.Server.GlobalVerbs
             if (user == target || target.HasComponent<MindComponent>())
                 return;
 
-            var player = user.GetComponent<IActorComponent>().playerSession;
+            var player = user.GetComponent<ActorComponent>().PlayerSession;
             if (groupController.CanCommand(player, "makesentient"))
             {
                 data.Visibility = VerbVisibility.Visible;
@@ -39,7 +39,7 @@ namespace Content.Server.GlobalVerbs
         {
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            var player = user.GetComponent<IActorComponent>().playerSession;
+            var player = user.GetComponent<ActorComponent>().PlayerSession;
             if (!groupController.CanCommand(player, "makesentient"))
                 return;
 

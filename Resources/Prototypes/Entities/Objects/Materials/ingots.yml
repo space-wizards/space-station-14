@@ -18,11 +18,11 @@
   parent: IngotBase
   id: IngotAdamantine
   name: adamantine bar
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: adamantine
+    - Adamantine
   - type: Stack
     stackType: Adamantine
   - type: Sprite
@@ -41,6 +41,7 @@
   parent: IngotAdamantine
   id: IngotAdamantine1
   name: adamantine bar
+  suffix: Single
   components:
   - type: Sprite
     state: adamantine
@@ -51,11 +52,11 @@
   parent: IngotBase
   id: IngotCopper
   name: copper bar
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: copper
+    - Copper
   - type: Stack
     stackType: Copper
   - type: Sprite
@@ -74,6 +75,7 @@
   parent: IngotCopper
   id: IngotCopper1
   name: copper bar
+  suffix: Single
   components:
   - type: Sprite
     state: copper
@@ -84,11 +86,11 @@
   parent: IngotBase
   id: IngotGold
   name: gold bar
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: gold
+    - Gold
   - type: Stack
     stackType: Gold
   - type: Sprite
@@ -107,6 +109,7 @@
   parent: IngotGold
   id: IngotGold1
   name: gold bar
+  suffix: Single
   components:
   - type: Sprite
     state: gold
@@ -117,11 +120,11 @@
   parent: IngotBase
   id: IngotHydrogen
   name: hydrogen bar
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: hydrogen
+    - Hydrogen
   - type: Stack
     stackType: Hydrogen
   - type: Sprite
@@ -140,6 +143,7 @@
   parent: IngotHydrogen
   id: IngotHydrogen1
   name: hydrogen bar
+  suffix: Single
   components:
   - type: Sprite
     state: hydrogen
@@ -150,11 +154,11 @@
   parent: IngotBase
   id: IngotIron
   name: iron bar
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: iron
+    - Iron
   - type: Stack
     stackType: Iron
   - type: Sprite
@@ -173,6 +177,7 @@
   parent: IngotIron
   id: IngotIron1
   name: iron bar
+  suffix: Single
   components:
   - type: Sprite
     state: iron
@@ -183,11 +188,11 @@
   parent: IngotBase
   id: IngotSilver
   name: silver bar
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: silver
+    - Silver
   - type: Stack
     stackType: Silver
   - type: Sprite
@@ -206,6 +211,7 @@
   parent: IngotSilver
   id: IngotSilver1
   name: silver bar
+  suffix: Single
   components:
   - type: Sprite
     state: silver
