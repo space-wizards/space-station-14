@@ -1,6 +1,7 @@
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -13,6 +14,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, StackChangeCountEvent>(OnStackCountChange);
+            SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
         }
 
         private void OnStackStarted(EntityUid uid, SharedStackComponent component, ComponentStartup args)
@@ -55,6 +57,20 @@ namespace Content.Shared.GameObjects.EntitySystems
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+        }
+
+        private void OnStackExamined(EntityUid uid, SharedStackComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+
+            args.Message.AddText("\n");
+            args.Message.AddMarkup(
+                Loc.GetString("comp-stack-examine-detail-count",
+                    ("count", component.Count),
+                    ("markupCountColor", "lightgray")
+                )
+            );
         }
     }
 

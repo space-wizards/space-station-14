@@ -237,6 +237,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             Message = message;
             Examiner = examiner;
+            IsInDetailsRange = isInDetailsRange;
         }
     }
 }
