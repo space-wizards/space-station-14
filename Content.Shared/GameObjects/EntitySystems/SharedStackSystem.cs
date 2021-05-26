@@ -22,6 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
                 return;
 
+            appearance.SetData(StackVisuals.Actual, component.Count);
             appearance.SetData(StackVisuals.MaxCount, component.MaxCount);
             appearance.SetData(StackVisuals.Hide, false);
         }
