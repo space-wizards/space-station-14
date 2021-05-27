@@ -1163,3 +1163,19 @@ Entries:
   changes: []
   id: 207
   time: '2021-05-24T14:55:48.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Dragging an object causes it to not count as thrown anymore., type: Fix}
+  id: 208
+  time: '2021-05-27T10:47:40.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Spears now apply damage when thrown, and have more damage', type: Add}
+  id: 209
+  time: '2021-05-27T10:47:49.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Pulling is now more reliable across different object weights, and feels
+      better.', type: Fix}
+  id: 210
+  time: '2021-05-27T10:48:37.0000000+00:00'
