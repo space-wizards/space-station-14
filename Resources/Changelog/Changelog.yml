@@ -1188,3 +1188,8 @@ Entries:
       someone on it., type: Fix}
   id: 211
   time: '2021-05-27T10:51:15.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added new recipes to the lathe., type: Add}
+  id: 212
+  time: '2021-05-27T22:43:10.0000000+00:00'
