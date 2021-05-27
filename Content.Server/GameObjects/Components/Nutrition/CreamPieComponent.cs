@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 solution.Solution.SpillAt(Owner, "PuddleSmear", false);
             }
 
-            Owner.Delete();
+            Owner.QueueDelete();
         }
     }
 }

@@ -11,6 +11,7 @@
         !type:PhysShapeCircle
           radius: 0.5
       mass: 5
+      # Keep an eye on ParticlesProjectile when adjusting these
       layer:
       - Impassable
       mask:

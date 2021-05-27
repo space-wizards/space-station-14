@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.Construction;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Construction;
 using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -314,10 +315,14 @@ namespace Content.Server.GameObjects.Components.Construction
                         return true;
                     }
 
-                    if (!stack.Split(needed, Owner.Transform.Coordinates, out var newStack))
+                    var splitStack = new StackSplitEvent()
+                        {Amount = needed, SpawnPosition = Owner.Transform.Coordinates};
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(stack.Owner.Uid, splitStack);
+
+                    if (splitStack.Result == null)
                         return false;
 
-                    if(!_partContainer.Insert(newStack))
+                    if(!_partContainer.Insert(splitStack.Result))
                         return false;
 
                     _materialProgress[type] += needed;

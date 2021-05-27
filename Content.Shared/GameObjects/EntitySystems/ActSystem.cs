@@ -68,7 +68,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 destroyAct.OnDestroy(eventArgs);
             }
 
-            owner.Delete();
+            owner.QueueDelete();
         }
 
         public void HandleExplosion(EntityCoordinates source, IEntity target, ExplosionSeverity severity)

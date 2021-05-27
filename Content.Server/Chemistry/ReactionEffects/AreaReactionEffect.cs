@@ -129,7 +129,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                ent.Delete();
+                ent.QueueDelete();
                 return;
             }
 

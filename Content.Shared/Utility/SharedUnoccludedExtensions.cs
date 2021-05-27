@@ -353,7 +353,7 @@ namespace Content.Shared.Utility
         }
 
         public static bool InRangeUnOccluded(
-            this DragDropEventArgs args,
+            this DragDropEvent args,
             float range = InteractionRange,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)

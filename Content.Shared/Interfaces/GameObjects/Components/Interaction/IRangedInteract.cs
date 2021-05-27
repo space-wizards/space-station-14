@@ -36,37 +36,37 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when being clicked by objects outside the range of direct use.
+    ///     Raised when an entity is interacted with that is out of the user entity's range of direct use.
     /// </summary>
     [PublicAPI]
-    public class RangedInteractMessage : HandledEntityEventArgs
+    public class RangedInteractEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     Entity that triggered the attack.
+        ///     Entity that triggered the interaction.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Entity that the User attacked with.
+        ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity ItemInHand { get; set; }
+        public IEntity Used { get; }
 
         /// <summary>
-        ///     Entity that was attacked.
+        ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Attacked { get; }
+        public IEntity Target { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public RangedInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation)
+        public RangedInteractEvent(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
             User = user;
-            ItemInHand = itemInHand;
+            Used = used;
+            Target = target;
             ClickLocation = clickLocation;
-            Attacked = attacked;
         }
     }
 }

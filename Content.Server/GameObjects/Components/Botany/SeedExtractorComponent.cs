@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Botany
             {
                 eventArgs.User.PopupMessageCursor(Loc.GetString("You extract some seeds from the {0}.", eventArgs.Using.Name));
 
-                eventArgs.Using.Delete();
+                eventArgs.Using.QueueDelete();
 
                 var random = _random.Next(_minSeeds, _maxSeeds);
 

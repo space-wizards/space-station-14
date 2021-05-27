@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             TrySpike(eventArgs.Dragged, eventArgs.User);
             return true;

@@ -38,7 +38,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             // LandInteraction
             // TODO: Refactor these to system messages
-            var landMsg = new LandMessage(user, landing, coordinates);
+            var landMsg = new LandEvent(user, landing, coordinates);
             RaiseLocalEvent(landMsg);
             if (landMsg.Handled)
             {
@@ -65,7 +65,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         public void ThrowCollideInteraction(IEntity? user, IPhysBody thrown, IPhysBody target)
         {
             // TODO: Just pass in the bodies directly
-            var collideMsg = new ThrowCollideMessage(user, thrown.Owner, target.Owner);
+            var collideMsg = new ThrowCollideEvent(user, thrown.Owner, target.Owner);
             RaiseLocalEvent(collideMsg);
             if (collideMsg.Handled)
             {
