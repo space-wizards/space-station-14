@@ -53,10 +53,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             _mapManager.GridChanged += MapManagerOnGridChanged;
             _mapManager.TileChanged += MapManagerOnTileChanged;
 
-            // TODO: Make this sane when EntityStarted becomes a directed event.
-            EntityManager.EntityStarted += OnEntityStarted;
-
-            SubscribeLocalEvent<SubFloorHideComponent, EntityTerminatingEvent>(OnSubFloorTerminating);
+            SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
+            SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             SubscribeLocalEvent<SubFloorHideComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
         }
 
@@ -66,22 +64,14 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             _mapManager.GridChanged -= MapManagerOnGridChanged;
             _mapManager.TileChanged -= MapManagerOnTileChanged;
-
-            EntityManager.EntityStarted -= OnEntityStarted;
-
-            UnsubscribeLocalEvent<SubFloorHideComponent, EntityTerminatingEvent>(OnSubFloorTerminating);
-            UnsubscribeLocalEvent<SubFloorHideComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
         }
 
-        private void OnEntityStarted(object? sender, EntityUid uid)
+        private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
         {
-            if (ComponentManager.HasComponent<SubFloorHideComponent>(uid))
-            {
-                UpdateEntity(uid);
-            }
+            UpdateEntity(uid);
         }
 
-        private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, EntityTerminatingEvent args)
+        private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
             UpdateEntity(uid);
         }
