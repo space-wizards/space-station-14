@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
@@ -78,8 +79,14 @@ namespace Content.Server.GameObjects.Components.Items
                     var tile = mapGrid.GetTileRef(location);
                     var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
                     {
+                        var stackUse = new StackUseEvent() {Amount = 1};
+                        Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                        if (!stackUse.Result)
+                            continue;
+
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);
                         break;
                     }

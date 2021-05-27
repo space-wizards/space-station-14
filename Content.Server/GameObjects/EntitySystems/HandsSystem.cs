@@ -180,12 +180,13 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype?.ID, playerEnt.Transform.Coordinates);
+                var splitStack = new StackSplitEvent() {Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates};
+                RaiseLocalEvent(throwEnt.Uid, splitStack);
 
-                // can only throw one item at a time, regardless of what the prototype stack size is.
-                if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
-                    newStackComp.Count = 1;
+                if (splitStack.Result == null)
+                    return false;
+
+                throwEnt = splitStack.Result;
             }
 
             var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;

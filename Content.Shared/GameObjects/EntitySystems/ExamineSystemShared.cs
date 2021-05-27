@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -14,6 +15,7 @@ using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
+    [Obsolete("Use ExaminedEvent instead.")]
     public interface IExamine
     {
         /// <summary>
@@ -164,7 +166,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
+        public FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
         {
             var message = new FormattedMessage();
 
@@ -184,6 +186,9 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             message.PushColor(Color.DarkGray);
 
+            // Raise the event and let things that subscribe to it change the message...
+            RaiseLocalEvent(entity.Uid, new ExaminedEvent(message, entity, examiner, IsInDetailsRange(examiner, entity)));
+
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())
             {
@@ -202,6 +207,43 @@ namespace Content.Shared.GameObjects.EntitySystems
             message.Pop();
 
             return message;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity is examined.
+    ///     You have to manually add a newline at the start, and perform cleanup (popping state) at the end.
+    /// </summary>
+    public class ExaminedEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     The message that will be displayed as the examine text.
+        ///     Use the methods it exposes to change it, and don't forget to add a newline at the start!
+        ///     Input/Output parameter.
+        /// </summary>
+        public FormattedMessage Message { get; }
+
+        /// <summary>
+        ///     The entity performing the examining.
+        /// </summary>
+        public IEntity Examiner { get; }
+
+        /// <summary>
+        ///     Entity being examined, for broadcast event purposes.
+        /// </summary>
+        public IEntity Examined { get; }
+
+        /// <summary>
+        ///     Whether the examiner is in range of the entity to get some extra details.
+        /// </summary>
+        public bool IsInDetailsRange { get; }
+
+        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange)
+        {
+            Message = message;
+            Examined = examined;
+            Examiner = examiner;
+            IsInDetailsRange = isInDetailsRange;
         }
     }
 }
