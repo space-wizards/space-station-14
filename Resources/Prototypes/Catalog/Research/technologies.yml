@@ -27,6 +27,7 @@
   unlockedRecipes:
     - Bucket
     - MopItem
+    - SprayBottle
 
 # Biological Technology Tree
 
@@ -92,6 +93,7 @@
   unlockedRecipes:
     - Beaker
     - LargeBeaker
+    - CryostasisBeaker
     - Dropper
     - Syringe
 

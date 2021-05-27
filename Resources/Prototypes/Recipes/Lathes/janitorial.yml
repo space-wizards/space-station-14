@@ -37,7 +37,9 @@
 
 - type: latheRecipe
   id: SprayBottle
-  icon: Objects/Specific/Janitorial/janitorial.rsi
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
   result: SprayBottle
   completetime: 500
   materials:

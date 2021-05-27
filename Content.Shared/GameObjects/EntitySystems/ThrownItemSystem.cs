@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Physics.Pull;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -18,22 +20,28 @@ namespace Content.Shared.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PhysicsSleepMessage>(HandleSleep);
+            SubscribeLocalEvent<ThrownItemComponent, PhysicsSleepMessage>(HandleSleep);
+            SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
         }
 
-        public override void Shutdown()
+        private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
-            base.Shutdown();
-            UnsubscribeLocalEvent<PhysicsSleepMessage>();
+            LandComponent(thrownItem);
         }
 
-        private void HandleSleep(PhysicsSleepMessage message)
+        private void HandlePullStarted(PullStartedMessage message)
         {
-            // TODO: Sub to ThrownitemComponent
-            if (message.Body.Deleted || !message.Body.Owner.TryGetComponent(out ThrownItemComponent? thrownItem)) return;
+            // TODO: this isn't directed so things have to be done the bad way
+            if (message.Pulled.Owner.TryGetComponent(out ThrownItemComponent? thrownItem))
+                LandComponent(thrownItem);
+        }
+
+        private void LandComponent(ThrownItemComponent thrownItem)
+        {
+            if (thrownItem.Owner.Deleted) return;
 
             var user = thrownItem.Thrower;
-            var landing = message.Body.Owner;
+            var landing = thrownItem.Owner;
             var coordinates = landing.Transform.Coordinates;
 
             // LandInteraction

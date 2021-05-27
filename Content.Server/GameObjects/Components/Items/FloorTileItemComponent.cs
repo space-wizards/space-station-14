@@ -14,6 +14,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
-        [DataField("outputs")]
+        [DataField("outputs", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
 
         public override void Initialize()
