@@ -1179,3 +1179,12 @@ Entries:
       better.', type: Fix}
   id: 210
   time: '2021-05-27T10:48:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'You can rotate barstools, PA components, and radiation collectors.',
+    type: Add}
+  - {message: You can turn to face people on rotatable chairs., type: Add}
+  - {message: Fixes draw depths and buckle offsets if a chair or such is rotated with
+      someone on it., type: Fix}
+  id: 211
+  time: '2021-05-27T10:51:15.0000000+00:00'
