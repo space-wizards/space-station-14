@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
@@ -151,6 +152,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     case null:
                         break;
                     default:
+                        ExceptionDispatchInfo.Capture(request.Job.Exception).Throw();
                         throw request.Job.Exception;
                 }
                 _pathfindingRequests.Remove(entity);
