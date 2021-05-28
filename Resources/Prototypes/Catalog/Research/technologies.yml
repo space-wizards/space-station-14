@@ -234,6 +234,8 @@
     - BasicResearch
   unlockedRecipes:
     - CableStack
+    - MVWireStack
+    - HVWireStack
     - LightBulb
     - LightTube
     - FirelockElectronics

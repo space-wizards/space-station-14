@@ -138,6 +138,8 @@
       - SheetRGlass
       - SheetPlastic
       - CableStack
+      - MVWireStack
+      - HVWireStack
       - ConveyorAssembly
       - RCD
       - RCDAmmo
