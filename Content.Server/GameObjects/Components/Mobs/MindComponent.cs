@@ -137,8 +137,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!HasMind)
             {
                 var aliveText =
-                    $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic")}[/color]";
-                var deadText = $"[color=red]{Loc.GetString("comp-mind-examined-dead")}[/color]";
+                    $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]";
+                var deadText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
 
                 message.AddMarkup(dead ? deadText : aliveText);
             }
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 if (dead) return;
 
                 var text =
-                    $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd")}[/color]";
+                    $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]";
 
                 message.AddMarkup(text);
             }
