@@ -1193,3 +1193,8 @@ Entries:
   - {message: Added spray bottle and cyrostasis beaker to the lathe., type: Add}
   id: 212
   time: '2021-05-27T22:43:10.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: added HV and MV cables into the lathe, type: Add}
+  id: 213
+  time: '2021-05-28T03:41:03.0000000+00:00'
