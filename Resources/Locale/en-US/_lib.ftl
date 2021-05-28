@@ -12,8 +12,8 @@ zzzz-fmt-pressure = { TOSTRING($divided, "G3") } { $places ->
 
 # Used internally by the THE() function.
 zzzz-the = { PROPER($ent) ->
-    *[false] the
-     [true] {""}
+    *[false] the { $ent }
+     [true] { $ent }
     }
 
 # Used internally by the SUBJECT() function.
@@ -32,7 +32,7 @@ zzzz-object-pronoun = { GENDER($ent) ->
    *[neuter] it
    }
 
-# Used internally by the POSSPRONOUN() function.
+# Used internally by the POSS-PRONOUN() function.
 zzzz-possessive-pronoun = { GENDER($ent) ->
     [male] his
     [female] hers
@@ -40,7 +40,7 @@ zzzz-possessive-pronoun = { GENDER($ent) ->
    *[neuter] its
    }
 
-# Used internally by the POSSADJ() function.
+# Used internally by the POSS-ADJ() function.
 zzzz-possessive-adjective = { GENDER($ent) ->
     [male] his
     [female] her
