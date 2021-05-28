@@ -1208,3 +1208,17 @@ Entries:
   - {message: Melee weapon effects are now rotated correctly, type: Fix}
   id: 215
   time: '2021-05-28T08:58:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: startsingularityengine starts the radiation emitters and no longer sets
+      the PA into an unsafe mode., type: Fix}
+  - {message: Radiation collectors do not produce infinite energy when subjected to
+      radiation., type: Fix}
+  - {message: The containment field shouldn't randomly fail anymore., type: Fix}
+  - {message: Two singularities no longer instantly annihilate each other, type: Fix}
+  - {message: Singularity shader works roughly properly again., type: Fix}
+  - {message: 'An unfinished PA in the PA room, so Engineering don''t have to beg
+      Cargo for a PA crate and go through all the steps.', type: Add}
+  - {message: Singularity shouldn't get stuck in a corner as often., type: Fix}
+  id: 216
+  time: '2021-05-28T09:44:13.0000000+00:00'
