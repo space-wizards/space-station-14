@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (!victim.TryGetComponent(out butcherable))
             {
-                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim.Name), ("this", Owner)));
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
                 return false;
             }
 
