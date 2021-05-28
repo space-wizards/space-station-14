@@ -13,4 +13,4 @@ comp-kitchen-spike-suicide-self = You throw yourself on a meat spike!
 comp-kitchen-spike-remove-meat = You remove some meat from { THE($victim) }.
 comp-kitchen-spike-remove-meat-last = You remove the last piece of meat from { THE($victim) }!
 
-comp-kitchen-spike-meat-name = { THE($victim) } meat
+comp-kitchen-spike-meat-name = { $victim } meat
