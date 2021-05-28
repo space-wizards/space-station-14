@@ -1198,3 +1198,8 @@ Entries:
   - {message: added HV and MV cables into the lathe, type: Add}
   id: 213
   time: '2021-05-28T03:41:03.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Adds a plasteel crate to cargo, type: Add}
+  id: 214
+  time: '2021-05-28T04:19:33.715248+00:00'
