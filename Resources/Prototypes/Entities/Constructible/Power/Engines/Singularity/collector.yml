@@ -39,6 +39,16 @@
         !type:AdjacentNode
         nodeGroupID: HVPower
   - type: RadiationCollector
+    # Note that this doesn't matter too much (see next comment)
+    # However it does act as a cap on power receivable via the collector.
+  - type: Battery
+    maxCharge: 100000
+    startingCharge: 0
+  - type: BatteryDischarger
+    # This is JUST a default. It has to be dynamically adjusted to ensure that the battery doesn't discharge "too fast" & run out immediately, while still scaling by input power.
+    activeSupplyRate: 100000
+  - type: PowerSupplier
+    supplyRate: 0
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
