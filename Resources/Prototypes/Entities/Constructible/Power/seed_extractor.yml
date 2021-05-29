@@ -5,24 +5,43 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      sprite: Constructible/Hydroponics/machines.rsi
-      state: seedextractor
-    - type: Physics
-      bodyType: Static
-      fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.4,-0.25,0.4,0.25"
-        mass: 25
-        layer:
-          - Opaque
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-    - type: SnapGrid
-    - type: Anchorable
-    - type: SeedExtractor
-    - type: PowerReceiver
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Constructible/Hydroponics/machines.rsi
+    layers:
+    - state: seedextractor-off
+    - state: seedextractor-unlit
+      shader: unshaded
+    netsync: false
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.25,0.4,0.25"
+      mass: 25
+      mask:
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+  - type: Anchorable
+  - type: SeedExtractor
+  - type: PowerReceiver
+  - type: Pullable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
