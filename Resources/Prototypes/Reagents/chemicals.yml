@@ -13,6 +13,20 @@
       amount: 0.5
 
 - type: reagent
+  id: Acetone 
+  name: acetone
+  desc: Common ingredient in other recipes. Causes toxin damage when ingested.
+  physicalDesc: pungent
+  color: "#b014b4"
+  boilingPoint: 56.0
+  meltingPoint: -95.0
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.5
+
+- type: reagent
   id: Diethylamine
   name: diethylamine
   desc: A very potent fertilizer.
@@ -111,6 +125,15 @@
       temperatureMultiplier: 1.5
 
 - type: reagent
+  id: Phenol
+  name: phenol
+  desc: Used for certain medical recipes.
+  physicalDesc: sickeninglysweet-smelling
+  color: "#e8ec94"
+  boilingPoint: 181.7
+  meltingPoint: 40.5
+
+- type: reagent
   id: PolytrinicAcid
   name: polytrinic acid
   desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
@@ -127,6 +150,16 @@
       amount: -8
 
 - type: reagent
+  id: HydrogenPeroxide
+  name: hydrogen peroxide
+  desc: Burns people on touch.
+  physicalDesc: unnoticeable
+  color: "#fffcd4"
+  boilingPoint: 150.2
+  meltingPoint: -0.43
+
+
+- type: reagent
   id: FluorosulfuricAcid
   name: fluorosulfuric acid
   desc: An extremely corrosive chemical substance.
@@ -134,6 +167,15 @@
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
+
+- type: reagent
+  id: Lye
+  name: lye
+  desc: Useful in creating homemade soap and candles.
+  physicalDesc: soapy 
+  color: "#d0a4dc"
+  boilingPoint: 1388.0
+  meltingPoint: 318.0
 
 - type: reagent
   id: TableSalt
@@ -198,6 +240,18 @@
       amount: -5
 
 - type: reagent
+  id: Saltpetre
+  name: saltpetre
+  desc: Fertilizer.
+  physicalDesc: salty
+  color: "#68a484"
+  boilingPoint: 400.0
+  meltingPoint: 334.0
+  plantMetabolism:
+    - !type:AdjustHealth
+      amount: 5
+
+- type: reagent
   id: UnstableMutagen
   name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
@@ -227,6 +281,17 @@
   plantMetabolism:
     - !type:AdjustWater
       amount: 1
+
+- type: reagent
+  id: Oil
+  name: oil
+  desc: Used by chefs to cook.
+  physicalDesc: oily
+  color: "#b67823"
+  boilingPoint: -84.7 
+  meltingPoint: -80.7
+  tileReactions:
+    - !type:FlammableTileReaction {}
 
 - type: reagent
   id: WeldingFuel

@@ -9,6 +9,18 @@
     Ammonia: 4
 
 - type: reaction
+  id: Acetone
+  reactants:
+    Oil:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Acetone: 3
+
+- type: reaction
   id: Diethylamine
   reactants:
     Ammonia:
@@ -27,6 +39,30 @@
       amount: 1
   products:
     FoamingAgent: 2
+
+- type: reaction
+  id: HydrogenPeroxide
+  reactants:
+    Oxygen:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    HydrogenPeroxide: 3
+
+- type: reaction
+  id: Phenol
+  reactants:
+    Oil:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Phenol: 3
 
 - type: reaction
   id: PolytrinicAcid
@@ -91,6 +127,18 @@
       diluteReagents: false
       prototypeId: Smoke
       sound: /Audio/Effects/smoke.ogg
+
+- type: reaction
+  id: Saltpetre
+  reactants:
+    Oxygen:
+      amount: 3
+    Potassium:
+      amount: 1
+    Nitrogen:
+      amount: 1
+  products:
+    Saltpetre: 3
 
 - type: reaction
   id: Foam
@@ -160,6 +208,18 @@
       prototypeId: AluminiumMetalFoam
 
 - type: reaction
+  id: Lye
+  reactants:
+    Hydrogen:
+      amount: 1
+    Sodium:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Lye: 3
+
+- type: reaction
   id: TableSalt
   reactants:
     Chlorine:
@@ -202,6 +262,18 @@
       amount: 1
   products:
     Water: 2
+
+- type: reaction
+  id: Oil
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Oil: 3
 
 - type: reaction
   id: Fluorosurfactant
