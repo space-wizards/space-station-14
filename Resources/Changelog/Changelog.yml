@@ -1222,3 +1222,8 @@ Entries:
   - {message: Singularity shouldn't get stuck in a corner as often., type: Fix}
   id: 216
   time: '2021-05-28T09:44:13.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes AME controller's physics, type: Fix}
+  id: 217
+  time: '2021-05-29T17:22:55.527577+00:00'
