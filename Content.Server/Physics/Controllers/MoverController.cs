@@ -187,7 +187,7 @@ namespace Content.Server.Physics.Controllers
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
                 _robustRandom.Pick(soundCollection.PickFiles),
-                mover,
+                mover.Transform.Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }
     }

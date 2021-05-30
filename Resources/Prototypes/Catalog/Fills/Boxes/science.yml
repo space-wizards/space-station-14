@@ -6,9 +6,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: Beaker
+      - id: Beaker
         amount: 3
-      - name: LargeBeaker
+      - id: LargeBeaker
         amount: 3
   - type: Sprite
     layers:

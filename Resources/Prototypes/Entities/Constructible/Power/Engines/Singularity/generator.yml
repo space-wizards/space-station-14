@@ -18,6 +18,7 @@
         !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
       mass: 25
+      # Keep an eye on ParticlesProjectile when adjusting these
       layer:
       - Opaque
       mask:

@@ -8,7 +8,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: AMEPart
+      - id: AMEPart
         amount: 9
 
 - type: entity
@@ -19,7 +19,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: AMEJar
+      - id: AMEJar
         amount: 3
 
 - type: entity
@@ -30,7 +30,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: AMEControllerUnanchored
+      - id: AMEControllerUnanchored
         amount: 1
 
 # Singularity
@@ -43,7 +43,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: Emitter
+      - id: Emitter
         amount: 1
 
 - type: entity
@@ -54,7 +54,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: RadiationCollector
+      - id: RadiationCollector
         amount: 1
 
 - type: entity
@@ -65,7 +65,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ContainmentFieldGenerator
+      - id: ContainmentFieldGenerator
         amount: 1
 
 - type: entity
@@ -76,7 +76,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: SingularityGenerator
+      - id: SingularityGenerator
         amount: 1
 
 # Particle Accelerator
@@ -89,19 +89,19 @@
   components:
   - type: StorageFill
     contents:
-      - name: MachineParticleAcceleratorEndCapCircuitboard
+      - id: MachineParticleAcceleratorEndCapCircuitboard
         amount: 1
-      - name: MachineParticleAcceleratorEmitterLeftCircuitboard
+      - id: MachineParticleAcceleratorEmitterLeftCircuitboard
         amount: 1
-      - name: MachineParticleAcceleratorEmitterCenterCircuitboard
+      - id: MachineParticleAcceleratorEmitterCenterCircuitboard
         amount: 1
-      - name: MachineParticleAcceleratorEmitterRightCircuitboard
+      - id: MachineParticleAcceleratorEmitterRightCircuitboard
         amount: 1
-      - name: MachineParticleAcceleratorFuelChamberCircuitboard
+      - id: MachineParticleAcceleratorFuelChamberCircuitboard
         amount: 1
-      - name: MachineParticleAcceleratorPowerBoxCircuitboard
+      - id: MachineParticleAcceleratorPowerBoxCircuitboard
         amount: 1
-      - name: ParticleAcceleratorComputerCircuitboard
+      - id: ParticleAcceleratorComputerCircuitboard
         amount: 1
 
 # Non-functional for some reason
@@ -114,7 +114,7 @@
 #  components:
 #  - type: StorageFill
 #    contents:
-#      - name: Singularity
+#      - id: Singularity
 #        amount: 1
 
 - type: entity
@@ -124,7 +124,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: DebugGenerator
+      - id: DebugGenerator
         amount: 1
 
 - type: entity
@@ -134,5 +134,5 @@
   components:
   - type: StorageFill
     contents:
-      - name: SolarAssemblyPart
+      - id: SolarAssemblyPart
         amount: 6

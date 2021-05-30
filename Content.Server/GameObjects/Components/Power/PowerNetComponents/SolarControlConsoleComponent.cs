@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
             // always update the UI immediately before opening, just in case
             UpdateUIState();
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
     }
 }

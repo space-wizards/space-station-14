@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
             }
 
-            Owner.Delete();
+            Owner.QueueDelete();
         }
     }
 }

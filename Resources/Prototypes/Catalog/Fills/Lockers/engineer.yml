@@ -5,33 +5,33 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingOuterVestHazard
+      - id: ClothingOuterVestHazard
         prob: 0.4
-      - name: FlashlightLantern
+      - id: FlashlightLantern
         prob: 0.7
-      - name: Screwdriver
+      - id: Screwdriver
         prob: 0.7
-      - name: Wrench
+      - id: Wrench
         prob: 0.7
-      - name: Welder
+      - id: Welder
         prob: 0.7
-      - name: Crowbar
+      - id: Crowbar
         prob: 0.7
-      - name: Wirecutter
+      - id: Wirecutter
         prob: 0.7
-      - name: Multitool
+      - id: Multitool
         prob: 0.2
-      - name: ClothingBeltUtility
+      - id: ClothingBeltUtility
         prob: 0.2
-      - name: ClothingHandsGlovesColorYellow
+      - id: ClothingHandsGlovesColorYellow
         prob: 0.05
-      - name: ClothingHeadHatHardhatRed
+      - id: ClothingHeadHatHardhatRed
         prob: 0.4
-      - name: ApcExtensionCableStack
+      - id: ApcExtensionCableStack
         prob: 0.3
-      - name: ApcExtensionCableStack
+      - id: ApcExtensionCableStack
         prob: 0.3
-      - name: ApcExtensionCableStack
+      - id: ApcExtensionCableStack
         prob: 0.3
 
 - type: entity
@@ -41,15 +41,15 @@
   components:
   - type: StorageFill
     contents:
-      - name: ToolboxElectricalFilled
+      - id: ToolboxElectricalFilled
         prob: 0.7
-      - name: FirelockElectronics
+      - id: FirelockElectronics
         prob: 0.05
-      - name: APCElectronics
+      - id: APCElectronics
         prob: 0.1
-      - name: MVWireStack
+      - id: MVWireStack
         prob: 0.2
-      - name: ApcExtensionCableStack
+      - id: ApcExtensionCableStack
         prob: 0.3
 
 - type: entity
@@ -59,11 +59,11 @@
   components:
   - type: StorageFill
     contents:
-      - name: WelderMini
+      - id: WelderMini
         prob: 1
-      - name: Welder
+      - id: Welder
         prob: 0.1
-      - name: ClothingHeadHatWelding
+      - id: ClothingHeadHatWelding
         prob: 0.5
 
 - type: entity
@@ -73,10 +73,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHelmetHardsuitAtmos
-      - name: ClothingOuterHardsuitAtmos
-      - name: ClothingMaskBreath
-      - name: OxygenTankFilled
+      - id: ClothingHeadHelmetHardsuitAtmos
+      - id: ClothingOuterHardsuitAtmos
+      - id: ClothingMaskBreath
+      - id: OxygenTankFilled
 
 - type: entity
   id: LockerEngineerFilled
@@ -85,11 +85,11 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHelmetHardsuitEngineering
-      - name: ClothingOuterHardsuitEngineering
-      - name: ClothingMaskBreath
-      - name: OxygenTankFilled
-      - name: ClothingShoesBootsMag
+      - id: ClothingHeadHelmetHardsuitEngineering
+      - id: ClothingOuterHardsuitEngineering
+      - id: ClothingMaskBreath
+      - id: OxygenTankFilled
+      - id: ClothingShoesBootsMag
         prob: 0.15
         
 - type: entity

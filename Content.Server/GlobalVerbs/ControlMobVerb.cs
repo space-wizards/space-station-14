@@ -26,14 +26,14 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
                 if (!user.HasComponent<MindComponent>() || !target.HasComponent<MindComponent>())
                 {
                     return;
                 }
 
-                if (groupController.CanCommand(player.playerSession, "controlmob"))
+                if (groupController.CanCommand(player.PlayerSession, "controlmob"))
                 {
                     data.Visibility = VerbVisibility.Visible;
                     data.Text = Loc.GetString("Control Mob");
@@ -46,7 +46,7 @@ namespace Content.Server.GlobalVerbs
         {
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            var player = user.GetComponent<IActorComponent>().playerSession;
+            var player = user.GetComponent<ActorComponent>().PlayerSession;
             if (!groupController.CanCommand(player, "controlmob"))
             {
                 return;

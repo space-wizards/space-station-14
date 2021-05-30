@@ -1,46 +1,34 @@
 using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        private const string SerializationCache = "stack";
-
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
-
-        [DataField("count")]
-        private int _count = 30;
 
         [DataField("max")]
         private int _maxCount = 30;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual int Count
-        {
-            get => _count;
-            set
-            {
-                _count = value;
-                if (_count <= 0)
-                {
-                    Owner.Delete();
-                }
+        [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
+        public string StackTypeId { get; private set; } = string.Empty;
 
-                Dirty();
-            }
-        }
+        /// <summary>
+        ///     Current stack count.
+        ///     Do NOT set this directly, raise the <see cref="StackChangeCountEvent"/> event instead.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("count")]
+        public int Count { get; set; } = 30;
 
         [ViewVariables]
         public int MaxCount
@@ -48,28 +36,16 @@ namespace Content.Shared.GameObjects.Components
             get => _maxCount;
             private set
             {
+                if (_maxCount == value)
+                    return;
+
                 _maxCount = value;
                 Dirty();
             }
         }
 
-        [ViewVariables] public int AvailableSpace => MaxCount - Count;
-
         [ViewVariables]
-        [DataField("stackType")]
-        public string StackTypeId { get; } = string.Empty;
-
-        public StackPrototype StackType => _prototypeManager.Index<StackPrototype>(StackTypeId);
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (StackTypeId != string.Empty && !_prototypeManager.HasIndex<StackPrototype>(StackTypeId))
-            {
-                Logger.Error($"No {nameof(StackPrototype)} found with id {StackTypeId} for {Owner.Prototype?.ID ?? Owner.Name}");
-            }
-        }
+        public int AvailableSpace => MaxCount - Count;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -79,11 +55,10 @@ namespace Content.Shared.GameObjects.Components
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not StackComponentState cast)
-            {
                 return;
-            }
 
-            Count = cast.Count;
+            // This will change the count and call events.
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new StackChangeCountEvent(cast.Count));
             MaxCount = cast.MaxCount;
         }
 

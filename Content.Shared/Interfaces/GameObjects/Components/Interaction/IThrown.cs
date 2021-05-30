@@ -30,7 +30,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when throwing the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class ThrownMessage : HandledEntityEventArgs
+    public class ThrownEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that threw the item.
@@ -42,7 +42,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Thrown { get; }
 
-        public ThrownMessage(IEntity user, IEntity thrown)
+        public ThrownEvent(IEntity user, IEntity thrown)
         {
             User = user;
             Thrown = thrown;

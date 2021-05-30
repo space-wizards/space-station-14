@@ -61,5 +61,10 @@ namespace Content.Shared.Chat
         ///     Unspecified.
         /// </summary>
         Unspecified = 512,
+
+        /// <summary>
+        ///     Channels considered to be IC.
+        /// </summary>
+        IC = Local | Radio | Dead | Emotes | Damage | Visual,
     }
 }

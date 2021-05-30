@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -8,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
         public override string Name => "SingularityGenerator";
 
-        private int _power;
+        [ViewVariables] private int _power;
 
         public int Power
         {

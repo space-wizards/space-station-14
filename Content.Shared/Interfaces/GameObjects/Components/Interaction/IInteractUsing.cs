@@ -45,36 +45,36 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when being clicked on or "attacked" by a user with an object in their hand
+    ///     Raised when a target entity is interacted with by a user while holding an object in their hand.
     /// </summary>
     [PublicAPI]
-    public class InteractUsingMessage : HandledEntityEventArgs
+    public class InteractUsingEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     Entity that triggered the attack.
+        ///     Entity that triggered the interaction.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Entity that the User attacked with.
+        ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity ItemInHand { get; }
+        public IEntity Used { get; }
 
         /// <summary>
-        ///     Entity that was attacked.
+        ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Attacked { get; }
+        public IEntity Target { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation)
+        public InteractUsingEvent(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
             User = user;
-            ItemInHand = itemInHand;
-            Attacked = attacked;
+            Used = used;
+            Target = target;
             ClickLocation = clickLocation;
         }
     }

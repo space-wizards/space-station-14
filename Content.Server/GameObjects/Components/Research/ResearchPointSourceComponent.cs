@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

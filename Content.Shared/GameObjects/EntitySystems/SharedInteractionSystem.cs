@@ -417,7 +417,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         /// <summary>
-        ///     Checks that the user of a <see cref="DragDropEventArgs"/> is within a
+        ///     Checks that the user of a <see cref="DragDropEvent"/> is within a
         ///     certain distance of the target and dropped entities without any entity
         ///     that matches the collision mask obstructing them.
         ///     If the <paramref name="range"/> is zero or negative,
@@ -448,7 +448,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
-            DragDropEventArgs args,
+            DragDropEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
@@ -544,7 +544,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         /// <summary>
         ///     Checks that the user and target of a
-        ///     <see cref="AfterInteractMessage"/> are within a  certain distance
+        ///     <see cref="AfterInteractEvent"/> are within a  certain distance
         ///     without any entity that matches the collision mask obstructing them.
         ///     If the <paramref name="range"/> is zero or negative,
         ///     this method will only check if nothing obstructs the entity and component.
@@ -574,7 +574,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
         public bool InRangeUnobstructed(
-            AfterInteractMessage args,
+            AfterInteractEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
@@ -582,7 +582,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool popup = false)
         {
             var user = args.User;
-            var target = args.Attacked;
+            var target = args.Target;
             predicate ??= e => e == user;
 
             MapCoordinates otherPosition;

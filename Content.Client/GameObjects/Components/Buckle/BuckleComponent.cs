@@ -43,7 +43,7 @@ namespace Content.Client.GameObjects.Components.Buckle
                 return;
             }
 
-            if (!_buckled && _originalDrawDepth.HasValue)
+            if (_originalDrawDepth.HasValue && !buckle.DrawDepth.HasValue)
             {
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;

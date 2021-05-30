@@ -10,15 +10,15 @@
   components:
   - type: StorageFill
     contents:
-      - name: ToolboxEmergencyFilled
+      - id: ToolboxEmergencyFilled
         prob: 0.4
-      - name: ClothingMaskBreath
+      - id: ClothingMaskBreath
         prob: 0.4
-      - name: ClothingMaskBreath
+      - id: ClothingMaskBreath
         prob: 0.25
-      - name: EmergencyOxygenTankFilled
+      - id: EmergencyOxygenTankFilled
         prob: 0.4
-      - name: OxygenTankFilled
+      - id: OxygenTankFilled
         prob: 0.2
 
 - type: entity
@@ -28,7 +28,7 @@
   components:
     - type: StorageFill
       contents:
-        - name: RedOxygenTankFilled
+        - id: RedOxygenTankFilled
           prob: 0.6
-        - name: ClothingOuterSuitFire
+        - id: ClothingOuterSuitFire
           prob: 0.75

@@ -5,17 +5,17 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingOuterArmorBulletproof
+      - id: ClothingOuterArmorBulletproof
         prob: 0.5
-      - name: ShotgunSawn
+      - id: ShotgunSawn
         prob: 0.8
-      - name: DrinkShaker
+      - id: DrinkShaker
         prob: 1
-      - name: ClothingEyesGlassesBeer
+      - id: ClothingEyesGlassesBeer
         prob: 1
-      - name: DrinkBeer
+      - id: DrinkBeer
         prob: 0.5
-      - name: DrinkBottleBeer
+      - id: DrinkBottleBeer
         prob: 0.5
 
 #- type: entity
@@ -30,10 +30,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: CrowbarRed
-      - name: MonkeyCubeBox
-      - name: SprayBottleWater
-      - name: ReagentContainerFlour
+      - id: CrowbarRed
+      - id: MonkeyCubeBox
+      - id: SprayBottleWater
+      - id: ReagentContainerFlour
 
 - type: entity
   id: LockerJanitorFilled
@@ -42,14 +42,14 @@
   components:
   - type: StorageFill
     contents:
-      - name: MopItem
-      - name: WetFloorSign
+      - id: MopItem
+      - id: WetFloorSign
         amount: 3
-      - name: TrashBag
+      - id: TrashBag
         amount: 2
-      - name: LightReplacer
+      - id: LightReplacer
         amount: 1
-      - name: BoxLightMixed
+      - id: BoxLightMixed
         amount: 1
 
 #- type: entity
@@ -64,21 +64,21 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHandsGlovesLeather
+      - id: ClothingHandsGlovesLeather
         prob: 1
-      - name: ClothingHandsGlovesLeather
+      - id: ClothingHandsGlovesLeather
         prob: 0.8
-      - name: ClothingOuterApronBotanist
+      - id: ClothingOuterApronBotanist
         prob: 1
-      - name: ClothingOuterApronBotanist
+      - id: ClothingOuterApronBotanist
         prob: 0.8
-      - name: TowercapSeeds
+      - id: TowercapSeeds
         prob: 1
-      - name: BananaSeeds
+      - id: BananaSeeds
         prob: 0.8
-      - name: EggySeeds
+      - id: EggySeeds
         prob: 0.5
-      - name: AppleSeeds
+      - id: AppleSeeds
         prob: 0.8
-      - name: TomatoSeeds
+      - id: TomatoSeeds
         prob: 1

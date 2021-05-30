@@ -33,7 +33,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity is dropped
     /// </summary>
     [PublicAPI]
-    public class DroppedMessage : HandledEntityEventArgs
+    public class DroppedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that dropped the item.
@@ -50,7 +50,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public bool Intentional { get; }
 
-        public DroppedMessage(IEntity user, IEntity dropped, bool intentional)
+        public DroppedEvent(IEntity user, IEntity dropped, bool intentional)
         {
             User = user;
             Dropped = dropped;

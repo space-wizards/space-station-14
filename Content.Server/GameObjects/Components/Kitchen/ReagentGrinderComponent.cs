@@ -256,12 +256,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
             _uiDirty = true;
-            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

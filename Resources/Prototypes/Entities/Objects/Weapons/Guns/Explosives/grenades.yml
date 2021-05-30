@@ -86,9 +86,9 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive
-    devastationRange: 3
-    heavyImpactRange: 5
-    lightImpactRange: 7
+    devastationRange: 1
+    heavyImpactRange: 3
+    lightImpactRange: 5
     flashRange: 10
   - type: Damageable
   - type: Destructible

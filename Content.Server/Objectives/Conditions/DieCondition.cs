@@ -20,18 +20,13 @@ namespace Content.Server.Objectives.Conditions
             return new DieCondition {_mind = mind};
         }
 
-        public string Title => Loc.GetString("Die a glorius death");
+        public string Title => Loc.GetString("Die a glorious death");
 
         public string Description => Loc.GetString("Die.");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress => _mind?
-            .OwnedEntity?
-            .GetComponentOrNull<IMobStateComponent>()?
-            .IsDead() ?? false
-            ? 0f
-            : 1f;
+        public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
 
         public float Difficulty => 1f;
 

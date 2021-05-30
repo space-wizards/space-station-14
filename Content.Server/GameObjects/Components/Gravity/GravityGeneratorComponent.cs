@@ -77,13 +77,13 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent<IActorComponent>(out var actor))
+            if (!eventArgs.User.TryGetComponent<ActorComponent>(out var actor))
                 return false;
             if (Status != GravityGeneratorStatus.Off && Status != GravityGeneratorStatus.On)
             {
                 return false;
             }
-            OpenUserInterface(actor.playerSession);
+            OpenUserInterface(actor.PlayerSession);
             return true;
         }
 

@@ -102,7 +102,8 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
-                "MapGrid"
+                "MapGrid",
+                "Actor", // We aren't testing actor components, those need their player session set.
             };
 
             var testEntity = @"
@@ -204,7 +205,8 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
-                "MapGrid"
+                "MapGrid",
+                "Actor", // We aren't testing actor components, those need their player session set.
             };
 
             var testEntity = @"

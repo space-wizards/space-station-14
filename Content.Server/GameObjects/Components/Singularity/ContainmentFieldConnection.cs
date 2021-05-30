@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             get => _sharedEnergyPool;
             set
             {
-                _sharedEnergyPool = Math.Clamp(value, 0, 10);
+                _sharedEnergyPool = Math.Clamp(value, 0, 25);
                 if (_sharedEnergyPool == 0)
                 {
                     Dispose();

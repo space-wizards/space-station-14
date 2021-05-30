@@ -169,12 +169,12 @@
   components:
     - type: StorageFill
       contents:
-        - name: Haycutters
-        - name: Moodriver
-        - name: Wronch
-        - name: Cowbar
-        - name: Mooltitool
-        - name: Cowelder
-        - name: Milkalyzer
+        - id: Haycutters
+        - id: Moodriver
+        - id: Wronch
+        - id: Cowbar
+        - id: Mooltitool
+        - id: Cowelder
+        - id: Milkalyzer
 
 # I hate these fucking cowtools I hope the burn in hell -Swept

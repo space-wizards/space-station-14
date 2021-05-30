@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
         }
 
-        private void AnchoredChanged()
+        public void AnchoredChanged()
         {
             if (!Owner.TryGetComponent(out PhysicsComponent? physics))
             {
@@ -267,10 +267,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     _lastClang = _gameTiming.CurTime;
                     SoundSystem.Play(Filter.Pvs(Owner), _clangSound, Owner.Transform.Coordinates);
                     break;
-
-                case AnchoredChangedMessage:
-                    AnchoredChanged();
-                    break;
             }
         }
 
@@ -292,9 +288,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (user.TryGetComponent<IActorComponent>(out var player))
+                if (user.TryGetComponent<ActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
                     {
                         data.Visibility = VerbVisibility.Visible;
                     }
@@ -305,9 +301,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (user.TryGetComponent<IActorComponent>(out var player))
+                if (user.TryGetComponent<ActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
                     {
                         component.PopupDirections(user);
                     }

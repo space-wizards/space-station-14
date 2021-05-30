@@ -163,20 +163,22 @@ namespace Content.Server.GameObjects.EntitySystems
                     case MaterialConstructionGraphStep materialStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!materialStep.EntityValid(entity, out var sharedStack))
+                            if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var stack = (StackComponent) sharedStack;
+                            var splitStack = new StackSplitEvent()
+                                {Amount = materialStep.Amount, SpawnPosition = user.ToCoordinates()};
+                            RaiseLocalEvent(entity.Uid, splitStack);
 
-                            if (!stack.Split(materialStep.Amount, user.ToCoordinates(), out var newStack))
+                            if (splitStack.Result == null)
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(newStack))
+                                if (!container.Insert(splitStack.Result))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(newStack))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Result))
                                     continue;
 
                             handled = true;
@@ -230,7 +232,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 BreakOnStun = true,
                 BreakOnTargetMove = false,
                 BreakOnUserMove = true,
-                NeedHand = true,
+                NeedHand = false,
             };
 
             if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)

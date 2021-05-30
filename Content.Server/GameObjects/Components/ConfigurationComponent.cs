@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (UserInterface == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return false;
 
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -117,11 +117,11 @@ namespace Content.Server.GameObjects.Components
             UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
         }
 
-        private void OpenUserInterface(IActorComponent actor)
+        private void OpenUserInterface(ActorComponent actor)
         {
             UpdateUserInterface();
-            UserInterface?.Open(actor.playerSession);
-            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
+            UserInterface?.SendMessage(new ValidationUpdateMessage(_validation.ToString()), actor.PlayerSession);
         }
 
         private static void FillConfiguration<T>(List<string> list, Dictionary<string, T> configuration, T value){
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, ConfigurationComponent component)
             {
-                if (user.TryGetComponent(out IActorComponent? actor))
+                if (user.TryGetComponent(out ActorComponent? actor))
                 {
                     component.OpenUserInterface(actor);
                 }

@@ -20,29 +20,21 @@ namespace Content.Server.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            IEntityQuery query;
+            EntityPrototype? prototype = null;
+            var checkPrototype = !string.IsNullOrEmpty(id);
 
-            if (id == null)
+            if (checkPrototype && !prototypeManager.TryIndex(id!, out prototype))
             {
-                query = new AllEntityQuery();
-            }
-            else
-            {
-                if (!prototypeManager.TryIndex(id, out EntityPrototype? prototype))
-                {
-                    shell.WriteLine($"No entity prototype found with id {id}.");
-                    return;
-                }
-
-                query = new PredicateEntityQuery(e => e.Prototype == prototype);
+                shell.WriteError($"Can't find entity prototype with id \"{id}\"!");
+                return;
             }
 
             var entities = 0;
             var components = 0;
 
-            foreach (var entity in entityManager.GetEntities(query))
+            foreach (var entity in entityManager.GetEntities())
             {
-                if (entity.Prototype == null)
+                if (checkPrototype && entity.Prototype != prototype || entity.Prototype == null)
                 {
                     continue;
                 }
@@ -51,19 +43,17 @@ namespace Content.Server.Commands
 
                 foreach (var component in entity.GetAllComponents())
                 {
-                    if (!entity.Prototype.Components.ContainsKey(component.Name))
-                    {
-                        entityManager.ComponentManager.RemoveComponent(entity.Uid, component);
-                        components++;
+                    if (entity.Prototype.Components.ContainsKey(component.Name))
+                        continue;
 
-                        modified = true;
-                    }
+                    entityManager.ComponentManager.RemoveComponent(entity.Uid, component);
+                    components++;
+
+                    modified = true;
                 }
 
                 if (modified)
-                {
                     entities++;
-                }
             }
 
             shell.WriteLine($"Removed {components} components from {entities} entities{(id == null ? "." : $" with id {id}")}");

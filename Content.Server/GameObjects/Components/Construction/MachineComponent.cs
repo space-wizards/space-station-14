@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Construction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -87,7 +88,14 @@ namespace Content.Server.GameObjects.Components.Construction
 
             foreach (var (stackType, amount) in machineBoard.MaterialRequirements)
             {
-                var s = StackHelpers.SpawnStack(stackType, amount, Owner.Transform.Coordinates);
+                var stackSpawn = new StackTypeSpawnEvent()
+                    {Amount = amount, StackType = stackType, SpawnPosition = Owner.Transform.Coordinates};
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, stackSpawn);
+
+                var s = stackSpawn.Result;
+
+                if (s == null)
+                    throw new Exception($"Couldn't spawn stack of type {stackType}!");
 
                 if (!partContainer.Insert(s))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");

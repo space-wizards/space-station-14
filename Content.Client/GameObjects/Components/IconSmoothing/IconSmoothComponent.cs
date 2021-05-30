@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -76,9 +77,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             {
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
-                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
-
+                UpdateLastPosition();
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
             }
 
@@ -96,15 +95,39 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             }
         }
 
+        private void UpdateLastPosition()
+        {
+            if (_mapManager.TryGetGrid(Owner.Transform.GridID, out var grid))
+            {
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+            }
+            else
+            {
+                // When this is called during component startup, the transform can end up being with an invalid grid ID.
+                // In that case, use this.
+                _lastPosition = (GridId.Invalid, new Vector2i(0, 0));
+            }
+        }
+
         internal virtual void CalculateNewSprite()
+        {
+            if (!_mapManager.TryGetGrid(Owner.Transform.GridID, out var grid))
+            {
+                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {Owner.Transform.GridID} was missing.");
+                return;
+            }
+            CalculateNewSprite(grid);
+        }
+
+        internal virtual void CalculateNewSprite(IMapGrid grid)
         {
             switch (Mode)
             {
                 case IconSmoothingMode.Corners:
-                    CalculateNewSpriteCorners();
+                    CalculateNewSpriteCorners(grid);
                     break;
                 case IconSmoothingMode.CardinalFlags:
-                    CalculateNewSpriteCardinal();
+                    CalculateNewSpriteCardinal(grid);
                     break;
                 case IconSmoothingMode.NoSprite:
                     break;
@@ -113,7 +136,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             }
         }
 
-        private void CalculateNewSpriteCardinal()
+        private void CalculateNewSpriteCardinal(IMapGrid grid)
         {
             if (!Owner.Transform.Anchored || Sprite == null)
             {
@@ -122,7 +145,6 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             var dirs = CardinalConnectDirs.None;
 
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var position = Owner.Transform.Coordinates;
             if (MatchingEntity(grid.GetInDir(position, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
@@ -136,14 +158,14 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
         }
 
-        private void CalculateNewSpriteCorners()
+        private void CalculateNewSpriteCorners(IMapGrid grid)
         {
             if (Sprite == null)
             {
                 return;
             }
 
-            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill();
+            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill(grid);
 
             Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
             Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
@@ -151,14 +173,13 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
         }
 
-        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill()
+        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid grid)
         {
             if (!Owner.Transform.Anchored)
             {
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
 
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
             var position = Owner.Transform.Coordinates;
             var n = MatchingEntity(grid.GetInDir(position, Direction.North));
             var ne = MatchingEntity(grid.GetInDir(position, Direction.NorthEast));
@@ -249,8 +270,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             if (Owner.Transform.Anchored)
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
-                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+                UpdateLastPosition();
             }
         }
 

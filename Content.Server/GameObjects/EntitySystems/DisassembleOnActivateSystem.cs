@@ -18,21 +18,21 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisassembleOnActivateComponent, ActivateInWorldMessage>(HandleActivateInWorld);
+            SubscribeLocalEvent<DisassembleOnActivateComponent, ActivateInWorldEvent>(HandleActivateInWorld);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<DisassembleOnActivateComponent, ActivateInWorldMessage>(HandleActivateInWorld);
+            UnsubscribeLocalEvent<DisassembleOnActivateComponent, ActivateInWorldEvent>(HandleActivateInWorld);
         }
 
-        private async void HandleActivateInWorld(EntityUid uid, DisassembleOnActivateComponent component, ActivateInWorldMessage args)
+        private async void HandleActivateInWorld(EntityUid uid, DisassembleOnActivateComponent component, ActivateInWorldEvent args)
         {
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if (!args.User.InRangeUnobstructed(args.Activated))
+            if (!args.User.InRangeUnobstructed(args.Target))
                 return;
 
             if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))

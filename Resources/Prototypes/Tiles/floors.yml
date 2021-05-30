@@ -102,7 +102,6 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.30
-  item_drop: FloorTileItemRock
 
 - type: tile
   name: floor_showroom
@@ -185,7 +184,6 @@
   can_crowbar: true
   footstep_sounds: footstep_asteroid
   friction: 0.30
-  item_drop: FloorTileItemAsteroid
 
 - type: tile
   name: floor_asteroid_coarse_sand0

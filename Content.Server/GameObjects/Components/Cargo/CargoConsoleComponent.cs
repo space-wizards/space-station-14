@@ -133,9 +133,13 @@ namespace Content.Server.GameObjects.Components.Cargo
                     var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
                     if (capacity.CurrentCapacity == capacity.MaxCapacity)
                         break;
+                    if (!_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
+                        break;
+                    if (!_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber))
+                        break;
                     if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
-                    _cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber);
+                    
                     UpdateUIState();
                     break;
                 }
@@ -191,14 +195,14 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
             if (!Powered)
                 return;
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
 
         private void UpdateUIState()

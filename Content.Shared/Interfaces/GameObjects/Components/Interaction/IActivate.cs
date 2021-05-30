@@ -38,22 +38,22 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when an entity is activated in the world.
     /// </summary>
     [PublicAPI]
-    public class ActivateInWorldMessage : HandledEntityEventArgs
+    public class ActivateInWorldEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     Entity that activated the world entity.
+        ///     Entity that activated the target world entity.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
         ///     Entity that was activated in the world.
         /// </summary>
-        public IEntity Activated { get; }
+        public IEntity Target { get; }
 
-        public ActivateInWorldMessage(IEntity user, IEntity activated)
+        public ActivateInWorldEvent(IEntity user, IEntity target)
         {
             User = user;
-            Activated = activated;
+            Target = target;
         }
     }
 }
