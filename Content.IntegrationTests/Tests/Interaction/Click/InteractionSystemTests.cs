@@ -9,8 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
-using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
@@ -21,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
     {
         const string PROTOTYPES = @"
 - type: entity
-  id: DummyTarget
+  id: DummyDebugWall
   components:
   - type: Physics
     bodyType: Dynamic
@@ -35,18 +33,18 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
       - MobMask
 ";
 
-        private async Task<(ServerIntegrationInstance, IEntity, IEntity, IEntity)> Startup(Vector2 targetCoords, CancellationToken token)
+        [Test]
+        public async Task InteractionTest()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
                 ContentBeforeIoC = () =>
                 {
                     IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestInteractionSystem>();
-                },
-                ExtraPrototypes = PROTOTYPES
+                }
             });
 
-            await server.WaitIdleAsync(cancellationToken: token);
+            await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -59,62 +57,25 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 coords = new MapCoordinates(Vector2.Zero, mapId);
             });
 
-            await server.WaitIdleAsync(cancellationToken: token);
-            IEntity userEntity = null;
-            IEntity targetEntity = null;
-            IEntity itemEntity = null;
-
-            token.Register(() =>
-            {
-                Console.WriteLine("Canceled");
-            });
+            await server.WaitIdleAsync();
+            IEntity user = null;
+            IEntity target = null;
+            IEntity item = null;
 
             server.Assert(() =>
             {
-                userEntity = entityManager.SpawnEntity(null, coords);
-                userEntity.EnsureComponent<HandsComponent>().AddHand("hand");
-                targetEntity = entityManager.SpawnEntity(null, new MapCoordinates(targetCoords, mapId));
-                itemEntity = entityManager.SpawnEntity(null, coords);
-                itemEntity.EnsureComponent<ItemComponent>();
+                user = entityManager.SpawnEntity(null, coords);
+                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                target = entityManager.SpawnEntity(null, coords);
+                item = entityManager.SpawnEntity(null, coords);
+                item.EnsureComponent<ItemComponent>();
             });
 
-            Console.WriteLine($"Startup {token.IsCancellationRequested} =====================================================================================================================================================================");
-            server.RunTicks(10);
-            await server.WaitIdleAsync(cancellationToken: token);
-            Console.WriteLine($"Startup2 {token.IsCancellationRequested} =====================================================================================================================================================================");
-
-            return (server, userEntity, targetEntity, itemEntity);
-        }
-
-        private async Task Shutdown(ServerIntegrationInstance server,CancellationTokenSource cancel, params IEntity[] entities)
-        {
-            var entityManager = server.ResolveDependency<IEntityManager>();
-
-            server.Assert(() =>
-            {
-                foreach (var entity in entities)
-                    entityManager.DeleteEntity(entity);
-            });
-
-            server.RunTicks(1);
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
-
-            Console.WriteLine($"Shutdown {cancel.IsCancellationRequested} =====================================================================================================================================================================");
-            cancel.Cancel();
-            cancel.Dispose();
-        }
-
-        [Test]
-        public async Task InteractionTest()
-        {
-            CancellationTokenSource cancel = new();
-            var (server, user, target, item) = await Startup(new Vector2(0, 0), cancel.Token);
+            await server.WaitRunTicks(1);
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
-
-            Console.WriteLine($"Test {cancel.IsCancellationRequested} =====================================================================================================================================================================");
 
             var attack = false;
             var interactUsing = false;
@@ -138,31 +99,55 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
-
-            await Shutdown(server, cancel, user, target, item);
+            await server.WaitIdleAsync();
         }
 
         [Test]
         public async Task InteractionObstructionTest()
         {
-            CancellationTokenSource cancel = new();
-            var (server, user, target, item) = await Startup((1.9f, 0), cancel.Token);
-            IEntity wall = null;
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ContentBeforeIoC = () =>
+                {
+                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestInteractionSystem>();
+                },
+                ExtraPrototypes = PROTOTYPES
+            });
 
-            Console.WriteLine($"Test {cancel.IsCancellationRequested} =====================================================================================================================================================================");
+            await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
-            Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
+            var mapManager = server.ResolveDependency<IMapManager>();
+
+            var mapId = MapId.Nullspace;
+            var coords = MapCoordinates.Nullspace;
+            server.Assert(() =>
+            {
+                mapId = mapManager.CreateMap();
+                coords = new MapCoordinates(Vector2.Zero, mapId);
+            });
+
+            await server.WaitIdleAsync();
+            IEntity user = null;
+            IEntity target = null;
+            IEntity item = null;
+            IEntity wall = null;
 
             server.Assert(() =>
             {
-                wall = entityManager.SpawnEntity("DummyTarget", new MapCoordinates((1, 0), user.Transform.MapID));
+                user = entityManager.SpawnEntity(null, coords);
+                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                target = entityManager.SpawnEntity(null, new MapCoordinates((1.9f, 0), mapId));
+                item = entityManager.SpawnEntity(null, coords);
+                item.EnsureComponent<ItemComponent>();
+                wall = entityManager.SpawnEntity("DummyDebugWall", new MapCoordinates((1, 0), user.Transform.MapID));
             });
 
             await server.WaitRunTicks(1);
+
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
+            Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
 
             var attack = false;
             var interactUsing = false;
@@ -186,21 +171,52 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
-
-            await Shutdown(server, cancel, user, target, item, wall);
+            await server.WaitIdleAsync();
         }
 
         [Test]
         public async Task InteractionInRangeTest()
         {
-            CancellationTokenSource cancel = new();
-            var (server, user, target, item) = await Startup((InteractionSystem.InteractionRange - 0.1f, 0), cancel.Token);
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ContentBeforeIoC = () =>
+                {
+                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestInteractionSystem>();
+                }
+            });
+
+            await server.WaitIdleAsync();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+
+            var mapId = MapId.Nullspace;
+            var coords = MapCoordinates.Nullspace;
+            server.Assert(() =>
+            {
+                mapId = mapManager.CreateMap();
+                coords = new MapCoordinates(Vector2.Zero, mapId);
+            });
+
+            await server.WaitIdleAsync();
+            IEntity user = null;
+            IEntity target = null;
+            IEntity item = null;
+
+            server.Assert(() =>
+            {
+                user = entityManager.SpawnEntity(null, coords);
+                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                target = entityManager.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange - 0.1f, 0), mapId));
+                item = entityManager.SpawnEntity(null, coords);
+                item.EnsureComponent<ItemComponent>();
+            });
+
+            await server.WaitRunTicks(1);
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
-            Console.WriteLine($"Test {cancel.IsCancellationRequested} =====================================================================================================================================================================");
 
             var attack = false;
             var interactUsing = false;
@@ -224,22 +240,53 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
-
-            await Shutdown(server, cancel, user, target, item);
+            await server.WaitIdleAsync();
         }
 
 
         [Test]
         public async Task InteractionOutOfRangeTest()
         {
-            CancellationTokenSource cancel = new();
-            var (server, user, target, item) = await Startup((InteractionSystem.InteractionRange, 0), cancel.Token);
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ContentBeforeIoC = () =>
+                {
+                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestInteractionSystem>();
+                }
+            });
+
+            await server.WaitIdleAsync();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+
+            var mapId = MapId.Nullspace;
+            var coords = MapCoordinates.Nullspace;
+            server.Assert(() =>
+            {
+                mapId = mapManager.CreateMap();
+                coords = new MapCoordinates(Vector2.Zero, mapId);
+            });
+
+            await server.WaitIdleAsync();
+            IEntity user = null;
+            IEntity target = null;
+            IEntity item = null;
+
+            server.Assert(() =>
+            {
+                user = entityManager.SpawnEntity(null, coords);
+                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                target = entityManager.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
+                item = entityManager.SpawnEntity(null, coords);
+                item.EnsureComponent<ItemComponent>();
+            });
+
+            await server.WaitRunTicks(1);
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
             Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
-            Console.WriteLine($"Test {cancel.IsCancellationRequested} =====================================================================================================================================================================");
 
             var attack = false;
             var interactUsing = false;
@@ -263,32 +310,58 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
-
-            await Shutdown(server, cancel, user, target, item);
+            await server.WaitIdleAsync();
         }
 
         [Test]
         public async Task InsideContainerInteractionBlockTest()
         {
-            CancellationTokenSource cancel = new();
-            var (server, user, target, item) = await Startup((0, 0), cancel.Token);
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ContentBeforeIoC = () =>
+                {
+                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestInteractionSystem>();
+                }
+            });
+
+            await server.WaitIdleAsync();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+
+            var mapId = MapId.Nullspace;
+            var coords = MapCoordinates.Nullspace;
+            server.Assert(() =>
+            {
+                mapId = mapManager.CreateMap();
+                coords = new MapCoordinates(Vector2.Zero, mapId);
+            });
+
+            await server.WaitIdleAsync();
+            IEntity user = null;
+            IEntity target = null;
+            IEntity item = null;
             IEntity containerEntity = null;
             IContainer container = null;
 
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
-            Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
-            Console.WriteLine($"Test {cancel.IsCancellationRequested} =====================================================================================================================================================================");
-
             server.Assert(() =>
             {
-                containerEntity = entityManager.SpawnEntity(null, user.Transform.MapPosition);
+                user = entityManager.SpawnEntity(null, coords);
+                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                target = entityManager.SpawnEntity(null, coords);
+                item = entityManager.SpawnEntity(null, coords);
+                item.EnsureComponent<ItemComponent>();
+                containerEntity = entityManager.SpawnEntity(null, coords);
                 container = ContainerHelpers.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
             });
 
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
+            await server.WaitRunTicks(1);
+
+            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
+            Assert.That(entitySystemManager.TryGetEntitySystem<TestInteractionSystem>(out var testInteractionSystem));
+
+            await server.WaitIdleAsync();
 
             var attack = false;
             var interactUsing = false;
@@ -324,9 +397,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.True);
             });
 
-            await server.WaitIdleAsync(cancellationToken: cancel.Token);
-
-            await Shutdown(server, cancel, user, target, item, containerEntity);
+            await server.WaitIdleAsync();
         }
 
         [Reflect(false)]
