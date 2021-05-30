@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface.Cargo;
+﻿using System;
+using Content.Client.UserInterface.Cargo;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Client.GameObjects;
@@ -137,7 +138,7 @@ namespace Content.Client.GameObjects.Components.Cargo
                 _orderMenu?.Requester.Text ?? "",
                 _orderMenu?.Reason.Text ?? "",
                 _product?.ID ?? "",
-                _orderMenu?.Amount.Value ?? 0));
+                Math.Min((_orderMenu?.Amount.Value ?? 0), ShuttleCapacity.MaxCapacity)));
         }
 
         private void RemoveOrder(ButtonEventArgs args)
