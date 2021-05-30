@@ -1233,3 +1233,9 @@ Entries:
       the "approve" button., type: Fix}
   id: 218
   time: '2021-05-30T05:19:15.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix some bugs with stacks where their appearance and count would be
+      incorrect client-side., type: Fix}
+  id: 219
+  time: '2021-05-30T06:54:38.996745+00:00'
