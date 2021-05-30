@@ -137,14 +137,17 @@ namespace Content.Server.GameObjects.Components.Cargo
                     if (product == null!)
                         break;
                     var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
-                    if (capacity.CurrentCapacity == capacity.MaxCapacity || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity)
+                    if (
+                        capacity.CurrentCapacity == capacity.MaxCapacity
+                        || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
+                        || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
+                        || !_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber)
+                        || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
+                        )
+                    {
+                        SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
                         break;
-                    if (!_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                        break;
-                    if (!_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber))
-                        break;
-                    if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                        break;
+                    }
                     UpdateUIState();
                     break;
                 }
