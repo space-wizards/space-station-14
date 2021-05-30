@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(BaseComputerUserInterfaceComponent))]
     public class SolarControlConsoleComponent : BaseComputerUserInterfaceComponent
     {
         public override string Name => "SolarControlConsole";

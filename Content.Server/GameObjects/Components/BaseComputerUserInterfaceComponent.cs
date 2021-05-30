@@ -19,8 +19,7 @@ namespace Content.Server.GameObjects.Components
     /// These components operate the server-side logic for the "primary UI" of a computer.
     /// That means showing the UI when a user activates it, for example.
     /// </summary>
-    [ComponentReference(typeof(IActivate))]
-    public abstract class BaseComputerUserInterfaceComponent : Component, IActivate
+    public abstract class BaseComputerUserInterfaceComponent : Component
     {
         // { get; private set; } doesn't really express this properly.
         protected readonly object UserInterfaceKey;
@@ -38,25 +37,38 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             if (UserInterface != null)
-                UserInterface.OnReceiveMessage += OnReceiveUnfilteredUserInterfaceMessage;
+                UserInterface.OnReceiveMessage += OnReceiveUIMessageCallback;
 
             Owner.EnsureComponent<PowerReceiverComponent>();
+        }
+
+        /// <summary>
+        /// Internal callback used to grab session and session attached entity before any more work is done.
+        /// This is so that sessionEntity is always available to checks up and down the line.
+        /// </summary>
+        private void OnReceiveUIMessageCallback(ServerBoundUserInterfaceMessage obj)
+        {
+            var session = obj.Session;
+            var sessionEntity = session.AttachedEntity;
+            if (sessionEntity == null)
+                return; // No session entity, so we're probably not able to touch this.
+            OnReceiveUnfilteredUserInterfaceMessage(obj, sessionEntity);
         }
 
         /// <summary>
         /// Override this to handle messages from the UI before filtering them.
         /// Calling base is necessary if you want this class to have any meaning.
         /// </summary>
-        protected void OnReceiveUnfilteredUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
+        protected void OnReceiveUnfilteredUserInterfaceMessage(ServerBoundUserInterfaceMessage obj, IEntity sessionEntity)
         {
             // "Across all computers" "anti-cheats" ought to be put here or at some parent level (BaseDeviceUserInterfaceComponent?)
-            if (!Powered)
-                return; // Not powered, so this computer should probably do nothing.
             // Determine some facts about the session.
-            var session = obj.Session;
-            var sessionEntity = session.AttachedEntity;
-            if (sessionEntity == null)
-                return; // No session entity, so we're probably not able to touch this.
+            // Powered?
+            if (!Powered)
+            {
+                sessionEntity.PopupMessageCursor(Loc.GetString("base-computer-ui-component-not-powered"));
+                return; // Not powered, so this computer should probably do nothing.
+            }
             // Can we interact?
             if (!ActionBlockerSystem.CanInteract(sessionEntity))
             {
@@ -108,7 +120,13 @@ namespace Content.Server.GameObjects.Components
         {
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
+        /// <summary>
+        /// This is called from ComputerUIActivatorSystem.
+        /// Override this to add additional activation conditions of some sort.
+        /// Calling base runs standard activation logic.
+        /// *This remains inside the component for overridability.*
+        /// </summary>
+        public virtual void ActivateThunk(ActivateInWorldEvent eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
@@ -117,6 +135,7 @@ namespace Content.Server.GameObjects.Components
 
             if (!Powered)
             {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("base-computer-ui-component-not-powered"));
                 return;
             }
 
