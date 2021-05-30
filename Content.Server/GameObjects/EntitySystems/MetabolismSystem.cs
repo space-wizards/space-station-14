@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Metabolism;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var metabolism in ComponentManager.EntityQuery<MetabolismComponent>())
+            foreach (var metabolism in ComponentManager.EntityQuery<MetabolismComponent>(true))
             {
                 metabolism.Update(frameTime);
             }

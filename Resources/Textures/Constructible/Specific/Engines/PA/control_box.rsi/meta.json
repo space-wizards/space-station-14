@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/a0fc71b279ceb41c8c5387b08e60d2cc4f15bef8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "box"
+    },
+    {
+      "name": "boxc",
+      "directions": 4
+    },
+    {
+      "name": "unlitp",
+      "directions": 4
+    },
+    {
+      "name": "unlitp0",
+      "directions": 4
+    },
+    {
+      "name": "unlitp1",
+      "directions": 4
+    },
+    {
+      "name": "unlitp2",
+      "directions": 4
+    },
+    {
+      "name": "unlitp3",
+      "directions": 4,
+      "delays": [
+        [0.5, 0.5],
+        [0.5, 0.5],
+        [0.5, 0.5],
+        [0.5, 0.5]
+      ]
+    },
+    {
+      "name": "boxw",
+      "directions": 4
+    }
+  ]
+}

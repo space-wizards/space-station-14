@@ -1,0 +1,84 @@
+- type: entity
+  id: LockerBoozeFilled
+  suffix: Filled
+  parent: LockerBooze
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorBulletproof
+        prob: 0.5
+      - id: ShotgunSawn
+        prob: 0.8
+      - id: DrinkShaker
+        prob: 1
+      - id: ClothingEyesGlassesBeer
+        prob: 1
+      - id: DrinkBeer
+        prob: 0.5
+      - id: DrinkBottleBeer
+        prob: 0.5
+
+#- type: entity
+#  id: LockerFormalFilled
+#  suffix: Filled
+#  parent: LockerFormal
+
+- type: entity
+  id: LockerChefFilled
+  suffix: Filled
+  parent: LockerChef
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarRed
+      - id: MonkeyCubeBox
+      - id: SprayBottleWater
+      - id: ReagentContainerFlour
+
+- type: entity
+  id: LockerJanitorFilled
+  suffix: Filled
+  parent: LockerJanitor
+  components:
+  - type: StorageFill
+    contents:
+      - id: MopItem
+      - id: WetFloorSign
+        amount: 3
+      - id: TrashBag
+        amount: 2
+      - id: LightReplacer
+        amount: 1
+      - id: BoxLightMixed
+        amount: 1
+
+#- type: entity
+#  id: LockerLegalFilled
+#  suffix: Filled
+#  parent: LockerLegal
+
+- type: entity
+  id: LockerBotanistFilled
+  suffix: Filled
+  parent: LockerBotanist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLeather
+        prob: 1
+      - id: ClothingHandsGlovesLeather
+        prob: 0.8
+      - id: ClothingOuterApronBotanist
+        prob: 1
+      - id: ClothingOuterApronBotanist
+        prob: 0.8
+      - id: TowercapSeeds
+        prob: 1
+      - id: BananaSeeds
+        prob: 0.8
+      - id: EggySeeds
+        prob: 0.5
+      - id: AppleSeeds
+        prob: 0.8
+      - id: TomatoSeeds
+        prob: 1

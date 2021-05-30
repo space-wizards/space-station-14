@@ -1,5 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -51,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Items
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new ItemCooldownComponentState
             {
@@ -60,9 +62,11 @@ namespace Content.Shared.GameObjects.Components.Items
             };
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is ItemCooldownComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not ItemCooldownComponentState cast)
                 return;
 
             CooldownStart = cast.CooldownStart;

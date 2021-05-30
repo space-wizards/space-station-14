@@ -1,15 +1,18 @@
-﻿#nullable enable
-using System;
+#nullable enable
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Shared.Utility;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -20,6 +23,8 @@ namespace Content.Server.GameObjects.Components.Fluids
     public class BucketComponent : Component, IInteractUsing
     {
         public override string Name => "Bucket";
+
+        private List<EntityUid> _currentlyUsing = new();
 
         public ReagentUnit MaxVolume
         {
@@ -37,79 +42,60 @@ namespace Content.Server.GameObjects.Components.Fluids
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
-        private string? _sound;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _sound, "sound", "/Audio/Effects/Fluids/watersplash.ogg");
-        }
+        [DataField("sound")]
+        private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            Owner.EnsureComponentWarn<SolutionContainerComponent>();
         }
 
-        private bool TryGiveToMop(MopComponent mopComponent)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
+                _currentlyUsing.Contains(eventArgs.Using.Uid) ||
+                !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
+                mopComponent.Mopping)
             {
                 return false;
             }
 
-            var mopContents = mopComponent.Contents;
-
-            if (mopContents == null)
+            if (CurrentVolume <= 0)
             {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Bucket is empty"));
                 return false;
             }
 
-            // Let's fill 'er up
-            // If this is called the mop should be empty but just in case we'll do Max - Current
+            if (mopComponent.CurrentVolume == mopComponent.MaxVolume)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop is full"));
+                return false;
+            }
+
+            _currentlyUsing.Add(eventArgs.Using.Uid);
+
+            // IMO let em move while doing it.
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, 1.0f, target: eventArgs.Target)
+            {
+                BreakOnStun = true,
+                BreakOnDamage = true,
+            };
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
+
+            _currentlyUsing.Remove(eventArgs.Using.Uid);
+
+            if (result == DoAfterStatus.Cancelled ||
+                Owner.Deleted ||
+                mopComponent.Deleted ||
+                CurrentVolume <= 0 ||
+                !Owner.InRangeUnobstructed(mopComponent.Owner))
+                return false;
+
+            // Top up mops solution given it needs it to annihilate puddles I guess
+
             var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
-            var solution = contents.SplitSolution(transferAmount);
-            if (!mopContents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
-            {
-                return false;
-            }
-
-            if (_sound == null)
-            {
-                return true;
-            }
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
-
-            return true;
-        }
-
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
-            {
-                return false;
-            }
-
-            if (!eventArgs.Using.TryGetComponent(out MopComponent? mopComponent))
-            {
-                return false;
-            }
-
-            // Give to the mop if it's empty
-            if (mopComponent.CurrentVolume == 0)
-            {
-                if (!TryGiveToMop(mopComponent))
-                {
-                    return false;
-                }
-
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Splish"));
-                return true;
-            }
-
-            var transferAmount = ReagentUnit.Min(mopComponent.CurrentVolume, MaxVolume - CurrentVolume);
             if (transferAmount == 0)
             {
                 return false;
@@ -122,22 +108,16 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            var solution = mopContents.SplitSolution(transferAmount);
-            if (!contents.TryAddSolution(solution))
+            var solution = contents.SplitSolution(transferAmount);
+            if (!mopContents.TryAddSolution(solution))
             {
-                //This really shouldn't happen
-                throw new InvalidOperationException();
+                return false;
             }
 
-            // Give some visual feedback shit's happening (for anyone who can't hear sound)
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("Sploosh"));
-
-            if (_sound == null)
+            if (_sound != null)
             {
-                return true;
+                SoundSystem.Play(Filter.Pvs(Owner), _sound, Owner);
             }
-
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
         }

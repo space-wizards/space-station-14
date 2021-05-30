@@ -1,24 +1,25 @@
 using System;
 using Content.Shared.GameObjects.Components.Power;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Client.Graphics.Drawing;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface
     {
-        [Dependency]
-        private IGameTiming _gameTiming = default;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private SolarControlWindow _window;
-        private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+        private SolarControlWindow? _window;
+        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
         protected override void Open()
         {
@@ -72,6 +73,11 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.UpdateState(state);
 
+            if (_window == null)
+            {
+                return;
+            }
+
             SolarControlConsoleBoundInterfaceState scc = (SolarControlConsoleBoundInterfaceState) state;
             _lastState = scc;
             _window.NotARadar.UpdateState(scc);
@@ -87,19 +93,19 @@ namespace Content.Client.GameObjects.Components.Power
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
 
         private sealed class SolarControlWindow : SS14Window
         {
-            public Label OutputPower;
-            public Label SunAngle;
+            public readonly Label OutputPower;
+            public readonly Label SunAngle;
 
-            public SolarControlNotARadar NotARadar;
+            public readonly SolarControlNotARadar NotARadar;
 
-            public LineEdit PanelRotation;
-            public LineEdit PanelVelocity;
+            public readonly LineEdit PanelRotation;
+            public readonly LineEdit PanelVelocity;
 
             public SolarControlWindow(IGameTiming igt)
             {
@@ -138,18 +144,14 @@ namespace Content.Client.GameObjects.Components.Power
                 rows.AddChild(new Label {Text = "Press Enter to confirm."});
                 rows.AddChild(new Label {Text = ""});
 
-                PanelRotation.SizeFlagsHorizontal = SizeFlags.FillExpand;
-                PanelVelocity.SizeFlagsHorizontal = SizeFlags.FillExpand;
-                rows.SizeFlagsHorizontal = SizeFlags.Fill;
-                rows.SizeFlagsVertical = SizeFlags.Fill;
+                PanelRotation.HorizontalExpand = true;
+                PanelVelocity.HorizontalExpand = true;
 
                 NotARadar = new SolarControlNotARadar(igt);
 
                 var outerColumns = new HBoxContainer();
                 outerColumns.AddChild(rows);
                 outerColumns.AddChild(NotARadar);
-                outerColumns.SizeFlagsHorizontal = SizeFlags.Fill;
-                outerColumns.SizeFlagsVertical = SizeFlags.Fill;
                 Contents.AddChild(outerColumns);
                 Resizable = false;
             }
@@ -162,7 +164,7 @@ namespace Content.Client.GameObjects.Components.Power
             // This makes the display feel a lot smoother.
             private IGameTiming _gameTiming;
 
-            private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
+            private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
             private TimeSpan _lastStateTime = TimeSpan.Zero;
 
@@ -172,6 +174,7 @@ namespace Content.Client.GameObjects.Components.Power
             public SolarControlNotARadar(IGameTiming igt)
             {
                 _gameTiming = igt;
+                MinSize = (SizeFull, SizeFull);
             }
 
             public void UpdateState(SolarControlConsoleBoundInterfaceState ls)
@@ -180,34 +183,29 @@ namespace Content.Client.GameObjects.Components.Power
                 _lastStateTime = _gameTiming.CurTime;
             }
 
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return (SizeFull, SizeFull);
-            }
-
             protected override void Draw(DrawingHandleScreen handle)
             {
-                int point = SizeFull / 2;
-                Color fakeAA = new Color(0.08f, 0.08f, 0.08f);
-                Color gridLines = new Color(0.08f, 0.08f, 0.08f);
-                int panelExtentCutback = 4;
-                int gridLinesRadial = 8;
-                int gridLinesEquatorial = 8;
+                var point = SizeFull / 2;
+                var fakeAA = new Color(0.08f, 0.08f, 0.08f);
+                var gridLines = new Color(0.08f, 0.08f, 0.08f);
+                var panelExtentCutback = 4;
+                var gridLinesRadial = 8;
+                var gridLinesEquatorial = 8;
 
                 // Draw base
                 handle.DrawCircle((point, point), RadiusCircle + 1, fakeAA);
                 handle.DrawCircle((point, point), RadiusCircle, Color.Black);
 
                 // Draw grid lines
-                for (int i = 0; i < gridLinesEquatorial; i++)
+                for (var i = 0; i < gridLinesEquatorial; i++)
                 {
                     handle.DrawCircle((point, point), (RadiusCircle / gridLinesEquatorial) * i, gridLines, false);
                 }
 
-                for (int i = 0; i < gridLinesRadial; i++)
+                for (var i = 0; i < gridLinesRadial; i++)
                 {
                     Angle angle = (Math.PI / gridLinesRadial) * i;
-                    Vector2 aExtent = angle.ToVec() * RadiusCircle;
+                    var aExtent = angle.ToVec() * RadiusCircle;
                     handle.DrawLine((point, point) - aExtent, (point, point) + aExtent, gridLines);
                 }
 
@@ -216,12 +214,12 @@ namespace Content.Client.GameObjects.Components.Power
 
                 Angle predictedPanelRotation = _lastState.Rotation + (_lastState.AngularVelocity * ((_gameTiming.CurTime - _lastStateTime).TotalSeconds));
 
-                Vector2 extent = predictedPanelRotation.ToVec() * rotMul * RadiusCircle;
+                var extent = predictedPanelRotation.ToVec() * rotMul * RadiusCircle;
                 Vector2 extentOrtho = (extent.Y, -extent.X);
                 handle.DrawLine((point, point) - extentOrtho, (point, point) + extentOrtho, Color.White);
                 handle.DrawLine((point, point) + (extent / panelExtentCutback), (point, point) + extent - (extent / panelExtentCutback), Color.DarkGray);
 
-                Vector2 sunExtent = _lastState.TowardsSun.ToVec() * rotMul * RadiusCircle;
+                var sunExtent = _lastState.TowardsSun.ToVec() * rotMul * RadiusCircle;
                 handle.DrawLine((point, point) + sunExtent, (point, point), Color.Yellow);
             }
         }

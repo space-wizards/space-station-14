@@ -1,9 +1,11 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Shared.GameObjects.Systems;
+using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
+    [UsedImplicitly]
     public class NodeGroupSystem : EntitySystem
     {
         [Dependency] private readonly INodeGroupManager _groupManager = default!;

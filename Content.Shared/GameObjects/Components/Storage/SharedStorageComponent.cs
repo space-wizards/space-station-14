@@ -1,11 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Storage
@@ -24,13 +24,13 @@ namespace Content.Shared.GameObjects.Components.Storage
         /// <returns>True if no longer in storage, false otherwise</returns>
         public abstract bool Remove(IEntity entity);
 
-        public bool CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target.TryGetComponent(out SharedPlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
-        public bool Drop(DragDropEventArgs eventArgs)
+        bool IDraggable.Drop(DragDropEvent eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
@@ -96,6 +96,22 @@ namespace Content.Shared.GameObjects.Components.Storage
         public InsertEntityMessage()
         {
             Directed = true;
+        }
+    }
+
+    /// <summary>
+    /// Component message for displaying an animation of entities flying into a storage entity
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class AnimateInsertingEntitiesMessage : ComponentMessage
+    {
+        public readonly List<EntityUid> StoredEntities;
+        public readonly List<EntityCoordinates> EntityPositions;
+        public AnimateInsertingEntitiesMessage(List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
+        {
+            Directed = true;
+            StoredEntities = storedEntities;
+            EntityPositions = entityPositions;
         }
     }
 

@@ -1,23 +1,19 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Materials;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Research;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -26,10 +22,10 @@ namespace Content.Server.GameObjects.Components.Research
     [ComponentReference(typeof(IActivate))]
     public class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
     {
-        public const int VolumePerSheet = 3750;
+        public const int VolumePerSheet = 100;
 
         [ViewVariables]
-        public Queue<LatheRecipePrototype> Queue { get; } = new Queue<LatheRecipePrototype>();
+        public Queue<LatheRecipePrototype> Queue { get; } = new();
 
         [ViewVariables]
         public bool Producing { get; private set; }
@@ -69,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
-                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
+                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype? recipe);
                     if (recipe != null!)
                         for (var i = 0; i < msg.Quantity; i++)
                         {
@@ -103,11 +99,8 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
-        {   if(!Powered)
-            {
-                return false;
-            }
-            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
+        {
+            if (Producing || !Powered || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
 
             UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
 
@@ -145,14 +138,14 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
             if (!Powered)
             {
                 return;
             }
 
-            OpenUserInterface(actor.playerSession);
+            OpenUserInterface(actor.PlayerSession);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -167,23 +160,23 @@ namespace Content.Server.GameObjects.Components.Research
             var totalAmount = 0;
 
             // Check if it can insert all materials.
-            foreach (var mat in material.MaterialTypes.Values)
+            foreach (var mat in material.MaterialIds)
             {
                 // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * multiplier)) return false;
+                if (!storage.CanInsertMaterial(mat, VolumePerSheet * multiplier)) return false;
                 totalAmount += VolumePerSheet * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
             if (storage.CanTakeAmount(totalAmount)) return false;
 
-            foreach (var mat in material.MaterialTypes.Values)
+            foreach (var mat in material.MaterialIds)
             {
-                storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
+                storage.InsertMaterial(mat, VolumePerSheet * multiplier);
             }
 
             State = LatheState.Inserting;
-            switch (material.MaterialTypes.Values.First().Name)
+            switch (material.Materials.FirstOrDefault()?.ID)
             {
                 case "Steel":
                     SetAppearance(LatheVisualState.InsertingMetal);
@@ -193,6 +186,12 @@ namespace Content.Server.GameObjects.Components.Research
                     break;
                 case "Gold":
                     SetAppearance(LatheVisualState.InsertingGold);
+                    break;
+                case "Plastic":
+                    SetAppearance(LatheVisualState.InsertingPlastic);
+                    break;
+                case "Plasma":
+                    SetAppearance(LatheVisualState.InsertingPlasma);
                     break;
             }
 

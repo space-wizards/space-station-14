@@ -1,4 +1,4 @@
-﻿# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
+# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
 # The technology tree is using this layout - https://tgstation13.org/wiki//images/thumb/f/f4/ResearchTree.png/800px-ResearchTree.png
 
 # Base Technology
@@ -6,9 +6,28 @@
 - type: technology
   name: "basic research technology"
   id: BasicResearch
-  description: Nanotransen basic research technologies.
-  icon: Constructible/Power/server.rsi/server-on.png
-  requiredPoints: 250
+  description: Nanotrasen basic research technologies.
+  icon:
+    sprite: Constructible/Power/server.rsi
+    state: server-on
+  requiredPoints: 2500
+
+# Cleaning Technology Tree
+
+- type: technology
+  name: "cleaning technology"
+  id: MopBucket 
+  description: Start to a shiny clean station
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - Bucket
+    - MopItem
+    - SprayBottle
 
 # Biological Technology Tree
 
@@ -16,21 +35,157 @@
   name: "biological technology"
   id: BiologicalTechnology
   description: Investigations into the natural world.
-  icon: Constructible/Misc/potted_plants.rsi/applebush.png
-  requiredPoints: 1000
+  icon:
+    sprite: Constructible/Misc/potted_plants.rsi
+    state: applebush
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - Scythe
+    - Hatchet
+    - KitchenKnife  
+
+- type: technology
+  name: "advanced botany"
+  id: AdvancedBotany
+  description: A better understanding of botany.
+  icon:
+    sprite: Objects/Specific/Hydroponics/potato.rsi
+    state: seed
+  requiredPoints: 15000
+  requiredTechnologies:
+    - BiologicalTechnology
+  unlockedRecipes:
+    - Shovel
+    - ButchCleaver
+
+- type: technology
+  name: "advanced surgery"
+  id: AdvancedSugery
+  description: Research new surgical procedures.
+  icon:
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+  requiredPoints: 15000
+  requiredTechnologies:
+    - BiologicalTechnology
+  unlockedRecipes:
+    - Scalpel
+    - Retractor
+    - Cautery
+    - Drill
+    - BoneSaw
+    - Hemostat
+
+# Chemistry Technology Tree
+
+- type: technology
+  name: "chemistry technology"
+  id: ChemistryTechnology
+  description: A crash course in chemistry.
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
+    state: beakerlarge
+  requiredPoints: 10000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - Beaker
+    - LargeBeaker
+    - CryostasisBeaker
+    - Dropper
+    - Syringe
+
+# Security Technology Tree
+
+- type: technology
+  name: "security technology"
+  id: SecurityTechnology
+  description: Beginning of the long hard road to exosuits.
+  icon:
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    state: stunbaton_off
+  requiredPoints: 10000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - Flash
+    - Handcuffs
+    - Stunbaton
+
+- type: technology
+  name: "ballistic technology"
+  id: BallisticTechnology
+  description: Just a fancy term for guns.
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    state: icon
+  requiredPoints: 15000
+  requiredTechnologies:
+     - SecurityTechnology
+  unlockedRecipes:
+    - CartridgePistolBase
+    - ShellShotgunBase
+    - CartridgeLRifleBase
+    - CartridgeMagnumBase
+
+#- type: technology
+#   name: "ballistic technology"
+#   id: BallisticTechnology
+#   description: Just a fancy term for guns.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "direct energy technology"
+#   id: DirectEnergyTechnology
+#   description: Basically laser guns.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Battery/taser.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "explosives technology"
+#   id: ExplosivesTechnology
+#   description: Let's just start with grenades for now.
+#   icon:
+#     sprite: Objects/Weapons/Grenades/flashbang.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
+#
+# - type: technology
+#   name: "armor technology"
+#   id: ArmorTechnology
+#   description: Basic protective gear for security personnel.
+#   icon:
+#     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+#     state: icon
+#   requiredPoints: 15000
+#   requiredTechnologies:
+#     - SecurityTechnology
 
 # Data Theory Technology Tree
 
-- type: technology
-  name: "data theory"
-  id: DataTheory
-  description: Just like regular data, but in space!
-  icon: Constructible/Power/computers.rsi/computer-datatheory.png
-  requiredPoints: 1000
-  requiredTechnologies:
-    - BasicResearch
+# - type: technology
+#   name: "data theory"
+#   id: DataTheory
+#   description: Just like regular data, but in space!
+#   icon:
+#     sprite: Constructible/Power/computers.rsi
+#     state: computer-datatheory
+#   requiredPoints: 10000
+#   requiredTechnologies:
+#     - BasicResearch
 
 # Industrial Engineering Technology Tree
 
@@ -38,23 +193,31 @@
   name: "industrial engineering"
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
-  icon: Constructible/Power/protolathe.rsi/protolathe.png
-  requiredPoints: 1000
+  icon:
+    sprite: Constructible/Power/protolathe.rsi
+    state: icon
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - ConveyorAssembly
+    - RCD
+    - RCDAmmo
+    - FlashlightLantern
+    - FireExtinguisher
 
 - type: technology
   name: material sheet printing
   id: Sheets
   description: Print those sheets!
-  icon:
-    sprite: Objects/Materials/sheets.rsi
-    state: researchicon
-  requiredPoints: 250
+  icon: Objects/Materials/Sheets/researchicon.png
+  requiredPoints: 2500
   requiredTechnologies:
     - IndustrialEngineering
   unlockedRecipes:
-    - MetalStack
+    - SheetSteel
+    - SheetPlastic
+    - SheetRGlass
     - GlassStack
 
 # Electromagnetic Theory Technology Tree
@@ -63,18 +226,31 @@
   name: "electromagnetic theory"
   id: ElectromagneticTheory
   description: Try not to fry yourself.
-  icon: Constructible/Power/apc.rsi/apcewires.png
-  requiredPoints: 1000
+  icon:
+    sprite: Constructible/Power/apc.rsi
+    state: apcewires
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
+  unlockedRecipes:
+    - CableStack
+    - MVWireStack
+    - HVWireStack
+    - LightBulb
+    - LightTube
+    - FirelockElectronics
+    - DoorElectronics
+    - APCElectronics
 
 # Bluespace Theory Technology Tree
 
-- type: technology
-  name: "basic bluespace theory"
-  id: BluespaceTheory
-  description: An experimental course on the mysterious technology known as bluespace.
-  icon: Objects/Misc/skub.rsi/icon.png
-  requiredPoints: 1000
-  requiredTechnologies:
-    - BasicResearch
+# - type: technology
+#   name: "basic bluespace theory"
+#   id: BluespaceTheory
+#   description: An experimental course on the mysterious technology known as bluespace.
+#   icon:
+#     sprite: Objects/Misc/skub.rsi
+#     state: icon
+#   requiredPoints: 999999
+#   requiredTechnologies:
+#     - BasicResearch

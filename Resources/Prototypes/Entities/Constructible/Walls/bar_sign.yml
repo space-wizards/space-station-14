@@ -1,20 +1,29 @@
 ﻿- type: entity
   id: BarSign
+  parent: BaseConstructible
   name: bar sign
   components:
-  - type: Clickable
-  - type: InteractionOutline
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.95, 0.45, 1"
-        layer: [ Passable ]
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.95, 0.45, 1"
+      layer:
+      - Passable
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
   - type: PowerReceiver
   - type: BarSign
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: LargeBarSign
@@ -38,18 +47,3 @@
   components:
   - type: BarSign
     current: EngineChange
-
-- type: entity
-  id: BarSignCyberSylph
-  name: Cyber Sylph
-  parent: LargeBarSign
-  components:
-  - type: BarSign
-    current: CyberSylph
-  - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.95, 0.95, 1.5"
-        layer: [ Passable ]
-  - type: Sprite
-    drawdepth: Ghosts

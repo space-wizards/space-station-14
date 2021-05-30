@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -23,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [ComponentReference(typeof(IToolComponent))]
     public class ToolComponent : SharedToolComponent, IToolComponent
     {
+        [DataField("qualities")]
         protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]
@@ -40,11 +40,14 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("speed")]
         public float SpeedModifier { get; set; } = 1;
 
-        public string UseSound { get; set; }
+        [DataField("useSound")]
+        public string? UseSound { get; set; }
 
-        public string UseSoundCollection { get; set; }
+        [DataField("useSoundCollection")]
+        public string? UseSoundCollection { get; set; }
 
         public void AddQuality(ToolQuality quality)
         {
@@ -63,35 +66,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return _qualities.HasFlag(quality);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "qualities",
-                new List<ToolQuality>(),
-                qualities => qualities.ForEach(AddQuality),
-                () =>
-                {
-                    var qualities = new List<ToolQuality>();
-
-                    foreach (ToolQuality quality in Enum.GetValues(typeof(ToolQuality)))
-                    {
-                        if ((_qualities & quality) != 0)
-                        {
-                            qualities.Add(quality);
-                        }
-                    }
-
-                    return qualities;
-                });
-
-            serializer.DataField(this, mod => SpeedModifier, "speed", 1);
-            serializer.DataField(this, use => UseSound, "useSound", string.Empty);
-            serializer.DataField(this, collection => UseSoundCollection, "useSoundCollection", string.Empty);
-        }
-
-        public virtual async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool> doAfterCheck = null)
+        public virtual async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             if (!HasQuality(toolQualityNeeded) || !ActionBlockerSystem.CanInteract(user))
                 return false;
@@ -121,11 +96,15 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        protected void PlaySoundCollection(string name, float volume=-5f)
+        protected void PlaySoundCollection(string? name, float volume = -5f)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
             var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 
         public void PlayUseSound(float volume=-5f)
@@ -134,8 +113,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (!string.IsNullOrEmpty(UseSound))
                 {
-                    EntitySystem.Get<AudioSystem>()
-                        .PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                    SoundSystem.Play(Filter.Pvs(Owner), UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
                 }
             }
             else

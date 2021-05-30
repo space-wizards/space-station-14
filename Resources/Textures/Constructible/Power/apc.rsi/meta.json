@@ -8,21 +8,10 @@
     },
     "states": [
         {
-            "name": "apc-b",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc-b"
         },
         {
             "name": "apc-spark",
-            "select": [],
-            "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -36,87 +25,28 @@
             ]
         },
         {
-            "name": "apc0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc0"
         },
         {
-            "name": "apc1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc1"
         },
         {
-            "name": "apc1-b-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc1-b-nocover"
         },
         {
-            "name": "apc1-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc1-nocover"
         },
         {
-            "name": "apc2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc2"
         },
         {
-            "name": "apc2-b-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc2-b-nocover"
         },
         {
-            "name": "apc2-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apc2-nocover"
         },
         {
             "name": "apcemag",
-            "select": [],
-            "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     0.5,
@@ -125,164 +55,49 @@
             ]
         },
         {
-            "name": "apcewires",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apcewires"
         },
         {
-            "name": "apcmaint",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apcmaint"
         },
         {
-            "name": "apco0-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco0-0"
         },
         {
-            "name": "apco0-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco0-1"
         },
         {
-            "name": "apco0-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco0-2"
         },
         {
-            "name": "apco0-3",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco0-3"
         },
         {
-            "name": "apco1-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco1-0"
         },
         {
-            "name": "apco1-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco1-1"
         },
         {
-            "name": "apco1-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco1-2"
         },
         {
-            "name": "apco1-3",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco1-3"
         },
         {
-            "name": "apco2-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco2-0"
         },
         {
-            "name": "apco2-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco2-1"
         },
         {
-            "name": "apco2-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco2-2"
         },
         {
-            "name": "apco2-3",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apco2-3"
         },
         {
             "name": "apco3-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     1.0,
@@ -292,9 +107,6 @@
         },
         {
             "name": "apco3-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -308,9 +120,6 @@
         },
         {
             "name": "apco3-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
             "delays": [
                 [
                     1.0,
@@ -319,26 +128,10 @@
             ]
         },
         {
-            "name": "apcox-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apcox-0"
         },
         {
-            "name": "apcox-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "apcox-1"
         }
     ]
 }

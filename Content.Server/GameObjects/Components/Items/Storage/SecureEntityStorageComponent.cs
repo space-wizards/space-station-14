@@ -1,18 +1,15 @@
-﻿using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Access;
 using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -24,7 +21,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     public class SecureEntityStorageComponent : EntityStorageComponent
     {
         public override string Name => "SecureEntityStorage";
-        private bool _locked;
+        [DataField("locked")]
+        private bool _locked = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked
@@ -34,25 +32,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 _locked = value;
 
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(StorageVisuals.Locked, _locked);
                 }
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _locked, "locked", true);
-        }
-
         protected override void Startup()
         {
             base.Startup();
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanLock, true);
             }
@@ -84,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (Locked)
             {
                 data.Visibility = VerbVisibility.Invisible;
+
                 return;
             }
 
@@ -107,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!CheckAccess(user)) return;
 
             Locked = false;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private void DoLock(IEntity user)
@@ -115,12 +107,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!CheckAccess(user)) return;
 
             Locked = true;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private bool CheckAccess(IEntity user)
         {
-            if (Owner.TryGetComponent(out AccessReader reader))
+            if (Owner.TryGetComponent(out AccessReader? reader))
             {
                 if (!reader.IsAllowed(user))
                 {

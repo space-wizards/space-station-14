@@ -6,10 +6,10 @@ using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -23,26 +23,19 @@ namespace Content.Server.GameObjects.Components.Nutrition
     public sealed class FoodContainer : SharedFoodContainerComponent, IUse
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "FoodContainer";
 
-        private AppearanceComponent _appearance;
-        private Dictionary<string, int> _prototypes;
-        private uint _capacity;
+        private AppearanceComponent? _appearance;
+        [DataField("prototypes")]
+        private Dictionary<string, int>? _prototypes = default;
+        [DataField("capacity")]
+        private uint _capacity = 5;
 
         public int Capacity => (int)_capacity;
         [ViewVariables]
         public int Count => _count;
 
         private int _count = 0;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _prototypes, "prototypes", null);
-            serializer.DataField<uint>(ref _capacity, "capacity", 5);
-        }
 
         public override void Initialize()
         {
@@ -55,12 +48,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (!eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }
 
-            var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.Coordinates);
+            var itemToSpawn = Owner.EntityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.Coordinates);
             handsComponent.PutInHandOrDrop(itemToSpawn.GetComponent<ItemComponent>());
             _count--;
             if (_count < 1)
@@ -68,18 +61,26 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 Owner.Delete();
                 return false;
             }
-            return true;
 
+            return true;
         }
 
-
-        private string GetRandomPrototype()
+        private string? GetRandomPrototype()
         {
-            var defaultProto = _prototypes.Keys.FirstOrDefault();
-            if (_prototypes.Count == 1)
+            var defaultProto = _prototypes?.Keys.FirstOrDefault();
+
+            if (defaultProto == null)
+            {
+                return null;
+            }
+
+            DebugTools.AssertNotNull(_prototypes);
+
+            if (_prototypes!.Count == 1)
             {
                 return defaultProto;
             }
+
             var probResult = _random.Next(0, 100);
             var total = 0;
             foreach (var item in _prototypes)

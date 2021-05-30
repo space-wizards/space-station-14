@@ -1,7 +1,7 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {

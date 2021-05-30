@@ -1,10 +1,11 @@
 ﻿using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class SmesVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
@@ -62,7 +63,7 @@ namespace Content.Client.GameObjects.Components.Power
             }
         }
 
-        enum Layers
+        enum Layers : byte
         {
             Input,
             Charge,

@@ -3,11 +3,11 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -17,52 +17,43 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class MultiToolComponent : Component, IUse
     {
-        public class ToolEntry : IExposeData
+        [DataDefinition]
+        public class ToolEntry
         {
-            private string _state;
-            private string _sound;
-            private string _soundCollection;
-            private string _texture;
-            private string _sprite;
-            private string _changeSound;
+            [DataField("behavior")] public ToolQuality Behavior { get; private set; } = ToolQuality.None;
 
-            public ToolQuality Behavior { get; private set; }
-            public string State => _state;
-            public string Texture => _texture;
-            public string Sprite => _sprite;
-            public string Sound => _sound;
-            public string SoundCollection => _soundCollection;
-            public string ChangeSound => _changeSound;
+            [DataField("state")]
+            public string State { get; } = string.Empty;
 
-            public void ExposeData(ObjectSerializer serializer)
-            {
-                serializer.DataField(this, x => Behavior, "behavior", ToolQuality.None);
-                serializer.DataField(ref _state, "state", string.Empty);
-                serializer.DataField(ref _sprite, "sprite", string.Empty);
-                serializer.DataField(ref _texture, "texture", string.Empty);
-                serializer.DataField(ref _sound, "useSound", string.Empty);
-                serializer.DataField(ref _soundCollection, "useSoundCollection", string.Empty);
-                serializer.DataField(ref _changeSound, "changeSound", string.Empty);
-            }
+            [DataField("texture")]
+            public string Texture { get; } = string.Empty;
+
+            [DataField("sprite")]
+            public string Sprite { get; } = string.Empty;
+
+            [DataField("useSound")]
+            public string Sound { get; } = string.Empty;
+
+            [DataField("useSoundCollection")]
+            public string SoundCollection { get; } = string.Empty;
+
+            [DataField("changeSound")]
+            public string ChangeSound { get; } = string.Empty;
         }
 
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
-        private List<ToolEntry> _tools;
+        [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
-        private AudioSystem _audioSystem;
-        private ToolComponent _tool;
-        private SpriteComponent _sprite;
+        private ToolComponent? _tool;
+        private SpriteComponent? _sprite;
 
         public override void Initialize()
         {
             base.Initialize();
             Owner.TryGetComponent(out _tool);
             Owner.TryGetComponent(out _sprite);
-
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-
             SetTool();
         }
 
@@ -72,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetTool();
             var current = _tools[_currentTool];
             if(!string.IsNullOrEmpty(current.ChangeSound))
-                _audioSystem.PlayFromEntity(current.ChangeSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), current.ChangeSound, Owner);
         }
 
         private void SetTool()
@@ -98,21 +89,15 @@ namespace Content.Server.GameObjects.Components.Interactable
             Dirty();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _tools, "tools", new List<ToolEntry>());
-        }
-
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             Cycle();
             return true;
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new MultiToolComponentState(_tool.Qualities);
+            return new MultiToolComponentState(_tool?.Qualities ?? ToolQuality.None);
         }
     }
 }

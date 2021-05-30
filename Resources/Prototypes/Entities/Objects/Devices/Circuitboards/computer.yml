@@ -1,0 +1,93 @@
+﻿# TODO: Add descriptions (10)
+
+- type: entity
+  parent: BaseItem
+  id: BaseComputerCircuitboard
+  name: circuit board
+  abstract: true
+  components:
+    - type: ComputerBoard
+    - type: Sprite
+      sprite: Constructible/Misc/module.rsi
+      state: id_mod
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SupplyComputerCircuitboard
+  name: supply board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSupplyOrdering
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SupplyRequestComputerCircuitboard
+  name: supply request board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSupplyRequest
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ResearchComputerCircuitboard
+  name: R&D computer board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerResearchAndDevelopment
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: IDComputerCircuitboard
+  name: ID card terminal board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerId
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: BodyScannerComputerCircuitboard
+  name: body scanner computer board
+  components:
+    - type: ComputerBoard
+      prototype: computerBodyScanner
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CommsComputerCircuitboard
+  name: communications computer board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SolarControlComputerCircuitboard
+  name: solar control board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSolarControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SpaceVillainArcadeComputerCircuitboard
+  name: space villain arcade board
+  components:
+    - type: ComputerBoard
+      prototype: SpaceVillainArcade
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: BlockGameArcadeComputerCircuitboard
+  name: block game arcade board
+  components:
+    - type: ComputerBoard
+      prototype: BlockGameArcade
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ParticleAcceleratorComputerCircuitboard
+  name: PA control box
+  suffix: Circuit Board
+  components:
+    - type: ComputerBoard
+      prototype: ParticleAcceleratorControlBoxUnfinished

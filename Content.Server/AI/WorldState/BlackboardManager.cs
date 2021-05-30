@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.WorldState
@@ -14,7 +14,7 @@ namespace Content.Server.AI.WorldState
     {
         // Cache the known types
         public IReadOnlyCollection<Type> AiStates => _aiStates;
-        private List<Type> _aiStates = new List<Type>();
+        private readonly List<Type> _aiStates = new();
 
         public void Initialize()
         {
@@ -24,7 +24,7 @@ namespace Content.Server.AI.WorldState
             {
                 _aiStates.Add(state);
             }
-            
+
             DebugTools.AssertNotNull(_aiStates);
         }
     }

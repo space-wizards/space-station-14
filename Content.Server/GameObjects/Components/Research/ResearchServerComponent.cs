@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -18,23 +17,24 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
+        [DataField("servername")]
         private string _serverName = "RDSERVER";
         private float _timer = 0f;
-        public TechnologyDatabaseComponent Database { get; private set; }
+        public TechnologyDatabaseComponent? Database { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _points = 0;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("points")] private int _points = 0;
 
         [ViewVariables(VVAccess.ReadOnly)] public int Id { get; private set; }
 
         // You could optimize research by keeping a list of unlocked recipes too.
         [ViewVariables(VVAccess.ReadOnly)]
-        public IReadOnlyList<TechnologyPrototype> UnlockedTechnologies => Database.Technologies;
+        public IReadOnlyList<TechnologyPrototype>? UnlockedTechnologies => Database?.Technologies;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public List<ResearchPointSourceComponent> PointSources { get; } = new List<ResearchPointSourceComponent>();
+        public List<ResearchPointSourceComponent> PointSources { get; } = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public List<ResearchClientComponent> Clients { get; } = new List<ResearchClientComponent>();
+        public List<ResearchClientComponent> Clients { get; } = new();
 
         public int Point => _points;
 
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Research
         [ViewVariables]
         public bool CanRun => _powerReceiver is null || _powerReceiver.Powered;
 
-        private PowerReceiverComponent _powerReceiver;
+        private PowerReceiverComponent? _powerReceiver;
 
         public override void Initialize()
         {
@@ -84,17 +84,16 @@ namespace Content.Server.GameObjects.Components.Research
             EntitySystem.Get<ResearchSystem>()?.UnregisterServer(this);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _serverName, "servername", "RDSERVER");
-            serializer.DataField(ref _points, "points", 0);
-        }
-
         public bool CanUnlockTechnology(TechnologyPrototype technology)
         {
-            if (!Database.CanUnlockTechnology(technology) || _points < technology.RequiredPoints ||
-                Database.IsTechnologyUnlocked(technology)) return false;
+            if (Database == null)
+                return false;
+
+            if (!Database.CanUnlockTechnology(technology) ||
+                _points < technology.RequiredPoints ||
+                Database.IsTechnologyUnlocked(technology))
+                return false;
+
             return true;
         }
 
@@ -107,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Research
         public bool UnlockTechnology(TechnologyPrototype technology)
         {
             if (!CanUnlockTechnology(technology)) return false;
-            var result = Database.UnlockTechnology(technology);
+            var result = Database?.UnlockTechnology(technology) ?? false;
             if (result)
                 _points -= technology.RequiredPoints;
             return result;
@@ -120,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// <returns></returns>
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return Database.IsTechnologyUnlocked(technology);
+            return Database?.IsTechnologyUnlocked(technology) ?? false;
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
@@ -16,8 +16,6 @@ namespace Content.Server.AI.Utility.Actions.Test
     public class MoveRightAndLeftTen : UtilityAction
     {
         public override bool CanOverride => false;
-
-        public MoveRightAndLeftTen(IEntity owner) : base(owner) {}
 
         public override void SetupOperators(Blackboard context)
         {

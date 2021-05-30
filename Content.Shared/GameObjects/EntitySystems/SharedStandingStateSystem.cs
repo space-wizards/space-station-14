@@ -1,5 +1,6 @@
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+#nullable enable
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {

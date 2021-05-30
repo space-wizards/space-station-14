@@ -1,9 +1,12 @@
-﻿namespace Content.Shared.GameObjects
+#nullable enable
+
+namespace Content.Shared.GameObjects
 {
     // Starting from 1000 to avoid crossover with engine.
     public static class ContentNetIDs
     {
-        // 1000
+        // As a CMO main I hereby declare the hypospray worthy of ID #1000.
+        public const uint HYPOSPRAY = 1000;
         public const uint DESTRUCTIBLE = 1001;
         public const uint MAGAZINE_BARREL = 1002;
         public const uint HANDS = 1003;
@@ -11,8 +14,8 @@
         public const uint STORAGE = 1005;
         public const uint INVENTORY = 1006;
         public const uint POWER_DEBUG_TOOL = 1007;
-        // 1008
-        // 1009
+        public const uint PLAYER_MOB_MOVER = 1008;
+        public const uint TILE_FRICTION = 1009;
         public const uint RANGED_WEAPON = 1010;
         public const uint CAMERA_RECOIL = 1011;
         public const uint SOUND = 1012;
@@ -29,7 +32,7 @@
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
         public const uint COMBATMODE = 1025;
-        public const uint STATUSEFFECTS = 1026;
+        public const uint ALERTS = 1026;
         public const uint OVERLAYEFFECTS = 1027;
         public const uint STOMACH = 1028;
         public const uint ITEMCOOLDOWN = 1029;
@@ -57,7 +60,7 @@
         public const uint FLASHABLE = 1051;
         public const uint BUCKLE = 1052;
         public const uint PROJECTILE = 1053;
-        public const uint THROWN_ITEM = 1054;
+        // 1054
         public const uint STRAP = 1055;
         public const uint DISPOSABLE = 1056;
         public const uint GAS_ANALYZER = 1057;
@@ -73,7 +76,7 @@
         public const uint BATTERY_BARREL = 1067;
         public const uint SUSPICION_ROLE = 1068;
         public const uint ROTATION = 1069;
-        public const uint MOB_STATE_MANAGER = 1070;
+        public const uint MOB_STATE = 1070;
         public const uint SLIP = 1071;
         public const uint SPACE_VILLAIN_ARCADE = 1072;
         public const uint BLOCKGAME_ARCADE = 1073;
@@ -84,6 +87,17 @@
         public const uint PULLABLE = 1078;
         public const uint GAS_TANK = 1079;
         public const uint SINGULARITY = 1080;
+        public const uint CHARACTERINFO = 1081;
+        public const uint REAGENT_GRINDER = 1082;
+        public const uint ACTIONS = 1083;
+        public const uint DAMAGEABLE = 1084;
+        public const uint MAGBOOTS = 1085;
+        public const uint TAG = 1086;
+        // Used for clientside fake prediction of doors.
+        public const uint DOOR = 1087;
+        public const uint SPAWN_AFTER_INTERACT = 1088;
+        public const uint DISASSEMBLE_ON_ACTIVATE = 1089;
+        public const uint LIGHT_REPLACER = 1090;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

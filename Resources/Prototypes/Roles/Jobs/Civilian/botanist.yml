@@ -4,19 +4,22 @@
   positions: 2
   spawnPositions: 2
   startingGear: BotanistGear
-  department:
+  departments:
   - Civilian
   icon: "Botanist"
   access:
   - Service
-  - Hydroponics
   - Maintenance
 
 - type: startingGear
   id: BotanistGear
   equipment:
-    innerclothing: UniformHydroponics
-    backpack: BackpackClothingFilled
-    shoes: ShoesBrown
+    innerclothing: ClothingUniformJumpsuitHydroponics
+    backpack: ClothingBackpackHydroponicsFilled
+    shoes: ClothingShoesColorBrown
     idcard: BotanistPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
+    outerclothing: ClothingOuterApronBotanist
+  innerclothingskirt: ClothingUniformJumpskirtHydroponics
+  satchel: ClothingBackpackSatchelHydroponicsFilled
+  duffelbag: ClothingBackpackDuffelFilled

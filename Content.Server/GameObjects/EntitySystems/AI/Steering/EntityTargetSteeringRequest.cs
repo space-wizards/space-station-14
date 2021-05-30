@@ -1,4 +1,4 @@
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Steering
@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         public MapCoordinates TargetMap => _target.Transform.MapPosition;
         public EntityCoordinates TargetGrid => _target.Transform.Coordinates;
         public IEntity Target => _target;
-        private IEntity _target;
+        private readonly IEntity _target;
 
         /// <inheritdoc />
         public float ArrivalDistance { get; }

@@ -1,9 +1,9 @@
 ﻿using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.PA
 {
@@ -11,21 +11,13 @@ namespace Content.Server.GameObjects.Components.PA
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
-        [Dependency] private IEntityManager _entityManager = null!;
-
         public override string Name => "ParticleAcceleratorEmitter";
-        public ParticleAcceleratorEmitterType Type;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref Type, "emitterType", ParticleAcceleratorEmitterType.Center);
-        }
+        [DataField("emitterType")]
+        public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
 
         public void Fire(ParticleAcceleratorPowerState strength)
         {
-            var projectile = _entityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
+            var projectile = Owner.EntityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<ParticleProjectileComponent>(out var particleProjectileComponent))
             {

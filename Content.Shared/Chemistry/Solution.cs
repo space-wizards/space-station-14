@@ -1,9 +1,18 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.Interfaces.Serialization;
+using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -13,11 +22,13 @@ namespace Content.Shared.Chemistry
     ///     A solution of reagents.
     /// </summary>
     [Serializable, NetSerializable]
-    public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
+    [DataDefinition]
+    public class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
-        private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
+        [DataField("reagents")]
+        private List<ReagentQuantity> _contents = new(2);
 
         public IReadOnlyList<ReagentQuantity> Contents => _contents;
 
@@ -26,6 +37,8 @@ namespace Content.Shared.Chemistry
         /// </summary>
         [ViewVariables]
         public ReagentUnit TotalVolume { get; private set; }
+
+        public Color Color => GetColor();
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
@@ -42,19 +55,41 @@ namespace Content.Shared.Chemistry
             AddReagent(reagentId, quantity);
         }
 
-        /// <inheritdoc />
-        public void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            serializer.DataReadWriteFunction(
-                "reagents",
-                new List<ReagentQuantity>(),
-                quantities =>
+            TotalVolume = ReagentUnit.Zero;
+            _contents.ForEach(reagent => TotalVolume += reagent.Quantity);
+        }
+
+        public bool ContainsReagent(string reagentId)
+        {
+            return ContainsReagent(reagentId, out _);
+        }
+
+        public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
+        {
+            foreach (var reagent in Contents)
+            {
+                if (reagent.ReagentId == reagentId)
                 {
-                    _contents = quantities;
-                    TotalVolume = ReagentUnit.New(0);
-                    quantities.ForEach(reagent => TotalVolume += reagent.Quantity);
-                },
-                () => _contents);
+                    quantity = reagent.Quantity;
+                    return true;
+                }
+            }
+
+            quantity = ReagentUnit.New(0);
+            return false;
+        }
+
+        public string GetPrimaryReagentId()
+        {
+            if (Contents.Count == 0)
+            {
+                return "";
+            }
+
+            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First();
+            return majorReagent.ReagentId;
         }
 
         /// <summary>
@@ -231,6 +266,38 @@ namespace Content.Shared.Chemistry
             TotalVolume += otherSolution.TotalVolume;
         }
 
+        private Color GetColor()
+        {
+            if (TotalVolume == 0)
+            {
+                return Color.Transparent;
+            }
+
+            Color mixColor = default;
+            var runningTotalQuantity = ReagentUnit.New(0);
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var reagent in Contents)
+            {
+                runningTotalQuantity += reagent.Quantity;
+
+                if (!protoManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                {
+                    continue;
+                }
+
+                if (mixColor == default)
+                {
+                    mixColor = proto.SubstanceColor;
+                    continue;
+                }
+
+                var interpolateValue = (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float();
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+            }
+            return mixColor;
+        }
+
         public Solution Clone()
         {
             var volume = ReagentUnit.New(0);
@@ -247,10 +314,23 @@ namespace Content.Shared.Chemistry
             return newSolution;
         }
 
+        public void DoEntityReaction(IEntity entity, ReactionMethod method)
+        {
+            var chemistry = EntitySystem.Get<ChemistrySystem>();
+
+            foreach (var (reagentId, quantity) in _contents.ToArray())
+            {
+                chemistry.ReactionEntity(entity, method, reagentId, quantity, this);
+            }
+        }
+
         [Serializable, NetSerializable]
+        [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
+            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
             public readonly string ReagentId;
+            [DataField("Quantity")]
             public readonly ReagentUnit Quantity;
 
             public ReagentQuantity(string reagentId, ReagentUnit quantity)

@@ -1,11 +1,14 @@
 using System;
 using Content.Shared.GameObjects.Components.Weapons;
+using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.Weapon
 {
@@ -24,25 +27,24 @@ namespace Content.Server.GameObjects.Components.Weapon
             Dirty();
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new FlashComponentState(_duration, _lastFlash);
         }
 
-        public static void FlashAreaHelper(IEntity source, float range, float duration, string sound = null)
+        public static void FlashAreaHelper(IEntity source, float range, float duration, string? sound = null)
         {
-            foreach (var entity in IoCManager.Resolve<IEntityManager>().GetEntitiesInRange(source.Transform.Coordinates, range))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(source.Transform.Coordinates, range))
             {
-                if (!source.InRangeUnobstructed(entity, range, popup: true))
-                    continue;
+                if (!entity.TryGetComponent(out FlashableComponent? flashable) ||
+                    !source.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
 
-                if(entity.TryGetComponent(out FlashableComponent flashable))
-                    flashable.Flash(duration);
+                flashable.Flash(duration);
             }
 
             if (!string.IsNullOrEmpty(sound))
             {
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().PlayAtCoords(sound, source.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(source), sound, source.Transform.Coordinates);
             }
         }
     }

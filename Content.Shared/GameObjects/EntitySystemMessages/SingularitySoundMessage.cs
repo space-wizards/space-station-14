@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;

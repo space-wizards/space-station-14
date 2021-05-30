@@ -1,6 +1,6 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
@@ -19,6 +19,8 @@ namespace Content.Shared.GameObjects.Components.Projectiles
             get => _ignoreShooter;
             set
             {
+                if (_ignoreShooter == value) return;
+
                 _ignoreShooter = value;
                 Dirty();
             }
@@ -39,7 +41,7 @@ namespace Content.Shared.GameObjects.Components.Projectiles
 
         public bool PreventCollide(IPhysBody collidedwith)
         {
-            return IgnoreShooter && collidedwith.Entity.Uid == Shooter;
+            return IgnoreShooter && collidedwith.Owner.Uid == Shooter;
         }
     }
 }

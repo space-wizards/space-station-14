@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -38,7 +37,7 @@ namespace Content.Server.Utility
             }
 
             // If this doesn't have an item component, then we can't do anything with it.
-            if (!item.TryGetComponent(out ItemComponent itemComp))
+            if (!item.TryGetComponent(out ItemComponent? itemComp))
                 return DeleteItem();
 
             // We finally try to equip the item, otherwise we delete it.

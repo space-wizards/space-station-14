@@ -1,30 +1,27 @@
-﻿#nullable enable
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public abstract class SharedMoverSystem : EntitySystem
+    /// <summary>
+    ///     Handles converting inputs into movement.
+    /// </summary>
+    public sealed class SharedMoverSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -41,8 +38,6 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
                 .Register<SharedMoverSystem>();
-
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
         /// <inheritdoc />
@@ -52,105 +47,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
-        {
-            physics.EnsureController<MoverController>();
-
-            var weightless = transform.Owner.IsWeightless();
-
-            if (weightless)
-            {
-                // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, physics);
-
-                if (!touching)
-                {
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-            }
-
-            // TODO: movement check.
-            var (walkDir, sprintDir) = mover.VelocityDir;
-            var combined = walkDir + sprintDir;
-            if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
-            {
-                if (physics.TryGetController(out MoverController controller))
-                {
-                    controller.StopMoving();
-                }
-            }
-            else
-            {
-                if (weightless)
-                {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        controller.Push(combined, mover.CurrentPushSpeed);
-                    }
-
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
-
-                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-
-                {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        controller.Move(total, 1);
-                    }
-                }
-
-                transform.LocalRotation = total.GetDir().ToAngle();
-
-                HandleFootsteps(mover);
-            }
-        }
-
-        protected virtual void HandleFootsteps(IMoverComponent mover)
-        {
-
-        }
-
-        private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
-            IPhysicsComponent collider)
-        {
-            foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
-            {
-                if (entity == transform.Owner)
-                {
-                    continue; // Don't try to push off of yourself!
-                }
-
-                if (!entity.TryGetComponent<IPhysicsComponent>(out var otherCollider) ||
-                    !otherCollider.CanCollide ||
-                    (collider.CollisionMask & otherCollider.CollisionLayer) == 0)
-                {
-                    continue;
-                }
-
-                // Don't count pulled entities
-                if (otherCollider.HasController<PullController>())
-                {
-                    continue;
-                }
-
-                // TODO: Item check.
-                var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
-                                || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                               && !entity.HasComponent<IItemComponent>(); // This can't be an item
-
-                if (touching)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
         private static void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
             if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
@@ -158,11 +54,20 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             var owner = session?.AttachedEntity;
 
-            if (owner != null)
+            if (owner != null && session != null)
             {
                 foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
                 {
                     comp.MoveInputPressed(session);
+                }
+
+                // For stuff like "Moving out of locker" or the likes
+                if (owner.IsInContainer() &&
+                    (!owner.TryGetComponent(out IMobStateComponent? mobState) ||
+                     mobState.IsAlive()))
+                {
+                    var relayEntityMoveMessage = new RelayMovementEntityMessage(owner);
+                    owner.Transform.Parent!.Owner.SendMessage(owner.Transform, relayEntityMoveMessage);
                 }
             }
 
@@ -179,7 +84,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             moverComp.SetSprinting(subTick, walking);
         }
 
-        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
+        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [NotNullWhen(true)] out T? component)
             where T : class, IComponent
         {
             component = default;
@@ -207,7 +112,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (!(message is FullInputCmdMessage full))
+                if (message is not FullInputCmdMessage full)
                 {
                     return false;
                 }
@@ -221,7 +126,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (!(message is FullInputCmdMessage full))
+                if (message is not FullInputCmdMessage full)
                 {
                     return false;
                 }

@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
@@ -17,12 +17,29 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         protected override bool IsEntityCompatible(IEntity entity)
         {
-            return entity.HasComponent<ServerBatteryBarrelComponent>();
+            return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+                   entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
-        protected override BatteryComponent GetBatteryFrom(IEntity entity)
+        protected override BatteryComponent? GetBatteryFrom(IEntity entity)
         {
-            return entity.GetComponent<ServerBatteryBarrelComponent>().PowerCell;
+            if (entity.TryGetComponent(out PowerCellSlotComponent? slot))
+            {
+                if (slot.Cell != null)
+                {
+                    return slot.Cell;
+                }
+            }
+
+            if (entity.TryGetComponent(out ServerBatteryBarrelComponent? battery))
+            {
+                if (battery.PowerCell != null)
+                {
+                    return battery.PowerCell;
+                }
+            }
+
+            return null;
         }
     }
 }

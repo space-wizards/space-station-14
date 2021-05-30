@@ -1,0 +1,86 @@
+- type: entity
+  id: CrateHydroponicsSeedsExotic
+  name: exotic seeds crate
+  parent: CrateHydroSecure
+  description: "Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open."
+  components:
+  - type: StorageFill
+    contents:
+      - id: BananaSeeds
+        amount: 2
+      - id: EggySeeds
+        amount: 2
+      - id: TowercapSeeds
+        amount: 2
+#      - id: NettleSeeds
+#        amount: 2
+#      - id: RainbowBunchSeeds
+#        amount: 2
+#      - id: StrangeSeeds
+#        amount: 2
+#      - id: BunchaOfMyceliumSeeds
+#        amount: 2
+
+- type: entity
+  id: CrateHydroponicsTools
+  name: hydroponics equipment crate
+  parent: CrateHydroponics
+  description: "Supplies for growing a great garden! Contains some spray bottles of plant chemicals, a hatchet, a mini-hoe, scythe, as well as a pair of leather gloves and a botanist's apron."
+  components:
+  - type: StorageFill
+    contents:
+      - id: HydroponicsToolMiniHoe
+        amount: 1
+      - id: PlantBGoneSpray
+        amount: 1
+      - id: WeedSpray
+        amount: 1
+      - id: PestSpray
+        amount: 1
+      - id: HydroponicsToolScythe
+        amount: 1
+      - id: HydroponicsToolHatchet
+        amount: 1
+      - id: ClothingOuterApronBotanist
+        amount: 1
+      - id: ClothingHandsGlovesLeather
+        amount: 1
+
+- type: entity
+  id: CrateHydroponicsSeeds
+  name: seeds crate
+  parent: CrateHydroponics
+  description: "Big things have small beginnings. Contains nine different seeds."
+  components:
+  - type: StorageFill
+    contents:
+#      - id: ChiliSeeds
+#        amount: 1
+#      - id: CottonSeeds
+#        amount: 1
+#      - id: BerrySeeds
+#        amount: 1
+      - id: CornSeeds
+        amount: 1
+      - id: EggplantSeeds
+        amount: 1
+      - id: TomatoSeeds
+        amount: 1
+#      - id: SoybeanSeeds
+#        amount: 1
+      - id: WheatSeeds
+        amount: 1
+#      - id: RiceSeeds
+#        amount: 1
+      - id: CarrotSeeds
+        amount: 1
+#      - id: SunflowerSeeds
+#        amount: 1
+      - id: ChanterelleSeeds
+        amount: 1
+      - id: PotatoSeeds
+        amount: 1
+      - id: SugarcaneSeeds
+        amount: 1
+      - id: LemonSeeds
+        amount: 1

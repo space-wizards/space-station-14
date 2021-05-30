@@ -6,11 +6,21 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-  - type: Destructible
-    thresholdvalue: 5
+    bodyType: Static
+    canCollide: false
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi
@@ -27,16 +37,14 @@
   description: Return to monky.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: monkey_painting
 
@@ -50,16 +58,14 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_sec
 
@@ -71,16 +77,14 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_evac
 
@@ -93,16 +97,14 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_bridge
 
@@ -115,16 +117,14 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_med
 
@@ -137,16 +137,14 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_eng
 
@@ -158,16 +156,14 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_sci
 
@@ -179,20 +175,19 @@
   components:
   - type: Rotatable
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.1,-0.4,0.1,0.4"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: direction_supply
 
 # Regular Signs
+# Descriptions intentionally left empty.
 
 - type: entity
   parent: BaseSign
@@ -200,16 +195,14 @@
   name: armory sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: armory
 
@@ -220,16 +213,14 @@
   name: tool storage sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: ass
 
@@ -240,16 +231,14 @@
   name: anomaly lab sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: anomaly
 
@@ -260,16 +249,14 @@
   name: atmos sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos
 
@@ -280,16 +267,14 @@
   name: bar sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: bar
 
@@ -300,16 +285,14 @@
   name: library sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: biblio
 
@@ -320,16 +303,14 @@
   name: chapel sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: chapel
 
@@ -340,16 +321,14 @@
   name: head sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: commander
 
@@ -360,16 +339,14 @@
   name: conference room sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: conference_room
 
@@ -380,19 +357,16 @@
   name: drones sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: drones
-
 
 - type: entity
   parent: BaseSign
@@ -400,19 +374,16 @@
   name: engine sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: engine
-
 
 - type: entity
   parent: BaseSign
@@ -420,19 +391,16 @@
   name: cloning sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: cloning
-
 
 - type: entity
   parent: BaseSign
@@ -440,19 +408,16 @@
   name: interrogation sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: interrogation
-
 
 - type: entity
   parent: BaseSign
@@ -460,19 +425,16 @@
   name: surgery sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: surgery
-
 
 - type: entity
   parent: BaseSign
@@ -480,19 +442,16 @@
   name: telecomms sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: telecoms
-
 
 - type: entity
   parent: BaseSign
@@ -500,19 +459,16 @@
   name: cargo sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: cargo
-
 
 - type: entity
   parent: BaseSign
@@ -520,19 +476,16 @@
   name: cargo dock sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: cargo_dock
-
 
 - type: entity
   parent: BaseSign
@@ -540,19 +493,16 @@
   name: chemistry sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: chem
-
 
 - type: entity
   parent: BaseSign
@@ -560,19 +510,16 @@
   name: docking sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: dock
-
 
 - type: entity
   parent: BaseSign
@@ -580,19 +527,16 @@
   name: engineering sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: eng
-
 
 - type: entity
   parent: BaseSign
@@ -600,19 +544,16 @@
   name: EVA sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: eva
-
 
 - type: entity
   parent: BaseSign
@@ -620,19 +561,16 @@
   name: gravity sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: gravi
-
 
 - type: entity
   parent: BaseSign
@@ -640,19 +578,16 @@
   name: medbay sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: medbay
-
 
 - type: entity
   parent: BaseSign
@@ -660,40 +595,33 @@
   name: morgue sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: morgue
-
 
 - type: entity
   parent: BaseSign
   id: SignPrison
   name: prison sign
-  description:
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: prison
-
 
 - type: entity
   parent: BaseSign
@@ -701,19 +629,16 @@
   name: research and development sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: rnd
-
 
 - type: entity
   parent: BaseSign
@@ -721,19 +646,16 @@
   name: science sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: sci
-
 
 - type: entity
   parent: BaseSign
@@ -741,19 +663,16 @@
   name: toxins sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: toxins
-
 
 - type: entity
   parent: BaseSign
@@ -761,19 +680,16 @@
   name: bridge sign
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: bridge
-
 
 # Atmos Warnings
 
@@ -784,19 +700,16 @@
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_air
-
 
 - type: entity
   parent: BaseSign
@@ -805,19 +718,16 @@
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_co2
-
 
 - type: entity
   parent: BaseSign
@@ -826,19 +736,16 @@
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_n2
-
 
 - type: entity
   parent: BaseSign
@@ -847,19 +754,16 @@
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_n2o
-
 
 - type: entity
   parent: BaseSign
@@ -868,40 +772,34 @@
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_o2
 
-
 - type: entity
   parent: BaseSign
-  id: WarningPhoron
-  name: phoron waste sign
+  id: WarningPlasma
+  name: plasma waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
-    state: atmos_phoron
-
+    state: atmos_plasma
 
 - type: entity
   parent: BaseSign
@@ -910,19 +808,16 @@
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.2,-0.3,0.2,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.3,0.2,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: atmos_waste
-
 
 - type: entity
   parent: BaseSign
@@ -931,19 +826,16 @@
   description: A warning sign which reads 'NO SMOKING'
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: nosmoking2
-
 
 - type: entity
   parent: BaseSign
@@ -952,19 +844,16 @@
   description: Technical information of some sort, shame its too worn-out to read.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: something-old1
-
 
 - type: entity
   parent: BaseSign
@@ -973,16 +862,13 @@
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.4,-0.3,0.4,0.3"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-      - Clickable
+      mask:
+      - VaultImpassable
   - type: Sprite
     state: something-old2
-

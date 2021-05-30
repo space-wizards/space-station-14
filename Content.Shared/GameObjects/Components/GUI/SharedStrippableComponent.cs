@@ -1,11 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -22,14 +21,14 @@ namespace Content.Shared.GameObjects.Components.GUI
                    && ActionBlockerSystem.CanInteract(by);
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target != args.Dragged
                    && args.Target == args.User
                    && CanBeStripped(args.User);
         }
 
-        public abstract bool Drop(DragDropEventArgs args);
+        public abstract bool Drop(DragDropEvent args);
 
         [NetSerializable, Serializable]
         public enum StrippingUiKey

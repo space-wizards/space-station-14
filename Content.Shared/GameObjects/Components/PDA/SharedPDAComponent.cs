@@ -1,7 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.PDA
 {
@@ -31,6 +32,15 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
+    public sealed class PDAEjectPenMessage : BoundUserInterfaceMessage
+    {
+        public PDAEjectPenMessage()
+        {
+
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class PDAUBoundUserInterfaceState : BoundUserInterfaceState
     {
 
@@ -40,28 +50,27 @@ namespace Content.Shared.GameObjects.Components.PDA
     public sealed class PDAUpdateState : PDAUBoundUserInterfaceState
     {
         public bool FlashlightEnabled;
+        public bool HasPen;
         public PDAIdInfoText PDAOwnerInfo;
-        public UplinkAccountData Account;
-        public UplinkListingData[] Listings;
+        public UplinkAccountData Account = default!;
+        public UplinkListingData[] Listings = default!;
 
-        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
+        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo)
         {
             FlashlightEnabled = isFlashlightOn;
+            HasPen = hasPen;
             PDAOwnerInfo = ownerInfo;
         }
 
-        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo, UplinkAccountData accountData)
+        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo, UplinkAccountData accountData)
+            : this(isFlashlightOn, hasPen, ownerInfo)
         {
-            FlashlightEnabled = isFlashlightOn;
-            PDAOwnerInfo = ownerInfo;
             Account = accountData;
         }
 
-        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo, UplinkAccountData accountData, UplinkListingData[] listings)
+        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo, UplinkAccountData accountData, UplinkListingData[] listings)
+            : this(isFlashlightOn, hasPen, ownerInfo, accountData)
         {
-            FlashlightEnabled = isFlashlightOn;
-            PDAOwnerInfo = ownerInfo;
-            Account = accountData;
             Listings = listings;
         }
     }
@@ -99,9 +108,9 @@ namespace Content.Shared.GameObjects.Components.PDA
     [Serializable, NetSerializable]
     public struct PDAIdInfoText
     {
-        public string ActualOwnerName;
-        public string IdOwner;
-        public string JobTitle;
+        public string? ActualOwnerName;
+        public string? IdOwner;
+        public string? JobTitle;
     }
 
     [Serializable, NetSerializable]
@@ -119,14 +128,16 @@ namespace Content.Shared.GameObjects.Components.PDA
 
     public class UplinkAccount
     {
-        public event Action<UplinkAccount> BalanceChanged;
+        public event Action<UplinkAccount>? BalanceChanged;
         public EntityUid AccountHolder;
-        public int Balance { get; private set; }
+        private int _balance;
+        [ViewVariables]
+        public int Balance => _balance;
 
         public UplinkAccount(EntityUid uid, int startingBalance)
         {
             AccountHolder = uid;
-            Balance = startingBalance;
+            _balance = startingBalance;
         }
 
         public bool ModifyAccountBalance(int newBalance)
@@ -135,10 +146,9 @@ namespace Content.Shared.GameObjects.Components.PDA
             {
                 return false;
             }
-            Balance = newBalance;
+            _balance = newBalance;
             BalanceChanged?.Invoke(this);
             return true;
-
         }
     }
 
@@ -175,7 +185,7 @@ namespace Content.Shared.GameObjects.Components.PDA
             ItemId = itemId;
         }
 
-        public bool Equals(UplinkListingData other)
+        public bool Equals(UplinkListingData? other)
         {
             if (other == null)
             {

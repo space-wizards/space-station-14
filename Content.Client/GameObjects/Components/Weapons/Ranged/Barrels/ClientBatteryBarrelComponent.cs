@@ -2,7 +2,7 @@
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         public override string Name => "BatteryBarrel";
         public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         ///     Count of bullets in the magazine.
@@ -28,9 +28,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is BatteryBarrelComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not BatteryBarrelComponentState cast)
                 return;
 
             MagazineCount = cast.Magazine;
@@ -61,23 +63,24 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             public StatusControl(ClientBatteryBarrelComponent parent)
             {
+                MinHeight = 15;
                 _parent = parent;
-                SizeFlagsHorizontal = SizeFlags.FillExpand;
-                SizeFlagsVertical = SizeFlags.ShrinkCenter;
+                HorizontalExpand = true;
+                VerticalAlignment = VAlignment.Center;
 
                 AddChild(new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     Children =
                     {
                         new Control
                         {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            HorizontalExpand = true,
                             Children =
                             {
                                 (_bulletsList = new HBoxContainer
                                 {
-                                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                                    VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 4
                                 }),
                                 (_noBatteryLabel = new Label
@@ -87,11 +90,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                                 })
                             }
                         },
-                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control() { MinSize = (5,0) },
                         (_ammoCount = new Label
                         {
                             StyleClasses = {StyleNano.StyleClassItemStatus},
-                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                            HorizontalAlignment = HAlignment.Right,
                         }),
                     }
                 });
@@ -132,7 +135,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                         {
                             BackgroundColor = colorGone,
                         },
-                        CustomMinimumSize = (10, 15),
+                        MinSize = (10, 15),
                     });
                 }
 
@@ -146,14 +149,9 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                         {
                             BackgroundColor = color,
                         },
-                        CustomMinimumSize = (10, 15),
+                        MinSize = (10, 15),
                     });
                 }
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return Vector2.ComponentMax((0, 15), base.CalculateMinimumSize());
             }
         }
     }

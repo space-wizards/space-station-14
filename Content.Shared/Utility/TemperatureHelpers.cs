@@ -1,4 +1,5 @@
-﻿using Content.Shared.Maths;
+﻿#nullable enable
+using Content.Shared.Maths;
 
 namespace Content.Shared.Utility
 {

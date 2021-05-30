@@ -1,18 +1,23 @@
 ﻿using System;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Debugging;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.Placement;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox
@@ -20,23 +25,25 @@ namespace Content.Client.Sandbox
     // Layout for the SandboxWindow
     public class SandboxWindow : SS14Window
     {
-        public Button RespawnButton;
-        public Button SpawnEntitiesButton;
-        public Button SpawnTilesButton;
-        public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
-        public Button GiveAghostButton;
-        public Button ToggleLightButton;
-        public Button ToggleFovButton;
-        public Button ToggleShadowsButton;
-        public Button SuicideButton;
-        public Button ToggleSubfloorButton;
-        public Button ShowMarkersButton; //Shows spawn points
-        public Button ShowBbButton; //Shows bounding boxes
-        public Button MachineLinkingButton; // Enables/disables machine linking mode.
+        public readonly Button RespawnButton;
+        public readonly Button SpawnEntitiesButton;
+        public readonly Button SpawnTilesButton;
+        public readonly Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
+        public readonly Button GiveAghostButton;
+        public readonly Button ToggleLightButton;
+        public readonly Button ToggleFovButton;
+        public readonly Button ToggleShadowsButton;
+        public readonly Button SuicideButton;
+        public readonly Button ToggleSubfloorButton;
+        public readonly Button ShowMarkersButton; //Shows spawn points
+        public readonly Button ShowBbButton; //Shows bounding boxes
+        public readonly Button MachineLinkingButton; // Enables/disables machine linking mode.
+        private readonly IGameHud _gameHud;
 
         public SandboxWindow()
         {
             Resizable = false;
+            _gameHud = IoCManager.Resolve<IGameHud>();
 
             Title = "Sandbox Panel";
 
@@ -58,35 +65,49 @@ namespace Content.Client.Sandbox
             GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };
             vBox.AddChild(GiveAghostButton);
 
-            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true };
+            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().Enabled };
             vBox.AddChild(ToggleLightButton);
 
-            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true };
+            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true, Pressed = !IoCManager.Resolve<IEyeManager>().CurrentEye.DrawFov };
             vBox.AddChild(ToggleFovButton);
 
-            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true };
+            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().DrawShadows };
             vBox.AddChild(ToggleShadowsButton);
 
-            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true };
+            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true, Pressed = EntitySystem.Get<SubFloorHideSystem>().ShowAll };
             vBox.AddChild(ToggleSubfloorButton);
 
             SuicideButton = new Button { Text = Loc.GetString("Suicide") };
             vBox.AddChild(SuicideButton);
 
-            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true };
+            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true, Pressed = EntitySystem.Get<MarkerSystem>().MarkersVisible };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("Show Bb"), ToggleMode = true };
+            ShowBbButton = new Button { Text = Loc.GetString("Show BB"), ToggleMode = true, Pressed = IoCManager.Resolve<IDebugDrawing>().DebugColliders };
             vBox.AddChild(ShowBbButton);
 
             MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
             vBox.AddChild(MachineLinkingButton);
         }
+
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _gameHud.SandboxButtonDown = true;
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+            _gameHud.SandboxButtonDown = false;
+        }
+
     }
 
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
@@ -97,13 +118,12 @@ namespace Content.Client.Sandbox
 
         public bool SandboxAllowed { get; private set; }
 
-        public event Action<bool> AllowedChanged;
+        public event Action<bool>? AllowedChanged;
 
-        private SandboxWindow _window;
-        private EntitySpawnWindow _spawnWindow;
-        private TileSpawnWindow _tilesSpawnWindow;
+        private SandboxWindow? _window;
+        private EntitySpawnWindow? _spawnWindow;
+        private TileSpawnWindow? _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
-        private bool SpawnEntitiesButton { get; set; }
 
         public void Initialize()
         {
@@ -198,7 +218,6 @@ namespace Content.Client.Sandbox
         private void WindowOnOnClose()
         {
             _window = null;
-            _gameHud.SandboxButtonDown = false;
             _sandboxWindowToggled = false;
         }
 
@@ -269,7 +288,11 @@ namespace Content.Client.Sandbox
         private void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
+            {
                 _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
+                _spawnWindow.OpenToLeft();
+                return;
+            }
 
             if (_spawnWindow.IsOpen)
             {
@@ -277,15 +300,18 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
-                _spawnWindow.OpenToLeft();
+                _spawnWindow.Open();
             }
         }
 
         private void ToggleTilesWindow()
         {
             if (_tilesSpawnWindow == null)
+            {
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
+                _tilesSpawnWindow.OpenToLeft();
+                return;
+            }
 
             if (_tilesSpawnWindow.IsOpen)
             {
@@ -293,44 +319,43 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
-                _tilesSpawnWindow.OpenToLeft();
+                _tilesSpawnWindow.Open();
             }
         }
 
         private void ToggleLight()
         {
-            _console.ProcessCommand("togglelight");
+            _consoleHost.ExecuteCommand("togglelight");
         }
 
         private void ToggleFov()
         {
-            _console.ProcessCommand("togglefov");
+            _consoleHost.ExecuteCommand("togglefov");
         }
 
         private void ToggleShadows()
         {
-            _console.ProcessCommand("toggleshadows");
+            _consoleHost.ExecuteCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
         {
-            _console.ProcessCommand("showsubfloor");
+            _consoleHost.ExecuteCommand("showsubfloor");
         }
 
         private void ShowMarkers()
         {
-            _console.ProcessCommand("showmarkers");
+            _consoleHost.ExecuteCommand("showmarkers");
         }
 
         private void ShowBb()
         {
-            _console.ProcessCommand("showbb");
+            _consoleHost.ExecuteCommand("showbb");
         }
 
         private void LinkMachines()
         {
-            _console.ProcessCommand("signallink");
+            _consoleHost.ExecuteCommand("signallink");
         }
     }
 }

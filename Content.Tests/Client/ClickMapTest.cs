@@ -13,10 +13,10 @@ namespace Content.Tests.Client
         {
             var img = new Image<Rgba32>(2, 2)
             {
-                [0, 0] = new Rgba32(0, 0, 0, 0f),
-                [1, 0] = new Rgba32(0, 0, 0, 1f),
-                [0, 1] = new Rgba32(0, 0, 0, 1f),
-                [1, 1] = new Rgba32(0, 0, 0, 0f)
+                [0, 0] = new(0, 0, 0, 0f),
+                [1, 0] = new(0, 0, 0, 1f),
+                [0, 1] = new(0, 0, 0, 1f),
+                [1, 1] = new(0, 0, 0, 0f)
             };
 
             var clickMap = ClickMapManager.ClickMap.FromImage(img, 0.5f);
@@ -32,10 +32,10 @@ namespace Content.Tests.Client
         {
             var img = new Image<Rgba32>(2, 2)
             {
-                [0, 0] = new Rgba32(0, 0, 0, 0f),
-                [1, 0] = new Rgba32(0, 0, 0, 0.25f),
-                [0, 1] = new Rgba32(0, 0, 0, 0.75f),
-                [1, 1] = new Rgba32(0, 0, 0, 1f)
+                [0, 0] = new(0, 0, 0, 0f),
+                [1, 0] = new(0, 0, 0, 0.25f),
+                [0, 1] = new(0, 0, 0, 0.75f),
+                [1, 1] = new(0, 0, 0, 1f)
             };
 
             var clickMap = ClickMapManager.ClickMap.FromImage(img, 0.5f);

@@ -1,7 +1,7 @@
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Shared.AI;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
 {
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
         private void NotifyActionJob(SharedAiDebug.UtilityAiDebugMessage message)
         {
-            EntityManager.EntityNetManager.SendSystemNetworkMessage(message);
+            RaiseNetworkEvent(message);
         }
     }
 #endif

@@ -8,24 +8,19 @@
     "copyright": "https://github.com/vgstation-coders/vgstation13/raw/78a32d846158a67dcd0ca2375e408fec298b46a0/icons/obj/power.dmi",
     "states": [
         {
-            "name": "light-off",
-            "directions": 1
+            "name": "light-off"
         },
         {
-            "name": "empty",
-            "directions": 1
+            "name": "empty"
         },
         {
-            "name": "full",
-            "directions": 1
+            "name": "full"
         },
         {
-            "name": "open",
-            "directions": 1
+            "name": "open"
         },
         {
             "name": "light-charging",
-            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -37,7 +32,6 @@
         },
         {
             "name": "light-charged",
-            "directions": 1,
             "delays": [
                 [
                     0.5,
@@ -47,7 +41,6 @@
         },
         {
             "name": "light-empty",
-            "directions": 1,
             "delays": [
                 [
                     0.5,

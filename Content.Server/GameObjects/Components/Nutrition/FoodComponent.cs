@@ -1,28 +1,27 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Culinary;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
@@ -31,15 +30,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [ComponentReference(typeof(IAfterInteract))]
     public class FoodComponent : Component, IUse, IAfterInteract
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Food";
 
-        [ViewVariables] private string _useSound = "";
-        [ViewVariables] private string? _trashPrototype;
-        [ViewVariables] private ReagentUnit _transferAmount;
-        private UtensilType _utensilsNeeded;
+        [ViewVariables] [DataField("useSound")] protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+
+        [ViewVariables] [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] protected virtual string? TrashPrototype { get; set; }
+
+        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+
+        [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
 
         [ViewVariables]
         public int UsesRemaining
@@ -53,49 +52,21 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / _transferAmount).Float()));
+                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/eatfood.ogg");
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
-            serializer.DataField(ref _trashPrototype, "trash", null);
-
-            serializer.DataReadWriteFunction(
-                "utensils",
-                new List<UtensilType>(),
-                types => types.ForEach(type => _utensilsNeeded |= type),
-                () =>
-                {
-                    var types = new List<UtensilType>();
-
-                    foreach (var type in (UtensilType[]) Enum.GetValues(typeof(UtensilType)))
-                    {
-                        if ((_utensilsNeeded & type) != 0)
-                        {
-                            types.Add(type);
-                        }
-                    }
-
-                    return types;
-                });
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            Owner.EnsureComponentWarn<SolutionContainerComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (_utensilsNeeded != UtensilType.None)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
+                eventArgs.User.PopupMessage(Loc.GetString("food-you-need-utensil", ("utensil", _utensilsNeeded)));
                 return false;
             }
 
@@ -103,14 +74,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         // Feeding someone else
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
             {
-                return;
+                return false;
             }
 
             TryUseFood(eventArgs.User, eventArgs.Target);
+            return true;
         }
 
         public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
@@ -164,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 if (!types.HasFlag(_utensilsNeeded))
                 {
-                    trueTarget.PopupMessage(user, Loc.GetString("You need to be holding a {0} to eat that!", _utensilsNeeded));
+                    trueTarget.PopupMessage(user, Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
                     return false;
                 }
             }
@@ -174,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(_transferAmount, solution.CurrentVolume);
+            var transferAmount = ReagentUnit.Min(TransferAmount, solution.CurrentVolume);
             var split = solution.SplitSolution(transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
@@ -186,16 +158,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             // TODO: Account for partial transfer.
 
-            foreach (var (reagentId, quantity) in split.Contents)
-            {
-                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                split.RemoveReagent(reagentId, reagent.ReactionEntity(trueTarget, ReactionMethod.Ingestion, quantity));
-            }
+            split.DoEntityReaction(trueTarget, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(split);
 
-            _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+            if (UseSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+            }
+
             trueTarget.PopupMessage(user, Loc.GetString("Nom"));
 
             // If utensils were used
@@ -212,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return true;
             }
 
-            if (string.IsNullOrEmpty(_trashPrototype))
+            if (string.IsNullOrEmpty(TrashPrototype))
             {
                 Owner.Delete();
                 return true;
@@ -220,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             //We're empty. Become trash.
             var position = Owner.Transform.Coordinates;
-            var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
+            var finisher = Owner.EntityManager.SpawnEntity(TrashPrototype, position);
 
             // If the user is holding the item
             if (user.TryGetComponent(out HandsComponent? handsComponent) &&

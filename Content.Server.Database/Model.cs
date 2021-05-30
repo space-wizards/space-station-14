@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ namespace Content.Server.Database
         public DbSet<Preference> Preference { get; set; } = null!;
         public DbSet<Profile> Profile { get; set; } = null!;
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
+        public DbSet<Admin> Admin { get; set; } = null!;
+        public DbSet<AdminRank> AdminRank { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +52,19 @@ namespace Content.Server.Database
             modelBuilder.Entity<AssignedUserId>()
                 .HasIndex(p => p.UserId)
                 .IsUnique();
+
+            modelBuilder.Entity<Admin>()
+                .HasOne(p => p.AdminRank)
+                .WithMany(p => p!.Admins)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<AdminFlag>()
+                .HasIndex(f => new {f.Flag, f.AdminId})
+                .IsUnique();
+
+            modelBuilder.Entity<AdminRankFlag>()
+                .HasIndex(f => new {f.Flag, f.AdminRankId})
+                .IsUnique();
         }
     }
 
@@ -64,7 +80,8 @@ namespace Content.Server.Database
         [Column("preference_id")] public int Id { get; set; }
         [Column("user_id")] public Guid UserId { get; set; }
         [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
-        public List<Profile> Profiles { get; } = new List<Profile>();
+        [Column("admin_ooc_color")] public string AdminOOCColor { get; set; } = null!;
+        public List<Profile> Profiles { get; } = new();
     }
 
     [Table("profile")]
@@ -75,14 +92,17 @@ namespace Content.Server.Database
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         [Column("age")] public int Age { get; set; }
         [Column("sex")] public string Sex { get; set; } = null!;
+        [Column("gender")] public string Gender { get; set; } = null!;
         [Column("hair_name")] public string HairName { get; set; } = null!;
         [Column("hair_color")] public string HairColor { get; set; } = null!;
         [Column("facial_hair_name")] public string FacialHairName { get; set; } = null!;
         [Column("facial_hair_color")] public string FacialHairColor { get; set; } = null!;
         [Column("eye_color")] public string EyeColor { get; set; } = null!;
         [Column("skin_color")] public string SkinColor { get; set; } = null!;
-        public List<Job> Jobs { get; } = new List<Job>();
-        public List<Antag> Antags { get; } = new List<Antag>();
+        [Column("clothing")] public string Clothing { get; set; } = null!;
+        [Column("backpack")] public string Backpack { get; set; } = null!;
+        public List<Job> Jobs { get; } = new();
+        public List<Antag> Antags { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
@@ -103,7 +123,7 @@ namespace Content.Server.Database
 
     public enum DbJobPriority
     {
-        // These enum values HAVE to match the ones in JobPriority in Shared.
+        // These enum values HAVE to match the ones in JobPriority in Content.Shared
         Never = 0,
         Low = 1,
         Medium = 2,
@@ -134,5 +154,47 @@ namespace Content.Server.Database
         [Column("user_name")] public string UserName { get; set; } = null!;
 
         [Column("user_id")] public Guid UserId { get; set; }
+    }
+
+    [Table("admin")]
+    public class Admin
+    {
+        [Column("user_id"), Key] public Guid UserId { get; set; }
+        [Column("title")] public string? Title { get; set; }
+
+        [Column("admin_rank_id")] public int? AdminRankId { get; set; }
+        public AdminRank? AdminRank { get; set; }
+        public List<AdminFlag> Flags { get; set; } = default!;
+    }
+
+    [Table("admin_flag")]
+    public class AdminFlag
+    {
+        [Column("admin_flag_id")] public int Id { get; set; }
+        [Column("flag")] public string Flag { get; set; } = default!;
+        [Column("negative")] public bool Negative { get; set; }
+
+        [Column("admin_id")] public Guid AdminId { get; set; }
+        public Admin Admin { get; set; } = default!;
+    }
+
+    [Table("admin_rank")]
+    public class AdminRank
+    {
+        [Column("admin_rank_id")] public int Id { get; set; }
+        [Column("name")] public string Name { get; set; } = default!;
+
+        public List<Admin> Admins { get; set; } = default!;
+        public List<AdminRankFlag> Flags { get; set; } = default!;
+    }
+
+    [Table("admin_rank_flag")]
+    public class AdminRankFlag
+    {
+        [Column("admin_rank_flag_id")] public int Id { get; set; }
+        [Column("flag")] public string Flag { get; set; } = default!;
+
+        [Column("admin_rank_id")] public int AdminRankId { get; set; }
+        public AdminRank Rank { get; set; } = default!;
     }
 }

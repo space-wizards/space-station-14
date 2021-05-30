@@ -1,0 +1,89 @@
+- type: entity
+  id: CrateMaterialGlass
+  name:  glass sheet crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetGlass
+        amount: 3
+
+- type: entity
+  id: CrateMaterialSteel
+  name:  steel sheet crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetSteel
+        amount: 3
+
+- type: entity
+  id: CrateMaterialPlastic
+  name:  plastic sheet crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetPlastic
+        amount: 3
+
+- type: entity
+  id: CrateMaterialWood
+  name:  wood crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: MaterialWoodPlank
+        amount: 1
+
+- type: entity
+  id: CrateMaterialFuelTank
+  name:  fueltank crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeldingFuelTank
+        amount: 1
+
+#- type: entity
+#  id: CrateMaterialHFuelTank
+#  name:  fueltank crate
+#  parent: CrateGenericonimo
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - id: WeldingFuelTank
+#        amount: 1
+
+- type: entity
+  id: CrateMaterialWaterTank
+  name:  watertank crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: WaterTankFull
+        amount: 1
+
+#- type: entity
+#  id: CrateMaterialHWaterTank
+#  name:  watertank crate
+#  parent: CrateGenericonimo
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - id: WaterTankFull
+#        amount: 1
+
+- type: entity
+  id: CrateMaterialPlasteel
+  name: plasteel crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetPlasteel
+        amount: 3

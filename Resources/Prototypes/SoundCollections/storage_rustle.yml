@@ -1,0 +1,15 @@
+- type: soundCollection
+  id: storageRustle
+  files:
+  - /Audio/Effects/rustle1.ogg
+  - /Audio/Effects/rustle2.ogg
+  - /Audio/Effects/rustle3.ogg
+  - /Audio/Effects/rustle4.ogg
+  - /Audio/Effects/rustle5.ogg
+
+- type: soundCollection
+  id: trashBagRustle
+  files:
+  - /Audio/Effects/trashbag1.ogg
+  - /Audio/Effects/trashbag2.ogg
+  - /Audio/Effects/trashbag3.ogg

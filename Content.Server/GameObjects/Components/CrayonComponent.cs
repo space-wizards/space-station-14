@@ -1,4 +1,6 @@
-﻿#nullable enable
+#nullable enable
+using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
@@ -6,44 +8,43 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse, IDropped
+    public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse, IDropped, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         //TODO: useSound
-        private string? _useSound;
+        [DataField("useSound")]
+        private string? _useSound = string.Empty;
+
         [ViewVariables]
         public Color Color { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
-        private int _capacity;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Capacity { get => _capacity; set => _capacity = value; }
+        [DataField("capacity")]
+        public int Capacity { get; set; } = 30;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", string.Empty);
-            serializer.DataField(ref _color, "color", "white");
-            serializer.DataField(ref _capacity, "capacity", 30);
             Color = Color.FromName(_color);
         }
 
@@ -86,7 +87,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new CrayonComponentState(_color, SelectedState, Charges, Capacity);
         }
@@ -94,10 +95,10 @@ namespace Content.Server.GameObjects.Components
         // Opens the selection window
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                UserInterface?.Toggle(actor.playerSession);
-                if (UserInterface?.SessionHasOpen(actor.playerSession) == true)
+                UserInterface?.Toggle(actor.PlayerSession);
+                if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
                 {
                     // Tell the user interface the selected stuff
                     UserInterface.SetState(
@@ -108,41 +109,45 @@ namespace Content.Server.GameObjects.Components
             return false;
         }
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
-                collisionMask: Shared.Physics.CollisionGroup.MobImpassable)) return;
+                collisionMask: Shared.Physics.CollisionGroup.MobImpassable))
+            {
+                return true;
+            }
 
             if (Charges <= 0)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("Not enough left."));
-                return;
+                return true;
             }
 
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
-            
+
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
-                appearance.SetData(CrayonVisuals.Color, Color);
+                appearance.SetData(CrayonVisuals.Color, _color);
                 appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 
             if (!string.IsNullOrEmpty(_useSound))
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), _useSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             // Decrease "Ammo"
             Charges--;
             Dirty();
+            return true;
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
-                UserInterface?.Close(actor.playerSession);
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                UserInterface?.Close(actor.PlayerSession);
         }
     }
 }

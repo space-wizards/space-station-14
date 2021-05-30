@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible

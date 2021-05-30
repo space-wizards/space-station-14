@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "sylph",
-      "directions": 1,
       "delays": [
         [
           0.1,

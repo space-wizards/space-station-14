@@ -1,31 +1,29 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Content.Shared.GameObjects.Verbs;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -42,26 +40,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] private string _packPrototypeId = "";
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private bool _bufferModeTransfer = true;
 
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        [ViewVariables] private readonly SolutionContainerComponent BufferSolution = new SolutionContainerComponent();
+        [ViewVariables] private readonly Solution BufferSolution = new();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
-
-        /// <summary>
-        /// Shows the serializer how to save/load this components yaml prototype.
-        /// </summary>
-        /// <param name="serializer">Yaml serializer</param>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-        }
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
@@ -77,21 +63,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerChanged;
-            }
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             //BufferSolution = Owner.BufferSolution
-            BufferSolution.Solution = new Solution();
-            BufferSolution.MaxVolume = ReagentUnit.New(1000);
+            BufferSolution.RemoveAllSolution();
 
             UpdateUserInterface();
         }
 
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
+            }
+        }
+
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateUserInterface();
         }
@@ -175,12 +166,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.ReagentList.ToList(), _bufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
+                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer, BufferSolution.TotalVolume);
             }
 
             var solution = beaker.GetComponent<SolutionContainerComponent>();
             return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), _bufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
+                beaker.Name, Owner.Name, solution.ReagentList, BufferSolution.Contents, _bufferModeTransfer, BufferSolution.TotalVolume);
         }
 
         private void UpdateUserInterface()
@@ -199,7 +190,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
@@ -212,15 +207,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = _beakerContainer.ContainedEntity;
+
+            if(beaker is null)
+                return;
+
             var beakerSolution = beaker.GetComponent<SolutionContainerComponent>();
             if (isBuffer)
             {
-                foreach (var reagent in BufferSolution.Solution.Contents)
+                foreach (var reagent in BufferSolution.Contents)
                 {
                     if (reagent.ReagentId == id)
                     {
                         ReagentUnit actualAmount;
-                        if (amount == ReagentUnit.New(-1))
+                        if (amount == ReagentUnit.New(-1)) //amount is ReagentUnit.New(-1) when the client sends a message requesting to remove all solution from the container
                         {
                             actualAmount = ReagentUnit.Min(reagent.Quantity, beakerSolution.EmptyVolume);
                         }
@@ -230,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         }
 
 
-                        BufferSolution.Solution.RemoveReagent(id, actualAmount);
+                        BufferSolution.RemoveReagent(id, actualAmount);
                         if (_bufferModeTransfer)
                         {
                             beakerSolution.TryAddReagent(id, actualAmount, out var _);
@@ -250,14 +249,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         ReagentUnit actualAmount;
                         if (amount == ReagentUnit.New(-1))
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, BufferSolution.EmptyVolume);
+                            actualAmount = reagent.Quantity;
                         }
                         else
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, amount, BufferSolution.EmptyVolume);
+                            actualAmount = ReagentUnit.Min(reagent.Quantity, amount);
                         }
                         beakerSolution.TryRemoveReagent(id, actualAmount);
-                        BufferSolution.Solution.AddReagent(id, actualAmount);
+                        BufferSolution.AddReagent(id, actualAmount);
                         break;
                     }
                 }
@@ -268,21 +267,21 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TryCreatePackage(IEntity user, UiAction action, int pillAmount, int bottleAmount)
         {
-            if (BufferSolution.CurrentVolume == 0)
+            if (BufferSolution.TotalVolume == 0)
                 return;
 
             if (action == UiAction.CreateBottles)
             {
-                var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(bottleAmount);
+                var individualVolume = BufferSolution.TotalVolume / ReagentUnit.New(bottleAmount);
                 if (individualVolume < ReagentUnit.New(1))
                     return;
 
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.Coordinates);
+                    var bottle = Owner.EntityManager.SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
 
-                    var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
+                    var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
                     bottle.TryGetComponent<SolutionContainerComponent>(out var bottleSolution);
                     bottleSolution?.TryAddSolution(bufferSolution);
@@ -307,7 +306,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else //Pills
             {
-                var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(pillAmount);
+                var individualVolume = BufferSolution.TotalVolume / ReagentUnit.New(pillAmount);
                 if (individualVolume < ReagentUnit.New(1))
                     return;
 
@@ -316,7 +315,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.Coordinates);
 
-                    var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
+                    var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
                     pill.TryGetComponent<SolutionContainerComponent>(out var pillSolution);
                     pillSolution?.TryAddSolution(bufferSolution);
@@ -349,7 +348,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent? actor))
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -363,7 +362,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
             }
         }
 
@@ -418,7 +417,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         [Verb]

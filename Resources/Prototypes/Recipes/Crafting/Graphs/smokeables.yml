@@ -1,0 +1,100 @@
+﻿- type: constructionGraph
+  id: smokeableRollie
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: rollie
+          steps:
+            - prototype: PaperRolling
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigpaper
+              name: rolling paper
+            - prototype: CigaretteFilter
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigfilter
+              name: cigarette filter
+            - prototype: GroundCannabis
+              icon:
+                sprite: Objects/Misc/reageant_fillings.rsi
+                state: powderpile
+#                color: darkgreen
+              name: ground cannabis
+              doAfter: 2
+    - node: rollie
+      entity: Rollie
+
+- type: constructionGraph
+  id: smokeableCigarette
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cigarette
+          steps:
+            - prototype: PaperRolling
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigpaper
+              name: rolling paper
+            - prototype: CigaretteFilter
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+                state: cigfilter
+              name: cigarette filter
+            - prototype: GroundTobacco
+              icon:
+                sprite: Objects/Misc/reageant_fillings.rsi
+                state: powderpile
+#                color: brown
+              name: ground tobacco
+              doAfter: 2
+    - node: cigarette
+      entity: Cigarette
+
+- type: constructionGraph
+  id: smokeableGroundCannabis
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ground
+          steps:
+            - prototype: LeavesCannabisDried
+              icon:
+                sprite: Objects/Specific/Hydroponics/cannabis.rsi
+                state: dried
+              name: dried cannabis leaves
+            - prototype: LeavesCannabisDried
+              icon:
+                sprite: Objects/Specific/Hydroponics/cannabis.rsi
+                state: dried
+              name: dried cannabis leaves
+              doAfter: 5
+    - node: ground
+      entity: GroundCannabis
+
+- type: constructionGraph
+  id: smokeableGroundTobacco
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ground
+          steps:
+          - prototype: LeavesTobaccoDried
+            icon:
+              sprite: Objects/Specific/Hydroponics/tobacco.rsi
+              state: dried
+            name: dried tobacco leaves
+          - prototype: LeavesTobaccoDried
+            icon:
+              sprite: Objects/Specific/Hydroponics/tobacco.rsi
+              state: dried
+            name: dried tobacco leaves
+            doAfter: 5
+
+    - node: ground
+      entity: GroundTobacco

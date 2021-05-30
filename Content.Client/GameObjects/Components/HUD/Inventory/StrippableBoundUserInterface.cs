@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -15,12 +13,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [UsedImplicitly]
     public class StrippableBoundUserInterface : BoundUserInterface
     {
-        public Dictionary<Slots, string> Inventory { get; private set; }
-        public Dictionary<string, string> Hands { get; private set; }
-        public Dictionary<EntityUid, string> Handcuffs { get; private set; }
+        public Dictionary<Slots, string>? Inventory { get; private set; }
+        public Dictionary<string, string>? Hands { get; private set; }
+        public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
 
         [ViewVariables]
-        private StrippingMenu _strippingMenu;
+        private StrippingMenu? _strippingMenu;
 
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -43,7 +41,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             if (!disposing)
                 return;
 
-            _strippingMenu.Dispose();
+            _strippingMenu?.Dispose();
         }
 
         private void UpdateMenu()
@@ -90,7 +88,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.UpdateState(state);
 
-            if (!(state is StrippingBoundUserInterfaceState stripState)) return;
+            if (state is not StrippingBoundUserInterfaceState stripState) return;
 
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;

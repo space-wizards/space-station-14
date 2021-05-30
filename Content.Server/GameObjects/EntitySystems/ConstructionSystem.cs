@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,22 +9,21 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timers;
-
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -34,11 +33,10 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new Dictionary<ICommonSession, HashSet<int>>();
+        private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
         public override void Initialize()
         {
@@ -82,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            foreach (var near in _entityManager.GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, true))
             {
                 yield return near;
             }
@@ -91,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
             // We need a place to hold our construction items!
-            var container = ContainerManagerComponent.Ensure<Container>(materialContainer, user, out var existed);
+            var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
 
             if (existed)
             {
@@ -113,7 +111,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 while (true)
                 {
                     var random = _robustRandom.Next();
-                    var c = ContainerManagerComponent.Ensure<Container>(random.ToString(), user!, out var existed);
+                    var c = ContainerHelpers.EnsureContainer<Container>(user!, random.ToString(), out var existed);
 
                     if (existed) continue;
 
@@ -165,20 +163,22 @@ namespace Content.Server.GameObjects.EntitySystems
                     case MaterialConstructionGraphStep materialStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!materialStep.EntityValid(entity, out var sharedStack))
+                            if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var stack = (StackComponent) sharedStack;
+                            var splitStack = new StackSplitEvent()
+                                {Amount = materialStep.Amount, SpawnPosition = user.ToCoordinates()};
+                            RaiseLocalEvent(entity.Uid, splitStack);
 
-                            if (!stack.Split(materialStep.Amount, user.ToCoordinates(), out var newStack))
+                            if (splitStack.Result == null)
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(newStack))
+                                if (!container.Insert(splitStack.Result))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(newStack))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Result))
                                     continue;
 
                             handled = true;
@@ -187,41 +187,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
                         break;
 
-                    case ComponentConstructionGraphStep componentStep:
+                    case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!componentStep.EntityValid(entity))
+                            if (!arbitraryStep.EntityValid(entity))
                                 continue;
 
-                            if (string.IsNullOrEmpty(componentStep.Store))
+                            if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!container.Insert(entity))
                                     continue;
                             }
-                            else if (!GetContainer(componentStep.Store).Insert(entity))
+                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
-
-                            handled = true;
-                            break;
-                        }
-
-                        break;
-
-                    case PrototypeConstructionGraphStep prototypeStep:
-                        foreach (var entity in EnumerateNearby(user))
-                        {
-                            if (!prototypeStep.EntityValid(entity))
-                                continue;
-
-                            if (string.IsNullOrEmpty(prototypeStep.Store))
-                            {
-                                if (!container.Insert(entity))
-                                    continue;
-                            }
-                            else if (!GetContainer(prototypeStep.Store).Insert(entity))
-                            {
-                                continue;
-                            }
 
                             handled = true;
                             break;
@@ -254,7 +232,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 BreakOnStun = true,
                 BreakOnTargetMove = false,
                 BreakOnUserMove = true,
-                NeedHand = true,
+                NeedHand = false,
             };
 
             if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
@@ -263,7 +241,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return null;
             }
 
-            var newEntity = _entityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
+            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
 
             // Yes, this should throw if it's missing the component.
             var construction = newEntity.GetComponent<ConstructionComponent>();
@@ -274,7 +252,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // We preserve the containers...
             foreach (var (name, cont) in containers)
             {
-                var newCont = ContainerManagerComponent.Ensure<Container>(name, newEntity);
+                var newCont = ContainerHelpers.EnsureContainer<Container>(newEntity, name);
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
@@ -306,8 +284,18 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
-            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
+            {
+                Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                return;
+            }
+
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
+            {
+                Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                return;
+            }
+
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
@@ -352,13 +340,32 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
-            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
-            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
+            {
+                Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
+                return;
+            }
+
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
+            {
+                Logger.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
+                return;
+            }
+
+            var user = args.SenderSession.AttachedEntity;
+
+            if (user == null)
+            {
+                Logger.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            var user = args.SenderSession.AttachedEntity;
 
             if (_beingBuilt.TryGetValue(args.SenderSession, out var set))
             {
@@ -448,7 +455,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             structure.Transform.Coordinates = ev.Location;
-            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.South;
+            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "mixer_empty",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "mixer_broken",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "mixer_loaded",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +33,6 @@
     },
     {
       "name": "mixer_screens",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -52,7 +48,6 @@
     },
     {
       "name": "mixer_screen_broken",
-      "directions": 1,
       "delays": [
         [
           1

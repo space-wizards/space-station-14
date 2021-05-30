@@ -1,0 +1,317 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/a7215663648f4289d2446a1c82aec1c9a406310c",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "backpack0"
+    },
+    {
+      "name": "backpack15"
+    },
+    {
+      "name": "backpack60"
+    },
+    {
+      "name": "backpackmob-10",
+      "directions": 4
+    },
+    {
+      "name": "backpackmob100",
+      "directions": 4
+    },
+    {
+      "name": "backpackmob50",
+      "directions": 4
+    },
+    {
+      "name": "beaker0"
+    },
+    {
+      "name": "beaker10"
+    },
+    {
+      "name": "beaker25"
+    },
+    {
+      "name": "beaker50"
+    },
+    {
+      "name": "beaker75"
+    },
+    {
+      "name": "beaker80"
+    },
+    {
+      "name": "beaker90"
+    },
+    {
+      "name": "beakergold0"
+    },
+    {
+      "name": "beakergold10"
+    },
+    {
+      "name": "beakergold25"
+    },
+    {
+      "name": "beakergold50"
+    },
+    {
+      "name": "beakergold75"
+    },
+    {
+      "name": "beakergold80"
+    },
+    {
+      "name": "beakergold90"
+    },
+    {
+      "name": "beakerlarge0"
+    },
+    {
+      "name": "beakerlarge10"
+    },
+    {
+      "name": "beakerlarge25"
+    },
+    {
+      "name": "beakerlarge50"
+    },
+    {
+      "name": "beakerlarge75"
+    },
+    {
+      "name": "beakerlarge80"
+    },
+    {
+      "name": "beakerlarge90"
+    },
+    {
+      "name": "bloodpack10"
+    },
+    {
+      "name": "bloodpack100"
+    },
+    {
+      "name": "bloodpack20"
+    },
+    {
+      "name": "bloodpack30"
+    },
+    {
+      "name": "bloodpack40"
+    },
+    {
+      "name": "bloodpack50"
+    },
+    {
+      "name": "bloodpack60"
+    },
+    {
+      "name": "bloodpack70"
+    },
+    {
+      "name": "bloodpack80"
+    },
+    {
+      "name": "bloodpack90"
+    },
+    {
+      "name": "bottle0"
+    },
+    {
+      "name": "bottle10"
+    },
+    {
+      "name": "bottle30"
+    },
+    {
+      "name": "bottle50"
+    },
+    {
+      "name": "bottle70"
+    },
+    {
+      "name": "chempack10"
+    },
+    {
+      "name": "chempack100"
+    },
+    {
+      "name": "chempack20"
+    },
+    {
+      "name": "chempack30"
+    },
+    {
+      "name": "chempack40"
+    },
+    {
+      "name": "chempack50"
+    },
+    {
+      "name": "chempack60"
+    },
+    {
+      "name": "chempack70"
+    },
+    {
+      "name": "chempack80"
+    },
+    {
+      "name": "chempack90"
+    },
+    {
+      "name": "dropper"
+    },
+    {
+      "name": "emptycondiment0"
+    },
+    {
+      "name": "emptycondiment10"
+    },
+    {
+      "name": "emptycondiment100"
+    },
+    {
+      "name": "emptycondiment25"
+    },
+    {
+      "name": "emptycondiment50"
+    },
+    {
+      "name": "emptycondiment75"
+    },
+    {
+      "name": "glassbottle0"
+    },
+    {
+      "name": "glassbottle10"
+    },
+    {
+      "name": "glassbottle20"
+    },
+    {
+      "name": "glassbottle30"
+    },
+    {
+      "name": "glassbottle40"
+    },
+    {
+      "name": "glassbottle50"
+    },
+    {
+      "name": "glassbottle60"
+    },
+    {
+      "name": "glassbottle70"
+    },
+    {
+      "name": "glassbottle80"
+    },
+    {
+      "name": "glassbottle90"
+    },
+    {
+      "name": "glassbottlesmall0"
+    },
+    {
+      "name": "glassbottlesmall10"
+    },
+    {
+      "name": "glassbottlesmall20"
+    },
+    {
+      "name": "glassbottlesmall30"
+    },
+    {
+      "name": "glassbottlesmall40"
+    },
+    {
+      "name": "glassbottlesmall50"
+    },
+    {
+      "name": "glassbottlesmall60"
+    },
+    {
+      "name": "glassbottlesmall70"
+    },
+    {
+      "name": "glassbottlesmall80"
+    },
+    {
+      "name": "glassbottlesmall90"
+    },
+    {
+      "name": "largebottle0"
+    },
+    {
+      "name": "largebottle10"
+    },
+    {
+      "name": "largebottle25"
+    },
+    {
+      "name": "largebottle50"
+    },
+    {
+      "name": "largebottle75"
+    },
+    {
+      "name": "largebottle80"
+    },
+    {
+      "name": "largebottle90"
+    },
+    {
+      "name": "maunafilling25"
+    },
+    {
+      "name": "pill"
+    },
+    {
+      "name": "powderpile"
+    },
+    {
+      "name": "smallbottle-10"
+    },
+    {
+      "name": "smallbottle10"
+    },
+    {
+      "name": "smallbottle25"
+    },
+    {
+      "name": "smallbottle50"
+    },
+    {
+      "name": "smallbottle75"
+    },
+    {
+      "name": "smallbottle80"
+    },
+    {
+      "name": "smallbottle90"
+    },
+    {
+      "name": "splashed"
+    },
+    {
+      "name": "syringe1"
+    },
+    {
+      "name": "syringe10"
+    },
+    {
+      "name": "syringe15"
+    },
+    {
+      "name": "syringe5"
+    }
+  ]
+}

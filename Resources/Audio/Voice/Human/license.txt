@@ -1,0 +1,16 @@
+﻿All below sounds taken from https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8
+femalescream_1
+femalescream_2
+femalescream_3
+femalescream_4
+femalescream_5
+malescream_1
+malescream_2
+malescream_3
+malescream_4
+malescream_5
+malescream_6
+manlaugh_1
+manlaugh_2
+wilhelm_scream
+womanlaugh

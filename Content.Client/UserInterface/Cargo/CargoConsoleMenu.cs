@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Cargo;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Prototypes.Cargo;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Cargo
 {
     public class CargoConsoleMenu : SS14Window
     {
-        protected override Vector2? CustomSize => (400, 600);
-
         public CargoConsoleBoundUserInterface Owner { get; private set; }
 
-        public event Action<BaseButton.ButtonEventArgs> OnItemSelected;
-        public event Action<BaseButton.ButtonEventArgs> OnOrderApproved;
-        public event Action<BaseButton.ButtonEventArgs> OnOrderCanceled;
+        public event Action<ButtonEventArgs>? OnItemSelected;
+        public event Action<ButtonEventArgs>? OnOrderApproved;
+        public event Action<ButtonEventArgs>? OnOrderCanceled;
 
-        private List<string> _categoryStrings = new List<string>();
+        private readonly List<string> _categoryStrings = new();
 
         private Label _accountNameLabel { get; set; }
         private Label _pointsLabel { get; set; }
@@ -38,10 +37,11 @@ namespace Content.Client.UserInterface.Cargo
         public Button CallShuttleButton { get; set; }
         public Button PermissionsButton { get; set; }
 
-        private string _category = null;
+        private string? _category = null;
 
         public CargoConsoleMenu(CargoConsoleBoundUserInterface owner)
         {
+            SetSize = MinSize = (400, 600);
             IoCManager.InjectDependencies(this);
             Owner = owner;
 
@@ -109,9 +109,10 @@ namespace Content.Client.UserInterface.Cargo
             var buttons = new HBoxContainer();
             CallShuttleButton = new Button()
             {
-                Text = Loc.GetString("Call Shuttle"),
+                //Text = Loc.GetString("Call Shuttle"),
+                Text = Loc.GetString("Activate Telepad"), //Shuttle code pending
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                HorizontalExpand = true
             };
             PermissionsButton = new Button()
             {
@@ -126,13 +127,13 @@ namespace Content.Client.UserInterface.Cargo
             _categories = new OptionButton
             {
                 Prefix = Loc.GetString("Categories: "),
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
             _searchBar = new LineEdit
             {
                 PlaceHolder = Loc.GetString("Search"),
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
             category.AddChild(_categories);
@@ -141,41 +142,41 @@ namespace Content.Client.UserInterface.Cargo
 
             var products = new ScrollContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 6
             };
             Products = new VBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand
+                HorizontalExpand = true,
+                VerticalExpand = true
             };
             products.AddChild(Products);
             rows.AddChild(products);
 
             var requestsAndOrders = new PanelContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 6,
                 PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Black }
             };
             var orderScrollBox = new ScrollContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand
+                VerticalExpand = true
             };
             var rAndOVBox = new VBoxContainer();
             var requestsLabel = new Label { Text = Loc.GetString("Requests") };
             _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added
             {
                 StyleClasses = { "transparentItemList" },
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
             var ordersLabel = new Label { Text = Loc.GetString("Orders") };
             _orders = new VBoxContainer
             {
                 StyleClasses = { "transparentItemList" },
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
             rAndOVBox.AddChild(requestsLabel);
@@ -188,7 +189,7 @@ namespace Content.Client.UserInterface.Cargo
 
             rows.AddChild(new TextureButton
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
             });
             Contents.AddChild(rows);
 
@@ -197,7 +198,7 @@ namespace Content.Client.UserInterface.Cargo
             _categories.OnItemSelected += OnCategoryItemSelected;
         }
 
-        private void OnCallShuttleButtonPressed(BaseButton.ButtonEventArgs args)
+        private void OnCallShuttleButtonPressed(ButtonEventArgs args)
         {
         }
 
@@ -227,6 +228,11 @@ namespace Content.Client.UserInterface.Cargo
         public void PopulateProducts()
         {
             Products.RemoveAllChildren();
+
+            if (Owner.Market == null)
+            {
+                return;
+            }
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
@@ -260,6 +266,11 @@ namespace Content.Client.UserInterface.Cargo
             _categoryStrings.Clear();
             _categories.Clear();
 
+            if (Owner.Market == null)
+            {
+                return;
+            }
+
             _categoryStrings.Add(Loc.GetString("All"));
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
@@ -284,13 +295,25 @@ namespace Content.Client.UserInterface.Cargo
         {
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
+
+            if (Owner.Orders == null || Owner.Market == null)
+            {
+                return;
+            }
+
             foreach (var order in Owner.Orders.Orders)
             {
-                var row = new CargoOrderRow();
-                row.Order = order;
-                row.Icon.Texture = Owner.Market.GetProduct(order.ProductId).Icon.Frame0();
-                row.ProductName.Text = $"{Owner.Market.GetProduct(order.ProductId).Name} (x{order.Amount}) by {order.Requester}";
-                row.Description.Text = $"Reasons: {order.Reason}";
+                var row = new CargoOrderRow
+                {
+                    Order = order,
+                    Icon = {Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0()},
+                    ProductName =
+                    {
+                        Text =
+                            $"{Owner.Market.GetProduct(order.ProductId)?.Name} (x{order.Amount}) by {order.Requester}"
+                    },
+                    Description = {Text = $"Reasons: {order.Reason}"}
+                };
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
                 if (order.Approved)
                 {
@@ -342,7 +365,7 @@ namespace Content.Client.UserInterface.Cargo
 
     internal class CargoProductRow : PanelContainer
     {
-        public CargoProductPrototype Product { get; set; }
+        public CargoProductPrototype? Product { get; set; }
         public TextureRect Icon { get; private set; }
         public Button MainButton { get; private set; }
         public Label ProductName { get; private set; }
@@ -350,30 +373,30 @@ namespace Content.Client.UserInterface.Cargo
 
         public CargoProductRow()
         {
-            SizeFlagsHorizontal = SizeFlags.FillExpand;
+            HorizontalExpand = true;
 
             MainButton = new Button
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand
+                HorizontalExpand = true,
+                VerticalExpand = true
             };
             AddChild(MainButton);
 
             var hBox = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                HorizontalExpand = true
             };
 
             Icon = new TextureRect
             {
-                CustomMinimumSize = new Vector2(32.0f, 32.0f),
+                MinSize = new Vector2(32.0f, 32.0f),
                 RectClipContent = true
             };
             hBox.AddChild(Icon);
 
             ProductName = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                HorizontalExpand = true
             };
             hBox.AddChild(ProductName);
 
@@ -383,7 +406,7 @@ namespace Content.Client.UserInterface.Cargo
             };
             PointCost = new Label
             {
-                CustomMinimumSize = new Vector2(40.0f, 32.0f),
+                MinSize = new Vector2(40.0f, 32.0f),
                 Align = Label.AlignMode.Right
             };
             panel.AddChild(PointCost);
@@ -395,7 +418,7 @@ namespace Content.Client.UserInterface.Cargo
 
     internal class CargoOrderRow : PanelContainer
     {
-        public CargoOrderData Order { get; set; }
+        public CargoOrderData? Order { get; set; }
         public TextureRect Icon { get; private set; }
         public Label ProductName { get; private set; }
         public Label Description { get; private set; }
@@ -404,34 +427,34 @@ namespace Content.Client.UserInterface.Cargo
 
         public CargoOrderRow()
         {
-            SizeFlagsHorizontal = SizeFlags.FillExpand;
+            HorizontalExpand = true;
 
             var hBox = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
             };
 
             Icon = new TextureRect
             {
-                CustomMinimumSize = new Vector2(32.0f, 32.0f),
+                MinSize = new Vector2(32.0f, 32.0f),
                 RectClipContent = true
             };
             hBox.AddChild(Icon);
 
             var vBox = new VBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsVertical = SizeFlags.FillExpand
+                HorizontalExpand = true,
+                VerticalExpand = true
             };
             ProductName = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 StyleClasses = { StyleNano.StyleClassLabelSubText },
                 ClipText = true
             };
             Description = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 StyleClasses = { StyleNano.StyleClassLabelSubText },
                 ClipText = true
             };

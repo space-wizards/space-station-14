@@ -18,5 +18,3 @@
     - state: welded
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
-  - type: Icon
-    sprite: Constructible/Structures/closet.rsi

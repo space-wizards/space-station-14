@@ -1,13 +1,12 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
@@ -15,7 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
     {
         public Task<DoAfterStatus> AsTask { get; }
 
-        private TaskCompletionSource<DoAfterStatus> Tcs { get;}
+        private TaskCompletionSource<DoAfterStatus> Tcs { get; }
 
         public DoAfterEventArgs EventArgs;
 
@@ -27,13 +26,13 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         public EntityCoordinates TargetGrid { get; }
 
-        private bool _tookDamage;
+        public bool TookDamage { get; set; }
 
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
         // NeedHand
-        private string? _activeHand;
-        private ItemComponent? _activeItem;
+        private readonly string? _activeHand;
+        private readonly ItemComponent? _activeItem;
 
         public DoAfter(DoAfterEventArgs eventArgs)
         {
@@ -61,11 +60,6 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
             AsTask = Tcs.Task;
-        }
-
-        public void HandleDamage(HealthChangedEventArgs args)
-        {
-            _tookDamage = true;
         }
 
         public void Run(float frameTime)
@@ -118,17 +112,19 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             // TODO :Handle inertia in space.
-            if (EventArgs.BreakOnUserMove && EventArgs.User.Transform.Coordinates != UserGrid)
+            if (EventArgs.BreakOnUserMove && !EventArgs.User.Transform.Coordinates.InRange(
+                EventArgs.User.EntityManager, UserGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && EventArgs.Target!.Transform.Coordinates != TargetGrid)
+            if (EventArgs.BreakOnTargetMove && !EventArgs.Target!.Transform.Coordinates.InRange(
+                EventArgs.User.EntityManager, TargetGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
 
-            if (EventArgs.BreakOnDamage && _tookDamage)
+            if (EventArgs.BreakOnDamage && TookDamage)
             {
                 return true;
             }

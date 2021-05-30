@@ -1,0 +1,10 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingShoesBase
+  components:
+  - type: Clothing
+    Slots:
+    - shoes
+  - type: Sprite
+    state: icon

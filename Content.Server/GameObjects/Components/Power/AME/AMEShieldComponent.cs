@@ -26,11 +26,6 @@ namespace Content.Server.GameObjects.Components.Power.AME
             Owner.TryGetComponent(out _pointLight);
         }
 
-        internal void OnUpdate(float frameTime)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetCore()
         {
             if(_isCore) { return; }

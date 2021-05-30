@@ -1,99 +1,117 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/37f849fb17014f689346f7a9a49fab5f5562cf18",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ash"
     },
-    "states": [
-        {
-            "name": "alienhide",
-            "directions": 1
-        },
-        {
-            "name": "cathide",
-            "directions": 1
-        },
-        {
-            "name": "corgihide",
-            "directions": 1
-        },
-        {
-            "name": "liggerhide",
-            "directions": 1
-        },
-        {
-            "name": "monkeyhide",
-            "directions": 1
-        },
-        {
-            "name": "banananium",
-            "directions": 1
-        },
-        {
-            "name": "diamond",
-            "directions": 1
-        },
-        {
-            "name": "uranium",
-            "directions": 1
-        },
-        {
-            "name": "wood_plank",
-            "directions": 1
-        },
-        {
-            "name": "wool",
-            "directions": 1
-        },
-        {
-            "name": "copperbar_single",
-            "directions": 1
-        },
-        {
-            "name": "goldbar_10",
-            "directions": 1
-        },
-        {
-            "name": "goldbar_20",
-            "directions": 1
-        },
-        {
-            "name": "goldbar_30",
-            "directions": 1
-        },
-        {
-            "name": "leadbar_single",
-            "directions": 1
-        },
-        {
-            "name": "steelbar_single",
-            "directions": 1
-        },
-        {
-            "name": "tinbar_single",
-            "directions": 1
-        },
-        {
-            "name": "phoron_ore",
-            "directions": 1
-        },
-        {
-            "name": "phoron_sheet",
-            "directions": 1
-        },
-        {
-            "name": "phoron_gem",
-            "directions": 1
-        },
-        {
-            "name": "spent_phoron_gem",
-            "directions": 1
-        },
-        {
-            "name": "rods",
-            "directions": 1
-        }
-    ]
+    {
+      "name": "alienhide"
+    },
+    {
+      "name": "bananium"
+    },
+    {
+      "name": "bearpelt"
+    },
+    {
+      "name": "cathide"
+    },
+    {
+      "name": "cloth"
+    },
+    {
+      "name": "cloth_2"
+    },
+    {
+      "name": "cloth_3"
+    },
+    {
+      "name": "corgihide"
+    },
+    {
+      "name": "cotton"
+    },
+    {
+      "name": "cotton_2"
+    },
+    {
+      "name": "cotton_3"
+    },
+    {
+      "name": "diamond"
+    },
+    {
+      "name": "diamond-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "diamond-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "durathread"
+    },
+    {
+      "name": "durathread_2"
+    },
+    {
+      "name": "durathread_3"
+    },
+    {
+      "name": "durathreadraw"
+    },
+    {
+      "name": "durathreadraw_2"
+    },
+    {
+      "name": "durathreadraw_3"
+    },
+    {
+      "name": "hide"
+    },
+    {
+      "name": "hide_2"
+    },
+    {
+      "name": "hide_3"
+    },
+    {
+      "name": "leather"
+    },
+    {
+      "name": "leather_2"
+    },
+    {
+      "name": "leather_3"
+    },
+    {
+      "name": "liggerhide"
+    },
+    {
+      "name": "monkeyhide"
+    },
+    {
+      "name": "phoron_gem"
+    },
+    {
+      "name": "phoron_gem_spent"
+    },
+    {
+      "name": "wood"
+    },
+    {
+      "name": "wood-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wood-inhand-right",
+      "directions": 4
+    }
+  ]
 }

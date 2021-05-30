@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.GameTicking
+﻿#nullable enable
+
+namespace Content.Shared.GameTicking
 {
     public interface IResettingEntitySystem
     {

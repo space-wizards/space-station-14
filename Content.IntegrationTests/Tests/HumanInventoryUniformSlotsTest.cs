@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -16,10 +15,51 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(HumanInventoryControllerComponent))]
     public class HumanInventoryUniformSlotsTest : ContentIntegrationTest
     {
+        private const string Prototypes = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: Inventory
+  - type: HumanInventoryController
+
+- type: entity
+  name: UniformDummy
+  id: UniformDummy
+  components:
+  - type: Clothing
+    Slots: [innerclothing]
+    size: 5
+
+- type: entity
+  name: IDCardDummy
+  id: IDCardDummy
+  components:
+  - type: Clothing
+    Slots:
+    - idcard
+    size: 5
+  - type: IdCard
+
+- type: entity
+  name: FlashlightDummy
+  id: FlashlightDummy
+  components:
+  - type: Item
+    size: 5
+
+- type: entity
+  name: ToolboxDummy
+  id: ToolboxDummy
+  components:
+  - type: Item
+    size: 9999
+";
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
+            var server = StartServerDummyTicker(options);
 
             IEntity human = null;
             IEntity uniform = null;
@@ -35,11 +75,11 @@ namespace Content.IntegrationTests.Tests
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                human = entityMan.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                uniform = entityMan.SpawnEntity("UniformJanitor", MapCoordinates.Nullspace);
-                idCard = entityMan.SpawnEntity("AssistantIDCard", MapCoordinates.Nullspace);
-                pocketItem = entityMan.SpawnEntity("FlashlightLantern", MapCoordinates.Nullspace);
-                var tooBigItem = entityMan.SpawnEntity("ToolboxEmergency", MapCoordinates.Nullspace);
+                human = entityMan.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
+                uniform = entityMan.SpawnEntity("UniformDummy", MapCoordinates.Nullspace);
+                idCard = entityMan.SpawnEntity("IDCardDummy", MapCoordinates.Nullspace);
+                pocketItem = entityMan.SpawnEntity("FlashlightDummy", MapCoordinates.Nullspace);
+                var tooBigItem = entityMan.SpawnEntity("ToolboxDummy", MapCoordinates.Nullspace);
 
                 inventory = human.GetComponent<InventoryComponent>();
 

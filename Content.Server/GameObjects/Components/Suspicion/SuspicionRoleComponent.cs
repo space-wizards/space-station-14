@@ -1,20 +1,19 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.GameMode;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Mobs.Roles.Suspicion;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Suspicion;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -24,7 +23,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
     {
         private Role? _role;
-        private readonly HashSet<SuspicionRoleComponent> _allies = new HashSet<SuspicionRoleComponent>();
+        [ViewVariables]
+        private readonly HashSet<SuspicionRoleComponent> _allies = new();
 
         [ViewVariables]
         public Role? Role
@@ -60,22 +60,18 @@ namespace Content.Server.GameObjects.Components.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                   damageable.CurrentState == DamageState.Dead;
+            return Owner.TryGetComponent(out IMobStateComponent? state) &&
+                   state.IsDead();
         }
 
         public bool IsInnocent()
         {
-            return Owner.TryGetComponent(out MindComponent? mind) &&
-                   mind.HasMind &&
-                   mind.Mind!.HasRole<SuspicionInnocentRole>();
+            return !IsTraitor();
         }
 
         public bool IsTraitor()
         {
-            return Owner.TryGetComponent(out MindComponent? mind) &&
-                   mind.HasMind &&
-                   mind.Mind!.HasRole<SuspicionTraitorRole>();
+            return Role?.Antagonist ?? false;
         }
 
         public void SyncRoles()
@@ -97,36 +93,13 @@ namespace Content.Server.GameObjects.Components.Suspicion
             }
 
             _allies.Add(ally);
-
-            if (KnowsAllies && Owner.TryGetComponent(out IActorComponent? actor))
-            {
-                var channel = actor.playerSession.ConnectedClient;
-                DebugTools.AssertNotNull(channel);
-
-                var message = new SuspicionAllyAddedMessage(ally.Owner.Uid);
-
-                SendNetworkMessage(message, channel);
-            }
         }
 
         public bool RemoveAlly(SuspicionRoleComponent ally)
         {
-            if (ally == this)
-            {
-                return false;
-            }
-
             if (_allies.Remove(ally))
             {
-                if (KnowsAllies && Owner.TryGetComponent(out IActorComponent? actor))
-                {
-                    var channel = actor.playerSession.ConnectedClient;
-                    DebugTools.AssertNotNull(channel);
-
-                    var message = new SuspicionAllyRemovedMessage(ally.Owner.Uid);
-
-                    SendNetworkMessage(message, channel);
-                }
+                Dirty();
 
                 return true;
             }
@@ -138,46 +111,16 @@ namespace Content.Server.GameObjects.Components.Suspicion
         {
             _allies.Clear();
 
-            foreach (var ally in allies)
-            {
-                if (ally == this)
-                {
-                    continue;
-                }
+            _allies.UnionWith(allies.Where(a => a != this));
 
-                _allies.Add(ally);
-            }
-
-            if (!KnowsAllies ||
-                !Owner.TryGetComponent(out IActorComponent? actor))
-            {
-                return;
-            }
-
-            var channel = actor.playerSession.ConnectedClient;
-            DebugTools.AssertNotNull(channel);
-
-            var message = new SuspicionAlliesMessage(_allies.Select(role => role.Owner.Uid));
-
-            SendNetworkMessage(message, channel);
+            Dirty();
         }
 
         public void ClearAllies()
         {
             _allies.Clear();
 
-            if (!KnowsAllies ||
-                !Owner.TryGetComponent(out IActorComponent? actor))
-            {
-                return;
-            }
-
-            var channel = actor.playerSession.ConnectedClient;
-            DebugTools.AssertNotNull(channel);
-
-            var message = new SuspicionAlliesClearedMessage();
-
-            SendNetworkMessage(message, channel);
+            Dirty();
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
@@ -198,39 +141,42 @@ namespace Content.Server.GameObjects.Components.Suspicion
             message.AddMarkup(tooltip);
         }
 
-        public override void OnRemove()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
-            Role = null;
-            base.OnRemove();
-        }
+            if (Role == null)
+            {
+                return new SuspicionRoleComponentState(null, null, Array.Empty<(string, EntityUid)>());
+            }
 
-        public override ComponentState GetComponentState()
-        {
-            return Role == null
-                ? new SuspicionRoleComponentState(null, null)
-                : new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist);
+            var allies = new List<(string name, EntityUid)>();
+
+            foreach (var role in _allies)
+            {
+                if (role.Role?.Mind.CharacterName == null)
+                {
+                    continue;
+                }
+
+                allies.Add((role.Role!.Mind.CharacterName, role.Owner.Uid));
+            }
+
+            return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
-            if (!(message is RoleMessage msg) ||
-                !(msg.Role is SuspicionRole role))
-            {
-                return;
-            }
-
             switch (message)
             {
-                case PlayerAttachedMsg _:
-                case PlayerDetachedMsg _:
+                case PlayerAttachedMsg:
+                case PlayerDetachedMsg:
                     SyncRoles();
                     break;
-                case RoleAddedMessage _:
+                case RoleAddedMessage {Role: SuspicionRole role}:
                     Role = role;
                     break;
-                case RoleRemovedMessage _:
+                case RoleRemovedMessage {Role: SuspicionRole}:
                     Role = null;
                     break;
             }

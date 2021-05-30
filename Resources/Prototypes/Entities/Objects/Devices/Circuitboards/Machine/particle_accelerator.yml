@@ -1,0 +1,74 @@
+﻿# TODO: Add descriptions (3)
+
+- type: entity
+  id: MachineParticleAcceleratorEndCapCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA End Cap
+  components:
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEndCapUnfinished
+      materialRequirements:
+        Glass: 15
+        Steel: 15
+
+- type: entity
+  id: MachineParticleAcceleratorFuelChamberCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA Fuel Chamber
+  components:
+    - type: MachineBoard
+      prototype: ParticleAcceleratorFuelChamberUnfinished
+      componentRequirements:
+        AMEFuelContainer:
+          Amount: 1
+          DefaultPrototype: AMEJar
+          ExamineName: AME Fuel Jar
+      materialRequirements:
+        Glass: 10
+        Steel: 10
+
+- type: entity
+  id: MachineParticleAcceleratorPowerBoxCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA Power Box
+  components:
+    - type: MachineBoard
+      prototype: ParticleAcceleratorPowerBoxUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5
+
+# Emitter
+
+- type: entity
+  id: MachineParticleAcceleratorEmitterLeftCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA Emitter Left
+  components:
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEmitterLeftUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5
+
+- type: entity
+  id: MachineParticleAcceleratorEmitterCenterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA Emitter Center
+  components:
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEmitterCenterUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5
+
+- type: entity
+  id: MachineParticleAcceleratorEmitterRightCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA Emitter Right
+  components:
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEmitterRightUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5

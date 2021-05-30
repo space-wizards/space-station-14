@@ -1,21 +1,22 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Body.Behavior;
-using Robust.Shared.Interfaces.Timing;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
+    [DataDefinition]
     public class LungBehavior : MechanismBehavior
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -24,43 +25,33 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         [ViewVariables] private TimeSpan _lastGaspPopupTime;
 
-        [ViewVariables] public GasMixture Air { get; set; } = default!;
+        [DataField("air")]
+        [ViewVariables]
+        public GasMixture Air { get; set; } = new()
+        {
+            Volume = 6,
+            Temperature = Atmospherics.NormalBodyTemperature
+        };
 
-        [ViewVariables] public float Temperature => Air.Temperature;
-
-        [ViewVariables] public float Volume => Air.Volume;
-
-        [ViewVariables] public TimeSpan GaspPopupCooldown { get; private set; }
+        [DataField("gaspPopupCooldown")]
+        [ViewVariables]
+        public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
 
         [ViewVariables] public LungStatus Status { get; set; }
 
-        [ViewVariables] public float CycleDelay { get; set; }
+        [DataField("cycleDelay")]
+        [ViewVariables]
+        public float CycleDelay { get; set; } = 2;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public LungBehavior()
         {
-            base.ExposeData(serializer);
+            IoCManager.InjectDependencies(this);
+        }
 
-            Air = new GasMixture {Temperature = Atmospherics.NormalBodyTemperature};
-
-            serializer.DataField(this, l => l.CycleDelay, "cycleDelay", 2);
-
-            serializer.DataReadWriteFunction(
-                "volume",
-                6,
-                vol => Air.Volume = vol,
-                () => Air.Volume);
-
-            serializer.DataReadWriteFunction(
-                "temperature",
-                Atmospherics.NormalBodyTemperature,
-                temp => Air.Temperature = temp,
-                () => Air.Temperature);
-
-            serializer.DataReadWriteFunction(
-                "gaspPopupCooldown",
-                8f,
-                delay => GaspPopupCooldown = TimeSpan.FromSeconds(delay),
-                () => GaspPopupCooldown.TotalSeconds);
+        protected override void OnAddedToBody(IBody body)
+        {
+            base.OnAddedToBody(body);
+            Inhale(CycleDelay);
         }
 
         public void Gasp()
@@ -76,21 +67,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Transfer(GasMixture from, GasMixture to, float ratio)
         {
-            var removed = from.RemoveRatio(ratio);
-            var toOld = to.Gases.ToArray();
-
-            to.Merge(removed);
-
-            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
-            {
-                var newAmount = to.GetMoles(gas);
-                var oldAmount = toOld[gas];
-                var delta = newAmount - oldAmount;
-
-                removed.AdjustMoles(gas, -delta);
-            }
-
-            from.Merge(removed);
+            to.Merge(from.RemoveRatio(ratio));
         }
 
         public void ToBloodstream(GasMixture mixture)
@@ -113,6 +90,11 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Update(float frameTime)
         {
+            if (Body != null && Body.Owner.TryGetComponent(out IMobStateComponent? mobState) && mobState.IsCritical())
+            {
+                return;
+            }
+
             if (Status == LungStatus.None)
             {
                 Status = LungStatus.Inhaling;
@@ -152,11 +134,14 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Inhale(float frameTime)
         {
-            if (Body != null && Body.Owner.TryGetComponent(out InternalsComponent? internals)
-                             && internals.BreathToolEntity != null && internals.GasTankEntity != null
-                             && internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool)
-                             && breathTool.IsFunctional && internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank)
-                             && gasTank.Air != null)
+            if (Body != null &&
+                Body.Owner.TryGetComponent(out InternalsComponent? internals) &&
+                internals.BreathToolEntity != null &&
+                internals.GasTankEntity != null &&
+                internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+                breathTool.IsFunctional &&
+                internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank) &&
+                gasTank.Air != null)
             {
                 Inhale(frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume));
                 return;
@@ -204,20 +189,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             bloodstream.PumpToxins(Air);
 
             var lungRemoved = Air.RemoveRatio(0.5f);
-            var toOld = to.Gases.ToArray();
-
             to.Merge(lungRemoved);
-
-            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
-            {
-                var newAmount = to.GetMoles(gas);
-                var oldAmount = toOld[gas];
-                var delta = newAmount - oldAmount;
-
-                lungRemoved.AdjustMoles(gas, -delta);
-            }
-
-            Air.Merge(lungRemoved);
         }
     }
 

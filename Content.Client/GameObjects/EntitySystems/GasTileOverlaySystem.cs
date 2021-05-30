@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.Atmos;
@@ -6,12 +6,10 @@ using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -23,8 +21,6 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-
-        private readonly Dictionary<float, Color> _fireCache = new Dictionary<float, Color>();
 
         // Gas overlays
         private readonly float[] _timer = new float[Atmospherics.TotalNumberOfGases];
@@ -41,8 +37,8 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly int[] _fireFrameCounter = new int[FireStates];
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
 
-        private Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
-            new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
+        private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
+            new();
 
         private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -93,7 +89,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
+            if(!overlayManager.HasOverlay<GasTileOverlay>())
                 overlayManager.AddOverlay(new GasTileOverlay());
         }
 
@@ -131,11 +127,11 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
-                overlayManager.RemoveOverlay(nameof(GasTileOverlay));
+            if(!overlayManager.HasOverlay<GasTileOverlay>())
+                overlayManager.RemoveOverlay<GasTileOverlay>();
         }
 
-        private void OnGridRemoved(GridId gridId)
+        private void OnGridRemoved(MapId mapId, GridId gridId)
         {
             if (_tileData.ContainsKey(gridId))
             {
@@ -148,30 +144,26 @@ namespace Content.Client.GameObjects.EntitySystems
             return _tileData.ContainsKey(gridId);
         }
 
-        public (Texture, Color color)[] GetOverlays(GridId gridIndex, Vector2i indices)
+        public IEnumerable<(Texture, Color)> GetOverlays(GridId gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var chunks))
-                return Array.Empty<(Texture, Color)>();
+                yield break;
 
             var chunkIndex = GetGasChunkIndices(indices);
             if (!chunks.TryGetValue(chunkIndex, out var chunk))
-                return Array.Empty<(Texture, Color)>();
+                yield break;
 
             var overlays = chunk.GetData(indices);
 
             if (overlays.Gas == null)
-                return Array.Empty<(Texture, Color)>();
+                yield break;
 
             var fire = overlays.FireState != 0;
-            var length = overlays.Gas.Length + (fire ? 1 : 0);
 
-            var list = new (Texture, Color)[length];
-
-            for (var i = 0; i < overlays.Gas.Length; i++)
+            foreach (var gasData in overlays.Gas)
             {
-                var gasData = overlays.Gas[i];
                 var frames = _frames[gasData.Index];
-                list[i] = (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
+                yield return (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
             }
 
             if (fire)
@@ -179,10 +171,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 var state = overlays.FireState - 1;
                 var frames = _fireFrames[state];
                 // TODO ATMOS Set color depending on temperature
-                list[length - 1] = (frames[_fireFrameCounter[state]], Color.White);
+                yield return (frames[_fireFrameCounter[state]], Color.White);
             }
-
-            return list;
         }
 
         public override void FrameUpdate(float frameTime)

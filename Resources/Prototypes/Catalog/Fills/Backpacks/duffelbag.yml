@@ -1,0 +1,118 @@
+- type: entity
+  parent: ClothingBackpackDuffelMedical
+  id: ClothingBackpackDuffelSurgeryFilled
+  name: surgical duffel bag
+  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  components:
+  - type: StorageFill
+    contents:
+      - id: Hemostat
+      - id: Saw
+      - id: Drill
+      - id: Cautery
+      - id: Retractor
+      - id: Scalpel
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateMedical
+  id: ClothingBackpackDuffelSyndicateFilledMedical
+  name: syndicate surgical duffel bag
+  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  components:
+  - type: StorageFill
+    contents:
+      - id: Hemostat
+      - id: Saw
+      - id: Drill
+      - id: Cautery
+      - id: Retractor
+      - id: Scalpel
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledShotgun
+  name: Bojevic bundle
+  description: "Lean and mean: Contains the popular Bojevic Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ShotgunBojevic
+      - id: MagazineShotgun
+      - id: MagazineShotgunBeanbag
+#     - id: ThermalImagingGoggles
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledSMG
+  name: C-20r bundle
+  description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SmgC20r
+      - id: MagazinePistolSmg
+        amount: 2
+#     - id: SMGSuppressor
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledLMG
+  name: L6 Saw bundle
+  description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: LMGL6
+      - id: MagazineLRifleBox
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
+  name: China-Lake bundle
+  description: "An old China-Lake grenade launcher bundled with 9 rounds of various destruction capability."
+  components:
+  - type: StorageFill
+    contents:
+      - id: LauncherChinaLake
+      - id: GrenadeBlast
+        amount: 3
+      - id: GrenadeFlash
+        amount: 3
+      - id: GrenadeFrag
+        amount: 3
+  - type: Storage
+    capacity: 200
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelSyndicateCostumeCentcom
+  name: Centcom official costume duffel bag
+  description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCaptain
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingUniformJumpsuitCentcomOfficial
+      - id: ClothingShoesBootsJack
+      - id: ClothingHandsGlovesColorGray
+      - id: ClothingHeadsetService
+      - id: ClothingOuterVestKevlar
+      - id: Paper
+      - id: Pen
+      - id: CentcomPDA
+
+- type: entity
+  parent: ClothingBackpackDuffelClown
+  id: ClothingBackpackDuffelSyndicateCostumeClown
+  name: clown costume duffel bag
+  description: "Contains a complete Clown outfit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitClown
+      - id: ClothingShoesClown
+      - id: ClothingMaskClown
+      - id: BikeHorn
+      - id: ClownPDA
+      - id: ClothingHeadsetService

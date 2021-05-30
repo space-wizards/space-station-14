@@ -2,14 +2,14 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {
     public class SwingMeleeWeaponOperator : AiOperator
     {
-        private float _burstTime;
+        private readonly float _burstTime;
         private float _elapsedTime;
 
         private readonly IEntity _owner;
@@ -22,14 +22,14 @@ namespace Content.Server.AI.Operators.Combat.Melee
             _burstTime = burstTime;
         }
 
-        public override bool TryStartup()
+        public override bool Startup()
         {
-            if (!base.TryStartup())
+            if (!base.Startup())
             {
                 return true;
             }
 
-            if (!_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (!_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -42,13 +42,17 @@ namespace Content.Server.AI.Operators.Combat.Melee
             return true;
         }
 
-        public override void Shutdown(Outcome outcome)
+        public override bool Shutdown(Outcome outcome)
         {
-            base.Shutdown(outcome);
-            if (_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (!base.Shutdown(outcome))
+                return false;
+
+            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
+
+            return true;
         }
 
         public override Outcome Execute(float frameTime)
@@ -58,16 +62,16 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand == null)
+            if (!_owner.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null)
             {
                 return Outcome.Failed;
             }
 
             var meleeWeapon = hands.GetActiveHand.Owner;
-            meleeWeapon.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent);
+            meleeWeapon.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent);
 
             if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >
-                meleeWeaponComponent.Range)
+                meleeWeaponComponent?.Range)
             {
                 return Outcome.Failed;
             }

@@ -1,9 +1,7 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
@@ -22,10 +20,10 @@ namespace Content.Client
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         [ViewVariables]
-        private readonly Dictionary<Texture, ClickMap> _textureMaps = new Dictionary<Texture, ClickMap>();
+        private readonly Dictionary<Texture, ClickMap> _textureMaps = new();
 
         [ViewVariables] private readonly Dictionary<RSI, RsiClickMapData> _rsiMaps =
-            new Dictionary<RSI, RsiClickMapData>();
+            new();
 
         public void PostInject()
         {

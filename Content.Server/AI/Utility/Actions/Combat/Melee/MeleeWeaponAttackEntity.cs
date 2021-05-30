@@ -14,51 +14,45 @@ using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class MeleeWeaponAttackEntity : UtilityAction
     {
-        private IEntity _entity;
-
-        public MeleeWeaponAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
-        {
-            _entity = entity;
-            Bonus = weight;
-        }
+        public IEntity Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {
             MoveToEntityOperator moveOperator;
             var equipped = context.GetState<EquippedEntityState>().GetValue();
-            if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent))
+            if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
             {
-                moveOperator = new MoveToEntityOperator(Owner, _entity, meleeWeaponComponent.Range - 0.01f);
+                moveOperator = new MoveToEntityOperator(Owner, Target, meleeWeaponComponent.Range - 0.01f);
             }
             else
             {
                 // TODO: Abort
-                moveOperator = new MoveToEntityOperator(Owner, _entity);
+                moveOperator = new MoveToEntityOperator(Owner, Target);
             }
 
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 moveOperator,
-                new SwingMeleeWeaponOperator(Owner, _entity),
+                new SwingMeleeWeaponOperator(Owner, Target),
             });
         }
 
         protected override void UpdateBlackboard(Blackboard context)
         {
             base.UpdateBlackboard(context);
-            context.GetState<TargetEntityState>().SetValue(_entity);
-            context.GetState<MoveTargetState>().SetValue(_entity);
+            context.GetState<TargetEntityState>().SetValue(Target);
+            context.GetState<MoveTargetState>().SetValue(Target);
             var equipped = context.GetState<EquippedEntityState>().GetValue();
             context.GetState<WeaponEntityState>().SetValue(equipped);
         }
-        
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();

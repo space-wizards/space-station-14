@@ -1,10 +1,7 @@
-﻿using Content.Client.Interfaces.Parallax;
+using System;
+using Content.Client.Interfaces.Parallax;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -18,15 +15,14 @@ namespace Content.Client.Parallax
         [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override bool AlwaysDirty => true;
         private const float Slowness = 0.5f;
 
-        private Texture _parallaxTexture;
+        private Texture? _parallaxTexture;
 
-        public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
+        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
         private readonly ShaderInstance _shader;
 
-        public ParallaxOverlay() : base(nameof(ParallaxOverlay))
+        public ParallaxOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
@@ -41,26 +37,36 @@ namespace Content.Client.Parallax
             }
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
-            if (_parallaxTexture == null)
+            if (_parallaxTexture == null || args.Viewport.Eye == null)
             {
                 return;
             }
 
-            handle.UseShader(_shader);
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.WorldHandle;
+            screenHandle.UseShader(_shader);
 
-            var (sizeX, sizeY) = _parallaxTexture.Size;
-            var (posX, posY) = _eyeManager.ScreenToMap(Vector2.Zero).Position;
-            var (ox, oy) = (Vector2i) new Vector2(-posX / Slowness, posY / Slowness);
-            ox = MathHelper.Mod(ox, sizeX);
-            oy = MathHelper.Mod(oy, sizeY);
+            var (sizeX, sizeY) = _parallaxTexture.Size / (float) EyeManager.PixelsPerMeter;
+            var (posX, posY) = args.Viewport.Eye.Position;
+            var o = new Vector2(posX * Slowness, posY * Slowness);
 
-            var (screenSizeX, screenSizeY) = _displayManager.ScreenSize;
-            for (var x = -sizeX; x < screenSizeX; x += sizeX) {
-                for (var y = -sizeY; y < screenSizeY; y += sizeY) {
-                    screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox + x, oy + y));
+            // Remove offset so we can floor.
+            var (l, b) = args.WorldBounds.BottomLeft - o;
+
+            // Floor to background size.
+            l = sizeX * MathF.Floor(l / sizeX);
+            b = sizeY * MathF.Floor(b / sizeY);
+
+            // Re-offset.
+            l += o.X;
+            b += o.Y;
+
+            for (var x = l; x < args.WorldBounds.Right; x += sizeX)
+            {
+                for (var y = b; y < args.WorldBounds.Top; y += sizeY)
+                {
+                    screenHandle.DrawTexture(_parallaxTexture, (x, y));
                 }
             }
         }

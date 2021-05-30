@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
@@ -29,19 +30,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     public class PowerNetNodeGroup : BaseNetConnectorNodeGroup<BasePowerNetComponent, IPowerNet>, IPowerNet
     {
+        private static readonly Priority[] CachedPriorities = (Priority[]) Enum.GetValues(typeof(Priority));
+
         [Dependency] private readonly IPowerNetManager _powerNetManager = default!;
 
         [ViewVariables]
-        private readonly List<PowerSupplierComponent> _suppliers = new List<PowerSupplierComponent>();
+        private readonly List<PowerSupplierComponent> _suppliers = new();
 
         [ViewVariables]
         private int _totalSupply = 0;
 
         [ViewVariables]
-        private readonly Dictionary<Priority, List<PowerConsumerComponent>> _consumersByPriority = new Dictionary<Priority, List<PowerConsumerComponent>>();
+        private readonly Dictionary<Priority, List<PowerConsumerComponent>> _consumersByPriority = new();
 
         [ViewVariables]
-        private readonly Dictionary<Priority, int> _drawByPriority = new Dictionary<Priority, int>();
+        private readonly Dictionary<Priority, int> _drawByPriority = new();
 
         public static readonly IPowerNet NullNet = new NullPowerNet();
 
@@ -121,7 +124,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void UpdateConsumerReceivedPower()
         {
             var remainingSupply = _totalSupply;
-            foreach (Priority priority in Enum.GetValues(typeof(Priority)))
+            foreach (var priority in CachedPriorities)
             {
                 var categoryPowerDemand = _drawByPriority[priority];
                 if (remainingSupply >= categoryPowerDemand) //can fully power all in category

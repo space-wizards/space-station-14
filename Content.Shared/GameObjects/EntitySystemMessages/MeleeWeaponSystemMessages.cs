@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
@@ -9,7 +10,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class MeleeWeaponSystemMessages
     {
         [Serializable, NetSerializable]
-        public sealed class PlayMeleeWeaponAnimationMessage : EntitySystemMessage
+        public sealed class PlayMeleeWeaponAnimationMessage : EntityEventArgs
         {
             public PlayMeleeWeaponAnimationMessage(string arcPrototype, Angle angle, EntityUid attacker, EntityUid source, List<EntityUid> hits, bool textureEffect = false, bool arcFollowAttacker = true)
             {
@@ -29,6 +30,19 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
             public List<EntityUid> Hits { get; }
             public bool TextureEffect { get; }
             public bool ArcFollowAttacker { get; }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class PlayLungeAnimationMessage : EntityEventArgs
+        {
+            public Angle Angle { get; }
+            public EntityUid Source { get; }
+
+            public PlayLungeAnimationMessage(Angle angle, EntityUid source)
+            {
+                Angle = angle;
+                Source = source;
+            }
         }
     }
 }

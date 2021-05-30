@@ -1,7 +1,9 @@
 using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -10,21 +12,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Upon colliding with an object this will flash in an area around it
     /// </summary>
     [RegisterComponent]
-    public class FlashProjectileComponent : Component, ICollideBehavior
+    public class FlashProjectileComponent : Component, IStartCollide
     {
         public override string Name => "FlashProjectile";
 
-        private float _range;
-        private float _duration;
+        [DataField("range")]
+        private float _range = 1.0f;
+        [DataField("duration")]
+        private float _duration = 8.0f;
 
         private bool _flashed;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _range, "range", 1.0f);
-            serializer.DataField(ref _duration, "duration", 8.0f);
-        }
 
         public override void Initialize()
         {
@@ -33,20 +30,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
             Owner.EnsureComponent<ProjectileComponent>();
         }
 
-        void ICollideBehavior.CollideWith(IEntity entity)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (_flashed)
-            {
-                return;
-            }
+            if (_flashed) return;
+
             FlashableComponent.FlashAreaHelper(Owner, _range, _duration);
             _flashed = true;
-        }
-
-        // Projectile should handle the deleting
-        void ICollideBehavior.PostCollide(int collisionCount)
-        {
-            return;
         }
     }
 }

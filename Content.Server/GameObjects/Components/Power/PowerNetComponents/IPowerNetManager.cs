@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -19,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
     public class PowerNetManager : IPowerNetManager
     {
-        private readonly HashSet<IPowerNet> _dirtyPowerNets = new HashSet<IPowerNet>();
+        private readonly HashSet<IPowerNet> _dirtyPowerNets = new();
 
         public void AddDirtyPowerNet(IPowerNet powerNet)
         {

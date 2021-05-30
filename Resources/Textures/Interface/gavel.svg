@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="27"
+   height="32"
+   viewBox="0 0 27 32"
+   fill="none"
+   version="1.1"
+   id="svg900"
+   sodipodi:docname="gavel.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:export-filename="C:\ss14\space-station-14\Resources\Textures\Interface\gavel.svg.96dpi.png"
+   inkscape:export-xdpi="96.093094"
+   inkscape:export-ydpi="96.093094">
+  <metadata
+     id="metadata906">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs904" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     id="namedview902"
+     showgrid="false"
+     inkscape:zoom="31.5"
+     inkscape:cx="13.5"
+     inkscape:cy="16"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg900"
+     inkscape:pagecheckerboard="true" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M18.0775 25.4082H3.14365C1.90509 25.4082 0.900024 26.4509 0.900024 27.7361V31.969H20.3211V27.7361C20.3211 26.4509 19.3161 25.4082 18.0775 25.4082Z"
+     fill="#7B7E9E"
+     id="path896"
+     style="fill:#ffffff;fill-opacity:1" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M25.8157 24.3901L12.5807 10.2906L14.8167 7.89409C15.2508 8.2913 15.9185 8.27188 16.3293 7.84565C16.7588 7.39521 16.7588 6.67344 16.3293 6.22299L10.6524 0.337833C10.2229 -0.112611 9.52259 -0.112611 9.09312 0.337833C8.65898 0.783484 8.65898 1.51005 9.09312 1.95563L9.04644 1.9072L1.8382 9.38109L1.88488 9.43432C1.45536 8.98387 0.755078 8.98387 0.325611 9.43432C-0.108537 9.87997 -0.108537 10.6065 0.325611 11.0522L5.99786 16.9421C6.43201 17.3878 7.13229 17.3878 7.56181 16.9421C7.99134 16.4917 7.99134 15.77 7.56181 15.3196L7.6085 15.3679L9.93835 13.0179L23.5734 27.0839C24.1102 27.641 25.2788 27.3369 25.8157 26.7799C26.3526 26.2228 26.3526 24.9471 25.8157 24.3901Z"
+     fill="#7B7E9E"
+     id="path898"
+     style="fill:#ffffff;fill-opacity:1" />
+</svg>

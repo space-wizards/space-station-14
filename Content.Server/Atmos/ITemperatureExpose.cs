@@ -1,7 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-
-namespace Content.Server.Atmos
+﻿namespace Content.Server.Atmos
 {
     public interface ITemperatureExpose
     {

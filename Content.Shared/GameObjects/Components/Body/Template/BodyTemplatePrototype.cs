@@ -1,63 +1,67 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components.Body.Template
 {
     /// <summary>
-    ///     Prototype for the BodyTemplate class.
+    ///     Defines the layout of a <see cref="IBody"/>.
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
-    public class BodyTemplatePrototype : IPrototype, IIndexedPrototype
+    public class BodyTemplatePrototype : IPrototype, ISerializationHooks
     {
-        private string _id;
-        private string _name;
-        private string _centerSlot;
-        private Dictionary<string, BodyPartType> _slots;
-        private Dictionary<string, List<string>> _connections;
-        private Dictionary<string, string> _layers;
-        private Dictionary<string, string> _mechanismLayers;
+        [DataField("slots")]
+        private Dictionary<string, BodyPartType> _slots = new();
 
-        [ViewVariables] public string ID => _id;
+        [DataField("connections")]
+        private Dictionary<string, List<string>> _rawConnections = new();
 
-        [ViewVariables] public string Name => _name;
+        [DataField("layers")]
+        private Dictionary<string, string> _layers = new();
 
-        [ViewVariables] public string CenterSlot => _centerSlot;
-
-        [ViewVariables] public Dictionary<string, BodyPartType> Slots => new Dictionary<string, BodyPartType>(_slots);
+        [DataField("mechanismLayers")]
+        private Dictionary<string, string> _mechanismLayers = new();
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections =>
-            _connections.ToDictionary(x => x.Key, x => x.Value.ToList());
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        [ViewVariables] public Dictionary<string, string> Layers => new Dictionary<string, string>(_layers);
+        [ViewVariables]
+        [DataField("name")]
+        public string Name { get; } = string.Empty;
 
-        [ViewVariables] public Dictionary<string, string> MechanismLayers => new Dictionary<string, string>(_mechanismLayers);
+        [ViewVariables]
+        [DataField("centerSlot")]
+        public string CenterSlot { get; } = string.Empty;
 
-        public virtual void LoadFrom(YamlMappingNode mapping)
+        [ViewVariables]
+        public Dictionary<string, BodyPartType> Slots => new(_slots);
+
+        [ViewVariables]
+        public Dictionary<string, HashSet<string>> Connections { get; set; } = new();
+
+        [ViewVariables]
+        public Dictionary<string, string> Layers => new(_layers);
+
+        [ViewVariables]
+        public Dictionary<string, string> MechanismLayers => new(_mechanismLayers);
+
+        void ISerializationHooks.AfterDeserialization()
         {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _centerSlot, "centerSlot", string.Empty);
-            serializer.DataField(ref _slots, "slots", new Dictionary<string, BodyPartType>());
-            serializer.DataField(ref _connections, "connections", new Dictionary<string, List<string>>());
-            serializer.DataField(ref _layers, "layers", new Dictionary<string, string>());
-            serializer.DataField(ref _mechanismLayers, "mechanismLayers", new Dictionary<string, string>());
-
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, List<string>>();
+            var cleanedConnections = new Dictionary<string, HashSet<string>>();
+
             foreach (var targetSlotName in _slots.Keys)
             {
-                var tempConnections = new List<string>();
-                foreach (var (slotName, slotConnections) in _connections)
+                var tempConnections = new HashSet<string>();
+                foreach (var (slotName, slotConnections) in _rawConnections)
                 {
                     if (slotName == targetSlotName)
                     {
@@ -81,7 +85,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
                 }
             }
 
-            _connections = cleanedConnections;
+            Connections = cleanedConnections;
         }
     }
 }

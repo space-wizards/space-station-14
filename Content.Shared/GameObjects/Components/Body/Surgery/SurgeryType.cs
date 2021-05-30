@@ -1,11 +1,13 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
     /// <summary>
-    ///     Defines a surgery operation that can be performed.
+    ///     Types of surgery operations that can be performed.
     /// </summary>
+    // TODO BODY Move this to YAML?
     [Serializable, NetSerializable]
     public enum SurgeryType
     {

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.AI;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
@@ -18,7 +17,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private AiDebugMode _tooltips = AiDebugMode.None;
-        private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity,PanelContainer>();
+        private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new();
 
         public override void Update(float frameTime)
         {
@@ -178,7 +177,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
                 var panel = new PanelContainer
                 {
-                    StyleClasses = {"tooltipBox"},
+                    StyleClasses = { StyleNano.StyleClassTooltipPanel },
                     Children = {vBox},
                     MouseFilter = Control.MouseFilterMode.Ignore,
                     ModulateSelfOverride = Color.White.WithAlpha(0.75f),

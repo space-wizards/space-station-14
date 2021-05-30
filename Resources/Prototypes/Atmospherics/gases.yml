@@ -24,12 +24,12 @@
 
 - type: gas
   id: 3
-  name: Phoron
+  name: Plasma
   specificHeat: 200
   heatCapacityRatio: 1.7
-  molarMass: 120 #creadth: making it very heavy (x4 of oxygen), idk what the proper value should be
+  molarMass: 120
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: phoron
+  gasOverlayState: plasma
   color: FF3300
 
 - type: gas

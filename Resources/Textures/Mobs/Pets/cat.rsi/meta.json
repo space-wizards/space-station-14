@@ -27,7 +27,6 @@
     },
     {
       "name": "cak_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -36,7 +35,6 @@
     },
     {
       "name": "cak_rest",
-      "directions": 1,
       "delays": [
         [
           1
@@ -45,7 +43,6 @@
     },
     {
       "name": "cak_sit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -90,7 +87,6 @@
     },
     {
       "name": "cat2_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -99,7 +95,6 @@
     },
     {
       "name": "cat2_rest",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -111,7 +106,6 @@
     },
     {
       "name": "cat2_sit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -120,7 +114,6 @@
     },
     {
       "name": "cat_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -129,7 +122,6 @@
     },
     {
       "name": "cat_deadcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -138,7 +130,6 @@
     },
     {
       "name": "cat_deadtag",
-      "directions": 1,
       "delays": [
         [
           1
@@ -147,7 +138,6 @@
     },
     {
       "name": "cat_rest",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -159,7 +149,6 @@
     },
     {
       "name": "cat_restcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -168,7 +157,6 @@
     },
     {
       "name": "cat_resttag",
-      "directions": 1,
       "delays": [
         [
           1
@@ -177,7 +165,6 @@
     },
     {
       "name": "cat_sit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -240,7 +227,6 @@
     },
     {
       "name": "kitten_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -249,7 +235,6 @@
     },
     {
       "name": "kitten_deadcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -258,7 +243,6 @@
     },
     {
       "name": "kitten_deadtag",
-      "directions": 1,
       "delays": [
         [
           1
@@ -267,7 +251,6 @@
     },
     {
       "name": "kitten_rest",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -279,7 +262,6 @@
     },
     {
       "name": "kitten_restcollar",
-      "directions": 1,
       "delays": [
         [
           1
@@ -288,7 +270,6 @@
     },
     {
       "name": "kitten_resttag",
-      "directions": 1,
       "delays": [
         [
           1
@@ -297,7 +278,6 @@
     },
     {
       "name": "kitten_sit",
-      "directions": 1,
       "delays": [
         [
           1
@@ -360,7 +340,6 @@
     },
     {
       "name": "spacecat_dead",
-      "directions": 1,
       "delays": [
         [
           1
@@ -369,7 +348,6 @@
     },
     {
       "name": "spacecat_rest",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -381,7 +359,6 @@
     },
     {
       "name": "spacecat_sit",
-      "directions": 1,
       "delays": [
         [
           1

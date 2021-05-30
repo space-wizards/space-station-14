@@ -1,18 +1,20 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -31,18 +33,21 @@ namespace Content.Server.GameObjects.Components.Power
         /// What size of cell fits into this component.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("slotSize")]
         public PowerCellSize SlotSize { get; set; } = PowerCellSize.Small;
 
         /// <summary>
         /// Can the cell be removed ?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canRemoveCell")]
         public bool CanRemoveCell { get; set; } = true;
 
         /// <summary>
         /// Should the "Remove cell" verb be displayed on this component?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("showVerb")]
         public bool ShowVerb { get; set; } = true;
 
         /// <summary>
@@ -51,21 +56,24 @@ namespace Content.Server.GameObjects.Components.Power
         /// Use null to show no text.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? DescFormatString { get; set; }
+        [DataField("descFormatString")]
+        public string? DescFormatString { get; set; } = "It uses size {0} power cells.";
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? CellRemoveSound { get; set; }
+        [DataField("cellRemoveSound")]
+        public string? CellRemoveSound { get; set; } = "/Audio/Items/pistol_magin.ogg";
 
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? CellInsertSound { get; set; }
+        [DataField("cellInsertSound")]
+        public string? CellInsertSound { get; set; } = "/Audio/Items/pistol_magout.ogg";
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -84,30 +92,19 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// True if we don't want a cell inserted during map init.
         /// </summary>
+        [DataField("startEmpty")]
         private bool _startEmpty = false;
 
         /// <summary>
         /// If not null, this cell type will be inserted at MapInit instead of the default Standard cell.
         /// </summary>
+        [DataField("startingCellType")]
         private string? _startingCellType = null;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.SlotSize, "slotSize", PowerCellSize.Small);
-            serializer.DataField(this, x => x.CanRemoveCell, "canRemoveCell", true);
-            serializer.DataField(this, x => x.ShowVerb, "showVerb", true);
-            serializer.DataField(ref _startEmpty, "startEmpty", false);
-            serializer.DataField(ref _startingCellType, "startingCellType", null);
-            serializer.DataField(this, x => x.CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
-            serializer.DataField(this, x => x.CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
-            serializer.DataField(this, x => x.DescFormatString, "descFormatString", "It uses size {0} power cells.");
-        }
 
         public override void Initialize()
         {
             base.Initialize();
-            _cellContainer = ContainerManagerComponent.Ensure<ContainerSlot>("cellslot_cell_container", Owner, out _);
+            _cellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "cellslot_cell_container", out _);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
@@ -151,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (playSound && CellRemoveSound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
             SendMessage(new PowerCellChangedMessage(true));
             return cell;
@@ -173,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Power
             //Dirty();
             if (playSound && CellInsertSound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
             SendMessage(new PowerCellChangedMessage(false));
             return true;
@@ -192,11 +189,13 @@ namespace Content.Server.GameObjects.Components.Power
 
                 if (component.Cell == null)
                 {
-                    data.Text = Loc.GetString("Eject cell (cell missing)");
+                    data.Text = Loc.GetString("No cell");
+                    data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
+                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
 
                 if (component.Cell == null || !component.CanRemoveCell)

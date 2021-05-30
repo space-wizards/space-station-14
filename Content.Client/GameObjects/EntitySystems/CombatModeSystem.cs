@@ -8,9 +8,9 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -19,19 +19,12 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _gameHud.OnCombatModeChanged = OnCombatModeChanged;
             _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.ToggleCombatMode,
-                    InputCmdHandler.FromDelegate(CombatModeToggled))
-                .Register<CombatModeSystem>();
         }
 
         public override void Shutdown()
@@ -40,19 +33,10 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        private void CombatModeToggled(ICommonSession session)
-        {
-            if (_gameTiming.IsFirstTimePredicted)
-            {
-                EntityManager.RaisePredictiveEvent(
-                    new CombatModeSystemMessages.SetCombatModeActiveMessage(!IsInCombatMode()));
-            }
-        }
-
         public bool IsInCombatMode()
         {
-            var entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out CombatModeComponent combatMode))
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+            if (entity == null || !entity.TryGetComponent(out CombatModeComponent? combatMode))
             {
                 return false;
             }
@@ -63,11 +47,6 @@ namespace Content.Client.GameObjects.EntitySystems
         private void OnTargetingZoneChanged(TargetingZone obj)
         {
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
-        }
-
-        private void OnCombatModeChanged(bool obj)
-        {
-            EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetCombatModeActiveMessage(obj));
         }
     }
 }

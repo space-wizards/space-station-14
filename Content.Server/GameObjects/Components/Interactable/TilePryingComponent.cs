@@ -3,11 +3,12 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using System.Threading.Tasks;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -18,17 +19,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "TilePrying";
+        [DataField("toolComponentNeeded")]
         private bool _toolComponentNeeded = true;
 
-        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryPryTile(eventArgs.User, eventArgs.ClickLocation);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _toolComponentNeeded, "toolComponentNeeded", true);
+            return true;
         }
 
         public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)

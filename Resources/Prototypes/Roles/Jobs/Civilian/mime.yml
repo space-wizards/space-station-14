@@ -3,7 +3,7 @@
   name: "mime"
   positions: 1
   startingGear: MimeGear
-  department:
+  departments:
   - Civilian
   icon: "Mime"
   access:
@@ -13,14 +13,17 @@
 - type: startingGear
   id: MimeGear
   equipment:
-    innerclothing: UniformMime
-    backpack: BackpackClothing
-    head: HatBeret
-    belt: SuspendersClothing
-    gloves: GlovesWhite
-    shoes: ShoesMime
-    pocket1: Pen
+    innerclothing: ClothingUniformJumpsuitMime
+    backpack: ClothingBackpackMimeFilled
+    head: ClothingHeadHatBeret
+    belt: ClothingBeltSuspenders
+    gloves: ClothingHandsGlovesLatex
+    shoes: ClothingShoesColorWhite
+    pocket1: CrayonMime
     pocket2: Paper
-    mask: MaskMime
+    mask: ClothingMaskMime
     idcard: MimePDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtMime
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelMimeFilled

@@ -1,5 +1,7 @@
-﻿using Content.Server.Mobs;
+#nullable enable
+using Content.Server.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -8,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public override string Name => "VisitingMind";
 
-        public Mind Mind { get; set; }
+        [ViewVariables] public Mind Mind { get; set; } = default!;
 
         public override void OnRemove()
         {
@@ -16,5 +18,9 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             Mind?.UnVisit();
         }
+    }
+
+    public class MindUnvisitedMessage : EntityEventArgs
+    {
     }
 }

@@ -1,15 +1,28 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
-    public interface IMechanismBehavior : IExposeData
+    /// <summary>
+    ///     Gives functionality to a <see cref="IMechanism"/> when added to it.
+    /// </summary>
+    [ImplicitDataDefinitionForInheritors]
+    public interface IMechanismBehavior
     {
+        /// <summary>
+        ///     The body that owns the <see cref="IBodyPart"/> in which the
+        ///     <see cref="IMechanism"/> that owns this
+        ///     <see cref="IMechanismBehavior"/> is in.
+        /// </summary>
         IBody? Body { get; }
 
+        /// <summary>
+        ///     The part in which the <see cref="IMechanism"/> that owns this
+        ///     <see cref="IMechanismBehavior"/> is in.
+        /// </summary>
         IBodyPart? Part { get; }
 
         /// <summary>
@@ -21,14 +34,34 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         /// <summary>
         ///     The entity that owns <see cref="Parent"/>.
         ///     For the entity owning the body that this mechanism may be in,
-        ///     see <see cref="IBody.Owner"/>
+        ///     see <see cref="Body"/>'s <see cref="IBody.Owner"/>.
         /// </summary>
         IEntity Owner { get; }
 
+        /// <summary>
+        ///     Called when this <see cref="IMechanismBehavior"/> is added to a
+        ///     <see cref="IMechanism"/>, during <see cref="IComponent.Initialize"/>.
+        ///     If it is added after component initialization,
+        ///     it is called immediately.
+        /// </summary>
+        /// <param name="parent">
+        ///     The mechanism that owns this <see cref="IMechanismBehavior"/>.
+        /// </param>
         void Initialize(IMechanism parent);
 
+        /// <summary>
+        ///     Called when this <see cref="IMechanismBehavior"/> is added to a
+        ///     <see cref="IMechanism"/>, during <see cref="IComponent.Startup"/>.
+        ///     If it is added after component startup, it is called immediately.
+        /// </summary>
         void Startup();
 
+        /// <summary>
+        ///     Runs an update cycle on this <see cref="IMechanismBehavior"/>.
+        /// </summary>
+        /// <param name="frameTime">
+        ///     The amount of seconds that passed since the last update.
+        /// </param>
         void Update(float frameTime);
 
         /// <summary>

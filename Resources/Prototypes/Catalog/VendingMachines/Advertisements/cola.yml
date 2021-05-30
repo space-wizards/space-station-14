@@ -1,0 +1,10 @@
+﻿- type: advertisementsPack
+  id: RobustSoftdrinksAds
+  advertisements:
+  - advertisement-cola-1
+  - advertisement-cola-2
+  - advertisement-cola-3
+  - advertisement-cola-4
+  - advertisement-cola-5
+  - advertisement-cola-6
+  - advertisement-cola-7

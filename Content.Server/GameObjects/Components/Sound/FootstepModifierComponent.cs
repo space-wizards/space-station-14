@@ -1,13 +1,12 @@
-﻿using Content.Shared.Audio;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Sound
 {
@@ -23,13 +22,8 @@ namespace Content.Server.GameObjects.Components.Sound
         /// <inheritdoc />
         public override string Name => "FootstepModifier";
 
-        public string _soundCollectionName;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _soundCollectionName, "footstepSoundCollection", "");
-        }
+        [DataField("footstepSoundCollection")]
+        public string? _soundCollectionName;
 
         public void PlayFootstep()
         {
@@ -37,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Sound
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
                 var file = _footstepRandom.Pick(soundCollection.PickFiles);
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(Owner), file, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2f));
             }
         }
     }

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -5,27 +6,26 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Singularity;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Physics;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 #nullable enable
 
@@ -35,17 +35,15 @@ namespace Content.Server.GameObjects.Components.Singularity
     [ComponentReference(typeof(IActivate))]
     public class EmitterComponent : Component, IActivate, IInteractUsing
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        [ComponentDependency] private AppearanceComponent? _appearance;
-        [ComponentDependency] private AccessReader? _accessReader;
+        [ComponentDependency] private readonly AppearanceComponent? _appearance = default;
+        [ComponentDependency] private readonly AccessReader? _accessReader = default;
 
         public override string Name => "Emitter";
 
         private CancellationTokenSource? _timerCancel;
 
-        private PhysicsComponent _collidableComponent = default!;
         private PowerConsumerComponent _powerConsumer = default!;
 
         // whether the power switch is in "on"
@@ -54,46 +52,27 @@ namespace Content.Server.GameObjects.Components.Singularity
         [ViewVariables] private bool _isPowered;
         [ViewVariables] private bool _isLocked;
 
+        // For the "emitter fired" sound
+        private const float Variation = 0.25f;
+        private const float Volume = 0.5f;
+        private const float Distance = 3f;
+
         [ViewVariables(VVAccess.ReadWrite)] private int _fireShotCounter;
 
-        [ViewVariables(VVAccess.ReadWrite)] private string _fireSound = default!;
-        [ViewVariables(VVAccess.ReadWrite)] private string _boltType = default!;
-        [ViewVariables(VVAccess.ReadWrite)] private int _powerUseActive;
-        [ViewVariables(VVAccess.ReadWrite)] private int _fireBurstSize;
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _fireInterval;
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _fireBurstDelayMin;
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _fireBurstDelayMax;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fireBurstDelayMin, "fireBurstDelayMin", TimeSpan.FromSeconds(2));
-            serializer.DataField(ref _fireBurstDelayMax, "fireBurstDelayMax", TimeSpan.FromSeconds(10));
-            serializer.DataField(ref _fireInterval, "fireInterval", TimeSpan.FromSeconds(2));
-            serializer.DataField(ref _fireBurstSize, "fireBurstSize", 3);
-            serializer.DataField(ref _powerUseActive, "powerUseActive", 500);
-            serializer.DataField(ref _boltType, "boltType", "EmitterBolt");
-            serializer.DataField(ref _fireSound, "fireSound", "/Audio/Weapons/emitter.ogg");
-        }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireSound")] private string _fireSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("boltType")] private string _boltType = "EmitterBolt";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerUseActive")] private int _powerUseActive = 500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstSize")] private int _fireBurstSize = 3;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireInterval")] private TimeSpan _fireInterval = TimeSpan.FromSeconds(2);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent(out _collidableComponent!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no CollidableComponent");
-                return;
-            }
+            Owner.EnsureComponent<PowerConsumerComponent>(out _powerConsumer);
 
-            if (!Owner.TryGetComponent(out _powerConsumer!))
-            {
-                Logger.Error($"EmitterComponent {Owner} created with no PowerConsumerComponent");
-                return;
-            }
-
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
@@ -114,29 +93,30 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private void OnAnchoredChanged()
-        {
-            if (_collidableComponent.Anchored)
-                Owner.SnapToGrid();
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_isLocked)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} is access locked!", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-locked", ("target", Owner)));
                 return;
             }
 
-            if (!_isOn)
+            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
-                SwitchOn();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} turns on.", Owner));
+                if (!_isOn)
+                {
+                    SwitchOn();
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
+                }
+                else
+                {
+                    SwitchOff();
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-off", ("target", Owner)));
+                }
             }
             else
             {
-                SwitchOff();
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} turns off.", Owner));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-not-anchored", ("target", Owner)));
             }
         }
 
@@ -153,24 +133,24 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if (_isLocked)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You lock {0:TheName}.", Owner));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-lock", ("target", Owner)));
                 }
                 else
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You unlock {0:TheName}.", Owner));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-unlock", ("target", Owner)));
                 }
 
                 UpdateAppearance();
             }
             else
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Access denied."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-denied"));
             }
 
             return Task.FromResult(true);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isOn = false;
             _powerConsumer.DrawRate = 0;
@@ -178,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             UpdateAppearance();
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             _isOn = true;
             _powerConsumer.DrawRate = _powerUseActive;
@@ -251,15 +231,15 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void Fire()
         {
-            var projectile = _entityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
+            var projectile = Owner.EntityManager.SpawnEntity(_boltType, Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {
-                Logger.Error("Emitter tried firing a bolt, but it was spawned without a CollidableComponent");
+                Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
                 return;
             }
 
-            physicsComponent.Status = BodyStatus.InAir;
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
             if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {
@@ -270,15 +250,14 @@ namespace Content.Server.GameObjects.Components.Singularity
             projectileComponent.IgnoreEntity(Owner);
 
             physicsComponent
-                .EnsureController<BulletController>()
-                .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
-
-            projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
+                .LinearVelocity = Owner.Transform.WorldRotation.ToWorldVec() * 20f;
+            projectile.Transform.WorldRotation = Owner.Transform.WorldRotation;
 
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_fireSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _fireSound, Owner,
+                AudioHelpers.WithVariation(Variation).WithVolume(Volume).WithMaxDistance(Distance));
         }
 
         private void UpdateAppearance()

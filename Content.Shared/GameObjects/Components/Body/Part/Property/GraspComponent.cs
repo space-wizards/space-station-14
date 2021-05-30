@@ -1,9 +1,11 @@
-﻿using Robust.Shared.GameObjects;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property
 {
     /// <summary>
-    ///     Defines an entity as being able to pick up items
+    ///     Defines a <see cref="IBodyPart"/> as being able to grasp around an entity,
+    ///     for example picking up an item.
     /// </summary>
     // TODO BODY Implement
     [RegisterComponent]

@@ -1,18 +1,13 @@
-﻿#nullable enable
-using System;
+#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -20,23 +15,37 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private (GridId, Vector2i) _lastPosition;
         private AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Name => "Airtight";
 
+        [DataField("airBlockedDirection", customTypeSerializer: typeof(FlagSerializer<AtmosDirectionFlags>))]
         [ViewVariables]
-        private int _initialAirBlockedDirection;
-        [ViewVariables]
-        private int _currentAirBlockedDirection;
-        private bool _airBlocked = true;
-        private bool _fixVacuum = false;
+        private int _initialAirBlockedDirection = (int) AtmosDirection.All;
 
         [ViewVariables]
+        private int _currentAirBlockedDirection;
+
+        [DataField("airBlocked")]
+        private bool _airBlocked = true;
+
+        [DataField("fixVacuum")]
+        private bool _fixVacuum = true;
+
+        [ViewVariables]
+        [DataField("rotateAirBlocked")]
         private bool _rotateAirBlocked = true;
 
         [ViewVariables]
+        [DataField("fixAirBlockedDirectionInitialize")]
         private bool _fixAirBlockedDirectionInitialize = true;
+
+        [ViewVariables]
+        [DataField("noAirWhenFullyAirBlocked")]
+        public bool NoAirWhenFullyAirBlocked { get; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
@@ -65,31 +74,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         public bool FixVacuum => _fixVacuum;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _airBlocked, "airBlocked", true);
-            serializer.DataField(ref _fixVacuum, "fixVacuum", true);
-            serializer.DataField(ref _initialAirBlockedDirection, "airBlockedDirection", (int)AtmosDirection.All, WithFormat.Flags<AtmosDirectionFlags>());
-            serializer.DataField(ref _rotateAirBlocked, "rotateAirBlocked", true);
-            serializer.DataField(ref _fixAirBlockedDirectionInitialize, "fixAirBlockedDirectionInitialize", true);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            // Using the SnapGrid is critical for performance, and thus if it is absent the component
-            // will not be airtight. A warning is much easier to track down than the object magically
-            // not being airtight, so log one if the SnapGrid component is missing.
-            if (!Owner.EnsureComponent(out SnapGridComponent _))
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SnapGridComponent)}");
+            if (_fixAirBlockedDirectionInitialize)
+                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
 
-            if(_fixAirBlockedDirectionInitialize)
-                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
+            // Adding this component will immediately anchor the entity, because the atmos system
+            // requires airtight entities to be anchored for performance.
+            Owner.Transform.Anchored = true;
 
             UpdatePosition();
         }
@@ -113,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!myDirection.HasFlag(direction)) continue;
+                if (!myDirection.IsFlagSet(direction)) continue;
                 var angle = direction.ToAngle();
                 angle += myAngle;
                 newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();
@@ -122,59 +118,60 @@ namespace Content.Server.GameObjects.Components.Atmos
             return newAirBlockedDirs;
         }
 
+        /// <inheritdoc />
         public void MapInit()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (Owner.Transform.Anchored)
             {
-                snapGrid.OnPositionChanged += OnTransformMove;
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
 
             UpdatePosition();
         }
 
+        /// <inheritdoc />
         protected override void Shutdown()
         {
             base.Shutdown();
 
             _airBlocked = false;
 
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                snapGrid.OnPositionChanged -= OnTransformMove;
-            }
-
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
+            {
                 _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
+            }
         }
 
-        private void OnTransformMove()
+        public void OnTransformMove()
         {
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
 
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            if (Owner.Transform.Anchored)
             {
-                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }
         }
 
         private void UpdatePosition()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
+            if (Owner.Transform.Anchored)
+            {
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                UpdatePosition(Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+            }
         }
 
         private void UpdatePosition(GridId gridId, Vector2i pos)
         {
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
 
-            if (gridAtmos == null) return;
-
-            gridAtmos.UpdateAdjacentBits(pos);
-            gridAtmos.Invalidate(pos);
+            gridAtmos?.UpdateAdjacentBits(pos);
+            gridAtmos?.Invalidate(pos);
         }
     }
 }

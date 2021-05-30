@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.Console;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -18,51 +18,29 @@ namespace Content.IntegrationTests.Tests.Networking
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             // Connect.
-
             client.SetConnectTarget(server);
 
-            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+            await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
-
-            for (var i = 0; i < 10; i++)
-            {
-                server.RunTicks(1);
-                await server.WaitIdleAsync();
-                client.RunTicks(1);
-                await client.WaitIdleAsync();
-            }
+            await RunTicksSync(client, server, 10);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            client.Post(() => IoCManager.Resolve<IClientConsole>().ProcessCommand("disconnect"));
+            await client.WaitPost(() => IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("disconnect"));
 
             // Run some ticks for the disconnect to complete and such.
-            for (var i = 0; i < 5; i++)
-            {
-                server.RunTicks(1);
-                await server.WaitIdleAsync();
-                client.RunTicks(1);
-                await client.WaitIdleAsync();
-            }
+            await RunTicksSync(client, server, 5);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             // Reconnect.
-
             client.SetConnectTarget(server);
 
-            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+            await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
-
-            for (var i = 0; i < 10; i++)
-            {
-                server.RunTicks(1);
-                await server.WaitIdleAsync();
-                client.RunTicks(1);
-                await client.WaitIdleAsync();
-            }
+            await RunTicksSync(client, server, 10);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
         }

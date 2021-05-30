@@ -1,32 +1,30 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Client.GameObjects.Components.VendingMachines
 {
     [UsedImplicitly]
-    public sealed class VendingMachineVisualizer : AppearanceVisualizer
+    public sealed class VendingMachineVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         // TODO: Should default to off or broken if damaged
-        // 
-        
+        //
+
         // TODO: The length of these animations is supposed to be dictated
         // by the vending machine's pack prototype's `AnimationDuration`
         // but we have no good way of passing that data from the server
         // to the client at the moment. Rework Visualizers?
 
-        private Dictionary<string, bool> _baseStates;
+        private Dictionary<string, bool> _baseStates = new();
 
         private static readonly Dictionary<string, VendingMachineVisualLayers> LayerMap =
-            new Dictionary<string, VendingMachineVisualLayers>
+            new()
             {
                 {"off", VendingMachineVisualLayers.Unlit},
                 {"screen", VendingMachineVisualLayers.Screen},
@@ -38,42 +36,54 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                 {"deny-unshaded", VendingMachineVisualLayers.BaseUnshaded},
                 {"broken", VendingMachineVisualLayers.Unlit},
             };
-        
-        private Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
 
-        public override void LoadData(YamlMappingNode node)
+        [DataField("screen")]
+        private bool _screen;
+
+        [DataField("normal")]
+        private bool _normal;
+
+        [DataField("normalUnshaded")]
+        private bool _normalUnshaded;
+
+        [DataField("eject")]
+        private bool _eject;
+
+        [DataField("ejectUnshaded")]
+        private bool _ejectUnshaded;
+
+        [DataField("deny")]
+        private bool _deny;
+
+        [DataField("denyUnshaded")]
+        private bool _denyUnshaded;
+
+        [DataField("broken")]
+        private bool _broken;
+
+        [DataField("brokenUnshaded")]
+        private bool _brokenUnshaded;
+
+        private readonly Dictionary<string, Animation> _animations = new();
+
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            _baseStates = new Dictionary<string, bool>
+            // Used a dictionary so the yaml can adhere to the style-guide and the texture states can be clear
+            var states = new Dictionary<string, bool>
             {
                 {"off", true},
+                {"screen", _screen},
+                {"normal", _normal},
+                {"normal-unshaded", _normalUnshaded},
+                {"eject", _eject},
+                {"eject-unshaded", _ejectUnshaded},
+                {"deny", _deny},
+                {"deny-unshaded", _denyUnshaded},
+                {"broken", _broken},
+                {"broken-unshaded", _brokenUnshaded},
             };
 
-            // Used a dictionary so the yaml can adhere to the style-guide and the texture states can be clear
-            var states = new Dictionary<string, string>
-            {
-                {"screen", "screen"},
-                {"normal", "normal"},
-                {"normalUnshaded", "normal-unshaded"},
-                {"eject", "eject"},
-                {"ejectUnshaded", "eject-unshaded"},
-                {"deny", "deny"},
-                {"denyUnshaded", "deny-unshaded"},
-                {"broken", "broken"},
-                {"brokenUnshaded", "broken-unshaded"},
-            };
-
-            foreach (var (state, textureState) in states)
-            {
-                if (!node.TryGetNode(state, out var yamlNode))
-                {
-                    _baseStates[textureState] = false;
-                    continue;
-                }
-                
-                _baseStates.Add(textureState, yamlNode.AsBool());
-            }
+            _baseStates = states;
 
             if (_baseStates["deny"])
             {
@@ -99,7 +109,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
         private void InitializeAnimation(string key, bool unshaded = false)
         {
             _animations.Add(key, new Animation {Length = TimeSpan.FromSeconds(1.2f)});
-                
+
             var flick = new AnimationTrackSpriteFlick();
             _animations[key].AnimationTracks.Add(flick);
             flick.LayerKey = unshaded ? VendingMachineVisualLayers.BaseUnshaded : VendingMachineVisualLayers.Base;
@@ -128,13 +138,15 @@ namespace Content.Client.GameObjects.Components.VendingMachines
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            base.OnChangeData(component);
+
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
             if (!component.TryGetData(VendingMachineVisuals.VisualState, out VendingMachineVisualState state))
             {
                 state = VendingMachineVisualState.Normal;
             }
-            
+
             // Hide last state
             HideLayers(sprite);
             ActivateState(sprite, "off");
@@ -146,10 +158,10 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                     ActivateState(sprite, "normal-unshaded");
                     ActivateState(sprite, "normal");
                     break;
-                
+
                 case VendingMachineVisualState.Off:
                     break;
-                
+
                 case VendingMachineVisualState.Broken:
                     ActivateState(sprite, "broken-unshaded");
                     ActivateState(sprite, "broken");
@@ -171,7 +183,7 @@ namespace Content.Client.GameObjects.Components.VendingMachines
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         // Helper methods just to avoid all of that hard-to-read-indented code
         private void ActivateState(ISpriteComponent spriteComponent, string stateId)
         {
@@ -192,15 +204,15 @@ namespace Content.Client.GameObjects.Components.VendingMachines
             {
                 return;
             }
-            
+
             if (!animationPlayer.HasRunningAnimation(key))
             {
                 spriteComponent.LayerSetVisible(LayerMap[key], true);
                 animationPlayer.Play(animation, key);
             }
         }
-        
-        public enum VendingMachineVisualLayers
+
+        public enum VendingMachineVisualLayers : byte
         {
             // Off / Broken. The other layers will overlay this if the machine is on.
             Unlit,

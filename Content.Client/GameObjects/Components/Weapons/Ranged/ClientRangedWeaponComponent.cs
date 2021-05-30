@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.GameObjects.Components.Weapons.Ranged
 {
     // Yeah I put it all in the same enum, don't judge me
-    public enum RangedBarrelVisualLayers
+    public enum RangedBarrelVisualLayers : byte
     {
         Base,
         BaseUnshaded,
@@ -14,16 +14,16 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
         Mag,
         MagUnshaded,
     }
-    
+
     [RegisterComponent]
     public sealed class ClientRangedWeaponComponent : SharedRangedWeaponComponent
     {
         public FireRateSelector FireRateSelector { get; private set; } = FireRateSelector.Safety;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is RangedWeaponComponentState rangedState))
+            if (curState is not RangedWeaponComponentState rangedState)
             {
                 return;
             }

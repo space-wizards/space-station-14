@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
 
@@ -24,14 +26,17 @@ namespace Content.Client.GameObjects.Components
     {
         public override string Name => "LowWall";
 
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public CornerFill LastCornerNE { get; private set; }
         public CornerFill LastCornerSE { get; private set; }
         public CornerFill LastCornerSW { get; private set; }
         public CornerFill LastCornerNW { get; private set; }
 
+        [ViewVariables] private IEntity? _overlayEntity;
+
         [ViewVariables]
-        private IEntity _overlayEntity;
-        private ISpriteComponent _overlaySprite;
+        private ISpriteComponent? _overlaySprite;
 
         protected override void Startup()
         {
@@ -39,6 +44,7 @@ namespace Content.Client.GameObjects.Components
 
             _overlayEntity = Owner.EntityManager.SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
             _overlayEntity.Transform.AttachParent(Owner);
+            _overlayEntity.Transform.LocalPosition = Vector2.Zero;
 
             _overlaySprite = _overlayEntity.GetComponent<ISpriteComponent>();
 
@@ -57,21 +63,29 @@ namespace Content.Client.GameObjects.Components
         {
             base.Shutdown();
 
-            _overlayEntity.Delete();
+            _overlayEntity?.Delete();
         }
 
         internal override void CalculateNewSprite()
         {
             base.CalculateNewSprite();
 
-            var (n, nl) = MatchingWall(SnapGrid.GetInDir(Direction.North));
-            var (ne, nel) = MatchingWall(SnapGrid.GetInDir(Direction.NorthEast));
-            var (e, el) = MatchingWall(SnapGrid.GetInDir(Direction.East));
-            var (se, sel) = MatchingWall(SnapGrid.GetInDir(Direction.SouthEast));
-            var (s, sl) = MatchingWall(SnapGrid.GetInDir(Direction.South));
-            var (sw, swl) = MatchingWall(SnapGrid.GetInDir(Direction.SouthWest));
-            var (w, wl) = MatchingWall(SnapGrid.GetInDir(Direction.West));
-            var (nw, nwl) = MatchingWall(SnapGrid.GetInDir(Direction.NorthWest));
+            if (Sprite == null || !Owner.Transform.Anchored || _overlaySprite == null)
+            {
+                return;
+            }
+
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+
+            var (n, nl) = MatchingWall(grid.GetInDir(coords, Direction.North));
+            var (ne, nel) = MatchingWall(grid.GetInDir(coords, Direction.NorthEast));
+            var (e, el) = MatchingWall(grid.GetInDir(coords, Direction.East));
+            var (se, sel) = MatchingWall(grid.GetInDir(coords, Direction.SouthEast));
+            var (s, sl) = MatchingWall(grid.GetInDir(coords, Direction.South));
+            var (sw, swl) = MatchingWall(grid.GetInDir(coords, Direction.SouthWest));
+            var (w, wl) = MatchingWall(grid.GetInDir(coords, Direction.West));
+            var (nw, nwl) = MatchingWall(grid.GetInDir(coords, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;
@@ -188,9 +202,9 @@ namespace Content.Client.GameObjects.Components
             LastCornerSW = cornerSW;
             LastCornerNW = cornerNW;
 
-            foreach (var entity in SnapGrid.GetLocal())
+            foreach (var entity in grid.GetLocal(coords))
             {
-                if (entity.TryGetComponent(out WindowComponent window))
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out WindowComponent? window))
                 {
                     window.UpdateSprite();
                 }
@@ -198,11 +212,11 @@ namespace Content.Client.GameObjects.Components
         }
 
         [Pure]
-        private (bool connected, bool lowWall) MatchingWall(IEnumerable<IEntity> candidates)
+        private (bool connected, bool lowWall) MatchingWall(IEnumerable<EntityUid> candidates)
         {
             foreach (var entity in candidates)
             {
-                if (!entity.TryGetComponent(out IconSmoothComponent other))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }
@@ -217,7 +231,7 @@ namespace Content.Client.GameObjects.Components
         }
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private enum OverCornerLayers
+        private enum OverCornerLayers : byte
         {
             SE,
             NE,

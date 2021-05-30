@@ -1,129 +1,65 @@
 - type: reaction
-  id: react.H2O
+  id: Ammonia
   reactants:
-    chem.H:
-      amount: 1
-    chem.O:
-      amount: 1
-  products:
-    chem.H2O: 2
-
-- type: reaction
-  id: react.Ammonia
-  reactants:
-    chem.H:
+    Hydrogen:
       amount: 3
-    chem.N:
+    Nitrogen:
       amount: 1
   products:
-    chem.Ammonia: 4
+    Ammonia: 4
 
 - type: reaction
-  id: react.Bleach
+  id: Diethylamine
   reactants:
-    chem.TableSalt:
-      amount: 2
-    chem.SpaceCleaner:
-      amount: 2
-    chem.O:
+    Ammonia:
+      amount: 1
+    Ethanol:
       amount: 1
   products:
-    chem.Bleach: 5
+    Diethylamine: 2
 
 - type: reaction
-  id: react.Diethylamine
+  id: FoamingAgent
   reactants:
-    chem.Ammonia:
+    Lithium:
       amount: 1
-    chem.Ethanol:
+    Hydrogen:
       amount: 1
   products:
-    chem.Diethylamine: 2
+    FoamingAgent: 2
 
 - type: reaction
-  id: react.FoamingAgent
+  id: PolytrinicAcid
   reactants:
-    chem.Li:
+    SulfuricAcid:
       amount: 1
-    chem.H:
+    Chlorine:
+      amount: 1
+    Potassium:
       amount: 1
   products:
-    chem.FoamingAgent: 2
+    PolytrinicAcid: 3
 
 - type: reaction
-  id: react.PolytrinicAcid
+  id: FluorosulfuricAcid
   reactants:
-    chem.H2SO4:
+    Fluorine:
       amount: 1
-    chem.Cl:
+    Hydrogen:
       amount: 1
-    chem.K:
+    Potassium:
+      amount: 1
+    SulfuricAcid:
       amount: 1
   products:
-    chem.PolytrinicAcid: 3
+    FluorosulfuricAcid: 4
 
 - type: reaction
-  id: react.SpaceCleaner
+  id: PotassiumExplosion
   reactants:
-    chem.Ammonia:
+    Water:
       amount: 1
-    chem.H2O:
-      amount: 1
-  products:
-    chem.SpaceCleaner: 2
-
-- type: reaction
-  id: react.SpaceLube
-  reactants:
-    chem.H2O:
-      amount: 1
-    chem.Si:
-      amount: 1
-    chem.O:
-      amount: 1
-  products:
-    chem.SpaceLube: 3
-
-- type: reaction
-  id: react.TableSalt
-  reactants:
-    chem.Cl:
-      amount: 1
-    chem.Na:
-      amount: 1
-  products:
-    chem.TableSalt: 2
-
-- type: reaction
-  id: react.Thermite
-  reactants:
-    chem.Fe:
-      amount: 1
-    chem.Al:
-      amount: 1
-    chem.O:
-      amount: 1
-  products:
-    chem.Thermite: 3
-
-- type: reaction
-  id: react.UnstableMutagen
-  reactants:
-    chem.Ra:
-      amount: 1
-    chem.P:
-      amount: 1
-    chem.Cl:
-      amount: 1
-  products:
-    chem.UnstableMutagen: 3
-
-- type: reaction
-  id: react.PotassiumExplosion
-  reactants:
-    chem.H2O:
-      amount: 1
-    chem.K:
+    Potassium:
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
@@ -136,45 +72,145 @@
       maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
 
 - type: reaction
-  id: react.EZNutrient
+  id: Smoke
   reactants:
-    chem.N:
+    Phosphorus:
       amount: 1
-    chem.P:
+    Potassium:
       amount: 1
-    chem.K:
+    Sugar:
       amount: 1
-  products:
-    chem.EZNutrient: 3
+  effects:
+    - !type:SmokeAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
+      maxRange: 10
+      duration: 10
+      spreadDelay: 0.5
+      removeDelay: 0.5
+      diluteReagents: false
+      prototypeId: Smoke
+      sound: /Audio/Effects/smoke.ogg
 
 - type: reaction
-  id: react.RobustHarvest
+  id: Foam
   reactants:
-    chem.EZNutrient:
+    Fluorosurfactant:
       amount: 1
-    chem.H2SO4:
+    Water:
       amount: 1
-      catalyst: true
-  products:
-    chem.RobustHarvest: 1
+  effects:
+    - !type:FoamAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
+      maxRange: 10
+      duration: 10
+      spreadDelay: 1
+      removeDelay: 0
+      diluteReagents: true
+      reagentDilutionStart: 4 #At what range should the reagents start diluting
+      reagentDilutionFactor: 1
+      reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
+      prototypeId: Foam
 
 - type: reaction
-  id: react.Left4Zed
+  id: IronMetalFoam
   reactants:
-    chem.EZNutrient:
+    Iron:
+      amount: 3
+    FoamingAgent:
       amount: 1
-    chem.Ra:
+    FluorosulfuricAcid:
       amount: 1
-      catalyst: true
-  products:
-    chem.Left4Zed: 1
+  effects:
+    - !type:FoamAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1
+      maxRange: 10
+      duration: 10
+      spreadDelay: 1
+      removeDelay: 0
+      diluteReagents: true
+      reagentDilutionStart: 4
+      reagentDilutionFactor: 1
+      reagentMaxConcentrationFactor: 2
+      prototypeId: IronMetalFoam
 
 - type: reaction
-  id: react.PlantBGone
+  id: AluminiumMetalFoam
   reactants:
-    chem.Toxin:
+    Aluminium:
+      amount: 3
+    FoamingAgent:
       amount: 1
-    chem.H2O:
-      amount: 4
+    FluorosulfuricAcid:
+      amount: 1
+  effects:
+    - !type:FoamAreaReactionEffect
+      rangeConstant: 0
+      rangeMultiplier: 1.1
+      maxRange: 10
+      duration: 10
+      spreadDelay: 1
+      removeDelay: 0
+      diluteReagents: true
+      reagentDilutionStart: 4
+      reagentDilutionFactor: 1
+      reagentMaxConcentrationFactor: 2
+      prototypeId: AluminiumMetalFoam
+
+- type: reaction
+  id: TableSalt
+  reactants:
+    Chlorine:
+      amount: 1
+    Sodium:
+      amount: 1
   products:
-    chem.PlantBGone: 5
+    TableSalt: 2
+
+- type: reaction
+  id: Thermite
+  reactants:
+    Iron:
+      amount: 1
+    Aluminium:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Thermite: 3
+
+- type: reaction
+  id: UnstableMutagen
+  reactants:
+    Radium:
+      amount: 1
+    Phosphorus:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    UnstableMutagen: 3
+
+- type: reaction
+  id: Water
+  reactants:
+    Hydrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Water: 2
+
+- type: reaction
+  id: Fluorosurfactant
+  reactants:
+    Carbon:
+      amount: 2
+    Fluorine:
+      amount: 2
+    SulfuricAcid:
+      amount: 1
+  products:
+    Fluorosurfactant: 5

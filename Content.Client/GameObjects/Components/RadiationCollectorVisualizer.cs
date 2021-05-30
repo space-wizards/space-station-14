@@ -1,25 +1,22 @@
 ﻿using System;
-using Content.Client.GameObjects.Components.Doors;
-using Content.Client.GameObjects.Components.Wires;
-using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Singularity;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
-    public class RadiationCollectorVisualizer : AppearanceVisualizer
+    [UsedImplicitly]
+    public class RadiationCollectorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "radiationcollector_animation";
 
-        private Animation ActivateAnimation;
-        private Animation DeactiveAnimation;
+        private Animation ActivateAnimation = default!;
+        private Animation DeactiveAnimation = default!;
 
-        public override void LoadData(YamlMappingNode node)
+        void ISerializationHooks.AfterDeserialization()
         {
             ActivateAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
@@ -54,11 +51,9 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (component.Owner.Deleted)
-                return;
+            base.OnChangeData(component);
 
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             if (!component.Owner.TryGetComponent<AnimationPlayerComponent>(out var animPlayer)) return;
@@ -95,9 +90,9 @@ namespace Content.Client.GameObjects.Components
                     break;
             }
         }
-
     }
-    public enum RadiationCollectorVisualLayers
+
+    public enum RadiationCollectorVisualLayers : byte
     {
         Main
     }

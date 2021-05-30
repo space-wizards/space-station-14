@@ -1,26 +1,27 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
+using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
@@ -29,28 +30,51 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
+        // time to blink light when ghost made boo nearby
+        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan ghostBlinkingCooldown = TimeSpan.FromSeconds(60);
+
+        [ComponentDependency]
+        private readonly AppearanceComponent? _appearance;
+
         private TimeSpan _lastThunk;
+        private TimeSpan? _lastGhostBlink;
 
-        [ViewVariables] private bool _on;
+        [DataField("hasLampOnSpawn")]
+        private bool _hasLampOnSpawn = true;
 
-        private LightBulbType BulbType = LightBulbType.Tube;
-        [ViewVariables] private ContainerSlot _lightBulbContainer;
+        [ViewVariables] [DataField("on")]
+        private bool _on = true;
 
         [ViewVariables]
-        private LightBulbComponent LightBulb
+        private bool _currentLit;
+
+        [ViewVariables]
+        private bool _isBlinking;
+
+        [ViewVariables] [DataField("ignoreGhostsBoo")]
+        private bool _ignoreGhostsBoo;
+
+        [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
+        public LightBulbType BulbType => _bulbType;
+
+        [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
+
+        [ViewVariables]
+        public LightBulbComponent? LightBulb
         {
             get
             {
                 if (_lightBulbContainer.ContainedEntity == null) return null;
 
-                _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
+                _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent? bulb);
 
                 return bulb;
             }
@@ -58,19 +82,19 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         // TODO CONSTRUCTION make this use a construction graph
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.Using);
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
+            if (!eventArgs.User.TryGetComponent(out IDamageableComponent? damageableComponent))
             {
                 Eject();
                 return false;
             }
-            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent heatResistanceComponent))
+            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
             {
                 if(CanBurn(heatResistanceComponent.GetHeatResistance()))
                 {
@@ -83,15 +107,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             bool CanBurn(int heatResistance)
             {
-                return _lightState && heatResistance < LightBulb.BurningTemperature;
+                if (LightBulb == null)
+                    return false;
+
+                return _currentLit && heatResistance < LightBulb.BurningTemperature;
             }
 
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You burn your hand!"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
-                var audioSystem = EntitySystem.Get<AudioSystem>();
-                audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
 
             void Eject()
@@ -102,14 +128,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         }
 
         /// <summary>
+        /// Try to replace current bulb with a new one
+        /// </summary>
+        public bool ReplaceBulb(IEntity bulb)
+        {
+            EjectBulb();
+            return InsertBulb(bulb);
+        }
+
+        /// <summary>
         ///     Inserts the bulb if possible.
         /// </summary>
         /// <returns>True if it could insert it, false if it couldn't.</returns>
         private bool InsertBulb(IEntity bulb)
         {
             if (LightBulb != null) return false;
-            if (!bulb.TryGetComponent(out LightBulbComponent lightBulb)) return false;
-            if (lightBulb.Type != BulbType) return false;
+            if (!bulb.TryGetComponent(out LightBulbComponent? lightBulb)) return false;
+            if (lightBulb.Type != _bulbType) return false;
 
             var inserted = _lightBulbContainer.Insert(bulb);
 
@@ -124,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// <summary>
         ///     Ejects the bulb to a mob's hand if possible.
         /// </summary>
-        private void EjectBulb(IEntity user)
+        private void EjectBulb(IEntity? user = null)
         {
             if (LightBulb == null) return;
 
@@ -135,26 +170,26 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (!_lightBulbContainer.Remove(bulb.Owner)) return;
 
-            if (!user.TryGetComponent(out HandsComponent hands)
-                || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
-                bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
-        }
+            if (user != null)
+            {
+                if (!user.TryGetComponent(out HandsComponent? hands)
+                    || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
+                    bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
+            }
+            else
+            {
+                bulb.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+            }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
-            serializer.DataField(ref _on, "on", true);
         }
 
         /// <summary>
         ///     For attaching UpdateLight() to events.
         /// </summary>
-        public void UpdateLight(object sender, EventArgs e)
+        public void UpdateLight(object? sender, EventArgs? e)
         {
             UpdateLight();
         }
-
-        private bool _lightState => Owner.GetComponent<PointLightComponent>().Enabled;
 
         /// <summary>
         ///     Updates the light's power drain, sprite and actual light state.
@@ -162,13 +197,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public void UpdateLight()
         {
             var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            var sprite = Owner.GetComponent<SpriteComponent>();
-            var light = Owner.GetComponent<PointLightComponent>();
+
             if (LightBulb == null) // No light bulb.
             {
+                _currentLit = false;
                 powerReceiver.Load = 0;
-                sprite.LayerSetState(0, "empty");
-                light.Enabled = false;
+                _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
 
@@ -177,30 +211,30 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 case LightBulbState.Normal:
                     if (powerReceiver.Powered && _on)
                     {
+                        _currentLit = true;
                         powerReceiver.Load = LightBulb.PowerUse;
-                        sprite.LayerSetState(0, "on");
-                        light.Enabled = true;
-                        light.Color = LightBulb.Color;
+                        _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
                     {
-                        sprite.LayerSetState(0, "off");
-                        light.Enabled = false;
+                        _currentLit = false;
+                        _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
-                    sprite.LayerSetState(0, "broken");
-                    light.Enabled = false;
+                    _currentLit = false;
+                    _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
-                    sprite.LayerSetState(0, "burned");
-                    light.Enabled = false;
+                    _currentLit = false;
+                    _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
         }
@@ -209,32 +243,53 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             base.Initialize();
 
-            Owner.EnsureComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
-
-            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
-        public override void OnRemove()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged -= UpdateLight;
+                case PowerChangedMessage:
+                    UpdateLight();
+                    break;
+                case DamageChangedMessage msg:
+                    TryDestroyBulb(msg);
+                    break;
             }
+        }
 
-            base.OnRemove();
+        private void TryDestroyBulb(DamageChangedMessage msg)
+        {
+            if (!msg.TookDamage)
+                return;
+
+            if (LightBulb == null || LightBulb.State == LightBulbState.Broken)
+                return;
+
+            LightBulb.State = LightBulbState.Broken;
+            LightBulb.PlayBreakSound();
+            UpdateLight();
         }
 
         void IMapInit.MapInit()
         {
-            var prototype = BulbType switch
+            if (_hasLampOnSpawn)
             {
-                LightBulbType.Bulb => "LightBulb",
-                LightBulbType.Tube => "LightTube",
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                var prototype = _bulbType switch
+                {
+                    LightBulbType.Bulb => "LightBulb",
+                    LightBulbType.Tube => "LightTube",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
 
-            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
-            _lightBulbContainer.Insert(entity);
+                var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
+                _lightBulbContainer.Insert(entity);
+            }
+
+            // need this to update visualizers
+            UpdateLight();
         }
 
         public void TriggerSignal(bool signal)
@@ -247,6 +302,37 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             _on = !_on;
             UpdateLight();
+        }
+
+        public void ToggleBlinkingLight(bool isNowBlinking)
+        {
+            if (_isBlinking == isNowBlinking)
+                return;
+
+            _isBlinking = isNowBlinking;
+            _appearance?.SetData(PoweredLightVisuals.Blinking, _isBlinking);
+        }
+
+        public bool AffectedByGhostBoo(InstantActionEventArgs args)
+        {
+            if (_ignoreGhostsBoo)
+                return false;
+
+            // check cooldown first to prevent abuse
+            var time = _gameTiming.CurTime;
+            if (_lastGhostBlink != null)
+            {
+                if (time <= _lastGhostBlink + ghostBlinkingCooldown)
+                    return false;
+            }
+            _lastGhostBlink = time;
+
+            ToggleBlinkingLight(true);
+            Owner.SpawnTimer(ghostBlinkingTime, () => {
+                ToggleBlinkingLight(false);
+            });
+
+            return true;
         }
     }
 }

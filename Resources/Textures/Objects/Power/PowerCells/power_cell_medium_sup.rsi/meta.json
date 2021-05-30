@@ -9,16 +9,10 @@
     "states": [
         {
             "name": "m_sup",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "m_sup_0",
-            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -28,39 +22,19 @@
         },
         {
             "name": "m_sup_100",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "m_sup_25",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "m_sup_50",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "m_sup_75",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

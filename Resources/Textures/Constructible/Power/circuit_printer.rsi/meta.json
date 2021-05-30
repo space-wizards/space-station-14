@@ -9,16 +9,10 @@
     "states": [
         {
             "name": "circuit_imprinter",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         },
         {
             "name": "circuit_imprinter_ani",
-            "directions": 1,
             "delays": [
                 [
                     0.08,
@@ -51,12 +45,7 @@
         },
         {
             "name": "circuit_imprinter_t",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+
         }
     ]
 }

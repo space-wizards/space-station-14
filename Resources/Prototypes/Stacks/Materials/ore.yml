@@ -1,0 +1,83 @@
+- type: stack
+  id: AdamantineOre
+  name: adamantine ore
+  icon: /Textures/Objects/Materials/ore.rsi/adamantine.png
+  spawn: AdamantineOre1
+
+- type: stack
+  id: Ammonia
+  name: ammonia
+  icon: /Textures/Objects/Materials/ore.rsi/ammonia.png
+  spawn: Ammonia1
+
+- type: stack
+  id: BananiumOre
+  name: bananium ore
+  icon: /Textures/Objects/Materials/ore.rsi/bananium.png
+  spawn: BananiumOre1
+
+- type: stack
+  id: DiamondOre
+  name: diamond ore
+  icon: /Textures/Objects/Materials/ore.rsi/diamond.png
+  spawn: DiamondOre1
+
+- type: stack
+  id: GoldOre
+  name: gold ore
+  icon: /Textures/Objects/Materials/ore.rsi/gold.png
+  spawn: GoldOre1
+
+- type: stack
+  id: IronOre
+  name: iron ore
+  icon: /Textures/Objects/Materials/ore.rsi/iron.png
+  spawn: IronOre1
+
+- type: stack
+  id: PhoronOre
+  name: phoron ore
+  icon: /Textures/Objects/Materials/ore.rsi/phoron.png
+  spawn: PhoronOre1
+
+- type: stack
+  id: PlasmaOre
+  name: plasma ore
+  icon: /Textures/Objects/Materials/ore.rsi/plasma.png
+  spawn: PlasmaOre1
+
+- type: stack
+  id: Sand
+  name: sand
+  icon: /Textures/Objects/Materials/ore.rsi/sand.png
+  spawn: Sand1
+
+- type: stack
+  id: BlackSand
+  name: black sand
+  icon: /Textures/Objects/Materials/ore.rsi/sand_black.png
+  spawn: SandBlack1
+
+- type: stack
+  id: SilverOre
+  name: silver ore
+  icon: /Textures/Objects/Materials/ore.rsi/silver.png
+  spawn: SilverOre1
+
+- type: stack
+  id: Slag
+  name: slag
+  icon: /Textures/Objects/Materials/ore.rsi/slag.png
+  spawn: Slag1
+
+- type: stack
+  id: TitaniumOre
+  name: titanium ore
+  icon: /Textures/Objects/Materials/ore.rsi/titanium.png
+  spawn: TitaniumOre1
+
+- type: stack
+  id: UraniumOre
+  name: uranium ore
+  icon: /Textures/Objects/Materials/ore.rsi/titanium.png
+  spawn: UraniumOre1

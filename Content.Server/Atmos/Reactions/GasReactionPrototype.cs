@@ -1,12 +1,12 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Shared.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Reactions
 {
@@ -24,47 +24,47 @@ namespace Content.Server.Atmos.Reactions
     }
 
     [Prototype("gasReaction")]
-    public class GasReactionPrototype : IPrototype, IIndexedPrototype
+    public class GasReactionPrototype : IPrototype
     {
-        public string ID { get; private set; }
+        [ViewVariables]
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
 
         /// <summary>
         ///     Minimum gas amount requirements.
         /// </summary>
-        public float[] MinimumRequirements { get; private set; }
+        [DataField("minimumRequirements")]
+        public float[] MinimumRequirements { get; } = new float[Atmospherics.TotalNumberOfGases];
+
+        /// <summary>
+        ///     Maximum temperature requirement.
+        /// </summary>
+        [DataField("maximumTemperature")]
+        public float MaximumTemperatureRequirement { get; } = float.MaxValue;
 
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>
-        public float MinimumTemperatureRequirement { get; private set; }
+        [DataField("minimumTemperature")]
+        public float MinimumTemperatureRequirement { get; } = Atmospherics.TCMB;
 
         /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
-        public float MinimumEnergyRequirement { get; private set; }
+        [DataField("minimumEnergy")]
+        public float MinimumEnergyRequirement { get; } = 0f;
 
         /// <summary>
         ///     Lower numbers are checked/react later than higher numbers.
         ///     If two reactions have the same priority, they may happen in either order.
         /// </summary>
-        public int Priority { get; private set; }
+        [DataField("priority")]
+        public int Priority { get; } = int.MinValue;
 
         /// <summary>
         ///     A list of effects this will produce.
         /// </summary>
-        private List<IGasReactionEffect> _effects;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(this, x => ID, "id", string.Empty);
-            serializer.DataField(this, x => Priority, "priority", 100);
-            serializer.DataField(this, x => MinimumRequirements, "minimumRequirements", new float[Atmospherics.TotalNumberOfGases]);
-            serializer.DataField(this, x => MinimumTemperatureRequirement, "minimumTemperature", Atmospherics.TCMB);
-            serializer.DataField(this, x => MinimumEnergyRequirement, "minimumEnergy", 0f);
-            serializer.DataField(ref _effects, "effects", new List<IGasReactionEffect>());
-        }
+        [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
         {

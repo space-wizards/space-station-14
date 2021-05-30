@@ -12,6 +12,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked { }
 
 - type: construction
   name: wall
@@ -27,6 +30,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: reinforced wall
@@ -42,6 +48,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
 
 - type: construction
   name: low wall
@@ -52,7 +61,8 @@
   category: Structures
   description: A low wall used for mounting windows.
   conditions:
-    - !type:NoWindowsInTile { }
+    - !type:NoWindowsInTile {}
+    - !type:TileNotBlocked {}
   icon:
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
@@ -70,6 +80,7 @@
   description: Clear. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
@@ -87,6 +98,7 @@
   description: Clear but tough. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
@@ -95,18 +107,92 @@
   canRotate: false
 
 - type: construction
-  name: phoron window
-  id: PhoronWindow
+  name: plasma window
+  id: PlasmaWindow
   graph: window
   startNode: start
-  targetNode: phoronWindow
+  targetNode: plasmaWindow
   category: Structures
   description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
+    - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    sprite: Constructible/Structures/Windows/plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+
+- type: construction
+  name: Firelock
+  id: Firelock
+  graph: Firelock
+  startNode: start
+  targetNode: Firelock
+  category: Structures
+  description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
+  icon:
+    sprite: Constructible/Structures/Doors/Standard/firelock.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: Catwalk
+  id: Catwalk
+  graph: Catwalk
+  startNode: start
+  targetNode: Catwalk
+  category: Structures
+  description: Just like a lattice. Except it looks better.
+  conditions:
+    - !type:TileNotBlocked {}
+    - !type:TileType
+      targets:
+        - lattice
+        - plating
+        - underplating
+  icon:
+    sprite: Constructible/Tiles/catwalk.rsi
+    state: catwalk_preview
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: Wooden Barricade
+  id: Barricade
+  graph: barricade
+  startNode: start
+  targetNode: barricadewooden
+  category: Structures
+  description: An improvised barricade made out of wooden planks.
+  icon:
+    sprite: Constructible/Structures/barricades.rsi
+    state: barricadewooden
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: Airlock
+  id: airlock
+  graph: airlock
+  startNode: start
+  targetNode: airlock
+  category: Structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Constructible/Structures/Doors/Standard/basic.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}

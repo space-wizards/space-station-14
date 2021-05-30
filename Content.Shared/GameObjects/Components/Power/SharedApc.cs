@@ -1,5 +1,6 @@
-﻿using System;
-using Robust.Shared.GameObjects.Components.UserInterface;
+﻿#nullable enable
+using System;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Power
@@ -46,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Power
 
     [Serializable, NetSerializable]
     public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
-    { 
+    {
     }
 
     public enum ApcExternalPowerState

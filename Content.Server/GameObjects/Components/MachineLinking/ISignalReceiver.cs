@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Server.GameObjects.Components.MachineLinking
+﻿namespace Content.Server.GameObjects.Components.MachineLinking
 {
     public interface ISignalReceiver<in T>
     {

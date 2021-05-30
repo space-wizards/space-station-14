@@ -1,46 +1,40 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -48,9 +42,10 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "DisposalUnit";
 
@@ -70,18 +65,31 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
         [ViewVariables]
+        [DataField("pressure")]
         private float _pressure;
 
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private TimeSpan _automaticEngageTime;
+        [DataField("autoEngageTime")]
+        private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private TimeSpan _flushDelay;
+        [DataField("flushDelay")]
+        private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
 
+        /// <summary>
+        ///     Delay from trying to enter disposals ourselves.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _entryDelay;
+        [DataField("entryDelay")]
+        private float _entryDelay = 0.5f;
+
+        /// <summary>
+        ///     Delay from trying to shove someone else into disposals.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _draggedEntryDelay = 0.5f;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -125,34 +133,13 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
-        private DisposalUnitBoundUserInterfaceState? _lastUiState;
+        [DataField("air")]
+        public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
-        /// <summary>
-        ///     Store the translated state.
-        /// </summary>
-        private (PressureState State, string Localized) _locState;
-
-        public bool CanInsert(IEntity entity)
+        public override bool CanInsert(IEntity entity)
         {
-            if (!Anchored)
-            {
+            if (!base.CanInsert(entity))
                 return false;
-            }
-
-
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
-                !physics.CanCollide)
-            {
-                if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
-                    return false;
-                }
-            }
-
-            if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<IBody>())
-            {
-                return false;
-            }
 
             return _container.CanInsert(entity);
         }
@@ -179,9 +166,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             TryQueueEngage();
 
-            if (entity.TryGetComponent(out IActorComponent? actor))
+            if (entity.TryGetComponent(out ActorComponent? actor))
             {
-                UserInterface?.Close(actor.playerSession);
+                UserInterface?.Close(actor.PlayerSession);
             }
 
             UpdateVisualState();
@@ -192,11 +179,15 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!CanInsert(entity))
                 return false;
 
-            if (user != null && _entryDelay > 0f)
+            var delay = user == entity ? _entryDelay : _draggedEntryDelay;
+
+            if (user != null && delay > 0.0f)
             {
                 var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
-                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
+                // Can't check if our target AND disposals moves currently so we'll just check target.
+                // if you really want to check if disposals moves then add a predicate.
+                var doAfterArgs = new DoAfterEventArgs(user, delay, default, entity)
                 {
                     BreakOnDamage = true,
                     BreakOnStun = true,
@@ -209,7 +200,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;
-
             }
 
             if (!_container.Insert(entity))
@@ -272,24 +262,34 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var entry = snapGrid
-                .GetLocal()
-                .FirstOrDefault(entity => entity.HasComponent<DisposalEntryComponent>());
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            var entry = grid.GetLocal(coords)
+                .FirstOrDefault(entity => Owner.EntityManager.ComponentManager.HasComponent<DisposalEntryComponent>(entity));
 
-            if (entry == null)
+            if (entry == default)
             {
                 return false;
             }
 
-            var entryComponent = entry.GetComponent<DisposalEntryComponent>();
-            var entities = _container.ContainedEntities.ToList();
-            foreach (var entity in _container.ContainedEntities.ToList())
+            var entryComponent = Owner.EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
+
+            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
+                tileAtmos.Air != null &&
+                tileAtmos.Air.Temperature > 0)
             {
-                _container.Remove(entity);
+                var tileAir = tileAtmos.Air;
+                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (tileAir.Temperature * Atmospherics.R);
+
+                Air = tileAir.Remove(transferMoles);
+
+                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                atmosSystem
+                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
+                    .Invalidate(tileAtmos.GridIndices);
             }
 
-            entryComponent.TryInsert(entities);
+            entryComponent.TryInsert(this);
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
@@ -323,33 +323,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private DisposalUnitBoundUserInterfaceState GetInterfaceState()
+        private void UpdateInterface()
         {
             string stateString;
 
-            if (_locState.State != State)
-            {
-                stateString = Loc.GetString($"{State}");
-                _locState = (State, stateString);
-            }
-            else
-            {
-                stateString = _locState.Localized;
-            }
-
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
-        }
-
-        private void UpdateInterface()
-        {
-            var state = GetInterfaceState();
-
-            if (_lastUiState != null && _lastUiState.Equals(state))
-            {
-                return;
-            }
-
-            _lastUiState = state;
+            stateString = Loc.GetString($"{State}");
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -381,7 +360,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!(obj.Message is UiButtonPressedMessage message))
+            if (obj.Message is not UiButtonPressedMessage message)
             {
                 return;
             }
@@ -396,15 +375,14 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
                 case UiButton.Power:
                     TogglePower();
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
-
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void UpdateVisualState()
+        public void UpdateVisualState()
         {
             UpdateVisualState(false);
         }
@@ -484,10 +462,14 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            UpdateInterface();
+            // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
+            if (_pressure < 1.0f || oldPressure < 1.0f && _pressure >= 1.0f)
+            {
+                UpdateInterface();
+            }
         }
 
-        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
+        private void PowerStateChanged(PowerChangedMessage args)
         {
             if (!args.Powered)
             {
@@ -503,40 +485,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction(
-                "pressure",
-                1.0f,
-                pressure => _pressure = pressure,
-                () => _pressure);
-
-            serializer.DataReadWriteFunction(
-                "automaticEngageTime",
-                30,
-                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _automaticEngageTime.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "flushDelay",
-                3,
-                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
-                () => (int) _flushDelay.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "entryDelay",
-                0.5f,
-                seconds => _entryDelay = seconds,
-                () => (int) _entryDelay);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
 
             if (UserInterface != null)
             {
@@ -555,31 +508,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged += UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += PowerStateChanged;
-            }
-
             UpdateVisualState();
+            UpdateInterface();
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
-            {
-                physics.AnchoredChanged -= UpdateVisualState;
-            }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerStateChanged;
-            }
-
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
                 _container.ForceRemove(entity);
@@ -612,6 +546,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                     _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
                     break;
+
+                case PowerChangedMessage powerChanged:
+                    PowerStateChanged(powerChanged);
+                    break;
             }
         }
 
@@ -623,7 +561,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            if (eventArgs.User.IsInContainer())
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;
@@ -642,7 +580,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return false;
             }
@@ -650,7 +588,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (IsValidInteraction(eventArgs))
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
                 return true;
             }
 
@@ -659,14 +597,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             if (IsValidInteraction(eventArgs))
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
             }
 
             return;
@@ -678,12 +616,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool CanDragDropOn(DragDropEvent eventArgs)
         {
+            // Base is redundant given this already calls the base CanInsert
+            // If that changes then update this
             return CanInsert(eventArgs.Dragged);
         }
 
-        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;
@@ -739,6 +679,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("Flush");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)

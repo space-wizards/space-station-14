@@ -1,10 +1,6 @@
-#nullable enable
-using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -12,17 +8,11 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStunnableComponent))]
     public class StunnableComponent : SharedStunnableComponent
     {
-        protected override void OnInteractHand()
-        {
-            EntitySystem.Get<AudioSystem>()
-                .Play("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
-        }
-
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is StunnableComponentState state))
+            if (curState is not StunnableComponentState state)
             {
                 return;
             }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Namotion.Reflection;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -8,7 +7,7 @@ using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.SharedConfigurationComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Wires
+namespace Content.Client.GameObjects.Components.Configuration
 {
     public class ConfigurationMenu : SS14Window
     {
@@ -20,80 +19,52 @@ namespace Content.Client.GameObjects.Components.Wires
 
         private readonly List<(string  name, LineEdit input)> _inputs;
 
-        protected override Vector2? CustomSize => (300, 250);
-
         public ConfigurationMenu(ConfigurationBoundUserInterface owner)
         {
+            MinSize = SetSize = (300, 250);
             Owner = owner;
 
             _inputs = new List<(string name, LineEdit input)>();
 
-            Title = Loc.GetString("Device Configuration");
-
-            var margin = new MarginContainer
-            {
-                MarginBottomOverride = 8,
-                MarginLeftOverride = 8,
-                MarginRightOverride = 8,
-                MarginTopOverride = 8
-            };
+            Title = Loc.GetString("configuration-menu-device-title");
 
             _baseContainer = new VBoxContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                VerticalExpand = true,
+                HorizontalExpand = true
             };
 
             _column = new VBoxContainer
             {
+                Margin = new Thickness(8),
                 SeparationOverride = 16,
-                SizeFlagsVertical = SizeFlags.Fill
             };
 
             _row = new HBoxContainer
             {
                 SeparationOverride = 16,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
-            };
-
-            var buttonRow = new HBoxContainer
-            {
-                SizeFlagsHorizontal = SizeFlags.FillExpand
-            };
-
-            var spacer1 = new HBoxContainer
-            {
-                SizeFlagsHorizontal = SizeFlags.Expand
-            };
-
-            var spacer2 = new HBoxContainer()
-            {
-                SizeFlagsHorizontal = SizeFlags.Expand
+                HorizontalExpand = true
             };
 
             var confirmButton = new Button
             {
-                Text = Loc.GetString("Confirm"),
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                Text = Loc.GetString("configuration-menu-confirm"),
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
             };
 
             confirmButton.OnButtonUp += OnConfirm;
-            buttonRow.AddChild(spacer1);
-            buttonRow.AddChild(confirmButton);
-            buttonRow.AddChild(spacer2);
 
             var outerColumn = new ScrollContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                VerticalExpand = true,
+                HorizontalExpand = true,
                 ModulateSelfOverride = Color.FromHex("#202025")
             };
 
-            margin.AddChild(_column);
-            outerColumn.AddChild(margin);
+            outerColumn.AddChild(_column);
             _baseContainer.AddChild(outerColumn);
-            _baseContainer.AddChild(buttonRow);
+            _baseContainer.AddChild(confirmButton);
             Contents.AddChild(_baseContainer);
         }
 
@@ -101,22 +72,18 @@ namespace Content.Client.GameObjects.Components.Wires
         {
             _column.Children.Clear();
             _inputs.Clear();
-            
+
             foreach (var field in state.Config)
             {
-                var margin = new MarginContainer
-                {
-                    MarginRightOverride = 8
-                };
-
                 var label = new Label
                 {
+                    Margin = new Thickness(0, 0, 8, 0),
                     Name = field.Key,
                     Text = field.Key + ":",
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    VerticalAlignment = VAlignment.Center,
+                    HorizontalExpand = true,
                     SizeFlagsStretchRatio = .2f,
-                    CustomMinimumSize = new Vector2(60, 0)
+                    MinSize = new Vector2(60, 0)
                 };
 
                 var input = new LineEdit
@@ -124,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     Name = field.Key + "-input",
                     Text = field.Value,
                     IsValid = Validate,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     SizeFlagsStretchRatio = .8f
                 };
 
@@ -133,8 +100,7 @@ namespace Content.Client.GameObjects.Components.Wires
                 var row = new HBoxContainer();
                 CopyProperties(_row, row);
 
-                margin.AddChild(label);
-                row.AddChild(margin);
+                row.AddChild(label);
                 row.AddChild(input);
                 _column.AddChild(row);
             }
@@ -142,8 +108,8 @@ namespace Content.Client.GameObjects.Components.Wires
 
         private void OnConfirm(ButtonEventArgs args)
         {
-            var config = GenerateDictionary<string, LineEdit>(_inputs, "Text");
-            
+            var config = GenerateDictionary(_inputs, "Text");
+
             Owner.SendConfiguration(config);
             Close();
         }
@@ -153,13 +119,13 @@ namespace Content.Client.GameObjects.Components.Wires
             return Owner.Validation == null || Owner.Validation.IsMatch(value);
         }
 
-        private Dictionary<string, TConfig> GenerateDictionary<TConfig, TInput>(List<(string name, TInput input)> inputs, string propertyName) where TInput : Control
+        private Dictionary<string, string> GenerateDictionary(IEnumerable<(string name, LineEdit input)> inputs, string propertyName)
         {
-            var dictionary = new Dictionary<string, TConfig>();
+            var dictionary = new Dictionary<string, string>();
+
             foreach (var input in inputs)
             {
-                var value = input.input.TryGetPropertyValue<TConfig>(propertyName);
-                dictionary.Add(input.name, value);
+                dictionary.Add(input.name, input.input.Text);
             }
 
             return dictionary;

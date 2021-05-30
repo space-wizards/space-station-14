@@ -1,6 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Verbs
 {

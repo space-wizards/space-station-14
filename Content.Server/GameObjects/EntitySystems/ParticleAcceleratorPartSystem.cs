@@ -2,8 +2,6 @@
 using Content.Server.GameObjects.Components.PA;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -15,6 +13,22 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>();
+        }
+
+        private static void BodyTypeChanged(
+            EntityUid uid,
+            ParticleAcceleratorPartComponent component,
+            PhysicsBodyTypeChangedEvent args)
+        {
+            component.OnAnchorChanged();
         }
 
         private static void RotateEvent(RotateEvent ev)

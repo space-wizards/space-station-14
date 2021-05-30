@@ -4,7 +4,7 @@
   positions: 1
   spawnPositions: 1
   startingGear: WardenGear
-  department:
+  departments:
   - Security
   icon: "Warden"
   access:
@@ -16,10 +16,15 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    innerclothing: UniformWarden
-    backpack: SecPackFilled
-    shoes: ShoesJackboots
-    eyes: SecGlasses
-    outerclothing: OuterclothingArmorVest
+    head: ClothingHeadHatWarden
+    innerclothing: ClothingUniformJumpsuitWarden
+    backpack: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    outerclothing: ClothingOuterVestKevlar
     idcard: WardenPDA
-    ears: HeadsetSecurity
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtWarden
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

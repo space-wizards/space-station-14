@@ -1,28 +1,41 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+using Content.Shared.Materials;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Research
 {
     [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public class LatheRecipePrototype : IPrototype, IIndexedPrototype
+    public class LatheRecipePrototype : IPrototype
     {
-        private string _name;
-        private string _id;
-        private SpriteSpecifier _icon;
-        private string _description;
-        private string _result;
-        private int _completeTime;
-        private Dictionary<string, int> _requiredMaterials;
-
         [ViewVariables]
-        public string ID => _id;
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
+
+        [DataField("name")]
+        private string _name = string.Empty;
+
+        [DataField("icon")]
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+
+        [DataField("description")]
+        private string _description = string.Empty;
+
+        [DataField("result")]
+        private string _result = string.Empty;
+
+        [DataField("completetime")]
+        private int _completeTime = 2500;
+
+        [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
+        private Dictionary<string, int> _requiredMaterials = new();
 
         /// <summary>
         ///     Name displayed in the lathe GUI.
@@ -35,7 +48,7 @@ namespace Content.Shared.Research
                 if (_name.Trim().Length != 0) return _name;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
                 return _name;
@@ -53,7 +66,7 @@ namespace Content.Shared.Research
                 if (_description.Trim().Length != 0) return _description;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
                 return _description;
@@ -90,18 +103,5 @@ namespace Content.Shared.Research
         /// </summary>
         [ViewVariables]
         public int CompleteTime => _completeTime;
-
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-
-            serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _description, "description", string.Empty);
-            serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _result, "result", null);
-            serializer.DataField(ref _completeTime, "completetime", 2500);
-            serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
-        }
     }
 }

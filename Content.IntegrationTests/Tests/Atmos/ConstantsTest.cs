@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using NUnit.Framework;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Atmos
 {

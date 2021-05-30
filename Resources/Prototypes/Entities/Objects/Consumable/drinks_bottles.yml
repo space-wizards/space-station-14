@@ -6,24 +6,48 @@
   - type: Drink
     openSounds: bottleOpenSounds
   - type: SolutionContainer
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+    maxVol: 100
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Sprite
     state: icon
-
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 10
   - type: Spillable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkAbsintheBottleFull
-  name: jailbreaker verte
+  name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
-
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Absinthe
+        Quantity: 100
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -39,15 +63,15 @@
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkAleBottleFull
-  name: magm-ale
+  name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
   - type: SolutionContainer
-    maxVol: 80
+    maxVol: 100
     contents:
       reagents:
-      - ReagentId: chem.Ale
-        Quantity: 80
+      - ReagentId: Ale
+        Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
@@ -70,11 +94,10 @@
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
   - type: SolutionContainer
-    maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Cognac
-        Quantity: 80
+      - ReagentId: Cognac
+        Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
@@ -82,13 +105,17 @@
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkGinBottleFull
-  name: griffeater gin bottle
+  name: Griffeater Gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
-
+  - type: SolutionContainer
+    contents:
+      reagents:
+        - ReagentId: Gin
+          Quantity: 100
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -111,7 +138,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
+      - ReagentId: Water
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluabottle.rsi
@@ -182,7 +209,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Vodka
+      - ReagentId: Vodka
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
@@ -198,7 +225,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Whiskey
+      - ReagentId: Whiskey
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
@@ -214,8 +241,7 @@
     maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.Wine
+      - ReagentId: Wine
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
-

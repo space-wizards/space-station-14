@@ -9,7 +9,6 @@
   "states": [
     {
       "name": "booze_dispenser",
-      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +17,6 @@
     },
     {
       "name": "soda_dispenser",
-      "directions": 1,
       "delays": [
         [
           1
@@ -27,7 +25,6 @@
     },
     {
       "name": "dispenser",
-      "directions": 1,
       "delays": [
         [
           1

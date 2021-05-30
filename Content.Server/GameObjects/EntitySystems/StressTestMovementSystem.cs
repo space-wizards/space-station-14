@@ -1,7 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var stressTest in ComponentManager.EntityQuery<StressTestMovementComponent>())
+            foreach (var stressTest in ComponentManager.EntityQuery<StressTestMovementComponent>(true))
             {
                 var transform = stressTest.Owner.Transform;
 

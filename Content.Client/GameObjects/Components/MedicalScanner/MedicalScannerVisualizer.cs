@@ -1,21 +1,17 @@
 using System;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent.MedicalScannerStatus;
 
 namespace Content.Client.GameObjects.Components.MedicalScanner
 {
+    [UsedImplicitly]
     public class MedicalScannerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
@@ -27,12 +23,12 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         {
             switch (status)
             {
-                case Off: return "scanner_off";
-                case Open: return "scanner_open";
-                case Red: return "scanner_red";
-                case Death: return "scanner_death";
-                case Green: return "scanner_green";
-                case Yellow: return "scanner_yellow";
+                case Off: return "closed";
+                case Open: return "open";
+                case Red: return "closed";
+                case Death: return "closed";
+                case Green: return "occupied";
+                case Yellow: return "closed";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
             }
@@ -42,18 +38,18 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         {
             switch (status)
             {
-                case Off: return "scanner_terminal_off";
-                case Open: return "scanner_terminal_blue";
-                case Red: return "scanner_terminal_red";
-                case Death: return "scanner_terminal_dead";
-                case Green: return "scanner_terminal_green";
-                case Yellow: return "scanner_terminal_blue";
+                case Off: return "off_unlit";
+                case Open: return "idle_unlit";
+                case Red: return "red_unlit";
+                case Death: return "red_unlit";
+                case Green: return "idle_unlit";
+                case Yellow: return "maint_unlit";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
             }
         }
 
-        public enum MedicalScannerVisualLayers
+        public enum MedicalScannerVisualLayers : byte
         {
             Machine,
             Terminal,

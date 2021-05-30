@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
@@ -21,37 +22,28 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public virtual void Initialize()
         {
-
         }
 
-        public abstract SS14Window Window { get; }
+        public abstract SS14Window? Window { get; }
         protected ClientInventoryComponent Owner { get; }
 
         public virtual void PlayerAttached()
         {
             GameHud.InventoryButtonVisible = true;
-            GameHud.InventoryButtonToggled = b =>
-            {
-                if (b)
-                {
-                    Window.Open();
-                }
-                else
-                {
-                    Window.Close();
-                }
-            };
         }
 
         public virtual void PlayerDetached()
         {
             GameHud.InventoryButtonVisible = false;
-            Window.Close();
         }
 
         public virtual void Dispose()
         {
         }
+
+        /// <returns>the button controls associated with the
+        /// specified slot, if any. Empty if none.</returns>
+        public abstract IEnumerable<ItemSlotButton> GetItemSlotButtons(EquipmentSlotDefines.Slots slot);
 
         public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, IEntity entity)
         {

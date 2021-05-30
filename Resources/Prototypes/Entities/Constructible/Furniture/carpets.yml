@@ -1,26 +1,37 @@
 - type: entity
   id: CarpetBase
+  parent: BaseConstructible
   description: "Fancy walking surface."
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
   - type: Sprite
     drawdepth: BelowFloor
   - type: Icon
     state: full
-  - type: SnapGrid
-    offset: Center
   - type: IconSmooth
     key: full
     base: carpet_
+  - type: Physics
+    canCollide: false
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - Passable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
 
 - type: entity
   id: Carpet
   parent: CarpetBase
   name: "carpet"
-  description:
   components:
   - type: Sprite
     sprite: Constructible/Carpets/red_carpet.rsi
@@ -31,7 +42,6 @@
   id: CarpetBlack
   parent: CarpetBase
   name: "black carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -43,7 +53,6 @@
   id: CarpetGay
   parent: CarpetBase
   name: "pink carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -55,7 +64,6 @@
   id: CarpetBlue
   parent: CarpetBase
   name: "blue carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -67,7 +75,6 @@
   id: CarpetGreen
   parent: CarpetBase
   name: "green carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -79,7 +86,6 @@
   id: CarpetOrange
   parent: CarpetBase
   name: "orange carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -91,7 +97,6 @@
   id: CarpetSBlue
   parent: CarpetBase
   name: "skyblue carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite
@@ -103,7 +108,6 @@
   id: CarpetPurple
   parent: CarpetBase
   name: "purple carpet"
-  description:
   components:
   - type: Clickable
   - type: Sprite

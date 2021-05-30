@@ -1,8 +1,7 @@
 #nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {

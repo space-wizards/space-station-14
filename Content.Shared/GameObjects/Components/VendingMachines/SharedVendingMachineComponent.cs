@@ -1,7 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.VendingMachines
         public override uint? NetID => ContentNetIDs.VENDING_MACHINE;
 
         [ViewVariables]
-        public List<VendingMachineInventoryEntry> Inventory = new List<VendingMachineInventoryEntry>();
+        public List<VendingMachineInventoryEntry> Inventory = new();
 
         [Serializable, NetSerializable]
         public enum VendingMachineVisuals

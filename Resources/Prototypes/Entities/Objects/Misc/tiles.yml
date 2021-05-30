@@ -1,0 +1,244 @@
+﻿- type: entity
+  parent: BaseItem
+  id: FloorTileItemBase
+  description: These could work as a pretty decent throwing weapon.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+  - type: DamageOtherOnHit
+    amount: 10
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: steel tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteel
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_steel
+  - type: Stack
+    stackType: FloorTileSteel
+  - type: Construction
+    graph: tileSteel
+    node: steeltile
+
+- type: entity
+  name: wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWood
+  components:
+  - type: Sprite
+    state: wood
+  - type: Item
+    HeldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_wood
+  - type: Stack
+    stackType: FloorTileWood
+  - type: Construction
+    graph: tileWood
+    node: woodtile
+
+- type: entity
+  name: white tile
+  parent: FloorTileItemBase
+  id: FloorTileItemWhite
+  components:
+  - type: Sprite
+    state: white
+  - type: Item
+    HeldPrefix: white
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_white
+  - type: Stack
+    stackType: FloorTileWhite
+
+- type: entity
+  name: dark tile
+  parent: FloorTileItemBase
+  id: FloorTileItemDark
+  components:
+  - type: Sprite
+    state: dark
+  - type: Item
+    HeldPrefix: dark
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_dark
+  - type: Stack
+    stackType: FloorTileDark
+
+- type: entity
+  name: techmaint floor
+  parent: FloorTileItemBase
+  id: FloorTileItemTechmaint
+  components:
+  - type: Sprite
+    state: dark_techfloor_grid
+  - type: Item
+    HeldPrefix: dark
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_techmaint
+  - type: Stack
+    stackType: FloorTileTechmaint
+
+- type: entity
+  name: freezer tile
+  parent: FloorTileItemBase
+  id: FloorTileItemFreezer
+  components:
+  - type: Sprite
+    state: showroom
+  - type: Item
+    HeldPrefix: showroom
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_freezer
+  - type: Stack
+    stackType: FloorTileFreezer
+
+- type: entity
+  name: showroom tile
+  parent: FloorTileItemBase
+  id: FloorTileItemShowroom
+  components:
+  - type: Sprite
+    state: showroom
+  - type: Item
+    HeldPrefix: showroom
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_showroom
+  - type: Stack
+    stackType: FloorTileShowroom
+
+- type: entity
+  name: green-circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGCircuit
+  components:
+  - type: Sprite
+    state: gcircuit
+  - type: Item
+    HeldPrefix: silver
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_green_circuit
+  - type: Stack
+    stackType: FloorTileGCircuit
+
+- type: entity
+  name: gold floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGold
+  components:
+  - type: Sprite
+    state: gold
+  - type: Item
+    HeldPrefix: gold
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_gold
+  - type: Stack
+    stackType: FloorTileGold
+
+- type: entity
+  name: reinforced tile
+  parent: FloorTileItemBase
+  id: FloorTileItemReinforced
+  components:
+  - type: Sprite
+    state: reinforced
+  - type: Item
+    HeldPrefix: reinforced
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_reinforced
+  - type: Stack
+    stackType: FloorTileReinforced
+
+- type: entity
+  name: mono tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMono
+  components:
+  - type: Sprite
+    state: white_monofloor
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_mono
+  - type: Stack
+    stackType: FloorTileMono
+
+- type: entity
+  name: linoleum floor
+  parent: FloorTileItemBase
+  id: FloorTileItemLino
+  components:
+  - type: Sprite
+    state: white_monofloor
+  - type: Item
+    HeldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_lino
+  - type: Stack
+    stackType: FloorTileLino
+
+- type: entity
+  name: hydro tile
+  parent: FloorTileItemBase
+  id: FloorTileItemHydro
+  components:
+  - type: Sprite
+    state: hydro
+  - type: Item
+    HeldPrefix: hydro
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_hydro
+  - type: Stack
+    stackType: FloorTileHydro
+
+- type: entity
+  name: dirty tile
+  parent: FloorTileItemBase
+  id: FloorTileItemDirty
+  components:
+  - type: Sprite
+    state: dirty
+  - type: Item
+    HeldPrefix: brown
+  - type: FloorTile
+    outputs:
+      - plating
+      - floor_steel_dirty
+  - type: Stack
+    stackType: FloorTileDirty

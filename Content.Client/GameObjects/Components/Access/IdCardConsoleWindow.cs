@@ -29,15 +29,14 @@ namespace Content.Client.GameObjects.Components.Access
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
-        private readonly Dictionary<string, Button> _accessButtons = new Dictionary<string, Button>();
+        private readonly Dictionary<string, Button> _accessButtons = new();
 
-        private string _lastFullName;
-        private string _lastJobTitle;
-
-        protected override Vector2? CustomSize => (650, 270);
+        private string? _lastFullName;
+        private string? _lastJobTitle;
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
         {
+            MinSize = SetSize = (650, 290);
             _owner = owner;
             var vBox = new VBoxContainer();
 
@@ -60,7 +59,7 @@ namespace Content.Client.GameObjects.Components.Access
             _targetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
 
             // Separator
-            vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
+            vBox.AddChild(new Control {MinSize = (0, 8)});
 
             // Name and job title line edits.
             vBox.AddChild(new GridContainer
@@ -76,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Access
                     }),
                     (_fullNameLineEdit = new LineEdit
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
                     }),
                     (_fullNameSaveButton = new Button
                     {
@@ -91,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Access
                     }),
                     (_jobTitleLineEdit = new LineEdit
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        HorizontalExpand = true
                     }),
                     (_jobTitleSaveButton = new Button
                     {
@@ -116,13 +115,13 @@ namespace Content.Client.GameObjects.Components.Access
             _jobTitleSaveButton.OnPressed += _ => SubmitData();
 
             // Separator
-            vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
+            vBox.AddChild(new Control {MinSize = (0, 8)});
 
             {
                 var grid = new GridContainer
                 {
                     Columns = 5,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+                    HorizontalAlignment = HAlignment.Center
                 };
                 vBox.AddChild(grid);
 
@@ -166,7 +165,7 @@ namespace Content.Client.GameObjects.Components.Access
             _fullNameLineEdit.Editable = interfaceEnabled;
             if (!fullNameDirty)
             {
-                _fullNameLineEdit.Text = state.TargetIdFullName;
+                _fullNameLineEdit.Text = state.TargetIdFullName ?? "";
             }
 
             _fullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
@@ -175,7 +174,7 @@ namespace Content.Client.GameObjects.Components.Access
             _jobTitleLineEdit.Editable = interfaceEnabled;
             if (!jobTitleDirty)
             {
-                _jobTitleLineEdit.Text = state.TargetIdJobTitle;
+                _jobTitleLineEdit.Text = state.TargetIdJobTitle ?? "";
             }
 
             _jobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
@@ -185,7 +184,7 @@ namespace Content.Client.GameObjects.Components.Access
                 button.Disabled = !interfaceEnabled;
                 if (interfaceEnabled)
                 {
-                    button.Pressed = state.TargetIdAccessList.Contains(accessName);
+                    button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
                 }
             }
 

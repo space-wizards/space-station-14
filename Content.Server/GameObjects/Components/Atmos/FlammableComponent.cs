@@ -1,39 +1,35 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
+    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IInteractUsing
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private bool _resisting = false;
-        private readonly List<EntityUid> _collided = new List<EntityUid>();
+        private readonly List<EntityUid> _collided = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; private set; }
@@ -42,17 +38,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         public float FireStacks { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("fireSpread")]
         public bool FireSpread { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => x.FireSpread, "fireSpread", false);
-            serializer.DataField(this, x => x.CanResistFire, "canResistFire", false);
-        }
 
         public void Ignite()
         {
@@ -78,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void AdjustFireStacks(float relativeFireStacks)
         {
-            FireStacks = MathF.Max(MathF.Min(-10f, FireStacks + relativeFireStacks), 20f);
+            FireStacks = MathF.Min(MathF.Max(-10f, FireStacks + relativeFireStacks), 20f);
             if (OnFire && FireStacks <= 0)
                 Extinguish();
 
@@ -93,24 +84,24 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks = MathF.Min(0, FireStacks + 1);
             }
 
-            Owner.TryGetComponent(out ServerStatusEffectsComponent status);
+            Owner.TryGetComponent(out ServerAlertsComponent? status);
 
             if (!OnFire)
             {
-                status?.RemoveStatusEffect(StatusEffect.Fire);
+                status?.ClearAlert(AlertType.Fire);
                 return;
             }
 
-            status?.ChangeStatusEffect(StatusEffect.Fire, "/Textures/Interface/StatusEffects/Fire/fire.png", null);
+            status?.ShowAlert(AlertType.Fire);
 
             if (FireStacks > 0)
             {
-                if(Owner.TryGetComponent(out TemperatureComponent temp))
+                if (Owner.TryGetComponent(out TemperatureComponent? temp))
                 {
                     temp.ReceiveHeat(200 * FireStacks);
                 }
 
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
+                if (Owner.TryGetComponent(out IDamageableComponent? damageable))
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
@@ -126,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             // If we're in an oxygenless environment, put the fire out.
-            if (tile?.Air?.GetMoles(Gas.Oxygen) < 1f)
+            if (tile.Air?.GetMoles(Gas.Oxygen) < 1f)
             {
                 Extinguish();
                 return;
@@ -134,28 +125,29 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             tile.HotspotExpose(700, 50, true);
 
+            var physics = Owner.GetComponent<IPhysBody>();
+
             foreach (var uid in _collided.ToArray())
             {
-                if (!uid.IsValid() || !_entityManager.EntityExists(uid))
+                if (!uid.IsValid() || !Owner.EntityManager.EntityExists(uid))
                 {
                     _collided.Remove(uid);
                     continue;
                 }
 
-                var entity = _entityManager.GetEntity(uid);
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
+                var entity = Owner.EntityManager.GetEntity(uid);
+                var otherPhysics = entity.GetComponent<IPhysBody>();
 
-                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
+                if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     _collided.Remove(uid);
                 }
             }
         }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (!collidedWith.TryGetComponent(out FlammableComponent otherFlammable))
+            if (!otherFixture.Body.Owner.TryGetComponent(out FlammableComponent? otherFlammable))
                 return;
 
             if (!FireSpread || !otherFlammable.FireSpread)
@@ -185,7 +177,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateAppearance()
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent appearanceComponent)) return;
+            if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)) return;
             appearanceComponent.SetData(FireVisuals.OnFire, OnFire);
             appearanceComponent.SetData(FireVisuals.FireStacks, FireStacks);
         }
@@ -199,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         // This needs some improvements...
         public void Resist()
         {
-            if (!OnFire || !ActionBlockerSystem.CanInteract(Owner) || _resisting || !Owner.TryGetComponent(out StunnableComponent stunnable)) return;
+            if (!OnFire || !ActionBlockerSystem.CanInteract(Owner) || _resisting || !Owner.TryGetComponent(out StunnableComponent? stunnable)) return;
 
             _resisting = true;
 
@@ -209,30 +201,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.SpawnTimer(2000, () =>
             {
                 _resisting = false;
-                FireStacks -= 2f;
+                FireStacks -= 3f;
                 UpdateAppearance();
             });
         }
 
-        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            switch (reagent.ID)
+            foreach (var hotItem in eventArgs.Using.GetAllComponents<IHotItem>())
             {
-                case "chem.H2O":
-                    Extinguish();
-                    AdjustFireStacks(-1.5f);
-                    return ReagentUnit.Zero;
-
-                case "chem.WeldingFuel":
-                case "chem.Thermite":
-                case "chem.Phoron":
-                case "chem.Ethanol":
-                    AdjustFireStacks(volume.Float() / 10f);
-                    return volume;
-
-                default:
-                    return ReagentUnit.Zero;
+                if (hotItem.IsCurrentlyHot())
+                {
+                    Ignite();
+                    return true;
+                }
             }
+
+            return false;
         }
     }
 }

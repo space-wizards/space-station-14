@@ -1,9 +1,8 @@
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
@@ -13,7 +12,14 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
     {
         private const string RadiationPrototype = "RadiationPulse";
 
-        public IEntity RadiationPulse(EntityCoordinates coordinates, float range, int dps, bool decay = true, float minPulseLifespan = 0.8f, float maxPulseLifespan = 2.5f, string sound = null)
+        public IEntity RadiationPulse(
+            EntityCoordinates coordinates,
+            float range,
+            int dps,
+            bool decay = true,
+            float minPulseLifespan = 0.8f,
+            float maxPulseLifespan = 2.5f,
+            string? sound = null)
         {
             var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
             var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
@@ -35,14 +41,16 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             base.Update(frameTime);
 
-            foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>())
+            var lookupSystem = IoCManager.Resolve<IEntityLookup>();
+
+            foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
             {
                 comp.Update(frameTime);
                 var ent = comp.Owner;
 
                 if (ent.Deleted) continue;
 
-                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
+                foreach (var entity in lookupSystem.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
                 {
                     if (entity.Deleted) continue;
 

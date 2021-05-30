@@ -1,16 +1,16 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
     [RegisterComponent]
-    public class SpillableComponent : Component
+    public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
 
@@ -23,36 +23,45 @@ namespace Content.Server.GameObjects.Components.Fluids
             protected override void GetData(IEntity user, SpillableComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user) ||
-                    !component.Owner.TryGetComponent(out SolutionContainerComponent solutionComponent) ||
-                    !solutionComponent.CanRemoveSolutions)
+                    !component.Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent) ||
+                    !solutionComponent.CanDrain)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 data.Text = Loc.GetString("Spill liquid");
-                data.Visibility = solutionComponent.CurrentVolume > ReagentUnit.Zero ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Visibility = solutionComponent.DrainAvailable > ReagentUnit.Zero
+                    ? VerbVisibility.Visible
+                    : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, SpillableComponent component)
             {
-                if (component.Owner.TryGetComponent<SolutionContainerComponent>(out var solutionComponent))
+                if (component.Owner.TryGetComponent<ISolutionInteractionsComponent>(out var solutionComponent))
                 {
-                    if (!solutionComponent.CanRemoveSolutions)
+                    if (!solutionComponent.CanDrain)
                     {
-                        user.PopupMessage(user, Loc.GetString("You can't pour anything from {0:theName}!", component.Owner));
+                        user.PopupMessage(user,
+                            Loc.GetString("You can't pour anything from {0:theName}!", component.Owner));
                     }
 
-                    if (solutionComponent.CurrentVolume.Float() <= 0)
+                    if (solutionComponent.DrainAvailable <= 0)
                     {
                         user.PopupMessage(user, Loc.GetString("{0:theName} is empty!", component.Owner));
                     }
 
                     // Need this as when we split the component's owner may be deleted
-                    var entityLocation = component.Owner.Transform.Coordinates;
-                    var solution = solutionComponent.SplitSolution(solutionComponent.CurrentVolume);
-                    solution.SpillAt(entityLocation, "PuddleSmear");
+                    solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
                 }
+            }
+        }
+
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
+        {
+            if (!eventArgs.Intentional && Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent))
+            {
+                solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
             }
         }
     }

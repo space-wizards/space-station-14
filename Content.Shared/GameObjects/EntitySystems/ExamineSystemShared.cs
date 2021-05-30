@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -6,16 +7,15 @@ using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
+    [Obsolete("Use ExaminedEvent instead.")]
     public interface IExamine
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             Ignored predicate = entity => entity == examiner || entity == examined;
 
-            if (ContainerHelpers.TryGetContainer(examiner, out var container))
+            if (examiner.TryGetContainer(out var container))
             {
                 predicate += entity => entity == container.Owner;
             }
@@ -150,7 +150,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(DragDropEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(DragDropEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
             var otherPos = args.DropLocation.ToMap(args.User.EntityManager);
@@ -161,14 +161,19 @@ namespace Content.Shared.GameObjects.EntitySystems
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target.Transform.MapPosition;
+            var otherPos = args.Target?.Transform.MapPosition ?? args.ClickLocation.ToMap(args.User.EntityManager);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)
+        public FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
         {
             var message = new FormattedMessage();
+
+            if (examiner == null)
+            {
+                return message;
+            }
 
             var doNewline = false;
 
@@ -180,6 +185,9 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             message.PushColor(Color.DarkGray);
+
+            // Raise the event and let things that subscribe to it change the message...
+            RaiseLocalEvent(entity.Uid, new ExaminedEvent(message, entity, examiner, IsInDetailsRange(examiner, entity)));
 
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())
@@ -199,6 +207,43 @@ namespace Content.Shared.GameObjects.EntitySystems
             message.Pop();
 
             return message;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity is examined.
+    ///     You have to manually add a newline at the start, and perform cleanup (popping state) at the end.
+    /// </summary>
+    public class ExaminedEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     The message that will be displayed as the examine text.
+        ///     Use the methods it exposes to change it, and don't forget to add a newline at the start!
+        ///     Input/Output parameter.
+        /// </summary>
+        public FormattedMessage Message { get; }
+
+        /// <summary>
+        ///     The entity performing the examining.
+        /// </summary>
+        public IEntity Examiner { get; }
+
+        /// <summary>
+        ///     Entity being examined, for broadcast event purposes.
+        /// </summary>
+        public IEntity Examined { get; }
+
+        /// <summary>
+        ///     Whether the examiner is in range of the entity to get some extra details.
+        /// </summary>
+        public bool IsInDetailsRange { get; }
+
+        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange)
+        {
+            Message = message;
+            Examined = examined;
+            Examiner = examiner;
+            IsInDetailsRange = isInDetailsRange;
         }
     }
 }

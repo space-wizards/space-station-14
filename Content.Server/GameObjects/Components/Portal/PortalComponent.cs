@@ -1,22 +1,23 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Portal;
+using Content.Shared.GameObjects.Components.Tag;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Portal
 {
     [RegisterComponent]
-    public class PortalComponent : SharedPortalComponent, ICollideBehavior
+    public class PortalComponent : SharedPortalComponent, IStartCollide
     {
         // Potential improvements: Different sounds,
         // Add Gateways
@@ -26,29 +27,13 @@ namespace Content.Server.GameObjects.Components.Portal
 
         private IEntity? _connectingTeleporter;
         private PortalState _state = PortalState.Pending;
-        [ViewVariables(VVAccess.ReadWrite)] private float _individualPortalCooldown;
-        [ViewVariables] private float _overallPortalCooldown;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("individual_cooldown")] private float _individualPortalCooldown = 2.1f;
+        [ViewVariables] [DataField("overall_cooldown")] private float _overallPortalCooldown = 2.0f;
         [ViewVariables] private bool _onCooldown;
-        [ViewVariables] private string _departureSound = "";
-        [ViewVariables] private string _arrivalSound = "";
-        public readonly List<IEntity> ImmuneEntities = new List<IEntity>(); // K
-        [ViewVariables(VVAccess.ReadWrite)] private float _aliveTime;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            // How long will the portal stay up: 0 is infinite
-            serializer.DataField(ref _aliveTime, "alive_time", 10.0f);
-
-            // How long before a specific person can go back into it
-            serializer.DataField(ref _individualPortalCooldown, "individual_cooldown", 2.1f);
-
-            // How long before anyone can go in it
-            serializer.DataField(ref _overallPortalCooldown, "overall_cooldown", 2.0f);
-
-            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
-            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
-        }
+        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
+        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
+        public readonly List<IEntity> ImmuneEntities = new(); // K
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("alive_time")] private float _aliveTime = 10f;
 
         public override void OnAdd()
         {
@@ -116,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Portal
         {
             // TODO: Check if it's slotted etc. Otherwise the slot item itself gets ported.
             return !ImmuneEntities.Contains(entity) &&
-                   entity.HasComponent<TeleportableComponent>();
+                   entity.HasTag("Teleportable");
         }
 
         public void StartCooldown()
@@ -157,13 +142,12 @@ namespace Content.Server.GameObjects.Components.Portal
             }
 
             var position = _connectingTeleporter.Transform.Coordinates;
-            var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // Departure
             // Do we need to rate-limit sounds to stop ear BLAST?
-            soundPlayer.PlayAtCoords(_departureSound, entity.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(entity), _departureSound, entity.Transform.Coordinates);
             entity.Transform.Coordinates = position;
-            soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(entity), _arrivalSound, entity.Transform.Coordinates);
             TryChangeState(PortalState.RecentlyTeleported);
 
             // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal
@@ -173,11 +157,11 @@ namespace Content.Server.GameObjects.Components.Portal
             StartCooldown();
         }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             if (_onCooldown == false)
             {
-                TryPortalEntity(collidedWith);
+                TryPortalEntity(otherFixture.Body.Owner);
             }
         }
     }

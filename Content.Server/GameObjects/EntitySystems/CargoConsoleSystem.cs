@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo;
-using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Cargo;
+using Content.Shared.GameTicking;
+using Content.Shared.Prototypes.Cargo;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class CargoConsoleSystem : EntitySystem
+    public class CargoConsoleSystem : EntitySystem, IResettingEntitySystem
     {
         /// <summary>
         /// How much time to wait (in seconds) before increasing bank accounts balance.
@@ -13,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// How many points to give to every bank account every <see cref="Delay"/> seconds.
         /// </summary>
-        private const int PointIncrease = 10;
+        private const int PointIncrease = 150;
 
         /// <summary>
         /// Keeps track of how much time has elapsed since last balance increase.
@@ -22,7 +26,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Stores all bank accounts.
         /// </summary>
-        private readonly Dictionary<int, CargoBankAccount> _accountsDict = new Dictionary<int, CargoBankAccount>();
+        private readonly Dictionary<int, CargoBankAccount> _accountsDict = new();
+
+        private readonly Dictionary<int, CargoOrderDatabase> _databasesDict = new();
         /// <summary>
         /// Used to assign IDs to bank accounts. Incremental counter.
         /// </summary>
@@ -36,9 +42,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public CargoBankAccount StationAccount => GetBankAccount(0);
 
+        public CargoOrderDatabase StationOrderDatabase => GetOrderDatabase(0);
+
         public override void Initialize()
         {
-            CreateBankAccount("Orbital Monitor IV Station", 100000);
+            CreateBankAccount("Space Station 14", 1000);
+            CreateOrderDatabase(0);
         }
 
         public override void Update(float frameTime)
@@ -56,6 +65,15 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
+        public void Reset()
+        {
+            _accountsDict.Clear();
+            _databasesDict.Clear();
+            _timer = 0;
+            _accountIndex = 0;
+            Initialize();
+        }
+
         /// <summary>
         /// Creates a new bank account.
         /// </summary>
@@ -66,6 +84,11 @@ namespace Content.Server.GameObjects.EntitySystems
             _accountIndex += 1;
         }
 
+        public void CreateOrderDatabase(int id)
+        {
+            _databasesDict.Add(id, new CargoOrderDatabase(id));
+        }
+
         /// <summary>
         /// Returns the bank account associated with the given ID.
         /// </summary>
@@ -74,14 +97,42 @@ namespace Content.Server.GameObjects.EntitySystems
             return _accountsDict[id];
         }
 
+        public CargoOrderDatabase GetOrderDatabase(int id)
+        {
+            return _databasesDict[id];
+        }
+
         /// <summary>
         /// Returns whether the account exists, eventually passing the account in the out parameter.
         /// </summary>
-        public bool TryGetBankAccount(int id, out CargoBankAccount account)
+        public bool TryGetBankAccount(int id, [NotNullWhen(true)] out CargoBankAccount? account)
         {
             return _accountsDict.TryGetValue(id, out account);
         }
 
+        public bool TryGetOrderDatabase(int id, [NotNullWhen(true)] out CargoOrderDatabase? database)
+        {
+            return _databasesDict.TryGetValue(id, out database);
+        }
+        /// <summary>
+        /// Verifies if there is enough money in the account's balance to pay the amount.
+        /// Returns false if there's no account associated with the given ID
+        /// or if the balance would end up being negative.
+        /// </summary>
+        public bool CheckBalance(int id, int amount)
+        {
+            if (!TryGetBankAccount(id, out var account))
+            {
+                return false;
+            }
+
+            if (account.Balance + amount < 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
         /// <summary>
         /// Attempts to change the given account's balance.
         /// Returns false if there's no account associated with the given ID
@@ -94,13 +145,62 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (account.Balance + amount < 0)
-            {
-                return false;
-            }
-
             account.Balance += amount;
             return true;
+        }
+
+        public bool AddOrder(int id, string requester, string reason, string productId, int amount, int payingAccountId)
+        {
+            if (amount < 1 || !TryGetOrderDatabase(id, out var database))
+                return false;
+            database.AddOrder(requester, reason, productId, amount, payingAccountId);
+            SyncComponentsWithId(id);
+            return true;
+        }
+
+        public bool RemoveOrder(int id, int orderNumber)
+        {
+            if (!TryGetOrderDatabase(id, out var database))
+                return false;
+            database.RemoveOrder(orderNumber);
+            SyncComponentsWithId(id);
+            return true;
+        }
+
+        public bool ApproveOrder(int id, int orderNumber)
+        {
+            if (!TryGetOrderDatabase(id, out var database))
+                return false;
+            if (!database.ApproveOrder(orderNumber))
+                return false;
+            SyncComponentsWithId(id);
+            return true;
+        }
+
+        public List<CargoOrderData> RemoveAndGetApprovedOrders(int id)
+        {
+            if (!TryGetOrderDatabase(id, out var database))
+                return new List<CargoOrderData>();
+            var approvedOrders = database.SpliceApproved();
+            SyncComponentsWithId(id);
+            return approvedOrders;
+        }
+
+        public (int CurrentCapacity, int MaxCapacity) GetCapacity(int id)
+        {
+            if (!TryGetOrderDatabase(id, out var database))
+                return (0,0);
+            return (database.CurrentOrderSize, database.MaxOrderSize);
+        }
+
+        private void SyncComponentsWithId(int id)
+        {
+            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>(true))
+            {
+                if (comp.Database == null || comp.Database.Id != id)
+                    continue;
+                comp.Dirty();
+            }
         }
     }
 }

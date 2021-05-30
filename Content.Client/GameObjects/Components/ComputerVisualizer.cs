@@ -1,44 +1,25 @@
 using Content.Shared.GameObjects.Components;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
+    [UsedImplicitly]
     public sealed class ComputerVisualizer : AppearanceVisualizer
     {
+        [DataField("key")]
         private string KeyboardState = "generic_key";
+        [DataField("screen")]
         private string ScreenState = "generic";
+        [DataField("body")]
         private string BodyState = "computer";
+        [DataField("bodyBroken")]
         private string BodyBrokenState = "broken";
         private string ScreenBroken = "computer_broken";
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("key", out var scalar))
-            {
-                KeyboardState = scalar.AsString();
-            }
-
-            if (node.TryGetNode("screen", out scalar))
-            {
-                ScreenState = scalar.AsString();
-            }
-
-            if (node.TryGetNode("body", out scalar))
-            {
-                BodyState = scalar.AsString();
-            }
-
-            if (node.TryGetNode("bodyBroken", out scalar))
-            {
-                BodyBrokenState = scalar.AsString();
-            }
-        }
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -85,7 +66,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        public enum Layers
+        public enum Layers : byte
         {
             Body,
             Screen,

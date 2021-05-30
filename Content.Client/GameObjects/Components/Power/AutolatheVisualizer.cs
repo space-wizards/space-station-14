@@ -1,33 +1,33 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class AutolatheVisualizer : AppearanceVisualizer
     {
-        private const string AnimationKey = "autolathe_animation";
+        private const string AnimationKey = "inserting_animation";
 
         private Animation _buildingAnimation;
         private Animation _insertingMetalAnimation;
         private Animation _insertingGlassAnimation;
         private Animation _insertingGoldAnimation;
-        private Animation _insertingPhoronAnimation;
+        private Animation _insertingPlasmaAnimation;
+        private Animation _insertingPlasticAnimation;
 
-        public override void LoadData(YamlMappingNode node)
+        public AutolatheVisualizer()
         {
-            base.LoadData(node);
-
-            _buildingAnimation = PopulateAnimation("autolathe_building", "autolathe_building_unlit", 0.5f);
-            _insertingMetalAnimation = PopulateAnimation("autolathe_inserting_metal_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingGlassAnimation = PopulateAnimation("autolathe_inserting_glass_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingGoldAnimation = PopulateAnimation("autolathe_inserting_gold_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingPhoronAnimation = PopulateAnimation("autolathe_inserting_phoron_sheet", "autolathe_inserting_unlit", 0.9f);
+            _buildingAnimation = PopulateAnimation("building", "building_unlit", 0.5f);
+            _insertingMetalAnimation = PopulateAnimation("inserting_metal", "inserting_unlit", 0.5f);
+            _insertingGlassAnimation = PopulateAnimation("inserting_glass", "inserting_unlit", 0.5f);
+            _insertingGoldAnimation = PopulateAnimation("inserting_gold", "inserting_unlit", 0.5f);
+            _insertingPlasmaAnimation = PopulateAnimation("inserting_plasma", "inserting_unlit", 0.5f);
+            _insertingPlasticAnimation = PopulateAnimation("inserting_plastic", "inserting_unlit", 0.5f);
         }
 
         private Animation PopulateAnimation(string sprite, string spriteUnlit, float length)
@@ -65,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 state = LatheVisualState.Idle;
             }
-
+            sprite.LayerSetVisible(AutolatheVisualLayers.AnimationLayer, true);
             switch (state)
             {
                 case LatheVisualState.Idle:
@@ -74,8 +74,9 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Stop(AnimationKey);
                     }
 
-                    sprite.LayerSetState(AutolatheVisualLayers.Base, "autolathe");
-                    sprite.LayerSetState(AutolatheVisualLayers.BaseUnlit, "autolathe_unlit");
+                    sprite.LayerSetState(AutolatheVisualLayers.Base, "icon");
+                    sprite.LayerSetState(AutolatheVisualLayers.BaseUnlit, "unlit");
+                    sprite.LayerSetVisible(AutolatheVisualLayers.AnimationLayer, false);
                     break;
                 case LatheVisualState.Producing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
@@ -101,10 +102,16 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Play(_insertingGoldAnimation, AnimationKey);
                     }
                     break;
-                case LatheVisualState.InsertingPhoron:
+                case LatheVisualState.InsertingPlasma:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
-                        animPlayer.Play(_insertingPhoronAnimation, AnimationKey);
+                        animPlayer.Play(_insertingPlasmaAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingPlastic:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(_insertingPlasticAnimation, AnimationKey);
                     }
                     break;
                 default:
@@ -114,10 +121,12 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(AutolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum AutolatheVisualLayers
+
+        public enum AutolatheVisualLayers : byte
         {
             Base,
-            BaseUnlit
+            BaseUnlit,
+            AnimationLayer
         }
     }
 }

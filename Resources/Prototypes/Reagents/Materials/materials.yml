@@ -1,0 +1,23 @@
+- type: material
+  id: Plasma
+  stack: Plasma
+  name: plasma
+  icon: Objects/Materials/Sheets/other.rsi/plasma.png
+
+- type: material
+  id: Phoron
+  stack: Phoron
+  name: phoron
+  icon: Objects/Materials/Sheets/other.rsi/phoron.png
+
+- type: material
+  id: Plastic
+  stack: Plastic
+  name: plastic
+  icon: Objects/Materials/Sheets/other.rsi/plastic.png
+
+- type: material
+  id: Wood
+  stack: WoodPlank
+  name: wood
+  icon: Objects/Materials/materials.rsi/wood.png

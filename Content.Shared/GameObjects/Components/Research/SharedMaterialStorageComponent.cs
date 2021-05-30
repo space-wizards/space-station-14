@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ namespace Content.Shared.GameObjects.Components.Research
 {
     public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
-        [ViewVariables]
-        protected virtual Dictionary<string, int> Storage { get; set; }
         public override string Name => "MaterialStorage";
         public sealed override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
+
+        [ViewVariables]
+        protected virtual Dictionary<string, int> Storage { get; set; } = new();
 
         public int this[string ID]
         {
@@ -25,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
-        public int this[Material material]
+        public int this[MaterialPrototype material]
         {
             get
             {

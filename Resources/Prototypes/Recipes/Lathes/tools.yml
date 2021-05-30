@@ -1,0 +1,134 @@
+- type: latheRecipe
+  id: Wirecutter
+  icon: Objects/Tools/wirecutters.rsi/cutters-map.png
+  result: Wirecutter
+  completetime: 500
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Screwdriver
+  icon:
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver-map
+  result: Screwdriver
+  completetime: 500
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Welder
+  icon:
+    sprite: /Textures/Objects/Tools/welder.rsi
+    state: icon
+  result: Welder
+  completetime: 500
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  id: Wrench
+  icon: Objects/Tools/wrench.rsi/icon.png
+  result: Wrench
+  completetime: 500
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: CableStack
+  name: cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
+  result: ApcExtensionCableStack1
+  completetime: 500
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: MVWireStack
+  name: MV cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
+  result: MVWireStack1
+  completetime: 500
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  id: HVWireStack
+  name: HV cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
+  result: HVWireStack1
+  completetime: 500
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Crowbar
+  icon: Objects/Tools/crowbar.rsi/icon.png
+  result: Crowbar
+  completetime: 500
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Pickaxe
+  icon: Objects/Weapons/Melee/pickaxe.rsi
+  result: Pickaxe
+  completetime: 500
+  materials:
+    Steel: 200
+    Wood: 100
+
+- type: latheRecipe
+  id: Shovel
+  icon:
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  result: Shovel
+  completetime: 500
+  materials:
+    Steel: 200
+    Wood: 100
+
+- type: latheRecipe
+  id: Multitool
+  icon:
+    sprite: Objects/Tools/multitool.rsi
+    state: icon
+  result: Multitool
+  completetime: 500
+  materials:
+    Steel: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: PowerDrill
+  icon:
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  result: PowerDrill
+  completetime: 500
+  materials:
+    Steel: 600
+    Plastic: 200
+
+- type: latheRecipe
+  id: RCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  result: RCD
+  completetime: 1000
+  materials:
+    Steel: 1000
+    Plastic: 300
+
+- type: latheRecipe
+  id: RCDAmmo
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd_ammo
+  result: RCDAmmo
+  completetime: 600
+  materials:
+    Steel: 500
+    Plastic: 250

@@ -1,28 +1,26 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Trigger;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Trigger
 {
-    public class TimerTriggerVisualizer : AppearanceVisualizer
+    [UsedImplicitly]
+    public class TimerTriggerVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "priming_animation";
 
-        private Animation PrimingAnimation;
+        [DataField("countdown_sound", required: true)]
+        private string? _countdownSound;
 
-        public override void LoadData(YamlMappingNode node)
+        private Animation PrimingAnimation = default!;
+
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var countdownSound = node.GetNode("countdown_sound").AsString();
-
-
             PrimingAnimation = new Animation { Length = TimeSpan.MaxValue };
             {
                 var flick = new AnimationTrackSpriteFlick();
@@ -30,9 +28,12 @@ namespace Content.Client.GameObjects.Components.Trigger
                 flick.LayerKey = TriggerVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("primed", 0f));
 
-                var sound = new AnimationTrackPlaySound();
-                PrimingAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(countdownSound, 0));
+                if (_countdownSound != null)
+                {
+                    var sound = new AnimationTrackPlaySound();
+                    PrimingAnimation.AnimationTracks.Add(sound);
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound, 0));
+                }
             }
         }
 
@@ -69,7 +70,7 @@ namespace Content.Client.GameObjects.Components.Trigger
             }
         }
     }
-    public enum TriggerVisualLayers
+    public enum TriggerVisualLayers : byte
     {
         Base
     }

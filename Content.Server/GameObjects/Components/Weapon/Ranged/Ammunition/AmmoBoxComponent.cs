@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -6,16 +6,15 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
@@ -25,31 +24,34 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     {
         public override string Name => "AmmoBox";
 
-        private BallisticCaliber _caliber;
-        public int Capacity => _capacity;
-        private int _capacity;
+        [DataField("caliber")]
+        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+
+        [DataField("capacity")]
+        public int Capacity
+        {
+            get => _capacity;
+            set
+            {
+                _capacity = value;
+                _spawnedAmmo = new Stack<IEntity>(value);
+            }
+        }
+
+        private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
-        private Stack<IEntity> _spawnedAmmo;
-        private Container _ammoContainer;
+        private Stack<IEntity> _spawnedAmmo = new();
+        private Container _ammoContainer = default!;
         private int _unspawnedCount;
 
-        private string _fillPrototype;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            serializer.DataField(ref _capacity, "capacity", 30);
-            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-
-            _spawnedAmmo = new Stack<IEntity>(_capacity);
-        }
+        [DataField("fillPrototype")]
+        private string? _fillPrototype;
 
         public override void Initialize()
         {
             base.Initialize();
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-container", Owner, out var existing);
+            _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-container", out var existing);
 
             if (existing)
             {
@@ -71,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -79,9 +81,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeAmmo()
+        public IEntity? TakeAmmo()
         {
-            if (_spawnedAmmo.TryPop(out IEntity ammo))
+            if (_spawnedAmmo.TryPop(out var ammo))
             {
                 _ammoContainer.Remove(ammo);
                 return ammo;
@@ -98,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public bool TryInsertAmmo(IEntity user, IEntity entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -128,11 +130,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }
 
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent rangedMagazine))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? rangedMagazine))
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
                     var ammo = rangedMagazine.TakeAmmo();
+
+                    if (ammo == null)
+                    {
+                        continue;
+                    }
 
                     if (!TryInsertAmmo(eventArgs.User, ammo))
                     {
@@ -149,21 +156,29 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private bool TryUse(IEntity user)
         {
-            if (!user.TryGetComponent(out HandsComponent handsComponent))
+            if (!user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return false;
             }
 
             var ammo = TakeAmmo();
-            var itemComponent = ammo.GetComponent<ItemComponent>();
 
-            if (!handsComponent.CanPutInHand(itemComponent))
+            if (ammo == null)
             {
-                TryInsertAmmo(user, ammo);
                 return false;
             }
 
-            handsComponent.PutInHand(itemComponent);
+            if (ammo.TryGetComponent(out ItemComponent? item))
+            {
+                if (!handsComponent.CanPutInHand(item))
+                {
+                    TryInsertAmmo(user, ammo);
+                    return false;
+                }
+
+                handsComponent.PutInHand(item);
+            }
+
             UpdateAppearance();
             return true;
         }
@@ -214,6 +229,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
                 data.Text = Loc.GetString("Dump 10");
                 data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, AmmoBoxComponent component)

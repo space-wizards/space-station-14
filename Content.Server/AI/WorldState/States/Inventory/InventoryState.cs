@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Inventory
 {
@@ -12,13 +12,13 @@ namespace Content.Server.AI.WorldState.States.Inventory
 
         public override IEnumerable<IEntity> GetValue()
         {
-            if (Owner.TryGetComponent(out HandsComponent handsComponent))
+            if (Owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 foreach (var item in handsComponent.GetAllHeldItems())
                 {
                     if (item.Owner.Deleted)
                         continue;
-                    
+
                     yield return item.Owner;
                 }
             }

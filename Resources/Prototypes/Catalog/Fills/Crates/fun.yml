@@ -1,0 +1,68 @@
+- type: entity
+  id: CrateFunPlushie
+  name: plushie crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieBee
+        amount: 1
+      - id: PlushieNar
+        amount: 1
+      - id: PlushieCarp
+        amount: 1
+      - id: PlushieNuke
+        amount: 1
+      - id: PlushieSlime
+        amount: 1
+      - id: PlushieSnake
+        amount: 1
+      - id: PlushieLizard
+        amount: 1
+
+- type: entity
+  id: CrateFunInstruments
+  name: big band instrument collection
+  description: Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments.
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: SynthesizerInstrument
+        amount: 1
+      - id: AcousticGuitarInstrument
+        amount: 1
+      - id: ViolinInstrument
+        amount: 1
+      - id: TrumpetInstrument
+        amount: 1
+      - id: ElectricGuitarInstrument
+        amount: 1
+      - id: AccordionInstrument
+        amount: 1
+      - id: HarmonicaInstrument
+        amount: 1
+      - id: RecorderInstrument
+        amount: 1
+      - id: TromboneInstrument
+        amount: 1
+      - id: SaxophoneInstrument
+        amount: 1
+      - id: GlockenspielInstrument
+        amount: 1
+      - id: BanjoInstrument
+        amount: 1
+      - id: BikeHornInstrument
+        amount: 1
+
+- type: entity
+  id: CrateFunArtSupplies
+  name: art supplies
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrayonBox
+        amount: 1
+      - id: CrayonWhite
+        amount: 1

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Body;
@@ -9,15 +9,15 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("trayPrototype")]
         private string? _trayPrototypeId;
 
         [ViewVariables]
@@ -41,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public ContainerSlot? TrayContainer { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("doSoulBeep")]
         public bool DoSoulBeep = true;
 
         [ViewVariables]
@@ -51,15 +53,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);
-            TrayContainer = ContainerManagerComponent.Ensure<ContainerSlot>("morgue_tray", Owner, out _);
-        }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _trayPrototypeId, "trayPrototype", "");
-            serializer.DataField(ref DoSoulBeep, "doSoulBeep", true);
+            TrayContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "morgue_tray", out _);
         }
 
         public override Vector2 ContentsDumpPosition()
@@ -122,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             {
                 count++;
                 if (!hasMob && entity.HasComponent<IBody>()) hasMob = true;
-                if (!hasSoul && entity.TryGetComponent<BasicActorComponent>(out var actor) && actor.playerSession != null) hasSoul = true;
+                if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null) hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
             Appearance?.SetData(MorgueVisuals.HasMob, hasMob);
@@ -148,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             CheckContents();
 
             if(DoSoulBeep && Appearance !=null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg", Owner);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

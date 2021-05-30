@@ -1,10 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
     /// <summary>
-    ///     Used to determine whether a BodyPart can connect to another BodyPart.
+    ///     Determines whether two <see cref="IBodyPart"/>s can connect.
     /// </summary>
     [Serializable, NetSerializable]
     public enum BodyPartCompatibility

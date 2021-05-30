@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -27,16 +27,17 @@ namespace Content.Client.GameObjects.Components.Chemistry
         void IItemStatus.DestroyControl(Control control) { }
 
         //Handle net updates
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            var cast = (InjectorComponentState) curState;
-            if (cast != null)
+            if (curState is not InjectorComponentState state)
             {
-                CurrentVolume = cast.CurrentVolume;
-                TotalVolume = cast.TotalVolume;
-                CurrentMode = cast.CurrentMode;
-                _uiUpdateNeeded = true;
+                return;
             }
+
+            CurrentVolume = state.CurrentVolume;
+            TotalVolume = state.TotalVolume;
+            CurrentMode = state.CurrentMode;
+            _uiUpdateNeeded = true;
         }
 
         /// <summary>
@@ -56,9 +57,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
                 if (!_parent._uiUpdateNeeded)
                 {
                     return;

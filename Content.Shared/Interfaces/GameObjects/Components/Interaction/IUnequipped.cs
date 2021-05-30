@@ -1,61 +1,62 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when their owner is removed from an inventory slot.
+    ///     This interface gives components behavior when their entity is removed from a non-hand inventory slot,
+    ///     regardless of where it's going to. This includes moving the entity from a non-hand slot into a hand slot
+    ///     (which would also fire <see cref="IEquippedHand"/>).
+    ///
+    ///     This DOES NOT fire when removing the entity from a hand slot (<see cref="IUnequippedHand"/>), nor
+    ///     does it fire when removing the entity from held/equipped storage.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IUnequipped
     {
+        [Obsolete("Use UnequippedMessage instead")]
         void Unequipped(UnequippedEventArgs eventArgs);
     }
 
-    public class UnequippedEventArgs : EventArgs
+    public class UnequippedEventArgs : UserEventArgs
     {
-        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot) : base(user)
         {
-            User = user;
             Slot = slot;
         }
 
-        public IEntity User { get; }
         public EquipmentSlotDefines.Slots Slot { get; }
     }
 
     /// <summary>
-    ///     Raised when removing the entity from an inventory slot.
+    ///     Raised when removing an entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class UnequippedMessage : EntitySystemMessage
+    public class UnequippedEvent : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Item that was equipped.
+        ///     Item that was unequipped.
         /// </summary>
-        public IEntity Equipped { get; }
+        public IEntity Unequipped { get; }
 
         /// <summary>
-        ///     Slot where the item was removed from.
+        ///     Slot that the item was removed from.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public UnequippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public UnequippedEvent(IEntity user, IEntity unequipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
-            Equipped = equipped;
+            Unequipped = unequipped;
             Slot = slot;
         }
     }

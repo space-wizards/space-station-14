@@ -1,15 +1,18 @@
-﻿using System;
+#nullable enable
+using System;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     ///     This interface gives components behavior when thrown.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IThrown
     {
+        [Obsolete("Use ThrownMessage instead")]
         void Thrown(ThrownEventArgs eventArgs);
     }
 
@@ -27,13 +30,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when throwing the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class ThrownMessage : EntitySystemMessage
+    public class ThrownEvent : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
         /// <summary>
         ///     Entity that threw the item.
         /// </summary>
@@ -44,7 +42,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Thrown { get; }
 
-        public ThrownMessage(IEntity user, IEntity thrown)
+        public ThrownEvent(IEntity user, IEntity thrown)
         {
             User = user;
             Thrown = thrown;

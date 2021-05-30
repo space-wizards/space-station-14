@@ -1,31 +1,31 @@
-﻿#nullable enable
+#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Verbs;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -41,29 +41,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IInteractUsing))]
     public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
+        private static ReagentInventoryComparer _comparer = new();
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] private string _packPrototypeId = "";
+        [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
-        [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
 
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
-
-        /// <summary>
-        /// Shows the serializer how to save/load this components yaml prototype.
-        /// </summary>
-        /// <param name="serializer">Yaml serializer</param>
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-        }
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
@@ -79,15 +70,21 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _beakerContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += OnPowerChanged;
-            }
+                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             InitializeFromPrototype();
             UpdateUserInterface();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerChanged(powerChanged);
+                    break;
+            }
         }
 
         /// <summary>
@@ -98,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) return;
 
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out ReagentDispenserInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
                 return;
             }
@@ -107,9 +104,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 Inventory.Add(new ReagentDispenserInventoryEntry(entry));
             }
+
+            Inventory.Sort(_comparer);
         }
 
-        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerChanged(PowerChangedMessage e)
         {
             UpdateUserInterface();
         }
@@ -153,8 +152,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 case UiButton.SetDispenseAmount10:
                     _dispenseAmount = ReagentUnit.New(10);
                     break;
+                case UiButton.SetDispenseAmount15:
+                    _dispenseAmount = ReagentUnit.New(15);
+                    break;
+                case UiButton.SetDispenseAmount20:
+                    _dispenseAmount = ReagentUnit.New(20);
+                    break;
                 case UiButton.SetDispenseAmount25:
                     _dispenseAmount = ReagentUnit.New(25);
+                    break;
+                case UiButton.SetDispenseAmount30:
+                    _dispenseAmount = ReagentUnit.New(30);
                     break;
                 case UiButton.SetDispenseAmount50:
                     _dispenseAmount = ReagentUnit.New(50);
@@ -206,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Inventory, Owner.Name, null, _dispenseAmount);
+                    string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionContainerComponent>();
@@ -230,7 +238,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+            if(beaker is null)
+                return;
+
+            _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
@@ -245,7 +256,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private void TryClear()
         {
             if (!HasBeaker) return;
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+            if(solution is null)
+                return;
+
             solution.RemoveAllSolution();
 
             UpdateUserInterface();
@@ -259,7 +273,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker) return;
 
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
+            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+            if (solution is null)
+                return;
+
             solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
@@ -271,7 +288,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent? actor))
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -285,7 +302,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Open(actor.PlayerSession);
             }
         }
 
@@ -340,8 +357,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
-
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         [Verb]
@@ -362,6 +378,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             protected override void Activate(IEntity user, ReagentDispenserComponent component)
             {
                 component.TryEject(user);
+            }
+        }
+
+        private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>
+        {
+            public override int Compare(ReagentDispenserInventoryEntry x, ReagentDispenserInventoryEntry y)
+            {
+                return string.Compare(x.ID, y.ID, StringComparison.InvariantCultureIgnoreCase);
             }
         }
     }

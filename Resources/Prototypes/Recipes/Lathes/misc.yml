@@ -1,0 +1,72 @@
+- type: latheRecipe
+  id: LightTube
+  icon: Objects/Power/light_tube.rsi/normal.png
+  result: LightTube
+  completetime: 500
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: LightBulb
+  icon: Objects/Power/light_bulb.rsi/normal.png
+  result: LightBulb
+  completetime: 500
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: PowerCellSmallHigh
+  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
+  result: PowerCellSmallHigh
+  completetime: 500
+  materials:
+    Steel: 100
+    Glass: 100
+
+- type: latheRecipe
+  id: GlowStickRed
+  icon: Objects/Misc/glowstick.rsi
+  result: GlowStickRed
+  completetime: 500
+  materials:
+    Plastic: 50
+
+- type: latheRecipe
+  id: FlareBase
+  icon: Objects/Misc/flare.rsi
+  result: FlareBase
+  completetime: 500
+  materials:
+    Plastic: 50
+
+- type: latheRecipe
+  id: FlashlightLantern
+  icon: 
+    sprite: Objects/Tools/flashlight.rsi
+    state: lantern_off
+  result: FlashlightLantern
+  completetime: 500
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: FireExtinguisher
+  icon:
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    state: fire_extinguisher_closed
+  result: FireExtinguisher 
+  completetime: 500
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Matchbox
+  icon: Objects/Tools/matches.rsi
+  result: Matchbox
+  completetime: 10
+  materials:
+    Wood: 100

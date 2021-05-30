@@ -1,16 +1,18 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    /// This interface gives components behavior when being clicked on by a user with an object in their hand
-    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
+    /// This interface gives components behavior when their entity is clicked on by a user with an object in their hand
+    /// who is in range and has unobstructed reach of the target entity (allows inside blockers). This includes
+    /// clicking on an object in the world as well as clicking on an object in inventory.
     /// </summary>
+    [RequiresExplicitImplementation]
     public interface IInteractUsing
     {
         /// <summary>
@@ -22,53 +24,57 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
+        [Obsolete("Use InteractUsingMessage instead")]
         Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
     public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public IEntity User { get; set; }
-        public EntityCoordinates ClickLocation { get; set; }
-        public IEntity Using { get; set; }
-        public IEntity Target { get; set; }
+        public InteractUsingEventArgs(IEntity user, EntityCoordinates clickLocation, IEntity @using, IEntity target)
+        {
+            User = user;
+            ClickLocation = clickLocation;
+            Using = @using;
+            Target = target;
+        }
+
+        public IEntity User { get; }
+        public EntityCoordinates ClickLocation { get; }
+        public IEntity Using { get; }
+        public IEntity Target { get; }
     }
 
     /// <summary>
-    ///     Raised when being clicked on or "attacked" by a user with an object in their hand
+    ///     Raised when a target entity is interacted with by a user while holding an object in their hand.
     /// </summary>
     [PublicAPI]
-    public class InteractUsingMessage : EntitySystemMessage
+    public class InteractUsingEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     If this message has already been "handled" by a previous system.
-        /// </summary>
-        public bool Handled { get; set; }
-
-        /// <summary>
-        ///     Entity that triggered the attack.
+        ///     Entity that triggered the interaction.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Entity that the User attacked with.
+        ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity ItemInHand { get; }
+        public IEntity Used { get; }
 
         /// <summary>
-        ///     Entity that was attacked.
+        ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Attacked { get; }
+        public IEntity Target { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation)
+        public InteractUsingEvent(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
             User = user;
-            ItemInHand = itemInHand;
-            Attacked = attacked;
+            Used = used;
+            Target = target;
             ClickLocation = clickLocation;
         }
     }

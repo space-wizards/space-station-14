@@ -1,26 +1,23 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Arcade;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
@@ -29,10 +26,10 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
     {
-        [Dependency] private IRobustRandom _random = null!;
+        [Dependency] private readonly IRobustRandom _random = null!;
 
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
-        [ComponentDependency] private WiresComponent? _wiresComponent = default!;
+        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+        [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
 
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
 
@@ -42,37 +39,27 @@ namespace Content.Server.GameObjects.Components.Arcade
         [ViewVariables] private bool _enemyInvincibilityFlag;
         [ViewVariables] private SpaceVillainGame _game = null!;
 
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFightVerbs = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFirstEnemyNames = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleLastEnemyNames = null!;
-        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleRewards = null!;
-
-        public override void ExposeData(ObjectSerializer serializer)
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFightVerbs")] private List<string> _possibleFightVerbs = new List<string>()
+            {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"};
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFirstEnemyNames")] private List<string> _possibleFirstEnemyNames = new List<string>(){
+            "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
+            "the Space", "Lord", "the Great", "Duke", "General"
+        };
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleLastEnemyNames")] private List<string> _possibleLastEnemyNames = new List<string>()
         {
-            serializer.DataField(ref _possibleFightVerbs, "possibleFightVerbs", new List<string>()
-                {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"});
-            serializer.DataField(ref _possibleFirstEnemyNames, "possibleFirstEnemyNames", new List<string>(){
-                "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
-                "the Space", "Lord", "the Great", "Duke", "General"
-            });
-            serializer.DataField(ref _possibleLastEnemyNames, "possibleLastEnemyNames", new List<string>()
-            {
-                "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
-                "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
-            });
-            serializer.DataField(ref _possibleRewards, "possibleRewards", new List<string>()
-            {
-                "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
-                "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
-                "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
-            });
-
-            _game = new SpaceVillainGame(this);
-        }
-
-        public void Activate(ActivateEventArgs eventArgs)
+            "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
+            "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
+        };
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleRewards")] private List<string> _possibleRewards = new List<string>()
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
+            "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
+            "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
+        };
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -80,14 +67,16 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
+            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
+
+            _game ??= new SpaceVillainGame(this);
 
             if (_wiresComponent?.IsPanelOpen == true)
             {
-                _wiresComponent.OpenInterface(actor.playerSession);
+                _wiresComponent.OpenInterface(actor.PlayerSession);
             } else
             {
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
             }
         }
 
@@ -99,14 +88,20 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+        }
 
-            if (_powerReceiverComponent != null)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                _powerReceiverComponent.OnPowerStateChanged += OnOnPowerStateChanged;
+                case PowerChangedMessage powerChanged:
+                    OnOnPowerStateChanged(powerChanged);
+                    break;
             }
         }
 
-        private void OnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnOnPowerStateChanged(PowerChangedMessage e)
         {
             if(e.Powered) return;
 
@@ -119,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (!Powered)
                 return;
 
-            if (!(serverMsg.Message is SpaceVillainArcadePlayerActionMessage msg)) return;
+            if (serverMsg.Message is not SpaceVillainArcadePlayerActionMessage msg) return;
 
             switch (msg.PlayerAction)
             {
@@ -133,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     _game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/newgame.ogg", Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/Arcade/newgame.ogg", Owner, AudioParams.Default.WithVolume(-4f));
                     _game = new SpaceVillainGame(this);
                     UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
                     break;
@@ -240,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             [Dependency] private readonly IRobustRandom _random = default!;
 
-            [ViewVariables] private SpaceVillainArcadeComponent Owner;
+            [ViewVariables] private readonly SpaceVillainArcadeComponent _owner;
 
             [ViewVariables] public string Name => $"{_fightVerb} {_enemyName}";
             [ViewVariables(VVAccess.ReadWrite)] private int _playerHp = 30;
@@ -253,8 +248,8 @@ namespace Content.Server.GameObjects.Components.Arcade
             [ViewVariables(VVAccess.ReadWrite)] private int _enemyMpMax = 20;
             [ViewVariables(VVAccess.ReadWrite)] private int _turtleTracker;
 
-            [ViewVariables(VVAccess.ReadWrite)] private string _fightVerb;
-            [ViewVariables(VVAccess.ReadWrite)] private string _enemyName;
+            [ViewVariables(VVAccess.ReadWrite)] private readonly string _fightVerb;
+            [ViewVariables(VVAccess.ReadWrite)] private readonly string _enemyName;
 
             [ViewVariables] private bool _running = true;
 
@@ -266,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             public SpaceVillainGame(SpaceVillainArcadeComponent owner, string fightVerb, string enemyName)
             {
                 IoCManager.InjectDependencies(this);
-                Owner = owner;
+                _owner = owner;
                 //todo defeat the curse secret game mode
                 _fightVerb = fightVerb;
                 _enemyName = enemyName;
@@ -278,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// </summary>
             private void ValidateVars()
             {
-                if(Owner._overflowFlag) return;
+                if(_owner._overflowFlag) return;
 
                 if (_playerHp > _playerHpMax) _playerHp = _playerHpMax;
                 if (_playerMp > _playerMpMax) _playerMp = _playerMpMax;
@@ -299,23 +294,23 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Attack:
                         var attackAmount = _random.Next(2, 6);
                         _latestPlayerActionMessage = Loc.GetString("You attack {0} for {1}!", _enemyName, attackAmount);
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_attack.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if(!Owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_attack.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        if(!_owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
                     case PlayerAction.Heal:
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
                         _latestPlayerActionMessage = Loc.GetString("You use {0} magic to heal for {1} damage!", pointAmount, healAmount);
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_heal.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if(!Owner._playerInvincibilityFlag) _playerMp -= pointAmount;
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_heal.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        if(!_owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
                         break;
                     case PlayerAction.Recharge:
                         var chargeAmount = _random.Next(4, 7);
                         _latestPlayerActionMessage = Loc.GetString("You regain {0} points", chargeAmount);
-                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_charge.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_charge.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += chargeAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -347,8 +342,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You won!"), Loc.GetString("{0} dies.", _enemyName), true);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
-                    Owner.ProcessWin();
+                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/win.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    _owner.ProcessWin();
                     return false;
                 }
 
@@ -358,14 +353,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.", _enemyName), true);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if (_enemyHp <= 0 || _enemyMp <= 0)
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.", _enemyName), true);
-                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
 
@@ -377,7 +372,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// </summary>
             private void UpdateUi(bool metadata = false)
             {
-                Owner.UserInterface?.SendMessage(metadata ? GenerateMetaDataMessage() : GenerateUpdateMessage());
+                _owner.UserInterface?.SendMessage(metadata ? GenerateMetaDataMessage() : GenerateUpdateMessage());
             }
 
             private void UpdateUi(string message1, string message2, bool metadata = false)
@@ -397,14 +392,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     var boomAmount = _random.Next(5, 10);
                     _latestEnemyActionMessage = Loc.GetString("{0} throws a bomb, exploding you for {1} damage!", _enemyName, boomAmount);
-                    if (Owner._playerInvincibilityFlag) return;
+                    if (_owner._playerInvincibilityFlag) return;
                     _playerHp -= boomAmount;
                     _turtleTracker--;
                 }else if (_enemyMp <= 5 && _random.Prob(0.7f))
                 {
                     var stealAmount = _random.Next(2, 3);
                     _latestEnemyActionMessage = Loc.GetString("{0} steals {1} of your power!", _enemyName, stealAmount);
-                    if (Owner._playerInvincibilityFlag) return;
+                    if (_owner._playerInvincibilityFlag) return;
                     _playerMp -= stealAmount;
                     _enemyMp += stealAmount;
                 }else if (_enemyHp <= 10 && _enemyMp > 4)
@@ -418,7 +413,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     var attackAmount = _random.Next(3, 6);
                     _latestEnemyActionMessage =
                         Loc.GetString("{0} attacks you for {1} damage!", _enemyName, attackAmount);
-                    if (Owner._playerInvincibilityFlag) return;
+                    if (_owner._playerInvincibilityFlag) return;
                     _playerHp -= attackAmount;
                 }
             }
@@ -429,7 +424,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <returns>A Metadata-message.</returns>
             public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
             {
-                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName, !_running);
+                return new(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName, !_running);
             }
 
             /// <summary>
@@ -439,7 +434,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             public SpaceVillainArcadeDataUpdateMessage
                 GenerateUpdateMessage()
             {
-                return new SpaceVillainArcadeDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage,
+                return new(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage,
                     _latestEnemyActionMessage);
             }
         }

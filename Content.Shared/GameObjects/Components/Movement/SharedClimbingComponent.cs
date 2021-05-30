@@ -1,77 +1,111 @@
-﻿using System;
-using Content.Shared.GameObjects.EntitySystems;
+#nullable enable
+using System;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedClimbingComponent : Component, IActionBlocker, ICollideSpecial, IDraggable
+    public abstract class SharedClimbingComponent : Component, IActionBlocker
     {
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
-        protected IPhysicsComponent Body;
-        protected bool IsOnClimbableThisFrame = false;
-
-        protected bool OwnerIsTransitioning
+        protected bool IsOnClimbableThisFrame
         {
             get
             {
-                if (Body.TryGetController<ClimbController>(out var controller))
+                if (Body == null) return false;
+
+                foreach (var entity in Body.GetBodiesIntersecting())
                 {
-                    return controller.IsActive;
+                    if ((entity.CollisionLayer & (int) CollisionGroup.SmallImpassable) != 0) return true;
                 }
 
                 return false;
             }
         }
 
-        public abstract bool IsClimbing { get; set; }
-
         bool IActionBlocker.CanMove() => !OwnerIsTransitioning;
-        bool IActionBlocker.CanChangeDirection() => !OwnerIsTransitioning;
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collided)
+        [ViewVariables]
+        protected virtual bool OwnerIsTransitioning
         {
-            if (((CollisionGroup)collided.CollisionLayer).HasFlag(CollisionGroup.VaultImpassable) && collided.Entity.HasComponent<IClimbable>())
+            get => _ownerIsTransitioning;
+            set
             {
-                IsOnClimbableThisFrame = true;
-                return IsClimbing;
+                if (_ownerIsTransitioning == value) return;
+                _ownerIsTransitioning = value;
+                if (Body == null) return;
+                if (value)
+                {
+                    Body.BodyType = BodyType.Dynamic;
+                }
+                else
+                {
+                    Body.BodyType = BodyType.KinematicController;
+                }
             }
-
-            return false;
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        private bool _ownerIsTransitioning = false;
+
+        [ComponentDependency] protected PhysicsComponent? Body;
+
+        protected TimeSpan StartClimbTime = TimeSpan.Zero;
+
+        /// <summary>
+        ///     We'll launch the mob onto the table and give them at least this amount of time to be on it.
+        /// </summary>
+        protected const float BufferTime = 0.3f;
+
+        public virtual bool IsClimbing
         {
-            return args.Target.HasComponent<IClimbable>();
+            get => _isClimbing;
+            set
+            {
+                if (_isClimbing == value) return;
+                _isClimbing = value;
+
+                ToggleSmallPassable(value);
+            }
         }
 
-        bool IDraggable.Drop(DragDropEventArgs args)
-        {
-            return false;
-        }
+        protected bool _isClimbing;
 
-        public override void Initialize()
+        // TODO: Layers need a re-work
+        private void ToggleSmallPassable(bool value)
         {
-            base.Initialize();
+            // Hope the mob has one fixture
+            if (Body == null || Body.Deleted) return;
 
-            Owner.TryGetComponent(out Body);
+            foreach (var fixture in Body.Fixtures)
+            {
+                if (value)
+                {
+                    fixture.CollisionMask &= ~(int) CollisionGroup.SmallImpassable;
+                }
+                else
+                {
+                    fixture.CollisionMask |= (int) CollisionGroup.SmallImpassable;
+                }
+            }
         }
 
         [Serializable, NetSerializable]
         protected sealed class ClimbModeComponentState : ComponentState
         {
-            public ClimbModeComponentState(bool climbing) : base(ContentNetIDs.CLIMBING)
+            public ClimbModeComponentState(bool climbing, bool isTransitioning) : base(ContentNetIDs.CLIMBING)
             {
                 Climbing = climbing;
+                IsTransitioning = isTransitioning;
             }
 
             public bool Climbing { get; }
+            public bool IsTransitioning { get; }
         }
     }
 }

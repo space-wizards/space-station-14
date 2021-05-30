@@ -1,0 +1,35 @@
+- type: material
+  id: Glass
+  stack: Glass
+  name: glass
+  icon: Objects/Materials/Sheets/glass.rsi/glass.png
+
+- type: material
+  id: ReinforcedGlass
+  stack: ReinforcedGlass
+  name: reinforced glass
+  icon: Objects/Materials/Sheets/glass.rsi/rglass.png
+
+- type: material
+  id: PlasmaGlass
+  stack: PlasmaGlass
+  name: plasma glass
+  icon: Objects/Materials/Sheets/glass.rsi/pglass.png
+
+- type: material
+  id: ReinforcedPlasmaGlass
+  stack: ReinforcedPlasmaGlass
+  name: reinforced plasma glass
+  icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
+
+- type: material
+  id: TitaniumGlass
+  stack: TitaniumGlass
+  name: titanium glass
+  icon: Objects/Materials/Sheets/glass.rsi/titaniumglass.png
+
+- type: material
+  id: PlastitaniumGlass
+  stack: PlastitaniumGlass
+  name: plastitanium glass
+  icon: Objects/Materials/Sheets/glass.rsi/plastitaniumglass.png

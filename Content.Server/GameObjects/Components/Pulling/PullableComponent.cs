@@ -3,11 +3,9 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Pulling
 {
@@ -34,33 +32,24 @@ namespace Content.Server.GameObjects.Components.Pulling
                 }
 
                 if (!user.HasComponent<ISharedHandsComponent>() ||
-                    !user.TryGetComponent(out IPhysicsComponent? userPhysics) ||
-                    !component.Owner.TryGetComponent(out IPhysicsComponent? targetPhysics) ||
-                    targetPhysics.Anchored)
+                    !user.TryGetComponent(out IPhysBody? userPhysics) ||
+                    !component.Owner.TryGetComponent(out IPhysBody? targetPhysics) ||
+                    targetPhysics.BodyType == BodyType.Static)
                 {
                     return;
                 }
 
-                var controller = targetPhysics.EnsureController<PullController>();
-
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = controller.Puller == userPhysics
+                data.Text = component.Puller == userPhysics.Owner
                     ? Loc.GetString("Stop pulling")
                     : Loc.GetString("Pull");
             }
 
             protected override void Activate(IEntity user, PullableComponent component)
             {
-                if (!user.TryGetComponent(out IPhysicsComponent? userCollidable) ||
-                    !component.Owner.TryGetComponent(out IPhysicsComponent? targetCollidable) ||
-                    targetCollidable.Anchored)
-                {
-                    return;
-                }
-
-                var controller = targetCollidable.EnsureController<PullController>();
-
-                if (controller.Puller == userCollidable)
+                // There used to be sanity checks here for no reason.
+                // Why no reason? Because they're supposed to be performed in TryStartPull.
+                if (component.Puller == user)
                 {
                     component.TryStopPull();
                 }

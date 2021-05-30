@@ -5,30 +5,62 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
-    public class SignalTransmitterComponent : Component, IInteractUsing
+    public class SignalTransmitterComponent : Component, IInteractUsing, ISerializationHooks
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "SignalTransmitter";
 
-        private List<SignalReceiverComponent> _unresolvedReceivers;
-        private List<SignalReceiverComponent> _receivers;
-        [ViewVariables] private float _range;
+        private List<SignalReceiverComponent>? _unresolvedReceivers = new();
+        private List<SignalReceiverComponent> _receivers = new();
 
         /// <summary>
         /// 0 is unlimited range
         /// </summary>
-        public float Range { get => _range; private set => _range = value; }
+        [ViewVariables]
+        [DataField("range")]
+        public float Range { get; private set; } = 10;
+
+        [DataField("signalReceivers")] private List<EntityUid> _receiverIds = new();
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            var entityList = new List<EntityUid>();
+
+            foreach (var receiver in _receivers)
+            {
+                if (receiver.Deleted)
+                {
+                    continue;
+                }
+
+                entityList.Add(receiver.Owner.Uid);
+            }
+
+            _receiverIds = entityList;
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            _unresolvedReceivers = new List<SignalReceiverComponent>();
+
+            foreach (var id in _receiverIds)
+            {
+                if (!Owner.EntityManager.TryGetEntity(id, out var entity) ||
+                    !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
+                {
+                    continue;
+                }
+
+                _unresolvedReceivers.Add(receiver);
+            }
+        }
 
         public override void Initialize()
         {
@@ -42,56 +74,15 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 {
                     receiver.Subscribe(this);
                 }
+
                 _unresolvedReceivers = null;
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _range, "range", 10);
-            if (serializer.Reading)
-            {
-                if (!serializer.TryReadDataField("signalReceivers", out List<EntityUid> entityUids))
-                {
-                    return;
-                }
-
-                _unresolvedReceivers = new List<SignalReceiverComponent>();
-                foreach (var entityUid in entityUids)
-                {
-                    if (!_entityManager.TryGetEntity(entityUid, out var entity)
-                        || !entity.TryGetComponent<SignalReceiverComponent>(out var receiver))
-                    {
-                        continue;
-                    }
-
-                    _unresolvedReceivers.Add(receiver);
-                }
-            }
-            else if (serializer.Writing)
-            {
-                var entityList = new List<EntityUid>();
-                foreach (var receiver in _receivers)
-                {
-                    if (receiver.Deleted)
-                    {
-                        continue;
-                    }
-
-                    entityList.Add(receiver.Owner.Uid);
-                }
-
-                serializer.DataWriteFunction("signalReceivers", null, () => entityList);
-            }
-        }
-
-        public bool TransmitSignal<T>(IEntity user, T signal)
+        public bool TransmitSignal<T>(T signal)
         {
             if (_receivers.Count == 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
                 return false;
             }
 
@@ -122,7 +113,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             _receivers.Remove(receiver);
         }
 
-        public SignalTransmitterComponent GetSignal(IEntity user)
+        public SignalTransmitterComponent GetSignal(IEntity? user)
         {
             if (user != null)
             {
@@ -132,7 +123,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             return this;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
@@ -150,8 +141,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            foreach (var receiver in _receivers)
+            for (var i = _receivers.Count-1; i >= 0; i++)
             {
+                var receiver = _receivers[i];
                 if (receiver.Deleted)
                 {
                     continue;
@@ -159,6 +151,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
                 receiver.Unsubscribe(this);
             }
+
             _receivers.Clear();
         }
     }

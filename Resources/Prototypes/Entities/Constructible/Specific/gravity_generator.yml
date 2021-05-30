@@ -13,25 +13,34 @@
         state: activated
         shader: unshaded
         map: ["enum.GravityGeneratorVisualLayers.Core"]
-
   - type: SnapGrid
-    offset: Center
   - type: PowerReceiver
     powerLoad: 500
   - type: Physics
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-1.5,-1.5,1.5,1.5"
-        layer:
-        - Opaque
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,1.5"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: Clickable
   - type: InteractionOutline
-  - type: Breakable
-    deadThreshold: 150
+  - type: Damageable
     resistances: metallicResistances
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: GravityGenerator
   - type: UserInterface
     interfaces:
@@ -40,10 +49,11 @@
   - type: Appearance
     visuals:
     - type: GravityGeneratorVisualizer
-      broken: "broken"
-      unpowered: "off"
-      off: "off"
-      on: "on"
+      spritemap:
+        broken: "broken"
+        unpowered: "off"
+        off: "off"
+        on: "on"
 
   placement:
     mode: AlignTileAny

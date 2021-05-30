@@ -1,6 +1,6 @@
+#nullable enable
 using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Research
@@ -20,6 +20,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public class ConsoleUnlockTechnologyMessage : BoundUserInterfaceMessage
         {
             public string Id;
+
             public ConsoleUnlockTechnologyMessage(string id)
             {
                 Id = id;

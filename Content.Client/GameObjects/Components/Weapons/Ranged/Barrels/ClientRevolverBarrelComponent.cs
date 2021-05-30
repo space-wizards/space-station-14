@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         public override string Name => "RevolverBarrel";
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         /// A array that lists the bullet states
@@ -25,14 +25,16 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         /// null means no bullet
         /// </summary>
         [ViewVariables]
-        public bool?[] Bullets { get; private set; }
+        public bool?[] Bullets { get; private set; } = new bool?[0];
 
         [ViewVariables]
         public int CurrentSlot { get; private set; }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is RevolverBarrelComponentState cast))
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not RevolverBarrelComponentState cast)
                 return;
 
             CurrentSlot = cast.CurrentSlot;
@@ -62,13 +64,14 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             public StatusControl(ClientRevolverBarrelComponent parent)
             {
+                MinHeight = 15;
                 _parent = parent;
-                SizeFlagsHorizontal = SizeFlags.FillExpand;
-                SizeFlagsVertical = SizeFlags.ShrinkCenter;
+                HorizontalExpand = true;
+                VerticalAlignment = VAlignment.Center;
                 AddChild((_bulletsList = new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalExpand = true,
+                    VerticalAlignment = VAlignment.Center,
                     SeparationOverride = 0
                 }));
             }
@@ -117,7 +120,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     // Add a outline
                     var box = new Control()
                     {
-                        CustomMinimumSize = texture.Size * scale,
+                        MinSize = texture.Size * scale,
                     };
                     if (i == _parent.CurrentSlot)
                     {
@@ -150,8 +153,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
                     box.AddChild(new TextureRect
                     {
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
                         Stretch = TextureRect.StretchMode.KeepCentered,
                         Texture = bulletTexture,
                         ModulateSelfOverride = color,
@@ -159,11 +160,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     altColor ^= true;
                     container.AddChild(box);
                 }
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return Vector2.ComponentMax((0, 15), base.CalculateMinimumSize());
             }
         }
     }

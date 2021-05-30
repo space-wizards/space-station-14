@@ -1,36 +1,34 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Pulling;
+using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Rotatable;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics.Pull;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
 {
@@ -40,12 +38,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     [UsedImplicitly]
     public sealed class InteractionSystem : SharedInteractionSystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
-            SubscribeNetworkEvent<DragDropMessage>(HandleDragDropMessage);
+            SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropMessage);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
@@ -64,18 +62,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             base.Shutdown();
         }
 
-        private void HandleDragDropMessage(DragDropMessage msg, EntitySessionEventArgs args)
+        private void HandleDragDropMessage(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
             var performer = args.SenderSession.AttachedEntity;
+
+            if (performer == null) return;
             if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped)) return;
             if (!EntityManager.TryGetEntity(msg.Target, out var target)) return;
 
-            var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
+            var interactionArgs = new DragDropEvent(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
+            // Client also does this check but ya know we gotta validate it.
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
+            RaiseLocalEvent(dropped.Uid, interactionArgs);
             foreach (var dragDrop in dropped.GetAllComponents<IDraggable>())
             {
                 if (dragDrop.CanDrop(interactionArgs) &&
@@ -86,6 +88,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // trigger dragdropons on the targeted entity
+            RaiseLocalEvent(target.Uid, interactionArgs, false);
             foreach (var dragDropOn in target.GetAllComponents<IDragDropOn>())
             {
                 if (dragDropOn.CanDragDropOn(interactionArgs) &&
@@ -96,12 +99,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleActivateItemInWorld(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!EntityManager.TryGetEntity(uid, out var used))
                 return false;
 
-            var playerEnt = ((IPlayerSession) session).AttachedEntity;
+            var playerEnt = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (playerEnt == null || !playerEnt.IsValid())
             {
@@ -118,12 +121,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates the Activate behavior of an object
+        /// Activates the IActivate behavior of an object
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="used"></param>
-        public void TryInteractionActivate(IEntity user, IEntity used)
+        public void TryInteractionActivate(IEntity? user, IEntity? used)
         {
             if (user != null && used != null && ActionBlockerSystem.CanUse(user))
             {
@@ -133,30 +134,30 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
-            var activateMsg = new ActivateInWorldMessage(user, used);
-            RaiseLocalEvent(activateMsg);
+            var activateMsg = new ActivateInWorldEvent(user, used);
+            RaiseLocalEvent(used.Uid, activateMsg);
             if (activateMsg.Handled)
             {
                 return;
             }
 
-            if (!used.TryGetComponent(out IActivate activateComp))
+            if (!used.TryGetComponent(out IActivate? activateComp))
             {
                 return;
             }
 
             // all activates should only fire when in range / unbostructed
-            var activateEventArgs = new ActivateEventArgs { User = user, Target = used };
+            var activateEventArgs = new ActivateEventArgs(user, used);
             if (activateEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 activateComp.Activate(activateEventArgs);
             }
         }
 
-        private bool HandleWideAttack(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -169,14 +170,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            var userEntity = ((IPlayerSession) session).AttachedEntity;
+            var userEntity = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (userEntity == null || !userEntity.IsValid())
             {
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            if (userEntity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(userEntity, coords, true);
             }
@@ -193,12 +194,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <param name="uid"></param>
         internal void UseItemInHand(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
-            if (entity.HasComponent<BasicActorComponent>())
+            if (entity.HasComponent<ActorComponent>())
             {
                 throw new InvalidOperationException();
             }
 
-            if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            if (entity.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(entity, coords, false, uid);
             }
@@ -208,10 +209,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleClientUseItemInHand(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -224,14 +225,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            var userEntity = ((IPlayerSession) session).AttachedEntity;
+            var userEntity = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (userEntity == null || !userEntity.IsValid())
             {
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
+            if (userEntity.TryGetComponent(out CombatModeComponent? combat) && combat.IsInCombatMode)
                 DoAttack(userEntity, coords, false, uid);
             else
                 UserInteraction(userEntity, coords, uid);
@@ -239,10 +240,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return true;
         }
 
-        private bool HandleTryPullObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
                 return false;
@@ -255,7 +256,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var player = session.AttachedEntity;
+            var player = session?.AttachedEntity;
 
             if (player == null)
             {
@@ -274,7 +275,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pulledObject.TryGetComponent(out PullableComponent pull))
+            if (!pulledObject.TryGetComponent(out PullableComponent? pull))
             {
                 return false;
             }
@@ -288,7 +289,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return pull.TogglePull(player);
         }
 
-        private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
+        public async void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
@@ -303,7 +304,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GetGridId(EntityManager)).ParentMapId != playerTransform.MapID)
+            if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -318,34 +319,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var item = hands.GetActiveHand?.Owner;
 
-            if (ActionBlockerSystem.CanChangeDirection(player))
-            {
-                var diff = coordinates.ToMapPos(EntityManager) - playerTransform.MapPosition.Position;
-                if (diff.LengthSquared > 0.01f)
-                {
-                    playerTransform.LocalRotation = new Angle(diff);
-                }
-            }
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(player))
             {
                 return;
             }
 
-            // If in a container
-            if (ContainerHelpers.IsInContainer(player))
-            {
-                return;
-            }
-
-
             // In a container where the attacked entity is not the container's owner
-            if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
+            if (player.TryGetContainer(out var playerContainer) &&
                 attacked != playerContainer.Owner)
             {
                 // Either the attacked entity is null, not contained or in a different container
                 if (attacked == null ||
-                    !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
+                    !attacked.TryGetContainer(out var attackedContainer) ||
                     attackedContainer != playerContainer)
                 {
                     return;
@@ -393,7 +380,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // InteractUsing/AfterInteract: We will either use the item on the nearby object
             if (item != null)
             {
-                _ = Interaction(player, item, attacked, coordinates);
+                await Interaction(player, item, attacked, coordinates);
             }
             // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
             else
@@ -402,25 +389,47 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
+        private void ClickFace(IEntity player, EntityCoordinates coordinates)
+        {
+            var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+            if (diff.LengthSquared <= 0.01f)
+                return;
+            var diffAngle = Angle.FromWorldVec(diff);
+            if (ActionBlockerSystem.CanChangeDirection(player))
+            {
+                player.Transform.LocalRotation = diffAngle;
+            }
+            else
+            {
+                if (player.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
+                {
+                    // We're buckled to another object. Is that object rotatable?
+                    if (buckle.BuckledTo!.Owner.TryGetComponent(out SharedRotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
+                    {
+                        // Note the assumption that even if unanchored, player can only do spinnychair with an "independent wheel".
+                        // (Since the player being buckled to it holds it down with their weight.)
+                        // This is logically equivalent to RotateWhileAnchored.
+                        // Barstools and office chairs have independent wheels, while regular chairs don't.
+                        rotatable.Owner.Transform.LocalRotation = diffAngle;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
+        private async void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
-            var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
-            RaiseLocalEvent(message);
+            var message = new AfterInteractEvent(user, weapon, null, clickLocation, canReach);
+            RaiseLocalEvent(weapon.Uid, message);
             if (message.Handled)
             {
                 return;
             }
 
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                afterInteract.AfterInteract(afterInteractEventArgs);
-            }
+            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
+            await DoAfterInteract(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
@@ -429,18 +438,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
-            var attackMsg = new InteractUsingMessage(user, weapon, attacked, clickLocation);
-            RaiseLocalEvent(attackMsg);
+            var attackMsg = new InteractUsingEvent(user, weapon, attacked, clickLocation);
+            RaiseLocalEvent(attacked.Uid, attackMsg);
             if (attackMsg.Handled)
-            {
                 return;
-            }
 
             var attackBys = attacked.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
-            var attackByEventArgs = new InteractUsingEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Using = weapon, Target = attacked
-            };
+            var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, attacked);
 
             // all AttackBys should only happen when in range / unobstructed, so no range check is needed
             if (attackByEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
@@ -455,24 +459,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, true);
-            RaiseLocalEvent(afterAtkMsg);
+            var afterAtkMsg = new AfterInteractEvent(user, weapon, attacked, clickLocation, true);
+            RaiseLocalEvent(weapon.Uid, afterAtkMsg, false);
             if (afterAtkMsg.Handled)
             {
                 return;
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
-            };
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
 
-            foreach (var afterAttack in afterAttacks)
-            {
-                afterAttack.AfterInteract(afterAttackEventArgs);
-            }
+            await DoAfterInteract(weapon, afterAttackEventArgs);
         }
 
         /// <summary>
@@ -481,19 +478,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void Interaction(IEntity user, IEntity attacked)
         {
-            var message = new AttackHandMessage(user, attacked);
-            RaiseLocalEvent(message);
+            var message = new AttackHandEvent(user, attacked);
+            RaiseLocalEvent(attacked.Uid, message);
             if (message.Handled)
-            {
                 return;
-            }
 
-            var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
-            var attackHandEventArgs = new InteractHandEventArgs { User = user, Target = attacked };
+            var attackHandEventArgs = new InteractHandEventArgs(user, attacked);
 
             // all attackHands should only fire when in range / unobstructed
             if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
+                var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
                 foreach (var attackHand in attackHands)
                 {
                     if (attackHand.InteractHand(attackHandEventArgs))
@@ -509,7 +504,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates the Use behavior of an object
+        /// Activates the IUse behaviors of an entity
         /// Verifies that the user is capable of doing the use interaction first
         /// </summary>
         /// <param name="user"></param>
@@ -523,8 +518,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Activates/Uses an object in control/possession of a user
-        /// If the item has the IUse interface on one of its components we use the object in our hand
+        /// Activates the IUse behaviors of an entity without first checking
+        /// if the user is capable of doing the use interaction.
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {
@@ -536,8 +531,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     delayComponent.BeginDelay();
             }
 
-            var useMsg = new UseInHandMessage(user, used);
-            RaiseLocalEvent(useMsg);
+            var useMsg = new UseInHandEvent(user, used);
+            RaiseLocalEvent(used.Uid, useMsg);
             if (useMsg.Handled)
             {
                 return;
@@ -548,7 +543,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Try to use item on any components which have the interface
             foreach (var use in uses)
             {
-                if (use.UseEntity(new UseEntityEventArgs { User = user }))
+                if (use.UseEntity(new UseEntityEventArgs(user)))
                 {
                     // If a Use returns a status completion we finish our attack
                     return;
@@ -574,67 +569,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void ThrownInteraction(IEntity user, IEntity thrown)
         {
-            var throwMsg = new ThrownMessage(user, thrown);
-            RaiseLocalEvent(throwMsg);
+            var throwMsg = new ThrownEvent(user, thrown);
+            RaiseLocalEvent(thrown.Uid, throwMsg);
             if (throwMsg.Handled)
             {
                 return;
             }
 
             var comps = thrown.GetAllComponents<IThrown>().ToList();
+            var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Thrown(new ThrownEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls Land on all components that implement the ILand interface
-        ///     on an entity that has landed after being thrown.
-        /// </summary>
-        public void LandInteraction(IEntity user, IEntity landing, EntityCoordinates landLocation)
-        {
-            var landMsg = new LandMessage(user, landing, landLocation);
-            RaiseLocalEvent(landMsg);
-            if (landMsg.Handled)
-            {
-                return;
-            }
-
-            var comps = landing.GetAllComponents<ILand>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Land(new LandEventArgs(user, landLocation));
-            }
-        }
-
-        /// <summary>
-        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
-        ///     on a thrown entity and the target entity it hit.
-        /// </summary>
-        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
-        {
-            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
-            RaiseLocalEvent(collideMsg);
-            if (collideMsg.Handled)
-            {
-                return;
-            }
-
-            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
-
-            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
-            {
-                comp.DoHit(eventArgs);
-            }
-
-            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
-            {
-                comp.HitBy(eventArgs);
+                comp.Thrown(args);
             }
         }
 
@@ -644,8 +592,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
         {
-            var equipMsg = new EquippedMessage(user, equipped, slot);
-            RaiseLocalEvent(equipMsg);
+            var equipMsg = new EquippedEvent(user, equipped, slot);
+            RaiseLocalEvent(equipped.Uid, equipMsg);
             if (equipMsg.Handled)
             {
                 return;
@@ -666,8 +614,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
         {
-            var unequipMsg = new UnequippedMessage(user, equipped, slot);
-            RaiseLocalEvent(unequipMsg);
+            var unequipMsg = new UnequippedEvent(user, equipped, slot);
+            RaiseLocalEvent(equipped.Uid, unequipMsg);
             if (unequipMsg.Handled)
             {
                 return;
@@ -683,14 +631,56 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
+        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
+        ///     on an item.
+        /// </summary>
+        public void EquippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        {
+            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
+            RaiseLocalEvent(item.Uid, equippedHandMessage);
+            if (equippedHandMessage.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IEquippedHand>().ToList();
+
+            foreach (var comp in comps)
+            {
+                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
+            }
+        }
+
+        /// <summary>
+        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
+        ///     on an item.
+        /// </summary>
+        public void UnequippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        {
+            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
+            RaiseLocalEvent(item.Uid, unequippedHandMessage);
+            if (unequippedHandMessage.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IUnequippedHand>().ToList();
+
+            foreach (var comp in comps)
+            {
+                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
+            }
+        }
+
+        /// <summary>
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
-        public bool TryDroppedInteraction(IEntity user, IEntity item)
+        public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
             if (user == null || item == null || !ActionBlockerSystem.CanDrop(user)) return false;
 
-            DroppedInteraction(user, item);
+            DroppedInteraction(user, item, intentional);
             return true;
         }
 
@@ -698,21 +688,23 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls Dropped on all components that implement the IDropped interface
         ///     on an entity that has been dropped.
         /// </summary>
-        public void DroppedInteraction(IEntity user, IEntity item)
+        public void DroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            var dropMsg = new DroppedMessage(user, item);
-            RaiseLocalEvent(dropMsg);
+            var dropMsg = new DroppedEvent(user, item, intentional);
+            RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
             {
                 return;
             }
+
+            item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
 
             var comps = item.GetAllComponents<IDropped>().ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Dropped(new DroppedEventArgs(user));
+                comp.Dropped(new DroppedEventArgs(user, intentional));
             }
         }
 
@@ -722,8 +714,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
-            var handSelectedMsg = new HandSelectedMessage(user, item);
-            RaiseLocalEvent(handSelectedMsg);
+            var handSelectedMsg = new HandSelectedEvent(user, item);
+            RaiseLocalEvent(item.Uid, handSelectedMsg);
             if (handSelectedMsg.Handled)
             {
                 return;
@@ -744,8 +736,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {
-            var handDeselectedMsg = new HandDeselectedMessage(user, item);
-            RaiseLocalEvent(handDeselectedMsg);
+            var handDeselectedMsg = new HandDeselectedEvent(user, item);
+            RaiseLocalEvent(item.Uid, handDeselectedMsg);
             if (handDeselectedMsg.Handled)
             {
                 return;
@@ -760,23 +752,19 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-
         /// <summary>
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
-            var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
-            RaiseLocalEvent(rangedMsg);
+            var rangedMsg = new RangedInteractEvent(user, weapon, attacked, clickLocation);
+            RaiseLocalEvent(attacked.Uid, rangedMsg);
             if (rangedMsg.Handled)
                 return;
 
             var rangedAttackBys = attacked.GetAllComponents<IRangedInteract>().ToList();
-            var rangedAttackByEventArgs = new RangedInteractEventArgs
-            {
-                User = user, Using = weapon, ClickLocation = clickLocation
-            };
+            var rangedAttackByEventArgs = new RangedInteractEventArgs(user, weapon, clickLocation);
 
             // See if we have a ranged attack interaction
             foreach (var t in rangedAttackBys)
@@ -788,33 +776,40 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, false);
-            RaiseLocalEvent(afterAtkMsg);
+            var afterAtkMsg = new AfterInteractEvent(user, weapon, attacked, clickLocation, false);
+            RaiseLocalEvent(weapon.Uid, afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs
-            {
-                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
-            };
+            // See if we have a ranged attack interaction
+            var afterAttackEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
+            await DoAfterInteract(weapon, afterAttackEventArgs);
+        }
 
-            //See if we have a ranged attack interaction
+        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterAttackEventArgs)
+        {
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                if (await afterAttack.AfterInteract(afterAttackEventArgs))
+                {
+                    return;
+                }
             }
         }
 
-        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
+        public void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
         {
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GetGridId(_entityManager)).ParentMapId != player.Transform.MapID)
+            if (coordinates.GetMapId(EntityManager) != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
                 return;
             }
+
+            ClickFace(player, coordinates);
 
             if (!ActionBlockerSystem.CanAttack(player) ||
                 (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))
@@ -822,7 +817,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var eventArgs = new AttackEventArgs(player, coordinates, wideAttack, target);
+
+            // In a container where the target entity is not the container's owner
+            if (player.TryGetContainer(out var playerContainer) &&
+                (!EntityManager.TryGetEntity(targetUid, out var target) ||
+                target != playerContainer.Owner))
+            {
+                // Either the target entity is null, not contained or in a different container
+                if (target == null ||
+                    !target.TryGetContainer(out var attackedContainer) ||
+                    attackedContainer != playerContainer)
+                {
+                    return;
+                }
+            }
+
+            var eventArgs = new AttackEvent(player, coordinates, wideAttack, targetUid);
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))
@@ -831,6 +841,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
                 if (item != null)
                 {
+                    RaiseLocalEvent(item.Uid, eventArgs, false);
                     foreach (var attackComponent in item.GetAllComponents<IAttack>())
                     {
                         if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
@@ -840,7 +851,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if(EntityManager.TryGetEntity(target, out var targetEnt))
+                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt))
                     {
                         if (targetEnt.HasComponent<ItemComponent>())
                         {
@@ -851,6 +862,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
+            RaiseLocalEvent(player.Uid, eventArgs);
             foreach (var attackComponent in player.GetAllComponents<IAttack>())
             {
                 if (wideAttack)

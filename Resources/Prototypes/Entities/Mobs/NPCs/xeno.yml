@@ -1,33 +1,31 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
-  save: false
-  name: Xeno hunter
+  name: Xeno
   id: XenoMob_Content
+  parent: SimpleMobBase
   description: They mostly come at night. Mostly.
-  drawdepth: Mobs
-  suffix: AI
   components:
-  - type: AiController
-    logic: Xeno
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
   - type: AiFactionTag
     factions:
     - Xeno
   - type: Hands
-  - type: MovementSpeedModifier
-  - type: InteractionOutline
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-  - type: Clickable
+      sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Physics
-    anchored: false
-    mass: 85
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-1,-0.4,-0.2,0.4"
+      mass: 85
       mask:
       - Impassable
       - MobImpassable
@@ -35,17 +33,12 @@
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
-  - type: Damageable
-    criticalThreshold: 150
-    deadThreshold: 200
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      150: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
   - type: Metabolism
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Teleportable
-  - type: FootstepSound
-  - type: Stunnable
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0

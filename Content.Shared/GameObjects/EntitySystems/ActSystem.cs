@@ -1,14 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
     /// <summary>
-    /// This interface gives components behavior on getting destoyed.
+    /// This interface gives components behavior on getting destroyed.
     /// </summary>
     public interface IDestroyAct
     {
@@ -20,13 +20,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
     public class DestructionEventArgs : EventArgs
     {
-        public IEntity Owner { get; set; }
-        public bool IsSpawnWreck { get; set; }
+        public IEntity Owner { get; set; } = default!;
     }
 
     public class BreakageEventArgs : EventArgs
     {
-        public IEntity Owner { get; set; }
+        public IEntity Owner { get; set; } = default!;
     }
 
     public interface IBreakAct
@@ -48,27 +47,28 @@ namespace Content.Shared.GameObjects.EntitySystems
     public class ExplosionEventArgs : EventArgs
     {
         public EntityCoordinates Source { get; set; }
-        public IEntity Target { get; set; }
+        public IEntity Target { get; set; } = default!;
         public ExplosionSeverity Severity { get; set; }
     }
 
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
-        public void HandleDestruction(IEntity owner, bool isWreck)
+        public void HandleDestruction(IEntity owner)
         {
             var eventArgs = new DestructionEventArgs
             {
-                Owner = owner,
-                IsSpawnWreck = isWreck
+                Owner = owner
             };
+
             var destroyActs = owner.GetAllComponents<IDestroyAct>().ToList();
 
             foreach (var destroyAct in destroyActs)
             {
                 destroyAct.OnDestroy(eventArgs);
             }
-            owner.Delete();
+
+            owner.QueueDelete();
         }
 
         public void HandleExplosion(EntityCoordinates source, IEntity target, ExplosionSeverity severity)

@@ -58,17 +58,3 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-
-- type: entity
-  id: RandomArcade
-  name: Random Arcade Spawner
-  components:
-  - type: RandomArcade
-  - type: Sprite
-    netsync: false
-    visible: false
-    sprite: Interface/Misc/markers.rsi
-    state: cross_blue
-  - type: Marker
-  - type: Clickable
-  - type: InteractionOutline

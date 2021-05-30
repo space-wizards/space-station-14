@@ -3,17 +3,18 @@
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Client\</OutputPath>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
-    <WarningsAsErrors>CS8604;CS8765</WarningsAsErrors>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
     <PackageReference Include="Nett" Version="0.15.0" />
-    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="All" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
@@ -33,6 +34,8 @@
       <DependentUpon>OptionsMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-  <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
-  <Target Name="ContentAfterBuild" DependsOnTargets="ClientAfterBuild" AfterTargets="Build" />
+
+  <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
+
 </Project>

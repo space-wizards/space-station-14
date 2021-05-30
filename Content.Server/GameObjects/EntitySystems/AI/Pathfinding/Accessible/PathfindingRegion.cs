@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public int Width { get; private set; } = 1;
 
         public PathfindingChunk ParentChunk => OriginNode.ParentChunk;
-        public HashSet<PathfindingRegion> Neighbors { get; } = new HashSet<PathfindingRegion>();
+        public HashSet<PathfindingRegion> Neighbors { get; } = new();
 
         public bool IsDoor { get; }
         public HashSet<PathfindingNode> Nodes => _nodes;
@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         }
 
         // HashSet wasn't working correctly so uhh we got this.
-        public bool Equals(PathfindingRegion other)
+        public bool Equals(PathfindingRegion? other)
         {
             if (other == null) return false;
             if (ReferenceEquals(this, other)) return true;

@@ -2,31 +2,67 @@
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
     [UsedImplicitly]
-    public class DisposalUnitVisualizer : AppearanceVisualizer
+    public class DisposalUnitVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "disposal_unit_animation";
 
-        private string _stateAnchored;
-        private string _stateUnAnchored;
-        private string _stateCharging;
-        private string _overlayCharging;
-        private string _overlayReady;
-        private string _overlayFull;
-        private string _overlayEngaged;
-        private string _stateFlush;
+        [DataField("state_anchored", required: true)]
+        private string? _stateAnchored;
 
-        private Animation _flushAnimation;
+        [DataField("state_unanchored", required: true)]
+        private string? _stateUnAnchored;
+
+        [DataField("state_charging", required: true)]
+        private string? _stateCharging;
+
+        [DataField("overlay_charging", required: true)]
+        private string? _overlayCharging;
+
+        [DataField("overlay_ready", required: true)]
+        private string? _overlayReady;
+
+        [DataField("overlay_full", required: true)]
+        private string? _overlayFull;
+
+        [DataField("overlay_engaged", required: true)]
+        private string? _overlayEngaged;
+
+        [DataField("state_flush", required: true)]
+        private string? _stateFlush;
+
+        [DataField("flush_sound", required: true)]
+        private string? _flushSound;
+
+        [DataField("flush_time", required: true)]
+        private float _flushTime;
+
+        private Animation _flushAnimation = default!;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            _flushAnimation = new Animation {Length = TimeSpan.FromSeconds(_flushTime)};
+
+            var flick = new AnimationTrackSpriteFlick();
+            _flushAnimation.AnimationTracks.Add(flick);
+            flick.LayerKey = DisposalUnitVisualLayers.Base;
+            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(_stateFlush, 0));
+
+            var sound = new AnimationTrackPlaySound();
+            _flushAnimation.AnimationTracks.Add(sound);
+
+            if (_flushSound != null)
+            {
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_flushSound, 0));
+            }
+        }
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -35,7 +71,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -109,34 +145,6 @@ namespace Content.Client.GameObjects.Components.Disposal
             }
         }
 
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateAnchored = node.GetNode("state_anchored").AsString();
-            _stateUnAnchored = node.GetNode("state_unanchored").AsString();
-            _stateCharging = node.GetNode("state_charging").AsString();
-            _overlayCharging = node.GetNode("overlay_charging").AsString();
-            _overlayReady = node.GetNode("overlay_ready").AsString();
-            _overlayFull = node.GetNode("overlay_full").AsString();
-            _overlayEngaged = node.GetNode("overlay_engaged").AsString();
-            _stateFlush = node.GetNode("state_flush").AsString();
-
-            var flushSound = node.GetNode("flush_sound").AsString();
-            var flushTime = node.GetNode("flush_time").AsFloat();
-
-            _flushAnimation = new Animation {Length = TimeSpan.FromSeconds(flushTime)};
-
-            var flick = new AnimationTrackSpriteFlick();
-            _flushAnimation.AnimationTracks.Add(flick);
-            flick.LayerKey = DisposalUnitVisualLayers.Base;
-            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(_stateFlush, 0));
-
-            var sound = new AnimationTrackPlaySound();
-            _flushAnimation.AnimationTracks.Add(sound);
-            sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(flushSound, 0));
-        }
-
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
@@ -150,17 +158,11 @@ namespace Content.Client.GameObjects.Components.Disposal
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
-
             ChangeState(component);
         }
     }
 
-    public enum DisposalUnitVisualLayers
+    public enum DisposalUnitVisualLayers : byte
     {
         Base,
         Handle,

@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
-    public class PathfindingChunkUpdateMessage : EntitySystemMessage
+    public class PathfindingChunkUpdateMessage : EntityEventArgs
     {
         public PathfindingChunk Chunk { get; }
 
@@ -32,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Nodes per chunk row
         public static int ChunkSize => 8;
         public PathfindingNode[,] Nodes => _nodes;
-        private PathfindingNode[,] _nodes = new PathfindingNode[ChunkSize,ChunkSize];
+        private readonly PathfindingNode[,] _nodes = new PathfindingNode[ChunkSize,ChunkSize];
 
         public PathfindingChunk(GridId gridId, Vector2i indices)
         {
@@ -179,12 +177,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return _nodes[chunkX, chunkY];
         }
 
-        private void CreateNode(TileRef tile, PathfindingChunk parent = null)
+        private void CreateNode(TileRef tile, PathfindingChunk? parent = null)
         {
-            if (parent == null)
-            {
-                parent = this;
-            }
+            parent ??= this;
 
             var node = new PathfindingNode(parent, tile);
             var offsetX = tile.X - Indices.X;

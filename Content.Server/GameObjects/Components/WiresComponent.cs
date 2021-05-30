@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +16,16 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -118,33 +117,37 @@ namespace Content.Server.GameObjects.Components
         /// Contains all registered wires.
         /// </summary>
         [ViewVariables]
-        public readonly List<Wire> WiresList = new List<Wire>();
+        public readonly List<Wire> WiresList = new();
 
         /// <summary>
         /// Status messages are displayed at the bottom of the UI.
         /// </summary>
         [ViewVariables]
-        private readonly Dictionary<object, object> _statuses = new Dictionary<object, object>();
+        private readonly Dictionary<object, object> _statuses = new();
 
         /// <summary>
         /// <see cref="AssignAppearance"/> and <see cref="WiresBuilder.CreateWire"/>.
         /// </summary>
         private readonly List<WireColor> _availableColors =
-            new List<WireColor>((WireColor[]) Enum.GetValues(typeof(WireColor)));
+            new((WireColor[]) Enum.GetValues(typeof(WireColor)));
 
         private readonly List<WireLetter> _availableLetters =
-            new List<WireLetter>((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
+            new((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
-        private string _boardName = default!;
+        [DataField("BoardName")]
+        private string _boardName = "Wires";
 
+        [DataField("SerialNumber")]
         private string? _serialNumber;
 
         // Used to generate wire appearance randomization client side.
         // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
         [ViewVariables]
+        [DataField("WireSeed")]
         private int _wireSeed;
         [ViewVariables]
-        private string? _layoutId;
+        [DataField("LayoutId")]
+        private string? _layoutId = default;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 
@@ -447,7 +450,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
 
-                            _audioSystem.PlayFromEntity("/Audio/Effects/multitool_pulse.ogg", Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -474,28 +477,35 @@ namespace Content.Server.GameObjects.Components
                     _wireSeed));
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _boardName, "BoardName", "Wires");
-            serializer.DataField(ref _serialNumber, "SerialNumber", null);
-            serializer.DataField(ref _wireSeed, "WireSeed", 0);
-            serializer.DataField(ref _layoutId, "LayoutId", null);
-        }
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+            {
                 return false;
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
-                return false;
+            }
 
-            IsPanelOpen = !IsPanelOpen;
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
-                    Owner);
-            return true;
+            // opens the wires ui if using a tool with cutting or multitool quality on it
+            if (IsPanelOpen &&
+               (tool.HasQuality(ToolQuality.Cutting) ||
+                tool.HasQuality(ToolQuality.Multitool)))
+            {
+                if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                {
+                    OpenInterface(actor.PlayerSession);
+                    return true;
+                }
+            }
+
+            // screws the panel open if the tool can do so
+            else if (await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
+            {
+                IsPanelOpen = !IsPanelOpen;
+                SoundSystem.Play(Filter.Pvs(Owner), IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
+                        Owner);
+                return true;
+            }
+
+            return false;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

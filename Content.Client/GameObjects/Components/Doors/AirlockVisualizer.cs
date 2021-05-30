@@ -1,42 +1,40 @@
-﻿using System;
+using System;
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
     [UsedImplicitly]
-    public class AirlockVisualizer : AppearanceVisualizer
+    public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private const string AnimationKey = "airlock_animation";
 
-        private Animation CloseAnimation;
-        private Animation OpenAnimation;
-        private Animation DenyAnimation;
+        [DataField("open_sound", required: true)]
+        private string _openSound = default!;
 
-        public override void LoadData(YamlMappingNode node)
+        [DataField("close_sound", required: true)]
+        private string _closeSound = default!;
+
+        [DataField("deny_sound", required: true)]
+        private string _denySound = default!;
+
+        [DataField("animation_time")]
+        private float _delay = 0.8f;
+
+        private Animation CloseAnimation = default!;
+        private Animation OpenAnimation = default!;
+        private Animation DenyAnimation = default!;
+
+        void ISerializationHooks.AfterDeserialization()
         {
-            base.LoadData(node);
-
-            var delay = 0.8f;
-
-            var openSound = node.GetNode("open_sound").AsString();
-            var closeSound = node.GetNode("close_sound").AsString();
-            var denySound = node.GetNode("deny_sound").AsString();
-            if (node.TryGetNode("animation_time", out var yamlNode))
-            {
-                delay = yamlNode.AsFloat();
-            }
-
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -55,10 +53,14 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 CloseAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
+
+                if (_closeSound != null)
+                {
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
+                }
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(delay)};
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -77,7 +79,11 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
+
+                if (_openSound != null)
+                {
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
+                }
             }
 
             DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
@@ -85,11 +91,15 @@ namespace Content.Client.GameObjects.Components.Doors
                 var flick = new AnimationTrackSpriteFlick();
                 DenyAnimation.AnimationTracks.Add(flick);
                 flick.LayerKey = DoorVisualLayers.BaseUnlit;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny_unlit", 0f));
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
+
+                if (_denySound != null)
+                {
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
+                }
             }
         }
 
@@ -103,8 +113,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (component.Owner.Deleted)
-                return;
+            base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
@@ -116,35 +125,31 @@ namespace Content.Client.GameObjects.Components.Doors
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
+
+            if (animPlayer.HasRunningAnimation(AnimationKey))
+            {
+                animPlayer.Stop(AnimationKey);
+            }
             switch (state)
             {
-                case DoorVisualState.Closed:
-                    sprite.LayerSetState(DoorVisualLayers.Base, "closed");
-                    sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
-                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
-                    sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
-                    break;
-                case DoorVisualState.Closing:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(CloseAnimation, AnimationKey);
-                    }
-                    break;
-                case DoorVisualState.Opening:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(OpenAnimation, AnimationKey);
-                    }
-                    break;
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     unlitVisible = false;
                     break;
+                case DoorVisualState.Closed:
+                    sprite.LayerSetState(DoorVisualLayers.Base, "closed");
+                    sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
+                    sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
+                    break;
+                case DoorVisualState.Opening:
+                    animPlayer.Play(OpenAnimation, AnimationKey);
+                    break;
+                case DoorVisualState.Closing:
+                    animPlayer.Play(CloseAnimation, AnimationKey);
+                    break;
                 case DoorVisualState.Deny:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(DenyAnimation, AnimationKey);
-                    }
+                    animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorVisualState.Welded:
                     weldedVisible = true;
@@ -168,7 +173,7 @@ namespace Content.Client.GameObjects.Components.Doors
         }
     }
 
-    public enum DoorVisualLayers
+    public enum DoorVisualLayers : byte
     {
         Base,
         BaseUnlit,

@@ -1,34 +1,25 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Maps
 {
     public static class TurfHelpers
     {
         /// <summary>
-        ///     Returns the content tile definition for a tile.
-        /// </summary>
-        public static ContentTileDefinition GetContentTileDefinition(this Tile tile)
-        {
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
-        }
-
-        /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef GetTileRef(this Vector2i Vector2i, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this Vector2i vector2i, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return default;
@@ -38,7 +29,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(gridId, out var grid))
                 return default;
 
-            if (!grid.TryGetTileRef(Vector2i, out var tile))
+            if (!grid.TryGetTileRef(vector2i, out var tile))
                 return default;
 
             return tile;
@@ -54,10 +45,12 @@ namespace Content.Shared.Maps
             if (!coordinates.IsValid(entityManager))
                 return null;
 
+
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
                 return null;
+
 
             if (!grid.TryGetTileRef(coordinates, out var tile))
                 return null;
@@ -65,9 +58,42 @@ namespace Content.Shared.Maps
             return tile;
         }
 
-        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            return (turf = coordinates.GetTileRef()) != null;
+            return (turf = coordinates.GetTileRef(entityManager, mapManager)) != null;
+        }
+
+        /// <summary>
+        ///     Returns the content tile definition for a tile.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+        }
+
+        /// <summary>
+        ///     Returns whether a tile is considered space.
+        /// </summary>
+        public static bool IsSpace(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.GetContentTileDefinition(tileDefinitionManager).IsSpace;
+        }
+
+        /// <summary>
+        ///     Returns the content tile definition for a tile ref.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.Tile.GetContentTileDefinition(tileDefinitionManager);
+        }
+
+        /// <summary>
+        ///     Returns whether a tile ref is considered space.
+        /// </summary>
+        public static bool IsSpace(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
+        {
+            return tile.Tile.IsSpace(tileDefinitionManager);
         }
 
         public static bool PryTile(this EntityCoordinates coordinates, IEntityManager? entityManager = null,
@@ -123,32 +149,32 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
-            return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
             if (turf == null)
                 return Enumerable.Empty<IEntity>();
 
-            return GetEntitiesInTile(turf.Value, approximate, entityManager);
+            return GetEntitiesInTile(turf.Value, approximate, lookupSystem);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityLookup? lookupSystem = null)
         {
-            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, entityManager);
+            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, lookupSystem);
         }
 
         /// <summary>
@@ -156,7 +182,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = IoCManager.Resolve<IPhysicsManager>();
+            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
 
             var worldBox = GetWorldTileBox(turf);
 

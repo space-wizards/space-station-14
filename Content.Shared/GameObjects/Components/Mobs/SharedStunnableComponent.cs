@@ -1,15 +1,20 @@
+#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using Content.Shared.Alert;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -20,37 +25,44 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public sealed override string Name => "Stunnable";
         public override uint? NetID => ContentNetIDs.STUNNABLE;
 
-        protected TimeSpan? LastStun;
+        public (TimeSpan Start, TimeSpan End)? StunnedTimer { get; protected set; }
+        public (TimeSpan Start, TimeSpan End)? KnockdownTimer { get; protected set; }
+        public (TimeSpan Start, TimeSpan End)? SlowdownTimer { get; protected set; }
 
-        [ViewVariables] protected TimeSpan? StunStart => LastStun;
+        [ViewVariables] public float StunnedSeconds =>
+            StunnedTimer == null ? 0f : (float)(StunnedTimer.Value.End - StunnedTimer.Value.Start).TotalSeconds;
+        [ViewVariables] public float KnockdownSeconds =>
+            KnockdownTimer == null ? 0f : (float)(KnockdownTimer.Value.End - KnockdownTimer.Value.Start).TotalSeconds;
+        [ViewVariables] public float SlowdownSeconds =>
+            SlowdownTimer == null ? 0f : (float)(SlowdownTimer.Value.End - SlowdownTimer.Value.Start).TotalSeconds;
 
-        [ViewVariables]
-        protected TimeSpan? StunEnd => LastStun == null
-            ? (TimeSpan?) null
-            : _gameTiming.CurTime +
-              (TimeSpan.FromSeconds(Math.Max(StunnedTimer, Math.Max(KnockdownTimer, SlowdownTimer))));
+        [ViewVariables] public bool AnyStunActive => Stunned || KnockedDown || SlowedDown;
+        [ViewVariables] public bool Stunned => StunnedTimer != null;
+        [ViewVariables] public bool KnockedDown => KnockdownTimer != null;
+        [ViewVariables] public bool SlowedDown => SlowdownTimer != null;
 
-        private bool _canHelp = true;
+        [DataField("stunCap")]
         protected float _stunCap = 20f;
+
+        [DataField("knockdownCap")]
         protected float _knockdownCap = 20f;
+
+        [DataField("slowdownCap")]
         protected float _slowdownCap = 20f;
+
         private float _helpKnockdownRemove = 1f;
+
+        [DataField("helpInterval")]
         private float _helpInterval = 1f;
 
-        protected float StunnedTimer;
-        protected float KnockdownTimer;
-        protected float SlowdownTimer;
+        [DataField("stunAlertId")] private string _stunAlertId = "stun";
 
-        private string _stunTexture;
+        private bool _canHelp = true;
 
-        protected CancellationTokenSource StatusRemoveCancellation = new CancellationTokenSource();
+        protected CancellationTokenSource StatusRemoveCancellation = new();
 
         [ViewVariables] protected float WalkModifierOverride = 0f;
         [ViewVariables] protected float RunModifierOverride = 0f;
-
-        [ViewVariables] public bool Stunned => StunnedTimer > 0f;
-        [ViewVariables] public bool KnockedDown => KnockdownTimer > 0f;
-        [ViewVariables] public bool SlowedDown => SlowdownTimer > 0f;
 
         private float StunTimeModifier
         {
@@ -107,17 +119,16 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <returns>Whether or not the owner was stunned.</returns>
         public bool Stun(float seconds)
         {
-            seconds = MathF.Min(StunnedTimer + (seconds * StunTimeModifier), _stunCap);
+            seconds = MathF.Min(StunnedSeconds + (seconds * StunTimeModifier), _stunCap);
 
             if (seconds <= 0f)
             {
                 return false;
             }
 
-            StunnedTimer = seconds;
-            LastStun = _gameTiming.CurTime;
+            StunnedTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(seconds)));
 
-            SetStatusEffect();
+            SetAlert();
             OnStun();
 
             Dirty();
@@ -134,17 +145,16 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <returns>Whether or not the owner was knocked down.</returns>
         public bool Knockdown(float seconds)
         {
-            seconds = MathF.Min(KnockdownTimer + (seconds * KnockdownTimeModifier), _knockdownCap);
+            seconds = MathF.Min(KnockdownSeconds + (seconds * KnockdownTimeModifier), _knockdownCap);
 
             if (seconds <= 0f)
             {
                 return false;
             }
 
-            KnockdownTimer = seconds;
-            LastStun = _gameTiming.CurTime;
+            KnockdownTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(seconds)));;
 
-            SetStatusEffect();
+            SetAlert();
             OnKnockdown();
 
             Dirty();
@@ -172,7 +182,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// <param name="runModifierOverride">Run speed modifier. Set to 0 or negative for default value. (0.5f)</param>
         public void Slowdown(float seconds, float walkModifierOverride = 0f, float runModifierOverride = 0f)
         {
-            seconds = MathF.Min(SlowdownTimer + (seconds * SlowdownTimeModifier), _slowdownCap);
+            seconds = MathF.Min(SlowdownSeconds + (seconds * SlowdownTimeModifier), _slowdownCap);
 
             if (seconds <= 0f)
                 return;
@@ -180,40 +190,68 @@ namespace Content.Shared.GameObjects.Components.Mobs
             WalkModifierOverride = walkModifierOverride;
             RunModifierOverride = runModifierOverride;
 
-            SlowdownTimer = seconds;
-            LastStun = _gameTiming.CurTime;
+            SlowdownTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(seconds)));
 
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
                 movement.RefreshMovementSpeedModifiers();
 
-            SetStatusEffect();
+            SetAlert();
             Dirty();
         }
 
-        private void SetStatusEffect()
+        private (TimeSpan, TimeSpan)? GetTimers()
         {
-            if (!Owner.TryGetComponent(out SharedStatusEffectsComponent status))
+            // Don't do anything if no stuns are applied.
+            if (!AnyStunActive)
+                return null;
+
+            TimeSpan start = TimeSpan.MaxValue, end = TimeSpan.MinValue;
+
+            if (StunnedTimer != null)
+            {
+                if (StunnedTimer.Value.Start < start)
+                    start = StunnedTimer.Value.Start;
+
+                if (StunnedTimer.Value.End > end)
+                    end = StunnedTimer.Value.End;
+            }
+
+            if (KnockdownTimer != null)
+            {
+                if (KnockdownTimer.Value.Start < start)
+                    start = KnockdownTimer.Value.Start;
+
+                if (KnockdownTimer.Value.End > end)
+                    end = KnockdownTimer.Value.End;
+            }
+
+            if (SlowdownTimer != null)
+            {
+                if (SlowdownTimer.Value.Start < start)
+                    start = SlowdownTimer.Value.Start;
+
+                if (SlowdownTimer.Value.End > end)
+                    end = SlowdownTimer.Value.End;
+            }
+
+            return (start, end);
+        }
+
+        private void SetAlert()
+        {
+            if (!Owner.TryGetComponent(out SharedAlertsComponent? status))
             {
                 return;
             }
 
-            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture,
-                (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
+            var timers = GetTimers();
+
+            if (timers == null)
+                return;
+
+            status.ShowAlert(AlertType.Stun, cooldown:timers);
             StatusRemoveCancellation.Cancel();
             StatusRemoveCancellation = new CancellationTokenSource();
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stunCap, "stunCap", 20f);
-            serializer.DataField(ref _knockdownCap, "knockdownCap", 20f);
-            serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
-            serializer.DataField(ref _helpInterval, "helpInterval", 1f);
-            serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
-            serializer.DataField(ref _stunTexture, "stunTexture",
-                "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png");
         }
 
         protected virtual void OnInteractHand() { }
@@ -228,12 +266,67 @@ namespace Content.Shared.GameObjects.Components.Mobs
             _canHelp = false;
             Owner.SpawnTimer((int) _helpInterval * 1000, () => _canHelp = true);
 
-            KnockdownTimer -= _helpKnockdownRemove;
+            KnockdownTimer = (KnockdownTimer!.Value.Start, KnockdownTimer.Value.End.Subtract(TimeSpan.FromSeconds(_helpInterval)));
 
-            SetStatusEffect();
+            OnInteractHand();
+
+            SetAlert();
             Dirty();
 
             return true;
+        }
+
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new StunnableComponentState(StunnedTimer, KnockdownTimer, SlowdownTimer, WalkModifierOverride, RunModifierOverride);
+        }
+
+        protected virtual void OnKnockdownEnd()
+        {
+        }
+
+        public void Update(float delta)
+        {
+            var curTime = _gameTiming.CurTime;
+
+            if (StunnedTimer != null)
+            {
+                if (StunnedTimer.Value.End <= curTime)
+                {
+                    StunnedTimer = null;
+                    Dirty();
+                }
+            }
+
+            if (KnockdownTimer != null)
+            {
+                if (KnockdownTimer.Value.End <= curTime)
+                {
+                    OnKnockdownEnd();
+
+                    KnockdownTimer = null;
+                    Dirty();
+                }
+            }
+
+            if (SlowdownTimer != null)
+            {
+                if (SlowdownTimer.Value.End <= curTime)
+                {
+                    if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
+                    {
+                        movement.RefreshMovementSpeedModifiers();
+                    }
+
+                    SlowdownTimer = null;
+                    Dirty();
+                }
+            }
+
+            if (AnyStunActive || !Owner.TryGetComponent(out SharedAlertsComponent? status) || !status.IsShowingAlert(AlertType.Stun))
+                return;
+
+            status.ClearAlert(AlertType.Stun);
         }
 
         #region ActionBlockers
@@ -273,13 +366,15 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [Serializable, NetSerializable]
         protected sealed class StunnableComponentState : ComponentState
         {
-            public float StunnedTimer { get; }
-            public float KnockdownTimer { get; }
-            public float SlowdownTimer { get; }
+            public (TimeSpan Start, TimeSpan End)? StunnedTimer { get; }
+            public (TimeSpan Start, TimeSpan End)? KnockdownTimer { get; }
+            public (TimeSpan Start, TimeSpan End)? SlowdownTimer { get; }
             public float WalkModifierOverride { get; }
             public float RunModifierOverride { get; }
 
-            public StunnableComponentState(float stunnedTimer, float knockdownTimer, float slowdownTimer, float walkModifierOverride, float runModifierOverride) : base(ContentNetIDs.STUNNABLE)
+            public StunnableComponentState(
+                (TimeSpan Start, TimeSpan End)? stunnedTimer, (TimeSpan Start, TimeSpan End)? knockdownTimer,
+                (TimeSpan Start, TimeSpan End)? slowdownTimer, float walkModifierOverride, float runModifierOverride) : base(ContentNetIDs.STUNNABLE)
             {
                 StunnedTimer = stunnedTimer;
                 KnockdownTimer = knockdownTimer;

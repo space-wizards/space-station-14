@@ -1,3 +1,4 @@
+﻿using Content.Client.Changelog;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
@@ -14,7 +15,7 @@ namespace Content.Client.UserInterface
         {
             _richTextLabel = new RichTextLabel
             {
-                SizeFlagsVertical = SizeFlags.FillExpand
+                VerticalExpand = true
             };
             AddChild(_richTextLabel);
 
@@ -23,14 +24,29 @@ namespace Content.Client.UserInterface
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
-            var discordButton = new Button {Text = Loc.GetString("Join us on Discord!")};
+            var discordButton = new Button {Text = Loc.GetString("Discord")};
             discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
 
             var websiteButton = new Button {Text = Loc.GetString("Website")};
             websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
 
+            var reportButton = new Button { Text = Loc.GetString("Report Bugs") };
+            reportButton.OnPressed += args => uriOpener.OpenUri(UILinks.BugReport);
+
+            var creditsButton = new Button { Text = Loc.GetString("Credits") };
+            creditsButton.OnPressed += args => new CreditsWindow().Open();
+
+            var changelogButton = new ChangelogButton
+            {
+                HorizontalExpand = true,
+                HorizontalAlignment = HAlignment.Right
+            };
+
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
+            buttons.AddChild(reportButton);
+            buttons.AddChild(creditsButton);
+            buttons.AddChild(changelogButton);
         }
 
         public void SetInfoBlob(string markup)

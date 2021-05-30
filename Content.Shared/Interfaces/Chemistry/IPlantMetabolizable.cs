@@ -1,11 +1,9 @@
-﻿using Content.Shared.Chemistry;
-using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+#nullable enable
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Interfaces.Chemistry
 {
-    public interface IPlantMetabolizable : IExposeData
+    public interface IPlantMetabolizable
     {
         /// <summary>
         ///     Metabolize <paramref name="customPlantMetabolism"/> unit(s) of a reagent.

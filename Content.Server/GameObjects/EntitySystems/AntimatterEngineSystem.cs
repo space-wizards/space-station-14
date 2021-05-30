@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power.AME;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -9,18 +9,13 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         private float _accumulatedFrameTime;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
             _accumulatedFrameTime += frameTime;
             if (_accumulatedFrameTime >= 10)
             {
-                foreach (var comp in ComponentManager.EntityQuery<AMEControllerComponent>())
+                foreach (var comp in ComponentManager.EntityQuery<AMEControllerComponent>(true))
                 {
                     comp.OnUpdate(frameTime);
                 }

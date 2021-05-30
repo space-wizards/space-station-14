@@ -1,0 +1,30 @@
+- type: stack
+  id: Steel
+  name: steel
+  icon: /Textures/Objects/Materials/Sheets/metal.rsi/steel.png
+  spawn: SheetSteel1
+
+- type: stack
+  id: Plasteel
+  name: plasteel
+  icon: /Textures/Objects/Materials/Sheets/metal.rsi/plasteel.png
+  spawn: SheetPlasteel1
+
+- type: stack
+  id: Titanium
+  name: titanium
+  icon: /Textures/Objects/Materials/Sheets/metal.rsi/titanium.png
+  spawn: SheetTitanium1
+
+- type: stack
+  id: Plastitanium
+  name: plastitanium
+  icon: /Textures/Objects/Materials/Sheets/metal.rsi/plastitanium.png
+  spawn: SheetPlastitanium1
+
+- type: stack
+  id: Brass
+  name: brass
+  icon: /Textures/Objects/Materials/Sheets/metal.rsi/brass.png
+  spawn: SheetBrass1
+  

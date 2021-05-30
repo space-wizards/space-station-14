@@ -1,9 +1,9 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.Console;
+using Robust.Shared.Console;
 using Robust.Shared.Containers;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
@@ -14,14 +14,14 @@ namespace Content.Client.Commands
         public string Description => $"Reverts the effects of {ShowMechanismsCommand.CommandName}";
         public string Help => $"{Command}";
 
-        public bool Execute(IDebugConsole console, params string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
-            var mechanisms = componentManager.EntityQuery<IMechanism>();
+            var mechanisms = componentManager.EntityQuery<IMechanism>(true);
 
             foreach (var mechanism in mechanisms)
             {
-                if (!mechanism.Owner.TryGetComponent(out SpriteComponent sprite))
+                if (!mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
                 {
                     continue;
                 }
@@ -29,7 +29,7 @@ namespace Content.Client.Commands
                 sprite.ContainerOccluded = false;
 
                 var tempParent = mechanism.Owner;
-                while (ContainerHelpers.TryGetContainer(tempParent, out var container))
+                while (tempParent.TryGetContainer(out var container))
                 {
                     if (!container.ShowContents)
                     {
@@ -41,9 +41,7 @@ namespace Content.Client.Commands
                 }
             }
 
-            IoCManager.Resolve<IClientConsole>().ProcessCommand("hidecontainedcontext");
-
-            return false;
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("hidecontainedcontext");
         }
     }
 }

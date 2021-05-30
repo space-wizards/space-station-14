@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
@@ -10,10 +10,10 @@ namespace Content.Client.GameObjects.Components.Paper
     {
         private readonly RichTextLabel _label;
         public readonly LineEdit Input;
-        protected override Vector2? CustomSize => (300, 300);
 
         public PaperWindow()
         {
+            MinSize = SetSize = (300, 300);
             var container = new VBoxContainer();
             _label = new RichTextLabel();
             Input = new LineEdit {Visible = false};
@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Paper
                 Input.Visible = true;
             }
             var msg = new FormattedMessage();
-            msg.AddMarkup(state.Text);
+            msg.AddMarkupPermissive(state.Text);
             _label.SetMessage(msg);
         }
     }

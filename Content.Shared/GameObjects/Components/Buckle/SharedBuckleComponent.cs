@@ -1,25 +1,56 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Buckle
 {
-    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
+    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable, ICollideSpecial
     {
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
+
+        [ComponentDependency] protected readonly IPhysBody? Physics;
+
+        /// <summary>
+        ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
+        /// </summary>
+        [ViewVariables]
+        [DataField("range")]
+        public float Range { get; protected set; } = SharedInteractionSystem.InteractionRange / 1.4f;
 
         /// <summary>
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
 
-        public abstract bool TryBuckle(IEntity user, IEntity to);
+        public EntityUid? LastEntityBuckledTo { get; set; }
+
+        public bool IsOnStrapEntityThisFrame { get; set; }
+
+        public bool DontCollide { get; set; }
+
+        public abstract bool TryBuckle(IEntity? user, IEntity to);
+
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
+        {
+            if (collidedwith.Owner.Uid == LastEntityBuckledTo)
+            {
+                IsOnStrapEntityThisFrame = true;
+                return Buckled || DontCollide;
+            }
+
+            return false;
+        }
 
         bool IActionBlocker.CanMove()
         {
@@ -36,12 +67,12 @@ namespace Content.Shared.GameObjects.Components.Buckle
             return !Buckled;
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target.HasComponent<SharedStrapComponent>();
         }
 
-        public bool Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEvent args)
         {
             return TryBuckle(args.User, args.Target);
         }
@@ -50,13 +81,17 @@ namespace Content.Shared.GameObjects.Components.Buckle
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;
+            LastEntityBuckledTo = lastEntityBuckledTo;
+            DontCollide = dontCollide;
         }
 
         public bool Buckled { get; }
+        public EntityUid? LastEntityBuckledTo { get; }
+        public bool DontCollide { get; }
         public int? DrawDepth;
     }
 

@@ -1,0 +1,11 @@
+- type: entity
+  description: "If you want to get cancer, might as well do it in style."
+  id: BaseSmokeable
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: Smoking
+      duration: 50
+    - type: Appearance
+      visuals:
+        - type: BurnStateVisualizer

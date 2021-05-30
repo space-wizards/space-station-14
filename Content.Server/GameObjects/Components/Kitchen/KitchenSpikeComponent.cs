@@ -1,103 +1,174 @@
-﻿#nullable enable
+#nullable enable
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Kitchen;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenSpikeComponent : Component, IActivate, ISuicideAct
+    public class KitchenSpikeComponent : SharedKitchenSpikeComponent, IActivate, ISuicideAct
     {
-        public override string Name => "KitchenSpike";
-
         private int _meatParts;
         private string? _meatPrototype;
         private string _meatSource1p = "?";
         private string _meatSource0 = "?";
         private string _meatName = "?";
 
+        private List<EntityUid> _beingButchered = new();
+
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             SpriteComponent? sprite;
 
-            if (!EntitySystem.Get<SharedPullingSystem>().TryGetPulled(eventArgs.User, out var victim))
+            if (_meatParts == 0)
             {
-                if (_meatParts == 0)
-                {
-                    return;
-                }
-                _meatParts--;
-
-                if (!string.IsNullOrEmpty(_meatPrototype))
-                {
-                    var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
-                    if (meat != null)
-                    {
-                        meat.Name = _meatName;
-                    }
-                }
-
-                if (_meatParts != 0)
-                {
-                    eventArgs.User.PopupMessage(_meatSource1p);
-                }
-                else
-                {
-                    if (Owner.TryGetComponent(out sprite))
-                    {
-                        sprite.LayerSetState(0, "spike");
-                    }
-
-                    eventArgs.User.PopupMessage(_meatSource0);
-                }
-
                 return;
             }
+            _meatParts--;
+
+            if (!string.IsNullOrEmpty(_meatPrototype))
+            {
+                var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
+                if (meat != null)
+                {
+                    meat.Name = _meatName;
+                }
+            }
+
+            if (_meatParts != 0)
+            {
+                eventArgs.User.PopupMessage(_meatSource1p);
+            }
+            else
+            {
+                if (Owner.TryGetComponent(out sprite))
+                {
+                    sprite.LayerSetState(0, "spike");
+                }
+
+                eventArgs.User.PopupMessage(_meatSource0);
+            }
+
+            return;
+
+        }
+
+        public override bool DragDropOn(DragDropEvent eventArgs)
+        {
+            TrySpike(eventArgs.Dragged, eventArgs.User);
+            return true;
+        }
+
+        private bool Spikeable(IEntity user, IEntity victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
+        {
+            butcherable = null;
 
             if (_meatParts > 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The spike already has something on it, finish collecting its meat first!"));
-                return;
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-collect", ("this", Owner)));
+                return false;
             }
 
-            if (!victim.TryGetComponent<ButcherableComponent>(out var food))
+            if (!victim.TryGetComponent(out butcherable))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:theName} can't be butchered on the spike.", victim));
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
+                return false;
+            }
+
+            if (butcherable.MeatPrototype == null)
+                return false;
+
+            return true;
+        }
+
+        public async void TrySpike(IEntity victim, IEntity user)
+        {
+            var victimUid = victim.Uid;
+            if (_beingButchered.Contains(victimUid)) return;
+
+            SharedButcherableComponent? butcherable;
+
+            if (!Spikeable(user, victim, out butcherable))
+                return;
+
+            // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
+            if (victim.TryGetComponent<IMobStateComponent>(out var state) &&
+                !state.IsDead())
+            {
+                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
                 return;
             }
 
-            _meatPrototype = food.MeatPrototype;
+            if (user != victim)
+                Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", Owner)));
+            else
+                Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", Owner)));
+
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+            var doAfterArgs = new DoAfterEventArgs(user, SpikeDelay, default, victim)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                NeedHand = true,
+            };
+
+            _beingButchered.Add(victimUid);
+
+            var result = await doAfterSystem.DoAfter(doAfterArgs);
+
+            _beingButchered.Remove(victimUid);
+
+            if (result == DoAfterStatus.Cancelled)
+                return;
+
+            if (!Spikeable(user, victim, out butcherable))
+                return;
+
+            _meatPrototype = butcherable.MeatPrototype;
             _meatParts = 5;
-            _meatSource1p = Loc.GetString("You remove some meat from {0:theName}.", victim);
-            _meatSource0 = Loc.GetString("You remove the last piece of meat from {0:theName}!", victim);
+            _meatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victim));
+            _meatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victim));
             // TODO: This could stand to be improved somehow, but it'd require Name to be much 'richer' in detail than it presently is.
             // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
-            _meatName = Loc.GetString("{0:name} meat", victim);
+            _meatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victim));
 
-            if (Owner.TryGetComponent(out sprite))
+            // TODO: Visualizer
+            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
             {
                 sprite.LayerSetState(0, "spikebloody");
             }
 
-            Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", eventArgs.User, victim));
+            Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
+            // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             victim.Delete();
+
+            if (SpikeSound != null)
+                SoundSystem.Play(Filter.Pvs(Owner), SpikeSound, Owner);
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            var othersMessage = Loc.GetString("{0:theName} has thrown themselves on a meat spike!", victim);
+            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
             victim.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("You throw yourself on a meat spike!");
+            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
             victim.PopupMessage(selfMessage);
 
             return SuicideKind.Piercing;

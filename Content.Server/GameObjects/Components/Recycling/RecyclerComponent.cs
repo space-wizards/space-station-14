@@ -1,56 +1,57 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.Construction;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameTicking;
+using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Recycling;
-using Content.Shared.Physics;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Localization;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Recycling
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
-    public class RecyclerComponent : Component, ICollideBehavior
+    public class RecyclerComponent : Component, IStartCollide, ISuicideAct
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Recycler";
 
-        private List<IEntity> _intersecting = new List<IEntity>();
+        public List<IEntity> Intersecting { get; set; } = new();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
         /// </summary>
-        [ViewVariables]
-        private bool _safe;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("safe")]
+        private bool _safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
-        [ViewVariables]
-        private int _efficiency; // TODO
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("efficiency")]
+        private float _efficiency = 0.25f;
 
         private bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         private void Bloodstain()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, true);
             }
@@ -58,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void Clean()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
@@ -66,46 +67,36 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
+            // We suppose this entity has a Recyclable component.
             return entity.HasComponent<IBody>() && !_safe && Powered;
-        }
-
-        private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
-        {
-            prototype = null;
-
-            // TODO CONSTRUCTION fix this
-
-            return Powered;
         }
 
         private void Recycle(IEntity entity)
         {
-            if (!_intersecting.Contains(entity))
+            if (!Intersecting.Contains(entity))
             {
-                _intersecting.Add(entity);
+                Intersecting.Add(entity);
             }
 
             // TODO: Prevent collision with recycled items
+
+            // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
+            if (!entity.TryGetComponent(out RecyclableComponent? recyclable) || !recyclable.Safe && _safe) return;
+
+            // Mobs are a special case!
             if (CanGib(entity))
             {
-                entity.Delete(); // TODO: Gib
+                entity.GetComponent<IBody>().Gib(true);
                 Bloodstain();
                 return;
             }
 
-            if (!CanRecycle(entity, out var prototype))
-            {
-                return;
-            }
-
-            // TODO CONSTRUCTION fix this
-
-            entity.Delete();
+            recyclable.Recycle(_efficiency);
         }
 
-        private bool CanRun()
+        public bool CanRun()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
@@ -119,15 +110,15 @@ namespace Content.Server.GameObjects.Components.Recycling
             return true;
         }
 
-        private bool CanMove(IEntity entity)
+        public bool CanMove(IEntity entity)
         {
             if (entity == Owner)
             {
                 return false;
             }
 
-            if (!entity.TryGetComponent(out IPhysicsComponent physics) ||
-                physics.Anchored)
+            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+                physics.BodyType == BodyType.Static)
             {
                 return false;
             }
@@ -142,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(entity))
+            if (entity.IsInContainer())
             {
                 return false;
             }
@@ -150,45 +141,31 @@ namespace Content.Server.GameObjects.Components.Recycling
             return true;
         }
 
-        public void Update(float frameTime)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (!CanRun())
-            {
-                _intersecting.Clear();
-                return;
-            }
-
-            var direction = Vector2.UnitX;
-
-            for (var i = _intersecting.Count - 1; i >= 0; i--)
-            {
-                var entity = _intersecting[i];
-
-                if (entity.Deleted || !CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
-                {
-                    _intersecting.RemoveAt(i);
-                    continue;
-                }
-
-                if (entity.TryGetComponent(out IPhysicsComponent physics))
-                {
-                    var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, frameTime);
-                }
-            }
+            Recycle(otherFixture.Body.Owner);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
-            base.ExposeData(serializer);
+            var mind = victim.PlayerSession()?.ContentData()?.Mind;
 
-            serializer.DataField(ref _safe, "safe", true);
-            serializer.DataField(ref _efficiency, "efficiency", 25);
-        }
+            if (mind != null)
+            {
+                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("You recycle yourself!"));
+            }
 
-        void ICollideBehavior.CollideWith(IEntity collidedWith)
-        {
-            Recycle(collidedWith);
+            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+
+            if (victim.TryGetComponent<IBody>(out var body))
+            {
+                body.Gib(true);
+            }
+
+            Bloodstain();
+
+            return SuicideKind.Bloodloss;
         }
     }
 }

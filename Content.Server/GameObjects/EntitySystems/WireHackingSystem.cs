@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
@@ -9,9 +10,9 @@ namespace Content.Server.GameObjects.EntitySystems
     public class WireHackingSystem : EntitySystem, IResettingEntitySystem
     {
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =
-            new Dictionary<string, WireLayout>();
+            new();
 
-        public bool TryGetLayout(string id, out WireLayout layout)
+        public bool TryGetLayout(string id, [NotNullWhen(true)] out WireLayout? layout)
         {
             return _layouts.TryGetValue(id, out layout);
         }

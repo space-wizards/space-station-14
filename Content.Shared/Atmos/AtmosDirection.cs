@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Runtime.CompilerServices;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
@@ -86,15 +88,15 @@ namespace Content.Shared.Atmos
         {
             return direction switch
             {
-                AtmosDirection.East => Angle.FromDegrees(0),
-                AtmosDirection.North => Angle.FromDegrees(90),
-                AtmosDirection.West => Angle.FromDegrees(180),
-                AtmosDirection.South => Angle.FromDegrees(270),
+                AtmosDirection.East => Angle.FromDegrees(90),
+                AtmosDirection.North => Angle.FromDegrees(180),
+                AtmosDirection.West => Angle.FromDegrees(270),
+                AtmosDirection.South => Angle.FromDegrees(0),
 
-                AtmosDirection.NorthEast => Angle.FromDegrees(45),
-                AtmosDirection.NorthWest => Angle.FromDegrees(135),
-                AtmosDirection.SouthWest => Angle.FromDegrees(225),
-                AtmosDirection.SouthEast => Angle.FromDegrees(315),
+                AtmosDirection.NorthEast => Angle.FromDegrees(135),
+                AtmosDirection.NorthWest => Angle.FromDegrees(205),
+                AtmosDirection.SouthWest => Angle.FromDegrees(315),
+                AtmosDirection.SouthEast => Angle.FromDegrees(45),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), $"It was {direction}."),
             };
@@ -134,6 +136,12 @@ namespace Content.Shared.Atmos
         public static AtmosDirection WithoutFlag(this AtmosDirection direction, AtmosDirection other)
         {
             return direction & ~other;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsFlagSet(this AtmosDirection direction, AtmosDirection other)
+        {
+            return (direction & other) == other;
         }
     }
 

@@ -1,65 +1,62 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Atmos;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
     public static class AtmosHelpers
     {
-        public static TileAtmosphere? GetTileAtmosphere(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
+        public static TileAtmosphere? GetTileAtmosphere(this EntityCoordinates coordinates)
         {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GetGridId(entityManager));
-
-            return gridAtmos?.GetTile(coordinates);
+            return EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates).GetTile(coordinates);
         }
 
         public static GasMixture? GetTileAir(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
         {
-            return coordinates.GetTileAtmosphere(entityManager)?.Air;
+            return coordinates.GetTileAtmosphere()?.Air;
         }
 
-        public static bool TryGetTileAtmosphere(this EntityCoordinates coordinates, [MaybeNullWhen(false)] out TileAtmosphere atmosphere)
+        public static bool TryGetTileAtmosphere(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileAtmosphere? atmosphere)
         {
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            return !Equals(atmosphere = coordinates.GetTileAtmosphere()!, default);
+            return !Equals(atmosphere = coordinates.GetTileAtmosphere(), default);
         }
 
-        public static bool TryGetTileAir(this EntityCoordinates coordinates, [MaybeNullWhen(false)] out GasMixture air, IEntityManager? entityManager = null)
+        public static bool TryGetTileAir(this EntityCoordinates coordinates, [NotNullWhen(true)] out GasMixture? air, IEntityManager? entityManager = null)
         {
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            return !Equals(air = coordinates.GetTileAir(entityManager)!, default);
+            return !Equals(air = coordinates.GetTileAir(entityManager), default);
         }
 
-        public static TileAtmosphere? GetTileAtmosphere(this Vector2i indices, GridId gridId)
+        public static bool IsTileAirProbablySafe(this EntityCoordinates coordinates)
         {
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId);
-
-            return gridAtmos?.GetTile(indices);
+            // Note that oxygen mix isn't checked, but survival boxes make that not necessary.
+            var air = coordinates.GetTileAir();
+            if (air == null)
+                return false;
+            if (air.Pressure <= Atmospherics.WarningLowPressure)
+                return false;
+            if (air.Pressure >= Atmospherics.WarningHighPressure)
+                return false;
+            if (air.Temperature <= 260)
+                return false;
+            if (air.Temperature >= 360)
+                return false;
+            return true;
         }
 
-        public static GasMixture? GetTileAir(this Vector2i indices, GridId gridId)
+        public static bool InvalidateTileAir(this EntityCoordinates coordinates)
         {
-            return indices.GetTileAtmosphere(gridId)?.Air;
-        }
+            if (!coordinates.TryGetTileAtmosphere(out var tileAtmos))
+            {
+                return false;
+            }
 
-        public static bool TryGetTileAtmosphere(this Vector2i indices, GridId gridId,
-            [MaybeNullWhen(false)] out TileAtmosphere atmosphere)
-        {
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            return !Equals(atmosphere = indices.GetTileAtmosphere(gridId)!, default);
-        }
-
-        public static bool TryGetTileAir(this Vector2i indices, GridId gridId, [MaybeNullWhen(false)] out GasMixture air)
-        {
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            return !Equals(air = indices.GetTileAir(gridId)!, default);
+            tileAtmos.Invalidate();
+            return true;
         }
     }
 }

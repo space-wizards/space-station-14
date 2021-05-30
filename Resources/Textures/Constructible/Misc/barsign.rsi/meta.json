@@ -10,7 +10,6 @@
   "states": [
     {
       "name": "combocafe",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -34,7 +33,6 @@
     },
     {
       "name": "thewiggleroom",
-      "directions": 1,
       "delays": [
         [
           0.4,
@@ -46,7 +44,6 @@
     },
     {
       "name": "thesun",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -62,7 +59,6 @@
     },
     {
       "name": "lv426",
-      "directions": 1,
       "delays": [
         [
           1,
@@ -72,7 +68,6 @@
     },
     {
       "name": "birdcage",
-      "directions": 1,
       "delays": [
         [
           0.4,
@@ -82,7 +77,6 @@
     },
     {
       "name": "zocalo",
-      "directions": 1,
       "delays": [
         [
           1,
@@ -92,7 +86,6 @@
     },
     {
       "name": "emergencyrumparty",
-      "directions": 1,
       "delays": [
         [
           1,
@@ -108,7 +101,6 @@
     },
     {
       "name": "empbarsign",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -168,7 +160,6 @@
     },
     {
       "name": "empty",
-      "directions": 1,
       "delays": [
         [
           1
@@ -177,7 +168,6 @@
     },
     {
       "name": "goose",
-      "directions": 1,
       "delays": [
         [
           0.5,
@@ -197,7 +187,6 @@
     },
     {
       "name": "maidcafe",
-      "directions": 1,
       "delays": [
         [
           1,
@@ -221,7 +210,6 @@
     },
     {
       "name": "officerbeersky",
-      "directions": 1,
       "delays": [
         [
           3,
@@ -238,7 +226,6 @@
     },
     {
       "name": "the_lightbulb",
-      "directions": 1,
       "delays": [
         [
           0.3,
@@ -260,7 +247,6 @@
     },
     {
       "name": "thealenath",
-      "directions": 1,
       "delays": [
         [
           1.8,
@@ -295,7 +281,6 @@
     },
     {
       "name": "thecoderbus",
-      "directions": 1,
       "delays": [
         [
           2.5,
@@ -305,7 +290,6 @@
     },
     {
       "name": "thedrunkcarp",
-      "directions": 1,
       "delays": [
         [
           0.5,
@@ -321,7 +305,6 @@
     },
     {
       "name": "theharmbaton",
-      "directions": 1,
       "delays": [
         [
           3,
@@ -338,7 +321,6 @@
     },
     {
       "name": "thenet",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -406,7 +388,6 @@
     },
     {
       "name": "theouterspess",
-      "directions": 1,
       "delays": [
         [
           1,
@@ -416,7 +397,6 @@
     },
     {
       "name": "emprah",
-      "directions": 1,
       "delays": [
         [
           1,
@@ -426,7 +406,6 @@
     },
     {
       "name": "thesingulo",
-      "directions": 1,
       "delays": [
         [
           0.1,
@@ -442,7 +421,6 @@
     },
     {
       "name": "robustacafe",
-      "directions": 1,
       "delays": [
         [
           1.8,
@@ -469,7 +447,6 @@
     },
     {
       "name": "maltesefalcon",
-      "directions": 1,
       "delays": [
         [
           3.8,
@@ -485,7 +462,6 @@
     },
     {
       "name": "thewretchedhive",
-      "directions": 1,
       "delays": [
         [
           0.4,
@@ -509,7 +485,6 @@
     },
     {
       "name": "enginechange",
-      "directions": 1,
       "delays": [
         [
           0.2,

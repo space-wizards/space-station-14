@@ -1,0 +1,65 @@
+- type: entity
+  id: CrateMedicalDefib
+  name:  defibrillator crate
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+#    contents:
+#      - id: Defibrillator
+#        amount: 1
+
+- type: entity
+  id: CrateMedicalSupplies
+  name: medical supplies crate
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitFilled
+        amount: 2
+      - id: Gauze
+        amount: 2
+
+- type: entity
+  id: CrateMedicalSurgery
+  name: surgical supplies crate
+  parent: CrateSurgery
+  components:
+  - type: StorageFill
+    contents:
+      - id: Scalpel
+        amount: 1
+      - id: Retractor
+        amount: 1
+      - id: Cautery
+        amount: 1
+      - id: Drill
+        amount: 1
+      - id: Saw
+        amount: 1
+      - id: Hemostat
+        amount: 1
+      - id: ClothingMaskSterile
+        amount: 1
+
+- type: entity
+  id: CrateMedicalScrubs
+  name: medical scrubs crate
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: UniformScrubsColorGreen
+        amount: 1
+      - id: UniformScrubsColorPurple
+        amount: 1
+      - id: UniformScrubsColorBlue
+        amount: 1
+      - id: HatBandBlue
+        amount: 1
+      - id: HatBandRed
+        amount: 1
+      - id: HatBandGreen
+        amount: 1
+      - id: ClothingMaskSterile
+        amount: 3

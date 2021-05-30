@@ -1,13 +1,13 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Items
@@ -47,7 +47,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="handName">The name of the hand to get.</param>
         /// <param name="item">The item in the held, null if no item is held</param>
         /// <returns>Whether it was holding an item</returns>
-        bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item);
+        bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item);
 
         /// <summary>
         /// Gets item held by the current active hand
@@ -102,7 +102,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <returns>
         ///     true if the entity is held, false otherwise
         /// </returns>
-        bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName);
+        bool TryHand(IEntity entity, [NotNullWhen(true)] out string? handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
@@ -111,7 +111,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="mobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <param name="doDropInteraction">Whether to perform Dropped interactions.</param>
         /// <returns>True on success, false if something blocked the drop.</returns>
-        bool Drop(string slot, bool mobChecks = true, bool doDropInteraction = true);
+        bool Drop(string slot, bool mobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Drops an item held by one of our hand slots to the same position as our owning entity.
@@ -126,7 +126,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, bool mobChecks = true, bool doDropInteraction = true);
+        bool Drop(IEntity entity, bool mobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Drops the item in a slot.
@@ -136,7 +136,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <param name="doDropInteraction">Whether to perform Dropped interactions.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true);
+        bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Drop the specified entity in our hands to a certain position.
@@ -159,7 +159,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true);
+        bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Drop the item contained in a slot into another container.
@@ -174,7 +174,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         ///     but practical remove or insert returned false anyways.
         ///     This is an edge-case that is currently unhandled.
         /// </exception>
-        bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true);
+        bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Drops an item in one of the hands into a container.
@@ -195,7 +195,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true);
+        bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true);
 
         /// <summary>
         ///     Checks whether the item in the specified hand can be dropped.

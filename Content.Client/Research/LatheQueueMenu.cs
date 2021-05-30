@@ -4,131 +4,104 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.Maths;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Research
 {
     public class LatheQueueMenu : SS14Window
     {
-        protected override Vector2? CustomSize => (300, 450);
-
         public LatheBoundUserInterface Owner { get; set; }
 
         [ViewVariables]
-        private ItemList QueueList;
-        private Label NameLabel;
-        private Label Description;
-        private TextureRect Icon;
+        private readonly ItemList _queueList;
+        private readonly Label _nameLabel;
+        private readonly Label _description;
+        private readonly TextureRect _icon;
 
-        public LatheQueueMenu()
+        public LatheQueueMenu(LatheBoundUserInterface owner)
         {
-                        Title = "Lathe Queue";
-
-            var margin = new MarginContainer()
-            {
-                /*MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,*/
-            };
-
-//            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            Owner = owner;
+            SetSize = MinSize = (300, 450);
+            Title = Loc.GetString("lathequeue-menu-title");
 
             var vBox = new VBoxContainer();
 
-  //          vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
-
-            var descMargin = new MarginContainer()
+            var hBox = new HBoxContainer()
             {
-                /*MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,*/
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 2,
             };
 
-            var hBox = new HBoxContainer()
+            _icon = new TextureRect()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-            };
-
-            Icon = new TextureRect()
-            {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 SizeFlagsStretchRatio = 2,
             };
 
             var vBoxInfo = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };
 
-            NameLabel = new Label()
+            _nameLabel = new Label()
             {
                 RectClipContent = true,
-                SizeFlagsHorizontal = SizeFlags.Fill,
             };
 
-            Description = new Label()
+            _description = new Label()
             {
                 RectClipContent = true,
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.Fill,
+                VerticalAlignment = VAlignment.Stretch,
+                VerticalExpand = true
 
             };
 
-            QueueList = new ItemList()
+            _queueList = new ItemList()
             {
-                SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsVertical = SizeFlags.FillExpand,
+                VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
                 SelectMode = ItemList.ItemListSelectMode.None
             };
 
-            vBoxInfo.AddChild(NameLabel);
-            vBoxInfo.AddChild(Description);
+            vBoxInfo.AddChild(_nameLabel);
+            vBoxInfo.AddChild(_description);
 
-            hBox.AddChild(Icon);
+            hBox.AddChild(_icon);
             hBox.AddChild(vBoxInfo);
 
-            descMargin.AddChild(hBox);
+            vBox.AddChild(hBox);
+            vBox.AddChild(_queueList);
 
-            vBox.AddChild(descMargin);
-            vBox.AddChild(QueueList);
-
-            margin.AddChild(vBox);
-
-            Contents.AddChild(margin);
+            Contents.AddChild(vBox);
 
             ClearInfo();
         }
 
         public void SetInfo(LatheRecipePrototype recipe)
         {
-            Icon.Texture = recipe.Icon.Frame0();
+            _icon.Texture = recipe.Icon.Frame0();
             if (recipe.Name != null)
-                NameLabel.Text = recipe.Name;
+                _nameLabel.Text = recipe.Name;
             if (recipe.Description != null)
-                Description.Text = recipe.Description;
+                _description.Text = recipe.Description;
         }
 
         public void ClearInfo()
         {
-            Icon.Texture = Texture.Transparent;
-            NameLabel.Text = "-------";
-            Description.Text = "Not producing anything.";
+            _icon.Texture = Texture.Transparent;
+            _nameLabel.Text = "-------";
+            _description.Text = "Not producing anything.";
         }
 
         public void PopulateList()
         {
-            QueueList.Clear();
+            _queueList.Clear();
             var idx = 1;
             foreach (var recipe in Owner.QueuedRecipes)
             {
-                QueueList.AddItem($"{idx}. {recipe.Name}", recipe.Icon.Frame0());
+                _queueList.AddItem($"{idx}. {recipe.Name}", recipe.Icon.Frame0());
                 idx++;
             }
         }

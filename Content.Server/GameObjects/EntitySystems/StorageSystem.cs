@@ -2,28 +2,38 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Server.Player;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class StorageSystem : EntitySystem
     {
-        private readonly List<IPlayerSession> _sessionCache = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _sessionCache = new();
 
         /// <inheritdoc />
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
+            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
         }
 
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<ServerStorageComponent>())
+            foreach (var component in ComponentManager.EntityQuery<ServerStorageComponent>(true))
             {
                 CheckSubscribedEntities(component);
             }
@@ -33,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
+            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
@@ -43,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var oldParentEntity = message.Container.Owner;
 
-            if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
+            if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
             }

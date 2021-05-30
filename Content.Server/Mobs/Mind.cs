@@ -1,14 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Mobs.Roles;
+using Content.Server.Objectives;
 using Content.Server.Players;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
@@ -26,6 +32,8 @@ namespace Content.Server.Mobs
     public sealed class Mind
     {
         private readonly ISet<Role> _roles = new HashSet<Role>();
+
+        private readonly List<Objective> _objectives = new();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -47,26 +55,26 @@ namespace Content.Server.Mobs
         public bool IsVisitingEntity => VisitingEntity != null;
 
         [ViewVariables]
-        public IEntity VisitingEntity { get; private set; }
+        public IEntity? VisitingEntity { get; private set; }
 
-        [ViewVariables] public IEntity CurrentEntity => VisitingEntity ?? OwnedEntity;
+        [ViewVariables] public IEntity? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string CharacterName { get; set; }
+        public string? CharacterName { get; set; }
 
         /// <summary>
         ///     The component currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public MindComponent OwnedMob { get; private set; }
+        public MindComponent? OwnedComponent { get; private set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public IEntity OwnedEntity => OwnedMob?.Owner;
+        public IEntity? OwnedEntity => OwnedComponent?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
@@ -75,11 +83,17 @@ namespace Content.Server.Mobs
         public IEnumerable<Role> AllRoles => _roles;
 
         /// <summary>
+        ///     An enumerable over all the objectives this mind has.
+        /// </summary>
+        [ViewVariables]
+        public IEnumerable<Objective> AllObjectives => _objectives;
+
+        /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
         [ViewVariables]
-        public IPlayerSession Session
+        public IPlayerSession? Session
         {
             get
             {
@@ -90,6 +104,41 @@ namespace Content.Server.Mobs
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 playerMgr.TryGetSessionById(UserId.Value, out var ret);
                 return ret;
+            }
+        }
+
+        /// <summary>
+        ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
+        ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+        ///     "If administrators decide that zombies are dead, this returns true for zombies."
+        ///     (Maybe you were looking for the action blocker system?)
+        /// </summary>
+        [ViewVariables]
+        public bool CharacterDeadIC
+        {
+            get
+            {
+                // This is written explicitly so that the logic can be understood.
+                // But it's also weird and potentially situational.
+                // Specific considerations when updating this:
+                //  + Does being turned into a borg (if/when implemented) count as dead?
+                //    *If not, add specific conditions to users of this property where applicable.*
+                //  + Is being transformed into a donut 'dead'?
+                //    TODO: Consider changing the way ghost roles work.
+                //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
+                //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
+                //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
+
+                // This can be null if they're deleted (spike / brain nom)
+                if (OwnedEntity == null)
+                    return true;
+                var targetMobState = OwnedEntity.GetComponentOrNull<IMobStateComponent>();
+                // This can be null if it's a brain (this happens very often)
+                // Brains are the result of gibbing so should definitely count as dead
+                if (targetMobState == null)
+                    return true;
+                // They might actually be alive.
+                return targetMobState.IsDead();
             }
         }
 
@@ -112,7 +161,7 @@ namespace Content.Server.Mobs
             role.Greet();
 
             var message = new RoleAddedMessage(role);
-            OwnedEntity?.SendMessage(OwnedMob, message);
+            OwnedEntity?.SendMessage(OwnedComponent, message);
 
             return role;
         }
@@ -134,7 +183,7 @@ namespace Content.Server.Mobs
             _roles.Remove(role);
 
             var message = new RoleRemovedMessage(role);
-            OwnedEntity?.SendMessage(OwnedMob, message);
+            OwnedEntity?.SendMessage(OwnedComponent, message);
         }
 
         public bool HasRole<T>() where T : Role
@@ -143,6 +192,35 @@ namespace Content.Server.Mobs
 
             return _roles.Any(role => role.GetType() == t);
         }
+
+        /// <summary>
+        /// Adds an objective to this mind.
+        /// </summary>
+        public bool TryAddObjective(ObjectivePrototype objectivePrototype)
+        {
+            if (!objectivePrototype.CanBeAssigned(this))
+                return false;
+            var objective = objectivePrototype.GetObjective(this);
+            if (_objectives.Contains(objective))
+                return false;
+            _objectives.Add(objective);
+            return true;
+        }
+
+        /// <summary>
+        /// Removes an objective to this mind.
+        /// </summary>
+        /// <returns>Returns true if the removal succeeded.</returns>
+        public bool TryRemoveObjective(int index)
+        {
+            if (_objectives.Count >= index) return false;
+
+            var objective = _objectives[index];
+            _objectives.Remove(objective);
+            return true;
+        }
+
+
 
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
@@ -154,10 +232,11 @@ namespace Content.Server.Mobs
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(IEntity entity)
+        public void TransferTo(IEntity? entity)
         {
-            MindComponent component = null;
-            bool alreadyAttached = false;
+            MindComponent? component = null;
+            var alreadyAttached = false;
+
             if (entity != null)
             {
                 if (!entity.TryGetComponent(out component))
@@ -170,10 +249,10 @@ namespace Content.Server.Mobs
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
 
-                if (entity.TryGetComponent(out IActorComponent actor))
+                if (entity.TryGetComponent(out ActorComponent? actor))
                 {
                     // Happens when transferring to your currently visited entity.
-                    if (actor.playerSession != Session)
+                    if (actor.PlayerSession != Session)
                     {
                         throw new ArgumentException("Visit target already has a session.", nameof(entity));
                     }
@@ -182,23 +261,32 @@ namespace Content.Server.Mobs
                 }
             }
 
-            OwnedMob?.InternalEjectMind();
-            OwnedMob = component;
-            OwnedMob?.InternalAssignMind(this);
+            OwnedComponent?.InternalEjectMind();
+
+            OwnedComponent = component;
+            OwnedComponent?.InternalAssignMind(this);
+
+            if (VisitingEntity?.HasComponent<GhostComponent>() == false)
+                VisitingEntity = null;
 
             // Player is CURRENTLY connected.
-            if (Session != null && OwnedMob != null && !alreadyAttached)
+            if (Session != null && !alreadyAttached && VisitingEntity == null)
             {
                 Session.AttachToEntity(entity);
+                Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
             }
+        }
 
-            VisitingEntity = null;
+        public void RemoveOwningPlayer()
+        {
+            UserId = null;
         }
 
         public void ChangeOwningPlayer(NetUserId? newOwner)
         {
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            PlayerData newOwnerData = null;
+            PlayerData? newOwnerData = null;
+
             if (newOwner.HasValue)
             {
                 if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
@@ -218,7 +306,9 @@ namespace Content.Server.Mobs
 
             if (UserId.HasValue)
             {
-                playerMgr.GetPlayerData(UserId.Value).ContentData().Mind = null;
+                var data = playerMgr.GetPlayerData(UserId.Value).ContentData();
+                DebugTools.AssertNotNull(data);
+                data!.Mind = null;
             }
 
             UserId = newOwner;
@@ -229,7 +319,8 @@ namespace Content.Server.Mobs
 
             // Yank new owner out of their old mind too.
             // Can I mention how much I love the word yank?
-            newOwnerData.Mind?.ChangeOwningPlayer(null);
+            DebugTools.AssertNotNull(newOwnerData);
+            newOwnerData!.Mind?.ChangeOwningPlayer(null);
             newOwnerData.Mind = this;
         }
 
@@ -240,6 +331,8 @@ namespace Content.Server.Mobs
 
             var comp = entity.AddComponent<VisitingMindComponent>();
             comp.Mind = this;
+
+            Logger.Info($"Session {Session?.Name} visiting entity {entity}.");
         }
 
         public void UnVisit()
@@ -254,10 +347,19 @@ namespace Content.Server.Mobs
             // Null this before removing the component to avoid any infinite loops.
             VisitingEntity = null;
 
-            if (oldVisitingEnt.HasComponent<VisitingMindComponent>())
+            DebugTools.AssertNotNull(oldVisitingEnt);
+
+            if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
             {
                 oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
             }
+
+            oldVisitingEnt.EntityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
+        }
+
+        public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
+        {
+            return (session = Session) != null;
         }
     }
 }

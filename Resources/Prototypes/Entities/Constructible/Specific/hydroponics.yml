@@ -4,55 +4,72 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.1, 0.5"
       mass: 25
-      anchored: true
       hard: false
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5, -0.5, 0.1, 0.5"
-        mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
-        layer:
-        - Opaque
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
-    - type: Destructible
-      deadThreshold: 50
-      resistances: metallicResistances
-    - type: Sprite
-      sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: soil
-    - type: PlantHolder
-      drawWarnings: false
-    - type: SolutionContainer
-      maxVol: 200
-      caps: AddTo, NoExamine
-    - type: Pourable
-    - type: SnapGrid
-      offset: Center
-    - type: Appearance
-      visuals:
-        - type: PlantHolderVisualizer
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Constructible/Hydroponics/misc.rsi
+    state: soil
+    drawdepth: FloorObjects
+  - type: PlantHolder
+    drawWarnings: false
+  - type: SolutionContainer
+    maxVol: 200
+    caps: Refillable
+  - type: SnapGrid
+  - type: Reactive
+    reactions:
+      - !type:AddToSolutionReaction
+  - type: Appearance
+    visuals:
+      - type: PlantHolderVisualizer
 
 - type: entity
   name: hydroponics tray
   parent: hydroponicsSoil
   id: hydroponicsTray
+  description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
-    - type: Physics
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       mass: 25
       hard: true
-    - type: Anchorable
-      snap: true
-    - type: Sprite
-      sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: hydrotray3
-    - type: PlantHolder
-      drawWarnings: true
+      mask:
+      - Impassable
+  - type: Anchorable
+  - type: Pullable
+  - type: Sprite
+    sprite: Constructible/Hydroponics/containers.rsi
+    state: hydrotray3
+    drawdepth: FloorObjects
+  - type: PlantHolder
+    drawWarnings: true

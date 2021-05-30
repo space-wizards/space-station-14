@@ -6,22 +6,25 @@
   head: true
   positions: 1
   startingGear: CMOGear
-  department:
+  departments:
   - Command
   - Medical
   icon: "ChiefMedicalOfficer"
   access:
   - Medical
-  - ChiefMedicalOfficer
   - Command
   - Maintenance
 
 - type: startingGear
   id: CMOGear
   equipment:
-    innerclothing: UniformCMO
-    backpack: BackpackMedicalFilled
-    shoes: ShoesBrown
-    outerclothing: OuterclothingLabcoatcmo
+    innerclothing: ClothingUniformJumpsuitCMO
+    backpack: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesColorBrown
+    outerclothing: ClothingOuterCoatLabCmo
     idcard: CMOPDA
-    ears: HeadsetMedicalAlt
+    ears: ClothingHeadsetAltMedical
+    belt: ClothingBeltMedical
+  innerclothingskirt: ClothingUniformJumpskirtCMO
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled

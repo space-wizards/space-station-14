@@ -1,6 +1,6 @@
-﻿using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.Interfaces.GameObjects;
+﻿#nullable enable
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
 {
@@ -11,6 +11,19 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
     /// </summary>
     public interface IMobState : IActionBlocker
     {
+        bool IsAlive();
+
+        bool IsCritical();
+
+        bool IsDead();
+
+        /// <summary>
+        ///     Checks if the mob is in a critical or dead state.
+        ///     See <see cref="IsCritical"/> and <see cref="IsDead"/>.
+        /// </summary>
+        /// <returns>true if it is, false otherwise.</returns>
+        bool IsIncapacitated();
+
         /// <summary>
         ///     Called when this state is entered.
         /// </summary>
@@ -24,6 +37,6 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         /// <summary>
         ///     Called when this state is updated.
         /// </summary>
-        void UpdateState(IEntity entity);
+        void UpdateState(IEntity entity, int threshold);
     }
 }

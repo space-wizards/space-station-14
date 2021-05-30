@@ -15,17 +15,17 @@ namespace Content.Client.GameObjects.Components.Cargo
         /// <summary>
         ///     Event called when the database is updated.
         /// </summary>
-        public event Action OnDatabaseUpdated;
+        public event Action? OnDatabaseUpdated;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is GalacticMarketState state))
+            if (curState is not GalacticMarketState state)
                 return;
-            _products.Clear();
+            _productIds.Clear();
             foreach (var productId in state.Products)
             {
-                if (!_prototypeManager.TryIndex(productId, out CargoProductPrototype product))
+                if (!_prototypeManager.TryIndex(productId, out CargoProductPrototype? product))
                     continue;
                 _products.Add(product);
             }

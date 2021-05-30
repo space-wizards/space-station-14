@@ -2,7 +2,6 @@ using System;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 
@@ -11,7 +10,7 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class LanternVisualizer : AppearanceVisualizer
     {
-        private readonly Animation _radiatingLightAnimation = new Animation
+        private readonly Animation _radiatingLightAnimation = new()
         {
             Length = TimeSpan.FromSeconds(5),
             AnimationTracks =

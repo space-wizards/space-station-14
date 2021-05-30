@@ -4,23 +4,23 @@
   head: true
   positions: 1
   startingGear: ResearchDirectorGear
-  department:
+  departments:
   - Command
   - Science
   icon: "ResearchDirector"
   access:
   - Research
-  - ResearchDirector
   - Command
   - Maintenance
 
 - type: startingGear
   id: ResearchDirectorGear
   equipment:
-    innerclothing: UniformResearchDirector
-    # Note to Swept add science backpacks
-    backpack: BackpackClothingFilled
-    shoes: ShoesBrown
-    outerclothing: OuterclothingLabcoatopen
+    innerclothing: ClothingUniformJumpsuitResearchDirector
+    backpack: ClothingBackpackScienceFilled
+    shoes: ClothingShoesColorBrown
     idcard: RnDPDA
-    ears: HeadsetScience
+    ears: ClothingHeadsetScience
+  innerclothingskirt: ClothingUniformJumpskirtResearchDirector
+  satchel: ClothingBackpackSatchelScienceFilled
+  duffelbag: ClothingBackpackDuffelScienceFilled

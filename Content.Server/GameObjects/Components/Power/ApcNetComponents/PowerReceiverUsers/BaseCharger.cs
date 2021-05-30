@@ -1,20 +1,21 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
@@ -33,38 +34,35 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private CellChargerStatus _status;
 
         [ViewVariables]
-        private int _chargeRate;
+        [DataField("chargeRate")]
+        private int _chargeRate = 100;
 
         [ViewVariables]
-        private float _transferEfficiency;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _chargeRate, "chargeRate", 100);
-            serializer.DataField(ref _transferEfficiency, "transferEfficiency", 0.85f);
-        }
+        [DataField("transferEfficiency")]
+        private float _transferEfficiency = 0.85f;
 
         public override void Initialize()
         {
             base.Initialize();
 
             Owner.EnsureComponent<PowerReceiverComponent>();
-            _container = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
+            _container = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powerCellContainer");
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged += PowerUpdate;
+                case PowerChangedMessage powerChanged:
+                    PowerUpdate(powerChanged);
+                    break;
             }
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerUpdate;
-            }
-
             _heldBattery = null;
 
             base.OnRemove();
@@ -113,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateStatus();
         }
 
-        private void PowerUpdate(object? sender, PowerStateEventArgs eventArgs)
+        private void PowerUpdate(PowerChangedMessage eventArgs)
         {
             UpdateStatus();
         }
@@ -136,14 +134,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
                 if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
                 {
-                    data.Visibility = VerbVisibility.Disabled;
-                    data.Text = Loc.GetString("Insert");
+                    data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
 
                 data.Text = Loc.GetString("Insert {0}", heldItemName);
+                data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
@@ -175,14 +173,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 }
                 if (component._container.ContainedEntity == null)
                 {
-                    data.Text = Loc.GetString("Eject");
-                    data.Visibility = VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
 
                 data.Text = Loc.GetString("Eject {0}", containerItemName);
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
@@ -229,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// </summary>
         protected abstract bool IsEntityCompatible(IEntity entity);
 
-        protected abstract BatteryComponent GetBatteryFrom(IEntity entity);
+        protected abstract BatteryComponent? GetBatteryFrom(IEntity entity);
 
         private void UpdateStatus()
         {

@@ -1,1 +1,29 @@
-{"version":1,"size":{"x":32,"y":32},"states":[{"name":"spoon","directions":1,"delays":[[1.0]]},{"name":"fork","directions":1,"delays":[[1.0]]},{"name":"loadedfood","directions":1,"delays":[[1.0]]},{"name":"plastic_spoon","directions":1,"delays":[[1.0]]},{"name":"plastic_fork","directions":1,"delays":[[1.0]]},{"name":"plastic_knife","directions":1,"delays":[[1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "spoon"
+    },
+    {
+      "name": "fork"
+    },
+    {
+      "name": "loadedfood"
+    },
+    {
+      "name": "plastic_spoon"
+    },
+    {
+      "name": "plastic_fork"
+    },
+    {
+      "name": "plastic_knife"
+    }
+  ]
+}

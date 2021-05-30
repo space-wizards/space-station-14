@@ -1,17 +1,15 @@
-﻿
+
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -22,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
     {
-        private static readonly AudioParams LoopedSoundParams = new AudioParams(0, 1, "Master", 62.5f, 1, AudioMixTarget.Stereo, true, 0.3f);
+        private static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, true, 0.3f);
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
@@ -32,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         [ViewVariables]
         private float _stateExpiryTime = default;
-        private AppearanceComponent _appearance = default;
+        private AppearanceComponent? _appearance = default;
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
@@ -45,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent<ItemComponent>(out var item))
             {
-                item.EquippedPrefix = "off";
+                item.EquippedPrefix = "unlit";
             }
 
             CurrentState = ExpendableLightState.BrandNew;
@@ -62,12 +60,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (Owner.TryGetComponent<ItemComponent>(out var item))
                 {
-                    item.EquippedPrefix = "on";
+                    item.EquippedPrefix = "lit";
                 }
 
                 CurrentState = ExpendableLightState.Lit;
                 _stateExpiryTime = GlowDuration;
-                
+
                 UpdateSpriteAndSounds(Activated);
                 UpdateVisualizer();
 
@@ -82,25 +80,22 @@ namespace Content.Server.GameObjects.Components.Interactable
             switch (CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    _appearance.SetData(ExpendableLightVisuals.State, TurnOnBehaviourID);
+                    _appearance?.SetData(ExpendableLightVisuals.State, TurnOnBehaviourID);
                     break;
 
                 case ExpendableLightState.Fading:
-                    _appearance.SetData(ExpendableLightVisuals.State, FadeOutBehaviourID);
+                    _appearance?.SetData(ExpendableLightVisuals.State, FadeOutBehaviourID);
                     break;
 
                 case ExpendableLightState.Dead:
-                    _appearance.SetData(ExpendableLightVisuals.State, string.Empty);
-                    break;
-
-                default:
+                    _appearance?.SetData(ExpendableLightVisuals.State, string.Empty);
                     break;
             }
         }
 
         private void UpdateSpriteAndSounds(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 switch (CurrentState)
                 {
@@ -113,12 +108,16 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         if (LitSound != string.Empty)
                         {
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity(LitSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), LitSound, Owner);
+                        }
+
+                        if (IconStateLit != string.Empty)
+                        {
+                            sprite.LayerSetState(2, IconStateLit);
+                            sprite.LayerSetShader(2, "shaded");
                         }
 
                         sprite.LayerSetVisible(1, true);
-                        sprite.LayerSetState(2, IconStateLit);
-                        sprite.LayerSetShader(2, "unshaded");
                         break;
 
                     case ExpendableLightState.Fading:
@@ -129,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         if (DieSound != string.Empty)
                         {
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity(DieSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), DieSound, Owner);
                         }
 
                         if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopSound))
@@ -137,14 +136,14 @@ namespace Content.Server.GameObjects.Components.Interactable
                             loopSound.StopAllSounds();
                         }
 
+                        sprite.LayerSetState(0, IconStateSpent);
+                        sprite.LayerSetShader(0, "shaded");
                         sprite.LayerSetVisible(1, false);
-                        sprite.LayerSetState(2, IconStateSpent);
-                        sprite.LayerSetShader(2, "shaded");
                         break;
                 }
             }
 
-            if (Owner.TryGetComponent(out ClothingComponent clothing))
+            if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
             }
@@ -181,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         if (Owner.TryGetComponent<ItemComponent>(out var item))
                         {
-                            item.EquippedPrefix = "off";
+                            item.EquippedPrefix = "unlit";
                         }
 
                         break;

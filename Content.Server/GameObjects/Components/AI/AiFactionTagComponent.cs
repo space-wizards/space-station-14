@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
+#nullable enable
+using Content.Server.GameObjects.EntitySystems.AI;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.AI
 {
@@ -10,40 +10,7 @@ namespace Content.Server.GameObjects.Components.AI
     {
         public override string Name => "AiFactionTag";
 
+        [DataField("factions")]
         public Faction Factions { get; private set; } = Faction.None;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            
-            serializer.DataReadWriteFunction(
-                "factions",
-                new List<Faction>(),
-                factions => factions.ForEach(faction => Factions |= faction),
-                () =>
-                {
-                    var writeFactions = new List<Faction>();
-                    foreach (Faction fac in Enum.GetValues(typeof(Faction)))
-                    {
-                        if ((Factions & fac) != 0)
-                        {
-                            writeFactions.Add(fac);
-                        }
-                    }
-
-                    return writeFactions;
-                });
-        }
-    }
-
-    [Flags]
-    public enum Faction
-    {
-        None = 0,
-        NanoTransen = 1 << 0,
-        SimpleHostile = 1 << 1,
-        SimpleNeutral = 1 << 2,
-        Syndicate = 1 << 3,
-        Xeno = 1 << 4,
     }
 }

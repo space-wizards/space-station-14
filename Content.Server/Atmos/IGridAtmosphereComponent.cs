@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -120,7 +121,7 @@ namespace Content.Server.Atmos
         /// <param name="indices"></param>
         /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(Vector2i indices, bool createSpace = true);
+        TileAtmosphere? GetTile(Vector2i indices, bool createSpace = true);
 
         /// <summary>
         ///     Returns a tile.
@@ -128,7 +129,7 @@ namespace Content.Server.Atmos
         /// <param name="coordinates"></param>
         /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(EntityCoordinates coordinates, bool createSpace = true);
+        TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.
@@ -153,6 +154,13 @@ namespace Content.Server.Atmos
         /// <param name="cellCount"></param>
         /// <returns></returns>
         float GetVolumeForCells(int cellCount);
+
+        void RepopulateTiles();
+
+        /// <summary>
+        ///     Returns a dictionary of adjacent TileAtmospheres.
+        /// </summary>
+        Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(EntityCoordinates coordinates, bool includeAirBlocked = false);
 
         /// <summary>
         ///     Returns a dictionary of adjacent TileAtmospheres.

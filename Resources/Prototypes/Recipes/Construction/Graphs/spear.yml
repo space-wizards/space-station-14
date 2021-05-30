@@ -6,7 +6,7 @@
       edges:
         - to: spear
           steps:
-            - material: Metal
+            - material: Steel
               amount: 2
               doAfter: 2
             - material: Glass

@@ -1,43 +1,48 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components.Power;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
+    [UsedImplicitly]
     public class ProtolatheVisualizer : AppearanceVisualizer
     {
-        private const string AnimationKey = "protolathe_animation";
+        private const string AnimationKey = "inserting_animation";
 
         private Animation _buildingAnimation;
         private Animation _insertingMetalAnimation;
         private Animation _insertingGlassAnimation;
         private Animation _insertingGoldAnimation;
-        private Animation _insertingPhoronAnimation;
+        private Animation _insertingPlasmaAnimation;
+        private Animation _insertingPlasticAnimation;
 
-        public override void LoadData(YamlMappingNode node)
+        public ProtolatheVisualizer()
         {
-            base.LoadData(node);
-
-            _buildingAnimation = PopulateAnimation("protolathe_building", 0.9f);
-            _insertingMetalAnimation = PopulateAnimation("protolathe_metal", 0.9f);
-            _insertingGlassAnimation = PopulateAnimation("protolathe_glass", 0.9f);
-            _insertingGoldAnimation = PopulateAnimation("protolathe_gold", 0.9f);
-            _insertingPhoronAnimation = PopulateAnimation("protolathe_phoron", 0.9f);
+            _buildingAnimation = PopulateAnimation("building", "building_unlit", 0.8f);
+            _insertingMetalAnimation = PopulateAnimation("inserting_metal", "inserting_unlit", 0.8f);
+            _insertingGlassAnimation = PopulateAnimation("inserting_glass", "inserting_unlit", 0.8f);
+            _insertingGoldAnimation = PopulateAnimation("inserting_gold", "inserting_unlit", 0.8f);
+            _insertingPlasmaAnimation = PopulateAnimation("inserting_plasma", "inserting_unlit", 0.8f);
+            _insertingPlasticAnimation = PopulateAnimation("inserting_plastic", "inserting_unlit", 0.8f);
         }
 
-        private Animation PopulateAnimation(string sprite, float length)
+        private Animation PopulateAnimation(string sprite, string spriteUnlit, float length)
         {
-            var animation = new Animation {Length = TimeSpan.FromSeconds(length)};
+            var animation = new Animation { Length = TimeSpan.FromSeconds(length) };
 
             var flick = new AnimationTrackSpriteFlick();
             animation.AnimationTracks.Add(flick);
-            flick.LayerKey = ProtolatheVisualLayers.AnimationLayer;
+            flick.LayerKey = ProtolatheVisualLayers.Base;
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(sprite, 0f));
+
+            var flickUnlit = new AnimationTrackSpriteFlick();
+            animation.AnimationTracks.Add(flickUnlit);
+            flickUnlit.LayerKey = ProtolatheVisualLayers.BaseUnlit;
+            flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(spriteUnlit, 0f));
 
             return animation;
         }
@@ -69,8 +74,8 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Stop(AnimationKey);
                     }
 
-                    sprite.LayerSetState(ProtolatheVisualLayers.Base, "protolathe");
-                    sprite.LayerSetState(ProtolatheVisualLayers.BaseUnlit, "protolathe_unlit");
+                    sprite.LayerSetState(ProtolatheVisualLayers.Base, "icon");
+                    sprite.LayerSetState(ProtolatheVisualLayers.BaseUnlit, "unlit");
                     sprite.LayerSetVisible(ProtolatheVisualLayers.AnimationLayer, false);
                     break;
                 case LatheVisualState.Producing:
@@ -97,10 +102,16 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Play(_insertingGoldAnimation, AnimationKey);
                     }
                     break;
-                case LatheVisualState.InsertingPhoron:
+                case LatheVisualState.InsertingPlasma:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
-                        animPlayer.Play(_insertingPhoronAnimation, AnimationKey);
+                        animPlayer.Play(_insertingPlasmaAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingPlastic:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(_insertingPlasticAnimation, AnimationKey);
                     }
                     break;
                 default:
@@ -110,7 +121,8 @@ namespace Content.Client.GameObjects.Components.Power
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(ProtolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum ProtolatheVisualLayers
+
+        public enum ProtolatheVisualLayers : byte
         {
             Base,
             BaseUnlit,

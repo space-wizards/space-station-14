@@ -9,21 +9,23 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.GamePresets
 {
+    [GamePreset("suspicion")]
     public class PresetSuspicion : GamePreset
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -44,20 +46,12 @@ namespace Content.Server.GameTicking.GamePresets
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";
 
-        public static void RegisterCVars(IConfigurationManager cfg)
-        {
-            cfg.RegisterCVar("game.suspicion_min_players", 5);
-            cfg.RegisterCVar("game.suspicion_min_traitors", 2);
-            cfg.RegisterCVar("game.suspicion_players_per_traitor", 5);
-            cfg.RegisterCVar("game.suspicion_starting_balance", 20);
-        }
-
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            MinPlayers = _cfg.GetCVar<int>("game.suspicion_min_players");
-            MinTraitors = _cfg.GetCVar<int>("game.suspicion_min_traitors");
-            PlayersPerTraitor = _cfg.GetCVar<int>("game.suspicion_players_per_traitor");
-            TraitorStartingBalance = _cfg.GetCVar<int>("game.suspicion_starting_balance");
+            MinPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
+            MinTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
+            PlayersPerTraitor = _cfg.GetCVar(CCVars.SuspicionPlayersPerTraitor);
+            TraitorStartingBalance = _cfg.GetCVar(CCVars.SuspicionStartingBalance);
 
             if (!force && readyPlayers.Count < MinPlayers)
             {
@@ -76,15 +70,11 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var player in list)
             {
-                if (!readyProfiles.ContainsKey(player.UserId))
+                if (!ReadyProfiles.ContainsKey(player.UserId))
                 {
                     continue;
                 }
-                var profile = readyProfiles[player.UserId];
-                if (profile.AntagPreferences.Contains(_prototypeManager.Index<AntagPrototype>(TraitorID).Name))
-                {
-                    prefList.Add(player);
-                }
+                prefList.Add(player);
 
                 player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
             }
@@ -113,19 +103,22 @@ namespace Content.Server.GameTicking.GamePresets
                     list.Remove(traitor);
                     Logger.InfoS("preset", "Selected a preferred traitor.");
                 }
-                var mind = traitor.Data.ContentData().Mind;
+                var mind = traitor.Data.ContentData()?.Mind;
                 var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorID);
-                var traitorRole = new SuspicionTraitorRole(mind, antagPrototype);
-                mind.AddRole(traitorRole);
+
+                DebugTools.AssertNotNull(mind?.OwnedEntity);
+
+                var traitorRole = new SuspicionTraitorRole(mind!, antagPrototype);
+                mind!.AddRole(traitorRole);
                 traitors.Add(traitorRole);
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
                 var uplinkAccount =
-                    new UplinkAccount(mind.OwnedEntity.Uid,
+                    new UplinkAccount(mind.OwnedEntity!.Uid,
                         TraitorStartingBalance);
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent pdaItem))
+                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
                 {
                     continue;
                 }
@@ -144,9 +137,12 @@ namespace Content.Server.GameTicking.GamePresets
 
             foreach (var player in list)
             {
-                var mind = player.Data.ContentData().Mind;
+                var mind = player.Data.ContentData()?.Mind;
                 var antagPrototype = _prototypeManager.Index<AntagPrototype>(InnocentID);
-                mind.AddRole(new SuspicionInnocentRole(mind, antagPrototype));
+
+                DebugTools.AssertNotNull(mind);
+
+                mind!.AddRole(new SuspicionInnocentRole(mind, antagPrototype));
             }
 
             foreach (var traitor in traitors)

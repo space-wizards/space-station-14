@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "portal-pending",
-            "directions": 1,
             "delays": [[
                 0.1,
                 0.1,
@@ -29,7 +28,6 @@
         },
         {
             "name": "portal-unconnected",
-            "directions": 1,
             "delays": [[
                 0.1,
                 0.1,

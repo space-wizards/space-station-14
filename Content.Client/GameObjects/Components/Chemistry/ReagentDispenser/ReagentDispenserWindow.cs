@@ -2,11 +2,11 @@
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -34,8 +34,17 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// <summary>Sets the dispense amount to 10 when pressed.</summary>
         public Button DispenseButton10 { get; }
 
+        /// <summary>Sets the dispense amount to 15 when pressed.</summary>
+        public Button DispenseButton15 { get; }
+
+        /// <summary>Sets the dispense amount to 20 when pressed.</summary>
+        public Button DispenseButton20 { get; }
+
         /// <summary>Sets the dispense amount to 25 when pressed.</summary>
         public Button DispenseButton25 { get; }
+
+        /// <summary>Sets the dispense amount to 30 when pressed.</summary>
+        public Button DispenseButton30 { get; }
 
         /// <summary>Sets the dispense amount to 50 when pressed.</summary>
         public Button DispenseButton50 { get; }
@@ -52,14 +61,13 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// <summary>A grid of buttons for each reagent which can be dispensed.</summary>
         public GridContainer ChemicalList { get; }
 
-        protected override Vector2? CustomSize => (500, 600);
-
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
         /// </summary>
         public ReagentDispenserWindow()
         {
+            SetSize = MinSize = (590, 400);
             IoCManager.InjectDependencies(this);
 
             var dispenseAmountGroup = new ButtonGroup();
@@ -75,24 +83,27 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                         {
                             new Label {Text = Loc.GetString("Amount")},
                             //Padding
-                            new Control {CustomMinimumSize = (20, 0)},
+                            new Control {MinSize = (20, 0)},
                             (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenRight }}),
                             (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton15 = new Button {Text = "15", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton20 = new Button {Text = "20", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton25 = new Button {Text = "25", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton30 = new Button {Text = "30", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton50 = new Button {Text = "50", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
                             (DispenseButton100 = new Button {Text = "100", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenLeft }}),
                         }
                     },
                     //Padding
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    new Control {MinSize = (0.0f, 10.0f)},
                     //Grid of which reagents can be dispensed.
                     (ChemicalList = new GridContainer
                     {
                         Columns = 5
                     }),
                     //Padding
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    new Control {MinSize = (0.0f, 10.0f)},
                     new HBoxContainer
                     {
                         Children =
@@ -105,9 +116,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
                     new PanelContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         SizeFlagsStretchRatio = 6,
-                        CustomMinimumSize = (0, 150),
+                        MinSize = (0, 150),
                         PanelOverride = new StyleBoxFlat
                         {
                             BackgroundColor = new Color(27, 27, 30)
@@ -117,7 +128,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                             //Currently empty, when server sends state data this will have container contents and fill volume.
                             (ContainerInfo = new VBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 Children =
                                 {
                                     new Label
@@ -146,7 +157,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 
             foreach (var entry in inventory)
             {
-                if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype? proto))
                 {
                     ChemicalList.AddChild(new Button {Text = proto.Name});
                 }
@@ -215,8 +226,17 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                 case 10:
                     DispenseButton10.Pressed = true;
                     break;
+                case 15:
+                    DispenseButton15.Pressed = true;
+                    break;
+                case 20:
+                    DispenseButton20.Pressed = true;
+                    break;
                 case 25:
                     DispenseButton25.Pressed = true;
+                    break;
+                case 30:
+                    DispenseButton30.Pressed = true;
                     break;
                 case 50:
                     DispenseButton50.Pressed = true;
@@ -233,8 +253,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
         /// <param name="highlightedReagentId">Prototype id of the reagent whose dispense button is currently being mouse hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state,
-            string highlightedReagentId = null)
+        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, string highlightedReagentId = "")
         {
             ContainerInfo.Children.Clear();
 
@@ -266,7 +285,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }

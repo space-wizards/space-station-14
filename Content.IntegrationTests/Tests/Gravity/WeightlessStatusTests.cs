@@ -1,15 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Gravity;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -19,27 +16,30 @@ namespace Content.IntegrationTests.Tests.Gravity
     [TestOf(typeof(GravityGeneratorComponent))]
     public class WeightlessStatusTests : ContentIntegrationTest
     {
+        private const string Prototypes = @"
+- type: entity
+  name: HumanDummy
+  id: HumanDummy
+  components:
+  - type: Alerts
+";
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var server = StartServer();
+            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
+            var server = StartServer(options);
 
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IEntity human = null;
-            SharedStatusEffectsComponent statusEffects = null;
+            SharedAlertsComponent alerts = null;
 
             await server.WaitAssertion(() =>
             {
-                var mapId = mapManager.CreateMap();
-
-                pauseManager.AddUninitializedMap(mapId);
-
+                var mapId = new MapId(1);
                 var gridId = new GridId(1);
 
                 if (!mapManager.TryGetGrid(gridId, out var grid))
@@ -47,17 +47,10 @@ namespace Content.IntegrationTests.Tests.Gravity
                     grid = mapManager.CreateGrid(mapId, gridId);
                 }
 
-                var tileDefinition = tileDefinitionManager["underplating"];
-                var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
+                human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
-                grid.SetTile(coordinates, tile);
-
-                pauseManager.DoMapInitialize(mapId);
-
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
-
-                Assert.True(human.TryGetComponent(out statusEffects));
+                Assert.True(human.TryGetComponent(out alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -68,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
 
                 gravityGenerator = human.EnsureComponent<GravityGeneratorComponent>();
             });
@@ -78,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
 
                 // Disable the gravity generator
                 var args = new BreakageEventArgs {Owner = human};
@@ -89,7 +82,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
             });
         }
     }

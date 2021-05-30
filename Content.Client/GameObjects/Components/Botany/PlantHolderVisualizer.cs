@@ -1,8 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Botany;
+using Content.Shared.GameObjects.Components.Botany;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Botany
@@ -23,18 +22,18 @@ namespace Content.Client.GameObjects.Components.Botany
             sprite.LayerMapReserveBlank(PlantHolderLayers.AlertLight);
             sprite.LayerMapReserveBlank(PlantHolderLayers.HarvestLight);
 
-            var hydroTools = new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi");
+            var hydroTools = new ResourcePath("Constructible/Hydroponics/overlays.rsi");
 
             sprite.LayerSetSprite(PlantHolderLayers.HealthLight,
-                new SpriteSpecifier.Rsi(hydroTools, "over_lowhealth3"));
+                new SpriteSpecifier.Rsi(hydroTools, "lowhealth3"));
             sprite.LayerSetSprite(PlantHolderLayers.WaterLight,
-                new SpriteSpecifier.Rsi(hydroTools, "over_lowwater3"));
+                new SpriteSpecifier.Rsi(hydroTools, "lowwater3"));
             sprite.LayerSetSprite(PlantHolderLayers.NutritionLight,
-                new SpriteSpecifier.Rsi(hydroTools, "over_lownutri3"));
+                new SpriteSpecifier.Rsi(hydroTools, "lownutri3"));
             sprite.LayerSetSprite(PlantHolderLayers.AlertLight,
-                new SpriteSpecifier.Rsi(hydroTools, "over_alert3"));
+                new SpriteSpecifier.Rsi(hydroTools, "alert3"));
             sprite.LayerSetSprite(PlantHolderLayers.HarvestLight,
-                new SpriteSpecifier.Rsi(hydroTools, "over_harvest3"));
+                new SpriteSpecifier.Rsi(hydroTools, "harvest3"));
 
             // Let's make those invisible for now.
             sprite.LayerSetVisible(PlantHolderLayers.Plant, false);
@@ -93,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Botany
         }
     }
 
-    public enum PlantHolderLayers
+    public enum PlantHolderLayers : byte
     {
         Plant,
         HealthLight,

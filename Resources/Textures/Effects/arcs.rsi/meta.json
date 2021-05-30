@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "bite",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -21,7 +20,6 @@
         },
         {
             "name": "claw",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -33,7 +31,6 @@
         },
         {
             "name": "disarm",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -44,7 +41,6 @@
         },
         {
             "name": "kick",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -55,7 +51,6 @@
         },
         {
             "name": "punch",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -68,7 +63,6 @@
         },
         {
             "name": "smash",
-            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -78,16 +72,13 @@
             ]
         },
         {
-            "name": "spear",
-            "directions": 1
+            "name": "spear"
         },
         {
-            "name": "slash",
-            "directions": 1
+            "name": "slash"
         },
         {
-            "name": "fist",
-            "directions": 1
+            "name": "fist"
         }
     ]
 }

@@ -1,0 +1,28 @@
+- type: aiFaction
+  id: NanoTrasen
+  hostile:
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+
+- type: aiFaction
+  id: SimpleHostile
+  hostile:
+  - NanoTrasen
+  - Syndicate
+
+- type: aiFaction
+  id: SimpleNeutral
+
+- type: aiFaction
+  id: Syndicate
+  hostile:
+  - NanoTrasen
+  - SimpleHostile
+  - Xeno
+
+- type: aiFaction
+  id: Xeno
+  hostile:
+  - NanoTrasen
+  - Syndicate

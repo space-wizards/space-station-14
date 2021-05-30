@@ -1,38 +1,31 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Prototypes.PDA
 {
     [Prototype("uplinkListing")]
-    public class UplinkStoreListingPrototype : IPrototype, IIndexedPrototype
+    public class UplinkStoreListingPrototype : IPrototype
     {
+        [ViewVariables]
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        private string _id;
-        private string _itemId;
-        private int _price;
-        private UplinkCategory _category;
-        private string _desc;
-        private string _name;
+        [DataField("itemId")]
+        public string ItemId { get; } = string.Empty;
 
-        public string ID => _id;
+        [DataField("price")]
+        public int Price { get; } = 5;
 
-        public string ItemId => _itemId;
-        public int Price => _price;
-        public UplinkCategory Category => _category;
-        public string Description => _desc;
-        public string ListingName => _name;
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
-            serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _itemId, "itemId", string.Empty);
-            serializer.DataField(ref _price, "price", 5);
-            serializer.DataField(ref _category, "category", UplinkCategory.Utility);
-            serializer.DataField(ref _desc, "description", string.Empty);
-            serializer.DataField(ref _name, "listingName", string.Empty);
+        [DataField("category")]
+        public UplinkCategory Category { get; } = UplinkCategory.Utility;
 
-        }
+        [DataField("description")]
+        public string Description { get; } = string.Empty;
+
+        [DataField("listingName")]
+        public string ListingName { get; } = string.Empty;
     }
 }

@@ -3,17 +3,15 @@ using BenchmarkDotNet.Attributes;
 using Moq;
 using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Reflection;
 
 namespace Content.Benchmarks
 {
     public class ComponentManagerGetAllComponents
     {
-        private readonly List<IEntity> _entities = new List<IEntity>();
+        private readonly List<IEntity> _entities = new();
 
         private IComponentManager _componentManager;
 
@@ -65,9 +63,7 @@ namespace Content.Benchmarks
             // Initialize N entities with one component.
             for (var i = 0; i < N; i++)
             {
-                var entity = new Entity();
-                entity.SetManagers(entityManager);
-                entity.SetUid(new EntityUid(i + 1));
+                var entity = new Entity(entityManager, new EntityUid(i + 1));
                 _entities.Add(entity);
 
                 _componentManager.AddComponent<DummyComponent>(entity);
@@ -79,7 +75,7 @@ namespace Content.Benchmarks
         {
             var count = 0;
 
-            foreach (var _ in _componentManager.EntityQuery<DummyComponent>())
+            foreach (var _ in _componentManager.EntityQuery<DummyComponent>(true))
             {
                 count += 1;
             }

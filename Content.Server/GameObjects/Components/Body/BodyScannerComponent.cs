@@ -3,10 +3,8 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Scanner;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -20,12 +18,12 @@ namespace Content.Server.GameObjects.Components.Body
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            var session = actor.playerSession;
+            var session = actor.PlayerSession;
 
             if (session.AttachedEntity == null)
             {
@@ -45,11 +43,9 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Initialize();
 
-            if (UserInterface == null)
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} doesn't have a {nameof(ServerUserInterfaceComponent)}");
-            }
-            else
+            Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
+
+            if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
@@ -62,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private BodyScannerUIState InterfaceState(IBody body)
         {
-            return new BodyScannerUIState(body.Owner.Uid);
+            return new(body.Owner.Uid);
         }
     }
 }

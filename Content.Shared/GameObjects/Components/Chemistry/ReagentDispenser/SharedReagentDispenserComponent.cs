@@ -1,8 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
         /// <summary>
         /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
         /// </summary>
-        protected readonly List<ReagentDispenserInventoryEntry> Inventory = new List<ReagentDispenserInventoryEntry>();
+        protected readonly List<ReagentDispenserInventoryEntry> Inventory = new();
 
         [Serializable, NetSerializable]
         public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
@@ -37,12 +37,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
             /// </summary>
-            public readonly List<Solution.ReagentQuantity> ContainerReagents;
+            public readonly List<Solution.ReagentQuantity>? ContainerReagents;
             public readonly string DispenserName;
             public readonly ReagentUnit SelectedDispenseAmount;
 
             public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents, ReagentUnit selectedDispenseAmount)
+                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity>? containerReagents, ReagentUnit selectedDispenseAmount)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
@@ -88,7 +88,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
             SetDispenseAmount1,
             SetDispenseAmount5,
             SetDispenseAmount10,
+            SetDispenseAmount15,
+            SetDispenseAmount20,
             SetDispenseAmount25,
+            SetDispenseAmount30,
             SetDispenseAmount50,
             SetDispenseAmount100,
             /// <summary>

@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems.AI
 {
@@ -24,7 +20,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     {
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
-        private DebugPathfindingOverlay _overlay;
+        private DebugPathfindingOverlay? _overlay;
 
         public override void Initialize()
         {
@@ -49,7 +45,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             if ((_modes & PathfindingDebugMode.Nodes) != 0 ||
                 (_modes & PathfindingDebugMode.Route) != 0)
             {
-                _overlay.AStarRoutes.Add(message);
+                _overlay?.AStarRoutes.Add(message);
                 Timer.Spawn(TimeSpan.FromSeconds(_routeDuration), () =>
                 {
                     if (_overlay == null) return;
@@ -63,7 +59,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             if ((_modes & PathfindingDebugMode.Nodes) != 0 ||
                     (_modes & PathfindingDebugMode.Route) != 0)
             {
-                _overlay.JpsRoutes.Add(message);
+                _overlay?.JpsRoutes.Add(message);
                 Timer.Spawn(TimeSpan.FromSeconds(_routeDuration), () =>
                 {
                     if (_overlay == null) return;
@@ -74,32 +70,31 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         private void HandleGraphMessage(SharedAiDebug.PathfindingGraphMessage message)
         {
-            EnableOverlay();
-            _overlay.UpdateGraph(message.Graph);
+            EnableOverlay().UpdateGraph(message.Graph);
         }
 
         private void HandleRegionsMessage(SharedAiDebug.ReachableChunkRegionsDebugMessage message)
         {
-            EnableOverlay();
-            _overlay.UpdateRegions(message.GridId, message.Regions);
+            EnableOverlay().UpdateRegions(message.GridId, message.Regions);
         }
 
         private void HandleCachedRegionsMessage(SharedAiDebug.ReachableCacheDebugMessage message)
         {
-            EnableOverlay();
-            _overlay.UpdateCachedRegions(message.GridId, message.Regions, message.Cached);
+            EnableOverlay().UpdateCachedRegions(message.GridId, message.Regions, message.Cached);
         }
 
-        private void EnableOverlay()
+        private DebugPathfindingOverlay EnableOverlay()
         {
             if (_overlay != null)
             {
-                return;
+                return _overlay;
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             _overlay = new DebugPathfindingOverlay {Modes = _modes};
             overlayManager.AddOverlay(_overlay);
+
+            return _overlay;
         }
 
         private void DisableOverlay()
@@ -111,7 +106,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             _overlay.Modes = 0;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlay.ID);
+            overlayManager.RemoveOverlay(_overlay);
             _overlay = null;
         }
 
@@ -129,12 +124,20 @@ namespace Content.Client.GameObjects.EntitySystems.AI
             {
                 EnableOverlay();
             }
-            _overlay.Modes = _modes;
+
+            if (_overlay != null)
+            {
+                _overlay.Modes = _modes;
+            }
 
             if (tooltip == PathfindingDebugMode.Graph)
             {
-                var systemMessage = new SharedAiDebug.RequestPathfindingGraphMessage();
-                EntityManager.EntityNetManager.SendSystemNetworkMessage(systemMessage);
+                RaiseNetworkEvent(new SharedAiDebug.RequestPathfindingGraphMessage());
+            }
+
+            if (tooltip == PathfindingDebugMode.Regions)
+            {
+                RaiseNetworkEvent(new SharedAiDebug.SubscribeReachableMessage());
             }
 
             // TODO: Request region graph, although the client system messages didn't seem to be going through anymore
@@ -143,12 +146,17 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         private void DisableMode(PathfindingDebugMode mode)
         {
+            if (mode == PathfindingDebugMode.Regions && (_modes & PathfindingDebugMode.Regions) != 0)
+            {
+                RaiseNetworkEvent(new SharedAiDebug.UnsubscribeReachableMessage());
+            }
+
             _modes &= ~mode;
             if (_modes == 0)
             {
                 DisableOverlay();
             }
-            else
+            else if (_overlay != null)
             {
                 _overlay.Modes = _modes;
             }
@@ -169,8 +177,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
     internal sealed class DebugPathfindingOverlay : Overlay
     {
-        private IEyeManager _eyeManager;
-        private IPlayerManager _playerManager;
+        private readonly IEyeManager _eyeManager;
+        private readonly IPlayerManager _playerManager;
 
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -179,29 +187,29 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public PathfindingDebugMode Modes { get; set; } = PathfindingDebugMode.None;
 
         // Graph debugging
-        public readonly Dictionary<int, List<Vector2>> Graph = new Dictionary<int, List<Vector2>>();
-        private readonly Dictionary<int, Color> _graphColors = new Dictionary<int, Color>();
+        public readonly Dictionary<int, List<Vector2>> Graph = new();
+        private readonly Dictionary<int, Color> _graphColors = new();
 
         // Cached regions
         public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions =
-                    new Dictionary<GridId, Dictionary<int, List<Vector2>>>();
+                    new();
 
         private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors =
-                     new Dictionary<GridId, Dictionary<int, Color>>();
+                     new();
 
         // Regions
         public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
-                    new Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>>();
+                    new();
 
         private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors =
-                     new Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>>();
+                     new();
 
         // Route debugging
         // As each pathfinder is very different you'll likely want to draw them completely different
-        public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new List<SharedAiDebug.AStarRouteMessage>();
-        public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new List<SharedAiDebug.JpsRouteMessage>();
+        public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new();
+        public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new();
 
-        public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
+        public DebugPathfindingOverlay()
         {
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();
@@ -456,15 +464,15 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         #endregion
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             if (Modes == 0)
             {
                 return;
             }
 
-            handle.UseShader(_shader);
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.ScreenHandle;
+            screenHandle.UseShader(_shader);
             var viewport = _eyeManager.GetWorldViewport();
 
             if ((Modes & PathfindingDebugMode.Route) != 0)
@@ -497,7 +505,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     }
 
     [Flags]
-    public enum PathfindingDebugMode {
+    public enum PathfindingDebugMode : byte
+    {
         None = 0,
         Route = 1 << 0,
         Graph = 1 << 1,

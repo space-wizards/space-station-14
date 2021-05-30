@@ -40,8 +40,7 @@
 			"directions": 4
 		},
 		{
-			"name": "catwalk_preview",
-			"directions": 1
+			"name": "catwalk_preview"
 		}
 	]
 }

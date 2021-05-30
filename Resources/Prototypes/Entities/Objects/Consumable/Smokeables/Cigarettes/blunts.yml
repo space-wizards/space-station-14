@@ -1,0 +1,21 @@
+- type: entity
+  id: Rollie
+  parent: BaseSmokeable
+  name: blunt
+  description: "A roll of dried plant matter wrapped in thin paper."
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
+      netsync: false
+      state: unlit-icon
+    - type: Tag
+      tags:
+        - Cigarette
+    - type: Clothing
+      sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
+      Slots: [ mask ]
+      HeldPrefix: unlit
+      size: 1
+    - type: Construction
+      graph: smokeableRollie
+      node: rollie

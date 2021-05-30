@@ -3,8 +3,6 @@ using Content.Shared.GameObjects.Components.Pointing;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
@@ -32,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Pointing
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent animation))
+            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

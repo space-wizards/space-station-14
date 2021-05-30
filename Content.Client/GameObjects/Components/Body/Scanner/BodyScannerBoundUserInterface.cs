@@ -1,9 +1,8 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Body.Scanner;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Body.Scanner
@@ -12,10 +11,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
     public class BodyScannerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private BodyScannerDisplay _display;
+        private BodyScannerDisplay? _display;
 
         [ViewVariables]
-        private IEntity _entity;
+        private IEntity? _entity;
 
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
@@ -31,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             base.UpdateState(state);
 
-            if (!(state is BodyScannerUIState scannerState))
+            if (state is not BodyScannerUIState scannerState)
             {
                 return;
             }
@@ -41,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner.Uid} at {Owner.Owner.Transform.MapPosition}");
             }
 
-            _display.UpdateDisplay(_entity);
+            _display?.UpdateDisplay(_entity);
         }
 
         protected override void Dispose(bool disposing)

@@ -2,25 +2,26 @@
 using Content.Shared.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Conveyor
 {
     [UsedImplicitly]
     public class ConveyorVisualizer : AppearanceVisualizer
     {
-        private string _stateRunning;
-        private string _stateStopped;
-        private string _stateReversed;
-        private string _stateLoose;
+        [DataField("state_running")]
+        private string? _stateRunning;
+
+        [DataField("state_stopped")]
+        private string? _stateStopped;
+
+        [DataField("state_reversed")]
+        private string? _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -32,21 +33,10 @@ namespace Content.Client.GameObjects.Components.Conveyor
                 ConveyorState.Off => _stateStopped,
                 ConveyorState.Forward => _stateRunning,
                 ConveyorState.Reversed => _stateReversed,
-                ConveyorState.Loose => _stateLoose,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
             sprite.LayerSetState(0, texture);
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            _stateRunning = node.GetNode("state_running").AsString();
-            _stateStopped = node.GetNode("state_stopped").AsString();
-            _stateReversed = node.GetNode("state_reversed").AsString();
-            _stateLoose = node.GetNode("state_loose").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -60,12 +50,6 @@ namespace Content.Client.GameObjects.Components.Conveyor
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
-
             ChangeState(component);
         }
     }

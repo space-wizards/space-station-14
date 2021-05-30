@@ -5,10 +5,11 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -23,11 +24,12 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         private IBody? _body;
 
         // TODO BODY Remove
-        private List<string> _mechanismIds = new List<string>();
+        [DataField("mechanisms")]
+        private List<string> _mechanismIds = new();
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         [ViewVariables]
-        private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
+        private readonly HashSet<IMechanism> _mechanisms = new();
 
         [ViewVariables]
         public IBody? Body
@@ -55,8 +57,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             }
         }
 
-        [ViewVariables] public BodyPartType PartType { get; private set; }
-        [ViewVariables] public int Size { get; private set; }
+        [ViewVariables]
+        public string DisplayName => Name;
+
+        [ViewVariables]
+        [DataField("partType")]
+        public BodyPartType PartType { get; private set; } = BodyPartType.Other;
+
+        [ViewVariables] [DataField("size")] public int Size { get; private set; } = 1;
 
         [ViewVariables] public int SizeUsed { get; private set; }
 
@@ -69,7 +77,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     attach between types.
         /// </summary>
         [ViewVariables]
-        public BodyPartCompatibility Compatibility { get; private set; }
+        [DataField("compatibility")]
+        public BodyPartCompatibility Compatibility { get; private set; } = BodyPartCompatibility.Universal;
 
         /// <summary>
         ///     Set of all <see cref="IMechanism"/> currently inside this
@@ -84,14 +93,15 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     If the last vital body part is removed creature dies
         /// </summary>
         [ViewVariables]
-        public bool IsVital { get; private set; }
+        [DataField("vital")]
+        public bool IsVital { get; private set; } = false;
 
         [ViewVariables]
-        public BodyPartSymmetry Symmetry { get; private set; }
+        [DataField("symmetry")]
+        public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
 
-        // TODO BODY
         [ViewVariables]
-        public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
+        public ISurgeryData? SurgeryDataComponent => Owner.GetComponentOrNull<ISurgeryData>();
 
         protected virtual void OnAddMechanism(IMechanism mechanism)
         {
@@ -117,26 +127,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             Dirty();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // TODO BODY serialize any changed properties?
-
-            serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
-
-            serializer.DataField(this, b => b.Size, "size", 1);
-
-            serializer.DataField(this, b => b.Compatibility, "compatibility", BodyPartCompatibility.Universal);
-
-            serializer.DataField(this, b => b.IsVital, "vital", false);
-
-            serializer.DataField(this, b => b.Symmetry, "symmetry", BodyPartSymmetry.None);
-
-            serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
-        }
-
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             var mechanismIds = new EntityUid[_mechanisms.Count];
 
@@ -154,7 +145,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is BodyPartComponentState state))
+            if (curState is not BodyPartComponentState state)
             {
                 return;
             }
@@ -314,6 +305,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         protected virtual void OnAddedToBody(IBody body) { }
 
         protected virtual void OnRemovedFromBody(IBody old) { }
+
+        public virtual void Gib()
+        {
+            foreach (var mechanism in _mechanisms)
+            {
+                RemoveMechanism(mechanism);
+            }
+        }
     }
 
     [Serializable, NetSerializable]

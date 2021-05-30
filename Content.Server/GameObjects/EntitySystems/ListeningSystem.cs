@@ -1,7 +1,6 @@
 ﻿using Content.Server.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -10,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public void PingListeners(IEntity source, string message)
         {
-            foreach (var listener in ComponentManager.EntityQuery<IListen>())
+            foreach (var listener in ComponentManager.EntityQuery<IListen>(true))
             {
                 // TODO: Map Position distance
                 if (listener.CanListen(message, source))

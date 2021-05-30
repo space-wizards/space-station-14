@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.Animations;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
@@ -11,10 +10,12 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
@@ -22,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
     [RegisterComponent]
     public class ClientMagazineBarrelComponent : Component, IItemStatus
     {
-        private static readonly Animation AlarmAnimationSmg = new Animation
+        private static readonly Animation AlarmAnimationSmg = new()
         {
             Length = TimeSpan.FromSeconds(1.4),
             AnimationTracks =
@@ -35,17 +36,17 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.1f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.3f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.3f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.2f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.3f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.3f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.2f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.3f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.3f),
                     }
                 }
             }
         };
 
-        private static readonly Animation AlarmAnimationLmg = new Animation
+        private static readonly Animation AlarmAnimationLmg = new()
         {
             Length = TimeSpan.FromSeconds(0.75),
             AnimationTracks =
@@ -58,11 +59,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.0f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.15f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.15f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.15f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.15f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.15f),
                         new AnimationTrackProperty.KeyFrame(Color.Red, 0.15f),
-                        new AnimationTrackProperty.KeyFrame(null, 0.15f),
+                        new AnimationTrackProperty.KeyFrame(null!, 0.15f),
                     }
                 }
             }
@@ -71,7 +72,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         public override string Name => "MagazineBarrel";
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         ///     True if a bullet is chambered.
@@ -88,18 +89,13 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _isLmgAlarmAnimation;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("lmg_alarm_animation")] private bool _isLmgAlarmAnimation = default;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            base.ExposeData(serializer);
+            base.HandleComponentState(curState, nextState);
 
-            serializer.DataField(ref _isLmgAlarmAnimation, "lmg_alarm_animation", false);
-        }
-
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
-        {
-            if (!(curState is MagazineBarrelComponentState cast))
+            if (curState is not MagazineBarrelComponentState cast)
                 return;
 
             Chambered = cast.Chambered;
@@ -107,13 +103,13 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             _statusControl?.Update();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
             switch (message)
             {
-                
+
                 case MagazineAutoEjectMessage _:
                     _statusControl?.PlayAlarmAnimation();
                     return;
@@ -145,30 +141,31 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             public StatusControl(ClientMagazineBarrelComponent parent)
             {
+                MinHeight = 15;
                 _parent = parent;
-                SizeFlagsHorizontal = SizeFlags.FillExpand;
-                SizeFlagsVertical = SizeFlags.ShrinkCenter;
+                HorizontalExpand = true;
+                VerticalAlignment = VAlignment.Center;
 
                 AddChild(new HBoxContainer
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HorizontalExpand = true,
                     Children =
                     {
                         (_chamberedBullet = new TextureRect
                         {
                             Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered_rotated.png"),
-                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Fill,
+                            VerticalAlignment = VAlignment.Center,
+                            HorizontalAlignment = HAlignment.Right,
                         }),
-                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control() { MinSize = (5,0) },
                         new Control
                         {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            HorizontalExpand = true,
                             Children =
                             {
                                 (_bulletsList = new HBoxContainer
                                 {
-                                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                                    VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 0
                                 }),
                                 (_noMagazineLabel = new Label
@@ -178,11 +175,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                                 })
                             }
                         },
-                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control() { MinSize = (5,0) },
                         (_ammoCount = new Label
                         {
                             StyleClasses = {StyleNano.StyleClassItemStatus},
-                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                            HorizontalAlignment = HAlignment.Right,
                         }),
                     }
                 });
@@ -231,8 +228,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     {
                         Texture = texture,
                         ModulateSelfOverride = altColor ? colorGoneA : colorGoneB,
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
                         Stretch = TextureRect.StretchMode.KeepCentered
                     });
 
@@ -247,18 +242,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     {
                         Texture = texture,
                         ModulateSelfOverride = altColor ? colorA : colorB,
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
                         Stretch = TextureRect.StretchMode.KeepCentered
                     });
 
                     altColor ^= true;
                 }
-            }
-
-            protected override Vector2 CalculateMinimumSize()
-            {
-                return Vector2.ComponentMax((0, 15), base.CalculateMinimumSize());
             }
 
             public void PlayAlarmAnimation()

@@ -1,11 +1,12 @@
-﻿using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
@@ -25,10 +26,11 @@ namespace Content.Server.GlobalVerbs
             data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
+            data.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
                 if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
@@ -36,7 +38,7 @@ namespace Content.Server.GlobalVerbs
                     return;
                 }
 
-                if (groupController.CanCommand(player.playerSession, "rejuvenate"))
+                if (groupController.CanCommand(player.PlayerSession, "rejuvenate"))
                 {
                     data.Visibility = VerbVisibility.Visible;
                 }
@@ -46,42 +48,46 @@ namespace Content.Server.GlobalVerbs
         public override void Activate(IEntity user, IEntity target)
         {
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
-                if (groupController.CanCommand(player.playerSession, "rejuvenate"))
+                if (groupController.CanCommand(player.PlayerSession, "rejuvenate"))
                     PerformRejuvenate(target);
             }
         }
 
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out IDamageableComponent damage))
+            if (target.TryGetComponent(out IDamageableComponent? damage))
             {
                 damage.Heal();
-                damage.CurrentState = DamageState.Alive;
             }
 
-            if (target.TryGetComponent(out HungerComponent hunger))
+            if (target.TryGetComponent(out IMobStateComponent? mobState))
+            {
+                mobState.UpdateState(0);
+            }
+
+            if (target.TryGetComponent(out HungerComponent? hunger))
             {
                 hunger.ResetFood();
             }
 
-            if (target.TryGetComponent(out ThirstComponent thirst))
+            if (target.TryGetComponent(out ThirstComponent? thirst))
             {
                 thirst.ResetThirst();
             }
 
-            if (target.TryGetComponent(out StunnableComponent stun))
+            if (target.TryGetComponent(out StunnableComponent? stun))
             {
                 stun.ResetStuns();
             }
 
-            if (target.TryGetComponent(out FlammableComponent flammable))
+            if (target.TryGetComponent(out FlammableComponent? flammable))
             {
                 flammable.Extinguish();
             }
 
-            if (target.TryGetComponent(out CreamPiedComponent creamPied))
+            if (target.TryGetComponent(out CreamPiedComponent? creamPied))
             {
                 creamPied.Wash();
             }

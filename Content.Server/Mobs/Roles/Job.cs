@@ -11,7 +11,7 @@ namespace Content.Server.Mobs.Roles
         public override string Name { get; }
         public override bool Antagonist => false;
 
-        public string StartingGear => Prototype.StartingGear;
+        public string? StartingGear => Prototype.StartingGear;
 
         public Job(Mind mind, JobPrototype jobPrototype) : base(mind)
         {
@@ -23,10 +23,11 @@ namespace Content.Server.Mobs.Roles
         {
             base.Greet();
 
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.DispatchServerMessage(Mind.Session, $"You're a new {Name}. Do your best!");
+            if (Mind.TryGetSession(out var session))
+            {
+                var chat = IoCManager.Resolve<IChatManager>();
+                chat.DispatchServerMessage(session, $"You're a new {Name}. Do your best!");
+            }
         }
     }
-
-
 }

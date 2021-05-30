@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Interfaces.Parallax;
+using Content.Shared;
 using Nett;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -17,29 +17,29 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Parallax
 {
-    internal sealed class ParallaxManager : IParallaxManager, IPostInjectInit
+    internal sealed class ParallaxManager : IParallaxManager
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-        private static readonly ResourcePath ParallaxConfigPath = new ResourcePath("/parallax_config.toml");
+        private static readonly ResourcePath ParallaxConfigPath = new("/parallax_config.toml");
 
         // Both of these below are in the user directory.
-        private static readonly ResourcePath ParallaxPath = new ResourcePath("/parallax_cache.png");
-        private static readonly ResourcePath ParallaxConfigOld = new ResourcePath("/parallax_config_old");
+        private static readonly ResourcePath ParallaxPath = new("/parallax_cache.png");
+        private static readonly ResourcePath ParallaxConfigOld = new("/parallax_config_old");
 
-        public event Action<Texture> OnTextureLoaded;
-        public Texture ParallaxTexture { get; private set; }
+        public event Action<Texture>? OnTextureLoaded;
+        public Texture? ParallaxTexture { get; private set; }
 
         public async void LoadParallax()
         {
-            if (!_configurationManager.GetCVar<bool>("parallax.enabled"))
+            if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
             {
                 return;
             }
 
-            var debugParallax = _configurationManager.GetCVar<bool>("parallax.debug");
+            var debugParallax = _configurationManager.GetCVar(CCVars.ParallaxDebug);
             string contents;
             TomlTable table;
             // Load normal config into memory
@@ -53,7 +53,7 @@ namespace Content.Client.Parallax
             {
                 using (var reader = new StreamReader(configStream, EncodingHelpers.UTF8))
                 {
-                    contents = reader.ReadToEnd();
+                    contents = reader.ReadToEnd().Replace(Environment.NewLine, "\n");
                 }
 
                 if (!debugParallax && _resourceCache.UserData.Exists(ParallaxConfigOld))
@@ -75,7 +75,7 @@ namespace Content.Client.Parallax
                 table = Toml.ReadString(contents);
             }
 
-            List<Image<Rgba32>> debugImages = null;
+            List<Image<Rgba32>>? debugImages = null;
             if (debugParallax)
             {
                 debugImages = new List<Image<Rgba32>>();
@@ -94,7 +94,7 @@ namespace Content.Client.Parallax
                 image.SaveAsPng(stream);
             }
 
-            if (debugParallax)
+            if (debugParallax && debugImages != null)
             {
                 var i = 0;
                 foreach (var debugImage in debugImages)
@@ -117,12 +117,6 @@ namespace Content.Client.Parallax
             }
 
             OnTextureLoaded?.Invoke(ParallaxTexture);
-        }
-
-        public void PostInject()
-        {
-            _configurationManager.RegisterCVar("parallax.enabled", true);
-            _configurationManager.RegisterCVar("parallax.debug", false);
         }
     }
 }

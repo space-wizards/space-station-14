@@ -1,24 +1,18 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Research;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
+    [UsedImplicitly]
     public class ResearchSystem : EntitySystem
     {
-        public const float ResearchConsoleUIUpdateTime = 30f;
+        private const float ResearchConsoleUIUpdateTime = 30f;
 
         private float _timer = ResearchConsoleUIUpdateTime;
-        private readonly List<ResearchServerComponent> _servers = new List<ResearchServerComponent>();
-        private readonly IEntityQuery ConsoleQuery;
+        private readonly List<ResearchServerComponent> _servers = new();
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
-
-        public ResearchSystem()
-        {
-            ConsoleQuery = new TypeEntityQuery(typeof(ResearchConsoleComponent));
-        }
 
         public bool RegisterServer(ResearchServerComponent server)
         {
@@ -32,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _servers.Remove(server);
         }
 
-        public ResearchServerComponent GetServerById(int id)
+        public ResearchServerComponent? GetServerById(int id)
         {
             foreach (var server in Servers)
             {
@@ -77,9 +71,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (_timer >= ResearchConsoleUIUpdateTime)
             {
-                foreach (var console in EntityManager.GetEntities(ConsoleQuery))
+                foreach (var console in ComponentManager.EntityQuery<ResearchConsoleComponent>())
                 {
-                    console.GetComponent<ResearchConsoleComponent>().UpdateUserInterface();
+                    console.UpdateUserInterface();
                 }
 
                 _timer = 0f;

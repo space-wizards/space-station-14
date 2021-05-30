@@ -1,10 +1,10 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
@@ -18,7 +18,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void RemoveReceiver(PowerReceiverComponent receiver);
 
-        public IEntity ProviderOwner { get; }
+        void UpdateReceiverLoad(int oldLoad, int newLoad);
+
+        public IEntity? ProviderOwner { get; }
+
+        public bool HasApcPower { get; }
     }
 
     [RegisterComponent]
@@ -28,16 +32,20 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public IEntity ProviderOwner => Owner;
 
+        [ViewVariables]
+        public bool HasApcPower => Net.Powered;
+
         /// <summary>
         ///     The max distance this can transmit power to <see cref="PowerReceiverComponent"/>s from.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerTransferRange { get => _powerTransferRange; set => SetPowerTransferRange(value); }
-        private int _powerTransferRange;
+        [DataField("powerTransferRange")]
+        private int _powerTransferRange = 3;
 
         [ViewVariables]
         public IReadOnlyList<PowerReceiverComponent> LinkedReceivers => _linkedReceivers;
-        private List<PowerReceiverComponent> _linkedReceivers = new List<PowerReceiverComponent>();
+        private List<PowerReceiverComponent> _linkedReceivers = new();
 
         /// <summary>
         ///     If <see cref="PowerReceiverComponent"/>s should consider connecting to this.
@@ -49,20 +57,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public void AddReceiver(PowerReceiverComponent receiver)
         {
+            var oldLoad = GetTotalLoad();
             _linkedReceivers.Add(receiver);
-            Net.UpdatePowerProviderReceivers(this);
+            var newLoad = oldLoad + receiver.Load;
+            Net.UpdatePowerProviderReceivers(this, oldLoad, newLoad);
         }
 
         public void RemoveReceiver(PowerReceiverComponent receiver)
         {
+            var oldLoad = GetTotalLoad();
             _linkedReceivers.Remove(receiver);
-            Net.UpdatePowerProviderReceivers(this);
+            var newLoad = oldLoad - receiver.Load;
+            Net.UpdatePowerProviderReceivers(this, oldLoad, newLoad);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void UpdateReceiverLoad(int oldLoad, int newLoad)
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _powerTransferRange, "powerTransferRange", 3);
+            Net.UpdatePowerProviderReceivers(this, oldLoad, newLoad);
         }
 
         protected override void Startup()
@@ -82,8 +93,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 receiver.ClearProvider();
             }
-            _linkedReceivers = new List<PowerReceiverComponent>();
-            Net.UpdatePowerProviderReceivers(this);
             foreach (var receiver in receivers)
             {
                 receiver.TryFindAndSetProvider();
@@ -93,14 +102,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private List<PowerReceiverComponent> FindAvailableReceivers()
         {
-            var nearbyEntities = Owner.EntityManager
+            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(Owner, PowerTransferRange);
-            return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
-                .Where(receiver => receiver != null)
-                .Where(receiver => receiver.Connectable)
-                .Where(receiver => receiver.NeedsProvider)
-                .Where(receiver => receiver.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance) && distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
-                .ToList();
+
+            var receivers = new List<PowerReceiverComponent>();
+
+            foreach (var entity in nearbyEntities)
+            {
+                if (entity.TryGetComponent<PowerReceiverComponent>(out var receiver) &&
+                    receiver.Connectable &&
+                    receiver.NeedsProvider &&
+                    receiver.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance) &&
+                    distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
+                {
+                    receivers.Add(receiver);
+                }
+            }
+            return receivers;
         }
 
         protected override void AddSelfToNet(IApcNet apcNet)
@@ -115,20 +133,41 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void SetPowerTransferRange(int newPowerTransferRange)
         {
-            foreach (var receiver in _linkedReceivers.ToArray())
+            var receivers = _linkedReceivers.ToArray();
+
+            foreach (var receiver in receivers)
             {
                 receiver.ClearProvider();
             }
             _powerTransferRange = newPowerTransferRange;
-            _linkedReceivers = FindAvailableReceivers();
-            Net.UpdatePowerProviderReceivers(this);
+
+            foreach (var receiver in receivers)
+            {
+                receiver.TryFindAndSetProvider();
+            }
+        }
+
+        private int GetTotalLoad()
+        {
+            var load = 0;
+            foreach (var receiver in _linkedReceivers)
+            {
+                load += receiver.Load;
+            }
+            return load;
         }
 
         private class NullPowerProvider : IPowerProvider
         {
+            /// <summary>
+            ///     It is important that this returns false, so <see cref="PowerReceiverComponent"/>s with a <see cref="NullPowerProvider"/> have no power.
+            /// </summary>
+            public bool HasApcPower => false;
+
             public void AddReceiver(PowerReceiverComponent receiver) { }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
-            public IEntity ProviderOwner => default;
+            public void UpdateReceiverLoad(int oldLoad, int newLoad) { }
+            public IEntity? ProviderOwner => default;
         }
     }
 }

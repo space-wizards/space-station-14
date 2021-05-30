@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -30,10 +31,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
-        private readonly List<Node> _nodes = new List<Node>();
+        private readonly List<Node> _nodes = new();
 
         [ViewVariables]
         public int NodeCount => Nodes.Count;
+
+        /// <summary>
+        ///     Debug variable to indicate that this NodeGroup should not be being used by anything.
+        /// </summary>
+        [ViewVariables]
+        public bool Removed { get; private set; } = false;
 
         public static readonly INodeGroup NullGroup = new NullNodeGroup();
 
@@ -69,6 +76,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 node.NodeGroup = newGroup;
             }
+            Removed = true;
         }
 
         /// <summary>
@@ -91,6 +99,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 }
             }
             AfterRemake(newGroups);
+            Removed = true;
         }
 
         protected virtual void OnAddNode(Node node) { }
@@ -104,7 +113,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
-            private readonly List<Node> _nodes = new List<Node>();
+            private readonly List<Node> _nodes = new();
             public void Initialize(Node sourceNode) { }
             public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }

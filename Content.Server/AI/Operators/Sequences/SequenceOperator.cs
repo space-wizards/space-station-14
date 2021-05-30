@@ -9,7 +9,7 @@ namespace Content.Server.AI.Operators.Sequences
     /// </summary>
     public abstract class SequenceOperator : AiOperator
     {
-        public Queue<AiOperator> Sequence { get; protected set; }
+        public Queue<AiOperator> Sequence { get; protected set; } = new();
 
         public override Outcome Execute(float frameTime)
         {
@@ -17,9 +17,9 @@ namespace Content.Server.AI.Operators.Sequences
             {
                 return Outcome.Success;
             }
-            
+
             var op = Sequence.Peek();
-            op.TryStartup();
+            op.Startup();
             var outcome = op.Execute(frameTime);
 
             switch (outcome)
@@ -35,7 +35,7 @@ namespace Content.Server.AI.Operators.Sequences
                     op.Shutdown(outcome);
                     Sequence.Clear();
                     return Outcome.Failed;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

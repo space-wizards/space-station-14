@@ -1,0 +1,80 @@
+- type: entity
+  parent: BaseItem
+  id: MonkeyCube
+  name: monkey cube
+  description: Just add water!
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+    maxVol: 11 # needs room for water
+    caps: Refillable
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Reactive
+    reactions:
+      - !type:AddToSolutionReaction
+        touch: true
+        ingestion: true
+        injection: true
+        reagents:
+          - Water
+  - type: Rehydratable
+    target: MonkeyMob_Content
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: KinematicController
+    fixtures: # TODO: Make a second fixture.
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 2.5
+      hard: false
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable
+
+- type: entity
+  parent: PlushieCarp
+  id: DehydratedSpaceCarp
+  name: dehydrated space carp
+  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+    maxVol: 11 # needs room for water
+    caps: Refillable
+  - type: Reactive
+    reactions:
+    - !type:AddToSolutionReaction
+      touch: true
+      ingestion: true
+      injection: true
+      reagents:
+        - Water
+  - type: Rehydratable
+    target: CarpMob_Content
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: KinematicController
+    fixtures: # TODO: Make a second fixture.
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 2.5
+      hard: false
+      layer:
+        - SmallImpassable
+      mask:
+        - Impassable
+        - MobImpassable

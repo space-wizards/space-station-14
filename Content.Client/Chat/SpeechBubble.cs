@@ -1,18 +1,17 @@
-﻿using System;
+using System;
 using Content.Client.Interfaces.Chat;
-using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chat
 {
     public abstract class SpeechBubble : Control
     {
-        public enum SpeechType
+        public enum SpeechType : byte
         {
             Emote,
             Say
@@ -75,16 +74,12 @@ namespace Content.Client.Chat
 
             ForceRunStyleUpdate();
 
-            ContentHeight = bubble.CombinedMinimumSize.Y;
+            bubble.Measure(Vector2.Infinity);
+            ContentHeight = bubble.DesiredSize.Y;
             _verticalOffsetAchieved = -ContentHeight;
         }
 
         protected abstract Control BuildBubble(string text);
-
-        protected override Vector2 CalculateMinimumSize()
-        {
-            return (base.CalculateMinimumSize().X, 0);
-        }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -115,6 +110,9 @@ namespace Content.Client.Chat
                 _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
+            if (!_senderEntity.Transform.Coordinates.IsValid(_senderEntity.EntityManager))
+                return;
+
             var worldPos = _senderEntity.Transform.WorldPosition;
             worldPos += (0, EntityVerticalOffset);
 
@@ -123,7 +121,7 @@ namespace Content.Client.Chat
             LayoutContainer.SetPosition(this, screenPos);
 
             var height = MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
-            LayoutContainer.SetSize(this, (Size.X, height));
+            SetHeight = height;
         }
 
         private void Die()

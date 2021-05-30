@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
@@ -6,100 +6,94 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Content.Shared.Physics;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class MeleeWeaponComponent : Component, IAttack
+    public class MeleeWeaponComponent : Component, IAttack, IHandSelected
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "MeleeWeapon";
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        private readonly string _hitSound = default!;
-        private readonly string _missSound = default!;
+        [DataField("hitSound")]
+        private string _hitSound = "/Audio/Weapons/genhit1.ogg";
+
+        [DataField("missSound")]
+        private string _missSound = "/Audio/Weapons/punchmiss.ogg";
+
+        [DataField("arcCooldownTime")]
         public float ArcCooldownTime { get; private set; } = 1f;
-        public float CooldownTime { get; private set; } = 0.5f;
+
+        [DataField("cooldownTime")]
+        public float CooldownTime { get; private set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ClickArc { get; set; }
+        [DataField("clickArc")]
+        public string ClickArc { get; set; } = "punch";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string Arc { get; set; }
+        [DataField("arc")]
+        public string Arc { get; set; } = "default";
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("arcwidth")] public float ArcWidth { get; set; } = 90;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ArcWidth { get; set; }
+        [DataField("range")]
+        public float Range { get; set; } = 1;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Range { get; set; }
+        [DataField("damage")]
+        public int Damage { get; set; } = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Damage { get; set; }
+        [DataField("damageType")]
+        public DamageType DamageType { get; set; } = DamageType.Blunt;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageType DamageType { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("clickAttackEffect")] public bool ClickAttackEffect { get; set; } = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool ClickAttackEffect { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Damage, "damage", 5);
-            serializer.DataField(this, x => x.Range, "range", 1);
-            serializer.DataField(this, x => x.ArcWidth, "arcwidth", 90);
-            serializer.DataField(this, x => x.Arc, "arc", "default");
-            serializer.DataField(this, x => x.ClickArc, "clickArc", "punch");
-            serializer.DataField(this, x => x._hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
-            serializer.DataField(this, x => x._missSound, "hitSound", "/Audio/Weapons/punchmiss.ogg");
-            serializer.DataField(this, x => x.ArcCooldownTime, "arcCooldownTime", 1f);
-            serializer.DataField(this, x => x.CooldownTime, "cooldownTime", 1f);
-            serializer.DataField(this, x => x.DamageType, "damageType", DamageType.Blunt);
-            serializer.DataField(this, x => x.ClickAttackEffect, "clickAttackEffect", true);
-        }
-
-        protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
+        protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEvent eventArgs)
         {
             return true;
         }
 
-        bool IAttack.WideAttack(AttackEventArgs eventArgs)
+        bool IAttack.WideAttack(AttackEvent eventArgs)
         {
             if (!eventArgs.WideAttack) return true;
 
             var curTime = _gameTiming.CurTime;
 
-            if(curTime < _cooldownEnd)
+            if (curTime < _cooldownEnd)
                 return true;
 
             var location = eventArgs.User.Transform.Coordinates;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
+            var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
 
-            var audioSystem = EntitySystem.Get<AudioSystem>();
             if (entities.Count != 0)
             {
-                audioSystem.PlayFromEntity( _hitSound, entities.First());
+                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, entities.First().Transform.Coordinates);
             }
             else
             {
-                audioSystem.PlayFromEntity(_missSound, eventArgs.User);
+                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User.Transform.Coordinates);
             }
 
             var hitEntities = new List<IEntity>();
@@ -108,14 +102,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent? damageComponent))
                 {
                     damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
                     hitEntities.Add(entity);
                 }
             }
+            SendMessage(new MeleeHitMessage(hitEntities));
 
-            if(!OnHitEntities(hitEntities, eventArgs)) return false;
+            if (!OnHitEntities(hitEntities, eventArgs)) return false;
 
             if (Arc != null)
             {
@@ -126,46 +121,43 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(ArcCooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
-            {
-                cooldown.CooldownStart = _lastAttackTime;
-                cooldown.CooldownEnd = _cooldownEnd;
-            }
+            RefreshItemCooldown();
 
             return true;
         }
 
-        bool IAttack.ClickAttack(AttackEventArgs eventArgs)
+        bool IAttack.ClickAttack(AttackEvent eventArgs)
         {
             if (eventArgs.WideAttack) return false;
 
             var curTime = _gameTiming.CurTime;
 
-            if(curTime < _cooldownEnd || !eventArgs.Target.IsValid())
+            if (curTime < _cooldownEnd || !eventArgs.Target.IsValid())
                 return true;
 
             var target = eventArgs.TargetEntity;
 
             var location = eventArgs.User.Transform.Coordinates;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
+            var diff = eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
 
-            var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)
             {
-                audioSystem.PlayFromEntity( _hitSound, target);
+                SoundSystem.Play(Filter.Pvs(Owner), _hitSound, target);
             }
             else
             {
-                audioSystem.PlayFromEntity(_missSound, eventArgs.User);
+                SoundSystem.Play(Filter.Pvs(Owner), _missSound, eventArgs.User);
                 return false;
             }
 
-            if (target.TryGetComponent(out IDamageableComponent damageComponent))
+            if (target.TryGetComponent(out IDamageableComponent? damageComponent))
             {
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
+            SendMessage(new MeleeHitMessage(new List<IEntity> { target }));
 
-            var targets = new[] {target};
+            var targets = new[] { target };
 
             if (!OnHitEntities(targets, eventArgs))
                 return false;
@@ -179,11 +171,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(CooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
-            {
-                cooldown.CooldownStart = _lastAttackTime;
-                cooldown.CooldownEnd = _cooldownEnd;
-            }
+            RefreshItemCooldown();
 
             return true;
         }
@@ -201,14 +189,60 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), Range, ignore).FirstOrDefault();
-                if (res.HitEntity != null)
+                var res = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(mapId,
+                    new CollisionRay(position, castAngle.ToWorldVec(),
+                        (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), Range, ignore).ToList();
+
+                if (res.Count != 0)
                 {
-                    resSet.Add(res.HitEntity);
+                    resSet.Add(res[0].HitEntity);
                 }
             }
 
             return resSet;
+        }
+
+        void IHandSelected.HandSelected(HandSelectedEventArgs eventArgs)
+        {
+            var curTime = _gameTiming.CurTime;
+            var cool = TimeSpan.FromSeconds(CooldownTime * 0.5f);
+
+            if (curTime < _cooldownEnd)
+            {
+                if (_cooldownEnd - curTime < cool)
+                {
+                    _lastAttackTime = curTime;
+                    _cooldownEnd += cool;
+                }
+                else
+                    return;
+            }
+            else
+            {
+                _lastAttackTime = curTime;
+                _cooldownEnd = curTime + cool;
+            }
+
+            RefreshItemCooldown();
+        }
+
+        private void RefreshItemCooldown()
+        {
+            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
+            {
+                cooldown.CooldownStart = _lastAttackTime;
+                cooldown.CooldownEnd = _cooldownEnd;
+            }
+        }
+    }
+
+    public class MeleeHitMessage : ComponentMessage
+    {
+        public readonly List<IEntity> HitEntities;
+
+        public MeleeHitMessage(List<IEntity> hitEntities)
+        {
+            HitEntities = hitEntities;
         }
     }
 }

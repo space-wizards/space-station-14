@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Atmos
@@ -14,16 +15,12 @@ namespace Content.Shared.GameObjects.Components.Atmos
     {
         public readonly PipeDirection InletDirection;
         public readonly PipeDirection OutletDirection;
-        public readonly ConduitLayer InletConduitLayer;
-        public readonly ConduitLayer OutletConduitLayer;
         public readonly bool PumpEnabled;
 
-        public PumpVisualState(PipeDirection inletDirection, PipeDirection outletDirection, ConduitLayer inletConduitLayer, ConduitLayer outletConduitLayer, bool pumpEnabled)
+        public PumpVisualState(PipeDirection inletDirection, PipeDirection outletDirection, bool pumpEnabled)
         {
             InletDirection = inletDirection;
             OutletDirection = outletDirection;
-            InletConduitLayer = inletConduitLayer;
-            OutletConduitLayer = outletConduitLayer;
             PumpEnabled = pumpEnabled;
         }
     }

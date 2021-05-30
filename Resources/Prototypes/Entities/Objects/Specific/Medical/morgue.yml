@@ -1,0 +1,65 @@
+- type: entity
+  id: BodyBag_Container
+  name: body bag
+  description: A plastic bag designed for the storage and transportation of cadavers.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    layers:
+    - state: bag
+    - state: open_overlay
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: label_overlay
+      map: ["enum.BodyBagVisualLayers.Label"]
+  - type: Icon
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    state: bag
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.5,0.1,0.5"
+      mass: 5
+  - type: BodyBagEntityStorage
+    CanWeldShut: false
+    Capacity: 1
+    closeSound: /Audio/Misc/zip.ogg
+    openSound: /Audio/Misc/zip.ogg
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: open_overlay
+      state_closed: bag
+    - type: BodyBagVisualizer
+  - type: Pullable
+
+- type: entity
+  id: BodyBag_Item
+  name: body bag
+  description: A plastic bag designed for the storage and transportation of cadavers.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    state: item
+#  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
+# - type: Placeable
+#   prototype: someId
+#   snap: Center
+
+- type: entity
+  parent: BaseItem
+  id: Ash
+  name: ash
+  description: This used to be something, but now it's not.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/materials.rsi
+    state: ash

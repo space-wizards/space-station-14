@@ -4,26 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public abstract class SharedMechanismComponent : Component, IMechanism
+    public abstract class SharedMechanismComponent : Component, IMechanism, ISerializationHooks
     {
         public override string Name => "Mechanism";
 
-        protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
+        protected readonly Dictionary<int, object> OptionsCache = new();
         protected IBody? BodyCache;
         protected int IdHash;
         protected IEntity? PerformerCache;
         private IBodyPart? _part;
-        private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new Dictionary<Type, IMechanismBehavior>();
+
+        [DataField("behaviors", serverOnly: true)] private HashSet<IMechanismBehavior> _behaviorTypes = new();
+
+        private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
 
         public IBody? Body => Part?.Body;
 
@@ -68,72 +70,40 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors => _behaviors;
 
-        public string Description { get; set; } = string.Empty;
+        [DataField("maxDurability")] public int MaxDurability { get; set; } = 10;
 
-        public string ExamineMessage { get; set; } = string.Empty;
+        [DataField("currentDurability")] public int CurrentDurability { get; set; } = 10;
 
-        public int MaxDurability { get; set; }
+        [DataField("destroyThreshold")] public int DestroyThreshold { get; set; } = -10;
 
-        public int CurrentDurability { get; set; }
-
-        public int DestroyThreshold { get; set; }
-
+        // TODO BODY: Surgery description and adding a message to the examine tooltip of the entity that owns this mechanism
         // TODO BODY
-        public int Resistance { get; set; }
+        [DataField("resistance")] public int Resistance { get; set; } = 0;
 
         // TODO BODY OnSizeChanged
-        public int Size { get; set; }
+        [DataField("size")] public int Size { get; set; } = 1;
 
-        public BodyPartCompatibility Compatibility { get; set; }
+        [DataField("compatibility")]
+        public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void ISerializationHooks.BeforeSerialization()
         {
-            base.ExposeData(serializer);
+            _behaviorTypes = _behaviors.Values.ToHashSet();
+        }
 
-            serializer.DataField(this, m => m.Description, "description", string.Empty);
-
-            serializer.DataField(this, m => m.ExamineMessage, "examineMessage", string.Empty);
-
-            serializer.DataField(this, m => m.MaxDurability, "maxDurability", 10);
-
-            serializer.DataField(this, m => m.CurrentDurability, "currentDurability", MaxDurability);
-
-            serializer.DataField(this, m => m.DestroyThreshold, "destroyThreshold", -MaxDurability);
-
-            serializer.DataField(this, m => m.Resistance, "resistance", 0);
-
-            serializer.DataField(this, m => m.Size, "size", 1);
-
-            serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
-
-            var moduleManager = IoCManager.Resolve<IModuleManager>();
-
-            if (moduleManager.IsServerModule)
+        void ISerializationHooks.AfterDeserialization()
+        {
+            foreach (var behavior in _behaviorTypes)
             {
-                serializer.DataReadWriteFunction(
-                    "behaviors",
-                    null!,
-                    behaviors =>
-                    {
-                        if (behaviors == null)
-                        {
-                            return;
-                        }
+                var type = behavior.GetType();
 
-                        foreach (var behavior in behaviors)
-                        {
-                            var type = behavior.GetType();
+                if (!_behaviors.TryAdd(type, behavior))
+                {
+                    Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)}: {type}.");
+                    continue;
+                }
 
-                            if (!_behaviors.TryAdd(type, behavior))
-                            {
-                                Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)} for entity {Owner.Name}: {type}.");
-                                continue;
-                            }
-
-                            IoCManager.InjectDependencies(behavior);
-                        }
-                    },
-                    () => _behaviors.Values.ToList());
+                IoCManager.InjectDependencies(behavior);
             }
         }
 
@@ -165,8 +135,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                 return true;
             }
 
-            behavior = new T();
-            IoCManager.InjectDependencies(behavior);
+            behavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<T>();
             _behaviors.Add(typeof(T), behavior);
             behavior.Initialize(this);
             behavior.Startup();

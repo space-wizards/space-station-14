@@ -15,11 +15,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
     {
         // Some of this is probably fugly due to other structural changes in pathfinding so it could do with optimisation
         // Realistically it's probably not getting used given it doesn't support tile costs which can be very useful
-        public static event Action<SharedAiDebug.JpsRouteDebug> DebugRoute;
+#if DEBUG
+        public static event Action<SharedAiDebug.JpsRouteDebug>? DebugRoute;
+#endif
 
-        private PathfindingNode _startNode;
-        private PathfindingNode _endNode;
-        private PathfindingArgs _pathfindingArgs;
+        private readonly PathfindingNode? _startNode;
+        private PathfindingNode? _endNode;
+        private readonly PathfindingArgs _pathfindingArgs;
 
         public JpsPathfindingJob(double maxTime,
             PathfindingNode startNode,
@@ -32,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             _pathfindingArgs = pathfindingArgs;
         }
 
-        protected override async Task<Queue<TileRef>> Process()
+        protected override async Task<Queue<TileRef>?> Process()
         {
             // VERY similar to A*; main difference is with the neighbor tiles you look for jump nodes instead
             if (_startNode == null ||
@@ -56,7 +58,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             var jumpNodes = new HashSet<PathfindingNode>();
 #endif
 
-            PathfindingNode currentNode = null;
+            PathfindingNode? currentNode = null;
             openTiles.Add((0, _startNode));
             gScores[_startNode] = 0.0f;
             var routeFound = false;
@@ -121,7 +123,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 return null;
             }
 
-            var route = PathfindingHelpers.ReconstructJumpPath(cameFrom, currentNode);
+            DebugTools.AssertNotNull(currentNode);
+
+            var route = PathfindingHelpers.ReconstructJumpPath(cameFrom, currentNode!);
+
             if (route.Count == 1)
             {
                 return null;
@@ -151,14 +156,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             return route;
         }
 
-        private PathfindingNode GetJumpPoint(PathfindingNode currentNode, Direction direction, PathfindingNode endNode)
+        private PathfindingNode? GetJumpPoint(PathfindingNode currentNode, Direction direction, PathfindingNode endNode)
         {
             var count = 0;
 
             while (count < 1000)
             {
                 count++;
-                PathfindingNode nextNode = null;
+                PathfindingNode? nextNode = null;
                 foreach (var node in currentNode.GetNeighbors())
                 {
                     if (PathfindingHelpers.RelativeDirection(node, currentNode) == direction)
@@ -283,10 +288,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             // I tried just casting direction ints and offsets to make it smaller but brain no worky.
             // From NorthEast we check (Closed / Open) S - SE, W - NW
 
-            PathfindingNode openNeighborOne = null;
-            PathfindingNode closedNeighborOne = null;
-            PathfindingNode openNeighborTwo = null;
-            PathfindingNode closedNeighborTwo = null;
+            PathfindingNode? openNeighborOne = null;
+            PathfindingNode? closedNeighborOne = null;
+            PathfindingNode? openNeighborTwo = null;
+            PathfindingNode? closedNeighborTwo = null;
 
             switch (direction)
             {
@@ -398,10 +403,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         /// </summary>
         private bool IsCardinalJumpPoint(Direction direction, PathfindingNode currentNode)
         {
-            PathfindingNode openNeighborOne = null;
-            PathfindingNode closedNeighborOne = null;
-            PathfindingNode openNeighborTwo = null;
-            PathfindingNode closedNeighborTwo = null;
+            PathfindingNode? openNeighborOne = null;
+            PathfindingNode? closedNeighborOne = null;
+            PathfindingNode? openNeighborTwo = null;
+            PathfindingNode? closedNeighborTwo = null;
 
             switch (direction)
             {

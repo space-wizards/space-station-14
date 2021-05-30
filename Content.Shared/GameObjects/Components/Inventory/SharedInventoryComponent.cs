@@ -1,37 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.GameObjects.Components.Inventory
 {
-    public abstract class SharedInventoryComponent : Component
+    public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
     {
-        // ReSharper disable UnassignedReadonlyField
-        [Dependency] protected readonly IReflectionManager ReflectionManager;
-        [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory;
-        // ReSharper restore UnassignedReadonlyField
+        [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
+        [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory = default!;
 
         public sealed override string Name => "Inventory";
         public sealed override uint? NetID => ContentNetIDs.STORAGE;
 
         [ViewVariables]
-        protected Inventory InventoryInstance { get; private set; }
+        protected Inventory InventoryInstance { get; private set; } = default!;
 
         [ViewVariables]
+        [DataField("Template")]
         private string _templateName = "HumanInventory"; //stored for serialization purposes
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _templateName, "Template", "HumanInventory");
-        }
 
         public override void Initialize()
         {
@@ -44,8 +38,12 @@ namespace Content.Shared.GameObjects.Components.Inventory
         {
             var type = ReflectionManager.LooseGetType(_templateName);
             DebugTools.Assert(type != null);
-            InventoryInstance = DynamicTypeFactory.CreateInstance<Inventory>(type);
+            InventoryInstance = DynamicTypeFactory.CreateInstance<Inventory>(type!);
         }
+
+        /// <returns>true if the item is equipped to an equip slot (NOT inside an equipped container
+        /// like inside a backpack)</returns>
+        public abstract bool IsEquipped(IEntity item);
 
         [Serializable, NetSerializable]
         protected class InventoryComponentState : ComponentState
@@ -95,5 +93,8 @@ namespace Content.Shared.GameObjects.Components.Inventory
                 Slot = slot;
             }
         }
+
+        public abstract float WalkSpeedModifier { get; }
+        public abstract float SprintSpeedModifier { get; }
     }
 }

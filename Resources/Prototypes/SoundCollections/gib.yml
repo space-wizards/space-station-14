@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: gib
+  files:
+  - /Audio/Effects/gib1.ogg
+  - /Audio/Effects/gib2.ogg
+  - /Audio/Effects/gib3.ogg

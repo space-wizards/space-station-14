@@ -1,17 +1,17 @@
 ﻿- type: entity
   id: StorageTank
+  parent: BaseConstructibleDynamic
   name: storage tank
   description: "A liquids storage tank."
   abstract: true
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 15
-    anchored: false
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5,-0.5,0.5,0.5"
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 100
       mask:
       - Impassable
       - MobImpassable
@@ -23,14 +23,17 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 10
+  - type: Damageable
     resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: SolutionContainer
     maxVol: 1500
-    caps: RemoveFrom
-  - type: Pourable
-    transferAmount: 100.0
-  placement:
-    snap:
-    - Wall
+    caps: Drainable
+  - type: ReagentTank

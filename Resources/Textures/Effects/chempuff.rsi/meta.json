@@ -9,7 +9,6 @@
     "states": [
         {
             "name": "chempuff",
-            "directions": 1,
             "delays": [
                 [
                     0.05,

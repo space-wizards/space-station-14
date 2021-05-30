@@ -1,5 +1,6 @@
-﻿#nullable enable
+#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -7,33 +8,35 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastClang;
 
         private bool _connected;
         private bool _broken;
-        private string _clangSound = default!;
+        [DataField("clangSound")]
+        private string _clangSound = "/Audio/Effects/clang.ogg";
 
         /// <summary>
         ///     Container of entities that are currently inside this tube
@@ -44,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         /// <summary>
         ///     The directions that this tube can connect to others from
@@ -67,12 +70,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent? NextTube(DisposalHolderComponent holder)
         {
             var nextDirection = NextDirection(holder);
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
 
-            foreach (var entity in snapGrid.GetInDir(nextDirection))
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            foreach (var entity in grid.GetInDir(position, nextDirection))
             {
-                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
                 {
                     continue;
                 }
@@ -190,14 +194,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
         }
 
-        private void AnchoredChanged()
+        public void AnchoredChanged()
         {
             if (!Owner.TryGetComponent(out PhysicsComponent? physics))
             {
                 return;
             }
 
-            if (physics.Anchored)
+            if (physics.BodyType == BodyType.Static)
             {
                 OnAnchor();
             }
@@ -219,29 +223,20 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateVisualState();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _clangSound, "clangSound", "/Audio/Effects/clang.ogg");
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
-            Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            Contents = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
             Owner.EnsureComponent<AnchorableComponent>();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-
-            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent<PhysicsComponent>().Anchored)
+            Owner.EnsureComponent<PhysicsComponent>(out var physicsComponent);
+            if (physicsComponent.BodyType != BodyType.Static)
             {
                 return;
             }
@@ -253,9 +248,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void OnRemove()
         {
             base.OnRemove();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-            physics.AnchoredChanged -= AnchoredChanged;
 
             Disconnect();
         }
@@ -273,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(Owner), _clangSound, Owner.Transform.Coordinates);
                     break;
             }
         }
@@ -296,9 +288,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (user.TryGetComponent<IActorComponent>(out var player))
+                if (user.TryGetComponent<ActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
                     {
                         data.Visibility = VerbVisibility.Visible;
                     }
@@ -309,9 +301,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (user.TryGetComponent<IActorComponent>(out var player))
+                if (user.TryGetComponent<ActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
                     {
                         component.PopupDirections(user);
                     }

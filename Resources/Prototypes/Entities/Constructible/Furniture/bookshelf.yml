@@ -1,74 +1,37 @@
 - type: entity
-  id: BookshelfBase
+  id: Bookshelf
+  parent: BaseConstructible
   name: "bookshelf"
   description: Mostly filled with erotica.
-  abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Misc/bookshelf.rsi
-  - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: Destructible
-    deadThreshold: 30
-    destroySound: /Audio/Effects/woodhit.ogg
-    spawnOnDestroy:
-      WoodPlank:
-        Min: 1
-        Max: 1
+    layers:
+      - state: base
+      - state: book-0
+  - type: RandomSpriteState
+    spriteLayer: 1
+    spriteStates:
+      - book-0
+      - book-1
+      - book-2
+      - book-3
+      - book-4
+      - book-5
+  - type: Damageable
     resistances: metallicResistances
-  - type: Occluder
-    sizeX: 32
-    sizeY: 32
-
-- type: entity
-  id: Bookshelf0
-  parent: BookshelfBase
-  components:
-  - type: Sprite
-    state: book-0
-
-- type: entity
-  id: Bookshelf1
-  parent: BookshelfBase
-  components:
-  - type: Sprite
-    state: book-1
-
-- type: entity
-  id: Bookshelf2
-  parent: BookshelfBase
-  components:
-  - type: Sprite
-    state: book-2
-
-- type: entity
-  id: Bookshelf3
-  parent: BookshelfBase
-  components:
-  - type: Sprite
-    state: book-3
-
-- type: entity
-  id: Bookshelf4
-  parent: BookshelfBase
-  components:
-  - type: Sprite
-    state: book-4
-
-- type: entity
-  id: Bookshelf5
-  parent: BookshelfBase
-  components:
-  - type: Sprite
-    state: book-5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

@@ -1,16 +1,18 @@
-﻿using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
+﻿using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
 
 namespace Content.Client.GameObjects.Components.Power.AME
 {
+    [UsedImplicitly]
     public class AMEControllerBoundUserInterface : BoundUserInterface
     {
-        private AMEWindow _window;
+        private AMEWindow? _window;
 
         public AMEControllerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-
         }
 
         protected override void Open()
@@ -27,7 +29,6 @@ namespace Content.Client.GameObjects.Components.Power.AME
             _window.DecreaseFuelButton.OnPressed += _ => ButtonPressed(UiButton.DecreaseFuel);
             _window.RefreshPartsButton.OnPressed += _ => ButtonPressed(UiButton.RefreshParts);
         }
-
 
         /// <summary>
         /// Update the ui each time new state data is sent from the server.
@@ -55,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
     }

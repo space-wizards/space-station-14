@@ -7,7 +7,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -26,13 +25,11 @@ namespace Content.Client.GameObjects.Components.Interactable
         [ViewVariables] public bool Activated { get; private set; }
         [ViewVariables] public override ToolQuality Qualities => _behavior;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-        }
+            base.HandleComponentState(curState, nextState);
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
-        {
-            if (!(curState is WelderComponentState weld))
+            if (curState is not WelderComponentState weld)
                 return;
 
             FuelCapacity = weld.FuelCapacity;
@@ -58,9 +55,10 @@ namespace Content.Client.GameObjects.Components.Interactable
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            /// <inheritdoc />
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {

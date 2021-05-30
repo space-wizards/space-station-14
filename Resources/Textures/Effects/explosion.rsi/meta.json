@@ -7,7 +7,6 @@
     "states": [
         {
             "name": "explosionfast",
-            "directions": 1,
             "delays": [
                 [
                     0.06,

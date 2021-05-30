@@ -34,7 +34,7 @@
   name: AKMS
   parent: RifleBase
   id: RifleAk
-  description: Weapon of the oppressed, oppressors, and extremists of all flavours. This is a copy of an ancient semi-automatic rifle chambered for .30 Rifle. If it won't fire, percussive maintenance should get it working again. It is known for its easy maintenance, and low price. This gun is not in active military service anymore, but has become ubiquitous among criminals and insurgents. This is a high-quality copy, which has an automatic fire mode.
+  description: An iconic weapon of war.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -73,7 +73,7 @@
   name: black AK
   parent: RifleBase
   id: RifleBlackAk
-  description: Weapon of the oppressed, oppressors, and extremists of all flavours. This is a copy of an ancient semi-automatic rifle chambered for .30 Rifle. If it won't fire, percussive maintenance should get it working again. It is known for its easy maintenance, and low price. This gun is not in active military service anymore, but has become ubiquitous among criminals and insurgents. This is a high-quality copy, which has an automatic fire mode.
+  description: An iconic weapon of war; painted black.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
@@ -112,7 +112,7 @@
   name: Z8 Bulldog
   parent: RifleBase
   id: RifleCarbine
-  description: The Z8 Bulldog is an older bullpup carbine model, made by Frozen Star.
+  description: An older bullpup carbine model, made by Frozen Star.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -155,7 +155,7 @@
   name: Dallas
   parent: RifleBase
   id: RifleDallas
-  description: Dallas is a pulse-action air-cooled automatic assault rifle made by unknown manufacturer. This weapon is very rare, but deadly efficient. It's used by elite mercenaries, assassins or bald marines.
+  description: A pulse-action air-cooled automatic assault rifle.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
@@ -195,7 +195,7 @@
   name: STS-35
   parent: RifleBase
   id: RifleSTS
-  description: The rugged STS-35 is a durable automatic weapon, popular on frontier worlds. Uses .30 Rifle rounds. This one is unmarked.
+  description: A rugged and durable automatic weapon.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/sts.rsi
@@ -237,7 +237,7 @@
   name: Vintorez
   parent: RifleBase
   id: RifleVintorez
-  description: This gun is a copy of a design from a country that no longer exists. It is still highly prized for its armor piercing capabilities.
+  description: Highly prized for its armor piercing capabilities.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
@@ -276,7 +276,7 @@
   name: Wintermute
   parent: RifleBase
   id: RifleWintermute
-  description: A high end military grade assault rifle, designed as a modern ballistic infantry weapon. Primarily used by and produced for IH troops.
+  description: A high end military grade assault rifle.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi

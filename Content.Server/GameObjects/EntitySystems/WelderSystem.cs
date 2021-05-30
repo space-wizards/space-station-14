@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class WelderSystem : EntitySystem
     {
-        private readonly HashSet<WelderComponent> _activeWelders = new HashSet<WelderComponent>();
+        private readonly HashSet<WelderComponent> _activeWelders = new();
 
         public bool Subscribe(WelderComponent welder)
         {

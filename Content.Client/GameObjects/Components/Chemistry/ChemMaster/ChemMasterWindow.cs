@@ -1,18 +1,19 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
-using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Chemistry.ChemMaster.SharedChemMasterComponent;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 {
@@ -38,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 
         public bool BufferModeTransfer = true;
 
-        public event Action<BaseButton.ButtonEventArgs, ChemButton> OnChemButtonPressed;
+        public event Action<ButtonEventArgs, ChemButton>? OnChemButtonPressed;
 
         public HBoxContainer PillInfo { get; set; }
         public HBoxContainer BottleInfo { get; set; }
@@ -47,14 +48,13 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
         public Button CreatePills { get; }
         public Button CreateBottles { get; }
 
-        protected override Vector2? CustomSize => (400, 200);
-
         /// <summary>
         /// Create and initialize the chem master UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the chem master.
         /// </summary>
         public ChemMasterWindow()
         {
+            MinSize = SetSize = (400, 525);
             IoCManager.InjectDependencies(this);
 
             Contents.AddChild(new VBoxContainer
@@ -67,16 +67,16 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                         Children =
                         {
                             new Label {Text = Loc.GetString("Container")},
-                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                            new Control {HorizontalExpand = true},
                             (EjectButton = new Button {Text = Loc.GetString("Eject")})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
                     new PanelContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         SizeFlagsStretchRatio = 6,
-                        CustomMinimumSize = (0, 200),
+                        MinSize = (0, 200),
                         PanelOverride = new StyleBoxFlat
                         {
                             BackgroundColor = new Color(27, 27, 30)
@@ -86,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             //Currently empty, when server sends state data this will have container contents and fill volume.
                             (ContainerInfo = new VBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 Children =
                                 {
                                     new Label
@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     },
 
                     //Padding
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    new Control {MinSize = (0.0f, 10.0f)},
 
                     //Buffer
                     new HBoxContainer
@@ -107,7 +107,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                         Children =
                         {
                             new Label {Text = Loc.GetString("Buffer")},
-                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                            new Control {HorizontalExpand = true},
                             (BufferTransferButton = new Button {Text = Loc.GetString("Transfer"), Pressed = BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenRight }}),
                             (BufferDiscardButton = new Button {Text = Loc.GetString("Discard"), Pressed = !BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenLeft }})
                         }
@@ -116,9 +116,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     //Wrap the buffer info in a PanelContainer so we can color it's background differently.
                     new PanelContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         SizeFlagsStretchRatio = 6,
-                        CustomMinimumSize = (0, 100),
+                        MinSize = (0, 100),
                         PanelOverride = new StyleBoxFlat
                         {
                             BackgroundColor = new Color(27, 27, 30)
@@ -128,7 +128,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             //Buffer reagent list
                             (BufferInfo = new VBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                                 Children =
                                 {
                                     new Label
@@ -141,7 +141,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     },
 
                     //Padding
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    new Control {MinSize = (0.0f, 10.0f)},
 
                     //Packaging
                     new HBoxContainer
@@ -155,9 +155,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     //Wrap the packaging info in a PanelContainer so we can color it's background differently.
                     new PanelContainer
                     {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        VerticalExpand = true,
                         SizeFlagsStretchRatio = 6,
-                        CustomMinimumSize = (0, 100),
+                        MinSize = (0, 100),
                         PanelOverride = new StyleBoxFlat
                         {
                             BackgroundColor = new Color(27, 27, 30)
@@ -167,7 +167,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             //Packaging options
                             (PackagingInfo = new VBoxContainer
                             {
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                HorizontalExpand = true,
                             }),
 
                         }
@@ -190,12 +190,12 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             };
             PackagingInfo.AddChild(PillInfo);
 
-            var pillPadding = new Control {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            var pillPadding = new Control {HorizontalExpand = true};
             PillInfo.AddChild(pillPadding);
 
             PillAmount = new SpinBox
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 Value = 1
             };
             PillAmount.InitDefaultButtons();
@@ -227,12 +227,12 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             };
             PackagingInfo.AddChild(BottleInfo);
 
-            var bottlePadding = new Control {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            var bottlePadding = new Control {HorizontalExpand = true};
             BottleInfo.AddChild(bottlePadding);
 
             BottleAmount = new SpinBox
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                HorizontalExpand = true,
                 Value = 1
             };
             BottleAmount.InitDefaultButtons();
@@ -332,7 +332,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }
@@ -351,7 +351,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             },
 
                             //Padding
-                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                            new Control {HorizontalExpand = true},
 
                             MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, false, StyleBase.ButtonOpenRight),
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
@@ -378,7 +378,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}/{state.BufferMaxVolume}",
+                Text = $"{state.BufferCurrentVolume}",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
             bufferHBox.AddChild(bufferVol);
@@ -387,7 +387,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             {
                 var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
-                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
                     name = proto.Name;
                 }
@@ -407,7 +407,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             },
 
                             //Padding
-                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                            new Control {HorizontalExpand = true},
 
                             MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, true, StyleBase.ButtonOpenRight),
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),

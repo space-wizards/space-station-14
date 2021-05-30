@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
@@ -17,7 +18,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _spawnedPositions = new();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
@@ -45,7 +46,11 @@ namespace Content.Server.GameTicking
                                 .Where(j =>
                                 {
                                     var (jobId, priority) = j;
-                                    var job = _prototypeManager.Index<JobPrototype>(jobId);
+                                    if (!_prototypeManager.TryIndex(jobId, out JobPrototype? job))
+                                    {
+                                        // Job doesn't exist, probably old data?
+                                        return false;
+                                    }
                                     if (job.IsHead != heads)
                                     {
                                         return false;
@@ -141,7 +146,7 @@ namespace Content.Server.GameTicking
         {
             var available = GetAvailablePositions();
 
-            bool TryPick(JobPriority priority, out string jobId)
+            bool TryPick(JobPriority priority, [NotNullWhen(true)] out string? jobId)
             {
                 var filtered = profile.JobPriorities
                     .Where(p => p.Value == priority)

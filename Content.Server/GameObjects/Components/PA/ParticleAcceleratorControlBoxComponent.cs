@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,20 +9,22 @@ using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameObjects.Components.PA
 {
@@ -36,6 +38,8 @@ namespace Content.Server.GameObjects.Components.PA
     [RegisterComponent]
     public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override string Name => "ParticleAcceleratorControlBox";
 
         [ViewVariables]
@@ -44,7 +48,7 @@ namespace Content.Server.GameObjects.Components.PA
         /// <summary>
         ///     Power receiver for the control console itself.
         /// </summary>
-        [ViewVariables] private PowerReceiverComponent? _powerReceiverComponent;
+        [ViewVariables] private PowerReceiverComponent _powerReceiverComponent = default!;
 
         [ViewVariables] private ParticleAcceleratorFuelChamberComponent? _partFuelChamber;
         [ViewVariables] private ParticleAcceleratorEndCapComponent? _partEndCap;
@@ -70,10 +74,20 @@ namespace Content.Server.GameObjects.Components.PA
         /// <summary>
         ///     Delay between consecutive PA shots.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _firingDelay;
+        // Fun fact:
+        // On /vg/station (can't check TG because lol they removed singulo),
+        // the PA emitter parts have var/fire_delay = 50.
+        // For anybody from the future not BYOND-initiated, that's 5 seconds.
+        // However, /obj/machinery/particle_accelerator/control_box/process(),
+        // which calls emit_particle() on the emitters,
+        // only gets called every *2* seconds, because of CarnMC timing.
+        // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
+        // So...
+        // I have reflected that here to be authentic.
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireDelay")] private TimeSpan _firingDelay = TimeSpan.FromSeconds(6);
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _powerDrawBase;
-        [ViewVariables(VVAccess.ReadWrite)] private int _powerDrawMult;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawBase")] private int _powerDrawBase = 500;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawMult")] private int _powerDrawMult = 1500;
 
         [ViewVariables] private bool ConsolePowered => _powerReceiverComponent?.Powered ?? true;
 
@@ -86,25 +100,6 @@ namespace Content.Server.GameObjects.Components.PA
             ? ParticleAcceleratorPowerState.Level3
             : ParticleAcceleratorPowerState.Level2;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // Fun fact:
-            // On /vg/station (can't check TG because lol they removed singulo),
-            // the PA emitter parts have var/fire_delay = 50.
-            // For anybody from the future not BYOND-initiated, that's 5 seconds.
-            // However, /obj/machinery/particle_accelerator/control_box/process(),
-            // which calls emit_particle() on the emitters,
-            // only gets called every *2* seconds, because of CarnMC timing.
-            // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
-            // So...
-            // I have reflected that here to be authentic.
-            serializer.DataField(ref _firingDelay, "fireDelay", TimeSpan.FromSeconds(6));
-            serializer.DataField(ref _powerDrawBase, "powerDrawBase", 500);
-            serializer.DataField(ref _powerDrawMult, "powerDrawMult", 1500);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
@@ -113,14 +108,20 @@ namespace Content.Server.GameObjects.Components.PA
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (!Owner.TryGetComponent(out _powerReceiverComponent))
-            {
-                Logger.Error("ParticleAcceleratorControlBox was created without PowerReceiverComponent");
-                return;
-            }
+            Owner.EnsureComponent(out _powerReceiverComponent);
 
-            _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
-            _powerReceiverComponent.Load = 250;
+            _powerReceiverComponent!.Load = 250;
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerStateChanged(powerChanged);
+                    break;
+            }
         }
 
         protected override void Startup()
@@ -132,7 +133,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         // This is the power state for the PA control box itself.
         // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
-        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerStateChanged(PowerChangedMessage e)
         {
             UpdateAppearance();
 
@@ -219,14 +220,14 @@ namespace Content.Server.GameObjects.Components.PA
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
             {
-                wires.OpenInterface(actor.playerSession);
+                wires.OpenInterface(actor.PlayerSession);
             }
             else
             {
@@ -235,7 +236,7 @@ namespace Content.Server.GameObjects.Components.PA
                     return;
                 }
 
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
                 UpdateUI();
             }
         }
@@ -381,11 +382,13 @@ namespace Content.Server.GameObjects.Components.PA
             _partEmitterRight = null;
 
             // Find fuel chamber first by scanning cardinals.
-            if (SnapGrid != null)
+            if (Owner.Transform.Anchored)
             {
-                foreach (var maybeFuel in SnapGrid.GetCardinalNeighborCells())
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                var coords = Owner.Transform.Coordinates;
+                foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
-                    if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
                         break;
                     }
@@ -447,7 +450,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             Vector2i RotateOffset(in Vector2i vec)
             {
-                var rot = new Angle(Owner.Transform.LocalRotation + Math.PI / 2);
+                var rot = new Angle(Owner.Transform.LocalRotation);
                 return (Vector2i) rot.RotateVec(vec);
             }
         }
@@ -455,9 +458,11 @@ namespace Content.Server.GameObjects.Components.PA
         private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
             where T : ParticleAcceleratorPartComponent
         {
-            foreach (var ent in SnapGrid!.GetOffset(offset))
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            foreach (var ent in grid.GetOffset(coords, offset))
             {
-                if (ent.TryGetComponent(out part) && !part.Deleted)
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(ent, out part) && !part.Deleted)
                 {
                     return true;
                 }
@@ -483,7 +488,7 @@ namespace Content.Server.GameObjects.Components.PA
                 yield return _partEmitterRight;
         }
 
-        private void SwitchOn()
+        public void SwitchOn()
         {
             DebugTools.Assert(_isAssembled);
 
@@ -509,7 +514,7 @@ namespace Content.Server.GameObjects.Components.PA
             _partPowerBox!.PowerConsumerComponent!.DrawRate = PowerDrawFor(_selectedStrength);
         }
 
-        private void SwitchOff()
+        public void SwitchOff()
         {
             _isEnabled = false;
             PowerOff();
@@ -545,7 +550,7 @@ namespace Content.Server.GameObjects.Components.PA
             UpdatePartVisualStates();
         }
 
-        private void SetStrength(ParticleAcceleratorPowerState state)
+        public void SetStrength(ParticleAcceleratorPowerState state)
         {
             if (_wireStrengthCut)
             {

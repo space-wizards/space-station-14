@@ -1,92 +1,34 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "@Bright#2366",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "",
-  "copyright": "By Bright",
   "states": [
     {
-      "name": "hello",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "hello"
     },
     {
-      "name": "help_me",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "help_me"
     },
     {
-      "name": "thank_you",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "thank_you"
     },
     {
-      "name": "im_sorry",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "im_sorry"
     },
     {
-      "name": "very_good",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "very_good"
     },
     {
       "name": "inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     }
   ]
 }

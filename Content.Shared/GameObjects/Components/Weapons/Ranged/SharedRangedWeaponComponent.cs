@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -18,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged
     public sealed class RangedWeaponComponentState : ComponentState
     {
         public FireRateSelector FireRateSelector { get; }
-        
+
         public RangedWeaponComponentState(
             FireRateSelector fireRateSelector
             ) : base(ContentNetIDs.RANGED_WEAPON)

@@ -1,13 +1,33 @@
-# Both humans and NPCs inherit from this.
 # Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
   name: Urist McHands
   id: BaseHumanMob_Content
   description: A miserable pile of secrets.
-  drawdepth: Mobs
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Teleportable
+    - FootstepSound
+  - type: Reactive
+    reactions:
+    - !type:ExtinguishReaction
+      touch: true
+      reagents:
+      - Water
+    - !type:FlammableReaction
+      touch: true
+      reagents:
+      - WeldingFuel
+      - Thermite
+      - Plasma
+      - Ethanol
+    - !type:WashCreamPieReaction
+      touch: true
+      reagents:
+      - Water
+      - SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -20,7 +40,7 @@
   # Organs
   - type: SolutionContainer
     maxVol: 250
-    caps: AddTo, RemoveFrom, NoExamine
+    caps: Injectable, Drawable
   - type: Bloodstream
     max_volume: 100
   # StatusEffects
@@ -34,6 +54,7 @@
     state: full
   - type: Sprite
     netsync: false
+    noRot: true
     drawdepth: Mobs
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -112,16 +133,21 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
+    - map: [ "enum.Slots.POCKET1" ]
+    - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
-    anchored: false
-    mass: 85
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+    bodyType: KinematicController
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 70
+      restitution: 0.0
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
@@ -139,11 +165,8 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: Damageable
-    damagePrototype: biologicalDamageContainer
-    criticalThreshold: 100
-    deadThreshold: 200
+    damageContainer: biologicalDamageContainer
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -158,7 +181,19 @@
       Oxygen: 0.00045572916
       CarbonDioxide: 0.00015190972
   - type: Internals
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      100: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        type: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -174,30 +209,29 @@
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
-  - type: Teleportable
   - type: CharacterInfo
-  - type: FootstepSound
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
     range: 0.8
     arcwidth: 30
     arc: fist
-  - type: Grammar
-    proper: true
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-    - key: enum.AcceptCloningUiKey.Key
-      type: AcceptCloningBoundUserInterface
   - type: Puller
   - type: Butcherable
     meat: FoodMeat
+  - type: Recyclable
+    safe: false
+  - type: Speech
+  - type: Emoting
 
 - type: entity
   save: false
@@ -282,14 +316,18 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: ["enum.Slots.MASK"]
       - map: ["enum.Slots.HEAD"]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
-      anchored: false
-      mass: 85
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.35,-0.35,0.35,0.35"
+      bodyType: Dynamic
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable
@@ -301,14 +339,13 @@
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
-      centerSlot: torso
     - type: Damageable
-      damagePrototype: biologicalDamageContainer
-      criticalThreshold: 100
-      deadThreshold: 200
-    - type: MobStateManager
+      damageContainer: biologicalDamageContainer
+    - type: MobState
+      thresholds:
+        0: !type:NormalMobState {}
+        100: !type:CriticalMobState {}
+        200: !type:DeadMobState {}
     - type: Appearance
       visuals:
       - type: RotationVisualizer
-    - type: Grammar
-      proper: true

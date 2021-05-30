@@ -21,6 +21,14 @@ namespace Content.Server.Database
                 options.UseSqlite("dummy connection string");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SqlitePlayer>()
+                .HasIndex(p => p.LastSeenUserName);
+        }
+
         public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
         }
@@ -33,6 +41,7 @@ namespace Content.Server.Database
 
         [Column("user_id")] public Guid? UserId { get; set; }
         [Column("address")] public string? Address { get; set; }
+        [Column("hwid")] public byte[]? HWId { get; set; }
 
         [Column("ban_time")] public DateTime BanTime { get; set; }
         [Column("expiration_time")] public DateTime? ExpirationTime { get; set; }
@@ -67,6 +76,7 @@ namespace Content.Server.Database
         [Column("last_seen_user_name")] public string LastSeenUserName { get; set; } = null!;
         [Column("last_seen_time")] public DateTime LastSeenTime { get; set; }
         [Column("last_seen_address")] public string LastSeenAddress { get; set; } = null!;
+        [Column("last_seen_hwid")] public byte[]? LastSeenHWId { get; set; }
     }
 
     [Table("connection_log")]
@@ -78,5 +88,6 @@ namespace Content.Server.Database
         [Column("user_name")] public string UserName { get; set; } = null!;
         [Column("time")] public DateTime Time { get; set; }
         [Column("address")] public string Address { get; set; } = null!;
+        [Column("hwid")] public byte[]? HWId { get; set; }
     }
 }

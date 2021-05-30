@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
@@ -9,7 +10,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class VerbSystemMessages
     {
         [Serializable, NetSerializable]
-        public class RequestVerbsMessage : EntitySystemMessage
+        public class RequestVerbsMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
 
@@ -20,7 +21,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public class VerbsResponseMessage : EntitySystemMessage
+        public class VerbsResponseMessage : EntityEventArgs
         {
             public readonly NetVerbData[] Verbs;
             public readonly EntityUid Entity;
@@ -37,8 +38,8 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
                 public readonly string Text;
                 public readonly string Key;
                 public readonly string Category;
-                public readonly SpriteSpecifier Icon;
-                public readonly SpriteSpecifier CategoryIcon;
+                public readonly SpriteSpecifier? Icon;
+                public readonly SpriteSpecifier? CategoryIcon;
                 public readonly bool Available;
 
                 public NetVerbData(VerbData data, string key)
@@ -54,7 +55,7 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         }
 
         [Serializable, NetSerializable]
-        public class UseVerbMessage : EntitySystemMessage
+        public class UseVerbMessage : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
             public readonly string VerbKey;

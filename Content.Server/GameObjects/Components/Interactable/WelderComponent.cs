@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
@@ -10,16 +11,19 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,7 +32,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
+    [ComponentReference(typeof(IHotItem))]
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -51,10 +56,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
+        [DataField("weldSoundCollection")]
         public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
+        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
 
         [ViewVariables]
         public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
@@ -73,6 +79,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        bool IHotItem.IsCurrentlyHot()
+        {
+            return WelderLit;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -86,17 +97,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _pointLightComponent);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, collection => WeldSoundCollection, "weldSoundCollection", string.Empty);
-        }
-
-        public override ComponentState GetComponentState()
+        public override ComponentState GetComponentState(ICommonSession player)
         {
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
+        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -104,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (!CanWeld(DefaultFuelCost))
                 {
-                    target.PopupMessage(user, "Can't weld!");
+                    target?.PopupMessage(user, "Can't weld!");
 
                     return false;
                 }
@@ -133,20 +139,24 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (!WelderLit)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
+                if (!silent && user != null)
+                    Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
+
                 return false;
             }
 
             if (!CanWeld(value))
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
+                if (!silent && user != null)
+                    Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
+
                 return false;
             }
 
             if (_solutionComponent == null)
                 return false;
 
-            bool succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+            var succeeded = _solutionComponent.TryRemoveReagent("WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
@@ -186,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return true;
             }
 
-            if (!CanLitWelder())
+            if (!CanLitWelder() && user != null)
             {
                 Owner.PopupMessage(user, Loc.GetString("The welder has no fuel left!"));
                 return false;
@@ -207,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleWelderStatus(eventArgs.User);
         }
@@ -241,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+            _solutionComponent?.TryRemoveReagent("WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
             Owner.Transform.Coordinates
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
@@ -251,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             string othersMessage;
             string selfMessage;
@@ -284,6 +294,41 @@ namespace Content.Server.GameObjects.Components.Interactable
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             Dirty();
+        }
+
+
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target == null || !eventArgs.CanReach)
+            {
+                return false;
+            }
+
+            if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
+                && tank.TankType == ReagentTankType.Fuel
+                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
+                && targetSolution.CanDrain
+                && _solutionComponent != null)
+            {
+                if (WelderLit)
+                {
+                    // Oh no no
+                    eventArgs.Target.SpawnExplosion();
+                    return true;
+                }
+
+                var trans = ReagentUnit.Min(_solutionComponent.EmptyVolume, targetSolution.DrainAvailable);
+                if (trans > 0)
+                {
+                    var drained = targetSolution.Drain(trans);
+                    _solutionComponent.TryAddSolution(drained);
+
+                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("Welder refueled"));
+                }
+            }
+
+            return true;
         }
     }
 }

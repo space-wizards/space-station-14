@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -15,21 +16,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    public abstract class Node : IExposeData
+    [ImplicitDataDefinitionForInheritors]
+    public abstract class Node
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
         ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
         /// </summary>
         [ViewVariables]
-        public NodeGroupID NodeGroupID { get; private set; }
+        [DataField("nodeGroupID")]
+        public NodeGroupID NodeGroupID { get; private set; } = NodeGroupID.Default;
 
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
         private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
         [ViewVariables]
-        public IEntity Owner { get; private set; }
+        public IEntity Owner { get; private set; } = default!;
 
         [ViewVariables]
         private bool _needsGroup = true;
@@ -37,52 +40,48 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
         /// </summary>
-        private bool Connectable => !_deleting && Anchored;
+        public bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
+        private bool Anchored => !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.
         /// </summary>
-        private bool _deleting = false;
-
-        private INodeGroupFactory _nodeGroupFactory;
-
-        public virtual void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
-        }
+        private bool _deleting;
 
         public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
-            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
         }
 
-        public void OnContainerStartup()
+        public virtual void OnContainerStartup()
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+        }
+
+        public void AnchorUpdate()
+        {
+            if (Anchored)
             {
-                AnchorUpdate();
-                physics.AnchoredChanged += AnchorUpdate;
+                TryAssignGroupIfNeeded();
+                CombineGroupWithReachable();
+            }
+            else
+            {
+                RemoveSelfFromGroup();
             }
         }
 
-        public void OnContainerRemove()
+        public virtual void OnContainerShutdown()
         {
             _deleting = true;
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
-            {
-                physics.AnchoredChanged -= AnchorUpdate;
-            }
             NodeGroup.RemoveNode(this);
         }
 
         public bool TryAssignGroupIfNeeded()
         {
-            if (!_needsGroup)
+            if (!_needsGroup || !Connectable)
             {
                 return false;
             }
@@ -93,10 +92,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void SpreadGroup()
         {
             Debug.Assert(!_needsGroup);
-            foreach (var node in GetReachableCompatibleNodes().Where(node => node._needsGroup))
+            foreach (var node in GetReachableCompatibleNodes())
             {
-                node.NodeGroup = NodeGroup;
-                node.SpreadGroup();
+                if (node._needsGroup)
+                {
+                    node.NodeGroup = NodeGroup;
+                    node.SpreadGroup();
+                }
             }
         }
 
@@ -108,8 +110,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         protected void RefreshNodeGroup()
         {
-            NodeGroup.RemoveNode(this);
-            ClearNodeGroup();
+            RemoveSelfFromGroup();
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
         }
@@ -122,20 +123,35 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private IEnumerable<Node> GetReachableCompatibleNodes()
         {
-            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
-                .Where(node => node.Connectable);
+            foreach (var node in GetReachableNodes())
+            {
+                if (node.NodeGroupID == NodeGroupID && node.Connectable)
+                {
+                    yield return node;
+                }
+            }
         }
 
         private IEnumerable<INodeGroup> GetReachableCompatibleGroups()
         {
-            return GetReachableCompatibleNodes().Where(node => !node._needsGroup)
-                .Select(node => node.NodeGroup)
-                .Where(group => group != NodeGroup);
+            foreach (var node in GetReachableCompatibleNodes())
+            {
+                if (!node._needsGroup)
+                {
+                    var group = node.NodeGroup;
+                    if (group != NodeGroup)
+                    {
+                        yield return group;
+                    }
+                }
+            }
         }
 
         private void CombineGroupWithReachable()
         {
-            Debug.Assert(!_needsGroup);
+            if (_needsGroup || !Connectable)
+                return;
+
             foreach (var group in GetReachableCompatibleGroups())
             {
                 NodeGroup.CombineGroup(group);
@@ -151,24 +167,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private INodeGroup MakeNewGroup()
         {
-            return _nodeGroupFactory.MakeNodeGroup(this);
+            return IoCManager.Resolve<INodeGroupFactory>().MakeNodeGroup(this);
         }
 
-        private void AnchorUpdate()
+        private void RemoveSelfFromGroup()
         {
-            if (Anchored)
-            {
-                if (_needsGroup)
-                {
-                    TryAssignGroupIfNeeded();
-                    CombineGroupWithReachable();
-                }
-            }
-            else
-            {
-                NodeGroup.RemoveNode(this);
-                ClearNodeGroup();
-            }
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
         }
     }
 }

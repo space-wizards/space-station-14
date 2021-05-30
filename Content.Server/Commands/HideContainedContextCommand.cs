@@ -1,22 +1,26 @@
-﻿#nullable enable
+#nullable enable
+using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Systems;
+using Content.Shared.Administration;
+using Robust.Server.Player;
+using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Commands
 {
-    public class HideContainedContextCommand : IClientCommand
+    [AdminCommand(AdminFlags.Debug)]
+    public class HideContainedContextCommand : IConsoleCommand
     {
         public string Command => "hidecontainedcontext";
         public string Description => $"Reverts the effects of {ShowContainedContextCommand.CommandName}";
         public string Help => $"{Command}";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.SendText(player, "You need to be a player to use this command.");
+                shell.WriteLine("You need to be a player to use this command.");
                 return;
             }
 

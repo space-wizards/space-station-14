@@ -1,8 +1,10 @@
-﻿using Content.Server.Explosions;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Explosion
 {
@@ -11,33 +13,30 @@ namespace Content.Server.GameObjects.Components.Explosion
     {
         public override string Name => "Explosive";
 
-        public int DevastationRange = 0;
-        public int HeavyImpactRange = 0;
-        public int LightImpactRange = 0;
-        public int FlashRange = 0;
+        [DataField("devastationRange")]
+        public int DevastationRange;
+        [DataField("heavyImpactRange")]
+        public int HeavyImpactRange;
+        [DataField("lightImpactRange")]
+        public int LightImpactRange;
+        [DataField("flashRange")]
+        public int FlashRange;
 
-        private bool _beingExploded = false;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref DevastationRange, "devastationRange", 0);
-            serializer.DataField(ref HeavyImpactRange, "heavyImpactRange", 0);
-            serializer.DataField(ref LightImpactRange, "lightImpactRange", 0);
-            serializer.DataField(ref FlashRange, "flashRange", 0);
-        }
+        public bool Exploding { get; private set; } = false;
 
         public bool Explosion()
         {
-            //Prevent adjacent explosives from infinitely blowing each other up.
-            if (_beingExploded) return true;
-            _beingExploded = true;
-
-            Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
-
-            Owner.Delete();
-            return true;
+            if (Exploding)
+            {
+                return false;
+            }
+            else
+            {
+                Exploding = true;
+                Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
+                Owner.QueueDelete();
+                return true;
+            }
         }
 
         bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)

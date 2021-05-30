@@ -9,8 +9,6 @@
     - type: StorageVisualizer
       state: generic
       state_closed: red_door
-  - type: Icon
-    state: red_icon
 
 # Atmospherics wardrobe
 - type: entity
@@ -23,8 +21,6 @@
     - type: StorageVisualizer
       state: generic
       state_closed: atmos_wardrobe_door
-  - type: Icon
-    state: atmos_wardrobe_icon
 
 # Janitor locker (moved here from the Fills group because it was being misused)
 - type: entity
@@ -32,4 +28,3 @@
   parent: WardrobeMixed
   name: "custodial closet"
   description: "It's a storage unit for janitorial clothes and gear."
-

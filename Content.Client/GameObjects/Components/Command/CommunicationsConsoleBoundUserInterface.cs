@@ -1,10 +1,10 @@
 ﻿using System;
 using Content.Client.Command;
 using Content.Shared.GameObjects.Components.Command;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Command
@@ -13,7 +13,10 @@ namespace Content.Client.GameObjects.Components.Command
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ViewVariables] private CommunicationsConsoleMenu _menu;
+        [ViewVariables] private CommunicationsConsoleMenu? _menu;
+
+        public bool CanAnnounce { get; private set; }
+        public bool CanCall { get; private set; }
 
         public bool CountdownStarted { get; private set; }
 
@@ -30,18 +33,22 @@ namespace Content.Client.GameObjects.Components.Command
             base.Open();
 
             _menu = new CommunicationsConsoleMenu(this);
-
             _menu.OnClose += Close;
-
             _menu.OpenCentered();
         }
 
         public void EmergencyShuttleButtonPressed()
         {
-            if(CountdownStarted)
+            if (CountdownStarted)
                 RecallShuttle();
             else
                 CallShuttle();
+        }
+
+        public void AnnounceButtonPressed(string message)
+        {
+            var msg = message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...";
+            SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
         }
 
         public void CallShuttle()
@@ -56,13 +63,22 @@ namespace Content.Client.GameObjects.Components.Command
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
-            if (!(state is CommunicationsConsoleInterfaceState commsState))
+            base.UpdateState(state);
+
+            if (state is not CommunicationsConsoleInterfaceState commsState)
                 return;
 
+            CanAnnounce = commsState.CanAnnounce;
+            CanCall = commsState.CanCall;
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
-            _menu?.UpdateCountdown();
 
+            if (_menu != null)
+            {
+                _menu.UpdateCountdown();
+                _menu.EmergencyShuttleButton.Disabled = !CanCall;
+                _menu.AnnounceButton.Disabled = !CanAnnounce;
+            }
         }
 
         protected override void Dispose(bool disposing)

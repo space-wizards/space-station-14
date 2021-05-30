@@ -7,9 +7,7 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
-    - state: paper_words
     - state: paper
-
   - type: Paper
   - type: UserInterface
     interfaces:
@@ -17,13 +15,23 @@
       type: PaperBoundUserInterface
 
 - type: entity
+  parent: Paper
+  id: PaperWritten
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: paper_words
+
+- type: entity
   name: pen
   parent: BaseItem
   id: Pen
   description: 'A dark ink pen.'
   components:
+  - type: Tag
+    tags:
+    - Write
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
-
-  - type: Write

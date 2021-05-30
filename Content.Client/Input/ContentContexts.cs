@@ -1,4 +1,4 @@
-﻿using Content.Shared.Input;
+using Content.Shared.Input;
 using Robust.Shared.Input;
 
 namespace Content.Client.Input
@@ -13,10 +13,14 @@ namespace Content.Client.Input
         {
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
+            common.AddFunction(ContentKeyFunctions.FocusLocalChat);
+            common.AddFunction(ContentKeyFunctions.FocusRadio);
             common.AddFunction(ContentKeyFunctions.FocusOOC);
             common.AddFunction(ContentKeyFunctions.FocusAdminChat);
+            common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
+            common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
-            common.AddFunction(ContentKeyFunctions.OpenTutorial);
+            common.AddFunction(ContentKeyFunctions.OpenInfo);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.Point);
@@ -37,7 +41,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
             human.AddFunction(ContentKeyFunctions.SmartEquipBelt);
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
-            human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
             human.AddFunction(ContentKeyFunctions.WideAttack);
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
@@ -46,6 +49,28 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Arcade1);
             human.AddFunction(ContentKeyFunctions.Arcade2);
             human.AddFunction(ContentKeyFunctions.Arcade3);
+
+            // actions should be common (for ghosts, mobs, etc)
+            common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
+            common.AddFunction(ContentKeyFunctions.Hotbar0);
+            common.AddFunction(ContentKeyFunctions.Hotbar1);
+            common.AddFunction(ContentKeyFunctions.Hotbar2);
+            common.AddFunction(ContentKeyFunctions.Hotbar3);
+            common.AddFunction(ContentKeyFunctions.Hotbar4);
+            common.AddFunction(ContentKeyFunctions.Hotbar5);
+            common.AddFunction(ContentKeyFunctions.Hotbar6);
+            common.AddFunction(ContentKeyFunctions.Hotbar7);
+            common.AddFunction(ContentKeyFunctions.Hotbar8);
+            common.AddFunction(ContentKeyFunctions.Hotbar9);
+            common.AddFunction(ContentKeyFunctions.Loadout1);
+            common.AddFunction(ContentKeyFunctions.Loadout2);
+            common.AddFunction(ContentKeyFunctions.Loadout3);
+            common.AddFunction(ContentKeyFunctions.Loadout4);
+            common.AddFunction(ContentKeyFunctions.Loadout5);
+            common.AddFunction(ContentKeyFunctions.Loadout6);
+            common.AddFunction(ContentKeyFunctions.Loadout7);
+            common.AddFunction(ContentKeyFunctions.Loadout8);
+            common.AddFunction(ContentKeyFunctions.Loadout9);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);

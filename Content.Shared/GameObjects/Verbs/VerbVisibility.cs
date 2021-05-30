@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>

@@ -1,4 +1,3 @@
-﻿using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
@@ -15,16 +14,17 @@ namespace Content.Client.GameObjects.Components.Atmos
     internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ViewVariables] public GasAnalyzerDanger Danger { get; private set; }
+        [ViewVariables] private GasAnalyzerDanger Danger { get; set; }
 
         Control IItemStatus.MakeControl()
         {
             return new StatusControl(this);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        /// <inheritdoc />
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (!(curState is GasAnalyzerComponentState state))
+            if (curState is not GasAnalyzerComponentState state)
                 return;
 
             Danger = state.Danger;
@@ -45,9 +45,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            /// <inheritdoc />
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {
@@ -55,15 +56,15 @@ namespace Content.Client.GameObjects.Components.Atmos
                 }
 
                 _parent._uiUpdateNeeded = false;
+
                 var color = _parent.Danger switch
                 {
                     GasAnalyzerDanger.Warning => "orange",
                     GasAnalyzerDanger.Hazard => "red",
                     _ => "green",
                 };
-                _label.SetMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color]",
-                    color,
-                    Enum.GetName(typeof(GasAnalyzerDanger), _parent.Danger)));
+
+                _label.SetMarkup(Loc.GetString("itemstatus-pressure-warn", ("color", color), ("danger", _parent.Danger)));
             }
         }
     }

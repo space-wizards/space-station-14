@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.WorldState.States.Clothing
 {
@@ -15,7 +15,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
         {
             var result = new Dictionary<EquipmentSlotDefines.Slots, IEntity>();
 
-            if (!Owner.TryGetComponent(out InventoryComponent inventoryComponent))
+            if (!Owner.TryGetComponent(out InventoryComponent? inventoryComponent))
             {
                 return result;
             }

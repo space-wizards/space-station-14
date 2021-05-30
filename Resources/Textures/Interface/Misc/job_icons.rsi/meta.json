@@ -1,315 +1,113 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi",
     "size": {
         "x": 8,
         "y": 8
     },
     "states": [
         {
-            "name": "Detective",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Detective"
         },
         {
-            "name": "QuarterMaster",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "QuarterMaster"
         },
         {
-            "name": "Botanist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Botanist"
         },
         {
-            "name": "AtmosphericTechnician",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "AtmosphericTechnician"
         },
         {
-            "name": "Nanotrasen",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Nanotrasen"
         },
         {
-            "name": "Prisoner",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Prisoner"
         },
         {
-            "name": "Janitor",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Janitor"
         },
         {
-            "name": "Chemist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Chemist"
         },
         {
-            "name": "StationEngineer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "StationEngineer"
         },
         {
-            "name": "SecurityOfficer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "SecurityOfficer"
         },
         {
-            "name": "NoId",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "NoId"
         },
         {
-            "name": "ChiefMedicalOfficer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "ChiefMedicalOfficer"
         },
         {
-            "name": "Roboticist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Roboticist"
         },
         {
-            "name": "Chaplain",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Chaplain"
         },
         {
-            "name": "Lawyer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Lawyer"
         },
         {
-            "name": "Unknown",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Unknown"
         },
         {
-            "name": "Librarian",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Librarian"
         },
         {
-            "name": "CargoTechnician",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "CargoTechnician"
         },
         {
-            "name": "Scientist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Scientist"
         },
         {
-            "name": "Geneticist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Geneticist"
         },
         {
-            "name": "Clown",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Clown"
         },
         {
-            "name": "Captain",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Captain"
         },
         {
-            "name": "HeadOfPersonnel",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "HeadOfPersonnel"
         },
         {
-            "name": "Virologist",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Virologist"
         },
         {
-            "name": "ShaftMiner",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "ShaftMiner"
         },
         {
-            "name": "Assistant",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Assistant"
         },
         {
-            "name": "ChiefEngineer",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "ChiefEngineer"
         },
         {
-            "name": "Bartender",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Bartender"
         },
         {
-            "name": "HeadOfSecurity",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "HeadOfSecurity"
         },
         {
-            "name": "MedicalDoctor",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "MedicalDoctor"
         },
         {
-            "name": "Chef",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Chef"
         },
         {
-            "name": "Warden",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Warden"
         },
         {
-            "name": "ResearchDirector",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "ResearchDirector"
         },
         {
-            "name": "Mime",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "Mime"
         }
     ]
 }

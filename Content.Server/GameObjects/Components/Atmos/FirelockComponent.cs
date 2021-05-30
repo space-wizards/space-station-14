@@ -1,100 +1,115 @@
-﻿using System;
-using System.Threading.Tasks;
+#nullable enable
 using Content.Server.GameObjects.Components.Doors;
-using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Interfaces.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Server.Atmos;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying, and not being openable on open-hand click.
+    /// </summary>
     [RegisterComponent]
-    public class FirelockComponent : ServerDoorComponent, IInteractUsing, ICollideBehavior
+    [ComponentReference(typeof(IDoorCheck))]
+    public class FirelockComponent : Component, IDoorCheck
     {
         public override string Name => "Firelock";
 
-        protected override TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.1f);
-        protected override TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.6f);
-        protected override TimeSpan OpenTimeOne => TimeSpan.FromSeconds(0.1f);
-        protected override TimeSpan OpenTimeTwo => TimeSpan.FromSeconds(0.6f);
-
-        public void CollideWith(IEntity collidedWith)
-        {
-            // We do nothing.
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (Owner.TryGetComponent(out AirtightComponent airtightComponent))
-            {
-                airtightComponent.AirBlocked = false;
-            }
-
-            if (Owner.TryGetComponent(out IPhysicsComponent physics))
-            {
-                physics.CanCollide = false;
-            }
-
-            AutoClose = false;
-            Safety = false;
-
-            if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))
-            {
-                occluder.Enabled = false;
-            }
-
-            State = DoorState.Open;
-            SetAppearance(DoorVisualState.Open);
-        }
+        [ComponentDependency]
+        private readonly ServerDoorComponent? _doorComponent = null;
 
         public bool EmergencyPressureStop()
         {
-            var closed = State == DoorState.Open && Close();
-
-            if(closed)
-                Owner.GetComponent<AirtightComponent>().AirBlocked = true;
-
-            return closed;
+            if (_doorComponent != null && _doorComponent.State == SharedDoorComponent.DoorState.Open && _doorComponent.CanCloseGeneric())
+            {
+                _doorComponent.Close();
+                if (Owner.TryGetComponent(out AirtightComponent? airtight))
+                {
+                    airtight.AirBlocked = true;
+                }
+                return true;
+            }
+            return false;
         }
 
-        public override bool CanOpen()
+        bool IDoorCheck.OpenCheck()
         {
-            return !IsHoldingFire() && !IsHoldingPressure() && base.CanOpen();
+            return !IsHoldingFire() && !IsHoldingPressure();
         }
 
-        public override bool CanClose(IEntity user) => true;
-        public override bool CanOpen(IEntity user) => CanOpen();
+        bool IDoorCheck.DenyCheck() => false;
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        float? IDoorCheck.GetPryTime()
         {
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+            if (IsHoldingFire() || IsHoldingPressure())
+            {
+                return 1.5f;
+            }
+            return null;
+        }
+
+        bool IDoorCheck.BlockActivate(ActivateEventArgs eventArgs) => true;
+
+        void IDoorCheck.OnStartPry(InteractUsingEventArgs eventArgs)
+        {
+            if (_doorComponent == null || _doorComponent.State != SharedDoorComponent.DoorState.Closed)
+            {
+                return;
+            }
+
+            if (IsHoldingPressure())
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of air blows in your face... Maybe you should reconsider."));
+            }
+            else if (IsHoldingFire())
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of warm air blows in your face... Maybe you should reconsider."));
+            }
+        }
+
+        public bool IsHoldingPressure(float threshold = 20)
+        {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
+
+            var minMoles = float.MaxValue;
+            var maxMoles = 0f;
+
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(Owner.Transform.Coordinates))
+            {
+                // includeAirBlocked remains false, and therefore Air must be present
+                var moles = adjacent.Air!.TotalMoles;
+                if (moles < minMoles)
+                    minMoles = moles;
+                if (moles > maxMoles)
+                    maxMoles = moles;
+            }
+
+            return (maxMoles - minMoles) > threshold;
+        }
+
+        public bool IsHoldingFire()
+        {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
                 return false;
 
-            if (tool.HasQuality(ToolQuality.Prying))
-            {
-                var holdingPressure = IsHoldingPressure();
-                var holdingFire = IsHoldingFire();
-
-                if (State == DoorState.Closed)
-                {
-                    if(holdingPressure)
-                        Owner.PopupMessage(eventArgs.User, "A gush of air blows in your face... Maybe you should reconsider.");
-                }
-
-                if (!await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
-
-                if (State == DoorState.Closed)
-                    Open();
-                else if (State == DoorState.Open)
-                    Close();
-
+            if (tileAtmos.Hotspot.Valid)
                 return true;
+
+            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
+
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            {
+                if (adjacent.Hotspot.Valid)
+                    return true;
             }
 
             return false;

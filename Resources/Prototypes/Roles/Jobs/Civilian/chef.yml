@@ -3,19 +3,23 @@
   name: "chef"
   positions: 1
   startingGear: ChefGear
-  department:
+  departments:
   - Civilian
   icon: "Chef"
   access:
   - Service
-  - Kitchen
   - Maintenance
 
 - type: startingGear
   id: ChefGear
   equipment:
-    innerclothing: UniformChef
-    backpack: BackpackClothingFilled
-    shoes: ShoesBlack
+    innerclothing: ClothingUniformJumpsuitChef
+    head: ClothingHeadHatChef
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
     idcard: ChefPDA
-    ears: HeadsetService
+    ears: ClothingHeadsetService
+    outerclothing: ClothingOuterApronChef
+  innerclothingskirt: ClothingUniformJumpskirtChef
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

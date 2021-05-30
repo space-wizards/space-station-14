@@ -1,43 +1,50 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.Atmos;
-using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
-using Robust.Client.Utility;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
+    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
-            new Dictionary<GridId, AtmosDebugOverlayMessage>();
+        private readonly Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
+            new();
 
-        private AtmosphereSystem _atmosphereSystem = default!;
+        // Configuration set by debug commands and used by AtmosDebugOverlay {
+        /// <summary>Value source for display</summary>
+        public AtmosDebugOverlayMode CfgMode;
+        /// <summary>This is subtracted from value (applied before CfgScale)</summary>
+        public float CfgBase = 0;
+        /// <summary>The value is divided by this (applied after CfgBase)</summary>
+        public float CfgScale = Atmospherics.MolesCellStandard * 2;
+        /// <summary>Gas ID used by GasMoles mode</summary>
+        public int CfgSpecificGas = 0;
+        /// <summary>Uses black-to-white interpolation (as opposed to red-green-blue) for colourblind users</summary>
+        public bool CfgCBM = false;
+        // }
 
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeNetworkEvent<AtmosDebugOverlayMessage>(HandleAtmosDebugOverlayMessage);
+            SubscribeNetworkEvent<AtmosDebugOverlayDisableMessage>(HandleAtmosDebugOverlayDisableMessage);
+
             _mapManager.OnGridRemoved += OnGridRemoved;
 
-            _atmosphereSystem = Get<AtmosphereSystem>();
-
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(AtmosDebugOverlay)))
+            if(!overlayManager.HasOverlay<AtmosDebugOverlay>())
                 overlayManager.AddOverlay(new AtmosDebugOverlay());
         }
 
@@ -46,16 +53,26 @@ namespace Content.Client.GameObjects.EntitySystems
             _tileData[message.GridId] = message;
         }
 
+        private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)
+        {
+            _tileData.Clear();
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
-                overlayManager.RemoveOverlay(nameof(GasTileOverlay));
+            if(!overlayManager.HasOverlay<GasTileOverlay>())
+                overlayManager.RemoveOverlay<GasTileOverlay>();
         }
 
-        private void OnGridRemoved(GridId gridId)
+        public void Reset()
+        {
+            _tileData.Clear();
+        }
+
+        private void OnGridRemoved(MapId mapId, GridId gridId)
         {
             if (_tileData.ContainsKey(gridId))
             {
@@ -79,5 +96,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
             return srcMsg.OverlayData[relative.X + (relative.Y * LocalViewRange)];
         }
+    }
+
+    internal enum AtmosDebugOverlayMode : byte
+    {
+        TotalMoles,
+        GasMoles,
+        Temperature
     }
 }

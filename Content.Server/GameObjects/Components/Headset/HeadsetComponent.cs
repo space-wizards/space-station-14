@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,28 +26,20 @@ namespace Content.Server.GameObjects.Components.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        private List<int> _channels = new List<int>();
+        [DataField("channels")]
+        private List<int> _channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int BroadcastFrequency { get; set; }
+        [DataField("broadcastChannel")]
+        private int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("listenRange")]
         public int ListenRange { get; private set; }
 
         public IReadOnlyList<int> Channels => _channels;
 
         public bool RadioRequested { get; set; }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            // Only listens to speech in exact same position
-            serializer.DataField(this, h => h.ListenRange, "listenRange", 0);
-
-            serializer.DataField(ref _channels, "channels", new List<int> {1459});
-            serializer.DataField(this, h => h.BroadcastFrequency, "broadcastChannel", 1459);
-        }
 
         public override void Initialize()
         {
@@ -65,18 +55,19 @@ namespace Content.Server.GameObjects.Components.Headset
 
         public void Receive(string message, int channel, IEntity source)
         {
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            if (Owner.TryGetContainer(out var container))
             {
-                if (!container.Owner.TryGetComponent(out IActorComponent actor))
+                if (!container.Owner.TryGetComponent(out ActorComponent? actor))
                     return;
 
-                var playerChannel = actor.playerSession.ConnectedClient;
+                var playerChannel = actor.PlayerSession.ConnectedClient;
 
                 var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
-                msg.MessageWrap = Loc.GetString("[{0}] {1} says, \"{{0}}\"", channel, source.Name);
+                //Square brackets are added here to avoid issues with escaping
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", source.Name));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }
@@ -94,11 +85,11 @@ namespace Content.Server.GameObjects.Components.Headset
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddText(Loc.GetString("It is set to broadcast over the {0} frequency.", BroadcastFrequency));
-
-            message.AddText(Loc.GetString("A small screen on the headset displays the following available frequencies:"));
+            message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
             message.AddText("\n");
-            message.AddText(Loc.GetString("Use {0} for the currently tuned frequency.", ";"));
+            message.AddText(Loc.GetString("examine-headset"));
+            message.AddText("\n");
+            message.AddText(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
 }

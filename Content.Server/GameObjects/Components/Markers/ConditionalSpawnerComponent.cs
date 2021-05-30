@@ -1,16 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
+using Robust.Shared.Reflection;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Markers
@@ -19,39 +15,21 @@ namespace Content.Server.GameObjects.Components.Markers
     public class ConditionalSpawnerComponent : Component, IMapInit
     {
         [Dependency] private readonly IGameTicker _gameTicker = default!;
-        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<string> Prototypes { get; set; } = new List<string>();
+        [DataField("prototypes")]
+        public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<string> _gameRules = new List<string>();
+        [DataField("gameRules")]
+        private readonly List<string> _gameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("chance")]
         public float Chance { get; set; } = 1.0f;
-
-        public IEnumerable<Type> GameRules
-        {
-            get
-            {
-                foreach (var rule in _gameRules)
-                {
-                    yield return _reflectionManager.GetType(rule);
-                }
-            }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, x => Prototypes, "prototypes", new List<string>());
-            serializer.DataField(this, x => Chance, "chance", 1.0f);
-            serializer.DataField(this, x => _gameRules, "gameRules", new List<string>());
-        }
 
         private void RuleAdded(GameRuleAddedEventArgs obj)
         {
@@ -67,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Markers
                 return;
             }
 
-            foreach (var rule in GameRules)
+            foreach (var rule in _gameRules)
             {
                 if (!_gameTicker.HasGameRule(rule)) continue;
                 Spawn();
@@ -87,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Markers
             }
 
             if(!Owner.Deleted)
-                _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
         }
 
         public virtual void MapInit()

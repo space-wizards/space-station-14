@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Interfaces.Chat;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
 
-        public static readonly Regex SentenceRegex = new Regex(@"(?<=[\.!\?])");
+        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])");
 
         public void Initialize()
         {

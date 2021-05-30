@@ -1,32 +1,29 @@
 #nullable enable
+#nullable disable warnings
 using System;
 using Content.Server.Atmos;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Body.Respiratory;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
+using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -36,22 +33,26 @@ namespace Content.Server.GameObjects.Components.Atmos
     [ComponentReference(typeof(IActivate))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
-    	  private const float MaxExplosionRange = 14f;
+        private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-        private float _pressureResistance;
+        [DataField("pressureResistance")]
+        private float _pressureResistance = Atmospherics.OneAtmosphere * 5f;
 
         private int _integrity = 3;
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
+
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [ViewVariables] public GasMixture? Air { get; set; }
+        [DataField("air")] [ViewVariables] public GasMixture? Air { get; set; } = new();
 
         /// <summary>
         ///     Distributed pressure.
         /// </summary>
-        [ViewVariables] public float OutputPressure { get; private set; }
+        [DataField("outputPressure")]
+        [ViewVariables]
+        public float OutputPressure { get; private set; } = DefaultOutputPressure;
 
         /// <summary>
         ///     Tank is connected to internals.
@@ -66,21 +67,25 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Pressure at which tanks start leaking.
         /// </summary>
+        [DataField("tankLeakPressure")]
         public float TankLeakPressure { get; set; }     = 30 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Pressure at which tank spills all contents into atmosphere.
         /// </summary>
+        [DataField("tankRupturePressure")]
         public float TankRupturePressure { get; set; }  = 40 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Base 3x3 explosion.
         /// </summary>
+        [DataField("tankFragmentPressure")]
         public float TankFragmentPressure { get; set; } = 50 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Increases explosion for each scale kPa above threshold.
         /// </summary>
+        [DataField("tankFragmentScale")]
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
 
         public override void Initialize()
@@ -99,26 +104,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateUserInterface(true);
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, x => x.Air, "air", new GasMixture());
-            serializer.DataField(this, x => x.OutputPressure, "outputPressure", DefaultOutputPressure);
-            serializer.DataField(this, x => x.TankLeakPressure, "tankLeakPressure", 30 * Atmospherics.OneAtmosphere);
-            serializer.DataField(this, x => x.TankRupturePressure, "tankRupturePressure", 40 * Atmospherics.OneAtmosphere);
-            serializer.DataField(this, x => x.TankFragmentPressure, "tankFragmentPressure", 50 * Atmospherics.OneAtmosphere);
-            serializer.DataField(this, x => x.TankFragmentScale, "tankFragmentScale", 10 * Atmospherics.OneAtmosphere);
-            serializer.DataField(ref _pressureResistance, "pressureResistance", Atmospherics.OneAtmosphere * 5f);
-        }
-
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Pressure: [color=orange]{0}[/color] kPa.\n",
-                Math.Round(Air?.Pressure ?? 0)));
+            message.AddMarkup(Loc.GetString("gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
             if (IsConnected)
             {
-                message.AddMarkup(Loc.GetString("Connected to external component"));
+                message.AddMarkup(Loc.GetString("gas-tank-connected"));
             }
         }
 
@@ -166,17 +157,17 @@ namespace Content.Server.GameObjects.Components.Atmos
             return air;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
-            OpenInterface(actor.playerSession);
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
+            OpenInterface(actor.PlayerSession);
             return true;
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
-            OpenInterface(actor.playerSession);
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            OpenInterface(actor.PlayerSession);
         }
 
         public void ConnectToInternals()
@@ -198,14 +189,18 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateUserInterface(bool initialUpdate = false)
         {
+            var internals = GetInternalsComponent();
             _userInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
                     OutputPressure = initialUpdate ? OutputPressure : (float?) null,
                     InternalsConnected = IsConnected,
-                    CanConnectInternals = IsFunctional && GetInternalsComponent() != null
+                    CanConnectInternals = IsFunctional && internals != null
                 });
+
+            if (internals == null) return;
+            _itemActions?.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -221,8 +216,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        private void ToggleInternals()
+        internal void ToggleInternals()
         {
+            if (!ActionBlockerSystem.CanUse(GetInternalsComponent()?.Owner)) return;
             if (IsConnected)
             {
                 DisconnectFromInternals();
@@ -234,8 +230,9 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
         {
+            if (Owner.Deleted) return null;
             if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
-            return ContainerHelpers.TryGetContainer(Owner, out var container)
+            return Owner.TryGetContainer(out var container)
                 ? container.Owner.GetComponentOrNull<InternalsComponent>()
                 : null;
         }
@@ -272,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.Delete();
+                Owner.QueueDelete();
                 return;
             }
 
@@ -283,10 +280,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
                     tileAtmos?.AssumeAir(Air);
 
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords("Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
+                    SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
 
-                    Owner.Delete();
+                    Owner.QueueDelete();
                     return;
                 }
 
@@ -317,6 +314,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 _integrity++;
         }
 
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
+        {
+            DisconnectFromInternals(eventArgs.User);
+        }
+
         /// <summary>
         /// Open interaction window
         /// </summary>
@@ -328,7 +330,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
-                if (!user.HasComponent<IActorComponent>())
+                if (!user.HasComponent<ActorComponent>())
                 {
                     return;
                 }
@@ -339,18 +341,28 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             protected override void Activate(IEntity user, GasTankComponent component)
             {
-                if (!user.TryGetComponent<IActorComponent>(out var actor))
+                if (!user.TryGetComponent<ActorComponent>(out var actor))
                 {
                     return;
                 }
 
-                component.OpenInterface(actor.playerSession);
+                component.OpenInterface(actor.PlayerSession);
             }
         }
+    }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+    [UsedImplicitly]
+    [DataDefinition]
+    public class ToggleInternalsAction : IToggleItemAction
+    {
+        public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            DisconnectFromInternals(eventArgs.User);
+            if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return false;
+            // no change
+            if (gasTankComponent.IsConnected == args.ToggledOn) return false;
+            gasTankComponent.ToggleInternals();
+            // did we successfully toggle to the desired status?
+            return gasTankComponent.IsConnected == args.ToggledOn;
         }
     }
 }

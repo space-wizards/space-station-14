@@ -2,19 +2,20 @@
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
+    [UsedImplicitly]
     public class RangedWeaponSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -23,8 +24,8 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private InputSystem _inputSystem;
-        private CombatModeSystem _combatModeSystem;
+        private InputSystem _inputSystem = default!;
+        private CombatModeSystem _combatModeSystem = default!;
         private bool _blocked;
         private int _shotCounter;
 
@@ -33,8 +34,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Initialize();
 
             IoCManager.InjectDependencies(this);
-            _inputSystem = EntitySystemManager.GetEntitySystem<InputSystem>();
-            _combatModeSystem = EntitySystemManager.GetEntitySystem<CombatModeSystem>();
+            _inputSystem = Get<InputSystem>();
+            _combatModeSystem = Get<CombatModeSystem>();
         }
 
         public override void Update(float frameTime)
@@ -54,14 +55,14 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out HandsComponent hands))
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+            if (entity == null || !entity.TryGetComponent(out HandsComponent? hands))
             {
                 return;
             }
 
             var held = hands.ActiveHand;
-            if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent weapon))
+            if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent? weapon))
             {
                 _blocked = true;
                 return;

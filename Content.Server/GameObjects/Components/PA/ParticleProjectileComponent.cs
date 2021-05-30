@@ -1,40 +1,26 @@
-﻿using System;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Singularity;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Timers;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameObjects.Components.PA
 {
     [RegisterComponent]
-    public class ParticleProjectileComponent : Component, ICollideBehavior
+    public class ParticleProjectileComponent : Component, IStartCollide
     {
         public override string Name => "ParticleProjectile";
         private ParticleAcceleratorPowerState _state;
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (collidedWith.TryGetComponent<SingularityComponent>(out var singularityComponent))
-            {
-                var multiplier = _state switch
-                {
-                    ParticleAcceleratorPowerState.Standby => 0,
-                    ParticleAcceleratorPowerState.Level0 => 1,
-                    ParticleAcceleratorPowerState.Level1 => 3,
-                    ParticleAcceleratorPowerState.Level2 => 6,
-                    ParticleAcceleratorPowerState.Level3 => 10,
-                    _ => 0
-                };
-                singularityComponent.Energy += 10 * multiplier;
-                Owner.Delete();
-            }else if (collidedWith.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent)
-            )
+            if (otherFixture.Body.Owner.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
             {
                 singularityGeneratorComponent.Power += _state switch
                 {
@@ -58,7 +44,7 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
-            physicsComponent.Status = BodyStatus.InAir;
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
             if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
             {
@@ -66,6 +52,22 @@ namespace Content.Server.GameObjects.Components.PA
                 return;
             }
             projectileComponent.IgnoreEntity(firer);
+
+            if (!Owner.TryGetComponent<SinguloFoodComponent>(out var singuloFoodComponent))
+            {
+                Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
+                return;
+            }
+            var multiplier = _state switch
+            {
+                ParticleAcceleratorPowerState.Standby => 0,
+                ParticleAcceleratorPowerState.Level0 => 1,
+                ParticleAcceleratorPowerState.Level1 => 3,
+                ParticleAcceleratorPowerState.Level2 => 6,
+                ParticleAcceleratorPowerState.Level3 => 10,
+                _ => 0
+            };
+            singuloFoodComponent.Energy = 10 * multiplier;
 
             var suffix = state switch
             {
@@ -84,10 +86,9 @@ namespace Content.Server.GameObjects.Components.PA
             spriteComponent.LayerSetState(0, $"particle{suffix}");
 
             physicsComponent
-                .EnsureController<BulletController>()
-                .LinearVelocity = angle.ToVec() * 20f;
+                .LinearVelocity = angle.ToWorldVec() * 20f;
 
-            Owner.Transform.LocalRotation = new Angle(angle + Angle.FromDegrees(180));
+            Owner.Transform.LocalRotation = angle;
             Timer.Spawn(3000, () => Owner.Delete());
         }
     }

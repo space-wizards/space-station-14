@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Content.Shared.VendingMachines;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 

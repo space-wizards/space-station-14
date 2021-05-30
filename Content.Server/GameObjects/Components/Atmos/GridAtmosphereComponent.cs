@@ -1,4 +1,5 @@
-﻿#nullable enable
+#nullable enable
+// ReSharper disable once RedundantUsingDirective
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,20 +12,17 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Map;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -33,11 +31,11 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// </summary>
     [ComponentReference(typeof(IGridAtmosphereComponent))]
     [RegisterComponent, Serializable]
-    public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
+    public class GridAtmosphereComponent : Component, IGridAtmosphereComponent, ISerializationHooks
     {
-        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
-        [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
@@ -48,22 +46,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         private const int LagCheckIterations = 30;
 
-        /// <summary>
-        ///     Max milliseconds allowed for atmos updates.
-        /// </summary>
-        private const float LagCheckMaxMilliseconds = 5f;
-
-        /// <summary>
-        ///     How much time before atmos updates are ran.
-        /// </summary>
-        private const float AtmosTime = 1/26f;
-
         public override string Name => "GridAtmosphere";
 
-        private bool _paused = false;
-        private float _timer = 0f;
-        private Stopwatch _stopwatch = new Stopwatch();
+        private bool _paused;
+        private float _timer;
+        private Stopwatch _stopwatch = new();
         private GridId _gridId;
+
+        [ComponentDependency] private IMapGridComponent? _mapGridComponent;
 
         [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
@@ -72,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _tileEqualizeLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
+        private readonly HashSet<ExcitedGroup> _excitedGroups = new(1000);
 
         [ViewVariables]
         private int ExcitedGroupCount => _excitedGroups.Count;
@@ -80,11 +70,17 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         private double _excitedGroupLastProcess;
 
-        [ViewVariables]
-        protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new Dictionary<Vector2i, TileAtmosphere>(1000);
+        [DataField("uniqueMixes")]
+        private List<GasMixture>? _uniqueMixes;
+
+        [DataField("tiles")]
+        private Dictionary<Vector2i, int>? _tiles;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
+        protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
+
+        [ViewVariables]
+        private readonly HashSet<TileAtmosphere> _activeTiles = new(1000);
 
         [ViewVariables]
         private int ActiveTilesCount => _activeTiles.Count;
@@ -93,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _activeTilesLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
+        private readonly HashSet<TileAtmosphere> _hotspotTiles = new(1000);
 
         [ViewVariables]
         private int HotspotTilesCount => _hotspotTiles.Count;
@@ -102,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _hotspotsLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
+        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new(1000);
 
         [ViewVariables]
         private int SuperconductivityTilesCount => _superconductivityTiles.Count;
@@ -111,13 +107,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _superconductivityLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<Vector2i> _invalidatedCoords = new HashSet<Vector2i>(1000);
+        private readonly HashSet<Vector2i> _invalidatedCoords = new(1000);
 
         [ViewVariables]
         private int InvalidatedCoordsCount => _invalidatedCoords.Count;
 
         [ViewVariables]
-        private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
+        private HashSet<TileAtmosphere> _highPressureDelta = new(1000);
 
         [ViewVariables]
         private int HighPressureDeltaCount => _highPressureDelta.Count;
@@ -126,31 +122,36 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _highPressureDeltaLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<IPipeNet> _pipeNets = new HashSet<IPipeNet>();
+        private readonly HashSet<IPipeNet> _pipeNets = new();
 
         [ViewVariables]
         private double _pipeNetLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<PipeNetDeviceComponent> _pipeNetDevices = new HashSet<PipeNetDeviceComponent>();
+        private readonly HashSet<PipeNetDeviceComponent> _pipeNetDevices = new();
 
         [ViewVariables]
         private double _pipeNetDevicesLastProcess;
 
         [ViewVariables]
-        private Queue<TileAtmosphere> _currentRunTiles = new Queue<TileAtmosphere>();
+        private Queue<TileAtmosphere> _currentRunTiles = new();
 
         [ViewVariables]
-        private Queue<ExcitedGroup> _currentRunExcitedGroups = new Queue<ExcitedGroup>();
+        private Queue<ExcitedGroup> _currentRunExcitedGroups = new();
 
         [ViewVariables]
-        private Queue<IPipeNet> _currentRunPipeNet = new Queue<IPipeNet>();
+        private Queue<IPipeNet> _currentRunPipeNet = new();
 
         [ViewVariables]
-        private Queue<PipeNetDeviceComponent> _currentRunPipeNetDevice = new Queue<PipeNetDeviceComponent>();
+        private Queue<PipeNetDeviceComponent> _currentRunPipeNetDevice = new();
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
+
+        public GridAtmosphereComponent()
+        {
+            _paused = false;
+        }
 
         private enum ProcessState
         {
@@ -172,9 +173,59 @@ namespace Content.Server.GameObjects.Components.Atmos
             indices.PryTile(_gridId, _mapManager, _tileDefinitionManager, _serverEntityManager);
         }
 
+        void ISerializationHooks.BeforeSerialization()
+        {
+            var uniqueMixes = new List<GasMixture>();
+            var uniqueMixHash = new Dictionary<GasMixture, int>();
+            var tiles = new Dictionary<Vector2i, int>();
+
+            foreach (var (indices, tile) in Tiles)
+            {
+                if (tile.Air == null) continue;
+
+                if (uniqueMixHash.TryGetValue(tile.Air, out var index))
+                {
+                    tiles[indices] = index;
+                    continue;
+                }
+
+                uniqueMixes.Add(tile.Air);
+                var newIndex = uniqueMixes.Count - 1;
+                uniqueMixHash[tile.Air] = newIndex;
+                tiles[indices] = newIndex;
+            }
+
+            if (uniqueMixes.Count == 0) uniqueMixes = null;
+            if (tiles.Count == 0) tiles = null;
+
+            _uniqueMixes = uniqueMixes;
+            _tiles = tiles;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
+
+            Tiles.Clear();
+
+            if (_tiles != null && Owner.TryGetComponent(out IMapGridComponent? mapGrid))
+            {
+                foreach (var (indices, mix) in _tiles)
+                {
+                    try
+                    {
+                        Tiles.Add(indices, new TileAtmosphere(this, mapGrid.GridIndex, indices, (GasMixture) _uniqueMixes![mix].Clone()));
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                        throw;
+                    }
+
+                    Invalidate(indices);
+                }
+            }
+
             GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
             GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
@@ -217,7 +268,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         protected virtual void Revalidate()
         {
-            foreach (var indices in _invalidatedCoords.ToArray())
+            foreach (var indices in _invalidatedCoords)
             {
                 var tile = GetTile(indices);
 
@@ -227,15 +278,29 @@ namespace Content.Server.GameObjects.Components.Atmos
                     Tiles[indices] = tile;
                 }
 
-                if (IsSpace(indices))
+                var isAirBlocked = IsAirBlocked(indices);
+
+                if (IsSpace(indices) && !isAirBlocked)
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem);
                     tile.Air.MarkImmutable();
                     Tiles[indices] = tile;
 
-                } else if (IsAirBlocked(indices))
+                } else if (isAirBlocked)
                 {
-                    tile.Air = null;
+                    var nullAir = false;
+
+                    foreach (var airtight in GetObstructingComponents(indices))
+                    {
+                        if (airtight.NoAirWhenFullyAirBlocked)
+                        {
+                            nullAir = true;
+                            break;
+                        }
+                    }
+
+                    if(nullAir)
+                        tile.Air = null;
                 }
                 else
                 {
@@ -253,20 +318,25 @@ namespace Content.Server.GameObjects.Components.Atmos
                     tile.Air ??= new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
                 }
 
+                // By removing the active tile, we effectively remove its excited group, if any.
+                RemoveActiveTile(tile);
+
+                // Then we activate the tile again.
                 AddActiveTile(tile);
+
                 tile.BlockedAirflow = GetBlockedDirections(indices);
 
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
                 tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals();
+                GasTileOverlaySystem.Invalidate(_gridId, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
                     var direction = (AtmosDirection) (1 << i);
                     var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
-                    AddActiveTile(otherTile);
+                    if (otherTile != null) AddActiveTile(otherTile);
                 }
             }
 
@@ -284,6 +354,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var tile = GetTile(indices);
             if (tile?.GridIndex != _gridId) return;
+            // includeAirBlocked is false, therefore all tiles in this have Air != null.
             var adjacent = GetAdjacentTiles(indices);
             tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
             Tiles[indices] = tile;
@@ -292,7 +363,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var (_, adj) in adjacent)
             {
-                var mix = adj.Air.RemoveRatio(ratio);
+                var mix = adj.Air!.RemoveRatio(ratio);
                 tile.Air.Merge(mix);
                 adj.Air.Merge(mix);
             }
@@ -300,18 +371,17 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddActiveTile(TileAtmosphere? tile)
+        public virtual void AddActiveTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile?.GridIndex != _gridId || tile.Air == null) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true)
+        public virtual void RemoveActiveTile(TileAtmosphere tile, bool disposeGroup = true)
         {
-            if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
             if(disposeGroup)
@@ -322,7 +392,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddHotspotTile(TileAtmosphere? tile)
+        public virtual void AddHotspotTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _gridId || tile?.Air == null) return;
             _hotspotTiles.Add(tile);
@@ -330,29 +400,27 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveHotspotTile(TileAtmosphere? tile)
+        public virtual void RemoveHotspotTile(TileAtmosphere tile)
         {
-            if (tile == null) return;
             _hotspotTiles.Remove(tile);
         }
 
-        public virtual void AddSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void AddSuperconductivityTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile?.GridIndex != _gridId || !AtmosphereSystem.Superconduction) return;
             _superconductivityTiles.Add(tile);
         }
 
-        public virtual void RemoveSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void RemoveSuperconductivityTile(TileAtmosphere tile)
         {
-            if (tile == null) return;
             _superconductivityTiles.Remove(tile);
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void AddHighPressureDelta(TileAtmosphere? tile)
+        public virtual void AddHighPressureDelta(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _gridId) return;
+            if (tile.GridIndex != _gridId) return;
             _highPressureDelta.Add(tile);
         }
 
@@ -420,12 +488,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public bool IsAirBlocked(Vector2i indices, AtmosDirection direction = AtmosDirection.All)
         {
+            var directions = AtmosDirection.Invalid;
+
             foreach (var obstructingComponent in GetObstructingComponents(indices))
             {
                 if (!obstructingComponent.AirBlocked)
                     continue;
 
-                if (obstructingComponent.AirBlockedDirection.HasFlag(direction))
+                // We set the directions that are air-blocked so far,
+                // as you could have a full obstruction with only 4 directional air blockers.
+                directions |= obstructingComponent.AirBlockedDirection;
+
+                if (directions.IsFlagSet(direction))
                     return true;
             }
 
@@ -435,10 +509,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public virtual bool IsSpace(Vector2i indices)
         {
-            // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
+            if (_mapGridComponent == null) return default;
 
-            return mapGrid.Grid.GetTileRef(indices).Tile.IsEmpty;
+            return _mapGridComponent.Grid.GetTileRef(indices).IsSpace();
+        }
+
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(EntityCoordinates coordinates, bool includeAirBlocked = false)
+        {
+            return GetAdjacentTiles(coordinates.ToVector2i(_serverEntityManager, _mapManager), includeAirBlocked);
         }
 
         public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)
@@ -461,29 +539,32 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public float GetVolumeForCells(int cellCount)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
+            if (_mapGridComponent == null) return default;
 
-            return mapGrid.Grid.TileSize * cellCount * Atmospherics.CellVolume;
+            return _mapGridComponent.Grid.TileSize * cellCount * Atmospherics.CellVolume;
         }
 
         /// <inheritdoc />
         public virtual void Update(float frameTime)
         {
             _timer += frameTime;
+            var atmosTime = 1f/AtmosphereSystem.AtmosTickRate;
 
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
 
-            if (_timer < AtmosTime)
+            if (_timer < atmosTime)
                 return;
 
             // We subtract it so it takes lost time into account.
-            _timer -= AtmosTime;
+            _timer -= atmosTime;
+
+            var maxProcessTime = AtmosphereSystem.AtmosMaxProcessTime;
 
             switch (_state)
             {
                 case ProcessState.TileEqualize:
-                    if (!ProcessTileEqualize(_paused))
+                    if (!ProcessTileEqualize(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -493,7 +574,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
-                    if (!ProcessActiveTiles(_paused))
+                    if (!ProcessActiveTiles(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -503,7 +584,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.ExcitedGroups;
                     return;
                 case ProcessState.ExcitedGroups:
-                    if (!ProcessExcitedGroups(_paused))
+                    if (!ProcessExcitedGroups(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -513,7 +594,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
-                    if (!ProcessHighPressureDelta(_paused))
+                    if (!ProcessHighPressureDelta(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -523,17 +604,20 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
-                    if (!ProcessHotspots(_paused))
+                    if (!ProcessHotspots(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
                     }
 
                     _paused = false;
-                    _state = ProcessState.Superconductivity;
+                    // Next state depends on whether superconduction is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    _state = AtmosphereSystem.Superconduction ? ProcessState.Superconductivity : ProcessState.PipeNet;
                     break;
                 case ProcessState.Superconductivity:
-                    if (!ProcessSuperconductivity(_paused))
+                    if (!ProcessSuperconductivity(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -543,7 +627,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.PipeNet;
                     break;
                 case ProcessState.PipeNet:
-                    if (!ProcessPipeNets(_paused))
+                    if (!ProcessPipeNets(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
@@ -553,21 +637,24 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.PipeNetDevices;
                     break;
                 case ProcessState.PipeNetDevices:
-                    if (!ProcessPipeNetDevices(_paused))
+                    if (!ProcessPipeNetDevices(_paused, maxProcessTime))
                     {
                         _paused = true;
                         return;
                     }
 
                     _paused = false;
-                    _state = ProcessState.TileEqualize;
+                    // Next state depends on whether monstermos equalization is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    _state = AtmosphereSystem.MonstermosEqualization ? ProcessState.TileEqualize : ProcessState.ActiveTiles;
                     break;
             }
 
             UpdateCounter++;
         }
 
-        public virtual bool ProcessTileEqualize(bool resumed = false)
+        public virtual bool ProcessTileEqualize(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -583,7 +670,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _tileEqualizeLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -594,9 +681,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessActiveTiles(bool resumed = false)
+        public virtual bool ProcessActiveTiles(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
+
+            var spaceWind = AtmosphereSystem.SpaceWind;
 
             if(!resumed)
                 _currentRunTiles = new Queue<TileAtmosphere>(_activeTiles);
@@ -605,12 +694,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             while (_currentRunTiles.Count > 0)
             {
                 var tile = _currentRunTiles.Dequeue();
-                tile.ProcessCell(UpdateCounter);
+                tile.ProcessCell(UpdateCounter, spaceWind);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _activeTilesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -621,9 +710,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessExcitedGroups(bool resumed = false)
+        public virtual bool ProcessExcitedGroups(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
+
+            var spaceIsAllConsuming = AtmosphereSystem.ExcitedGroupsSpaceIsAllConsuming;
 
             if(!resumed)
                 _currentRunExcitedGroups = new Queue<ExcitedGroup>(_excitedGroups);
@@ -636,7 +727,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 excitedGroup.DismantleCooldown++;
 
                 if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    excitedGroup.SelfBreakdown();
+                    excitedGroup.SelfBreakdown(spaceIsAllConsuming);
 
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     excitedGroup.Dismantle();
@@ -644,7 +735,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _excitedGroupLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -655,7 +746,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessHighPressureDelta(bool resumed = false)
+        public virtual bool ProcessHighPressureDelta(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -674,7 +765,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _highPressureDeltaLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -685,7 +776,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessHotspots(bool resumed = false)
+        protected virtual bool ProcessHotspots(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -701,7 +792,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _hotspotsLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -712,7 +803,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessSuperconductivity(bool resumed = false)
+        protected virtual bool ProcessSuperconductivity(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -728,7 +819,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _superconductivityLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -739,7 +830,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessPipeNets(bool resumed = false)
+        protected virtual bool ProcessPipeNets(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -755,7 +846,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _pipeNetLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -766,7 +857,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        protected virtual bool ProcessPipeNetDevices(bool resumed = false)
+        protected virtual bool ProcessPipeNetDevices(bool resumed = false, float lagCheck = 5f)
         {
             _stopwatch.Restart();
 
@@ -782,7 +873,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= lagCheck)
                 {
                     _pipeNetDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
                     return false;
@@ -797,15 +888,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
 
-            var list = new List<AirtightComponent>();
-
             foreach (var v in gridLookup.GetEntitiesIntersecting(_gridId, indices))
             {
                 if (v.TryGetComponent<AirtightComponent>(out var ac))
-                    list.Add(ac);
+                    yield return ac;
             }
-
-            return list;
         }
 
         private bool NeedsVacuumFixing(Vector2i indices)
@@ -836,61 +923,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void Dispose()
         {
 
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            if (serializer.Reading &&
-                Owner.TryGetComponent(out IMapGridComponent? mapGrid))
-            {
-                var gridId = mapGrid.Grid.Index;
-
-                if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture>? uniqueMixes) ||
-                    !serializer.TryReadDataField("tiles", out Dictionary<Vector2i, int>? tiles))
-                    return;
-
-                Tiles.Clear();
-
-                foreach (var (indices, mix) in tiles!)
-                {
-                    try
-                    {
-                        Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
-                        throw;
-                    }
-
-                    Invalidate(indices);
-                }
-            }
-            else if (serializer.Writing)
-            {
-                var uniqueMixes = new List<GasMixture>();
-                var uniqueMixHash = new Dictionary<GasMixture, int>();
-                var tiles = new Dictionary<Vector2i, int>();
-                foreach (var (indices, tile) in Tiles)
-                {
-                    if (tile.Air == null) continue;
-
-                    if (uniqueMixHash.TryGetValue(tile.Air, out var index))
-                    {
-                        tiles[indices] = index;
-                        continue;
-                    }
-
-                    uniqueMixes.Add(tile.Air);
-                    var newIndex = uniqueMixes.Count - 1;
-                    uniqueMixHash[tile.Air] = newIndex;
-                    tiles[indices] = newIndex;
-                }
-
-                serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
-                serializer.DataField(ref tiles, "tiles", new Dictionary<Vector2i, int>());
-            }
         }
 
         public IEnumerator<TileAtmosphere> GetEnumerator()

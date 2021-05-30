@@ -27,7 +27,6 @@
     },
     {
       "name": "sloth_dead",
-      "directions": 1,
       "delays": [
         [
           1

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Shared.Serialization;
 

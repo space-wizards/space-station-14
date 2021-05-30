@@ -12,10 +12,10 @@ namespace Content.Server.Atmos
         private bool _disposed = false;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _tiles = new HashSet<TileAtmosphere>();
+        private readonly HashSet<TileAtmosphere> _tiles = new();
 
         [ViewVariables]
-        private GridAtmosphereComponent _gridAtmosphereComponent;
+        private GridAtmosphereComponent _gridAtmosphereComponent = default!;
 
         [ViewVariables]
         public int DismantleCooldown { get; set; }
@@ -139,7 +139,7 @@ namespace Content.Server.Atmos
 
             Dismantle(false);
 
-            _gridAtmosphereComponent = null;
+            _gridAtmosphereComponent = null!;
         }
     }
 }

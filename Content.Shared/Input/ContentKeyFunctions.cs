@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Input;
+#nullable enable
+using Robust.Shared.Input;
 
 namespace Content.Shared.Input
 {
@@ -10,22 +11,25 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
         public static readonly BoundKeyFunction Drop = "Drop";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
-        public static readonly BoundKeyFunction FocusChat = "FocusChatWindow";
+        public static readonly BoundKeyFunction FocusChat = "FocusChatInputWindow";
+        public static readonly BoundKeyFunction FocusLocalChat = "FocusLocalChatWindow";
+        public static readonly BoundKeyFunction FocusRadio = "FocusRadioWindow";
         public static readonly BoundKeyFunction FocusOOC = "FocusOOCWindow";
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
+        public static readonly BoundKeyFunction CycleChatChannelForward = "CycleChatChannelForward";
+        public static readonly BoundKeyFunction CycleChatChannelBackward = "CycleChatChannelBackward";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
         public static readonly BoundKeyFunction OpenContextMenu = "OpenContextMenu";
         public static readonly BoundKeyFunction OpenCraftingMenu = "OpenCraftingMenu";
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
         public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
         public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
-        public static readonly BoundKeyFunction OpenTutorial = "OpenTutorial";
+        public static readonly BoundKeyFunction OpenInfo = "OpenInfo";
         public static readonly BoundKeyFunction SwapHands = "SwapHands";
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
         public static readonly BoundKeyFunction TryPullObject = "TryPullObject";
         public static readonly BoundKeyFunction MovePulledObject = "MovePulledObject";
         public static readonly BoundKeyFunction ReleasePulledObject = "ReleasePulledObject";
-        public static readonly BoundKeyFunction ToggleCombatMode = "ToggleCombatMode";
         public static readonly BoundKeyFunction MouseMiddle = "MouseMiddle";
         public static readonly BoundKeyFunction OpenEntitySpawnWindow = "OpenEntitySpawnWindow";
         public static readonly BoundKeyFunction OpenSandboxWindow = "OpenSandboxWindow";
@@ -41,5 +45,35 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Arcade1 = "Arcade1";
         public static readonly BoundKeyFunction Arcade2 = "Arcade2";
         public static readonly BoundKeyFunction Arcade3 = "Arcade3";
+        public static readonly BoundKeyFunction OpenActionsMenu = "OpenAbilitiesMenu";
+        public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
+        public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
+        public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";
+        public static readonly BoundKeyFunction Hotbar3 = "Hotbar3";
+        public static readonly BoundKeyFunction Hotbar4 = "Hotbar4";
+        public static readonly BoundKeyFunction Hotbar5 = "Hotbar5";
+        public static readonly BoundKeyFunction Hotbar6 = "Hotbar6";
+        public static readonly BoundKeyFunction Hotbar7 = "Hotbar7";
+        public static readonly BoundKeyFunction Hotbar8 = "Hotbar8";
+        public static readonly BoundKeyFunction Hotbar9 = "Hotbar9";
+        public static readonly BoundKeyFunction Loadout1 = "Loadout1";
+        public static readonly BoundKeyFunction Loadout2 = "Loadout2";
+        public static readonly BoundKeyFunction Loadout3 = "Loadout3";
+        public static readonly BoundKeyFunction Loadout4 = "Loadout4";
+        public static readonly BoundKeyFunction Loadout5 = "Loadout5";
+        public static readonly BoundKeyFunction Loadout6 = "Loadout6";
+        public static readonly BoundKeyFunction Loadout7 = "Loadout7";
+        public static readonly BoundKeyFunction Loadout8 = "Loadout8";
+        public static readonly BoundKeyFunction Loadout9 = "Loadout9";
+        public static readonly BoundKeyFunction Vote0 = "Vote0";
+        public static readonly BoundKeyFunction Vote1 = "Vote1";
+        public static readonly BoundKeyFunction Vote2 = "Vote2";
+        public static readonly BoundKeyFunction Vote3 = "Vote3";
+        public static readonly BoundKeyFunction Vote4 = "Vote4";
+        public static readonly BoundKeyFunction Vote5 = "Vote5";
+        public static readonly BoundKeyFunction Vote6 = "Vote6";
+        public static readonly BoundKeyFunction Vote7 = "Vote7";
+        public static readonly BoundKeyFunction Vote8 = "Vote8";
+        public static readonly BoundKeyFunction Vote9 = "Vote9";
     }
 }

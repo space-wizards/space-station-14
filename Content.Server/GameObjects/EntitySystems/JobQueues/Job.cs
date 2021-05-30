@@ -23,10 +23,10 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         /// <summary>
         ///     Represents the status of this job as a regular task.
         /// </summary>
-        public Task<T> AsTask { get; }
+        public Task<T?> AsTask { get; }
 
-        public T Result { get; private set; }
-        public Exception Exception { get; private set; }
+        public T? Result { get; private set; }
+        public Exception? Exception { get; private set; }
         protected CancellationToken Cancellation { get; }
 
         public double DebugTime { get; private set; }
@@ -34,11 +34,11 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         protected readonly IStopwatch StopWatch;
 
         // TCS for the Task property.
-        private readonly TaskCompletionSource<T> _taskTcs;
+        private readonly TaskCompletionSource<T?> _taskTcs;
 
         // TCS to call to resume the suspended job.
-        private TaskCompletionSource<object> _resume;
-        private Task _workInProgress;
+        private TaskCompletionSource<object?>? _resume;
+        private Task? _workInProgress;
 
         protected Job(double maxTime, CancellationToken cancellation = default)
             : this(maxTime, new Stopwatch(), cancellation)
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             StopWatch = stopwatch;
             Cancellation = cancellation;
 
-            _taskTcs = new TaskCompletionSource<T>();
+            _taskTcs = new TaskCompletionSource<T?>();
             AsTask = _taskTcs.Task;
         }
 
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         {
             DebugTools.AssertNull(_resume);
 
-            _resume = new TaskCompletionSource<object>();
+            _resume = new TaskCompletionSource<object?>();
             Status = JobStatus.Paused;
             DebugTime += StopWatch.Elapsed.TotalSeconds;
             return _resume.Task;
@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
 
             // Immediately block on resume so that everything stays correct.
             Status = JobStatus.Paused;
-            _resume = new TaskCompletionSource<object>();
+            _resume = new TaskCompletionSource<object?>();
 
             await _resume.Task;
 
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             await task;
 
             // Immediately block on resume so that everything stays correct.
-            _resume = new TaskCompletionSource<object>();
+            _resume = new TaskCompletionSource<object?>();
             Status = JobStatus.Paused;
 
             await _resume.Task;
@@ -144,11 +144,11 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
 
             if (Cancellation.IsCancellationRequested)
             {
-                resume.TrySetCanceled();
+                resume?.TrySetCanceled();
             }
             else
             {
-                resume.SetResult(null);
+                resume?.SetResult(null);
             }
 
             if (Status != JobStatus.Finished && Status != JobStatus.Waiting)
@@ -158,7 +158,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             }
         }
 
-        protected abstract Task<T> Process();
+        protected abstract Task<T?> Process();
 
         private async Task ProcessWrap()
         {

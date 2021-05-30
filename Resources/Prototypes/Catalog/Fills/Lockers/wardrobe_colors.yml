@@ -1,0 +1,39 @@
+#- type: entity
+#  id: WardrobeGreyFilled
+#  suffix: Filled
+#  parent: WardrobeGrey
+
+#- type: entity
+#  id: WardrobeMixedFilled
+#  suffix: Filled
+#  parent: WardrobeMixed
+
+#- type: entity
+#  id: WardrobeYellowFilled
+#  suffix: Filled
+#  parent: WardrobeYellow
+
+- type: entity
+  id: WardrobeWhiteFilled
+  suffix: Filled
+  parent: WardrobeWhite
+
+#- type: entity
+#  id: WardrobeBlueFilled
+#  suffix: Filled
+#  parent: WardrobeBlue
+
+#- type: entity
+#  id: WardrobePinkFilled
+#  suffix: Filled
+#  parent: WardrobePink
+
+#- type: entity
+#  id: WardrobeBlackFilled
+#  suffix: Filled
+#  parent: WardrobeBlack
+
+#- type: entity
+#  id: WardrobeGreenFilled
+#  suffix: Filled
+#  parent: WardrobeGreen

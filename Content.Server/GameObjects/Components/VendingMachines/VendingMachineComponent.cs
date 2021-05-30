@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +10,14 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
@@ -39,20 +33,26 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
-        private string _packPrototypeId = "";
+        [DataField("pack")]
+        private string _packPrototypeId = string.Empty;
         private string? _description;
         private string _spriteName = "";
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
-        private string _soundVend = "";
+        [DataField("soundVend")]
+        // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
+        private string _soundVend = "/Audio/Machines/machine_vend.ogg";
+        [DataField("soundDeny")]
+        // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
+        private string _soundDeny = "/Audio/Machines/custom_deny.ogg";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -62,26 +62,17 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
             {
-                wires.OpenInterface(actor.playerSession);
+                wires.OpenInterface(actor.PlayerSession);
             } else
             {
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-            // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-            serializer.DataField(ref _soundVend, "soundVend", "/Audio/Machines/machine_vend.ogg");
         }
 
         private void InitializeFromPrototype()
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             {
                 return;
             }
@@ -116,27 +107,39 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                receiver.OnPowerStateChanged += UpdatePower;
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
 
             InitializeFromPrototype();
         }
 
-        public override void OnRemove()
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            base.HandleMessage(message, component);
+            switch (message)
             {
-                receiver.OnPowerStateChanged -= UpdatePower;
+                case PowerChangedMessage powerChanged:
+                    UpdatePower(powerChanged);
+                    break;
             }
-
-            base.OnRemove();
         }
 
-        private void UpdatePower(object? sender, PowerStateEventArgs args)
+        private void UpdatePower(PowerChangedMessage args)
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
+
+            // Pause/resume advertising if advertising component exists and not broken
+            if (!Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent) || _broken) return;
+
+            if (Powered)
+            {
+                advertiseComponent.Resume();
+            }
+            else
+            {
+                advertiseComponent.Pause();
+            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -172,13 +175,15 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             var entry = Inventory.Find(x => x.ID == id);
             if (entry == null)
             {
-                FlickDenyAnimation();
+                Owner.PopupMessageEveryone(Loc.GetString("Invalid item"));
+                Deny();
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                FlickDenyAnimation();
+                Owner.PopupMessageEveryone(Loc.GetString("Out of stock"));
+                Deny();
                 return;
             }
 
@@ -194,7 +199,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void TryEject(string id, IEntity? sender)
@@ -203,15 +208,19 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 if (sender == null || !accessReader.IsAllowed(sender))
                 {
-                    FlickDenyAnimation();
+                    Owner.PopupMessageEveryone(Loc.GetString("Access denied"));
+                    Deny();
                     return;
                 }
             }
             TryEject(id);
         }
 
-        private void FlickDenyAnimation()
+        private void Deny()
         {
+            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+
+            // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);
             //TODO: This duration should be a distinct value specific to the deny animation
             Owner.SpawnTimer(_animationDuration, () =>
@@ -246,6 +255,11 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         {
             _broken = true;
             TrySetVisualState(VendingMachineVisualState.Broken);
+
+            if (Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent))
+            {
+                advertiseComponent.Pause();
+            }
         }
 
         public enum Wires

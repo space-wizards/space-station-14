@@ -6,7 +6,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -15,20 +15,13 @@ namespace Content.Server.GameObjects.Components.Damage
     {
         public override string Name => "DamageOnToolInteract";
 
-        /* Set in YAML */
+        [DataField("damage")]
         protected int Damage;
-        private List<ToolQuality> _tools = new List<ToolQuality>();
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
+        [DataField("tools")]
+        private List<ToolQuality> _tools = new();
 
-            serializer.DataField(ref Damage, "damage", 0);
-
-            serializer.DataField(ref _tools, "tools", new List<ToolQuality>());
-        }
-
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
             {
@@ -36,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Damage
                 {
                     if (tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
                     {
-                        if (eventArgs.Using.TryGetComponent(out WelderComponent welder))
+                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder))
                         {
                             if (welder.WelderLit) return CallDamage(eventArgs, tool);
                         }

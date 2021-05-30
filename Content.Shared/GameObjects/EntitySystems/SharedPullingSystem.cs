@@ -1,29 +1,52 @@
-﻿#nullable enable
+#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Pulling;
+using Content.Shared.GameObjects.Components.Rotatable;
+using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class SharedPullingSystem : EntitySystem
+    public abstract class SharedPullingSystem : EntitySystem, IResettingEntitySystem
     {
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
         private readonly Dictionary<IEntity, IEntity> _pullers =
-            new Dictionary<IEntity, IEntity>();
+            new();
+
+        private readonly HashSet<SharedPullableComponent> _moving = new();
+        private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
+
+        /// <summary>
+        ///     If distance between puller and pulled entity lower that this threshold,
+        ///     pulled entity will not change its rotation.
+        ///     Helps with small distance jittering
+        /// </summary>
+        private const float ThresholdRotDistance = 1;
+
+        /// <summary>
+        ///     If difference between puller and pulled angle  lower that this threshold,
+        ///     pulled entity will not change its rotation.
+        ///     Helps with diagonal movement jittering
+        /// </summary>
+        private const float ThresholdRotAngle = 30;
+
+        public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
         public override void Initialize()
         {
@@ -32,11 +55,27 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
             SubscribeLocalEvent<MoveEvent>(PullerMoved);
+            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
                 .Register<SharedPullingSystem>();
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            _moving.ExceptWith(_stoppedMoving);
+            _stoppedMoving.Clear();
+        }
+
+        public void Reset()
+        {
+            _pullers.Clear();
+            _moving.Clear();
+            _stoppedMoving.Clear();
         }
 
         private void OnPullStarted(PullStartedMessage message)
@@ -55,19 +94,58 @@ namespace Content.Shared.GameObjects.EntitySystems
             RemovePuller(message.Puller.Owner);
         }
 
+        protected void OnPullableMove(EntityUid uid, SharedPullableComponent component, PullableMoveMessage args)
+        {
+            _moving.Add(component);
+        }
+
+        protected void OnPullableStopMove(EntityUid uid, SharedPullableComponent component, PullableStopMovingMessage args)
+        {
+            _stoppedMoving.Add(component);
+        }
+
         private void PullerMoved(MoveEvent ev)
         {
+            var puller = ev.Sender;
             if (!TryGetPulled(ev.Sender, out var pulled))
             {
                 return;
             }
 
-            if (!pulled.TryGetComponent(out IPhysicsComponent? physics))
+            if (!pulled.TryGetComponent(out IPhysBody? physics))
             {
                 return;
             }
 
+            UpdatePulledRotation(puller, pulled);
+
             physics.WakeBody();
+
+            if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
+            {
+                pullable.MovingTo = null;
+            }
+        }
+
+        // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
+        private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
+        {
+            if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
+            {
+                pullable.TryStopPull();
+            }
+
+            if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
+            {
+                if (puller.Pulling == null) return;
+
+                if (!puller.Pulling.TryGetComponent(out SharedPullableComponent? pulling))
+                {
+                    return;
+                }
+
+                pulling.TryStopPull();
+            }
         }
 
         private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -89,7 +167,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
-            pullable.TryMoveTo(coords);
+            pullable.TryMoveTo(coords.ToMap(EntityManager));
 
             return false;
         }
@@ -139,6 +217,27 @@ namespace Content.Shared.GameObjects.EntitySystems
         public bool IsPulling(IEntity puller)
         {
             return _pullers.ContainsKey(puller);
+        }
+
+        private void UpdatePulledRotation(IEntity puller, IEntity pulled)
+        {
+            // TODO: update once ComponentReference works with directed event bus.
+            if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
+                return;
+
+            if (!rotatable.RotateWhilePulling)
+                return;
+
+            var dir = puller.Transform.WorldPosition - pulled.Transform.WorldPosition;
+            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
+            {
+                var oldAngle = pulled.Transform.WorldRotation;
+                var newAngle = Angle.FromWorldVec(dir);
+
+                var diff = newAngle - oldAngle;
+                if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
+                    pulled.Transform.WorldRotation = newAngle;
+            }
         }
     }
 }

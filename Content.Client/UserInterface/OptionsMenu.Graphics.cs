@@ -1,11 +1,13 @@
-﻿using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
+using Content.Shared;
+using Content.Shared.Prototypes.HUD;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.IoC;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -25,90 +27,151 @@ namespace Content.Client.UserInterface
             };
 
             private readonly IConfigurationManager _cfg;
+            private readonly IPrototypeManager _prototypeManager;
 
             private readonly Button ApplyButton;
             private readonly CheckBox VSyncCheckBox;
             private readonly CheckBox FullscreenCheckBox;
             private readonly OptionButton LightingPresetOption;
             private readonly OptionButton _uiScaleOption;
+            private readonly OptionButton _hudThemeOption;
+            private readonly CheckBox _viewportStretchCheckBox;
+            private readonly CheckBox _viewportLowResCheckBox;
+            private readonly Slider _viewportScaleSlider;
+            private readonly Control _viewportScaleBox;
+            private readonly Label _viewportScaleText;
 
-            public GraphicsControl(IConfigurationManager cfg)
+            public GraphicsControl(IConfigurationManager cfg, IPrototypeManager proMan)
             {
                 _cfg = cfg;
+                _prototypeManager = proMan;
                 var vBox = new VBoxContainer();
 
-                var contents = new VBoxContainer();
+                var contents = new VBoxContainer
+                {
+                    Margin = new Thickness(2, 2, 2, 0),
+                    VerticalExpand = true,
+                };
 
-                VSyncCheckBox = new CheckBox {Text = Loc.GetString("VSync")};
+                VSyncCheckBox = new CheckBox {Text = Loc.GetString("ui-options-vsync")};
                 contents.AddChild(VSyncCheckBox);
                 VSyncCheckBox.OnToggled += OnCheckBoxToggled;
 
-                FullscreenCheckBox = new CheckBox {Text = Loc.GetString("Fullscreen")};
+                FullscreenCheckBox = new CheckBox {Text = Loc.GetString("ui-options-fullscreen")};
                 contents.AddChild(FullscreenCheckBox);
                 FullscreenCheckBox.OnToggled += OnCheckBoxToggled;
 
-                LightingPresetOption = new OptionButton {CustomMinimumSize = (100, 0)};
-                LightingPresetOption.AddItem(Loc.GetString("Very Low"));
-                LightingPresetOption.AddItem(Loc.GetString("Low"));
-                LightingPresetOption.AddItem(Loc.GetString("Medium"));
-                LightingPresetOption.AddItem(Loc.GetString("High"));
+                LightingPresetOption = new OptionButton {MinSize = (100, 0)};
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-very-low"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-low"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-medium"));
+                LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-high"));
                 LightingPresetOption.OnItemSelected += OnLightingQualityChanged;
 
                 contents.AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = Loc.GetString("Lighting Quality:")},
-                        new Control {CustomMinimumSize = (4, 0)},
+                        new Label {Text = Loc.GetString("ui-options-lighting-label")},
+                        new Control {MinSize = (4, 0)},
                         LightingPresetOption
                     }
                 });
 
                 ApplyButton = new Button
                 {
-                    Text = Loc.GetString("Apply"), TextAlign = Label.AlignMode.Center,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                    Text = Loc.GetString("ui-options-apply"), TextAlign = Label.AlignMode.Center,
+                    HorizontalAlignment = HAlignment.Right
                 };
 
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-
                 _uiScaleOption = new OptionButton();
-                _uiScaleOption.AddItem(Loc.GetString("Automatic ({0}%)", UserInterfaceManager.DefaultUIScale * 100));
-                _uiScaleOption.AddItem(Loc.GetString("75%"));
-                _uiScaleOption.AddItem(Loc.GetString("100%"));
-                _uiScaleOption.AddItem(Loc.GetString("125%"));
-                _uiScaleOption.AddItem(Loc.GetString("150%"));
-                _uiScaleOption.AddItem(Loc.GetString("175%"));
-                _uiScaleOption.AddItem(Loc.GetString("200%"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-auto",
+                    ("scale", UserInterfaceManager.DefaultUIScale)));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-75"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-100"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-125"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-150"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-175"));
+                _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-200"));
                 _uiScaleOption.OnItemSelected += OnUIScaleChanged;
 
                 contents.AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = Loc.GetString("UI Scale:")},
-                        new Control {CustomMinimumSize = (4, 0)},
+                        new Label {Text = Loc.GetString("ui-options-scale-label")},
+                        new Control {MinSize = (4, 0)},
                         _uiScaleOption
                     }
                 });
 
-                contents.AddChild(new Placeholder(resourceCache)
+                _hudThemeOption = new OptionButton();
+                foreach (var gear in _prototypeManager.EnumeratePrototypes<HudThemePrototype>())
                 {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    PlaceholderText = "Viewport settings"
-                });
+                   _hudThemeOption.AddItem(Loc.GetString(gear.Name));
+                }
+                _hudThemeOption.OnItemSelected += OnHudThemeChanged;
 
-                vBox.AddChild(new MarginContainer
+                contents.AddChild(new HBoxContainer
                 {
-                    MarginLeftOverride = 2,
-                    MarginTopOverride = 2,
-                    MarginRightOverride = 2,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
                     Children =
                     {
-                        contents
+                        new Label {Text = Loc.GetString("ui-options-hud-theme")},
+                        new Control {MinSize = (4, 0)},
+                        _hudThemeOption
                     }
                 });
+
+                _viewportStretchCheckBox = new CheckBox
+                {
+                    Text = Loc.GetString("ui-options-vp-stretch")
+                };
+
+                _viewportStretchCheckBox.OnToggled += _ =>
+                {
+                    UpdateViewportScale();
+                    UpdateApplyButton();
+                };
+
+                _viewportScaleSlider = new Slider
+                {
+                    MinValue = 1,
+                    MaxValue = 5,
+                    Rounded = true,
+                    MinWidth = 200
+                };
+
+                _viewportScaleSlider.OnValueChanged += _ =>
+                {
+                    UpdateApplyButton();
+                    UpdateViewportScale();
+                };
+
+                _viewportLowResCheckBox = new CheckBox { Text = Loc.GetString("ui-options-vp-low-res")};
+                _viewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
+
+                contents.AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        _viewportStretchCheckBox,
+                        (_viewportScaleBox = new HBoxContainer
+                        {
+                            Children =
+                            {
+                                (_viewportScaleText = new Label
+                                {
+                                    Margin = new Thickness(8, 0)
+                                }),
+                                _viewportScaleSlider,
+                            }
+                        })
+                    }
+                });
+
+                contents.AddChild(_viewportLowResCheckBox);
+
+                vBox.AddChild(contents);
 
                 vBox.AddChild(new StripeBack
                 {
@@ -121,10 +184,17 @@ namespace Content.Client.UserInterface
                 });
                 ApplyButton.OnPressed += OnApplyButtonPressed;
 
-                VSyncCheckBox.Pressed = _cfg.GetCVar<bool>("display.vsync");
+                VSyncCheckBox.Pressed = _cfg.GetCVar(CVars.DisplayVSync);
                 FullscreenCheckBox.Pressed = ConfigIsFullscreen;
                 LightingPresetOption.SelectId(GetConfigLightingQuality());
                 _uiScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
+                _hudThemeOption.SelectId(_cfg.GetCVar(CCVars.HudTheme));
+                _viewportScaleSlider.Value = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+                _viewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
+                _viewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
+
+                UpdateViewportScale();
+                UpdateApplyButton();
 
                 AddChild(vBox);
             }
@@ -135,13 +205,27 @@ namespace Content.Client.UserInterface
                 UpdateApplyButton();
             }
 
+            private void OnHudThemeChanged(OptionButton.ItemSelectedEventArgs args)
+            {
+                _hudThemeOption.SelectId(args.Id);
+                UpdateApplyButton();
+            }
+
             private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
             {
-                _cfg.SetCVar("display.vsync", VSyncCheckBox.Pressed);
+                _cfg.SetCVar(CVars.DisplayVSync, VSyncCheckBox.Pressed);
                 SetConfigLightingQuality(LightingPresetOption.SelectedId);
-                _cfg.SetCVar("display.windowmode",
+                if (_hudThemeOption.SelectedId != _cfg.GetCVar(CCVars.HudTheme)) // Don't unnecessarily redraw the HUD
+                {
+                    _cfg.SetCVar(CCVars.HudTheme, _hudThemeOption.SelectedId);
+                }
+
+                _cfg.SetCVar(CVars.DisplayWindowMode,
                     (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
-                _cfg.SetCVar("display.uiScale", UIScaleOptions[_uiScaleOption.SelectedId]);
+                _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[_uiScaleOption.SelectedId]);
+                _cfg.SetCVar(CCVars.ViewportStretch, _viewportStretchCheckBox.Pressed);
+                _cfg.SetCVar(CCVars.ViewportFixedScaleFactor, (int) _viewportScaleSlider.Value);
+                _cfg.SetCVar(CCVars.ViewportScaleRender, !_viewportLowResCheckBox.Pressed);
                 _cfg.SaveToFile();
                 UpdateApplyButton();
             }
@@ -159,22 +243,34 @@ namespace Content.Client.UserInterface
 
             private void UpdateApplyButton()
             {
-                var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar<bool>("display.vsync");
+                var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar(CVars.DisplayVSync);
                 var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
                 var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
+                var isHudThemeSame = _hudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
                 var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[_uiScaleOption.SelectedId], ConfigUIScale);
-                ApplyButton.Disabled = isVSyncSame && isFullscreenSame && isLightingQualitySame && isUIScaleSame;
+                var isVPStretchSame = _viewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
+                var isVPScaleSame = (int) _viewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+                var isVPResSame = _viewportLowResCheckBox.Pressed == !_cfg.GetCVar(CCVars.ViewportScaleRender);
+
+                ApplyButton.Disabled = isVSyncSame &&
+                                       isFullscreenSame &&
+                                       isLightingQualitySame &&
+                                       isUIScaleSame &&
+                                       isVPStretchSame &&
+                                       isVPScaleSame &&
+                                       isVPResSame &&
+                                       isHudThemeSame;
             }
 
             private bool ConfigIsFullscreen =>
-                _cfg.GetCVar<int>("display.windowmode") == (int) WindowMode.Fullscreen;
+                _cfg.GetCVar(CVars.DisplayWindowMode) == (int) WindowMode.Fullscreen;
 
-            private float ConfigUIScale => _cfg.GetCVar<float>("display.uiScale");
+            private float ConfigUIScale => _cfg.GetCVar(CVars.DisplayUIScale);
 
             private int GetConfigLightingQuality()
             {
-                var val = _cfg.GetCVar<int>("display.lightmapdivider");
-                var soft = _cfg.GetCVar<bool>("display.softshadows");
+                var val = _cfg.GetCVar(CVars.DisplayLightMapDivider);
+                var soft = _cfg.GetCVar(CVars.DisplaySoftShadows);
                 if (val >= 8)
                 {
                     return 0;
@@ -198,20 +294,20 @@ namespace Content.Client.UserInterface
                 switch (value)
                 {
                     case 0:
-                        _cfg.SetCVar("display.lightmapdivider", 8);
-                        _cfg.SetCVar("display.softshadows", false);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 8);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, false);
                         break;
                     case 1:
-                        _cfg.SetCVar("display.lightmapdivider", 2);
-                        _cfg.SetCVar("display.softshadows", false);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, false);
                         break;
                     case 2:
-                        _cfg.SetCVar("display.lightmapdivider", 2);
-                        _cfg.SetCVar("display.softshadows", true);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, true);
                         break;
                     case 3:
-                        _cfg.SetCVar("display.lightmapdivider", 1);
-                        _cfg.SetCVar("display.softshadows", true);
+                        _cfg.SetCVar(CVars.DisplayLightMapDivider, 1);
+                        _cfg.SetCVar(CVars.DisplaySoftShadows, true);
                         break;
                 }
             }
@@ -227,6 +323,12 @@ namespace Content.Client.UserInterface
                 }
 
                 return 0;
+            }
+
+            private void UpdateViewportScale()
+            {
+                _viewportScaleBox.Visible = !_viewportStretchCheckBox.Pressed;
+                _viewportScaleText.Text = Loc.GetString("ui-options-vp-scale", ("scale", _viewportScaleSlider.Value));
             }
         }
     }

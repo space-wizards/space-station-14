@@ -9,13 +9,12 @@
     netsync: false
   - type: Item
     size: 24
-    state: icon
 
 - type: entity
   name: china lake
   parent: LauncherBase
   id: LauncherChinaLake
-  description: This centuries-old design was recently rediscovered and adapted for use in modern battlefields. Working similar to a pump-action combat shotgun, its light weight and robust design quickly made it a popular weapon. It uses specialised grenade shells.
+  description: PLOOP
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -24,7 +23,6 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -48,7 +46,7 @@
   name: RPG-7
   parent: LauncherBase
   id: LauncherRocket
-  description: A modified ancient rocket-propelled grenade launcher, this design is centuries old, but well preserved.
+  description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
@@ -57,7 +55,6 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
@@ -79,3 +76,29 @@
       magState: mag
       steps: 1
       zeroVisible: true
+
+- type: entity
+  name: pie cannon
+  parent: LauncherBase
+  id: LauncherCreamPie
+  description: Load cream pie for optimal results.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/pie_cannon.rsi
+      state: piecannon
+    - type: Item
+      size: 24
+      sprite: Objects/Weapons/Guns/Launchers/pie_cannon.rsi
+    - type: RangedWeapon
+      clumsyCheck: false
+    - type: RevolverBarrel
+      caliber: CreamPie
+      currentSelector: Single
+      allSelectors:
+        - Single
+      fillPrototype: FoodPieBananaCream
+      fireRate: 5
+      capacity: 5
+      soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+      soundGunshot: /Audio/Effects/bang.ogg
+      soundInsert: /Audio/Items/bikehorn.ogg

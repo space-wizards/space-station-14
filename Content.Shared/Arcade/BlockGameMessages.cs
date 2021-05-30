@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Arcade
@@ -57,9 +57,6 @@ namespace Content.Shared.Arcade
                 IsPlayer = isPlayer;
             }
         }
-
-        [Serializable, NetSerializable]
-        public class BlockGameUserUnregisterMessage : BoundUserInterfaceMessage{}
 
         [Serializable, NetSerializable]
         public class BlockGameSetScreenMessage : BoundUserInterfaceMessage
@@ -123,7 +120,7 @@ namespace Content.Shared.Arcade
 
             public int CompareTo(object? obj)
             {
-                if (!(obj is HighScoreEntry entry)) return 0;
+                if (obj is not HighScoreEntry entry) return 0;
                 return Score.CompareTo(entry.Score);
             }
         }

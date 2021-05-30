@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -14,19 +14,17 @@ namespace Content.Client.GameObjects.Components
     [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IItemStatus
     {
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool _uiUpdateNeeded;
 
-        public Control MakeControl() => new StatusControl(this);
-
-        public override int Count
+        public Control MakeControl()
         {
-            get => base.Count;
-            set
-            {
-                base.Count = value;
+            return new StatusControl(this);
+        }
 
-                _uiUpdateNeeded = true;
-            }
+        public void DirtyUI()
+        {
+            _uiUpdateNeeded = true;
         }
 
         private sealed class StatusControl : Control
@@ -43,9 +41,9 @@ namespace Content.Client.GameObjects.Components
                 parent._uiUpdateNeeded = true;
             }
 
-            protected override void Update(FrameEventArgs args)
+            protected override void FrameUpdate(FrameEventArgs args)
             {
-                base.Update(args);
+                base.FrameUpdate(args);
 
                 if (!_parent._uiUpdateNeeded)
                 {
@@ -54,7 +52,7 @@ namespace Content.Client.GameObjects.Components
 
                 _parent._uiUpdateNeeded = false;
 
-                _label.SetMarkup(Loc.GetString("Count: [color=white]{0}[/color]", _parent.Count));
+                _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
             }
         }
     }

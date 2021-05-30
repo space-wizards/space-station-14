@@ -1,20 +1,21 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components.Singularity;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.Singularity
 {
+    [UsedImplicitly]
     public class EmitterVisualizer : AppearanceVisualizer
     {
-        private const string OverlayBeam = "emitter-beam";
-        private const string OverlayUnderPowered = "emitter-underpowered";
+        private const string OverlayBeam = "beam";
+        private const string OverlayUnderPowered = "underpowered";
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

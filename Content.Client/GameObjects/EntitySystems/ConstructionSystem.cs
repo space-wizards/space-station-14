@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
-using Content.Client.Construction;
+﻿using System;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Construction;
-using Content.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+
+#nullable enable
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -25,13 +25,12 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
 
         private int _nextId;
-        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new Dictionary<int, ConstructionGhostComponent>();
-        private ConstructionMenu _constructionMenu;
+
+        private bool CraftingEnabled { get; set; }
 
         /// <inheritdoc />
         public override void Initialize()
@@ -49,6 +48,20 @@ namespace Content.Client.GameObjects.EntitySystems
                 .Register<ConstructionSystem>();
         }
 
+        /// <inheritdoc />
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
+            UnsubscribeNetworkEvent<AckStructureConstructionMessage>();
+
+            CommandBinds.Unregister<ConstructionSystem>();
+        }
+
+        public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
+        public event EventHandler? ToggleCraftingWindow;
+
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
             ClearGhost(msg.GhostId);
@@ -56,66 +69,32 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandlePlayerAttached(PlayerAttachSysMessage msg)
         {
-            if (msg.AttachedEntity == null)
-            {
-                _gameHud.CraftingButtonVisible = false;
-                return;
-            }
-
-            if (_constructionMenu == null)
-            {
-                _constructionMenu = new ConstructionMenu();
-                _constructionMenu.OnClose += () => _gameHud.CraftingButtonDown = false;
-            }
-
-            _gameHud.CraftingButtonVisible = true;
-            _gameHud.CraftingButtonToggled = b =>
-            {
-                if (b)
-                {
-                    _constructionMenu.Open();
-                }
-                else
-                {
-                    _constructionMenu.Close();
-                }
-            };
-        }
-
-        /// <inheritdoc />
-        public override void Shutdown()
-        {
-            _constructionMenu?.Dispose();
-
-            CommandBinds.Unregister<ConstructionSystem>();
-            base.Shutdown();
+            var available = IsCrafingAvailable(msg.AttachedEntity);
+            UpdateCraftingAvailability(available);
         }
 
         private bool HandleOpenCraftingMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_playerManager.LocalPlayer.ControlledEntity == null)
-            {
+            if (args.State == BoundKeyState.Down)
+                ToggleCraftingWindow?.Invoke(this, EventArgs.Empty);
+            return true;
+        }
+
+        private void UpdateCraftingAvailability(bool available)
+        {
+            if (CraftingEnabled == available)
+                return;
+
+            CraftingAvailabilityChanged?.Invoke(this, new CraftingAvailabilityChangedArgs(available));
+            CraftingEnabled = available;
+        }
+
+        private static bool IsCrafingAvailable(IEntity? entity)
+        {
+            if (entity == null)
                 return false;
-            }
 
-            var menu = _constructionMenu;
-
-            if (menu.IsOpen)
-            {
-                if (menu.IsAtFront())
-                {
-                    SetOpenValue(menu, false);
-                }
-                else
-                {
-                    menu.MoveToFront();
-                }
-            }
-            else
-            {
-                SetOpenValue(menu, true);
-            }
-
+            // TODO: Decide if entity can craft, using capabilities or something
             return true;
         }
 
@@ -124,28 +103,13 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
                 return false;
 
-            var entity = _entityManager.GetEntity(args.EntityUid);
+            var entity = EntityManager.GetEntity(args.EntityUid);
 
-            if (!entity.TryGetComponent(out ConstructionGhostComponent ghostComp))
+            if (!entity.TryGetComponent<ConstructionGhostComponent>(out var ghostComp))
                 return false;
 
-            TryStartConstruction(ghostComp.GhostID);
+            TryStartConstruction(ghostComp.GhostId);
             return true;
-
-        }
-
-        private void SetOpenValue(ConstructionMenu menu, bool value)
-        {
-            if (value)
-            {
-                _gameHud.CraftingButtonDown = true;
-                menu.OpenCentered();
-            }
-            else
-            {
-                _gameHud.CraftingButtonDown = false;
-                menu.Close();
-            }
         }
 
         /// <summary>
@@ -156,10 +120,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var user = _playerManager.LocalPlayer?.ControlledEntity;
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
-            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker:prototype.CanBuildInImpassable))
-            {
-                return;
-            }
+            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker: prototype.CanBuildInImpassable)) return;
 
             foreach (var condition in prototype.Conditions)
             {
@@ -167,12 +128,12 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
             }
 
-            var ghost = _entityManager.SpawnEntity("constructionghost", loc);
+            var ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
-            comp.GhostID = _nextId++;
+            comp.GhostId = _nextId++;
             ghost.Transform.LocalRotation = dir.ToAngle();
-            _ghosts.Add(comp.GhostID, comp);
+            _ghosts.Add(comp.GhostId, comp);
             var sprite = ghost.GetComponent<SpriteComponent>();
             sprite.Color = new Color(48, 255, 48, 128);
             sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
@@ -188,10 +149,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             foreach (var ghost in _ghosts)
             {
-                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc))
-                {
-                    return true;
-                }
+                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc)) return true;
             }
 
             return false;
@@ -200,6 +158,12 @@ namespace Content.Client.GameObjects.EntitySystems
         private void TryStartConstruction(int ghostId)
         {
             var ghost = _ghosts[ghostId];
+
+            if (ghost.Prototype == null)
+            {
+                throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
+            }
+
             var transform = ghost.Owner.Transform;
             var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
@@ -214,28 +178,38 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         /// <summary>
-        ///     Removes a construction ghost entity with the given ID.
+        /// Removes a construction ghost entity with the given ID.
         /// </summary>
         public void ClearGhost(int ghostId)
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                ghost.Owner.Delete();
+                ghost.Owner.QueueDelete();
                 _ghosts.Remove(ghostId);
             }
         }
 
         /// <summary>
-        ///     Removes all construction ghosts.
+        /// Removes all construction ghosts.
         /// </summary>
         public void ClearAllGhosts()
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                ghost.Owner.Delete();
+                ghost.Owner.QueueDelete();
             }
 
             _ghosts.Clear();
+        }
+    }
+
+    public class CraftingAvailabilityChangedArgs : EventArgs
+    {
+        public bool Available { get; }
+
+        public CraftingAvailabilityChangedArgs(bool available)
+        {
+            Available = available;
         }
     }
 }

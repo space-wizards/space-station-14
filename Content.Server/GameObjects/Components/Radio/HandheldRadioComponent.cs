@@ -6,11 +6,11 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -22,20 +22,19 @@ namespace Content.Server.GameObjects.Components.Radio
     public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Radio";
 
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
-        private List<int> _channels = new List<int>();
+        [DataField("channels")]
+        private List<int> _channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int BroadcastFrequency { get; set; }
+        [DataField("broadcastChannel")]
+        private int BroadcastFrequency { get; set; } = 1459;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int ListenRange { get; private set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool RadioOn
@@ -49,15 +48,6 @@ namespace Content.Server.GameObjects.Components.Radio
         }
 
         [ViewVariables] public IReadOnlyList<int> Channels => _channels;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, h => h.ListenRange, "listenRange", 7);
-            serializer.DataField(ref _channels, "channels", new List<int> {1459});
-            serializer.DataField(this, h => h.BroadcastFrequency, "broadcastChannel", 1459);
-        }
 
         public override void Initialize()
         {
@@ -83,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Radio
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return Use(eventArgs.User);
         }
@@ -91,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Radio
         public bool CanListen(string message, IEntity source)
         {
             return RadioOn &&
-                   Owner.Transform.Coordinates.TryDistance(_entityManager, source.Transform.Coordinates, out var distance) &&
+                   Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, source.Transform.Coordinates, out var distance) &&
                    distance <= ListenRange;
         }
 
@@ -113,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Radio
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }
 
-        public void Activate(ActivateEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
         }

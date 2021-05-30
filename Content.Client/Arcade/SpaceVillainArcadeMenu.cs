@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Client.GameObjects.Components.Arcade;
+﻿using Content.Client.GameObjects.Components.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -10,25 +9,25 @@ namespace Content.Client.Arcade
 {
     public class SpaceVillainArcadeMenu : SS14Window
     {
-        protected override Vector2? CustomSize => (400, 200);
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 
-        private Label _enemyNameLabel;
-        private Label _playerInfoLabel;
-        private Label _enemyInfoLabel;
-        private Label _playerActionLabel;
-        private Label _enemyActionLabel;
+        private readonly Label _enemyNameLabel;
+        private readonly Label _playerInfoLabel;
+        private readonly Label _enemyInfoLabel;
+        private readonly Label _playerActionLabel;
+        private readonly Label _enemyActionLabel;
 
-        private Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
+        private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
-            Title = Loc.GetString("Space Villain");
+            MinSize = SetSize = (300, 225);
+            Title = Loc.GetString("spacevillain-menu-title");
             Owner = owner;
 
             var grid = new GridContainer {Columns = 1};
 
             var infoGrid = new GridContainer {Columns = 3};
-            infoGrid.AddChild(new Label{ Text = Loc.GetString("Player"), Align = Label.AlignMode.Center });
+            infoGrid.AddChild(new Label{ Text = Loc.GetString("spacevillain-menu-label-player"), Align = Label.AlignMode.Center });
             infoGrid.AddChild(new Label{ Text = "|", Align = Label.AlignMode.Center });
             _enemyNameLabel = new Label{ Align = Label.AlignMode.Center};
             infoGrid.AddChild(_enemyNameLabel);
@@ -50,15 +49,15 @@ namespace Content.Client.Arcade
 
             var buttonGrid = new GridContainer {Columns = 3};
             _gameButtons[0] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Attack)
-                {Text = Loc.GetString("ATTACK")};
+                {Text = Loc.GetString("spacevillain-menu-button-attack")};
             buttonGrid.AddChild(_gameButtons[0]);
 
             _gameButtons[1] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Heal)
-                {Text = Loc.GetString("HEAL")};
+                {Text = Loc.GetString("spacevillain-menu-button-heal")};
             buttonGrid.AddChild(_gameButtons[1]);
 
             _gameButtons[2] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Recharge)
-                {Text = Loc.GetString("RECHARGE")};
+                {Text = Loc.GetString("spacevillain-menu-button-recharge")};
             buttonGrid.AddChild(_gameButtons[2]);
 
             centerContainer = new CenterContainer();
@@ -66,12 +65,10 @@ namespace Content.Client.Arcade
             grid.AddChild(centerContainer);
 
             var newGame = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.NewGame)
-                {Text = Loc.GetString("New Game")};
+                {Text = Loc.GetString("spacevillain-menu-button-new-game")};
             grid.AddChild(newGame);
 
-            centerContainer = new CenterContainer();
-            centerContainer.AddChild(grid);
-            Contents.AddChild(centerContainer);
+            Contents.AddChild(grid);
         }
 
         private void UpdateMetadata(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage message)
@@ -97,8 +94,8 @@ namespace Content.Client.Arcade
 
         private class ActionButton : Button
         {
-            private SpaceVillainArcadeBoundUserInterface _owner;
-            private SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;
+            private readonly SpaceVillainArcadeBoundUserInterface _owner;
+            private readonly SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;
 
             public ActionButton(SpaceVillainArcadeBoundUserInterface owner,SharedSpaceVillainArcadeComponent.PlayerAction playerAction)
             {

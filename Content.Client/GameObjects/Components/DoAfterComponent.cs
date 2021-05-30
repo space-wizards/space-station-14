@@ -1,13 +1,14 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -17,10 +18,9 @@ namespace Content.Client.GameObjects.Components
         public override string Name => "DoAfter";
 
         public IReadOnlyDictionary<byte, ClientDoAfter> DoAfters => _doAfters;
-        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new Dictionary<byte, ClientDoAfter>();
-        
-        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = 
-                     new List<(TimeSpan CancelTime, ClientDoAfter Message)>();
+        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new();
+
+        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = new();
 
         public DoAfterGui? Gui { get; set; }
 
@@ -52,11 +52,11 @@ namespace Content.Client.GameObjects.Components
         /// </summary>
         public void Enable()
         {
-            if (Gui != null && !Gui.Disposed)
+            if (Gui?.Disposed == false)
                 return;
-            
+
             Gui = new DoAfterGui {AttachedEntity = Owner};
-            
+
             foreach (var (_, doAfter) in _doAfters)
             {
                 Gui.AddDoAfter(doAfter);
@@ -71,20 +71,22 @@ namespace Content.Client.GameObjects.Components
         public void Disable()
         {
             Gui?.Dispose();
+            Gui = null;
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is DoAfterComponentState state))
+
+            if (curState is not DoAfterComponentState state)
                 return;
 
             var toRemove = new List<ClientDoAfter>();
-            
+
             foreach (var (id, doAfter) in _doAfters)
             {
                 var found = false;
-                
+
                 foreach (var clientdoAfter in state.DoAfters)
                 {
                     if (clientdoAfter.ID == id)
@@ -109,10 +111,10 @@ namespace Content.Client.GameObjects.Components
             {
                 if (_doAfters.ContainsKey(doAfter.ID))
                     continue;
-                
+
                 _doAfters.Add(doAfter.ID, doAfter);
             }
-            
+
             if (Gui == null || Gui.Disposed)
                 return;
 
@@ -128,11 +130,10 @@ namespace Content.Client.GameObjects.Components
         /// <param name="clientDoAfter"></param>
         public void Remove(ClientDoAfter clientDoAfter)
         {
-            if (_doAfters.ContainsKey(clientDoAfter.ID))
-                _doAfters.Remove(clientDoAfter.ID);
+            _doAfters.Remove(clientDoAfter.ID);
 
             var found = false;
-            
+
             for (var i = CancelledDoAfters.Count - 1; i >= 0; i--)
             {
                 var cancelled = CancelledDoAfters[i];
@@ -167,7 +168,7 @@ namespace Content.Client.GameObjects.Components
 
             if (!_doAfters.ContainsKey(id))
                 return;
-            
+
             var doAfterMessage = _doAfters[id];
             currentTime ??= IoCManager.Resolve<IGameTiming>().CurTime;
             CancelledDoAfters.Add((currentTime.Value, doAfterMessage));

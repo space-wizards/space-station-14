@@ -4,6 +4,6 @@
 #  - type: Sprite
 #    texture: Objects/Toolbox_b.png
 #    offset: 2, 0
-#    directional: false
+#    noRot: false
 #  - type: AnimationPlayer
 #  - type: AnimationsTest

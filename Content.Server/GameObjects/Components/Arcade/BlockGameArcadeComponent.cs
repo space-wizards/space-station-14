@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,11 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -26,22 +22,35 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class BlockGameArcadeComponent : Component, IActivate
     {
-        [Dependency] private IRobustRandom _random = null!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
+
+        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+
         private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
 
         private IPlayerSession? _player;
-        private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+        private readonly List<IPlayerSession> _spectators = new();
 
-        public void Activate(ActivateEventArgs eventArgs)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerChangedMessage powerChanged:
+                    OnPowerStateChanged(powerChanged);
+                    break;
+            }
+        }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -49,10 +58,10 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
+            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
 
-            UserInterface?.Toggle(actor.playerSession);
-            RegisterPlayerSession(actor.playerSession);
+            UserInterface?.Toggle(actor.PlayerSession);
+            RegisterPlayerSession(actor.PlayerSession);
         }
 
         private void RegisterPlayerSession(IPlayerSession session)
@@ -105,16 +114,12 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-
-            if (_powerReceiverComponent != null)
-            {
-                _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
+                UserInterface.OnClosed += UnRegisterPlayerSession;
             }
             _game = new BlockGame(this);
         }
 
-        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        private void OnPowerStateChanged(PowerChangedMessage e)
         {
             if (e.Powered) return;
 
@@ -127,9 +132,6 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             switch (obj.Message)
             {
-                case BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage:
-                    UnRegisterPlayerSession(obj.Session);
-                    break;
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 
@@ -162,9 +164,9 @@ namespace Content.Server.GameObjects.Components.Arcade
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
-            private BlockGameArcadeComponent _component;
+            private readonly BlockGameArcadeComponent _component;
 
-            private List<BlockGameBlock> _field = new List<BlockGameBlock>();
+            private readonly List<BlockGameBlock> _field = new();
 
             private BlockGamePiece _currentPiece;
 
@@ -536,35 +538,45 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void ProcessInput(BlockGamePlayerAction action)
             {
+                if (_running)
+                {
+                    switch (action)
+                    {
+                        case BlockGamePlayerAction.StartLeft:
+                            _leftPressed = true;
+                            break;
+                        case BlockGamePlayerAction.StartRight:
+                            _rightPressed = true;
+                            break;
+                        case BlockGamePlayerAction.Rotate:
+                            TrySetRotation(Next(_currentRotation, false));
+                            break;
+                        case BlockGamePlayerAction.CounterRotate:
+                            TrySetRotation(Next(_currentRotation, true));
+                            break;
+                        case BlockGamePlayerAction.SoftdropStart:
+                            _softDropPressed = true;
+                            if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
+                            break;
+                        case BlockGamePlayerAction.Harddrop:
+                            PerformHarddrop();
+                            break;
+                        case BlockGamePlayerAction.Hold:
+                            HoldPiece();
+                            break;
+                    }
+                }
+
                 switch (action)
                 {
-                    case BlockGamePlayerAction.StartLeft:
-                        _leftPressed = true;
-                        break;
                     case BlockGamePlayerAction.EndLeft:
                         _leftPressed = false;
-                        break;
-                    case BlockGamePlayerAction.StartRight:
-                        _rightPressed = true;
                         break;
                     case BlockGamePlayerAction.EndRight:
                         _rightPressed = false;
                         break;
-                    case BlockGamePlayerAction.Rotate:
-                        TrySetRotation(Next(_currentRotation, false));
-                        break;
-                    case BlockGamePlayerAction.CounterRotate:
-                        TrySetRotation(Next(_currentRotation, true));
-                        break;
-                    case BlockGamePlayerAction.SoftdropStart:
-                        _softDropPressed = true;
-                        if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
-                        break;
                     case BlockGamePlayerAction.SoftdropEnd:
                         _softDropPressed = false;
-                        break;
-                    case BlockGamePlayerAction.Harddrop:
-                        PerformHarddrop();
                         break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
@@ -576,9 +588,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                             _running = true;
                             _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
                         }
-                        break;
-                    case BlockGamePlayerAction.Hold:
-                        HoldPiece();
                         break;
                     case BlockGamePlayerAction.ShowHighscores:
                         _running = false;
@@ -731,7 +740,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private readonly BlockGamePieceType[] _allBlockGamePieces;
 
-            private List<BlockGamePieceType> _blockGamePiecesBuffer = new List<BlockGamePieceType>();
+            private List<BlockGamePieceType> _blockGamePiecesBuffer = new();
 
             private BlockGamePiece GetRandomBlockGamePiece(IRobustRandom random)
             {

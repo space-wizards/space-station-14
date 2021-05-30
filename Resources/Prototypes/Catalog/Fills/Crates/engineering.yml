@@ -1,0 +1,89 @@
+- type: entity
+  id: CrateEngineeringGear
+  name: engineering gear crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltUtility
+        amount: 2
+      - id: ClothingEyesGlassesMeson
+        amount: 2
+      - id: ClothingHeadHatHardhatYellow
+        amount: 2
+      - id: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
+        amount: 2
+      - id: ClothingOuterVestHazard
+        amount: 3
+      - id: ClothingHandsGlovesColorYellow
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringToolbox
+  name: toolbox crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: ToolboxMechanical
+        amount: 2
+      - id: ToolboxElectricalFilled
+        amount: 2
+
+#- type: entity
+#  id: CrateEngineeringPowercell
+#  name:  ame crate
+#  parent: CrateElectrical
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - id: PowerCellLargeStandard
+#        amount: 3
+#      - id: PowerCellMediumStandard
+#        amount: 3
+#      - id: PowerCellSmallAutorecharge
+#        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableLV
+  name: LV cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ApcExtensionCableStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableMV
+  name: MV cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MVWireStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableHV
+  name: HV cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: HVWireStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableBulk
+  name: bulk cable crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: HVWireStack
+        amount: 2
+      - id: MVWireStack
+        amount: 2
+      - id: ApcExtensionCableStack
+        amount: 2

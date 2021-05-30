@@ -1,0 +1,8 @@
+- type: entity
+  name: clientsideclone
+  id: clientsideclone
+  abstract: true
+  components:
+  - type: Sprite
+  - type: Physics
+  - type: AnimationPlayer

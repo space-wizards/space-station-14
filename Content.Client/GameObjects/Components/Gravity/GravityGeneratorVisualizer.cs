@@ -1,17 +1,44 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Gravity;
 using Robust.Client.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Gravity
 {
-    public class GravityGeneratorVisualizer : AppearanceVisualizer
+    [UsedImplicitly]
+    public class GravityGeneratorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
-        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new Dictionary<GravityGeneratorStatus, string>();
+        [DataField("spritemap")]
+        private Dictionary<string, string> _rawSpriteMap = new();
+        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new();
+
+        void ISerializationHooks.BeforeSerialization()
+        {
+            _rawSpriteMap = new Dictionary<string, string>();
+            foreach (var (status, sprite) in _spriteMap)
+            {
+                _rawSpriteMap.Add(status.ToString().ToLower(), sprite);
+            }
+        }
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            // Get Sprites for each status
+            foreach (var status in (GravityGeneratorStatus[]) Enum.GetValues(typeof(GravityGeneratorStatus)))
+            {
+                if (_rawSpriteMap.TryGetValue(status.ToString().ToLower(), out var sprite))
+                {
+                    _spriteMap[status] = sprite;
+                }
+            }
+        }
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -22,20 +49,6 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Base);
             sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Core);
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            // Get Sprites for each status
-            foreach (var status in (GravityGeneratorStatus[]) Enum.GetValues(typeof(GravityGeneratorStatus)))
-            {
-                if (node.TryGetNode(status.ToString().ToLower(), out var sprite))
-                {
-                    _spriteMap[status] = sprite.AsString();
-                }
-            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -60,7 +73,7 @@ namespace Content.Client.GameObjects.Components.Gravity
             }
         }
 
-        public enum GravityGeneratorVisualLayers
+        public enum GravityGeneratorVisualLayers : byte
         {
             Base,
             Core

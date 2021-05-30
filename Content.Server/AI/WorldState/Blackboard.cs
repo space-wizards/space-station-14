@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState
@@ -15,8 +15,8 @@ namespace Content.Server.AI.WorldState
         
         // This also stops you from re-writing the same boilerplate everywhere of stuff like "Do I have OuterClothing on?"
 
-        private readonly Dictionary<Type, IAiState> _states = new Dictionary<Type, IAiState>();
-        private readonly List<IPlanningState> _planningStates = new List<IPlanningState>();
+        private readonly Dictionary<Type, IAiState> _states = new();
+        private readonly List<IPlanningState> _planningStates = new();
 
         public Blackboard(IEntity owner)
         {

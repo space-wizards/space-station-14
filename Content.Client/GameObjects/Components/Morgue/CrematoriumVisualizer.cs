@@ -1,42 +1,24 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Morgue;
+﻿using Content.Shared.GameObjects.Components.Morgue;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.GameObjects.Components.Morgue
 {
+    [UsedImplicitly]
     public sealed class CrematoriumVisualizer : AppearanceVisualizer
     {
+        [DataField("state_open")]
         private string _stateOpen = "";
+        [DataField("state_closed")]
         private string _stateClosed = "";
 
+        [DataField("light_contents")]
         private string _lightContents = "";
+        [DataField("light_burning")]
         private string _lightBurning = "";
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("state_open", out var child))
-            {
-                _stateOpen = child.AsString();
-            }
-            if (node.TryGetNode("state_closed", out child))
-            {
-                _stateClosed = child.AsString();
-            }
-
-            if (node.TryGetNode("light_contents", out child))
-            {
-                _lightContents = child.AsString();
-            }
-            if (node.TryGetNode("light_burning", out child))
-            {
-                _lightBurning = child.AsString();
-            }
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -44,12 +26,14 @@ namespace Content.Client.GameObjects.Components.Storage
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
 
-            sprite.LayerSetState(
-                CrematoriumVisualLayers.Base,
-                component.GetData<bool>(MorgueVisuals.Open)
-                    ? _stateOpen
-                    : _stateClosed
-            );
+            if (component.TryGetData(MorgueVisuals.Open, out bool open))
+            {
+                sprite.LayerSetState(CrematoriumVisualLayers.Base, open ? _stateOpen : _stateClosed);
+            }
+            else
+            {
+                sprite.LayerSetState(CrematoriumVisualLayers.Base, _stateClosed);
+            }
 
             var lightState = "";
             if (component.TryGetData(MorgueVisuals.HasContents,  out bool hasContents) && hasContents) lightState = _lightContents;
@@ -67,7 +51,7 @@ namespace Content.Client.GameObjects.Components.Storage
         }
     }
 
-    public enum CrematoriumVisualLayers
+    public enum CrematoriumVisualLayers : byte
     {
         Base,
         Light,

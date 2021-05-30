@@ -7,10 +7,8 @@
     visuals:
     - type: StorageVisualizer
       state: rd
-  - type: Icon
-    state: rd_icon
   - type: AccessReader
-    access: [ [ "ResearchDirector" ] ]
+    access: [ [ "Research", "Command" ] ]
 
 - type: entity
   id: LockerScientist
@@ -21,7 +19,5 @@
       visuals:
         - type: StorageVisualizer
           state: science
-    - type: Icon
-      state: science_icon
     - type: AccessReader
       access: [ [ "Research" ] ]

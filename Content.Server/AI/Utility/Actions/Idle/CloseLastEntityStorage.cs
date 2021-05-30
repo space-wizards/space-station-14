@@ -10,7 +10,6 @@ using Content.Server.AI.Utility.Considerations.State;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Idle
@@ -21,17 +20,25 @@ namespace Content.Server.AI.Utility.Actions.Idle
     public sealed class CloseLastEntityStorage : UtilityAction
     {
         public override float Bonus => IdleBonus + 0.01f;
-        
-        public CloseLastEntityStorage(IEntity owner) : base(owner) {}
 
         public override void SetupOperators(Blackboard context)
         {
             var lastStorage = context.GetState<LastOpenedStorageState>().GetValue();
-            
+
+            if (lastStorage == null)
+            {
+                ActionOperators = new Queue<AiOperator>(new AiOperator[]
+                {
+                    new CloseLastStorageOperator(Owner),
+                });
+
+                return;
+            }
+
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new MoveToEntityOperator(Owner, lastStorage),
-                new CloseLastStorageOperator(Owner), 
+                new CloseLastStorageOperator(Owner),
             });
         }
 

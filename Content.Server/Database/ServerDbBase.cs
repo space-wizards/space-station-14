@@ -1,11 +1,14 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Enums;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 
@@ -13,6 +16,8 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
+
+        #region Preferences
         public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
             await using var db = await GetDb();
@@ -21,6 +26,7 @@ namespace Content.Server.Database
                 .Preference
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
+                .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
 
             if (prefs is null) return null;
@@ -32,7 +38,7 @@ namespace Content.Server.Database
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
 
-            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot);
+            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor));
         }
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
@@ -55,7 +61,7 @@ namespace Content.Server.Database
                 return;
             }
 
-            if (!(profile is HumanoidCharacterProfile humanoid))
+            if (profile is not HumanoidCharacterProfile humanoid)
             {
                 // TODO: Handle other ICharacterProfile implementations properly
                 throw new NotImplementedException();
@@ -72,7 +78,7 @@ namespace Content.Server.Database
                 .Profiles
                 .SingleOrDefault(h => h.Slot == entity.Slot);
 
-            if (!(oldProfile is null))
+            if (oldProfile is not null)
             {
                 prefs.Profiles.Remove(oldProfile);
             }
@@ -97,7 +103,8 @@ namespace Content.Server.Database
             var prefs = new Preference
             {
                 UserId = userId.UserId,
-                SelectedCharacterSlot = 0
+                SelectedCharacterSlot = 0,
+                AdminOOCColor = Color.Red.ToHex()
             };
 
             prefs.Profiles.Add(profile);
@@ -106,7 +113,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0);
+            return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0, Color.FromHex(prefs.AdminOOCColor));
         }
 
         public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
@@ -119,6 +126,19 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
+        {
+            await using var db = await GetDb();
+            var prefs = await db.DbContext
+                .Preference
+                .Include(p => p.Profiles)
+                .SingleAsync(p => p.UserId == userId.UserId);
+            prefs.AdminOOCColor = color.ToHex();
+
+            await db.DbContext.SaveChangesAsync();
+
+        }
+
         private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
         {
             var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
@@ -129,10 +149,28 @@ namespace Content.Server.Database
         {
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => a.AntagName);
+
+            var sex = Sex.Male;
+            if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
+                sex = sexVal;
+
+            var clothing = ClothingPreference.Jumpsuit;
+            if (Enum.TryParse<ClothingPreference>(profile.Clothing, true, out var clothingVal))
+                clothing = clothingVal;
+
+            var backpack = BackpackPreference.Backpack;
+            if (Enum.TryParse<BackpackPreference>(profile.Backpack, true, out var backpackVal))
+                backpack = backpackVal;
+
+            var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
+            if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
+                gender = genderVal;
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Age,
-                profile.Sex == "Male" ? Sex.Male : Sex.Female,
+                sex,
+                gender,
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
@@ -142,6 +180,8 @@ namespace Content.Server.Database
                     Color.FromHex(profile.EyeColor),
                     Color.FromHex(profile.SkinColor)
                 ),
+                clothing,
+                backpack,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList()
@@ -157,12 +197,15 @@ namespace Content.Server.Database
                 CharacterName = humanoid.Name,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
-                HairName = appearance.HairStyleName,
+                Gender = humanoid.Gender.ToString(),
+                HairName = appearance.HairStyleId,
                 HairColor = appearance.HairColor.ToHex(),
-                FacialHairName = appearance.FacialHairStyleName,
+                FacialHairName = appearance.FacialHairStyleId,
                 FacialHairColor = appearance.FacialHairColor.ToHex(),
                 EyeColor = appearance.EyeColor.ToHex(),
                 SkinColor = appearance.SkinColor.ToHex(),
+                Clothing = humanoid.Clothing.ToString(),
+                Backpack = humanoid.Backpack.ToString(),
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };
@@ -178,6 +221,7 @@ namespace Content.Server.Database
 
             return entity;
         }
+        #endregion
 
         public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
@@ -204,19 +248,154 @@ namespace Content.Server.Database
         /*
          * BAN STUFF
          */
-        public abstract Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        /// <summary>
+        ///     Looks up a ban by id.
+        ///     This will return a pardoned ban as well.
+        /// </summary>
+        /// <param name="id">The ban id to look for.</param>
+        /// <returns>The ban with the given id or null if none exist.</returns>
+        public abstract Task<ServerBanDef?> GetServerBanAsync(int id);
+
+        /// <summary>
+        ///     Looks up an user's most recent received un-pardoned ban.
+        ///     This will NOT return a pardoned ban.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <param name="hwId">The HWId of the user.</param>
+        /// <returns>The user's latest received un-pardoned ban, or null if none exist.</returns>
+        public abstract Task<ServerBanDef?> GetServerBanAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId);
+
+        /// <summary>
+        ///     Looks up an user's ban history.
+        ///     This will return pardoned bans as well.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <param name="hwId">The HWId of the user.</param>
+        /// <returns>The user's ban history.</returns>
+        public abstract Task<List<ServerBanDef>> GetServerBansAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId);
+
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
+        public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
 
         /*
          * PLAYER RECORDS
          */
-        public abstract Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address);
+        public abstract Task UpdatePlayerRecord(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId);
+        public abstract Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel);
+        public abstract Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel);
 
         /*
          * CONNECTION LOG
          */
-        public abstract Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
+        public abstract Task AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId);
 
+        /*
+         * ADMIN STUFF
+         */
+        public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Admin
+                .Include(p => p.Flags)
+                .Include(p => p.AdminRank)
+                .ThenInclude(p => p!.Flags)
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+        }
+
+        public abstract Task<((Admin, string? lastUserName)[] admins, AdminRank[])>
+            GetAllAdminAndRanksAsync(CancellationToken cancel);
+
+        public async Task<AdminRank?> GetAdminRankDataForAsync(int id, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.AdminRank
+                .Include(r => r.Flags)
+                .SingleOrDefaultAsync(r => r.Id == id, cancel);
+        }
+
+        public async Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var admin = await db.DbContext.Admin.SingleAsync(a => a.UserId == userId.UserId, cancel);
+            db.DbContext.Admin.Remove(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddAdminAsync(Admin admin, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Admin.Add(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateAdminAsync(Admin admin, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var existing = await db.DbContext.Admin.Include(a => a.Flags).SingleAsync(a => a.UserId == admin.UserId, cancel);
+            existing.Flags = admin.Flags;
+            existing.Title = admin.Title;
+            existing.AdminRankId = admin.AdminRankId;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task RemoveAdminRankAsync(int rankId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var admin = await db.DbContext.AdminRank.SingleAsync(a => a.Id == rankId, cancel);
+            db.DbContext.AdminRank.Remove(admin);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.AdminRank.Add(rank);
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var existing = await db.DbContext.AdminRank
+                .Include(r => r.Flags)
+                .SingleAsync(a => a.Id == rank.Id, cancel);
+
+            existing.Flags = rank.Flags;
+            existing.Name = rank.Name;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
 
         protected abstract Task<DbGuard> GetDb();
 

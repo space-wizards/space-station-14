@@ -1,0 +1,24 @@
+# - type: entity
+#   id: LockerL3Filled
+#   suffix: Filled, Generic
+#   parent: LockerL3
+
+ - type: entity
+   id: LockerL3VirologyFilled
+   suffix: Filled, Virology
+   parent: LockerL3Virology
+
+ - type: entity
+   id: LockerL3SecurityFilled
+   suffix: Filled, Security
+   parent: LockerL3Security
+
+ - type: entity
+   id: LockerL3JanitorFilled
+   suffix: Filled, Janitor
+   parent: LockerL3Janitor
+
+# - type: entity
+#   id: LockerL3ScienceFilled
+#   suffix: Filled, Science
+#   parent: LockerL3Virology

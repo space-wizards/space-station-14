@@ -1,6 +1,7 @@
 {
   "version": 1,
-  "copyright": "Taken from https://github.com/tgstation/tgstation",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/a929584d9db319eb7484113221be25cfa1d5dc09",
   "size": {
     "x": 32,
     "y": 32
@@ -8,48 +9,14 @@
   "states": [
     {
       "name": "inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "icon"
     }
   ]
 }

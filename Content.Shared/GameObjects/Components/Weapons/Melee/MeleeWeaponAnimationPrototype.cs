@@ -1,57 +1,50 @@
+#nullable enable
 using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components.Weapons.Melee
 {
     [Prototype("MeleeWeaponAnimation")]
-    public sealed class MeleeWeaponAnimationPrototype : IPrototype, IIndexedPrototype
+    public sealed class MeleeWeaponAnimationPrototype : IPrototype
     {
-        private string _prototype;
-        private string _state;
-        private string _id;
-        private Vector4 _colorDelta;
-        private Vector4 _color;
-        private TimeSpan _length;
-        private float _speed;
-        private float _width;
-        private WeaponArcType _arcType;
-        
-        [ViewVariables] public string ID => _id;
-        [ViewVariables] public string State => _state;
-        [ViewVariables] public string Prototype => _prototype;
-        [ViewVariables] public TimeSpan Length => _length;
-        [ViewVariables] public float Speed => _speed;
-        [ViewVariables] public Vector4 Color => _color;
-        [ViewVariables] public Vector4 ColorDelta => _colorDelta;
-        [ViewVariables] public WeaponArcType ArcType => _arcType;
-        [ViewVariables] public float Width => _width;
+        [ViewVariables]
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            var serializer = YamlObjectSerializer.NewReader(mapping);
+        [ViewVariables]
+        [DataField("state")]
+        public string State { get; } = string.Empty;
 
-            serializer.DataField(ref _prototype, "prototype", "WeaponArc");
-            serializer.DataField(ref _state, "state", null);
-            serializer.DataField(ref _id, "id", null);
-            serializer.DataField(ref _colorDelta, "colorDelta", Vector4.Zero);
-            serializer.DataField(ref _color, "color", new Vector4(1, 1, 1, 1));
-            if (serializer.TryReadDataField("length", out float length))
-            {
-                _length = TimeSpan.FromSeconds(length);
-            }
-            else
-            {
-                _length = TimeSpan.FromSeconds(0.5f);
-            }
+        [ViewVariables]
+        [DataField("prototype")]
+        public string Prototype { get; } = "WeaponArc";
 
-            serializer.DataField(ref _speed, "speed", 1);
-            serializer.DataField(ref _arcType, "arcType", WeaponArcType.Slash);
-            serializer.DataField(ref _width, "width", 90);
-        }
+        [ViewVariables]
+        [DataField("length")]
+        public TimeSpan Length { get; } = TimeSpan.FromSeconds(0.5f);
+
+        [ViewVariables]
+        [DataField("speed")]
+        public float Speed { get; } = 1;
+
+        [ViewVariables]
+        [DataField("color")]
+        public Vector4 Color { get; } = new(1,1,1,1);
+
+        [ViewVariables]
+        [DataField("colorDelta")]
+        public Vector4 ColorDelta { get; } = Vector4.Zero;
+
+        [ViewVariables]
+        [DataField("arcType")]
+        public WeaponArcType ArcType { get; } = WeaponArcType.Slash;
+
+        [ViewVariables]
+        [DataField("width")]
+        public float Width { get; } = 90;
     }
 
     public enum WeaponArcType

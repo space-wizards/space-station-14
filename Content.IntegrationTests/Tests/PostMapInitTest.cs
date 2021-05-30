@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.Resources;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

@@ -1,4 +1,6 @@
+#nullable enable
 using Content.Client.GameObjects.Components.Observer;
+using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -10,9 +12,12 @@ namespace Content.Client.UserInterface
 {
     public class GhostGui : Control
     {
-        private readonly Button _returnToBody = new Button() {Text = Loc.GetString("Return to body")};
-        private readonly Button _ghostWarp = new Button() {Text = Loc.GetString("Ghost Warp")};
+        private readonly Button _returnToBody = new() {Text = Loc.GetString("Return to body")};
+        private readonly Button _ghostWarp = new() {Text = Loc.GetString("Ghost Warp")};
+        private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
         private readonly GhostComponent _owner;
+
+        public GhostTargetWindow? TargetWindow { get; }
 
         public GhostGui(GhostComponent owner)
         {
@@ -20,19 +25,21 @@ namespace Content.Client.UserInterface
 
             _owner = owner;
 
-            var targetMenu = new GhostTargetWindow(owner);
+            TargetWindow = new GhostTargetWindow(owner);
 
             MouseFilter = MouseFilterMode.Ignore;
 
-            _ghostWarp.OnPressed += args => targetMenu.Populate();
-            _returnToBody.OnPressed += args => owner.SendReturnToBodyMessage();
+            _ghostWarp.OnPressed += _ => TargetWindow.Populate();
+            _returnToBody.OnPressed += _ => owner.SendReturnToBodyMessage();
+            _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>().RemoteExecuteCommand(null, "ghostroles");
 
             AddChild(new HBoxContainer
             {
                 Children =
                 {
                     _returnToBody,
-                    _ghostWarp
+                    _ghostWarp,
+                    _ghostRoles,
                 }
             });
 
@@ -45,43 +52,35 @@ namespace Content.Client.UserInterface
         }
     }
 
-    internal class GhostTargetWindow : SS14Window
+    public class GhostTargetWindow : SS14Window
     {
-        protected override Vector2? CustomSize => (300, 450);
         private readonly GhostComponent _owner;
         private readonly VBoxContainer _buttonContainer;
 
         public GhostTargetWindow(GhostComponent owner)
         {
+            MinSize = SetSize = (300, 450);
             Title = "Ghost Warp";
             _owner = owner;
             _owner.GhostRequestWarpPoint();
             _owner.GhostRequestPlayerNames();
 
-            var margin = new MarginContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-            };
-
             _buttonContainer = new VBoxContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.Fill,
+                VerticalExpand = true,
                 SeparationOverride = 5,
 
             };
 
             var scrollBarContainer = new ScrollContainer()
             {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                VerticalExpand = true,
+                HorizontalExpand = true
             };
 
-            margin.AddChild(scrollBarContainer);
             scrollBarContainer.AddChild(_buttonContainer);
 
-            Contents.AddChild(margin);
+            Contents.AddChild(scrollBarContainer);
         }
 
         public void Populate()
@@ -100,14 +99,14 @@ namespace Content.Client.UserInterface
                 {
                     Text = value,
                     TextAlign = Label.AlignMode.Right,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
                     SizeFlagsStretchRatio = 1,
-                    CustomMinimumSize = (230, 20),
+                    MinSize = (230, 20),
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
                     _owner.SendGhostWarpRequestMessage(key);
                 };
@@ -124,16 +123,16 @@ namespace Content.Client.UserInterface
                 {
                     Text = $"Warp: {name}",
                     TextAlign = Label.AlignMode.Right,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
                     SizeFlagsStretchRatio = 1,
-                    CustomMinimumSize = (230,20),
+                    MinSize = (230,20),
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (args) =>
+                currentButtonRef.OnPressed += (_) =>
                 {
-                    _owner.SendGhostWarpRequestMessage(default,name);
+                    _owner.SendGhostWarpRequestMessage(name);
                 };
 
                 _buttonContainer.AddChild(currentButtonRef);

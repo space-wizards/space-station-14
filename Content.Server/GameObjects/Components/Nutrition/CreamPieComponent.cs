@@ -1,35 +1,50 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class CreamPieComponent : Component, ILand
+    public class CreamPieComponent : Component, ILand, IThrowCollide
     {
         public override string Name => "CreamPie";
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("paralyzeTime")]
+        public float ParalyzeTime { get; set; } = 1f;
+
         public void PlaySound()
         {
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("desecration"), Owner,
+            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("desecration"), Owner,
                 AudioHelpers.WithVariation(0.125f));
         }
 
-        public void Land(LandEventArgs eventArgs)
+        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
+        {
+            Splat();
+        }
+
+        void ILand.Land(LandEventArgs eventArgs)
+        {
+            Splat();
+        }
+
+        public void Splat()
         {
             PlaySound();
 
-            if (Owner.TryGetComponent(out SolutionContainerComponent solution))
+            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 solution.Solution.SpillAt(Owner, "PuddleSmear", false);
             }
 
-            Owner.Delete();
+            Owner.QueueDelete();
         }
     }
 }

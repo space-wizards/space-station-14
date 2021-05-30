@@ -1,51 +1,50 @@
 {
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/21d5a65346cfdaa61e86410cf9323e4e03a362d9",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/commit/e107a20eb3e8def075a7d967dbf91426accabcbe",
-    "states": [
-        {
-            "name": "broken",
-            "directions": 1
-        },
-        {
-            "name": "deny-unshaded",
-            "directions": 1,
-            "delays": [
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ]
-            ]
-        },
-        {
-            "name": "normal-unshaded",
-            "directions": 1,
-            "delays": [
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ]
-            ]
-        },
-        {
-            "name": "off",
-            "directions": 1
-        }
-    ]
+    {
+      "name": "deny-unshaded",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "panel"
+    }
+  ]
 }

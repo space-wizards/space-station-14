@@ -7,7 +7,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Circulatory
@@ -21,19 +21,22 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
-        [ViewVariables] private ReagentUnit _initialMaxVolume;
+        [DataField("maxVolume")]
+        [ViewVariables] private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
 
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private SolutionContainerComponent _internalSolution;
+        [ViewVariables] private SolutionContainerComponent _internalSolution = default!;
 
         /// <summary>
         ///     Empty volume of internal solution
         /// </summary>
         [ViewVariables] public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
 
-        [ViewVariables] public GasMixture Air { get; set; }
+        [ViewVariables]
+        public GasMixture Air { get; set; } = new(6)
+            {Temperature = Atmospherics.NormalBodyTemperature};
 
         [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
 
@@ -43,15 +46,6 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
 
             _internalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            Air = new GasMixture(6) {Temperature = Atmospherics.NormalBodyTemperature};
-
-            serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }
 
         /// <summary>
@@ -68,13 +62,13 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
                 return false;
             }
 
-            _internalSolution.TryAddSolution(solution, false, true);
+            _internalSolution.TryAddSolution(solution);
             return true;
         }
 
         public void PumpToxins(GasMixture to)
         {
-            if (!Owner.TryGetComponent(out MetabolismComponent metabolism))
+            if (!Owner.TryGetComponent(out MetabolismComponent? metabolism))
             {
                 to.Merge(Air);
                 Air.Clear();

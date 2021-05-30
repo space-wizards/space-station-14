@@ -1,14 +1,13 @@
-- type: tile
+﻿- type: tile
   name: floor_dark
   display_name: Dark floor
   texture: "dark"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemDark
 
 - type: tile
@@ -16,24 +15,22 @@
   display_name: Elevator shaft
   texture: "elevator_shaft"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_freezer
   display_name: Freezer
   texture: "freezer"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemFreezer
 
 - type: tile
@@ -41,24 +38,22 @@
   display_name: Hydro floor
   texture: "hydro"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_green_circuit
   display_name: Green circuit floor
   texture: "green_circuit"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemGCircuit
 
 - type: tile
@@ -66,12 +61,11 @@
   display_name: Linoleum floor
   texture: "lino"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemLino
 
 - type: tile
@@ -79,12 +73,11 @@
   display_name: Mono floor
   texture: "mono"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemMono
 
 - type: tile
@@ -92,12 +85,11 @@
   display_name: Reinforced floor
   texture: "reinforced"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemReinforced
 
 - type: tile
@@ -105,25 +97,22 @@
   display_name: rock floor
   texture: "rock_vault"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
-  item_drop: FloorTileItemRock
+  friction: 0.30
 
 - type: tile
   name: floor_showroom
   display_name: Showroom floor
   texture: "showroom"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds:
-  friction: 0.35
+  footstep_sounds: footstep_floor
+  friction: 0.30
   item_drop: FloorTileItemShowroom
 
 - type: tile
@@ -131,12 +120,11 @@
   display_name: Steel floor
   texture: "steel"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemSteel
 
 - type: tile
@@ -144,12 +132,11 @@
   display_name: Dirty steel floor
   texture: "steel_dirty"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemDirty
 
 - type: tile
@@ -157,12 +144,11 @@
   display_name: Techmaint Floor
   texture: "tech_maint"
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.5
+  friction: 0.30
   item_drop: FloorTileItemTechmaint
 
 - type: tile
@@ -170,12 +156,11 @@
   display_name: White Floor
   texture: "white"
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.1
+  friction: 0.25
   item_drop: FloorTileItemWhite
 
 - type: tile
@@ -187,20 +172,18 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_asteroid_tile
   display_name: Asteroid Tile
   texture: Asteroid/asteroid_tile
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_asteroid
-  friction: 0.35
-  item_drop: FloorTileItemAsteroid
+  friction: 0.30
 
 - type: tile
   name: floor_asteroid_coarse_sand0
@@ -211,7 +194,7 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_asteroid_coarse_sand1
@@ -222,7 +205,7 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_asteroid_coarse_sand2
@@ -233,7 +216,7 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_asteroid_coarse_sand_dug
@@ -244,7 +227,7 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_snow
@@ -255,17 +238,95 @@
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_snow
-  friction: 0.35
+  friction: 0.30
 
 - type: tile
   name: floor_gold
   display_name: Gold Tile
   texture: gold
   base_turfs:
-  - space
-  - underplating
+  - plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.35
+  friction: 0.30
   item_drop: FloorTileItemGold
+
+- type: tile
+  name: floor_glass
+  display_name: glass floor
+  texture: glass
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30
+  item_drop: SheetGlass1
+
+- type: tile
+  name: floor_rglass
+  display_name: reinforced glass floor
+  texture: rglass
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30
+  item_drop: SheetRGlass1
+
+- type: tile
+  name: floor_warning1
+  display_name: Warning Tile
+  texture: steel_warning1
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30
+
+- type: tile
+  name: floor_warning2
+  display_name: Beware Tile
+  texture: steel_warning2
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30
+
+- type: tile
+  name: floor_white_warning1
+  display_name: White Warning Tile
+  texture: white_warning1
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30
+
+- type: tile
+  name: floor_white_warning2
+  display_name: White Beware Tile
+  texture: white_warning2
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30
+
+- type: tile
+  name: floor_blue
+  display_name: Blue Tile
+  texture: blue
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.30

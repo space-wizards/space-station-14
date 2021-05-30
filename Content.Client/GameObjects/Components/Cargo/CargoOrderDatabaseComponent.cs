@@ -9,13 +9,13 @@ namespace Content.Client.GameObjects.Components.Cargo
     [RegisterComponent]
     public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
-        private List<CargoOrderData> _orders = new List<CargoOrderData>();
+        private readonly List<CargoOrderData> _orders = new();
 
         public IReadOnlyList<CargoOrderData> Orders => _orders;
         /// <summary>
         ///     Event called when the database is updated.
         /// </summary>
-        public event Action OnDatabaseUpdated;
+        public event Action? OnDatabaseUpdated;
 
         // TODO add account selector menu
 
@@ -37,10 +37,10 @@ namespace Content.Client.GameObjects.Components.Cargo
                 _orders.Add(order);
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is CargoOrderDatabaseState state))
+            if (curState is not CargoOrderDatabaseState state)
                 return;
             Clear();
             if (state.Orders == null)

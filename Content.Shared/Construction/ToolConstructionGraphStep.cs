@@ -1,25 +1,19 @@
-﻿using System;
+﻿#nullable enable
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
+    [DataDefinition]
     public class ToolConstructionGraphStep : ConstructionGraphStep
     {
-        public ToolQuality Tool { get; private set; }
-        public float Fuel { get; private set; }
-        public string ExamineOverride { get; private set; }
+        [DataField("tool")] public ToolQuality Tool { get; } = ToolQuality.None;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
+        [DataField("fuel")] public float Fuel { get; } = 10;
 
-            serializer.DataField(this, x => x.Tool, "tool", ToolQuality.None);
-            serializer.DataField(this, x => x.Fuel, "fuel", 10f); // Default fuel cost.
-            serializer.DataField(this, x => x.ExamineOverride, "examine", string.Empty);
-        }
+        [DataField("examine")] public string ExamineOverride { get; } = string.Empty;
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {

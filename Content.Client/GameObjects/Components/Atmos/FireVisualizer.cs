@@ -1,21 +1,25 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Atmos;
+﻿using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
     public class FireVisualizer : AppearanceVisualizer
     {
+        [DataField("fireStackAlternateState")]
         private int _fireStackAlternateState = 3;
-        private string _normalState;
-        private string _alternateState;
-        private string _sprite;
+
+        [DataField("normalState")]
+        private string? _normalState;
+
+        [DataField("alternateState")]
+        private string? _alternateState;
+
+        [DataField("sprite")]
+        private string? _sprite;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -25,31 +29,6 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             sprite.LayerMapReserveBlank(FireVisualLayers.Fire);
             sprite.LayerSetVisible(FireVisualLayers.Fire, false);
-        }
-
-        public override void LoadData(YamlMappingNode node)
-        {
-            base.LoadData(node);
-
-            if (node.TryGetNode("sprite", out var sprite))
-            {
-                _sprite = sprite.AsString();
-            }
-
-            if (node.TryGetNode("fireStackAlternateState", out var fireStack))
-            {
-                _fireStackAlternateState = fireStack.AsInt();
-            }
-
-            if (node.TryGetNode("normalState", out var normalState))
-            {
-                _normalState = normalState.AsString();
-            }
-
-            if (node.TryGetNode("alternateState", out var alternateState))
-            {
-                _alternateState = alternateState.AsString();
-            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -71,7 +50,11 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            sprite.LayerSetRSI(FireVisualLayers.Fire, _sprite);
+            if (_sprite != null)
+            {
+                sprite.LayerSetRSI(FireVisualLayers.Fire, _sprite);
+            }
+
             sprite.LayerSetVisible(FireVisualLayers.Fire, onFire);
 
             if(fireStacks > _fireStackAlternateState && !string.IsNullOrEmpty(_alternateState))
@@ -81,7 +64,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         }
     }
 
-    public enum FireVisualLayers
+    public enum FireVisualLayers : byte
     {
         Fire
     }

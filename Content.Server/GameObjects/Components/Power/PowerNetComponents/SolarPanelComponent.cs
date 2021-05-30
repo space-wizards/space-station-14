@@ -1,11 +1,11 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -23,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>
+        [DataField("maxsupply")]
         private int _maxSupply = 1500;
         [ViewVariables(VVAccess.ReadWrite)]
         public int MaxSupply
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void UpdateSupply()
         {
-            if (Owner.TryGetComponent(out PowerSupplierComponent supplier))
+            if (Owner.TryGetComponent<PowerSupplierComponent>(out var supplier))
             {
                 supplier.SupplyRate = (int) (_maxSupply * _coverage);
             }
@@ -73,24 +74,16 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out PowerSupplierComponent _))
-            {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PowerSupplierComponent)}");
-            }
+            Owner.EnsureComponentWarn<PowerSupplierComponent>();
 
             UpdateSupply();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _maxSupply, "maxsupply", 1500);
-        }
-
         public void OnBreak(BreakageEventArgs args)
         {
-            var sprite = Owner.GetComponent<SpriteComponent>();
+            if (!Owner.TryGetComponent<SpriteComponent>(out var sprite))
+                return;
+
             sprite.LayerSetState(0, "broken");
             MaxSupply = 0;
         }

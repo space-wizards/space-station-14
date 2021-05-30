@@ -1,13 +1,13 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
@@ -45,8 +45,8 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solution) ||
-                !Body.Owner.TryGetComponent(out SharedBloodstreamComponent? bloodstream))
+            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
+                !Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }
@@ -89,37 +89,28 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         /// <summary>
         ///     Initial internal solution storage volume
         /// </summary>
+        [DataField("maxVolume")]
         [ViewVariables]
-        protected ReagentUnit InitialMaxVolume { get; private set; }
+        protected ReagentUnit InitialMaxVolume { get; private set; } = ReagentUnit.New(100);
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
         ///     transferred to <see cref="SharedBloodstreamComponent"/>
         /// </summary>
-        [ViewVariables]
-        private float _digestionDelay;
+        [DataField("digestionDelay")] [ViewVariables]
+        private float _digestionDelay = 20;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
         [ViewVariables]
-        private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(this, s => s.InitialMaxVolume, "maxVolume", ReagentUnit.New(100));
-            serializer.DataField(ref _digestionDelay, "digestionDelay", 20);
-        }
+        private readonly List<ReagentDelta> _reagentDeltas = new();
 
         public override void Startup()
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
-            {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
-            }
+            Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
 
             solution.MaxVolume = InitialMaxVolume;
         }
@@ -142,16 +133,16 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public bool TryTransferSolution(Solution solution)
         {
-            if (!CanTransferSolution(solution))
+            if (Body == null || !CanTransferSolution(solution))
                 return false;
 
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solutionComponent))
+            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }
 
             // Add solution to _stomachContents
-            solutionComponent.TryAddSolution(solution, false, true);
+            solutionComponent.TryAddSolution(solution);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

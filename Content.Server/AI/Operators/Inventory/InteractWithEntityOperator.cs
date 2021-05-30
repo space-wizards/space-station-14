@@ -1,7 +1,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Utility;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
@@ -33,7 +33,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }

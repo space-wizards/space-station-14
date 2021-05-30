@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Timers;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -23,15 +19,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Flash";
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
-        [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
-        [ViewVariables(VVAccess.ReadWrite)] private float _range = 3f;
-        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration = 5000 / 3;
-        [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
+        public FlashComponent() { Range = 7f; }
+
+        [DataField("duration")] [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
+        [DataField("uses")] [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
+        [ViewVariables(VVAccess.ReadWrite)] private float _range => Range;
+        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration => _internalAoeFlashDuration ?? _flashDuration / 3;
+        [DataField("aoeFlashDuration")] private int? _internalAoeFlashDuration;
+        [DataField("slowTo")] [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
         private bool _flashing;
 
         private int Uses
@@ -46,18 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private bool HasUses => _uses > 0;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _flashDuration, "duration", 5000);
-            serializer.DataField(ref _uses, "uses", 5);
-            serializer.DataField(ref _range, "range", 7f);
-            serializer.DataField(ref _aoeFlashDuration, "aoeFlashDuration", _flashDuration / 3);
-            serializer.DataField(ref _slowTo, "slowTo", 0.75f);
-        }
-
-        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEvent eventArgs)
         {
             if (entities.Count == 0)
             {
@@ -77,14 +63,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!Use(eventArgs.User))
             {
                 return false;
             }
 
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, _range))
+            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(Owner.Transform.Coordinates, _range))
             {
                 Flash(entity, eventArgs.User, _aoeFlashDuration);
             }
@@ -100,8 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (--Uses == 0)
                 {
                     sprite.LayerSetState(0, "burnt");
-
-                    Owner.PopupMessage(user, Loc.GetString("The flash burns out!"));
+                    Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
                 }
                 else if (!_flashing)
                 {
@@ -115,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     });
                 }
 
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.Coordinates,
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/flash.ogg", Owner.Transform.Coordinates,
                     AudioParams.Default);
 
                 return true;
@@ -130,32 +115,27 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         }
 
         // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
+        // TODO: Merge with the code in FlashableComponent
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
+            if (entity.TryGetComponent<FlashableComponent>(out var flashable))
             {
-                if (!overlayEffectsComponent.TryModifyOverlay(nameof(SharedOverlayID.FlashOverlay),
-                    overlay =>
-                    {
-                        if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
-                        {
-                            timed.Length += flashDuration;
-                        }
-                    }))
-                {
-                    var container = new OverlayContainer(SharedOverlayID.FlashOverlay, new TimedOverlayParameter(flashDuration));
-                    overlayEffectsComponent.AddOverlay(container);
-                }
+                flashable.Flash(flashDuration / 1000d);
             }
 
-            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            if (entity.TryGetComponent<StunnableComponent>(out var stunnableComponent))
             {
                 stunnableComponent.Slowdown(flashDuration / 1000f, _slowTo, _slowTo);
             }
 
             if (entity != user)
             {
-                user.PopupMessage(entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
+                user.PopupMessage(entity,
+                    Loc.GetString(
+                        "flash-component-user-blinds-you",
+                        ("user", user)
+                    )
+                );
             }
         }
 
@@ -163,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (!HasUses)
             {
-                message.AddText("It's burnt out.");
+                message.AddText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
@@ -171,9 +151,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 message.AddMarkup(
                     Loc.GetString(
-                        "The flash has [color=green]{0}[/color] {1} remaining.",
-                        Uses,
-                        Loc.GetPluralString("use", "uses", Uses)
+                        "flash-component-examine-detail-count",
+                        ("count", Uses),
+                        ("markupCountColor", "green")
                     )
                 );
             }

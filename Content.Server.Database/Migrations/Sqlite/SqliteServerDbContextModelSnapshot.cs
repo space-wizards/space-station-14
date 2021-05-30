@@ -14,23 +14,118 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4");
+                .HasAnnotation("ProductVersion", "5.0.3");
+
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.Property<int?>("AdminRankId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_rank_id");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("title");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("AdminRankId");
+
+                    b.ToTable("admin");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_flag_id");
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_id");
+
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("flag");
+
+                    b.Property<bool>("Negative")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("negative");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("Flag", "AdminId")
+                        .IsUnique();
+
+                    b.ToTable("admin_flag");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_rank_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("admin_rank");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_rank_flag_id");
+
+                    b.Property<int>("AdminRankId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_rank_id");
+
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("flag");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminRankId");
+
+                    b.HasIndex("Flag", "AdminRankId")
+                        .IsUnique();
+
+                    b.ToTable("admin_rank_flag");
+                });
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("antag_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("antag_id");
 
                     b.Property<string>("AntagName")
                         .IsRequired()
-                        .HasColumnName("antag_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("antag_name");
 
                     b.Property<int>("ProfileId")
-                        .HasColumnName("profile_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
 
                     b.HasKey("Id");
 
@@ -44,17 +139,17 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("assigned_user_id_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("assigned_user_id_id");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnName("user_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
@@ -71,21 +166,21 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("job_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("job_id");
 
                     b.Property<string>("JobName")
                         .IsRequired()
-                        .HasColumnName("job_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("job_name");
 
                     b.Property<int>("Priority")
-                        .HasColumnName("priority")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("priority");
 
                     b.Property<int>("ProfileId")
-                        .HasColumnName("profile_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
 
                     b.HasKey("Id");
 
@@ -98,16 +193,21 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("preference_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("preference_id");
+
+                    b.Property<string>("AdminOOCColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_ooc_color");
 
                     b.Property<int>("SelectedCharacterSlot")
-                        .HasColumnName("selected_character_slot")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("selected_character_slot");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
@@ -121,64 +221,79 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("profile_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
 
                     b.Property<int>("Age")
-                        .HasColumnName("age")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("age");
+
+                    b.Property<string>("Backpack")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("backpack");
 
                     b.Property<string>("CharacterName")
                         .IsRequired()
-                        .HasColumnName("char_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("char_name");
+
+                    b.Property<string>("Clothing")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("clothing");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()
-                        .HasColumnName("eye_color")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("eye_color");
 
                     b.Property<string>("FacialHairColor")
                         .IsRequired()
-                        .HasColumnName("facial_hair_color")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("facial_hair_color");
 
                     b.Property<string>("FacialHairName")
                         .IsRequired()
-                        .HasColumnName("facial_hair_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("facial_hair_name");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("gender");
 
                     b.Property<string>("HairColor")
                         .IsRequired()
-                        .HasColumnName("hair_color")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("hair_color");
 
                     b.Property<string>("HairName")
                         .IsRequired()
-                        .HasColumnName("hair_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("hair_name");
 
                     b.Property<int>("PreferenceId")
-                        .HasColumnName("preference_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("preference_id");
 
                     b.Property<int>("PreferenceUnavailable")
-                        .HasColumnName("pref_unavailable")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pref_unavailable");
 
                     b.Property<string>("Sex")
                         .IsRequired()
-                        .HasColumnName("sex")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("sex");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
-                        .HasColumnName("skin_color")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("skin_color");
 
                     b.Property<int>("Slot")
-                        .HasColumnName("slot")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("slot");
 
                     b.HasKey("Id");
 
@@ -194,26 +309,30 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("connection_log_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("connection_log_id");
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnName("address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("address");
+
+                    b.Property<byte[]>("HWId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("hwid");
 
                     b.Property<DateTime>("Time")
-                        .HasColumnName("time")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("time");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnName("user_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
@@ -224,32 +343,38 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("player_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("player_id");
 
                     b.Property<DateTime>("FirstSeenTime")
-                        .HasColumnName("first_seen_time")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("first_seen_time");
 
                     b.Property<string>("LastSeenAddress")
                         .IsRequired()
-                        .HasColumnName("last_seen_address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("last_seen_address");
+
+                    b.Property<byte[]>("LastSeenHWId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("last_seen_hwid");
 
                     b.Property<DateTime>("LastSeenTime")
-                        .HasColumnName("last_seen_time")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("last_seen_time");
 
                     b.Property<string>("LastSeenUserName")
                         .IsRequired()
-                        .HasColumnName("last_seen_user_name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("last_seen_user_name");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LastSeenUserName");
 
                     b.ToTable("player");
                 });
@@ -258,33 +383,37 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("ban_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ban_id");
 
                     b.Property<string>("Address")
-                        .HasColumnName("address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("address");
 
                     b.Property<DateTime>("BanTime")
-                        .HasColumnName("ban_time")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ban_time");
 
                     b.Property<Guid?>("BanningAdmin")
-                        .HasColumnName("banning_admin")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("banning_admin");
 
                     b.Property<DateTime?>("ExpirationTime")
-                        .HasColumnName("expiration_time")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("expiration_time");
+
+                    b.Property<byte[]>("HWId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("hwid");
 
                     b.Property<string>("Reason")
                         .IsRequired()
-                        .HasColumnName("reason")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("reason");
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
@@ -295,20 +424,20 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("unban_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("unban_id");
 
                     b.Property<int>("BanId")
-                        .HasColumnName("ban_id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ban_id");
 
                     b.Property<DateTime>("UnbanTime")
-                        .HasColumnName("unban_time")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("unban_time");
 
                     b.Property<Guid?>("UnbanningAdmin")
-                        .HasColumnName("unbanning_admin")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("unbanning_admin");
 
                     b.HasKey("Id");
 
@@ -318,6 +447,38 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("unban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "AdminRank")
+                        .WithMany("Admins")
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AdminRank");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
+                {
+                    b.HasOne("Content.Server.Database.Admin", "Admin")
+                        .WithMany("Flags")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRankFlag", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "Rank")
+                        .WithMany("Flags")
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rank");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -325,6 +486,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
@@ -334,6 +497,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Profile", b =>
@@ -343,6 +508,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasForeignKey("PreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Preference");
                 });
 
             modelBuilder.Entity("Content.Server.Database.SqliteServerUnban", b =>
@@ -352,6 +519,37 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasForeignKey("Content.Server.Database.SqliteServerUnban", "BanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Ban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Admin", b =>
+                {
+                    b.Navigation("Flags");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminRank", b =>
+                {
+                    b.Navigation("Admins");
+
+                    b.Navigation("Flags");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Preference", b =>
+                {
+                    b.Navigation("Profiles");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Profile", b =>
+                {
+                    b.Navigation("Antags");
+
+                    b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.SqliteServerBan", b =>
+                {
+                    b.Navigation("Unban");
                 });
 #pragma warning restore 612, 618
         }

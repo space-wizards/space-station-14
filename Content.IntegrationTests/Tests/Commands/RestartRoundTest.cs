@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+using System;
+using System.Threading.Tasks;
+using Content.Server.Commands.GameTicking;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using NUnit.Framework;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Commands
@@ -17,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            var server = StartServer();
+            var (_, server) = await StartConnectedServerClientPair();
 
             await server.WaitIdleAsync();
 
@@ -31,14 +34,14 @@ namespace Content.IntegrationTests.Tests.Commands
 
             server.Assert(() =>
             {
-                configManager.SetCVar("game.lobbyenabled", lobbyEnabled);
+                configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
 
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
 
                 tickBeforeRestart = entityManager.CurrentTick;
 
                 var command = new NewRoundCommand();
-                command.Execute(null, null, new string[] { });
+                command.Execute(null, string.Empty, Array.Empty<string>());
 
                 if (lobbyEnabled)
                 {

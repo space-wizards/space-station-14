@@ -1,23 +1,21 @@
-﻿using System;
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -27,18 +25,16 @@ namespace Content.Server.GameObjects.Components.Items.RCD
     public class RCDComponent : Component, IAfterInteract, IUse, IExamine
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
-        [ViewVariables(VVAccess.ReadWrite)] public int maxAmmo;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int MaxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
-        [ViewVariables(VVAccess.ReadWrite)] private float _delay;
-        private DoAfterSystem doAfterSystem;
-
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
+        private DoAfterSystem _doAfterSystem = default!;
 
         ///Enum to store the different mode states for clarity.
         private enum RcdMode
@@ -49,26 +45,17 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             Deconstruct
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref maxAmmo, "maxAmmo", 5);
-            serializer.DataField(ref _delay, "delay", 2f);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
-            _ammo = maxAmmo;
-            doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            _ammo = MaxAmmo;
+            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         ///<summary>
         /// Method called when the RCD is clicked in-hand, this will cycle the RCD mode.
         ///</summary>
-
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             SwapMode(eventArgs);
             return true;
@@ -81,26 +68,44 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/genhit.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/genhit.ogg", Owner);
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is now set to {0} mode.", _mode)); //Prints an overhead message above the RCD
+            Owner.PopupMessage(eventArgs.User,
+                Loc.GetString(
+                    "rcd-component-change-mode",
+                    ("mode", _mode.ToString())
+                )
+            ); //Prints an overhead message above the RCD
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), _ammo));
+            if (inDetailsRange)
+            {
+                message.AddMarkup(
+                    Loc.GetString(
+                        "rcd-component-examine-detail-count",
+                        ("mode", _mode),
+                        ("ammoCount", _ammo)
+                    )
+                );
+            }
         }
 
-        public async void AfterInteract(AfterInteractEventArgs   eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)
         {
+            // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
+            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager) || !eventArgs.ClickLocation.GetGridId(Owner.EntityManager).IsValid())
+                return false;
+
             //No changing mode mid-RCD
             var startingMode = _mode;
 
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-            var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+            var snapPos = mapGrid.TileIndicesFor(eventArgs.ClickLocation);
 
             //Using an RCD isn't instantaneous
             var cancelToken = new CancellationTokenSource();
@@ -112,10 +117,10 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 ExtraCheck = () => IsRCDStillValid(eventArgs, mapGrid, tile, snapPos, startingMode) //All of the sanity checks are here
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
             if (result == DoAfterStatus.Cancelled)
             {
-                return;
+                return true;
             }
 
             switch (_mode)
@@ -132,25 +137,25 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     }
                     else //Delete what the user targeted
                     {
-                        eventArgs.Target.Delete();
+                        eventArgs.Target?.Delete();
                     }
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
-                    var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
-                    ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
+                    var ent = _serverEntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
+                    ent.Transform.LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:
                     var airlock = _serverEntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     airlock.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
                     break;
                 default:
-                    return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
+                    return true; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/deconstruct.ogg", Owner);
             _ammo--;
-
+            return true;
         }
 
         private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, Vector2i snapPos, RcdMode startingMode)
@@ -198,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
-                    if (eventArgs.Target != null && !eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist rcd_decon))
+                    if (eventArgs.Target != null && !eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist? deCon))
                     {
                         Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't deconstruct that!"));
                         return false;

@@ -1,11 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent.CloningPodStatus;
 
 namespace Content.Client.GameObjects.Components.CloningPod
 {
+    [UsedImplicitly]
     public class CloningPodVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
@@ -32,7 +33,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             }
         }
 
-        public enum CloningPodVisualLayers
+        public enum CloningPodVisualLayers : byte
         {
             Machine,
         }

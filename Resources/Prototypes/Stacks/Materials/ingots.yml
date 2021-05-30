@@ -1,0 +1,35 @@
+- type: stack
+  id: Adamantine
+  name: adamantine
+  icon: "/Textures/Objects/Materials/ingots.rsi/adamantine.png"
+  spawn: IngotAdamantine1
+
+- type: stack
+  id: Copper
+  name: copper
+  icon: "/Textures/Objects/Materials/ingots.rsi/copper.png"
+  spawn: IngotCopper1
+
+- type: stack
+  id: Gold
+  name: gold
+  icon: "/Textures/Objects/Materials/ingots.rsi/gold.png"
+  spawn: IngotGold1
+
+- type: stack
+  id: Hydrogen
+  name: hydrogen
+  icon: "/Textures/Objects/Materials/ingots.rsi/hydrogen.png"
+  spawn: IngotHydrogen1
+
+- type: stack
+  id: Iron
+  name: iron
+  icon: "/Textures/Objects/Materials/ingots.rsi/iron.png"
+  spawn: IngotIron1
+
+- type: stack
+  id: Silver
+  name: silver
+  icon: "/Textures/Objects/Materials/ingots.rsi/silver.png"
+  spawn: IngotSilver1

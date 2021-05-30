@@ -1,5 +1,5 @@
 using Content.Client.GameObjects.Components.Markers;
-using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void UpdateMarkers()
         {
-            foreach (var markerComponent in EntityManager.ComponentManager.EntityQuery<MarkerComponent>())
+            foreach (var markerComponent in EntityManager.ComponentManager.EntityQuery<MarkerComponent>(true))
             {
                 markerComponent.UpdateVisibility();
             }

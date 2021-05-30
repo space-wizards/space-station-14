@@ -1,7 +1,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Jobs
 {

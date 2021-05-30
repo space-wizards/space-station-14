@@ -1,5 +1,5 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
+﻿#nullable enable
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Utility
 {

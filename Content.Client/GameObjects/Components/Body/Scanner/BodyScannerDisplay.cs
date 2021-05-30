@@ -1,15 +1,13 @@
-﻿#nullable enable
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.GameObjects.Components.Body.Scanner
@@ -34,7 +32,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                     // Left half
                     new ScrollContainer
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
                         Children =
                         {
                             (BodyPartList = new ItemList())
@@ -43,13 +41,13 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                     // Right half
                     new VBoxContainer
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        HorizontalExpand = true,
                         Children =
                         {
                             // Top half of the right half
                             new VBoxContainer
                             {
-                                SizeFlagsVertical = SizeFlags.FillExpand,
+                                VerticalExpand = true,
                                 Children =
                                 {
                                     (BodyPartLabel = new Label()),
@@ -66,7 +64,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                                     },
                                     new ScrollContainer
                                     {
-                                        SizeFlagsVertical = SizeFlags.FillExpand,
+                                        VerticalExpand = true,
                                         Children =
                                         {
                                             (MechanismList = new ItemList())
@@ -77,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                             // Bottom half of the right half
                             (MechanismInfoLabel = new RichTextLabel
                             {
-                                SizeFlagsVertical = SizeFlags.FillExpand
+                                VerticalExpand = true
                             })
                         }
                     }
@@ -88,11 +86,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 
             BodyPartList.OnItemSelected += BodyPartOnItemSelected;
             MechanismList.OnItemSelected += MechanismOnItemSelected;
+            MinSize = SetSize = (800, 600);
         }
 
         public BodyScannerBoundUserInterface Owner { get; }
-
-        protected override Vector2? CustomSize => (800, 600);
 
         private ItemList BodyPartList { get; }
 
@@ -116,9 +113,9 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
-            foreach (var slotName in body.Parts.Keys)
+            foreach (var (part, _) in body.Parts)
             {
-                BodyPartList.AddItem(Loc.GetString(slotName));
+                BodyPartList.AddItem(Loc.GetString(part.Name));
             }
         }
 
@@ -131,12 +128,12 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
-            var slot = body.SlotAt(args.ItemIndex).Key;
-            _currentBodyPart = body.PartAt(args.ItemIndex).Value;
+            var slot = body.SlotAt(args.ItemIndex);
+            _currentBodyPart = body.PartAt(args.ItemIndex).Key;
 
-            if (body.Parts.TryGetValue(slot, out var part))
+            if (slot.Part != null)
             {
-                UpdateBodyPartBox(part, slot);
+                UpdateBodyPartBox(slot.Part, slot.Id);
             }
         }
 
@@ -144,11 +141,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
-            // TODO BODY Make dead not be the destroy threshold for a body part
-            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                damageable.TryHealth(DamageState.Critical, out var health))
+            // TODO BODY Part damage
+            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                BodyPartHealth.Text = $"{health.current} / {health.max}";
+                BodyPartHealth.Text = Loc.GetString("{0} damage", damageable.TotalDamage);
             }
 
             MechanismList.Clear();
@@ -174,9 +170,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 return;
             }
 
+            // TODO BODY Mechanism description
             var message =
                 Loc.GetString(
-                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}\n{mechanism.Description}");
+                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}");
 
             MechanismInfoLabel.SetMessage(message);
         }

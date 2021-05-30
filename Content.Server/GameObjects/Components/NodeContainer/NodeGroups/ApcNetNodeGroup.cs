@@ -1,14 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+#nullable enable
+using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface IApcNet
     {
+        bool Powered { get; }
+
         void AddApc(ApcComponent apc);
 
         void RemoveApc(ApcComponent apc);
@@ -17,25 +24,77 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         void RemovePowerProvider(PowerProviderComponent provider);
 
-        void UpdatePowerProviderReceivers(PowerProviderComponent provider);
+        void UpdatePowerProviderReceivers(PowerProviderComponent provider, int oldLoad, int newLoad);
 
         void Update(float frameTime);
+
+        GridId? GridId { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
     public class ApcNetNodeGroup : BaseNetConnectorNodeGroup<BaseApcNetComponent, IApcNet>, IApcNet
     {
         [ViewVariables]
-        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new Dictionary<ApcComponent, BatteryComponent>();
+        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new();
 
         [ViewVariables]
-        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
+        private readonly List<PowerProviderComponent> _providers = new();
+
+        [ViewVariables]
+        public bool Powered { get => _powered; private set => SetPowered(value); }
+        private bool _powered = false;
 
         //Debug property
         [ViewVariables]
-        private int TotalReceivers => _providerReceivers.SelectMany(kvp => kvp.Value).Count();
+        private int TotalReceivers => _providers.SelectMany(provider => provider.LinkedReceivers).Count();
+
+        [ViewVariables]
+        private int TotalPowerReceiverLoad { get => _totalPowerReceiverLoad; set => SetTotalPowerReceiverLoad(value); }
+
+        GridId? IApcNet.GridId => GridId;
+
+        private int _totalPowerReceiverLoad = 0;
 
         public static readonly IApcNet NullNet = new NullApcNet();
+
+        public override void Initialize(Node sourceNode)
+        {
+            base.Initialize(sourceNode);
+
+            EntitySystem.Get<ApcNetSystem>().AddApcNet(this);
+        }
+
+        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
+        {
+            base.AfterRemake(newGroups);
+
+            foreach (var group in newGroups)
+            {
+                if (group is not ApcNetNodeGroup apcNet)
+                    continue;
+
+                apcNet.Powered = Powered;
+            }
+
+            StopUpdates();
+        }
+
+        protected override void OnGivingNodesForCombine(INodeGroup newGroup)
+        {
+            base.OnGivingNodesForCombine(newGroup);
+
+            if (newGroup is ApcNetNodeGroup apcNet)
+            {
+                apcNet.Powered = Powered;
+            }
+
+            StopUpdates();
+        }
+
+        private void StopUpdates()
+        {
+            EntitySystem.Get<ApcNetSystem>().RemoveApcNet(this);
+        }
 
         #region IApcNet Methods
 
@@ -46,7 +105,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (!apc.Owner.TryGetComponent(out BatteryComponent battery))
+            if (!apc.Owner.TryGetComponent(out BatteryComponent? battery))
             {
                 return;
             }
@@ -57,80 +116,106 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void RemoveApc(ApcComponent apc)
         {
             _apcBatteries.Remove(apc);
-            if (!_apcBatteries.Any())
-            {
-                foreach (var receiver in _providerReceivers.SelectMany(kvp => kvp.Value))
-                {
-                    receiver.HasApcPower = false;
-                }
-            }
         }
 
         public void AddPowerProvider(PowerProviderComponent provider)
         {
-            _providerReceivers.Add(provider, provider.LinkedReceivers.ToList());
+            _providers.Add(provider);
+
+            foreach (var receiver in provider.LinkedReceivers)
+            {
+                TotalPowerReceiverLoad += receiver.Load;
+            }
         }
 
         public void RemovePowerProvider(PowerProviderComponent provider)
         {
-            _providerReceivers.Remove(provider);
+            _providers.Remove(provider);
+
+            foreach (var receiver in provider.LinkedReceivers)
+            {
+                TotalPowerReceiverLoad -= receiver.Load;
+            }
         }
 
-        public void UpdatePowerProviderReceivers(PowerProviderComponent provider)
+        public void UpdatePowerProviderReceivers(PowerProviderComponent provider, int oldLoad, int newLoad)
         {
-            Debug.Assert(_providerReceivers.ContainsKey(provider));
-            _providerReceivers[provider] = provider.LinkedReceivers.ToList();
+            DebugTools.Assert(_providers.Contains(provider));
+            TotalPowerReceiverLoad -= oldLoad;
+            TotalPowerReceiverLoad += newLoad;
         }
 
         public void Update(float frameTime)
         {
-            var totalCharge = 0.0;
-            var totalMaxCharge = 0;
-            foreach (var (apc, battery) in _apcBatteries)
+            var remainingPowerNeeded = TotalPowerReceiverLoad * frameTime;
+
+            foreach (var apcBatteryPair in _apcBatteries)
             {
+                var apc = apcBatteryPair.Key;
+
                 if (!apc.MainBreakerEnabled)
                     continue;
 
-                totalCharge += battery.CurrentCharge;
-                totalMaxCharge += battery.MaxCharge;
+                var battery = apcBatteryPair.Value;
+
+                if (battery.CurrentCharge < remainingPowerNeeded)
+                {
+                    remainingPowerNeeded -= battery.CurrentCharge;
+                    battery.CurrentCharge = 0;
+                }
+                else
+                {
+                    battery.UseCharge(remainingPowerNeeded);
+                    remainingPowerNeeded = 0;
+                }
+
+                if (remainingPowerNeeded == 0)
+                    break;
             }
 
-            foreach (var (_, receivers) in _providerReceivers)
-            {
-                foreach (var receiver in receivers)
-                {
-                    if (!receiver.NeedsPower || receiver.PowerDisabled)
-                        continue;
+            Powered = remainingPowerNeeded == 0;
+        }
 
-                    receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
+        private void SetPowered(bool powered)
+        {
+            if (powered != Powered)
+            {
+                _powered = powered;
+                PoweredChanged();
+            }
+        }
+
+        private void PoweredChanged()
+        {
+            foreach (var provider in _providers)
+            {
+                foreach (var receiver in provider.LinkedReceivers)
+                {
+                    receiver.ApcPowerChanged();
                 }
             }
         }
 
-        private bool TryUsePower(float neededCharge)
+        private void SetTotalPowerReceiverLoad(int totalPowerReceiverLoad)
         {
-            foreach (var (apc, battery) in _apcBatteries)
-            {
-                if (!apc.MainBreakerEnabled)
-                    continue;
-
-                if (battery.TryUseCharge(neededCharge)) //simplification - all power needed must come from one battery
-                {
-                    return true;
-                }
-            }
-            return false;
+            DebugTools.Assert(totalPowerReceiverLoad >= 0, $"Expected load equal to or greater than 0, was {totalPowerReceiverLoad}");
+            _totalPowerReceiverLoad = totalPowerReceiverLoad;
         }
 
         #endregion
 
         private class NullApcNet : IApcNet
         {
+            /// <summary>
+            ///     It is important that this returns false, so <see cref="PowerProviderComponent"/>s with a <see cref="NullApcNet"/> have no power.
+            /// </summary>
+            public bool Powered => false;
+            public GridId? GridId => default;
             public void AddApc(ApcComponent apc) { }
             public void AddPowerProvider(PowerProviderComponent provider) { }
             public void RemoveApc(ApcComponent apc) { }
             public void RemovePowerProvider(PowerProviderComponent provider) { }
-            public void UpdatePowerProviderReceivers(PowerProviderComponent provider) { }
+            public void UpdatePowerProviderReceivers(PowerProviderComponent provider, int oldLoad, int newLoad) { }
             public void Update(float frameTime) { }
         }
     }

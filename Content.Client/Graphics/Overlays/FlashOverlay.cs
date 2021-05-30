@@ -1,69 +1,72 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Interfaces;
+using Content.Client.State;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Shared.Interfaces.Timing;
+using Robust.Client.State;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class FlashOverlay : Overlay, IConfigurable<TimedOverlayParameter>
+    public class FlashOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;
-        private double _startTime;
-        private int lastsFor = 5000;
-        private Texture _screenshotTexture;
+        private double _startTime = -1;
+        private double _lastsFor = 1;
+        private Texture? _screenshotTexture;
 
-        public FlashOverlay() : base(nameof(SharedOverlayID.FlashOverlay))
+        public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
-
-            _startTime = _gameTiming.CurTime.TotalMilliseconds;
-            _displayManager.Screenshot(ScreenshotType.BeforeUI, image =>
-            {
-                var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
-                _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
-            });
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        public void ReceiveFlash(double duration)
         {
-            handle.UseShader(_shader);
-            var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - _startTime) / lastsFor);
-            _shader?.SetParameter("percentComplete", percentComplete);
+            if (_stateManager.CurrentState is IMainViewportState state)
+            {
+                state.Viewport.Viewport.Screenshot(image =>
+                {
+                    var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
+                    _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
+                });
+            }
 
-            var screenSpaceHandle = handle as DrawingHandleScreen;
+            _startTime = _gameTiming.CurTime.TotalSeconds;
+            _lastsFor = duration;
+        }
+
+        protected override void Draw(in OverlayDrawArgs args)
+        {
+            var percentComplete = (float) ((_gameTiming.CurTime.TotalSeconds - _startTime) / _lastsFor);
+            if (percentComplete >= 1.0f)
+                return;
+
+            var screenSpaceHandle = args.ScreenHandle;
+            screenSpaceHandle.UseShader(_shader);
+            _shader.SetParameter("percentComplete", percentComplete);
+
             var screenSize = UIBox2.FromDimensions((0, 0), _displayManager.ScreenSize);
 
             if (_screenshotTexture != null)
             {
-                screenSpaceHandle?.DrawTextureRect(_screenshotTexture, screenSize);
+                screenSpaceHandle.DrawTextureRect(_screenshotTexture, screenSize);
             }
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void DisposeBehavior()
         {
-            base.Dispose(disposing);
-
+            base.Dispose();
             _screenshotTexture = null;
-        }
-
-        public void Configure(TimedOverlayParameter parameters)
-        {
-            lastsFor = parameters.Length;
         }
     }
 }

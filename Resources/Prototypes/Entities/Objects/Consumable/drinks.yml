@@ -8,13 +8,11 @@
   components:
   - type: SolutionContainer
     maxVol: 50
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: Drink
   - type: Sprite
     state: icon
-
   - type: Spillable
 
 - type: entity
@@ -24,21 +22,40 @@
   components:
   - type: Drink
     isOpen: true
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
 
 # Transformable container - normal glass
 - type: entity
   name: Drinking glass
+  description: A drinking glass.
   parent: DrinkGlassBase
   id: DrinkGlass
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-
   - type: SolutionContainer
-    fillingState: glass
     maxVol: 50
-    caps: AddTo, RemoveFrom
-  - type: Pourable
+  - type: SolutionTransfer
     transferAmount: 5
   - type: TransformableContainer
 
@@ -52,11 +69,10 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Ale
+      - ReagentId: Ale
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/aleglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -68,12 +84,11 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Antifreeze
+      - ReagentId: Antifreeze
         Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/antifreeze.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -85,12 +100,11 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.AtomicBomb
+      - ReagentId: AtomicBomb
         Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -102,12 +116,11 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.B52
+      - ReagentId: B52
         Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/b52glass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -119,7 +132,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBeepskySmashGlass
@@ -129,7 +141,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -141,11 +152,10 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Beer
+      - ReagentId: Beer
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -157,22 +167,26 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Beer
+      - ReagentId: Beer
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beerglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkBerryjJice
+  id: DrinkBerryJuice
   name: berry juice
   description: A delicious blend of several different kinds of berries.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceBerry
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -184,7 +198,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBloodyMaryGlass
@@ -194,7 +207,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -206,7 +218,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/booger.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBraveBullGlass
@@ -217,7 +228,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bravebullglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBrownStar
@@ -227,7 +237,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/brownstar.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -240,11 +249,6 @@
     sprite: Objects/Consumable/Drinks/carafe.rsi
     state: icon-10
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 11
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkCarrotJuice
@@ -252,9 +256,14 @@
   description: Has a uniquely sweet flavour of concentrated carrots.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceCarrot
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carrotjuice.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -289,7 +298,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Coffee
+      - ReagentId: Coffee
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffee.rsi
@@ -305,7 +314,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Cognac
+      - ReagentId: Cognac
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
@@ -321,7 +330,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Cola
+      - ReagentId: Cola
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
@@ -337,7 +346,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Cream
+      - ReagentId: Cream
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
@@ -353,7 +362,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.CubaLibre
+      - ReagentId: CubaLibre
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
@@ -564,6 +573,12 @@
   description: The sweet-sour juice of limes.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceLime
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi
 
@@ -575,8 +590,30 @@
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceOrange
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_orange.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkGlassYellow
+  name: lemon juice
+  description: Used to make lemonade, soft drinks, and cocktails.
+  components:
+  - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
 
 
 - type: entity
@@ -586,6 +623,12 @@
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_red.rsi
 
@@ -600,22 +643,10 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Milk
+      - ReagentId: Milk
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_white.rsi
-
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkGlassYellow
-  name: lemon juice
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -635,6 +666,12 @@
   description: The juice is often sold in stores or fermented and made into wine, brandy, or vinegar.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceGrape
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grapejuice.rsi
 
@@ -749,7 +786,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Ice
+      - ReagentId: Ice
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
@@ -765,7 +802,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.IrishCarBomb
+      - ReagentId: IrishCarBomb
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
@@ -781,7 +818,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.IrishCoffee
+      - ReagentId: IrishCoffee
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
@@ -797,7 +834,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.IrishCream
+      - ReagentId: IrishCream
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
@@ -846,7 +883,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Kahlua
+      - ReagentId: Kahlua
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluaglass.rsi
@@ -903,6 +940,12 @@
   description: Used to make lemonade, soft drinks, and cocktails.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
 
@@ -914,6 +957,14 @@
   description: A tangy substance made of lime and lemon.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 10
+        - ReagentId: JuiceLime
+          Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonlime.rsi
 
@@ -925,6 +976,12 @@
   description: The sweet-sour juice of limes.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceLime
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -972,7 +1029,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.ManlyDorf
+      - ReagentId: ManlyDorf
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
@@ -1021,7 +1078,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Milk
+      - ReagentId: Milk
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
@@ -1100,6 +1157,12 @@
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceOrange
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
@@ -1122,6 +1185,12 @@
   description: A tasty juice blended from various kinds of very deadly and toxic berries.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceBerryPoison
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
 
@@ -1435,7 +1504,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.SyndicateBomb
+      - ReagentId: SyndicateBomb
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
@@ -1451,7 +1520,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Tea
+      - ReagentId: Tea
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teaglass.rsi
@@ -1467,7 +1536,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Tea
+      - ReagentId: Tea
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
@@ -1521,9 +1590,15 @@
   parent: DrinkGlassBase
   id: DrinkTomatoJuice
   name: tomato juice
-  description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
+  description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
@@ -1612,6 +1687,12 @@
   description: Delicious juice made from watermelon.
   components:
   - type: Drink
+  - type: SolutionContainer
+    maxVol: 20
+    contents:
+      reagents:
+        - ReagentId: JuiceWatermelon
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/watermelon.rsi
 
@@ -1627,11 +1708,6 @@
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
 
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer
-      steps: 2
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWhiskeyColaGlass
@@ -1642,7 +1718,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.WhiskeyCola
+      - ReagentId: WhiskeyCola
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
@@ -1658,7 +1734,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Whiskey
+      - ReagentId: Whiskey
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
@@ -1707,8 +1783,7 @@
     maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.Wine
+      - ReagentId: Wine
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi
-

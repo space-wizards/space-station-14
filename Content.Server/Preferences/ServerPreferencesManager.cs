@@ -7,11 +7,12 @@ using Content.Server.Interfaces;
 using Content.Shared;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Network;
+using Content.Shared.Roles;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -32,7 +33,7 @@ namespace Content.Server.Preferences
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
-            new Dictionary<NetUserId, PlayerPrefData>();
+            new();
 
         private int MaxCharacterSlots => _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
 
@@ -46,7 +47,6 @@ namespace Content.Server.Preferences
             _netManager.RegisterNetMessage<MsgDeleteCharacter>(nameof(MsgDeleteCharacter),
                 HandleDeleteCharacterMessage);
         }
-
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
@@ -72,7 +72,7 @@ namespace Content.Server.Preferences
                 return;
             }
 
-            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index);
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index, curPrefs.AdminOOCColor);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -106,12 +106,14 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            profile.EnsureValid();
+
             var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
             {
-                [slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos)
+                [slot] = profile
             };
 
-            prefsData.Prefs = new PlayerPreferences(profiles, slot);
+            prefsData.Prefs = new PlayerPreferences(profiles, slot, curPrefs.AdminOOCColor);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -142,7 +144,8 @@ namespace Content.Server.Preferences
             int? nextSlot = null;
             if (curPrefs.SelectedCharacterIndex == slot)
             {
-                var (ns, profile) = curPrefs.Characters.FirstOrDefault(p => p.Key != message.Slot);
+                // That ! on the end is because Rider doesn't like .NET 5.
+                var (ns, profile) = curPrefs.Characters.FirstOrDefault(p => p.Key != message.Slot)!;
                 if (profile == null)
                 {
                     // Only slot left, can't delete.
@@ -155,7 +158,7 @@ namespace Content.Server.Preferences
             var arr = new Dictionary<int, ICharacterProfile>(curPrefs.Characters);
             arr.Remove(slot);
 
-            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex);
+            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -179,8 +182,8 @@ namespace Content.Server.Preferences
                 {
                     PrefsLoaded = Task.CompletedTask,
                     Prefs = new PlayerPreferences(
-                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Default())},
-                        0)
+                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Random())},
+                        0, Color.Transparent)
                 };
 
                 _cachedPlayerPrefs[session.UserId] = prefsData;
@@ -246,10 +249,39 @@ namespace Content.Server.Preferences
             var prefs = await _db.GetPlayerPreferencesAsync(userId);
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Default());
+                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random());
             }
 
-            return prefs;
+            return SanitizePreferences(prefs);
+        }
+
+        private PlayerPreferences SanitizePreferences(PlayerPreferences prefs)
+        {
+            // Clean up preferences in case of changes to the game,
+            // such as removed jobs still being selected.
+
+            return new PlayerPreferences(prefs.Characters.Select(p =>
+            {
+                ICharacterProfile newProf;
+                switch (p.Value)
+                {
+                    case HumanoidCharacterProfile hp:
+                    {
+                        newProf = hp
+                            .WithJobPriorities(
+                                hp.JobPriorities.Where(job =>
+                                    _protos.HasIndex<JobPrototype>(job.Key)))
+                            .WithAntagPreferences(
+                                hp.AntagPreferences.Where(antag =>
+                                    _protos.HasIndex<AntagPrototype>(antag)));
+                        break;
+                    }
+                    default:
+                        throw new NotSupportedException();
+                }
+
+                return new KeyValuePair<int, ICharacterProfile>(p.Key, newProf);
+            }), prefs.SelectedCharacterIndex, prefs.AdminOOCColor);
         }
 
         public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(

@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: Window
+  parent: BaseConstructible
   name: window
   description: Don't smudge up the glass down there.
   placement:
@@ -7,7 +8,6 @@
     snap:
     - Window
   components:
-  - type: Clickable
   - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
@@ -19,23 +19,35 @@
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
   - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
       layer:
       - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 15
+      mask:
+      - VaultImpassable
+  - type: Damageable
     resistances: metallicResistances
-    destroySoundCollection: WindowBreak
-    spawnOnDestroy:
-      ShardGlass:
-        Min: 1
-        Max: 3
-  - type: SnapGrid
-    offset: Center
+  - type: Repairable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Airtight
   - type: Window
     base: window
@@ -56,9 +68,24 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
   - type: Destructible
-    deadThreshold: 75
-    resistances: metallicResistances
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Window
     base: rwindow
   - type: Construction
@@ -66,27 +93,35 @@
     node: reinforcedWindow
 
 - type: entity
-  id: PhoronWindow
-  name: phoronwindow
+  id: PlasmaWindow
+  name: plasma window
   parent: Window
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    sprite: Constructible/Structures/Windows/plasma_window.rsi
   - type: Icon
-    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    sprite: Constructible/Structures/Windows/plasma_window.rsi
+  - type: Damageable
+    resistances: metallicResistances
   - type: Destructible
-    deadThreshold: 100
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     resistances: metallicResistances
   - type: Window
     base: pwindow
   - type: Construction
     graph: window
-    node: phoronWindow
-
-- type: soundCollection
-  id: WindowBreak
-  files:
-  - /Audio/Effects/glass_break1.ogg
-  - /Audio/Effects/glass_break2.ogg
-  - /Audio/Effects/glass_break3.ogg
+    node: plasmaWindow

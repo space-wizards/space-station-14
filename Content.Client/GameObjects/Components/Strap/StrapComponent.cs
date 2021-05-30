@@ -1,5 +1,5 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Strap;
+﻿using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Strap
@@ -8,5 +8,9 @@ namespace Content.Client.GameObjects.Components.Strap
     [ComponentReference(typeof(SharedStrapComponent))]
     public class StrapComponent : SharedStrapComponent
     {
+        public override bool DragDropOn(DragDropEvent eventArgs)
+        {
+            return false;
+        }
     }
 }

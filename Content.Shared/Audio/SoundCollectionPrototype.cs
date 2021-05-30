@@ -1,28 +1,18 @@
+#nullable enable
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Audio
 {
     [Prototype("soundCollection")]
-    public sealed class SoundCollectionPrototype : IPrototype, IIndexedPrototype
+    public sealed class SoundCollectionPrototype : IPrototype
     {
-        public string ID { get; private set; }
-        public IReadOnlyList<string> PickFiles { get; private set; }
+        [ViewVariables]
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
 
-        public void LoadFrom(YamlMappingNode mapping)
-        {
-            ID = mapping.GetNode("id").AsString();
-
-            var pickFiles = new List<string>();
-
-            foreach (var file in mapping.GetNode<YamlSequenceNode>("files"))
-            {
-                pickFiles.Add(file.AsString());
-            }
-
-            PickFiles = pickFiles;
-        }
+        [DataField("files")] public List<string> PickFiles { get; } = new();
     }
 }

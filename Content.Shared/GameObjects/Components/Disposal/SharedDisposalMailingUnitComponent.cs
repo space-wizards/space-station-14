@@ -1,13 +1,13 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent, ICollideSpecial
+    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent
     {
         public override string Name => "DisposalMailingUnit";
 
@@ -21,7 +21,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         public const string NET_CMD_RESPONSE = "mailer_tag";
 
         [Serializable, NetSerializable]
-        public new enum UiButton
+        public new enum UiButton : byte
         {
             Eject,
             Engage,
@@ -38,10 +38,10 @@ namespace Content.Shared.GameObjects.Components.Disposal
             public readonly bool Engaged;
             public readonly string Tag;
             public readonly List<string> Tags;
-            public readonly string Target;
+            public readonly string? Target;
 
             public DisposalMailingUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered,
-                bool engaged, string tag, List<string> tags, string target)
+                bool engaged, string tag, List<string> tags, string? target)
             {
                 UnitName = unitName;
                 UnitState = unitState;
@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 return new DisposalMailingUnitBoundUserInterfaceState(UnitName, UnitState, Pressure, Powered, Engaged, Tag, (List<string>)Tags.Clone(), Target);
             }
 
-            public bool Equals(DisposalMailingUnitBoundUserInterfaceState other)
+            public bool Equals(DisposalMailingUnitBoundUserInterfaceState? other)
             {
                 if (other is null) return false;
                 if (ReferenceEquals(this, other)) return true;
@@ -92,9 +92,9 @@ namespace Content.Shared.GameObjects.Components.Disposal
         [Serializable, NetSerializable]
         public class UiTargetUpdateMessage : BoundUserInterfaceMessage
         {
-            public readonly string Target;
+            public readonly string? Target;
 
-            public UiTargetUpdateMessage(string target)
+            public UiTargetUpdateMessage(string? target)
             {
                 Target = target;
             }

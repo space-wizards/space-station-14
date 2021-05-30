@@ -1,13 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Interfaces
 {
-    public interface IGasReactionEffect : IExposeData
+    public interface IGasReactionEffect
     {
         ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup);
     }

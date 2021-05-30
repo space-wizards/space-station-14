@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
     public class NodeGroupManager : INodeGroupManager
     {
-        private readonly HashSet<INodeGroup> _dirtyNodeGroups = new HashSet<INodeGroup>();
+        private readonly HashSet<INodeGroup> _dirtyNodeGroups = new();
 
         public void AddDirtyNodeGroup(INodeGroup nodeGroup)
         {

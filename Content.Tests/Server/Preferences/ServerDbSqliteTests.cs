@@ -1,31 +1,49 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Content.Shared;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Robust.Shared.Enums;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.UnitTesting;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Server.Preferences
 {
     [TestFixture]
-    public class ServerDbSqliteTests : RobustUnitTest
+    public class ServerDbSqliteTests : ContentUnitTest
     {
-        private const int MaxCharacterSlots = 10;
+        private const string Prototypes = @"
+- type: dataset
+  id: names_first_male
+  values:
+  - Aaden
+
+- type: dataset
+  id: names_first_female
+  values:
+  - Aaliyah
+
+- type: dataset
+  id: names_last
+  values:
+  - Ackerley";
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new HumanoidCharacterProfile(
+            return new(
                 "Charlie Charlieson",
                 21,
                 Sex.Male,
+                Gender.Epicene,
                 new HumanoidCharacterAppearance(
                     "Afro",
                     Color.Aqua,
@@ -34,6 +52,8 @@ namespace Content.Tests.Server.Preferences
                     Color.Azure,
                     Color.Beige
                 ),
+                ClothingPreference.Jumpskirt,
+                BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
@@ -77,6 +97,8 @@ namespace Content.Tests.Server.Preferences
         {
             var db = GetDb();
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+            IoCManager.Resolve<ISerializationManager>().Initialize();
+            IoCManager.Resolve<IPrototypeManager>().LoadFromStream(new StringReader(Prototypes));
             await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);
@@ -87,7 +109,7 @@ namespace Content.Tests.Server.Preferences
 
         private static NetUserId NewUserId()
         {
-            return new NetUserId(Guid.NewGuid());
+            return new(Guid.NewGuid());
         }
     }
 }

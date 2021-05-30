@@ -2,16 +2,16 @@
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.Interfaces.Player;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Timer = Robust.Shared.Timers.Timer;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.GameRules
 {
@@ -29,13 +29,13 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private CancellationTokenSource _checkTimerCancel;
+        private CancellationTokenSource? _checkTimerCancel;
 
         public override void Added()
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("The game is now a death match. Kill everybody else to win!"));
 
-            _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
+            _entityManager.EventBus.SubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
@@ -43,11 +43,11 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            _entityManager.EventBus.UnsubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this);
+            _entityManager.EventBus.UnsubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
         }
 
-        private void OnHealthChanged(HealthChangedEventArgs message)
+        private void OnHealthChanged(DamageChangedEventArgs message)
         {
             _runDelayedCheck();
         }
@@ -56,19 +56,20 @@ namespace Content.Server.GameTicking.GameRules
         {
             _checkTimerCancel = null;
 
-            if (!_cfg.GetCVar<bool>("game.enablewin"))
+            if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin))
                 return;
 
-            IPlayerSession winner = null;
+            IPlayerSession? winner = null;
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
-                if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+                var playerEntity = playerSession.AttachedEntity;
+                if (playerEntity == null
+                    || !playerEntity.TryGetComponent(out IMobStateComponent? state))
                 {
                     continue;
                 }
 
-                if (damageable.CurrentState != DamageState.Alive)
+                if (!state.IsAlive())
                 {
                     continue;
                 }
@@ -93,7 +94,7 @@ namespace Content.Server.GameTicking.GameRules
             Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
 
-        private void PlayerManagerOnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus == SessionStatus.Disconnected)
             {

@@ -1,100 +1,26 @@
-﻿using Content.Client.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
+#nullable enable
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : Component, IItemComponent, IDraggable
+    [ComponentReference(typeof(SharedItemComponent))]
+    public class ItemComponent : SharedItemComponent
     {
-        [Dependency] private IResourceCache _resourceCache = default!;
-
-        public override string Name => "Item";
-        public override uint? NetID => ContentNetIDs.ITEM;
-
-        [ViewVariables] protected ResourcePath RsiPath;
-
-        [ViewVariables(VVAccess.ReadWrite)] protected Color Color;
-
-        private string _equippedPrefix;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string EquippedPrefix
+        public override bool TryPutInHand(IEntity user)
         {
-            get => _equippedPrefix;
-            set
-            {
-                _equippedPrefix = value;
-                if (!ContainerHelpers.TryGetContainer(Owner, out IContainer container)) return;
-                if(container.Owner.TryGetComponent(out HandsComponent hands))
-                    hands.RefreshInHands();
-            }
+            return false;
         }
 
-        public (RSI rsi, RSI.StateId stateId, Color color)? GetInHandStateInfo(HandLocation hand)
+        protected override void OnEquippedPrefixChange()
         {
-            if (RsiPath == null)
-            {
-                return null;
-            }
-
-            var handName = hand.ToString().ToLowerInvariant();
-            var rsi = GetRSI();
-            var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
-            if (rsi.TryGetState(stateId, out _))
-            {
-                return (rsi, stateId, Color);
-            }
-
-            return null;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataFieldCached(ref Color, "color", Color.White);
-            serializer.DataFieldCached(ref RsiPath, "sprite", null);
-            serializer.DataFieldCached(ref _equippedPrefix, "HeldPrefix", null);
-        }
-
-        protected RSI GetRSI()
-        {
-            return _resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
-        }
-
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
-        {
-            if(curState == null)
+            if (!Owner.TryGetContainer(out var container))
                 return;
 
-            var itemComponentState = (ItemComponentState)curState;
-            EquippedPrefix = itemComponentState.EquippedPrefix;
-        }
-
-        bool IDraggable.CanDrop(CanDropEventArgs args)
-        {
-            return args.Target.HasComponent<DisposalUnitComponent>();
-        }
-
-        public bool Drop(DragDropEventArgs args)
-        {
-            // TODO: Shared item class
-            return false;
+            if (container.Owner.TryGetComponent(out HandsComponent? hands))
+                hands.RefreshInHands();
         }
     }
 }

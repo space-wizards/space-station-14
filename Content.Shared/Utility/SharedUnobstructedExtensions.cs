@@ -1,10 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
@@ -408,7 +407,7 @@ namespace Content.Shared.Utility
         }
 
         public static bool InRangeUnobstructed(
-            this DragDropEventArgs args,
+            this DragDropEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
@@ -421,6 +420,20 @@ namespace Content.Shared.Utility
 
         public static bool InRangeUnobstructed(
             this AfterInteractEventArgs args,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
+        {
+            return SharedInteractionSystem.InRangeUnobstructed(args, range, collisionMask, predicate,
+                ignoreInsideBlocker, popup);
+        }
+        #endregion
+
+        #region EntityEventArgs
+        public static bool InRangeUnobstructed(
+            this AfterInteractEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,

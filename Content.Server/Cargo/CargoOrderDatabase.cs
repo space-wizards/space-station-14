@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.Localization;
@@ -7,7 +8,7 @@ namespace Content.Server.Cargo
 {
     public class CargoOrderDatabase
     {
-        private Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
+        private readonly Dictionary<int, CargoOrderData> _orders = new();
         private int _orderNumber = 0;
 
         public CargoOrderDatabase(int id)
@@ -38,15 +39,9 @@ namespace Content.Server.Cargo
             return _orders.Values.ToList();
         }
 
-        public bool TryGetOrder(int id, out CargoOrderData order)
+        public bool TryGetOrder(int id, [NotNullWhen(true)] out CargoOrderData? order)
         {
-            if (_orders.TryGetValue(id, out var _order))
-            {
-                order = _order;
-                return true;
-            }
-            order = null;
-            return false;
+            return _orders.TryGetValue(id, out order);
         }
 
         public List<CargoOrderData> SpliceApproved()
@@ -84,25 +79,28 @@ namespace Content.Server.Cargo
         {
             return _orders.Remove(orderNumber);
         }
-        
+
         /// <summary>
         ///     Approves an order in the database.
         /// </summary>
         /// <param name="order">The order to be approved.</param>
-        public void ApproveOrder(int orderNumber)
+        public bool ApproveOrder(int orderNumber)
         {
             if (CurrentOrderSize == MaxOrderSize)
-                return;
+                return false;
             if (!_orders.TryGetValue(orderNumber, out var order))
-                return;
+                return false;
+            if (order.Approved)
+                return false;
             else if (CurrentOrderSize + order.Amount > MaxOrderSize)
-            { 
-                AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)","")), order.ProductId,
+            {
+                AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)", "")), order.ProductId,
                     order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
                 order.Amount = MaxOrderSize - CurrentOrderSize;
             }
             order.Approved = true;
             CurrentOrderSize += order.Amount;
+            return true;
         }
 
         /// <summary>

@@ -4,10 +4,9 @@ using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 

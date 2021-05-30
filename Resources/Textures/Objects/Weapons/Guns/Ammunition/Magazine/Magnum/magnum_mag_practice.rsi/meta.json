@@ -8,28 +8,22 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_mags.dmi",
     "states": [
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
         },
         {
-            "name": "base",
-            "directions": 1
+            "name": "base"
         },
         {
-            "name": "mag-1",
-            "directions": 1
+            "name": "mag-1"
         },
         {
-            "name": "mag-2",
-            "directions": 1
+            "name": "mag-2"
         },
         {
-            "name": "mag-3",
-            "directions": 1
+            "name": "mag-3"
         },
         {
-            "name": "mag-4",
-            "directions": 1
+            "name": "mag-4"
         }
     ]
 }

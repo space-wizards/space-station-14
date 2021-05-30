@@ -8,11 +8,9 @@ using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Server.Maps;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -23,20 +21,47 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(LungBehavior))]
     public class LungTest : ContentIntegrationTest
     {
+        private const string Prototypes = @"
+- type: entity
+  name: HumanBodyAndBloodstreamDummy
+  id: HumanBodyAndBloodstreamDummy
+  components:
+  - type: Bloodstream
+    max_volume: 100
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+  - type: Metabolism
+    metabolismHeat: 5000
+    radiatedHeat: 400
+    implicitHeatRegulation: 5000
+    sweatHeatRegulation: 5000
+    shiveringHeatRegulation: 5000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+    needsGases:
+      Oxygen: 0.00060763888
+    producesGases:
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
+";
+
         [Test]
         public async Task AirConsistencyTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
+            var server = StartServerDummyTicker(options);
 
             server.Assert(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+                var mapId = mapManager.CreateMap();
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", new MapCoordinates(Vector2.Zero, mapId));
 
                 Assert.That(human.TryGetComponent(out IBody body));
                 Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
@@ -112,7 +137,9 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task NoSuffocationTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
+            var server = StartServerDummyTicker(options);
+
             await server.WaitIdleAsync();
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
@@ -138,7 +165,7 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var center = new Vector2(0.5f, -1.5f);
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
-                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
                 Assert.True(human.TryGetComponent(out IBody body));
                 Assert.True(body.HasMechanismBehavior<LungBehavior>());

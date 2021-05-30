@@ -1,12 +1,10 @@
 ﻿#nullable enable
-using System;
 using System.Threading.Tasks;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Construction
 {
-    public interface IGraphAction : IExposeData
+    public interface IGraphAction
     {
         Task PerformAction(IEntity entity, IEntity? user);
     }

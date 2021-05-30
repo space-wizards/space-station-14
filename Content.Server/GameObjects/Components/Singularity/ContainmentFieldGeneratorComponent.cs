@@ -1,34 +1,24 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Utility;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
+    public class ContainmentFieldGeneratorComponent : Component, IStartCollide
     {
-        [Dependency] private IPhysicsManager _physicsManager = null!;
-        [Dependency] private IEntityManager _entityManager = null!;
-
         public override string Name => "ContainmentFieldGenerator";
 
         private int _powerBuffer;
@@ -70,7 +60,8 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private PhysicsComponent? _collidableComponent;
+        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default;
+        [ComponentDependency] private readonly PointLightComponent? _pointLightComponent = default;
 
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
@@ -78,25 +69,9 @@ namespace Content.Server.GameObjects.Components.Singularity
         public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
 
-        public override void Initialize()
+        public void OnAnchoredChanged()
         {
-            base.Initialize();
-            if (!Owner.TryGetComponent(out _collidableComponent))
-            {
-                Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
-                return;
-            }
-            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
-        }
-
-
-        private void OnAnchoredChanged()
-        {
-            if(_collidableComponent?.Anchored == true)
-            {
-                Owner.SnapToGrid();
-            }
-            else
+            if(_collidableComponent?.BodyType != BodyType.Static)
             {
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
@@ -118,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
             if (propertyFieldTuple != null) return false;
-            if(_collidableComponent?.Anchored == false) return false;
+            if(_collidableComponent?.BodyType != BodyType.Static) return false;
 
             foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
             {
@@ -126,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 var dirVec = direction.ToVec();
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = _physicsManager.IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var rawRayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;
@@ -147,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                     !fieldGeneratorComponent.HasFreeConnections() ||
                     IsConnectedWith(fieldGeneratorComponent) ||
                     !ent.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
-                    !collidableComponent.Anchored)
+                    collidableComponent.BodyType != BodyType.Static)
                 {
                     continue;
                 }
@@ -166,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 {
                     Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
                 }
-
+                UpdateConnectionLights();
                 return true;
             }
 
@@ -178,9 +153,12 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (_connection1?.Item2 == connection)
             {
                 _connection1 = null;
-            }else if (_connection2?.Item2 == connection)
+                UpdateConnectionLights();
+            }
+            else if (_connection2?.Item2 == connection)
             {
                 _connection2 = null;
+                UpdateConnectionLights();
             }
             else if(connection != null)
             {
@@ -188,11 +166,19 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        public void CollideWith(IEntity collidedWith)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if(collidedWith.HasComponent<EmitterBoltComponent>())
+            if (otherFixture.Body.Owner.HasTag("EmitterBolt")) {
+                ReceivePower(6);
+            }
+        }
+
+        public void UpdateConnectionLights()
+        {
+            if (_pointLightComponent != null)
             {
-                ReceivePower(4);
+                bool hasAnyConnection = (_connection1 != null) || (_connection2 != null);
+                _pointLightComponent.Enabled = hasAnyConnection;
             }
         }
 
