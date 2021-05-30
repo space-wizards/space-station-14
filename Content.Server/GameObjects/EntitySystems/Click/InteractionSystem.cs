@@ -64,8 +64,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             base.Shutdown();
         }
 
-        #region Validation
-        private bool ValidateInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
+        #region Client Input Validation
+        private bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords, EntityUid uid, [NotNullWhen(true)] out IEntity? userEntity)
         {
             userEntity = null;
 
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         #region Drag drop
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (!ValidateInput(args.SenderSession, msg.DropLocation, msg.Target, out var userEntity))
+            if (!ValidateClientInput(args.SenderSession, msg.DropLocation, msg.Target, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"DragDropRequestEvent input validation failed");
                 return;
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         #region ActivateItemInWorld
         private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!ValidateInput(session, coords, uid, out var playerEnt))
+            if (!ValidateClientInput(session, coords, uid, out var playerEnt))
             {
                 Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
                 return false;
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleWideAttack(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!ValidateInput(session, coords, uid, out var userEntity))
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"WideAttack input validation failed");
                 return true;
@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!ValidateInput(session, coords, uid, out var userEntity))
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"Use input validation failed");
                 return true;
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!ValidateInput(session, coords, uid, out var userEntity))
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
                 return true;
@@ -273,7 +273,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            ClickFace(player, coordinates);
+            FaceClickCoordinates(player, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(player))
                 return;
@@ -281,16 +281,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             EntityManager.TryGetEntity(clickedUid, out var attacked);
 
-            // In a container where the attacked entity is not the container's owner
-            if (attacked != null)
+            // Check if interacted entity is a in the same container, the direct child, or direct parent of the user.
+            if (attacked != null && !player.IsInSameOrParentContainer(attacked))
             {
-                if (!player.IsInSameOrParentContainer(attacked))
-                {
-                    // Either the attacked entity is null, not contained or in a different container
-                    Logger.WarningS("system.interaction",
-                        $"Player named {player.Name} clicked on object {attacked.Name} that isn't in the same container");
-                    return;
-                }
+                // Either the attacked entity is null, not contained or in a different container
+                Logger.WarningS("system.interaction",
+                    $"Player named {player.Name} clicked on object {attacked.Name} that isn't in the same container");
+                return;
             }
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
@@ -321,7 +318,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 if (item != null)
                 {
-                    RangedInteraction(player, item, attacked, coordinates);
+                    InteractUsingRanged(player, item, attacked, coordinates);
                     return;
                 }
 
@@ -332,16 +329,16 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // InteractUsing/AfterInteract: We will either use the item on the nearby object
             if (item != null)
             {
-                await Interaction(player, item, attacked, coordinates);
+                await InteractUsing(player, item, attacked, coordinates);
             }
             // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
             else
             {
-                Interaction(player, attacked);
+                InteractHand(player, attacked);
             }
         }
 
-        private void ClickFace(IEntity player, EntityCoordinates coordinates)
+        private void FaceClickCoordinates(IEntity player, EntityCoordinates coordinates)
         {
             var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
             if (diff.LengthSquared <= 0.01f)
@@ -381,14 +378,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, null, canReach);
-            await DoAfterInteract(weapon, afterInteractEventArgs);
+            await InteractAfter(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
         /// Uses a weapon/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// </summary>
-        public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async Task InteractUsing(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
@@ -423,14 +420,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: true);
-            await DoAfterInteract(weapon, afterInteractEventArgs);
+            await InteractAfter(weapon, afterInteractEventArgs);
         }
 
         /// <summary>
         /// Uses an empty hand on an entity
         /// Finds components with the InteractHand interface and calls their function
         /// </summary>
-        public void Interaction(IEntity user, IEntity attacked)
+        public void InteractHand(IEntity user, IEntity attacked)
         {
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
@@ -460,6 +457,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             InteractionActivate(user, attacked);
         }
 
+        #region Hands
+        #region Use
         /// <summary>
         /// Activates the IUse behaviors of an entity
         /// Verifies that the user is capable of doing the use interaction first
@@ -507,7 +506,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
         }
+        #endregion
 
+        #region Throw
         /// <summary>
         /// Activates the Throw behavior of an object
         /// Verifies that the user is capable of doing the throw interaction first
@@ -542,7 +543,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 comp.Thrown(args);
             }
         }
+        #endregion
 
+        #region Equip
         /// <summary>
         ///     Calls Equipped on all components that implement the IEquipped interface
         ///     on an entity that has been equipped.
@@ -587,6 +590,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
+        #region Equip Hand
         /// <summary>
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
         ///     on an item.
@@ -628,7 +632,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
             }
         }
+        #endregion
+        #endregion
 
+        #region Drop
         /// <summary>
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
@@ -664,7 +671,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 comp.Dropped(new DroppedEventArgs(user, intentional));
             }
         }
+        #endregion
 
+        #region Hand Selected
         /// <summary>
         ///     Calls HandSelected on all components that implement the IHandSelected interface
         ///     on an item entity on a hand that has just been selected.
@@ -708,12 +717,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 comp.HandDeselected(new HandDeselectedEventArgs(user));
             }
         }
+        #endregion
+        #endregion
 
         /// <summary>
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public async void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
+        public async void InteractUsingRanged(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var rangedMsg = new RangedInteractEvent(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(attacked.Uid, rangedMsg);
@@ -740,10 +751,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             // See if we have a ranged attack interaction
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, attacked, canReach: false);
-            await DoAfterInteract(weapon, afterInteractEventArgs);
+            await InteractAfter(weapon, afterInteractEventArgs);
         }
 
-        private static async Task DoAfterInteract(IEntity weapon, AfterInteractEventArgs afterInteractEventArgs)
+        private static async Task InteractAfter(IEntity weapon, AfterInteractEventArgs afterInteractEventArgs)
         {
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
 
@@ -766,14 +777,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            ClickFace(player, coordinates);
+            FaceClickCoordinates(player, coordinates);
 
             if (!ActionBlockerSystem.CanAttack(player) ||
                 (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))
             {
                 return;
             }
-
 
             // In a container where the target entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
@@ -812,7 +822,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     {
                         if (targetEnt.HasComponent<ItemComponent>())
                         {
-                            Interaction(player, targetEnt);
+                            InteractHand(player, targetEnt);
                             return;
                         }
                     }
