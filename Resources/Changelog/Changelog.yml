@@ -1227,3 +1227,9 @@ Entries:
   - {message: Fixes AME controller's physics, type: Fix}
   id: 217
   time: '2021-05-29T17:22:55.527577+00:00'
+- author: esguard
+  changes:
+  - {message: Fixed being charged multiple times by the cargo console when spamming
+      the "approve" button., type: Fix}
+  id: 218
+  time: '2021-05-30T05:19:15.0000000+00:00'
