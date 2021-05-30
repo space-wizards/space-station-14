@@ -321,7 +321,8 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 ContentBeforeIoC = () =>
                 {
                     IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestInteractionSystem>();
-                }
+                },
+                FailureLogLevel = Robust.Shared.Log.LogLevel.Error
             });
 
             await server.WaitIdleAsync();
