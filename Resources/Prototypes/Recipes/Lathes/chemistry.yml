@@ -19,6 +19,16 @@
     Glass: 200
 
 - type: latheRecipe
+  id: CryostasisBeaker
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
+    state: beakernoreact
+  result: CryostasisBeaker
+  completetime: 500
+  materials:
+    Steel: 250
+
+- type: latheRecipe
   id: Dropper
   icon:
     sprite: Objects/Specific/Chemistry/dropper.rsi

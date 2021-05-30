@@ -7,6 +7,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -14,12 +15,14 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Energy
         {
             get => _energy;
@@ -48,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         }
         private int _energy = 180;
 
+        [ViewVariables]
         public int Level
         {
             get => _level;
@@ -58,6 +62,11 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value > 6) value = 6;
 
                 _level = value;
+                if ((_level > 1) && (value <= 1))
+                {
+                    // Prevents it getting stuck (see SingularityController.MoveSingulo)
+                    if (_collidableComponent != null) _collidableComponent.LinearVelocity = Vector2.Zero;
+                }
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
@@ -76,6 +85,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         }
         private int _level;
 
+        [ViewVariables]
         public int EnergyDrain =>
             Level switch
             {
@@ -87,6 +97,12 @@ namespace Content.Server.GameObjects.Components.Singularity
                 1 => 1,
                 _ => 0
             };
+
+        // This is an interesting little workaround.
+        // See, two singularities queuing deletion of each other at the same time will annihilate.
+        // This is undesirable behaviour, so this flag allows the imperatively first one processed to take priority.
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool BeingDeletedByAnotherSingularity { get; set; } = false;
 
         private PhysicsComponent _collidableComponent = default!;
         private RadiationPulseComponent _radiationPulseComponent = default!;
@@ -123,6 +139,11 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
+            // If we're being deleted by another singularity, this call is probably for that singularity.
+            // Even if not, just don't bother.
+            if (BeingDeletedByAnotherSingularity)
+                return;
+
             var otherEntity = otherFixture.Body.Owner;
 
             if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
@@ -143,8 +164,16 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (otherEntity.IsInContainer())
                 return;
 
+            // Singularity priority management / etc.
+            if (otherEntity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
+                otherSingulo.BeingDeletedByAnotherSingularity = true;
+
             otherEntity.QueueDelete();
-            Energy++;
+
+            if (otherEntity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
+                Energy += singuloFood.Energy;
+            else
+                Energy++;
         }
 
         public override void OnRemove()
