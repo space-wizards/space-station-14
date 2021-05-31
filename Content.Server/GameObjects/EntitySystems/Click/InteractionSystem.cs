@@ -295,24 +295,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var item = hands.GetActiveHand?.Owner;
 
-            var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true, popup: true);
+            var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
             if (target == null || !inRangeUnobstructed)
             {
                 if (item != null)
                     InteractUsingRanged(user, item, target, coordinates, inRangeUnobstructed);
                 return;
             }
-
-            // We are close to the nearby object and the object isn't contained in our active hand
-            // InteractUsing/AfterInteract: We will either use the item on the nearby object
-            if (item != null)
-            {
-                await InteractUsing(user, item, target, coordinates);
-            }
-            // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
             else
             {
-                InteractHand(user, target);
+                // We are close to the nearby object and the object isn't contained in our active hand
+                // InteractUsing/AfterInteract: We will either use the item on the nearby object
+                if (item != null)
+                    await InteractUsing(user, item, target, coordinates);
+                // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
+                else
+                    InteractHand(user, target);
             }
         }
 
@@ -346,35 +344,27 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private async Task InteractAfter(IEntity user, IEntity weapon, IEntity? target, EntityCoordinates clickLocation, bool canReach)
+        private async Task InteractDoAfter(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool canReach)
         {
-            var afterInteractEvent = new AfterInteractEvent(user, weapon, target, clickLocation, canReach);
-            RaiseLocalEvent(weapon.Uid, afterInteractEvent, false);
+            var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
+            RaiseLocalEvent(used.Uid, afterInteractEvent, false);
             if (afterInteractEvent.Handled)
-            {
                 return;
-            }
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            await InteractAfter(weapon, afterInteractEventArgs);
-        }
-
-        private static async Task InteractAfter(IEntity weapon, AfterInteractEventArgs afterInteractEventArgs)
-        {
-            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
+            var afterInteracts = used.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
 
             foreach (var afterInteract in afterInteracts)
             {
                 if (await afterInteract.AfterInteract(afterInteractEventArgs))
-                {
                     return;
-                }
             }
         }
 
         /// <summary>
         /// Uses a weapon/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
+        /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity weapon, IEntity target, EntityCoordinates clickLocation)
         {
@@ -382,57 +372,52 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
-            if (InRangeUnobstructed(user, target, ignoreInsideBlocker: true, popup: true))
+            var attackMsg = new InteractUsingEvent(user, weapon, target, clickLocation);
+            RaiseLocalEvent(target.Uid, attackMsg);
+            if (attackMsg.Handled)
+                return;
+
+            var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, target);
+
+            var attackBys = target.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
+            foreach (var attackBy in attackBys)
             {
-                var attackMsg = new InteractUsingEvent(user, weapon, target, clickLocation);
-                RaiseLocalEvent(target.Uid, attackMsg);
-                if (attackMsg.Handled)
-                    return;
-
-                var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, target);
-
-                var attackBys = target.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
-                foreach (var attackBy in attackBys)
+                if (await attackBy.InteractUsing(attackByEventArgs))
                 {
-                    if (await attackBy.InteractUsing(attackByEventArgs))
-                    {
-                        // If an InteractUsing returns a status completion we finish our attack
-                        return;
-                    }
+                    // If an InteractUsing returns a status completion we finish our attack
+                    return;
                 }
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            await InteractAfter(user, weapon, target, clickLocation, true);
+            await InteractDoAfter(user, weapon, target, clickLocation, true);
         }
 
         /// <summary>
         /// Uses an empty hand on an entity
         /// Finds components with the InteractHand interface and calls their function
+        /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
 
-            if (InRangeUnobstructed(user, target, ignoreInsideBlocker: true, popup: true))
+            var message = new InteractHandEvent(user, target);
+            RaiseLocalEvent(target.Uid, message);
+            if (message.Handled)
+                return;
+
+            var attackHandEventArgs = new InteractHandEventArgs(user, target);
+
+            // all attackHands should only fire when in range / unobstructed
+            var attackHands = target.GetAllComponents<IInteractHand>().ToList();
+            foreach (var attackHand in attackHands)
             {
-                var message = new InteractHandEvent(user, target);
-                RaiseLocalEvent(target.Uid, message);
-                if (message.Handled)
-                    return;
-
-                var attackHandEventArgs = new InteractHandEventArgs(user, target);
-
-                // all attackHands should only fire when in range / unobstructed
-                var attackHands = target.GetAllComponents<IInteractHand>().ToList();
-                foreach (var attackHand in attackHands)
+                if (attackHand.InteractHand(attackHandEventArgs))
                 {
-                    if (attackHand.InteractHand(attackHandEventArgs))
-                    {
-                        // If an InteractHand returns a status completion we finish our attack
-                        return;
-                    }
+                    // If an InteractHand returns a status completion we finish our attack
+                    return;
                 }
             }
 
@@ -731,9 +716,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (inRangeUnobstructed)
-                await InteractAfter(user, weapon, target, clickLocation, false);
+                await InteractDoAfter(user, weapon, target, clickLocation, false);
             else
-                await InteractAfter(user, weapon, null, clickLocation, false);
+                await InteractDoAfter(user, weapon, null, clickLocation, false);
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
@@ -784,17 +769,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                             return;
                     }
                 }
-                else
+                else if (!wideAttack &&
+                    EntityManager.TryGetEntity(targetUid, out var targetEnt) &&
+                    targetEnt.HasComponent<ItemComponent>())
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt))
-                    {
-                        if (targetEnt.HasComponent<ItemComponent>())
-                        {
-                            InteractHand(user, targetEnt);
-                            return;
-                        }
-                    }
+                    InteractHand(user, targetEnt);
+                    return;
                 }
             }
 
