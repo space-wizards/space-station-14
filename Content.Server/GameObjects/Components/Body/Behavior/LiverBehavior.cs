@@ -23,31 +23,31 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         /// <summary>
         ///     Whether the liver is functional.
         /// </summary>
-        [ViewVariables] private bool _liverFailing = false;
+        //[ViewVariables] private bool _liverFailing = false;
 
         /// <summary>
         ///     Modifier for alcohol damage.
         /// </summary>
-        [DataField("alcoholLethality")]
-        [ViewVariables] private float _alcoholLethality = 0.005f;
+        //[DataField("alcoholLethality")]
+        //[ViewVariables] private float _alcoholLethality = 0.005f;
 
         /// <summary>
         ///     Modifier for alcohol damage.
         /// </summary>
-        [DataField("alcoholExponent")]
-        [ViewVariables] private float _alcoholExponent = 1.6f;
+        //[DataField("alcoholExponent")]
+        //[ViewVariables] private float _alcoholExponent = 1.6f;
 
         /// <summary>
         ///     Toxin volume that can be purged without damage.
         /// </summary>
-        [DataField("toxinTolerance")]
-        [ViewVariables] private float _toxinTolerance = 3f;
+        //[DataField("toxinTolerance")]
+        //[ViewVariables] private float _toxinTolerance = 3f;
 
         /// <summary>
         ///     Toxin damage modifier.
         /// </summary>
-        [DataField("toxinLethality")]
-        [ViewVariables] private float _toxinLethality = 0.01f;
+        //[DataField("toxinLethality")]
+        //[ViewVariables] private float _toxinLethality = 0.01f;
 
         /// <summary>
         ///     Loops through each reagent in _internalSolution,
