@@ -30,6 +30,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
+using Robust.Shared.Localization;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
 {
@@ -295,11 +297,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var item = hands.GetActiveHand?.Owner;
 
+            // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
             if (target == null || !inRangeUnobstructed)
             {
-                if (item != null)
-                    InteractUsingRanged(user, item, target, coordinates, inRangeUnobstructed);
+                if (item == null)
+                    return;
+
+                if (!await InteractUsingRanged(user, item, target, coordinates, inRangeUnobstructed) &&
+                    !inRangeUnobstructed)
+                {
+                    var message = Loc.GetString("You can't reach there!");
+                    user.PopupMessage(message);
+                }
+
                 return;
             }
             else
@@ -344,12 +355,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private async Task InteractDoAfter(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool canReach)
+        private async Task<bool> InteractDoAfter(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool canReach)
         {
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used.Uid, afterInteractEvent, false);
             if (afterInteractEvent.Handled)
-                return;
+                return true;
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
             var afterInteracts = used.GetAllComponents<IAfterInteract>().OrderByDescending(x => x.Priority).ToList();
@@ -357,8 +368,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             foreach (var afterInteract in afterInteracts)
             {
                 if (await afterInteract.AfterInteract(afterInteractEventArgs))
-                    return;
+                    return true;
             }
+
+            return false;
         }
 
         /// <summary>
@@ -454,9 +467,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var useMsg = new UseInHandEvent(user, used);
             RaiseLocalEvent(used.Uid, useMsg);
             if (useMsg.Handled)
-            {
                 return;
-            }
 
             var uses = used.GetAllComponents<IUse>().ToList();
 
@@ -492,9 +503,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var throwMsg = new ThrownEvent(user, thrown);
             RaiseLocalEvent(thrown.Uid, throwMsg);
             if (throwMsg.Handled)
-            {
                 return;
-            }
 
             var comps = thrown.GetAllComponents<IThrown>().ToList();
             var args = new ThrownEventArgs(user);
@@ -517,9 +526,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var equipMsg = new EquippedEvent(user, equipped, slot);
             RaiseLocalEvent(equipped.Uid, equipMsg);
             if (equipMsg.Handled)
-            {
                 return;
-            }
 
             var comps = equipped.GetAllComponents<IEquipped>().ToList();
 
@@ -539,9 +546,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var unequipMsg = new UnequippedEvent(user, equipped, slot);
             RaiseLocalEvent(equipped.Uid, unequipMsg);
             if (unequipMsg.Handled)
-            {
                 return;
-            }
 
             var comps = equipped.GetAllComponents<IUnequipped>().ToList();
 
@@ -562,9 +567,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var equippedHandMessage = new EquippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, equippedHandMessage);
             if (equippedHandMessage.Handled)
-            {
                 return;
-            }
 
             var comps = item.GetAllComponents<IEquippedHand>().ToList();
 
@@ -583,9 +586,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, unequippedHandMessage);
             if (unequippedHandMessage.Handled)
-            {
                 return;
-            }
 
             var comps = item.GetAllComponents<IUnequippedHand>().ToList();
 
@@ -619,9 +620,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var dropMsg = new DroppedEvent(user, item, intentional);
             RaiseLocalEvent(item.Uid, dropMsg);
             if (dropMsg.Handled)
-            {
                 return;
-            }
 
             item.Transform.LocalRotation = intentional ? Angle.Zero : (_random.Next(0, 100) / 100f) * MathHelper.TwoPi;
 
@@ -645,9 +644,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var handSelectedMsg = new HandSelectedEvent(user, item);
             RaiseLocalEvent(item.Uid, handSelectedMsg);
             if (handSelectedMsg.Handled)
-            {
                 return;
-            }
 
             var comps = item.GetAllComponents<IHandSelected>().ToList();
 
@@ -667,9 +664,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var handDeselectedMsg = new HandDeselectedEvent(user, item);
             RaiseLocalEvent(item.Uid, handDeselectedMsg);
             if (handDeselectedMsg.Handled)
-            {
                 return;
-            }
 
             var comps = item.GetAllComponents<IHandDeselected>().ToList();
 
@@ -686,14 +681,14 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
         /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
-        public async void InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
                 RaiseLocalEvent(target.Uid, rangedMsg);
                 if (rangedMsg.Handled)
-                    return;
+                    return true;
 
                 var rangedInteractions = target.GetAllComponents<IRangedInteract>().ToList();
                 var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
@@ -703,14 +698,15 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 {
                     // If an InteractUsingRanged returns a status completion we finish our interaction
                     if (t.RangedInteract(rangedInteractionEventArgs))
-                        return;
+                        return true;
                 }
             }
 
             if (inRangeUnobstructed)
-                await InteractDoAfter(user, used, target, clickLocation, false);
+                return await InteractDoAfter(user, used, target, clickLocation, false);
             else
-                await InteractDoAfter(user, used, null, clickLocation, false);
+                return await InteractDoAfter(user, used, null, clickLocation, false);
+            return false;
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
@@ -741,6 +737,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     return;
                 }
 
+                // TODO: Replace with body attack range when we get something like arm length or telekinesis or something.
                 if (!user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true))
                     return;
             }
