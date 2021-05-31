@@ -390,13 +390,13 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         public override void OnRemove()
         {
-            base.OnRemove();
-
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);
 
             _buckleTime = default;
             UpdateBuckleStatus();
+
+            base.OnRemove();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
