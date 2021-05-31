@@ -867,11 +867,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             if(!resumed)
                 _currentRunAtmosDevices = new Queue<AtmosDeviceComponent>(_atmosDevices);
 
+            var updateEvent = new AtmosDeviceUpdateEvent(this);
             var number = 0;
             while (_currentRunAtmosDevices.Count > 0)
             {
                 var device = _currentRunAtmosDevices.Dequeue();
-                device.Update(_gameTiming);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(device.Owner.Uid, updateEvent, false);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
