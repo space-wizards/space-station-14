@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
@@ -23,7 +24,8 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         public DisposalUnitWindow()
         {
-            Title = Loc.GetString("Disposal Unit");
+            Title = Loc.GetString("ui-disposal-unit-title");
+            IoCManager.InjectDependencies(this);
             MinSize = SetSize = (300, 140);
             Contents.AddChild(new VBoxContainer
             {
@@ -33,8 +35,9 @@ namespace Content.Client.GameObjects.Components.Disposal
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("State: ")},
-                            (_unitState = new Label {Text = Loc.GetString("Ready")})
+                            new Label {Text = Loc.GetString("ui-disposal-unit-label-state")},
+                            new Control {MinSize = (4, 0)},
+                            (_unitState = new Label {Text = Loc.GetString("ui-disposal-unit-label-status")})
                         }
                     },
                     new Control {MinSize = (0, 5)},
@@ -42,10 +45,11 @@ namespace Content.Client.GameObjects.Components.Disposal
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Pressure: ")},
+                            new Label {Text = Loc.GetString("ui-disposal-unit-label-pressure")},
+                            new Control {MinSize = (4, 0)},
                             (_pressureBar = new ProgressBar
                             {
-                                MinSize = (185, 20),
+                                MinSize = (190, 20),
                                 HorizontalAlignment = HAlignment.Right,
                                 MinValue = 0,
                                 MaxValue = 1,
@@ -61,20 +65,20 @@ namespace Content.Client.GameObjects.Components.Disposal
                         {
                             (Engage = new Button
                             {
-                                Text = Loc.GetString("Flush"),
+                                Text = Loc.GetString("ui-disposal-unit-button-flush"),
                                 StyleClasses = {StyleBase.ButtonOpenRight},
                                 ToggleMode = true
                             }),
 
                             (Eject = new Button
                             {
-                                Text = Loc.GetString("Eject Contents"),
+                                Text = Loc.GetString("ui-disposal-unit-button-eject"),
                                 StyleClasses = {StyleBase.ButtonOpenBoth}
                             }),
 
                             (Power = new CheckButton
                             {
-                                Text = Loc.GetString("Power"),
+                                Text = Loc.GetString("ui-disposal-unit-button-power"),
                                 StyleClasses = {StyleBase.ButtonOpenLeft}
                             })
 
