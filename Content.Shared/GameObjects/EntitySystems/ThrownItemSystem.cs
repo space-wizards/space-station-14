@@ -57,7 +57,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            var fixture = new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, Name = ThrowingFixture};
+            var fixture = new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture};
             physicsComponent.AddFixture(fixture);
         }
 
