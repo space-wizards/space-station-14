@@ -32,14 +32,14 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PlayerAttachSystemMessage>(OnPlayerAttached);
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<PlayerAttachSystemMessage>();
+            UnsubscribeLocalEvent<PlayerAttachedEvent>();
         }
 
         private uint GetNextRoleIdentifier()
@@ -135,12 +135,12 @@ namespace Content.Server.GameObjects.EntitySystems
             return roles;
         }
 
-        private void OnPlayerAttached(PlayerAttachSystemMessage message)
+        private void OnPlayerAttached(PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
-            if (!_openUis.ContainsKey(message.NewPlayer)) return;
+            if (!_openUis.ContainsKey(message.Player)) return;
             if (message.Entity.HasComponent<GhostComponent>()) return;
-            CloseEui(message.NewPlayer);
+            CloseEui(message.Player);
         }
 
         public void Reset()

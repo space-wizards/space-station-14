@@ -53,7 +53,7 @@ namespace Content.Server.GameTicking.GameRules
             SoundSystem.Play(filter, "/Audio/Misc/tatoralert.ogg", AudioParams.Default);
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
-            EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.AllowAllNoExternal;
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
             Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
         }
@@ -62,7 +62,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            EntitySystem.Get<ServerDoorSystem>().AccessType = ServerDoorSystem.AccessTypes.Id;
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = null;
 
             _checkTimerCancel.Cancel();
