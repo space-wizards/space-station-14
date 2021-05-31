@@ -24,7 +24,6 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         public DisposalUnitWindow()
         {
-            Title = Loc.GetString("ui-disposal-unit-title");
             IoCManager.InjectDependencies(this);
             MinSize = SetSize = (300, 140);
             Contents.AddChild(new VBoxContainer
