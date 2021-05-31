@@ -10,50 +10,21 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
 {
     [RegisterComponent]
-    public class GasOutletInjectorComponent : Component, IAtmosProcess
+    public class GasOutletInjectorComponent : Component
     {
         public override string Name => "GasOutletInjector";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _enabled = true;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _injecting = false;
+        public bool Injecting { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _volumeRate = 50f;
+        public float VolumeRate { get; set; } = 50f;
 
         [DataField("inlet")]
-        private string _inletName = "pipe";
-
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
-        {
-            _injecting = false;
-
-            if (!_enabled)
-                return;
-
-            if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inlet))
-                return;
-
-            var environment = atmosphere.GetTile(Owner.Transform.Coordinates)!;
-
-            if (environment.Air == null)
-                return;
-
-            if (inlet.Air.Temperature > 0)
-            {
-                var transferMoles = inlet.Air.Pressure * _volumeRate / (inlet.Air.Temperature * Atmospherics.R);
-
-                var removed = inlet.Air.Remove(transferMoles);
-
-                environment.AssumeAir(removed);
-                environment.Invalidate();
-            }
-        }
+        public string InletName { get; set; } = "pipe";
 
         // TODO ATMOS: Inject method.
     }

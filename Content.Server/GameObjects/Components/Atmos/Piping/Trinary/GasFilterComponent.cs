@@ -14,74 +14,29 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
 {
     [RegisterComponent]
-    public class GasFilterComponent : Component, IAtmosProcess
+    public class GasFilterComponent : Component
     {
         public override string Name => "GasFilter";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _enabled = true;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        private string _inletName = "inlet";
+        public string InletName { get; set; } = "inlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("filter")]
-        private string _filterName = "filter";
+        public string FilterName { get; set; } = "filter";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
-        private string _outletName = "outlet";
+        public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _transferRate = Atmospherics.MaxTransferRate;
+        public float TransferRate { get; set; } = Atmospherics.MaxTransferRate;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas? FilteredGas { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float TransferRate
-        {
-            get => _transferRate;
-            set => _transferRate = Math.Min(value, Atmospherics.MaxTransferRate);
-        }
-
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
-        {
-            if (!_enabled)
-                return;
-
-            if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inletNode)
-                || !nodeContainer.TryGetNode(_filterName, out PipeNode? filterNode)
-                || !nodeContainer.TryGetNode(_outletName, out PipeNode? outletNode))
-                return;
-
-            if (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure)
-                return; // No need to transfer if target is full.
-
-            // SUS: Maybe this should take time into account, transfer rate is L/s...
-            var transferRatio = _transferRate / inletNode.Air.Volume;
-
-            if (transferRatio <= 0)
-                return;
-
-            var removed = inletNode.Air.RemoveRatio(transferRatio);
-
-            if (FilteredGas.HasValue)
-            {
-                var filteredOut = new GasMixture {Temperature = removed.Temperature};
-
-                filteredOut.SetMoles(FilteredGas.Value, removed.GetMoles(FilteredGas.Value));
-                removed.SetMoles(FilteredGas.Value, 0f);
-
-                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode.Air : inletNode.Air;
-                target.Merge(filteredOut);
-            }
-
-            outletNode.Air.Merge(removed);
-        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
@@ -10,21 +11,21 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Other
 {
     [RegisterComponent]
-    public class GasMinerComponent : Component, IAtmosProcess
+    public class GasMinerComponent : Component
     {
         public override string Name => "GasMiner";
 
-        private bool _enabled = true;
+        public bool Enabled { get; set; } = true;
 
-        private bool _broken = false;
+        public bool Broken { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxExternalAmount")]
-        public float MaxExternalAmount = float.PositiveInfinity;
+        public float MaxExternalAmount { get; set; } = float.PositiveInfinity;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxExternalPressure")]
-        public float MaxExternalPressure = 6500f;
+        public float MaxExternalPressure { get; set; } = 6500f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawnGas")]
@@ -37,56 +38,5 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Other
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawnAmount")]
         public float SpawnAmount { get; set; } = Atmospherics.MolesCellStandard * 20f;
-
-        private bool CheckOperation([NotNullWhen(true)] out TileAtmosphere? tile)
-        {
-            var atmosphere = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.Coordinates);
-            tile = atmosphere.GetTile(Owner.Transform.Coordinates)!;
-
-            // Space.
-            if (atmosphere.IsSpace(tile.GridIndices))
-            {
-                _broken = true;
-                return false;
-            }
-
-            // Airblocked location.
-            if (tile.Air == null)
-            {
-                _broken = true;
-                return false;
-            }
-
-            // External pressure above threshold.
-            if (!float.IsInfinity(MaxExternalPressure) &&
-                tile.Air.Pressure > MaxExternalPressure - SpawnAmount * SpawnTemperature * Atmospherics.R / tile.Air.Volume)
-            {
-                _broken = true;
-                return false;
-            }
-
-            // External gas amount above threshold.
-            if (!float.IsInfinity(MaxExternalAmount) && tile.Air.TotalMoles > MaxExternalAmount)
-            {
-                _broken = true;
-                return false;
-            }
-
-            _broken = false;
-            return true;
-        }
-
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
-        {
-            if (!CheckOperation(out var tile) || !_enabled || SpawnGas <= Gas.Invalid || SpawnAmount <= 0f)
-                return;
-
-            // Time to mine some gas.
-
-            var merger = new GasMixture(1) { Temperature = SpawnTemperature };
-            merger.SetMoles(SpawnGas, SpawnAmount);
-
-            tile.AssumeAir(merger);
-        }
     }
 }

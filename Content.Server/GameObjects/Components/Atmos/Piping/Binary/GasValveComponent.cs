@@ -9,6 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
 {
+    // TODO ATMOS: Make ECS.
     [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
     public class GasValveComponent : Component, IActivate

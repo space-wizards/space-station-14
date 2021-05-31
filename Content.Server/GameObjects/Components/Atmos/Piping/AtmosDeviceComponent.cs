@@ -3,6 +3,7 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
@@ -18,8 +19,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     [RegisterComponent]
     public class AtmosDeviceComponent : Component
     {
-        private static readonly AtmosDeviceUpdateEvent Event = new ();
-
         private TimeSpan _lastTime = TimeSpan.Zero;
 
         public override string Name => "AtmosDevice";
@@ -30,14 +29,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; private set; } = true;
-
-        /// <summary>
-        ///     Whether this device will cause all pressure in the pipenet to be released into the atmosphere when unanchored
-        ///     Requires <see cref="AnchorableComponent"/> and <see cref="NodeContainerComponent"/>.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("unsafeUnanchoring")]
-        public bool UnsafeUnanchoring { get; private set; } = false;
 
         public IGridAtmosphereComponent? Atmosphere { get; private set; }
 
@@ -65,9 +56,12 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public void Update(IGameTiming gameTiming)
         {
+            if (Atmosphere == null)
+                return;
+
             DeltaTime = gameTiming.CurTime - _lastTime;
             _lastTime = gameTiming.CurTime;
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, Event);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AtmosDeviceUpdateEvent(Atmosphere));
         }
 
         public void JoinAtmosphere()
@@ -101,5 +95,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
     public class AtmosDeviceUpdateEvent : EntityEventArgs
     {
+        public IGridAtmosphereComponent Atmosphere { get; }
+
+        public AtmosDeviceUpdateEvent(IGridAtmosphereComponent atmosphere)
+        {
+            Atmosphere = atmosphere;
+        }
     }
 }

@@ -11,60 +11,29 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
 {
     [RegisterComponent]
-    public class GasPassiveGateComponent : Component, IAtmosProcess
+    public class GasPassiveGateComponent : Component
     {
         public override string Name => "GasPassiveGate";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>
         ///     This is the minimum difference needed to overcome the friction in the mechanism.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("frictionDifference")]
-        private float _frictionPressureDifference = 10f;
+        public float FrictionPressureDifference { get; set; } = 10f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        private string _inletName = "inlet";
+        public string InletName { get; set; } = "inlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
-        private string _outletName = "outlet";
+        public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _targetPressure = Atmospherics.OneAtmosphere;
-
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
-        {
-            if (!_enabled)
-                return;
-
-            if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inlet)
-                || !nodeContainer.TryGetNode(_outletName, out PipeNode? outlet))
-                return;
-
-            var outputStartingPressure = outlet.Air.Pressure;
-            var inputStartingPressure = inlet.Air.Pressure;
-
-            if (outputStartingPressure >= MathF.Min(_targetPressure, inputStartingPressure - _frictionPressureDifference))
-                return; // No need to pump gas, target reached or input pressure too low.
-
-            if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
-            {
-                // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
-                var pressureDelta = MathF.Min(_targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure)/2);
-                // We can't have a pressure delta that would cause outlet pressure > inlet pressure.
-
-                var transferMoles = pressureDelta * outlet.Air.Volume / (inlet.Air.Temperature * Atmospherics.R);
-
-                // Actually transfer the gas.
-                outlet.Air.Merge(inlet.Air.Remove(transferMoles));
-            }
-        }
+        public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
     }
 }

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;

@@ -7,6 +7,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Atmos

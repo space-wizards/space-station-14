@@ -12,50 +12,22 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
 {
     [RegisterComponent]
-    public class GasPumpComponent : Component, IAtmosProcess
+    public class GasPumpComponent : Component
     {
         public override string Name => "GasPump";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _enabled = true;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
-        private string _inletName = "inlet";
+        public string InletName { get; set; } = "inlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
-        private string _outletName = "outlet";
+        public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _targetPressure = Atmospherics.OneAtmosphere;
-
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
-        {
-            if (!_enabled)
-                return;
-
-            if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inlet)
-                || !nodeContainer.TryGetNode(_outletName, out PipeNode? outlet))
-                return;
-
-            var outputStartingPressure = outlet.Air.Pressure;
-
-            if (MathHelper.CloseTo(_targetPressure, outputStartingPressure))
-                return; // No need to pump gas if target has been reached.
-
-            if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
-            {
-                // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
-                var pressureDelta = _targetPressure - outputStartingPressure;
-                var transferMoles = pressureDelta * outlet.Air.Volume / inlet.Air.Temperature * Atmospherics.R;
-
-                var removed = inlet.Air.Remove(transferMoles);
-                outlet.Air.Merge(removed);
-            }
-        }
+        public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
     }
 }

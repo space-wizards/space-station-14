@@ -15,60 +15,36 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
 {
     [RegisterComponent]
-    public class GasThermoMachineComponent : Component, IAtmosProcess, IRefreshParts, ISerializationHooks
+    public class GasThermoMachineComponent : Component, IRefreshParts, ISerializationHooks
     {
         public override string Name => "GasThermoMachine";
 
         [DataField("inlet")]
-        private string _inletName = "pipe";
+        public string InletName { get; set; } = "pipe";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _enabled = true;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _heatCapacity = 0;
+        public float HeatCapacity { get; set; } = 0;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _targetTemperature = Atmospherics.T20C;
+        public float TargetTemperature { get; set; } = Atmospherics.T20C;
 
         [DataField("mode")]
         [ViewVariables(VVAccess.ReadWrite)]
-        private ThermoMachineMode _mode = ThermoMachineMode.Freezer;
+        public ThermoMachineMode Mode { get; set; } = ThermoMachineMode.Freezer;
 
         [DataField("minTemperature")]
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _minTemperature = Atmospherics.T20C;
+        public float MinTemperature { get; set; } = Atmospherics.T20C;
 
         [DataField("maxTemperature")]
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _maxTemperature = Atmospherics.T20C;
+        public float MaxTemperature { get; set; } = Atmospherics.T20C;
 
-        private float _initialMinTemperature;
-        private float _initialMaxTemperature;
-
-        public void ProcessAtmos(IGridAtmosphereComponent atmosphere)
-        {
-            if (!_enabled)
-                return;
-
-            if (!Owner.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(_inletName, out PipeNode? inlet))
-                return;
-
-            var airHeatCapacity = inlet.Air.HeatCapacity;
-            var combinedHeatCapacity = airHeatCapacity + _heatCapacity;
-            var oldTemperature = inlet.Air.Temperature;
-
-            if (combinedHeatCapacity > 0)
-            {
-                var combinedEnergy = _heatCapacity * _targetTemperature + airHeatCapacity * inlet.Air.Temperature;
-                inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
-            }
-
-            // TODO ATMOS: Active power usage.
-        }
+        public float InitialMinTemperature { get; private set; }
+        public float InitialMaxTemperature { get; private set; }
 
         void IRefreshParts.RefreshParts(IEnumerable<MachinePartComponent> parts)
         {
@@ -88,25 +64,25 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
                 }
             }
 
-            _heatCapacity = 5000 * MathF.Pow((matterBinRating - 1), 2);
+            HeatCapacity = 5000 * MathF.Pow((matterBinRating - 1), 2);
 
-            switch (_mode)
+            switch (Mode)
             {
                 // 573.15K with stock parts.
                 case ThermoMachineMode.Heater:
-                    _maxTemperature = Atmospherics.T20C + (_initialMaxTemperature * laserRating);
+                    MaxTemperature = Atmospherics.T20C + (InitialMaxTemperature * laserRating);
                     break;
                 // 73.15K with stock parts.
                 case ThermoMachineMode.Freezer:
-                    _minTemperature = MathF.Max(Atmospherics.T0C - _initialMinTemperature + laserRating * 15f, Atmospherics.TCMB);
+                    MinTemperature = MathF.Max(Atmospherics.T0C - InitialMinTemperature + laserRating * 15f, Atmospherics.TCMB);
                     break;
             }
         }
 
         void ISerializationHooks.AfterDeserialization()
         {
-            _initialMinTemperature = _minTemperature;
-            _initialMaxTemperature = _maxTemperature;
+            InitialMinTemperature = MinTemperature;
+            InitialMaxTemperature = MaxTemperature;
         }
     }
 

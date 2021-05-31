@@ -1,5 +1,6 @@
 #nullable enable
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
