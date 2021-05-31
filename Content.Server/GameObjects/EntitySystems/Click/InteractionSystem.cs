@@ -362,35 +362,33 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        /// Uses a weapon/object on an entity
+        /// Uses a item/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async Task InteractUsing(IEntity user, IEntity weapon, IEntity target, EntityCoordinates clickLocation)
+        public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var attackMsg = new InteractUsingEvent(user, weapon, target, clickLocation);
-            RaiseLocalEvent(target.Uid, attackMsg);
-            if (attackMsg.Handled)
+            var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
+            RaiseLocalEvent(target.Uid, interactUsingEvent);
+            if (interactUsingEvent.Handled)
                 return;
 
-            var attackByEventArgs = new InteractUsingEventArgs(user, clickLocation, weapon, target);
+            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
 
-            var attackBys = target.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
-            foreach (var attackBy in attackBys)
+            var interactUsings = target.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
+            foreach (var interactUsing in interactUsings)
             {
-                if (await attackBy.InteractUsing(attackByEventArgs))
-                {
-                    // If an InteractUsing returns a status completion we finish our attack
+                // If an InteractUsing returns a status completion we finish our interaction
+                if (await interactUsing.InteractUsing(interactUsingEventArgs))
                     return;
-                }
             }
 
-            // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            await InteractDoAfter(user, weapon, target, clickLocation, true);
+            // If we aren't directly interacting with the nearby object, lets see if our item has an after interact we can do
+            await InteractDoAfter(user, used, target, clickLocation, true);
         }
 
         /// <summary>
@@ -403,22 +401,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
 
+            // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target.Uid, message);
             if (message.Handled)
                 return;
 
-            var attackHandEventArgs = new InteractHandEventArgs(user, target);
+            var interactHandEventArgs = new InteractHandEventArgs(user, target);
 
-            // all attackHands should only fire when in range / unobstructed
-            var attackHands = target.GetAllComponents<IInteractHand>().ToList();
-            foreach (var attackHand in attackHands)
+            var interactHandComps = target.GetAllComponents<IInteractHand>().ToList();
+            foreach (var interactHandComp in interactHandComps)
             {
-                if (attackHand.InteractHand(attackHandEventArgs))
-                {
-                    // If an InteractHand returns a status completion we finish our attack
+                // If an InteractHand returns a status completion we finish our interaction
+                if (interactHandComp.InteractHand(interactHandEventArgs))
                     return;
-                }
             }
 
             // Else we run Activate.
@@ -467,11 +463,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Try to use item on any components which have the interface
             foreach (var use in uses)
             {
+                // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
-                {
-                    // If a Use returns a status completion we finish our attack
                     return;
-                }
             }
         }
         #endregion
@@ -689,36 +683,34 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         #endregion
 
         /// <summary>
-        /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
-        /// Or it will use the weapon itself on the position clicked, regardless of what was there
+        /// Will have two behaviors, either "uses" the used entity at range on the target entity if it is capable of accepting that action
+        /// Or it will use the used entity itself on the position clicked, regardless of what was there
         /// </summary>
-        public async void InteractUsingRanged(IEntity user, IEntity weapon, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
+        public async void InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
             if (target != null)
             {
-                var rangedMsg = new RangedInteractEvent(user, weapon, target, clickLocation);
+                var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
                 RaiseLocalEvent(target.Uid, rangedMsg);
                 if (rangedMsg.Handled)
                     return;
 
                 var rangedInteractions = target.GetAllComponents<IRangedInteract>().ToList();
-                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, weapon, clickLocation);
+                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
 
-                // See if we have a ranged attack interaction
+                // See if we have a ranged interaction
                 foreach (var t in rangedInteractions)
                 {
+                    // If an InteractUsingRanged returns a status completion we finish our interaction
                     if (t.RangedInteract(rangedInteractionEventArgs))
-                    {
-                        // If an InteractUsing returns a status completion we finish our attack
                         return;
-                    }
                 }
             }
 
             if (inRangeUnobstructed)
-                await InteractDoAfter(user, weapon, target, clickLocation, false);
+                await InteractDoAfter(user, used, target, clickLocation, false);
             else
-                await InteractDoAfter(user, weapon, null, clickLocation, false);
+                await InteractDoAfter(user, used, null, clickLocation, false);
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
