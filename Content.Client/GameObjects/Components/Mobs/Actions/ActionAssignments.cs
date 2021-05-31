@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -116,9 +116,12 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             {
                 foreach (var (hotbar, slot) in slots)
                 {
-                    if (!assignment.TryGetItemActionWithItem(out var actionType, out _)) continue;
-                    AssignSlot(hotbar, slot,
-                        ActionAssignment.For(actionType));
+                    if (!assignment.TryGetItemActionWithItem(out var actionType, out _))
+                    {
+                        continue;
+                    }
+
+                    ClearSlot(hotbar, slot, false);
                 }
             }
 
