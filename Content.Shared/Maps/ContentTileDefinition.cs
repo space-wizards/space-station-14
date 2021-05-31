@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Maps
@@ -35,7 +36,8 @@ namespace Content.Shared.Maps
 
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
 
-        [DataField("item_drop")] public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
+        [DataField("item_drop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
         [DataField("is_space")] public bool IsSpace { get; private set; }
 

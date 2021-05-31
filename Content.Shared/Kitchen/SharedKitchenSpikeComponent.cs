@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -21,19 +22,17 @@ namespace Content.Shared.Kitchen
         [DataField("sound")]
         protected string? SpikeSound = "/Audio/Effects/Fluids/splat.ogg";
 
-        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (eventArgs.User == eventArgs.Dragged ||
-                !eventArgs.Dragged.TryGetComponent<IMobStateComponent>(out var state) ||
-                (eventArgs.User.TryGetComponent(out SharedCombatModeComponent? combatMode) && !combatMode.IsInCombatMode))
+            if (!eventArgs.Dragged.HasComponent<SharedButcherableComponent>())
             {
                 return false;
             }
 
             // TODO: Once we get silicons need to check organic
-            return !state.IsDead();
+            return true;
         }
 
-        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

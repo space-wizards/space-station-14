@@ -18,7 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns>true if <see cref="eventArgs"/> is valid, false otherwise.</returns>
-        bool CanDragDropOn(DragDropEventArgs eventArgs);
+        bool CanDragDropOn(DragDropEvent eventArgs);
 
         /// <summary>
         ///     Invoked server-side when another entity is being dragged and dropped
@@ -30,6 +30,6 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     true if an interaction occurred and no further interaction should
         ///     be processed for this drop.
         /// </returns>
-        bool DragDropOn(DragDropEventArgs eventArgs);
+        bool DragDropOn(DragDropEvent eventArgs);
     }
 }

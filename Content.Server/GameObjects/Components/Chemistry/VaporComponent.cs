@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // Check for collision with a impassable object (e.g. wall) and stop
             if ((otherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && otherFixture.Hard)
             {
-                Owner.Delete();
+                Owner.QueueDelete();
             }
         }
     }

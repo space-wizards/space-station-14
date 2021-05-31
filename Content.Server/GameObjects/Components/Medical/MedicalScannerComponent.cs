@@ -284,7 +284,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             _bodyContainer.Insert(eventArgs.Dragged);
             return true;

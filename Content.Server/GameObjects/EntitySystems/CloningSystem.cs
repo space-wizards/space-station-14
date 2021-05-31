@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CloningPodComponent, ActivateInWorldMessage>(HandleActivate);
+            SubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<CloningPodComponent, ActivateInWorldMessage>(HandleActivate);
+            UnsubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
             UnsubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems
             mind?.UnVisit();
         }
 
-        private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldMessage args)
+        private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldEvent args)
         {
             if (!component.Powered ||
                 !args.User.TryGetComponent(out ActorComponent? actor))

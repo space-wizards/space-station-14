@@ -6,7 +6,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingOuterArmorBulletproof
+      - id: ClothingOuterArmorBulletproof
         amount: 3
 
 - type: entity
@@ -17,7 +17,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHelmetHelmet
+      - id: ClothingHeadHelmetHelmet
         amount: 3
 
 - type: entity
@@ -27,13 +27,13 @@
   components:
   - type: StorageFill
     contents:
-      - name: TaserGun
+      - id: TaserGun
         amount: 3
-      - name: Stunbaton
+      - id: Stunbaton
         amount: 3
-      - name: BoxFlashbang
+      - id: BoxFlashbang
         amount: 1
-      - name: Flash
+      - id: Flash
         amount: 3
 #      - Pepperspray
 #      - GrenadeTeargas
@@ -45,7 +45,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: LaserGun
+      - id: LaserGun
         amount: 3
 
 - type: entity
@@ -55,13 +55,13 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingOuterArmorRiot
+      - id: ClothingOuterArmorRiot
         amount: 2
-      - name: ClothingHeadHelmetRiot
+      - id: ClothingHeadHelmetRiot
         amount: 2
-      - name: ShotgunGladstone
+      - id: ShotgunGladstone
         amount: 2
-      - name: ShellShotgunBeanbag
+      - id: ShellShotgunBeanbag
         amount: 12
 #      - ShieldRiot
 #      - SecGasmask
@@ -73,9 +73,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: BoxHandcuff
+      - id: BoxHandcuff
         amount: 1
-      - name: BoxSechud
+      - id: BoxSechud
         amount: 1
 #      - SecBelt
 #      - SecGasmask

@@ -77,8 +77,8 @@ namespace Content.Client.GameObjects.EntitySystems
                         Coordinates = attacker.Transform.Coordinates,
                         Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
                         ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
-                        Velocity = msg.Angle.ToVec(),
-                        Acceleration = msg.Angle.ToVec() * 5f,
+                        Velocity = msg.Angle.ToWorldVec(),
+                        Acceleration = msg.Angle.ToWorldVec() * 5f,
                         Born = curTime,
                         DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
                     };

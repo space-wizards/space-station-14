@@ -6,6 +6,7 @@
   components:
     - type: InteractionOutline
     - type: Anchorable
+    - type: Rotatable
     - type: Physics
       bodyType: Static
       fixtures:

@@ -16,23 +16,24 @@ namespace Content.Server.Physics.Controllers
         // Speeds. Note that the speed is mass-independent (multiplied by mass).
         // Instead, tuning to mass is done via the mass values below.
         // Note that setting the speed too high results in overshoots (stabilized by drag, but bad)
-        private const float AccelModifierHigh = 7.5f;
+        private const float AccelModifierHigh = 15f;
         private const float AccelModifierLow = 60.0f;
         // High/low-mass marks. Curve is constant-lerp-constant, i.e. if you can even pull an item,
         // you'll always get at least AccelModifierLow and no more than AccelModifierHigh.
-        private const float AccelModifierHighMass = 70.0f; // locker
-        private const float AccelModifierLowMass = 1.0f; // to taste
+        private const float AccelModifierHighMass = 70.0f; // roundstart saltern emergency closet
+        private const float AccelModifierLowMass = 5.0f; // roundstart saltern emergency crowbar
         // Used to control settling (turns off pulling).
-        // Note that once an object gets within MaximumSettleDistance, impulses change to trying to shut down velocity.
         private const float MaximumSettleVelocity = 0.1f;
-        private const float MaximumSettleDistance = 0.1f;
+        private const float MaximumSettleDistance = 0.01f;
         // Settle shutdown control.
         // Mustn't be too massive, as that causes severe mispredicts *and can prevent it ever resolving*.
         // Exists to bleed off "I pulled my crowbar" overshoots.
-        // Distance in which settle shutdown applies
+        // Minimum velocity for shutdown to be necessary. This prevents stuff getting stuck b/c too much shutdown.
+        private const float SettleMinimumShutdownVelocity = 0.25f;
+        // Distance in which settle shutdown multiplier is at 0. It then scales upwards linearly with closer distances.
         private const float SettleShutdownDistance = 1.0f;
         // Velocity change of -LinearVelocity * frameTime * this
-        private const float SettleShutdownMultiplier = 5.0f;
+        private const float SettleShutdownMultiplier = 20.0f;
 
         private SharedPullingSystem _pullableSystem = default!;
 
@@ -83,6 +84,7 @@ namespace Content.Server.Physics.Controllers
 
                 if (movingPosition.EqualsApprox(ownerPosition, MaximumSettleDistance) && (physics.LinearVelocity.Length < MaximumSettleVelocity))
                 {
+                    physics.LinearVelocity = Vector2.Zero;
                     pullable.MovingTo = null;
                     continue;
                 }
@@ -95,9 +97,11 @@ namespace Content.Server.Physics.Controllers
                 // Note the implication that the real rules of physics don't apply to pulling control.
                 var accel = diff.Normalized * multiplier;
                 // Now for the part where velocity gets shutdown...
-                if (movingPosition.EqualsApprox(ownerPosition, SettleShutdownDistance))
+                if ((diffLength < SettleShutdownDistance) && (physics.LinearVelocity.Length >= SettleMinimumShutdownVelocity))
                 {
-                    accel -= physics.LinearVelocity * SettleShutdownMultiplier;
+                    // Shutdown velocity increases as we get closer to centre
+                    var scaling = (SettleShutdownDistance - diffLength) / SettleShutdownDistance;
+                    accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
                 physics.ApplyLinearImpulse(accel * physics.Mass * frameTime);
             }

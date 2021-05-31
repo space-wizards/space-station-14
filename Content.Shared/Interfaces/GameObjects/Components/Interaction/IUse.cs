@@ -34,7 +34,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when using the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class UseInHandMessage : HandledEntityEventArgs
+    public class UseInHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity holding the item in their hand.
@@ -46,7 +46,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Used { get; }
 
-        public UseInHandMessage(IEntity user, IEntity used)
+        public UseInHandEvent(IEntity user, IEntity used)
         {
             User = user;
             Used = used;

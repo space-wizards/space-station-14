@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Singularity
 {
@@ -8,12 +9,9 @@ namespace Content.Client.GameObjects.Components.Singularity
     public class ToySingularityComponent : Component, IClientSingularityInstance
     {
         public override string Name => "ToySingularity";
-        public int Level {
-            get {
-                return 1;
-            }
-            set {
-            }
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Falloff { get; set; } = 2.0f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Intensity { get; set; } = 0.25f;
     }
 }

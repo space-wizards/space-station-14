@@ -13,13 +13,11 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Buckle
 {
-    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable, ICollideSpecial
+    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
     {
         public sealed override string Name => "Buckle";
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
-
-        [ComponentDependency] protected readonly IPhysBody? Physics;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
@@ -41,17 +39,6 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public abstract bool TryBuckle(IEntity? user, IEntity to);
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
-        {
-            if (collidedwith.Owner.Uid == LastEntityBuckledTo)
-            {
-                IsOnStrapEntityThisFrame = true;
-                return Buckled || DontCollide;
-            }
-
-            return false;
-        }
-
         bool IActionBlocker.CanMove()
         {
             return !Buckled;
@@ -67,12 +54,12 @@ namespace Content.Shared.GameObjects.Components.Buckle
             return !Buckled;
         }
 
-        bool IDraggable.CanDrop(CanDropEventArgs args)
+        bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target.HasComponent<SharedStrapComponent>();
         }
 
-        bool IDraggable.Drop(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEvent args)
         {
             return TryBuckle(args.User, args.Target);
         }

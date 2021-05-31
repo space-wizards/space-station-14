@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Body
                 }
             }
 
-            Owner.Delete();
+            Owner.QueueDelete();
         }
     }
 }

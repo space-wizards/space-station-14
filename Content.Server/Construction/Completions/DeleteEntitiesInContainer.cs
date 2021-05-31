@@ -22,7 +22,7 @@ namespace Content.Server.Construction.Completions
             foreach (var contained in container.ContainedEntities.ToArray())
             {
                 if(container.Remove(contained))
-                    contained.Delete();
+                    contained.QueueDelete();
             }
         }
     }

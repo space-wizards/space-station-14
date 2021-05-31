@@ -38,7 +38,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         }
     }
 
-    public class ThrowCollideMessage : HandledEntityEventArgs
+    public class ThrowCollideEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     The entity that threw <see cref="Thrown"/>.
@@ -55,7 +55,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Target { get; }
 
-        public ThrowCollideMessage(IEntity? user, IEntity thrown, IEntity target)
+        public ThrowCollideEvent(IEntity? user, IEntity thrown, IEntity target)
         {
             User = user;
             Thrown = thrown;

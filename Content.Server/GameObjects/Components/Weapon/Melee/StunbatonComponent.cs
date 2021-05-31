@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
         }
 
-        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEvent eventArgs)
         {
             if (!Activated || entities.Count == 0 || Cell == null)
                 return true;

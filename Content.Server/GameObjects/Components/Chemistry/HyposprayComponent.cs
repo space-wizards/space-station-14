@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             Dirty();
         }
 
-        bool IAttack.ClickAttack(AttackEventArgs eventArgs)
+        bool IAttack.ClickAttack(AttackEvent eventArgs)
         {
             var target = eventArgs.TargetEntity;
             var user = eventArgs.User;

@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
     [RegisterComponent]
     internal sealed class KitchenSpikeComponent : SharedKitchenSpikeComponent
     {
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return true;
         }

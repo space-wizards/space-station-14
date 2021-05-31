@@ -15,6 +15,7 @@
   parent: MaterialBase
   id: MaterialBananium
   name: bananium
+  suffix: Full
   components:
   - type: Stack
     stackType: Bananium
@@ -24,7 +25,7 @@
 - type: entity
   parent: MaterialBananium
   id: MaterialBananium1
-  suffix: 1
+  suffix: Single
   components:
   - type: Stack
     count: 1
@@ -33,6 +34,7 @@
   parent: MaterialBase
   id: MaterialCloth
   name: cloth
+  suffix: Full
   components:
   - type: Stack
     stackType: Cloth
@@ -49,6 +51,7 @@
 - type: entity
   parent: MaterialCloth
   id: MaterialCloth1
+  suffix: Single
   components:
   - type: Sprite
     state: cloth
@@ -59,6 +62,7 @@
   parent: MaterialBase
   id: MaterialCotton
   name: cotton
+  suffix: Full
   components:
   - type: Stack
     stackType: Cotton
@@ -75,6 +79,7 @@
 - type: entity
   parent: MaterialCotton
   id: MaterialCotton1
+  suffix: Single
   components:
   - type: Sprite
     state: cotton
@@ -85,6 +90,7 @@
   parent: MaterialBase
   id: MaterialDiamond
   name: refined diamond
+  suffix: Full
   components:
   - type: Stack
     stackType: Diamond
@@ -96,7 +102,7 @@
 - type: entity
   parent: MaterialDiamond
   id: MaterialDiamond1
-  suffix: 1
+  suffix: Single
   components:
   - type: Stack
     count: 1
@@ -105,6 +111,7 @@
   parent: MaterialBase
   id: MaterialDurathread
   name: durathread
+  suffix: Full
   components:
   - type: Stack
     stackType: Durathread
@@ -121,6 +128,7 @@
 - type: entity
   parent: MaterialDurathread
   id: MaterialDurathread1
+  suffix: Single
   components:
   - type: Sprite
     state: durathread
@@ -131,6 +139,7 @@
   parent: MaterialBase
   id: MaterialDurathreadRaw
   name: raw durathread
+  suffix: Full
   components:
   - type: Stack
     stackType: RawDurathread
@@ -147,6 +156,7 @@
 - type: entity
   parent: MaterialDurathreadRaw
   id: MaterialDurathreadRaw1
+  suffix: Single
   components:
   - type: Sprite
     state: durathreadraw
@@ -157,6 +167,7 @@
   parent: MaterialBase
   id: MaterialHide
   name: hide
+  suffix: Full
   components:
   - type: Stack
     stackType: Hide
@@ -173,6 +184,7 @@
 - type: entity
   parent: MaterialHide
   id: MaterialHide1
+  suffix: Single
   components:
   - type: Sprite
     state: hide
@@ -183,6 +195,7 @@
   parent: MaterialBase
   id: MaterialLeather
   name: leather
+  suffix: Full
   components:
   - type: Stack
     stackType: Leather
@@ -199,6 +212,7 @@
 - type: entity
   parent: MaterialLeather
   id: MaterialLeather1
+  suffix: Single
   components:
   - type: Sprite
     state: leather
@@ -209,11 +223,11 @@
   parent: MaterialBase
   id: MaterialWoodPlank
   name: wood
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: wood
+    - Wood
   - type: Stack
     stackType: WoodPlank
   - type: Sprite
@@ -224,7 +238,7 @@
 - type: entity
   parent: MaterialWoodPlank
   id: MaterialWoodPlank1
-  suffix: 1
+  suffix: Single
   components:
   - type: Stack
     count: 1

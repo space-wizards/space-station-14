@@ -59,6 +59,7 @@ namespace Content.Server.Physics.Controllers
 
         private void MoveSingulo(ServerSingularityComponent singularity, PhysicsComponent physics)
         {
+            // To prevent getting stuck, ServerSingularityComponent will zero the velocity of a singularity when it goes to a level <= 1 (see here).
             if (singularity.Level <= 1) return;
             // TODO: Could try gradual changes instead but for now just try to replicate
 

@@ -66,10 +66,10 @@ namespace Content.Client.GameObjects.EntitySystems
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
             if (senderEnt.IsValid() &&
+                _mapManager.TryGetGrid(senderEnt.Transform.GridID, out var grid1) &&
                 senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
-                var grid1 = _mapManager.GetGrid(senderEnt.Transform.GridID);
                 var coords = senderEnt.Transform.Coordinates;
 
                 _dirtyEntities.Enqueue(senderEnt.Uid);

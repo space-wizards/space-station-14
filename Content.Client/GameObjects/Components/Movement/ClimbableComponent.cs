@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent
     {
-        public override bool CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!base.CanDragDropOn(eventArgs))
                 return false;
@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Movement
             return user.InRangeUnobstructed(target, Range, predicate: Ignored) && user.InRangeUnobstructed(dragged, Range, predicate: Ignored);
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
         }

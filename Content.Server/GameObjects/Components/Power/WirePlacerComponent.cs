@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Map;
@@ -49,8 +50,16 @@ namespace Content.Server.GameObjects.Components.Power
                     return true;
                 }
             }
-            if (Owner.TryGetComponent<StackComponent>(out var stack) && !stack.Use(1))
-                return true;
+
+            if (Owner.HasComponent<StackComponent>())
+            {
+                var stackUse = new StackUseEvent(){Amount = 1};
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                if(!stackUse.Result)
+                    return true;
+            }
+
             Owner.EntityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
             return true;
         }

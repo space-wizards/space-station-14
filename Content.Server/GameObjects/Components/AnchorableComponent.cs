@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Pulling;
@@ -14,6 +13,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
+    // TODO: Move this component's logic to an EntitySystem.
     [RegisterComponent]
     public class AnchorableComponent : Component, IInteractUsing
     {
@@ -32,45 +32,40 @@ namespace Content.Server.GameObjects.Components
         [DataField("snap")]
         public bool Snap { get; private set; } = true;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponent<PhysicsComponent>(out _physicsComponent);
-        }
-
         /// <summary>
         ///     Checks if a tool can change the anchored status.
         /// </summary>
         /// <param name="user">The user doing the action</param>
-        /// <param name="utilizing">The tool being used, can be null if forcing it</param>
-        /// <param name="force">Whether or not to check if the tool is valid</param>
+        /// <param name="utilizing">The tool being used</param>
+        /// <param name="anchoring">True if we're anchoring, and false if we're unanchoring.</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity? user, IEntity? utilizing, bool anchoring, [NotNullWhen(true)] bool force = false)
+        private async Task<bool> Valid(IEntity user, IEntity utilizing, bool anchoring)
         {
-            if (user == null || utilizing == null || force)
-                return true;
+            if (!Owner.HasComponent<IPhysBody>())
+            {
+                return false;
+            }
 
-            AnchorableBaseCancellableMessage attempt =
-                anchoring ? new AnchorAttemptMessage(user, utilizing)
-                    : new UnanchorAttemptMessage(user, utilizing);
+            BaseAnchoredAttemptEvent attempt =
+                anchoring ? new AnchorAttemptEvent(user, utilizing) : new UnanchorAttemptEvent(user, utilizing);
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
 
-            return !attempt.Cancelled
-                   && utilizing.TryGetComponent(out ToolComponent? tool)
-                   && await tool.UseTool(user, Owner, 0.5f, Tool);
+            if (attempt.Cancelled)
+                return false;
+
+            return utilizing.TryGetComponent(out ToolComponent? tool) && await tool.UseTool(user, Owner, 0.5f, Tool);
         }
 
         /// <summary>
         ///     Tries to anchor the owner of this component.
         /// </summary>
         /// <param name="user">The entity doing the anchoring</param>
-        /// <param name="utilizing">The tool being used, if any</param>
-        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <param name="utilizing">The tool being used</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryAnchor(IEntity user, IEntity utilizing)
         {
-            if (!(await Valid(user, utilizing, true, force)))
+            if (!(await Valid(user, utilizing, true)))
             {
                 return false;
             }
@@ -93,10 +88,9 @@ namespace Content.Server.GameObjects.Components
             if (Snap)
                 Owner.SnapToGrid(Owner.EntityManager);
 
-            // User and utilizing can't be null since Valid checks.
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredMessage(user!, utilizing!), false);
-
             _physicsComponent.BodyType = BodyType.Static;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredEvent(user, utilizing), false);
 
             return true;
         }
@@ -108,9 +102,9 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryUnAnchor(IEntity user, IEntity utilizing)
         {
-            if (!(await Valid(user, utilizing, false, force)))
+            if (!(await Valid(user, utilizing, false)))
             {
                 return false;
             }
@@ -118,10 +112,9 @@ namespace Content.Server.GameObjects.Components
             if (_physicsComponent == null)
                 return false;
 
-            // User and utilizing can't be null since Valid checks.
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredMessage(user!, utilizing!), false);
-
             _physicsComponent.BodyType = BodyType.Dynamic;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredEvent(user, utilizing), false);
 
             return true;
         }
@@ -130,17 +123,16 @@ namespace Content.Server.GameObjects.Components
         ///     Tries to toggle the anchored status of this component's owner.
         /// </summary>
         /// <param name="user">The entity doing the unanchoring</param>
-        /// <param name="utilizing">The tool being used, if any</param>
-        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <param name="utilizing">The tool being used</param>
         /// <returns>true if toggled, false otherwise</returns>
-        public async Task<bool> TryToggleAnchor(IEntity? user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryToggleAnchor(IEntity user, IEntity utilizing)
         {
             if (_physicsComponent == null)
                 return false;
 
             return _physicsComponent.BodyType == BodyType.Static ?
-                await TryUnAnchor(user, utilizing, force) :
-                await TryAnchor(user, utilizing, force);
+                await TryUnAnchor(user, utilizing) :
+                await TryAnchor(user, utilizing);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -149,47 +141,47 @@ namespace Content.Server.GameObjects.Components
         }
     }
 
-    public abstract class AnchorableBaseMessage : EntityEventArgs
+    public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs
     {
         public IEntity User { get; }
-        public IEntity Using { get; }
+        public IEntity Tool { get; }
 
-        public AnchorableBaseMessage(IEntity user, IEntity @using)
+        protected BaseAnchoredAttemptEvent(IEntity user, IEntity tool)
         {
             User = user;
-            Using = @using;
+            Tool = tool;
         }
     }
 
-    public abstract class AnchorableBaseCancellableMessage : CancellableEntityEventArgs
+    public class AnchorAttemptEvent : BaseAnchoredAttemptEvent
+    {
+        public AnchorAttemptEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    public class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
+    {
+        public UnanchorAttemptEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    public abstract class BaseAnchoredEvent : EntityEventArgs
     {
         public IEntity User { get; }
-        public IEntity Using { get; }
+        public IEntity Tool { get; }
 
-        public AnchorableBaseCancellableMessage(IEntity user, IEntity @using)
+        protected BaseAnchoredEvent(IEntity user, IEntity tool)
         {
             User = user;
-            Using = @using;
+            Tool = tool;
         }
     }
 
-    public class AnchorAttemptMessage : AnchorableBaseCancellableMessage
+    public class AnchoredEvent : BaseAnchoredEvent
     {
-        public AnchorAttemptMessage(IEntity user, IEntity @using) : base(user, @using) { }
+        public AnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
     }
 
-    public class UnanchorAttemptMessage : AnchorableBaseCancellableMessage
+    public class UnanchoredEvent : BaseAnchoredEvent
     {
-        public UnanchorAttemptMessage(IEntity user, IEntity @using) : base(user, @using) { }
-    }
-
-    public class AnchoredMessage : AnchorableBaseMessage
-    {
-        public AnchoredMessage(IEntity user, IEntity @using) : base(user, @using) { }
-    }
-
-    public class UnanchoredMessage : AnchorableBaseMessage
-    {
-        public UnanchoredMessage(IEntity user, IEntity @using) : base(user, @using) { }
+        public UnanchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
     }
 }

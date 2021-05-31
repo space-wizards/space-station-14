@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -58,8 +59,10 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 var droppedEnt = Owner.EntityManager.SpawnEntity(result, resultPosition);
 
-                if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
-                    stackComp.Count = 1;
+                // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
+                // This is not a good way to do it.
+                if (droppedEnt.HasComponent<StackComponent>())
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(droppedEnt.Uid, new StackChangeCountEvent(1), false);
             }
 
             return true;

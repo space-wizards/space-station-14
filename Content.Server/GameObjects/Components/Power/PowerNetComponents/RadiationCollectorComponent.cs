@@ -11,11 +11,12 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
-    public class RadiationCollectorComponent : PowerSupplierComponent, IInteractHand, IRadiationAct
+    public class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -23,13 +24,19 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private bool _enabled;
         private TimeSpan _coolDownEnd;
 
-        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default!;
-
-        public void OnAnchoredChanged()
-        {
-            if(_collidableComponent != null && _collidableComponent.BodyType == BodyType.Static)
-                Owner.SnapToGrid();
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Collecting {
+            get => _enabled;
+            set
+            {
+                if (_enabled == value) return;
+                _enabled = value;
+                SetAppearance(_enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
+            }
         }
+
+        [ComponentDependency] private readonly BatteryComponent? _batteryComponent = default!;
+        [ComponentDependency] private readonly BatteryDischargerComponent? _batteryDischargerComponent = default!;
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
@@ -40,13 +47,13 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
             if (!_enabled)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The collector turns on."));
-                EnableCollection();
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-on"));
+                Collecting = true;
             }
             else
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The collector turns off."));
-                DisableCollection();
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-off"));
+                Collecting = false;
             }
 
             _coolDownEnd = curTime + TimeSpan.FromSeconds(0.81f);
@@ -54,23 +61,25 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             return true;
         }
 
-        void EnableCollection()
-        {
-            _enabled = true;
-            SetAppearance(RadiationCollectorVisualState.Activating);
-        }
-
-        void DisableCollection()
-        {
-            _enabled = false;
-            SetAppearance(RadiationCollectorVisualState.Deactivating);
-        }
-
         void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             if (!_enabled) return;
 
-            SupplyRate = (int) (frameTime * radiation.RadsPerSecond * 3000f);
+            // No idea if this is even vaguely accurate to the previous logic.
+            // The maths is copied from that logic even though it works differently.
+            // But the previous logic would also make the radiation collectors never ever stop providing energy.
+            // And since frameTime was used there, I'm assuming that this is what the intent was.
+            // This still won't stop things being potentially hilarously unbalanced though.
+            if (_batteryComponent != null)
+            {
+                _batteryComponent!.CurrentCharge += frameTime * radiation.RadsPerSecond * 3000f;
+                if (_batteryDischargerComponent != null)
+                {
+                    // The battery discharger is controlled like this to ensure it won't drain the entire battery in a single tick.
+                    // If that occurs then the battery discharger ends up shutting down.
+                    _batteryDischargerComponent!.ActiveSupplyRate = (int) Math.Max(1, _batteryComponent!.CurrentCharge);
+                }
+            }
         }
 
         protected void SetAppearance(RadiationCollectorVisualState state)
