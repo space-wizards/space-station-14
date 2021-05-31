@@ -231,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Doors
             // Disabled because it makes it suck hard to walk through double doors.
 
                 TryOpen(otherFixture.Body.Owner);
-            
+
         }
 
         #region Opening
@@ -266,14 +266,14 @@ namespace Content.Server.GameObjects.Components.Doors
                 return true;
             }
 
-            var doorSystem = EntitySystem.Get<ServerDoorSystem>();
+            var doorSystem = EntitySystem.Get<DoorSystem>();
             var isAirlockExternal = HasAccessType("External");
 
             return doorSystem.AccessType switch
             {
-                ServerDoorSystem.AccessTypes.AllowAll => true,
-                ServerDoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
-                ServerDoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
+                DoorSystem.AccessTypes.AllowAll => true,
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
+                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
                 _ => access.IsAllowed(user)
             };
         }
