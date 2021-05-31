@@ -94,16 +94,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                stack.Use(1);
-                var newThrowEnt = EntityManager.SpawnEntity(throwEnt.Prototype?.ID, playerEnt.Transform.Coordinates);
+                var splitStack = new StackSplitEvent() {Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates};
+                RaiseLocalEvent(throwEnt.Uid, splitStack);
 
-                if (!throwEnt.TryGetComponent<StackComponent>(out var newStack))
-                {
-                    Logger.Error($"{newThrowEnt} spawned from throwing {throwEnt} did not have a {nameof(StackComponent)}.");
+                if (splitStack.Result == null)
                     return false;
-                }
-                newStack.Count = 1;
-                throwEnt = newThrowEnt;
+
+                throwEnt = splitStack.Result;
             }
             else if (!hands.TryDropEntityToFloor(throwEnt))
                 return false;

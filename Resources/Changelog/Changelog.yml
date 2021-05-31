@@ -1137,3 +1137,105 @@ Entries:
   - {message: StackVisualizer now correctly displays levels, type: Fix}
   id: 202
   time: '2021-05-23T04:05:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Hopefully fix power equipment disappearing., type: Fix}
+  id: 203
+  time: '2021-05-23T18:18:36.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added new technologies and recipes to the lathe., type: Add}
+  id: 204
+  time: '2021-05-24T00:38:26.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Particle Accelerator particles actually affect singularity & singularity
+      generator again, type: Fix}
+  - {message: Singularity doesn't instantly escape all containment, type: Fix}
+  id: 205
+  time: '2021-05-24T04:14:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Attempt 2 at fixing substation/apc/generator disappearances, type: Fix}
+  id: 206
+  time: '2021-05-24T14:39:58.0000000+00:00'
+- author: scrato
+  changes: []
+  id: 207
+  time: '2021-05-24T14:55:48.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Dragging an object causes it to not count as thrown anymore., type: Fix}
+  id: 208
+  time: '2021-05-27T10:47:40.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Spears now apply damage when thrown, and have more damage', type: Add}
+  id: 209
+  time: '2021-05-27T10:47:49.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Pulling is now more reliable across different object weights, and feels
+      better.', type: Fix}
+  id: 210
+  time: '2021-05-27T10:48:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'You can rotate barstools, PA components, and radiation collectors.',
+    type: Add}
+  - {message: You can turn to face people on rotatable chairs., type: Add}
+  - {message: Fixes draw depths and buckle offsets if a chair or such is rotated with
+      someone on it., type: Fix}
+  id: 211
+  time: '2021-05-27T10:51:15.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added spray bottle and cyrostasis beaker to the lathe., type: Add}
+  id: 212
+  time: '2021-05-27T22:43:10.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: added HV and MV cables into the lathe, type: Add}
+  id: 213
+  time: '2021-05-28T03:41:03.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Adds a plasteel crate to cargo, type: Add}
+  id: 214
+  time: '2021-05-28T04:19:33.715248+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Melee weapon effects are now rotated correctly, type: Fix}
+  id: 215
+  time: '2021-05-28T08:58:30.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: startsingularityengine starts the radiation emitters and no longer sets
+      the PA into an unsafe mode., type: Fix}
+  - {message: Radiation collectors do not produce infinite energy when subjected to
+      radiation., type: Fix}
+  - {message: The containment field shouldn't randomly fail anymore., type: Fix}
+  - {message: Two singularities no longer instantly annihilate each other, type: Fix}
+  - {message: Singularity shader works roughly properly again., type: Fix}
+  - {message: 'An unfinished PA in the PA room, so Engineering don''t have to beg
+      Cargo for a PA crate and go through all the steps.', type: Add}
+  - {message: Singularity shouldn't get stuck in a corner as often., type: Fix}
+  id: 216
+  time: '2021-05-28T09:44:13.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes AME controller's physics, type: Fix}
+  id: 217
+  time: '2021-05-29T17:22:55.527577+00:00'
+- author: esguard
+  changes:
+  - {message: Fixed being charged multiple times by the cargo console when spamming
+      the "approve" button., type: Fix}
+  id: 218
+  time: '2021-05-30T05:19:15.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix some bugs with stacks where their appearance and count would be
+      incorrect client-side., type: Fix}
+  id: 219
+  time: '2021-05-30T06:54:38.996745+00:00'

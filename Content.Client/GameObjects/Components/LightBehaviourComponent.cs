@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components
     [ImplicitDataDefinitionForInheritors]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
-        [Dependency] protected readonly IRobustRandom RobustRandom = default!;
+        protected readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
 
         [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
 
@@ -38,23 +38,15 @@ namespace Content.Client.GameObjects.Components
 
         [DataField("enabled")] [ViewVariables] public bool Enabled { get; set; }
 
-        [DataField("startValue")] [ViewVariables] public float StartValue { get; set; }
+        [DataField("startValue")] [ViewVariables] public float StartValue { get; set; } = 0f;
 
-        [DataField("endValue")]
-        [ViewVariables]
-        public float EndValue { get; set; } = 2f;
+        [DataField("endValue")] [ViewVariables] public float EndValue { get; set; } = 2f;
 
-        [DataField("minDuration")]
-        [ViewVariables]
-        public float MinDuration { get; set; } = -1f;
+        [DataField("minDuration")] [ViewVariables] public float MinDuration { get; set; } = -1f;
 
-        [DataField("maxDuration")]
-        [ViewVariables]
-        public float MaxDuration { get; set; } = 2f;
+        [DataField("maxDuration")] [ViewVariables] public float MaxDuration { get; set; } = 2f;
 
-        [DataField("interpolate")]
-        [ViewVariables]
-        public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
+        [DataField("interpolate")] [ViewVariables] public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
 
         [ViewVariables] protected float MaxTime { get; set; }
 
@@ -82,7 +74,7 @@ namespace Content.Client.GameObjects.Components
 
             if (MinDuration > 0)
             {
-                MaxTime = (float) RobustRandom.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
+                MaxTime = (float) _random.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
             }
             else
             {
@@ -218,23 +210,23 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
-        private object? _randomValue1;
-        private object _randomValue2 = default!;
-        private object _randomValue3 = default!;
-        private object _randomValue4 = default!;
+        private float _randomValue1;
+        private float _randomValue2;
+        private float _randomValue3;
+        private float _randomValue4;
 
         public override void OnInitialize()
         {
-            _randomValue2 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
-            _randomValue3 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
-            _randomValue4 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+            _randomValue1 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
+            _randomValue2 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
+            _randomValue3 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
         }
 
         public override void OnStart()
         {
             if (Property == "Enabled") // special case for boolean, we randomize it
             {
-                ApplyProperty(RobustRandom.NextDouble() < 0.5);
+                ApplyProperty(_random.NextDouble() < 0.5);
                 return;
             }
 
@@ -245,7 +237,7 @@ namespace Content.Client.GameObjects.Components
             }
 
             _randomValue3 = _randomValue4;
-            _randomValue4 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+            _randomValue4 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(

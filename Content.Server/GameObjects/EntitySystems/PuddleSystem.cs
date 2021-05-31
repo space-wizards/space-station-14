@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     grid.TileIndicesFor(puddleTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
                     eventArgs.NewTile.Tile.IsEmpty)
                 {
-                    puddle.Owner.Delete();
+                    puddle.Owner.QueueDelete();
                     break; // Currently it's one puddle per tile, if that changes remove this
                 }
             }

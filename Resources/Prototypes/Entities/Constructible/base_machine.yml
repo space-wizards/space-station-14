@@ -1,0 +1,30 @@
+- type: entity
+  abstract: true
+  parent: BaseConstructible
+  id: BaseMachine
+  components:
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Pullable
+  - type: PowerReceiver
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 25
+      layer:
+      - MobMask
+      - Opaque
+      mask:
+      - MobMask
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

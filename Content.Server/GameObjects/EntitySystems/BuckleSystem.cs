@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -11,7 +12,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class BuckleSystem : EntitySystem
+    internal sealed class BuckleSystem : SharedBuckleSystem
     {
         public override void Initialize()
         {
@@ -20,22 +21,17 @@ namespace Content.Server.GameObjects.EntitySystems
             UpdatesAfter.Add(typeof(InteractionSystem));
             UpdatesAfter.Add(typeof(InputSystem));
 
-            SubscribeLocalEvent<MoveEvent>(MoveEvent);
-            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(ContainerModified);
-            SubscribeLocalEvent<EntRemovedFromContainerMessage>(ContainerModified);
+            SubscribeLocalEvent<BuckleComponent, MoveEvent>(MoveEvent);
+
+            SubscribeLocalEvent<StrapComponent, RotateEvent>(RotateEvent);
+
+            SubscribeLocalEvent<BuckleComponent, EntInsertedIntoContainerMessage>(ContainerModifiedBuckle);
+            SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(ContainerModifiedStrap);
+
+            SubscribeLocalEvent<BuckleComponent, EntRemovedFromContainerMessage>(ContainerModifiedBuckle);
+            SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
 
             SubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<MoveEvent>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-
-            UnsubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
         }
 
         private void HandleAttackHand(EntityUid uid, BuckleComponent component, AttackHandEvent args)
@@ -45,19 +41,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>())
+            foreach (var (buckle, physics) in ComponentManager.EntityQuery<BuckleComponent, PhysicsComponent>())
             {
-                comp.Update();
+                buckle.Update(physics);
             }
         }
 
-        private void MoveEvent(MoveEvent ev)
+        private void MoveEvent(EntityUid uid, BuckleComponent buckle, MoveEvent ev)
         {
-            if (!ev.Sender.TryGetComponent(out BuckleComponent? buckle))
-            {
-                return;
-            }
-
             var strap = buckle.BuckledTo;
 
             if (strap == null)
@@ -75,25 +66,35 @@ namespace Content.Server.GameObjects.EntitySystems
             buckle.TryUnbuckle(buckle.Owner, true);
         }
 
-        private void ContainerModified(ContainerModifiedMessage message)
+        private void RotateEvent(EntityUid uid, StrapComponent strap, RotateEvent ev)
         {
-            // Not returning is necessary in case an entity has both a buckle and strap component
-            if (message.Entity.TryGetComponent(out BuckleComponent? buckle))
+            // On rotation of a strap, reattach all buckled entities.
+            // This fixes buckle offsets and draw depths.
+            foreach (var buckledEntity in strap.BuckledEntities)
             {
-                ContainerModifiedReAttach(buckle, buckle.BuckledTo);
-            }
-
-            if (message.Entity.TryGetComponent(out StrapComponent? strap))
-            {
-                foreach (var buckledEntity in strap.BuckledEntities)
+                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
                 {
-                    if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
-                    {
-                        continue;
-                    }
-
-                    ContainerModifiedReAttach(buckled, strap);
+                    continue;
                 }
+                buckled.ReAttach(strap);
+                buckled.Dirty();
+            }
+        }
+
+        private void ContainerModifiedBuckle(EntityUid uid, BuckleComponent buckle, ContainerModifiedMessage message)
+        {
+            ContainerModifiedReAttach(buckle, buckle.BuckledTo);
+        }
+        private void ContainerModifiedStrap(EntityUid uid, StrapComponent strap, ContainerModifiedMessage message)
+        {
+            foreach (var buckledEntity in strap.BuckledEntities)
+            {
+                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
+                {
+                    continue;
+                }
+
+                ContainerModifiedReAttach(buckled, strap);
             }
         }
 

@@ -1,10 +1,10 @@
 ﻿- type: entity
   id: MedicalScanner
+  parent: BaseMachine
   name: medical scanner
   description: A bulky medical scanner.
-  placement:
-    mode: SnapgridCenter
   components:
+  - type: MedicalScanner
   - type: Sprite
     netsync: false
     noRot: true
@@ -14,32 +14,6 @@
       map: ["enum.MedicalScannerVisualLayers.Machine"]
     - state: idle_unlit
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
-  - type: PowerReceiver
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      mass: 25
-      layer:
-      - Impassable
-      - VaultImpassable
-  - type: SnapGrid
-  - type: Anchorable
-  - type: Pullable
-  - type: MedicalScanner
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer
