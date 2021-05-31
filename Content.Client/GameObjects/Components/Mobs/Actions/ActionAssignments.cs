@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
@@ -45,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             _numHotbars = numHotbars;
             _numSlots = numSlots;
             _assignments = new Dictionary<ActionAssignment, List<(byte Hotbar, byte Slot)>>();
-            _slots = new ActionAssignment?[numHotbars,numSlots];
+            _slots = new ActionAssignment?[numHotbars, numSlots];
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// which no longer have an associated state will be decoupled from their item.
         /// </summary>
         public void Reconcile(byte currentHotbar, IReadOnlyDictionary<ActionType, ActionState> actionStates,
-            IReadOnlyDictionary<EntityUid,Dictionary<ItemActionType, ActionState>> itemActionStates)
+            IReadOnlyDictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActionStates)
         {
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
@@ -68,8 +69,6 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                     AutoPopulate(assignment, currentHotbar, false);
                 }
             }
-
-
 
             foreach (var (item, itemStates) in itemActionStates)
             {
@@ -93,10 +92,13 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             // which once had an associated item but have been revoked (based on our newly provided action states)
             // so we can dissociate them from the item. If the provided action states do not
             // have a state for this action type + item, we can assume that the action has been revoked for that item.
-            var assignmentsWithoutItem = new List<KeyValuePair<ActionAssignment,List<(byte Hotbar, byte Slot)>>>();
+            var assignmentsWithoutItem = new List<KeyValuePair<ActionAssignment, List<(byte Hotbar, byte Slot)>>>();
             foreach (var assignmentEntry in _assignments)
             {
-                if (!assignmentEntry.Key.TryGetItemActionWithItem(out var actionType, out var item)) continue;
+                if (!assignmentEntry.Key.TryGetItemActionWithItem(out var actionType, out var item))
+                {
+                    continue;
+                }
 
                 // we have this assignment currently tied to an item,
                 // check if it no longer has an associated item in our dict of states
@@ -109,8 +111,10 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                         continue;
                     }
                 }
+
                 assignmentsWithoutItem.Add(assignmentEntry);
             }
+
             // reassign without the item for each assignment we found that no longer has an associated item
             foreach (var (assignment, slots) in assignmentsWithoutItem)
             {
@@ -150,7 +154,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             }
             else
             {
-                var newList = new List<(byte Hotbar, byte Slot)> {(hotbar, slot)};
+                var newList = new List<(byte Hotbar, byte Slot)> { (hotbar, slot) };
                 _assignments[actionType] = newList;
             }
         }
@@ -171,7 +175,12 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             // remove this particular assignment from our data structures
             // (keeping in mind something can be assigned multiple slots)
             var currentAction = _slots[hotbar, slot];
-            if (!currentAction.HasValue) return;
+
+            if (!currentAction.HasValue)
+            {
+                return;
+            }
+
             if (preventAutoPopulate)
             {
                 var assignment = currentAction.Value;
@@ -191,9 +200,10 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                     actionTypes.Add(itemActionType);
                 }
             }
+
             var assignmentList = _assignments[currentAction.Value];
             assignmentList = assignmentList.Where(a => a.Hotbar != hotbar || a.Slot != slot).ToList();
-            if (assignmentList.Count == 0)
+            if (!assignmentList.Any())
             {
                 _assignments.Remove(currentAction.Value);
             }
@@ -201,6 +211,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             {
                 _assignments[currentAction.Value] = assignmentList;
             }
+
             _slots[hotbar, slot] = null;
         }
 
@@ -215,7 +226,11 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// if this assignment has been prevented from auto population.</param>
         public void AutoPopulate(ActionAssignment toAssign, byte currentHotbar, bool force = true)
         {
-            if (ShouldPreventAutoPopulate(toAssign, force)) return;
+            if (ShouldPreventAutoPopulate(toAssign, force))
+            {
+                return;
+            }
+
             // if the assignment to make is an item action with an associated item,
             // then first look for currently assigned item actions without an item, to replace with this
             // assignment
@@ -232,7 +247,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                     {
                         var cost = possibility.Slot + _numSlots * (currentHotbar >= possibility.Hotbar
                             ? currentHotbar - possibility.Hotbar
-                            : (_numHotbars - currentHotbar) + possibility.Hotbar);
+                            : _numHotbars - currentHotbar + possibility.Hotbar);
                         if (cost < minCost)
                         {
                             hotbar = possibility.Hotbar;
@@ -265,8 +280,10 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                             AssignSlot(hotbar, slot, toAssign);
                             return;
                         }
+
                         continue;
                     }
+
                     // slot's empty, assign
                     AssignSlot(hotbar, slot, toAssign);
                     return;
@@ -277,7 +294,10 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
 
         private bool ShouldPreventAutoPopulate(ActionAssignment assignment, bool force)
         {
-            if (force) return false;
+            if (force)
+            {
+                return false;
+            }
 
             if (assignment.TryGetAction(out var actionType))
             {
