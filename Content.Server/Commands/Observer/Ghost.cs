@@ -16,7 +16,6 @@ namespace Content.Server.Commands.Observer
         public string Description => "Give up on life and become a ghost.";
         public string Help => "ghost";
 
-        [Obsolete("Call IGameTicker.OnGhostAttempt(Mind, CanReturn) instead.")]
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
