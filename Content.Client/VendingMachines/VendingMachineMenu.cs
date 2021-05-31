@@ -61,8 +61,7 @@ namespace Content.Client.VendingMachines
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }
 
-            SetSize = (Math.Clamp((longestEntry.Length + 8) * 12, 300, 400),
-                Math.Clamp(_items.Count * 40 + 50, 200, 500));
+            SetSize = ((longestEntry.Length + 8) * 12, _items.Count * 40 + 50);
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
