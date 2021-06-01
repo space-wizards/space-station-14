@@ -135,7 +135,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     continue;
 
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                {
                     yield return pipe;
+                }
             }
         }
 

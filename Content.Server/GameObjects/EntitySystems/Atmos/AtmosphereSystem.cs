@@ -1,12 +1,7 @@
-#nullable enable
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -15,7 +10,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 

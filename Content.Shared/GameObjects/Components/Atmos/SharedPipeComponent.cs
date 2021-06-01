@@ -2,6 +2,7 @@
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Atmos
 {
@@ -15,6 +16,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
     public class PipeVisualState
     {
         // TODO ATMOS: Make this not a class and just be the field below...
+        [ViewVariables]
         public readonly PipeDirection ConnectedDirections;
 
         public PipeVisualState(PipeDirection connectedDirections)
