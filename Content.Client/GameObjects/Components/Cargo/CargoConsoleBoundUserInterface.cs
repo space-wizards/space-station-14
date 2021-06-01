@@ -84,8 +84,10 @@ namespace Content.Client.GameObjects.Components.Cargo
             _menu.OnOrderCanceled += RemoveOrder;
             _orderMenu.SubmitButton.OnPressed += (_) =>
             {
-                AddOrder();
-                _orderMenu.Close();
+                if (AddOrder())
+                {
+                    _orderMenu.Close();
+                }
             };
 
             _menu.OpenCentered();
@@ -132,13 +134,21 @@ namespace Content.Client.GameObjects.Components.Cargo
             _orderMenu?.Dispose();
         }
 
-        private void AddOrder()
+        private bool AddOrder()
         {
+            int orderAmt = _orderMenu?.Amount.Value ?? 0;
+            if (orderAmt < 1 || orderAmt > ShuttleCapacity.MaxCapacity)
+            {
+                return false;
+            }
+
             SendMessage(new CargoConsoleAddOrderMessage(
                 _orderMenu?.Requester.Text ?? "",
                 _orderMenu?.Reason.Text ?? "",
                 _product?.ID ?? "",
-                Math.Min((_orderMenu?.Amount.Value ?? 0), ShuttleCapacity.MaxCapacity)));
+                orderAmt));
+
+            return true;
         }
 
         private void RemoveOrder(ButtonEventArgs args)
