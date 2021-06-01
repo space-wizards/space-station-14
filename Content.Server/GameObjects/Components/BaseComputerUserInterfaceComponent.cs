@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components
     /// </summary>
     public abstract class BaseComputerUserInterfaceComponent : Component
     {
-        // { get; private set; } doesn't really express this properly.
         protected readonly object UserInterfaceKey;
 
         [ViewVariables] protected BoundUserInterface? UserInterface => Owner.GetUIOrNull(UserInterfaceKey);
