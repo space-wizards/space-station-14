@@ -333,7 +333,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var diffAngle = Angle.FromWorldVec(diff);
             if (ActionBlockerSystem.CanChangeDirection(user))
             {
-                user.Transform.LocalRotation = diffAngle;
+                user.Transform.WorldRotation = diffAngle;
             }
             else
             {
