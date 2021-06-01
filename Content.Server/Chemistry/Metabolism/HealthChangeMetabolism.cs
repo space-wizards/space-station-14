@@ -16,21 +16,32 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class HealthChangeMetabolism : IMetabolizable
     {
-        // TODO: Rate of metabolism in units / second
+        /// <summary>
+        /// How much of the reagent should be metabolized each sec
+        /// </summary> 
         [DataField("rate")]
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
-        //How much damage is done/healed when 1u of the reagent is metabolized
+        /// <summary>
+        /// How much damage is changed when 1u of the reagent is metabolized
+        /// </summary>
         [DataField("healthChange")]
         public float HealthChange { get; set; } = 1.0f;
 
-        //type of damage changed 
+        /// <summary>
+        /// type of damage changed
+        /// </summary> 
         [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
         
 
-
-        //Remove reagent at set rate, changes damage if a DamageableComponent can be found
+        /// <summary>
+        /// Remove reagent at set rate, changes damage if a DamageableComponent can be found
+        /// </summary>
+        /// <param name="solutionEntity"></param>
+        /// <param name="reagentId"></param>
+        /// <param name="tickTime"></param>
+        /// <returns></returns>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
             var metabolismAmount = ReagentUnit.New(MetabolismRate.Float() * tickTime * 100);
