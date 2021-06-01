@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             EntityManager.TryGetEntity(clickedUid, out var target);
 
-            // Check if interacted entity is a in the same container, the direct child, or direct parent of the user.
+            // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             if (target != null && !user.IsInSameOrParentContainer(target))
             {
                 Logger.WarningS("system.interaction",
@@ -729,7 +729,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
                 EntityManager.TryGetEntity(targetUid, out var target);
 
-                // Check if interacted entity is a in the same container, the direct child, or direct parent of the user.
+                // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
                 if (target != null && !user.IsInSameOrParentContainer(target))
                 {
                     Logger.WarningS("system.interaction",
