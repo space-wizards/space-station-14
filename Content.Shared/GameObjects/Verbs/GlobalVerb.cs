@@ -34,11 +34,16 @@ namespace Content.Shared.GameObjects.Verbs
         /// <param name="target">The entity that is being acted upon.</param>
         public abstract void Activate(IEntity user, IEntity target);
 
-        public VerbData GetData(IEntity user, IEntity target)
+        /// <inheritdoc />
+        public sealed override void GetDataFromEntry(IEntity user, IEntity entity, VerbData data, ref VerbEntry entry)
         {
-            var data = new VerbData();
-            GetData(user, target, data);
-            return data;
+            GetData(user, entity, data);
+        }
+
+        /// <inheritdoc />
+        public override void ActivateFromEntry(IEntity user, IEntity entity, ref VerbEntry entry)
+        {
+            Activate(user, entity);
         }
     }
 

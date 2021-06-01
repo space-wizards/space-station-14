@@ -87,35 +87,20 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
+            foreach (var entry in VerbUtility.GetVerbs(entity, Assembly.GetExecutingAssembly()))
             {
-                if ($"{component.GetType()}:{verb.GetType()}" != use.VerbKey)
+                if (entry.VerbAddress != use.VerbKey)
                 {
                     continue;
                 }
 
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
+                if (!VerbUtility.VerbAccessChecks(userEntity, entity, entry.Verb))
                 {
                     break;
                 }
 
-                verb.Activate(userEntity, component);
-                break;
-            }
-
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (globalVerb.GetType().ToString() != use.VerbKey)
-                {
-                    continue;
-                }
-
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
-                {
-                    break;
-                }
-
-                globalVerb.Activate(userEntity, entity);
+                VerbEntry entryCopy = entry;
+                entry.Verb.ActivateFromEntry(userEntity, entity, ref entryCopy);
                 break;
             }
         }
@@ -134,7 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (userEntity == null)
             {
-                Logger.Warning($"{nameof(UseVerb)} called by player {player} with no attached entity.");
+                Logger.Warning($"{nameof(RequestVerbs)} called by player {player} with no attached entity.");
                 return;
             }
 
@@ -144,35 +129,21 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var data = new List<VerbsResponseMessage.NetVerbData>();
-            //Get verbs, component dependent.
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
+            // Get them verbs
+            foreach (var entry in VerbUtility.GetVerbs(entity, Assembly.GetExecutingAssembly()))
             {
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
+                if (!VerbUtility.VerbAccessChecks(userEntity, entity, entry.Verb))
                 {
                     continue;
                 }
 
-                var verbData = verb.GetData(userEntity, component);
+                VerbEntry entryCopy = entry;
+                var verbData = entry.Verb.GetDataFromEntry(userEntity, entity, ref entryCopy);
                 if (verbData.IsInvisible)
                     continue;
 
                 // TODO: These keys being giant strings is inefficient as hell.
-                data.Add(new VerbsResponseMessage.NetVerbData(verbData, $"{component.GetType()}:{verb.GetType()}"));
-            }
-
-            //Get global verbs. Visible for all entities regardless of their components.
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
-                {
-                    continue;
-                }
-
-                var verbData = globalVerb.GetData(userEntity, entity);
-                if (verbData.IsInvisible)
-                    continue;
-
-                data.Add(new VerbsResponseMessage.NetVerbData(verbData, globalVerb.GetType().ToString()));
+                data.Add(new VerbsResponseMessage.NetVerbData(verbData, entry.VerbAddress));
             }
 
             var response = new VerbsResponseMessage(data.ToArray(), req.EntityUid);

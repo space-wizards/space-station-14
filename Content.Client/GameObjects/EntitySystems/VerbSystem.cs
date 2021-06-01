@@ -157,15 +157,17 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var user = GetUserEntity();
-            //Get verbs, component dependent.
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
+            // Get all the verbs
+            foreach (var entry in VerbUtility.GetVerbs(entity, Assembly.GetExecutingAssembly()))
             {
-                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
+                if (!VerbUtility.VerbAccessChecks(user, entity, entry.Verb))
                 {
                     continue;
                 }
 
-                var verbData = verb.GetData(user, component);
+                VerbEntry entryCopy = entry;
+                var verbData = entry.Verb.GetDataFromEntry(user, entity, ref entryCopy);
+                Action activator = () => entry.Verb.ActivateFromEntry(user, entity, ref entryCopy);
 
                 if (verbData.IsInvisible)
                     continue;
@@ -177,33 +179,9 @@ namespace Content.Client.GameObjects.EntitySystems
                     groupIcons.Add(verbData.Category, verbData.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString()!, entity.ToString()!,
-                    () => verb.Activate(user, component), verbData.Icon));
-            }
-
-            //Get global verbs. Visible for all entities regardless of their components.
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
-                {
-                    continue;
-                }
-
-                var verbData = globalVerb.GetData(user, entity);
-
-                if (verbData.IsInvisible)
-                    continue;
-
-                var list = buttons.GetOrNew(verbData.Category);
-
-                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
-                {
-                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
-                }
-
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString()!,
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, entry.Verb.ToString()!,
                     entity.ToString()!,
-                    () => globalVerb.Activate(user, entity), verbData.Icon));
+                    activator, verbData.Icon));
             }
 
             if (buttons.Count > 0)

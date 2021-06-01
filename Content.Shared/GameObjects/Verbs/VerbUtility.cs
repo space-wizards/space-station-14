@@ -14,9 +14,16 @@ namespace Content.Shared.GameObjects.Verbs
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
-        // TODO: This is a quick hack. Verb objects should absolutely be cached properly.
+        // TODO: The implementation is a quick hack. Verb objects should absolutely be cached properly.
         // This works for now though.
-        public static IEnumerable<(IComponent, Verb)> GetVerbs(IEntity entity)
+        /// <summary>
+        /// Returns an IEnumerable of VerbEntry structs:
+        /// All non-abstract types inheriting <see cref="Verb"/> nested inside component classes for components in the entity.
+        /// All non-abstract types in the given assembly inheriting <see cref="GlobalVerb"/> with the <see cref="GlobalVerbAttribute"/> attribute.
+        /// </summary>
+        /// <param name="entity">The entity to consider authoritative.</param>
+        /// <param name="assembly">The assembly to search for global verbs in.</param>
+        public static IEnumerable<VerbEntry> GetVerbs(IEntity entity, Assembly assembly)
         {
             var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
 
@@ -31,18 +38,9 @@ namespace Content.Shared.GameObjects.Verbs
                     }
 
                     var verb = typeFactory.CreateInstance<Verb>(nestedType);
-                    yield return (component, verb);
+                    yield return new VerbEntry(component, verb);
                 }
             }
-        }
-
-        /// <summary>
-        /// Returns an IEnumerable of all classes inheriting <see cref="GlobalVerb"/> with the <see cref="GlobalVerbAttribute"/> attribute.
-        /// </summary>
-        /// <param name="assembly">The assembly to search for global verbs in.</param>
-        public static IEnumerable<GlobalVerb> GetGlobalVerbs(Assembly assembly)
-        {
-            var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
 
             foreach (Type type in assembly.GetTypes())
             {
@@ -52,7 +50,8 @@ namespace Content.Shared.GameObjects.Verbs
                     {
                         continue;
                     }
-                    yield return typeFactory.CreateInstance<GlobalVerb>(type);
+                    var verb = typeFactory.CreateInstance<GlobalVerb>(type);
+                    yield return new VerbEntry(verb);
                 }
             }
         }

@@ -33,11 +33,16 @@ namespace Content.Shared.GameObjects.Verbs
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         public abstract void Activate(IEntity user, IComponent component);
 
-        public VerbData GetData(IEntity user, IComponent component)
+        /// <inheritdoc />
+        public sealed override void GetDataFromEntry(IEntity user, IEntity entity, VerbData data, ref VerbEntry entry)
         {
-            var data = new VerbData();
-            GetData(user, component, data);
-            return data;
+            GetData(user, entry.Component!, data);
+        }
+
+        /// <inheritdoc />
+        public sealed override void ActivateFromEntry(IEntity user, IEntity entity, ref VerbEntry entry)
+        {
+            Activate(user, entry.Component!);
         }
     }
 
