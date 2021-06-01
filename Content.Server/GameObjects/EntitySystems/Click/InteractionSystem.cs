@@ -267,15 +267,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            // Verify user is on the same map as the entity he clicked on
-            if (coordinates.GetMapId(_entityManager) != user.Transform.MapID)
-            {
-                Logger.WarningS("system.interaction",
-                    $"User entity named {user.Name} clicked on a map he isn't located on");
+            if (!ValidateInteractAndFace(user, coordinates))
                 return;
-            }
-
-            FaceClickCoordinates(user, coordinates);
 
             if (!ActionBlockerSystem.CanInteract(user))
                 return;
@@ -323,6 +316,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 else
                     InteractHand(user, target);
             }
+        }
+
+        private bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
+        {
+            // Verify user is on the same map as the entity he clicked on
+            if (coordinates.GetMapId(_entityManager) != user.Transform.MapID)
+            {
+                Logger.WarningS("system.interaction",
+                    $"User entity named {user.Name} clicked on a map he isn't located on");
+                return false;
+            }
+
+            FaceClickCoordinates(user, coordinates);
+
+            return true;
         }
 
         private void FaceClickCoordinates(IEntity user, EntityCoordinates coordinates)
@@ -711,15 +719,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
         {
-            // Verify user is on the same map as the entity he clicked on
-            if (coordinates.GetMapId(EntityManager) != user.Transform.MapID)
-            {
-                Logger.WarningS("system.interaction",
-                    $"User entity named {user.Name} clicked on a map he isn't located on");
+            if (!ValidateInteractAndFace(user, coordinates))
                 return;
-            }
-
-            FaceClickCoordinates(user, coordinates);
 
             if (!ActionBlockerSystem.CanAttack(user))
                 return;
