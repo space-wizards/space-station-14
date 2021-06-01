@@ -1239,3 +1239,8 @@ Entries:
       incorrect client-side., type: Fix}
   id: 219
   time: '2021-05-30T06:54:38.996745+00:00'
+- author: TheDracheX
+  changes:
+  - {message: Fixed cargo points overflowing with large order quantities, type: Fix}
+  id: 220
+  time: '2021-06-01T04:45:28.0000000+00:00'
