@@ -103,6 +103,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             UpdateAdjacentConnectedDirections();
         }
 
+        public override void OnSnapGridMove()
+        {
+            OnConnectedDirectionsNeedsUpdating();
+        }
+
         public void JoinPipeNet(IPipeNet pipeNet)
         {
             _pipeNet = pipeNet;
