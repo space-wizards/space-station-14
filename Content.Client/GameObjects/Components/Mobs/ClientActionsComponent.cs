@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Mobs.Actions;
@@ -116,9 +116,11 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates());
+            Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates(), _ui.Locked);
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             _ui.UpdateUI();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public void AttemptAction(ActionSlot slot)

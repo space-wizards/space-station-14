@@ -56,7 +56,8 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         /// which no longer have an associated state will be decoupled from their item.
         /// </summary>
         public void Reconcile(byte currentHotbar, IReadOnlyDictionary<ActionType, ActionState> actionStates,
-            IReadOnlyDictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActionStates)
+            IReadOnlyDictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActionStates,
+            bool actionMenuLocked)
         {
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
@@ -125,7 +126,14 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
                         continue;
                     }
 
-                    ClearSlot(hotbar, slot, false);
+                    if (actionMenuLocked)
+                    {
+                        AssignSlot(hotbar, slot, ActionAssignment.For(actionType));
+                    }
+                    else
+                    {
+                        ClearSlot(hotbar, slot, false);
+                    }
                 }
             }
 
