@@ -4,6 +4,8 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Body.Respiratory;
+using Content.Server.GameObjects.Components.NodeContainer;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Actions;
@@ -42,7 +44,32 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [DataField("air")] [ViewVariables] public GasMixture? Air { get; set; } = new();
+        [ViewVariables]
+        public GasMixture? Air
+        {
+            // TODO ATMOS Kill it with fire.
+            get
+            {
+                if (!Owner.TryGetComponent(out NodeContainerComponent nodeContainer))
+                    return null;
+
+                return !nodeContainer.TryGetNode(TankName, out PipeNode? node) ? null : node.Air;
+            }
+
+            set
+            {
+                if (value == null || !Owner.TryGetComponent(out NodeContainerComponent nodeContainer))
+                    return;
+
+                if (!nodeContainer.TryGetNode(TankName, out PipeNode? node))
+                    return;
+
+                node.Air = value;
+            }
+        }
+
+        [DataField("air")] [ViewVariables]
+        public GasMixture InitialMixture { get; set; } = new();
 
         /// <summary>
         ///     Distributed pressure.
@@ -84,6 +111,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         [DataField("tankFragmentScale")]
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     NodeContainer node.
+        /// </summary>
+        [DataField("tank")]
+        public string TankName { get; set; } = "tank";
 
         public override void Initialize()
         {

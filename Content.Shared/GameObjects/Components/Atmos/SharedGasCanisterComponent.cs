@@ -5,19 +5,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Atmos
 {
-    public class SharedGasCanisterComponent : Component
+    /// <summary>
+    /// Key representing which <see cref="BoundUserInterface"/> is currently open.
+    /// Useful when there are multiple UI for an object. Here it's future-proofing only.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum GasCanisterUiKey
     {
-        public override string Name => "GasCanister";
-
-        /// <summary>
-        /// Key representing which <see cref="BoundUserInterface"/> is currently open.
-        /// Useful when there are multiple UI for an object. Here it's future-proofing only.
-        /// </summary>
-        [Serializable, NetSerializable]
-        public enum GasCanisterUiKey
-        {
-            Key,
-        }
+        Key,
     }
 
     #region Enums
@@ -37,7 +32,6 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public enum GasCanisterVisuals
     {
-        ConnectedState,
         PressureState
     }
 

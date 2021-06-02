@@ -6,6 +6,7 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -22,7 +23,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [DataDefinition]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
-        [DataField("connectionsEnabled")]
         private PipeDirection _connectedDirections;
 
         /// <summary>
@@ -32,6 +32,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         [DataField("pipeDirection")]
         public PipeDirection PipeDirection { get; private set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("connectToContainedEntities")]
+        public bool ConnectToContainedEntities { get; private set; } = false;
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
@@ -59,10 +63,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             {
                 _connectionsEnabled = value;
 
-                if (!_connectionsEnabled)
-                {
-                    _pipeNet.RemoveNode(this);
-                }
+                RefreshNodeGroup();
             }
         }
 
@@ -72,6 +73,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
+        [DataField("connectionsEnabled")]
         private bool _connectionsEnabled = true;
 
         /// <summary>
@@ -142,6 +144,24 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
                 {
                     yield return pipe;
+                }
+            }
+
+            if (!ConnectToContainedEntities || !Owner.TryGetComponent(out ContainerManagerComponent? containerManager))
+                yield break;
+
+            // TODO ATMOS Kill it with fire.
+            foreach (var container in containerManager.GetAllContainers())
+            {
+                foreach (var entity in container.ContainedEntities)
+                {
+                    if (!entity.TryGetComponent(out NodeContainerComponent? nodeContainer))
+                        continue;
+
+                    foreach (var node in nodeContainer.Nodes.Values)
+                    {
+                        yield return node;
+                    }
                 }
             }
         }

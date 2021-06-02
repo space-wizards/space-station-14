@@ -1,15 +1,24 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.Atmos.Piping.Binary;
 using Content.Server.GameObjects.Components.Atmos.Piping.Other;
 using Content.Server.GameObjects.Components.Atmos.Piping.Trinary;
 using Content.Server.GameObjects.Components.Atmos.Piping.Unary;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos
@@ -32,6 +41,13 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             SubscribeLocalEvent<GasPassiveVentComponent, AtmosDeviceUpdateEvent>(OnPassiveVentUpdated);
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
             SubscribeLocalEvent<GasOutletInjectorComponent, AtmosDeviceUpdateEvent>(OnOutletInjectorUpdated);
+
+            SubscribeLocalEvent<GasTankComponent, ComponentStartup>(OnTankStartup);
+
+            // Portable Atmospherics.
+            SubscribeLocalEvent<GasPortableComponent, AnchorAttemptEvent>(OnPortableAnchorAttempt);
+            SubscribeLocalEvent<GasPortableComponent, AnchoredEvent>(OnPortableAnchored);
+            SubscribeLocalEvent<GasPortableComponent, UnanchoredEvent>(OnPortableUnanchored);
         }
 
         private void OnGasVentUpdated(EntityUid uid, GasVentComponent vent, AtmosDeviceUpdateEvent args)
@@ -206,14 +222,118 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 environment.Invalidate();
             }
         }
+
+        private void OnTankStartup(EntityUid uid, GasTankComponent tank, ComponentStartup args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(tank.TankName, out PipeNode? tankNode))
+                return;
+
+            // Create a pipenet if we don't have one already.
+            tankNode.TryAssignGroupIfNeeded();
+            tankNode.Air.Merge(tank.InitialMixture);
+            tankNode.Air.Temperature = tank.InitialMixture.Temperature;
+        }
+
+        private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out ITransformComponent? transform))
+                return;
+
+            // If we can't find any ports, cancel the anchoring.
+            if(!FindGasPortIn(transform.GridID, transform.Coordinates, out _))
+                args.Cancel();
+        }
+
+        private void OnPortableAnchored(EntityUid uid, GasPortableComponent portable, AnchoredEvent args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
+                return;
+
+            portableNode.ConnectionsEnabled = true;
+
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(GasPortableVisuals.ConnectedState, true);
+            }
+        }
+
+        private void OnPortableUnanchored(EntityUid uid, GasPortableComponent portable, UnanchoredEvent args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
+                return;
+
+            portableNode.ConnectionsEnabled = false;
+
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(GasPortableVisuals.ConnectedState, false);
+            }
+        }
+
         #endregion
 
         #region Binary
         private void InitializeBinary()
         {
             SubscribeLocalEvent<GasPumpComponent, AtmosDeviceUpdateEvent>(OnPumpUpdated);
+            SubscribeLocalEvent<GasPortComponent, AtmosDeviceUpdateEvent>(OnPortUpdated);
+            SubscribeLocalEvent<GasCanisterComponent, AtmosDeviceUpdateEvent>(OnCanisterUpdated);
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceUpdateEvent>(OnVolumePumpUpdated);
             SubscribeLocalEvent<GasPassiveGateComponent, AtmosDeviceUpdateEvent>(OnPassiveGateUpdated);
+
+            SubscribeLocalEvent<GasCanisterComponent, ComponentStartup>(OnCanisterStartup);
+            SubscribeLocalEvent<GasCanisterComponent, InteractUsingEvent>(OnCanisterInteractUsing);
+        }
+
+        private void OnCanisterInteractUsing(EntityUid uid, GasCanisterComponent component, InteractUsingEvent args)
+        {
+            var canister = EntityManager.GetEntity(uid);
+            var container = canister.EnsureContainer<ContainerSlot>(component.ContainerName);
+
+            // Container full.
+            if (container.ContainedEntity != null)
+                return;
+
+            // TODO: Make entire codebase use ECS so we can kill these checks below and use events instead.
+            // Check the used item is valid...
+            if (!args.Used.TryGetComponent(out GasTankComponent? tank)
+                || !args.Used.TryGetComponent(out NodeContainerComponent? tankNodeContainer))
+                return;
+
+            // Check the user has hands.
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
+                return;
+
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!args.User.InRangeUnobstructed(canister, 1f, popup: true))
+                return;
+
+            if (!tankNodeContainer.TryGetNode(tank.TankName, out PipeNode? tankNode))
+                return;
+
+            if (!nodeContainer.TryGetNode(component.TankName, out PipeNode? canisterNode))
+                return;
+
+            if (!hands.Drop(args.Used, canister.Transform.Coordinates))
+                return;
+
+            if (!container.Insert(args.Used))
+                return;
+
+            canisterNode.NodeGroup.AddNode(tankNode);
+
+            args.Handled = true;
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPumpComponent pump, AtmosDeviceUpdateEvent args)
@@ -243,6 +363,67 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 outlet.Air.Merge(removed);
             }
         }
+
+        private void OnPortUpdated(EntityUid uid, GasPortComponent port, AtmosDeviceUpdateEvent args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(port.PipeName, out PipeNode? pipe)
+                || !nodeContainer.TryGetNode(port.ConnectedName, out PipeNode? connected))
+                return;
+
+            // Clear before use, always!
+            port.Buffer.Clear();
+            port.Buffer.Volume = pipe.Air.Volume + connected.Air.Volume;
+
+            port.Buffer.Merge(pipe.Air);
+            port.Buffer.Merge(connected.Air);
+
+            pipe.Air.Clear();
+            pipe.Air.Merge(port.Buffer);
+            pipe.Air.Multiply(pipe.Air.Volume / port.Buffer.Volume);
+
+            connected.Air.Clear();
+            connected.Air.Merge(port.Buffer);
+            connected.Air.Multiply(connected.Air.Volume / port.Buffer.Volume);
+        }
+
+        private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            ||  !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+                return;
+
+            if (!nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode))
+                return;
+
+            // Nothing to do here.
+            if (MathHelper.CloseTo(portNode.Air.Pressure, canister.LastPressure))
+                return;
+
+            canister.LastPressure = portNode.Air.Pressure;
+
+            // The Eris canisters are being used, so best to use the Eris light logic unless someone else has a better idea.
+            // https://github.com/discordia-space/CEV-Eris/blob/fdd6ee7012f46838a6711adb1737cd90c48ae448/code/game/machinery/atmoalter/canister.dm#L129
+            if (portNode.Air.Pressure < 10)
+            {
+                appearance.SetData(GasCanisterVisuals.PressureState, 0);
+            }
+            else if (portNode.Air.Pressure < Atmospherics.OneAtmosphere)
+            {
+                appearance.SetData(GasCanisterVisuals.PressureState, 1);
+            }
+            else if (portNode.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
+            {
+                appearance.SetData(GasCanisterVisuals.PressureState, 2);
+            }
+            else
+            {
+                appearance.SetData(GasCanisterVisuals.PressureState, 3);
+            }
+        }
+
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
@@ -315,6 +496,20 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 // Actually transfer the gas.
                 outlet.Air.Merge(inlet.Air.Remove(transferMoles));
             }
+        }
+
+        private void OnCanisterStartup(EntityUid uid, GasCanisterComponent canister, ComponentStartup args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode))
+                return;
+
+            // Create a pipenet if we don't have one already.
+            portNode.TryAssignGroupIfNeeded();
+            portNode.Air.Merge(canister.InitialMixture);
+            portNode.Air.Temperature = canister.InitialMixture.Temperature;
         }
 
         #endregion
@@ -425,7 +620,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             if (filter.FilteredGas.HasValue)
             {
-                var filteredOut = new GasMixture {Temperature = removed.Temperature};
+                var filteredOut = new GasMixture(this) {Temperature = removed.Temperature};
 
                 filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
@@ -452,7 +647,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             // Time to mine some gas.
 
-            var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
+            var merger = new GasMixture(1, this) { Temperature = miner.SpawnTemperature };
             merger.SetMoles(miner.SpawnGas, miner.SpawnAmount);
 
             tile.AssumeAir(merger);
@@ -534,6 +729,26 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             miner.Broken = false;
             return true;
+        }
+
+        private bool FindGasPortIn(GridId gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
+        {
+            port = null;
+
+            if (gridId.IsValid())
+                return false;
+
+            var grid = _mapManager.GetGrid(gridId);
+
+            foreach (var entityUid in grid.GetLocal(coordinates))
+            {
+                if (ComponentManager.TryGetComponent<GasPortComponent>(entityUid, out port))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion

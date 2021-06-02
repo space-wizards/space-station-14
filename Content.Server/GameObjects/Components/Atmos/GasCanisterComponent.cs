@@ -1,8 +1,6 @@
-#nullable enable
+/*#nullable enable
 using System;
-using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
@@ -146,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateAppearance();
         }
 
-        #endregion*/
+        #endregion
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -321,3 +319,4 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
     }
 }
+*/

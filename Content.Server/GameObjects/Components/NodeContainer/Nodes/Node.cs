@@ -42,7 +42,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         public bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
+        private bool Anchored => !NeedAnchored || !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("needAnchored")]
+        private bool NeedAnchored { get; } = true;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.

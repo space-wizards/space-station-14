@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: GasCanisterBase
+  id: GasCanister
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   parent: BaseConstructibleDynamic
@@ -8,6 +8,38 @@
   - type: InteractionOutline
   - type: SnapGrid
   - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/canister.rsi
+    state: grey
+  - type: Appearance
+    visuals:
+      - type: GasPortableVisualizer
+        stateConnected: can-connector
+      - type: GasCanisterVisualizer
+        pressureStates:
+          - can-o0
+          - can-o1
+          - can-o2
+          - can-o3
+  - type: UserInterface
+    interfaces:
+      - key: enum.GasCanisterUiKey.Key
+        type: GasCanisterBoundUserInterface
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GasCanisterBrokenBase:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
   - type: Damageable
     resistances: metallicResistances
   - type: Physics
@@ -24,54 +56,32 @@
         - MobImpassable
         - SmallImpassable
         - VaultImpassable
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+  - type: AtmosDevice
+    requireAnchored: false
+  - type: ContainerContainer
+    containers:
+      GasCanisterTankHolder: !type:ContainerSlot {}
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Down
+        connectionsEnabled: false
+        needAnchored: false
+        volume: 100
+      tank:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: None
+        needAnchored: false
+        connectToContainedEntities: true
+        volume: 1
+  - type: GasPortable
   - type: GasCanister
-  - type: UserInterface
-  - type: Appearance
-
-- type: entity
-  parent: GasCanisterBase
-  id: GasCanister
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Atmos/canister.rsi
-    state: grey
-  - type: Appearance
-    visuals:
-    - type: GasCanisterVisualizer
-      stateConnected: can-connector
-      pressureStates:
-        - can-o0
-        - can-o1
-        - can-o2
-        - can-o3
-  - type: UserInterface
-    interfaces:
-      - key: enum.GasCanisterUiKey.Key
-        type: GasCanisterBoundUserInterface
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          GasCanisterBrokenBase:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+  - type: GasPassiveGate
+    inlet: port
+    outlet: tank
 
 - type: entity
   parent: GasCanister

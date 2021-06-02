@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -7,10 +7,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
-    public class GasCanisterVisualizer : AppearanceVisualizer
+    public class GasPortableVisualizer : AppearanceVisualizer
     {
-        [DataField("pressureStates")]
-        private readonly string[] _statePressure = {"", "", "", ""};
+        [DataField("stateConnected")]
+        private string? _stateConnected;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -18,8 +18,11 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var sprite = entity.GetComponent<ISpriteComponent>();
 
-            sprite.LayerMapSet(Layers.PressureLight, sprite.AddLayerState(_statePressure[0]));
-            sprite.LayerSetShader(Layers.PressureLight, "unshaded");
+            if (_stateConnected != null)
+            {
+                sprite.LayerMapSet(Layers.ConnectedToPort, sprite.AddLayerState(_stateConnected));
+                sprite.LayerSetVisible(Layers.ConnectedToPort, false);
+            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -36,15 +39,16 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            // Update the canister lights
-            if (component.TryGetData(GasCanisterVisuals.PressureState, out int pressureState))
-                if ((pressureState >= 0) && (pressureState < _statePressure.Length))
-                    sprite.LayerSetState(Layers.PressureLight, _statePressure[pressureState]);
+            // Update the visuals : Is the canister connected to a port or not
+            if (component.TryGetData(GasPortableVisuals.ConnectedState, out bool isConnected))
+            {
+                sprite.LayerSetVisible(Layers.ConnectedToPort, isConnected);
+            }
         }
 
         private enum Layers
         {
-            PressureLight
+            ConnectedToPort,
         }
     }
 }
