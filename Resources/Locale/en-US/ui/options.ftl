@@ -95,7 +95,7 @@ ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-admin-menu = Open admin menu
-ui-options-function-lock-action-slots = (Un)lock dragging and clearning action slots
+ui-options-function-lock-action-slots = (Un)lock dragging and clearing action slots
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
