@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var node in component.Nodes.Values)
             {
                 node.OnSnapGridMove();
-                AddDirtyNodeGroup(node.NodeGroup);
             }
         }
 
