@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
+            for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
 
@@ -147,10 +147,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     Gets the pipes that can connect to us from entities on the tile adjacent in a direction.
+        ///     Gets the pipes that can connect to us from entities on the tile or adjacent in a direction.
         /// </summary>
         private IEnumerable<PipeNode> LinkableNodesInDirection(PipeDirection pipeDir)
         {
+            if (pipeDir is PipeDirection.Up or PipeDirection.Down)
+            {
+                foreach (var pipe in PipesInTile())
+                {
+                    if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                        yield return pipe;
+                }
+
+                yield break;
+            }
+
             foreach (var pipe in PipesInDirection(pipeDir))
             {
                 if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
@@ -182,6 +193,29 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
+        ///     Gets the pipes from entities on the tile adjacent in a direction.
+        /// </summary>
+        private IEnumerable<PipeNode> PipesInTile()
+        {
+            if (!Owner.Transform.Anchored)
+                yield break;
+
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            foreach (var entity in grid.GetLocal(position))
+            {
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                    continue;
+
+                foreach (var node in container.Nodes.Values)
+                {
+                    if (node is PipeNode pipe)
+                        yield return pipe;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Updates the <see cref="ConnectedDirections"/> of this and all sorrounding pipes.
         /// </summary>
         private void OnConnectedDirectionsNeedsUpdating()
@@ -197,7 +231,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             ConnectedDirections = PipeDirection.None;
 
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
+            for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
 

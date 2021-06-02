@@ -34,8 +34,10 @@ namespace Content.Shared.GameObjects.Components.Atmos
         //Half of a pipe in a direction
         North = 1 << 0,
         South = 1 << 1,
-        West = 1 << 2,
-        East = 1 << 3,
+        West  = 1 << 2,
+        East  = 1 << 3,
+        Up    = 1 << 4,
+        Down  = 1 << 5,
 
         //Straight pipes
         Longitudinal = North | South,
@@ -46,6 +48,12 @@ namespace Content.Shared.GameObjects.Components.Atmos
         NEBend = North | East,
         SWBend = South | West,
         SEBend = South | East,
+
+        //Vertical Bends (Up only)
+        NUBend = North | Up,
+        SUBend = South | Up,
+        WUBend = West  | Up,
+        EUBend = East  | Up,
 
         //T-Junctions
         TNorth = North | Lateral,
@@ -64,6 +72,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         Half,
         Straight,
         Bend,
+        VerticalBend,
         TJunction,
         Fourway
     }
@@ -80,6 +89,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
                 PipeShape.Half => PipeDirection.South,
                 PipeShape.Straight => PipeDirection.Longitudinal,
                 PipeShape.Bend => PipeDirection.SWBend,
+                PipeShape.VerticalBend => PipeDirection.SUBend,
                 PipeShape.TJunction => PipeDirection.TSouth,
                 PipeShape.Fourway => PipeDirection.Fourway,
                 _ => throw new ArgumentOutOfRangeException(nameof(shape), $"{shape} does not have an associated {nameof(PipeDirection)}."),
@@ -90,6 +100,11 @@ namespace Content.Shared.GameObjects.Components.Atmos
     public static class PipeDirectionHelpers
     {
         public const int PipeDirections = 4;
+
+        /// <summary>
+        ///     Includes the Up and Down directions.
+        /// </summary>
+        public const int AllPipeDirections = 6;
 
         public static bool HasDirection(this PipeDirection pipeDirection, PipeDirection other)
         {
@@ -133,6 +148,8 @@ namespace Content.Shared.GameObjects.Components.Atmos
                 PipeDirection.South => PipeDirection.North,
                 PipeDirection.East  => PipeDirection.West,
                 PipeDirection.West  => PipeDirection.East,
+                PipeDirection.Up    => PipeDirection.Down,
+                PipeDirection.Down  => PipeDirection.Up,
                 _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
             };
         }
@@ -153,6 +170,11 @@ namespace Content.Shared.GameObjects.Components.Atmos
                 PipeDirection.NWBend        => PipeShape.Bend,
                 PipeDirection.SEBend        => PipeShape.Bend,
                 PipeDirection.SWBend        => PipeShape.Bend,
+
+                PipeDirection.NUBend        => PipeShape.VerticalBend,
+                PipeDirection.SUBend        => PipeShape.VerticalBend,
+                PipeDirection.WUBend        => PipeShape.VerticalBend,
+                PipeDirection.EUBend        => PipeShape.VerticalBend,
 
                 PipeDirection.TNorth        => PipeShape.TJunction,
                 PipeDirection.TSouth        => PipeShape.TJunction,
