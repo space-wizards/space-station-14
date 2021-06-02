@@ -31,14 +31,17 @@ namespace Content.Server.GameObjects.Components.Sound
                     SoundSystem.Play(Filter.Pvs(Owner), _soundName, Owner, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
                     return true;
                 }
+
                 if (_semitoneVariation > 0)
                 {
                     SoundSystem.Play(Filter.Pvs(Owner), _soundName, Owner, AudioHelpers.WithSemitoneVariation(_semitoneVariation).WithVolume(-2f));
                     return true;
                 }
+
                 SoundSystem.Play(Filter.Pvs(Owner), _soundName, Owner, AudioParams.Default.WithVolume(-2f));
                 return true;
             }
+
             return false;
         }
     }

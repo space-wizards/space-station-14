@@ -1,19 +1,19 @@
+using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     public class ToysComponent : Component, IActivate, IUse, ILand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -24,36 +24,54 @@ namespace Content.Server.GameObjects.Components.Items
         [ViewVariables]
         [DataField("toySqueak")]
         public string _soundCollectionName = "ToySqueak";
+        private EmitSoundOnLandComponent? _emitSoundOnLand = default;
+        private EmitSoundOnUseComponent? _emitSoundOnUse = default;
 
-        public void Squeak()
+        public override void Initialize()
         {
-            PlaySqueakEffect();
+            base.Initialize();
+            Owner.EnsureComponent(out EmitSoundOnLandComponent emitSoundOnLand);
+            Owner.EnsureComponent(out EmitSoundOnUseComponent emitSoundOnUse);
+            _emitSoundOnLand = emitSoundOnLand;
+            _emitSoundOnUse = emitSoundOnUse;
         }
 
         public void PlaySqueakEffect()
         {
             if (!string.IsNullOrWhiteSpace(_soundCollectionName))
             {
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
-                var file = _random.Pick(soundCollection.PickFiles);
+                var file = SelectRandomSoundFromSoundCollection(_soundCollectionName);
                 SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
             }
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            Squeak();
+            PlaySqueakEffect();
+        }
+
+        private string SelectRandomSoundFromSoundCollection(string soundCollectionName)
+        {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
+            return _random.Pick(soundCollection.PickFiles);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            Squeak();
+            if(_emitSoundOnUse != null)
+            {
+                _emitSoundOnUse._soundName = SelectRandomSoundFromSoundCollection(_soundCollectionName);
+            }
+            
             return false;
         }
 
         void ILand.Land(LandEventArgs eventArgs)
         {
-            Squeak();
+            if(_emitSoundOnLand != null)
+            {
+                _emitSoundOnLand._soundName = SelectRandomSoundFromSoundCollection(_soundCollectionName);
+            }          
         }
     }
 }
