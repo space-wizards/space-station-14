@@ -16,6 +16,8 @@
 - type: entity
   parent: GasUnaryBase
   id: GasVent
+  name: air vent
+  description: Has a valve and a pump attached to it.
   placement:
     mode: SnapgridCenter
   components:
@@ -25,11 +27,12 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeHalf
-        - state: ventOff
+        - state: vent_off
+          map: ["enum.VentVisualLayers.Vent"]
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
-        - type: VentVisualizer
+        - type: VentPumpVisualizer
     - type: GasVent
 
 - type: entity

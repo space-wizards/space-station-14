@@ -52,6 +52,9 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
         private void OnGasVentUpdated(EntityUid uid, GasVentComponent vent, AtmosDeviceUpdateEvent args)
         {
+            var appearance = vent.Owner.GetComponentOrNull<AppearanceComponent>();
+            appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
+
             // TODO ATMOS: Weld shut.
             if (!vent.Enabled)
                 return;
@@ -70,6 +73,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             if (vent.PumpDirection == VentPumpDirection.Releasing)
             {
+                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Out);
                 var pressureDelta = 10000f;
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
@@ -87,6 +91,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Air.Pressure > 0)
             {
+                appearance?.SetData(VentPumpVisuals.State, VentPumpState.In);
                 var ourMultiplier = pipe.Air.Volume / (environment.Air.Temperature * Atmospherics.R);
                 var molesDelta = 10000f * ourMultiplier;
 
