@@ -403,9 +403,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 return;
 
             canister.LastPressure = portNode.Air.Pressure;
-
-            // The Eris canisters are being used, so best to use the Eris light logic unless someone else has a better idea.
-            // https://github.com/discordia-space/CEV-Eris/blob/fdd6ee7012f46838a6711adb1737cd90c48ae448/code/game/machinery/atmoalter/canister.dm#L129
+            
             if (portNode.Air.Pressure < 10)
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 0);
