@@ -1254,3 +1254,9 @@ Entries:
       through single-tile spaces., type: Fix}
   id: 221
   time: '2021-06-03T07:55:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You no longer technically 'go catatonic' when ghosting from a brain
+      or other 'effectively inanimate' object., type: Fix}
+  id: 222
+  time: '2021-06-03T08:03:19.0000000+00:00'
