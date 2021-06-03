@@ -8,10 +8,12 @@ using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -110,7 +112,11 @@ namespace Content.Server.GameObjects.Components.Cargo
                         break;
                     }
 
-                    _cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                    if (!_cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId,
+                        msg.Amount, _bankAccount.Id))
+                    {
+                        SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
+                    }
                     break;
                 }
                 case CargoConsoleRemoveOrderMessage msg:
@@ -131,15 +137,17 @@ namespace Content.Server.GameObjects.Components.Cargo
                     if (product == null!)
                         break;
                     var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
-                    if (capacity.CurrentCapacity == capacity.MaxCapacity)
+                    if (
+                        capacity.CurrentCapacity == capacity.MaxCapacity
+                        || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
+                        || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
+                        || !_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber)
+                        || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
+                        )
+                    {
+                        SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
                         break;
-                    if (!_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                        break;
-                    if (!_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber))
-                        break;
-                    if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                        break;
-                    
+                    }
                     UpdateUIState();
                     break;
                 }

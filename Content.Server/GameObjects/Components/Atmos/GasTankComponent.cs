@@ -36,9 +36,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-        [DataField("pressureResistance")]
-        private float _pressureResistance = Atmospherics.OneAtmosphere * 5f;
-
         private int _integrity = 3;
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
