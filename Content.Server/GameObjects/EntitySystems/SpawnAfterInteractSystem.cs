@@ -65,13 +65,20 @@ namespace Content.Server.GameObjects.EntitySystems
             if (component.Deleted || component.Owner.Deleted)
                 return;
 
-            StackComponent? stack = null;
-            if (component.RemoveOnInteract && component.Owner.TryGetComponent(out stack) && !stack.Use(1))
-                return;
+            var hasStack = component.Owner.HasComponent<StackComponent>();
+
+            if (hasStack && component.RemoveOnInteract)
+            {
+                var stackUse = new StackUseEvent() {Amount = 1};
+                RaiseLocalEvent(component.Owner.Uid, stackUse);
+
+                if (!stackUse.Result)
+                    return;
+            }
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
-            if (component.RemoveOnInteract && stack == null && !component.Owner.Deleted)
+            if (component.RemoveOnInteract && !hasStack && !component.Owner.Deleted)
                 component.Owner.Delete();
         }
     }

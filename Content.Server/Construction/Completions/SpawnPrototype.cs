@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -27,10 +28,8 @@ namespace Content.Server.Construction.Completions
 
             if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
             {
-                var _entity = entityManager.SpawnEntity(Prototype, coordinates);
-                StackComponent stackComponent = _entity.GetComponent<StackComponent>();
-
-                stackComponent.Count = Math.Min(stackComponent.MaxCount, Amount);
+                var stack = entityManager.SpawnEntity(Prototype, coordinates);
+                stack.EntityManager.EventBus.RaiseLocalEvent(stack.Uid, new StackChangeCountEvent(Amount), false);
             }
             else
             {

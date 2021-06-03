@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -7,7 +8,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// Used on the server side to manage global access level overrides.
     /// </summary>
-    class ServerDoorSystem : EntitySystem
+    internal sealed class DoorSystem : SharedDoorSystem
     {
         /// <summary>
         ///     Determines the base access behavior of all doors on the station.

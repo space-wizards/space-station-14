@@ -138,6 +138,8 @@
       - SheetRGlass
       - SheetPlastic
       - CableStack
+      - MVWireStack
+      - HVWireStack
       - ConveyorAssembly
       - RCD
       - RCDAmmo
@@ -152,6 +154,7 @@
       - Hemostat
       - Beaker
       - LargeBeaker
+      - CryostasisBeaker
       - Dropper
       - Syringe
       - Flash
@@ -166,6 +169,7 @@
       - APCElectronics
       - Bucket
       - MopItem
+      - SprayBottle
       - FireExtinguisher
       - KitchenKnife
       - ButchCleaver

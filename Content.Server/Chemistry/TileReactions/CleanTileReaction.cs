@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.TileReactions
                         break;
 
                     amount = next;
-                    entity.Delete();
+                    entity.QueueDelete();
                 }
             }
 

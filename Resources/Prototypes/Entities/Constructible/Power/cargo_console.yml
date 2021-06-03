@@ -44,15 +44,16 @@
       - cargo.materialsteel
       - cargo.materialglass
       - cargo.materialplastic
+      - cargo.materialplasteel
       - cargo.enginesingularityemitter
       - cargo.enginesingularitycollector
       - cargo.enginesingularitygenerator
       - cargo.enginesingularitycontainment
       - cargo.engineparticleaccelerator
-      - atmosphericsair
-      - atmosphericsoxygen
-      - atmosphericsnitrogen
-      - atmosphericscarbondioxide
+      - cargo.atmosphericsair
+      - cargo.atmosphericsoxygen
+      - cargo.atmosphericsnitrogen
+      - cargo.atmosphericscarbondioxide
 #      - atmosphericswatervapor
 #      - atmosphericsplasma
 #      - atmosphericstritium

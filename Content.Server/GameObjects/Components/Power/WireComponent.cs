@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -44,8 +45,9 @@ namespace Content.Server.GameObjects.Components.Power
             Owner.Delete();
             var droppedEnt = Owner.EntityManager.SpawnEntity(_wireDroppedOnCutPrototype, eventArgs.ClickLocation);
 
-            if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
-                stackComp.Count = 1;
+            // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
+            if (droppedEnt.HasComponent<StackComponent>())
+                Owner.EntityManager.EventBus.RaiseLocalEvent(droppedEnt.Uid, new StackChangeCountEvent(1), false);
 
             return true;
         }

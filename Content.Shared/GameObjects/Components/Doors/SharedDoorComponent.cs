@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Doors
 {
-    public abstract class SharedDoorComponent : Component, ICollideSpecial
+    public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";
         public override uint? NetID => ContentNetIDs.DOOR;
@@ -94,15 +94,14 @@ namespace Content.Shared.GameObjects.Components.Doors
         /// </summary>
         protected List<EntityUid> CurrentlyCrushing = new();
 
+        public bool IsCrushing(IEntity entity)
+        {
+            return CurrentlyCrushing.Contains(entity.Uid);
+        }
+
         protected void SetAppearance(DoorVisualState state)
         {
             AppearanceComponent?.SetData(DoorVisuals.VisualState, state);
-        }
-
-        // stops us colliding with people we're crushing, to prevent hitbox clipping and jank
-        public bool PreventCollide(IPhysBody collidedwith)
-        {
-            return CurrentlyCrushing.Contains(collidedwith.Owner.Uid);
         }
 
         /// <summary>

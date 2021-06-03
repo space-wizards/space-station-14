@@ -114,7 +114,25 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             return _databasesDict.TryGetValue(id, out database);
         }
+        /// <summary>
+        /// Verifies if there is enough money in the account's balance to pay the amount.
+        /// Returns false if there's no account associated with the given ID
+        /// or if the balance would end up being negative.
+        /// </summary>
+        public bool CheckBalance(int id, int amount)
+        {
+            if (!TryGetBankAccount(id, out var account))
+            {
+                return false;
+            }
 
+            if (account.Balance + amount < 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
         /// <summary>
         /// Attempts to change the given account's balance.
         /// Returns false if there's no account associated with the given ID
@@ -127,19 +145,17 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (account.Balance + amount < 0)
-            {
-                return false;
-            }
-
             account.Balance += amount;
             return true;
         }
 
         public bool AddOrder(int id, string requester, string reason, string productId, int amount, int payingAccountId)
         {
-            if (amount < 1 || !TryGetOrderDatabase(id, out var database))
+            if (amount < 1 || !TryGetOrderDatabase(id, out var database) || amount > database.MaxOrderSize)
+            {
                 return false;
+            }
+
             database.AddOrder(requester, reason, productId, amount, payingAccountId);
             SyncComponentsWithId(id);
             return true;
@@ -158,7 +174,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!TryGetOrderDatabase(id, out var database))
                 return false;
-            database.ApproveOrder(orderNumber);
+            if (!database.ApproveOrder(orderNumber))
+                return false;
             SyncComponentsWithId(id);
             return true;
         }

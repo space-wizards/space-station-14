@@ -33,3 +33,15 @@
   cost: 1500
   category: Materials
   group: market
+
+- type: cargoProduct
+  name: "crate of plasteel sheets"
+  id: cargo.materialplasteel
+  description: "90 sheets of plasteel."
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plasteel_3
+  product: CrateMaterialPlasteel
+  cost: 6000
+  category: Materials
+  group: market

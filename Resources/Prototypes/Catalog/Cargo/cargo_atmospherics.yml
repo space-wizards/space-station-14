@@ -1,8 +1,6 @@
-#requires localisation
-
 - type: cargoProduct
   name: "air canister"
-  id: atmosphericsair
+  id: cargo.atmosphericsair
   description: "Air canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -11,10 +9,10 @@
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "oxygen canister"
-  id: atmosphericsoxygen
+  id: cargo.atmosphericsoxygen
   description: "Oxygen canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -23,10 +21,10 @@
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "nitrogen canister"
-  id: atmosphericsnitrogen
+  id: cargo.atmosphericsnitrogen
   description: "Nitrogen canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -35,10 +33,10 @@
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "carbon dioxide canister"
-  id: atmosphericscarbondioxide
+  id: cargo.atmosphericscarbondioxide
   description: "Carbon dioxide canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -47,10 +45,10 @@
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "water vapor canister"
-  id: atmosphericswatervapor
+  id: cargo.atmosphericswatervapor
   description: "Water vapor canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -59,10 +57,10 @@
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "plasma canister"
-  id: atmosphericsplasma
+  id: cargo.atmosphericsplasma
   description: "Plasma canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -71,10 +69,10 @@
   cost: 2000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "tritium canister"
-  id: atmosphericstritium
+  id: cargo.atmosphericstritium
   description: "Tritium canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi

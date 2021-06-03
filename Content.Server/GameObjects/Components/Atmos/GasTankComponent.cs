@@ -36,9 +36,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-        [DataField("pressureResistance")]
-        private float _pressureResistance = Atmospherics.OneAtmosphere * 5f;
-
         private int _integrity = 3;
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
@@ -269,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.Delete();
+                Owner.QueueDelete();
                 return;
             }
 
@@ -283,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
 
-                    Owner.Delete();
+                    Owner.QueueDelete();
                     return;
                 }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -700,6 +700,8 @@ namespace Content.Client.Chat
 
         protected override void MouseExited()
         {
+            base.MouseExited();
+
             if (_currentDrag == DragMode.None && !_lobbyMode)
             {
                 DefaultCursorShape = CursorShape.Arrow;

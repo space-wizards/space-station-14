@@ -18,7 +18,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
 {
-    public abstract class SharedPullableComponent : Component, ICollideSpecial, IRelayMoveInput
+    public abstract class SharedPullableComponent : Component, IRelayMoveInput
     {
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
@@ -158,7 +158,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     _physics.WakeBody();
-                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics);
+                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics, $"pull-joint-{_physics.Owner.Uid}");
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = false;
                     _pullJoint.Length = length * 0.75f;
@@ -356,16 +356,6 @@ namespace Content.Shared.GameObjects.Components.Pulling
             MovingTo = null;
 
             base.OnRemove();
-        }
-
-        public bool PreventCollide(IPhysBody collidedWith)
-        {
-            if (_puller == null || _physics == null)
-            {
-                return false;
-            }
-
-            return (_physics.CollisionLayer & collidedWith.CollisionMask) == (int) CollisionGroup.MobImpassable;
         }
 
         // TODO: Need a component bus relay so all entities can use this and not just players
