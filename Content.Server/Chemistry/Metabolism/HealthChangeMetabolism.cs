@@ -17,26 +17,26 @@ namespace Content.Server.Chemistry.Metabolism
     public class HealthChangeMetabolism : IMetabolizable
     {
         /// <summary>
-        /// How much of the reagent should be metabolized each sec
+        /// How much of the reagent should be metabolized each sec.
         /// </summary> 
         [DataField("rate")]
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         /// <summary>
-        /// How much damage is changed when 1u of the reagent is metabolized
+        /// How much damage is changed when 1u of the reagent is metabolized.
         /// </summary>
         [DataField("healthChange")]
         public float HealthChange { get; set; } = 1.0f;
 
         /// <summary>
-        /// type of damage changed
+        /// Class of damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary> 
         [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
         
 
         /// <summary>
-        /// Remove reagent at set rate, changes damage if a DamageableComponent can be found
+        /// Remove reagent at set rate, changes damage if a DamageableComponent can be found.
         /// </summary>
         /// <param name="solutionEntity"></param>
         /// <param name="reagentId"></param>
@@ -44,9 +44,30 @@ namespace Content.Server.Chemistry.Metabolism
         /// <returns></returns>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            var metabolismAmount = ReagentUnit.New(MetabolismRate.Float() * tickTime * 100);
+            var metabolismAmount = ReagentUnit.New(MetabolismRate.Float());
+            float accumulatedHealth = 0;
+
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
-                health.ChangeDamage(DamageType, (int) (metabolismAmount.Float() * HealthChange), true);
+            {
+                health.ChangeDamage(DamageType, (int)HealthChange, true);
+                float decHealthChange = (float) (HealthChange - (int) HealthChange);
+                accumulatedHealth += decHealthChange;
+
+                if (accumulatedHealth >= 1)
+                {
+                    health.ChangeDamage(DamageType, 1, true);
+                    accumulatedHealth -= 1;
+                }
+                
+                else if(accumulatedHealth <= -1)
+                {
+                    health.ChangeDamage(DamageType, -1, true);
+                    accumulatedHealth += 1;
+                }
+                
+                
+
+            }
 
             return metabolismAmount;
         }
