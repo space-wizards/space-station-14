@@ -114,7 +114,13 @@ namespace Content.Server.Mobs
         ///     (Maybe you were looking for the action blocker system?)
         /// </summary>
         [ViewVariables]
-        public bool CharacterDeadIC
+        public bool CharacterDeadIC => CharacterDeadPhysically;
+        /// <summary>
+        ///     True if the OwnedEntity of this mind is physically dead.
+        ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
+        /// </summary>
+        [ViewVariables]
+        public bool CharacterDeadPhysically
         {
             get
             {
