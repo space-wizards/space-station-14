@@ -49,7 +49,11 @@ namespace Content.Server.GameObjects.Components
             BaseAnchoredAttemptEvent attempt =
                 anchoring ? new AnchorAttemptEvent(user, utilizing) : new UnanchorAttemptEvent(user, utilizing);
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, attempt, false);
+            // Need to cast the event or it will be raised as BaseAnchoredAttemptEvent.
+            if (anchoring)
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, (AnchorAttemptEvent) attempt, false);
+            else
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, (UnanchorAttemptEvent) attempt, false);
 
             if (attempt.Cancelled)
                 return false;
@@ -88,6 +92,8 @@ namespace Content.Server.GameObjects.Components
             if (Snap)
                 Owner.SnapToGrid(Owner.EntityManager);
 
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BeforeAnchoredEvent(user, utilizing), false);
+
             _physicsComponent.BodyType = BodyType.Static;
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredEvent(user, utilizing), false);
@@ -111,6 +117,8 @@ namespace Content.Server.GameObjects.Components
 
             if (_physicsComponent == null)
                 return false;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BeforeUnanchoredEvent(user, utilizing), false);
 
             _physicsComponent.BodyType = BodyType.Dynamic;
 
@@ -175,9 +183,25 @@ namespace Content.Server.GameObjects.Components
         }
     }
 
+    /// <summary>
+    ///     Raised just before the entity's body type is changed.
+    /// </summary>
+    public class BeforeAnchoredEvent : BaseAnchoredEvent
+    {
+        public BeforeAnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
     public class AnchoredEvent : BaseAnchoredEvent
     {
         public AnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    /// <summary>
+    ///     Raised just before the entity's body type is changed.
+    /// </summary>
+    public class BeforeUnanchoredEvent : BaseAnchoredEvent
+    {
+        public BeforeUnanchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
     }
 
     public class UnanchoredEvent : BaseAnchoredEvent
