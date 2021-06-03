@@ -61,12 +61,12 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value < 0) value = 0;
                 if (value > 6) value = 6;
 
-                _level = value;
                 if ((_level > 1) && (value <= 1))
                 {
                     // Prevents it getting stuck (see SingularityController.MoveSingulo)
                     if (_collidableComponent != null) _collidableComponent.LinearVelocity = Vector2.Zero;
                 }
+                _level = value;
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
