@@ -235,10 +235,13 @@ namespace Content.Server.Mobs
         ///     The entity to control.
         ///     Can be null, in which case it will simply detach the mind from any entity.
         /// </param>
+        /// <param name="ghostCheckOverride">
+        ///     If true, skips ghost check for Visiting Entity
+        /// </param>
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(IEntity? entity)
+        public void TransferTo(IEntity? entity, bool ghostCheckOverride = false)
         {
             MindComponent? component = null;
             var alreadyAttached = false;
@@ -272,8 +275,15 @@ namespace Content.Server.Mobs
             OwnedComponent = component;
             OwnedComponent?.InternalAssignMind(this);
 
-            if (VisitingEntity?.HasComponent<GhostComponent>() == false)
+            GhostComponent? ghostComponent = null;
+            VisitingEntity?.TryGetComponent(out ghostComponent);
+
+            if (ghostComponent == null || // visiting entity is not a Ghost
+                (ghostComponent != null && !ghostComponent.CanReturnToBody) || // it is a ghost, but cannot return to body anyway, so it's okay
+                ghostCheckOverride) // to force mind transfer, for example from ControlMobVerb
+            {
                 VisitingEntity = null;
+            }
 
             // Player is CURRENTLY connected.
             if (Session != null && !alreadyAttached && VisitingEntity == null)
