@@ -57,7 +57,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            var fixture = new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture};
+            var fixture = new Fixture(physicsComponent, shape) { CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
             physicsComponent.AddFixture(fixture);
         }
 
@@ -101,7 +101,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             // LandInteraction
             // TODO: Refactor these to system messages
             var landMsg = new LandEvent(user, landing, coordinates);
-            RaiseLocalEvent(landMsg);
+            RaiseLocalEvent(landing.Uid, landMsg);
+
             if (landMsg.Handled)
             {
                 return;

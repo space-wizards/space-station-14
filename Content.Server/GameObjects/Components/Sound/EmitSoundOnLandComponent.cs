@@ -1,21 +1,15 @@
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Sound
 {
     /// <summary>
-    /// Simple sound emitter that emits sound on land
+    /// Simple sound emitter that emits sound on LandEvent
     /// </summary>
     [RegisterComponent]
-    public class EmitSoundOnLandComponent : BaseEmitSoundComponent, ILand
+    public class EmitSoundOnLandComponent : BaseEmitSoundComponent
     {
         /// <inheritdoc />
         ///
         public override string Name => "EmitSoundOnLand";
-
-        void ILand.Land(LandEventArgs eventArgs)
-        {
-            PlaySoundBasedOnMode();
-        }
     }
 }

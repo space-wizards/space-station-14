@@ -10,10 +10,5 @@ namespace Content.Server.GameObjects.Components.Sound
     {
         /// <inheritdoc />
         public override string Name => "FootstepModifier";
-
-        public void PlayFootstep()
-        {
-            PlayRandomSoundFromCollection();
-        }
     }
 }

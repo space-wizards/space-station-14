@@ -10,6 +10,8 @@
     soundCollection: ToySqueak
   - type: EmitSoundOnLand
     soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -24,7 +26,12 @@
   name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
   components:
-  - type: Toys
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -39,7 +46,12 @@
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
-  - type: Toys
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -54,7 +66,12 @@
   name: nar'sie plushie
   description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
-  - type: Toys
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -69,7 +86,12 @@
   name: carp plushie
   description: An adorable stuffed toy that resembles the monstrous space carp.
   components:
-  - type: Toys
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -87,7 +109,12 @@
   name: slime plushie
   description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
   components:
-  - type: Toys
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
