@@ -6,7 +6,10 @@
   name: bee plushie
   description: A cute toy that resembles an even cuter programmer.
   components:
-  - type: Toys
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
