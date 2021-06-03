@@ -292,6 +292,8 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             SubscribeLocalEvent<GasCanisterComponent, ComponentStartup>(OnCanisterStartup);
             SubscribeLocalEvent<GasCanisterComponent, InteractUsingEvent>(OnCanisterInteractUsing);
+            SubscribeLocalEvent<GasCanisterComponent, EntInsertedIntoContainerMessage>(OnCanisterContainerInserted);
+            SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerRemoved);
         }
 
         private void OnCanisterInteractUsing(EntityUid uid, GasCanisterComponent component, InteractUsingEvent args)
@@ -334,6 +336,28 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             canisterNode.NodeGroup.AddNode(tankNode);
 
             args.Handled = true;
+        }
+
+        private void OnCanisterContainerInserted(EntityUid uid, GasCanisterComponent component, EntInsertedIntoContainerMessage args)
+        {
+            if (args.Container.ID != component.ContainerName)
+                return;
+
+            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+                return;
+
+            appearance.SetData(GasCanisterVisuals.TankInserted, true);
+        }
+
+        private void OnCanisterContainerRemoved(EntityUid uid, GasCanisterComponent component, EntRemovedFromContainerMessage args)
+        {
+            if (args.Container.ID != component.ContainerName)
+                return;
+
+            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+                return;
+
+            appearance.SetData(GasCanisterVisuals.TankInserted, false);
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPumpComponent pump, AtmosDeviceUpdateEvent args)
@@ -403,7 +427,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 return;
 
             canister.LastPressure = portNode.Air.Pressure;
-            
+
             if (portNode.Air.Pressure < 10)
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 0);
