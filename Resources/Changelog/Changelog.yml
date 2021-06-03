@@ -1244,3 +1244,13 @@ Entries:
   - {message: Fixed cargo points overflowing with large order quantities, type: Fix}
   id: 220
   time: '2021-06-01T04:45:28.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Render scale (low viewport resolution) will no longer alter singularity
+      intensity. This might reduce effect intensity, I am not sure.', type: Fix}
+  - {message: Singularity should actually not wander off into a corner this time.,
+    type: Fix}
+  - {message: Singularity generators and substations should be easier to pull around
+      through single-tile spaces., type: Fix}
+  id: 221
+  time: '2021-06-03T07:55:50.0000000+00:00'

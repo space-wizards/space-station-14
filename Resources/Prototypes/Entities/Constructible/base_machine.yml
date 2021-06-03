@@ -5,13 +5,12 @@
   components:
   - type: InteractionOutline
   - type: Anchorable
-  - type: Pullable
-  - type: PowerReceiver
   - type: Physics
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
       mass: 25
       layer:
       - MobMask
@@ -28,3 +27,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+
+- type: entity
+  abstract: true
+  parent: BaseMachine
+  id: BaseMachinePowered
+  components:
+  - type: PowerReceiver
+
