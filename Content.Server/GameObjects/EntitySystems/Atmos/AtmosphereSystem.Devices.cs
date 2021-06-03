@@ -100,6 +100,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
                 if ((pipe.Air.Pressure - environment.Pressure) > 2 * Atmospherics.OneAtmosphere)
                 {
+                    args.Delay += 1.5f;
                     args.User?.PopupMessageCursor(Loc.GetString("comp-atmos-unsafe-unanchor-warning"));
                     return; // Show the warning only once.
                 }
