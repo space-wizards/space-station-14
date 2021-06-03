@@ -22,6 +22,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Unary
         public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        public bool Welded { get; set; } = false;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
         public string OutletName { get; set; } = "pipe";
 

@@ -48,16 +48,17 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeHalf
-        - state: ventOff
+        - state: vent_off
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
-        - type: VentVisualizer
     - type: GasPassiveVent
 
 - type: entity
   parent: GasUnaryBase
   id: GasScrubber
+  name: air scrubber
+  description: Has a valve and pump attached to it.
   placement:
     mode: SnapgridCenter
   components:
@@ -67,11 +68,12 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeHalf
-        - state: scrubOff
+        - state: scrub_off
+          map: ["enum.ScrubberVisualLayers.Scrubber"]
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
-        - type: SiphonVisualizer
+        - type: ScrubberVisualizer
     - type: AtmosDevice
     - type: GasScrubber
 

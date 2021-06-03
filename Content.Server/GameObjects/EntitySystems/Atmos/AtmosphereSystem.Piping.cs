@@ -53,9 +53,15 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         private void OnGasVentUpdated(EntityUid uid, GasVentComponent vent, AtmosDeviceUpdateEvent args)
         {
             var appearance = vent.Owner.GetComponentOrNull<AppearanceComponent>();
+
+            if (vent.Welded)
+            {
+                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Welded);
+                return;
+            }
+
             appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
 
-            // TODO ATMOS: Weld shut.
             if (!vent.Enabled)
                 return;
 
@@ -114,6 +120,16 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
         private void OnScrubberUpdated(EntityUid uid, GasScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
         {
+            var appearance = scrubber.Owner.GetComponentOrNull<AppearanceComponent>();
+
+            if (scrubber.Welded)
+            {
+                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Welded);
+                return;
+            }
+
+            appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
+
             if (!scrubber.Enabled)
                 return;
 
@@ -125,14 +141,15 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             var environment = args.Atmosphere.GetTile(scrubber.Owner.Transform.Coordinates)!;
 
-            Scrub(scrubber, environment, outlet);
+            Scrub(scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
             foreach (var adjacent in environment.AdjacentTiles)
             {
-                Scrub(scrubber, adjacent, outlet);
+                // Pass null appearance, we don't need to set it there.
+                Scrub(scrubber, null, adjacent, outlet);
             }
         }
 
@@ -684,7 +701,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
         #region Helpers
 
-        private void Scrub(GasScrubberComponent scrubber, TileAtmosphere? tile, PipeNode outlet)
+        private void Scrub(GasScrubberComponent scrubber, AppearanceComponent? appearance, TileAtmosphere? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
             if (tile?.Air == null)
@@ -696,6 +713,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
+                appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
                 var transferMoles = MathF.Min(1f, (scrubber.VolumeRate / tile.Air.Volume) * tile.Air.TotalMoles);
 
                 // Take a gas sample.
@@ -712,6 +730,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
             {
+                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
                 var transferMoles = tile.Air.TotalMoles * (scrubber.VolumeRate / tile.Air.Volume);
 
                 var removed = tile.Air.Remove(transferMoles);

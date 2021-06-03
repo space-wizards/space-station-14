@@ -33,7 +33,6 @@
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
-    - type: PumpVisualizer
   - type: GasPump
 
 - type: entity
@@ -52,8 +51,6 @@
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
-        - type: PumpVisualizer
-          pumpEnabledState: pumpVolumeOn
     - type: GasVolumePump
 
 - type: entity
@@ -72,8 +69,6 @@
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
-        - type: PumpVisualizer
-          pumpEnabledState: pumpPassiveGateOn
     - type: GasPassiveGate
 
 - type: entity
@@ -93,8 +88,6 @@
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
-        - type: PumpVisualizer
-          pumpEnabledState: pumpPassiveGateOn
     - type: GasValve
     - type: NodeContainer
       nodes:
