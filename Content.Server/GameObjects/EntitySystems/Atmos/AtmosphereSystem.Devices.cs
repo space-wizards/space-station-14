@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
 
             // Atmos unsafe unanchoring.
-            SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UnanchoredEvent>(OnUnanchored);
+            SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, BeforeUnanchoredEvent>(OnBeforeUnanchored);
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         }
 
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
         }
 
-        private void OnUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchoredEvent args)
+        private void OnBeforeUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, BeforeUnanchoredEvent args)
         {
             if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;

@@ -11,6 +11,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } = true;
     }
 }

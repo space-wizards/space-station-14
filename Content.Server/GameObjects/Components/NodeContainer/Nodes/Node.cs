@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         public bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => !NeedAnchored || !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
+        protected bool Anchored => !NeedAnchored || !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("needAnchored")]

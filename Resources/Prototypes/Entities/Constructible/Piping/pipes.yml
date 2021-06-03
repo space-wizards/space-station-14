@@ -12,6 +12,9 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
   - type: Destructible
     thresholds:
     - trigger:

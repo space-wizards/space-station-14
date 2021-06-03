@@ -96,7 +96,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             base.OnContainerStartup();
             OnConnectedDirectionsNeedsUpdating();
-            UpdateAppearance();
         }
 
         public override void OnContainerShutdown()
@@ -113,11 +112,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void JoinPipeNet(IPipeNet pipeNet)
         {
             _pipeNet = pipeNet;
+            OnConnectedDirectionsNeedsUpdating();
         }
 
         public void ClearPipeNet()
         {
             _pipeNet = PipeNet.NullNet;
+            OnConnectedDirectionsNeedsUpdating();
         }
 
         /// <summary>
@@ -171,11 +172,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private IEnumerable<PipeNode> LinkableNodesInDirection(PipeDirection pipeDir)
         {
+            if (!Anchored)
+                yield break;
+
             if (pipeDir is PipeDirection.Up or PipeDirection.Down)
             {
                 foreach (var pipe in PipesInTile())
                 {
-                    if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                    if (pipe.Anchored && pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
                         yield return pipe;
                 }
 
@@ -242,6 +246,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             UpdateConnectedDirections();
             UpdateAdjacentConnectedDirections();
+            UpdateAppearance();
         }
 
         /// <summary>
@@ -282,6 +287,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
                 {
                     pipe.UpdateConnectedDirections();
+                    pipe.UpdateAppearance();
                 }
             }
         }
