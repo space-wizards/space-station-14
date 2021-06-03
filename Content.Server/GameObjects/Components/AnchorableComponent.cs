@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components
             if (attempt.Cancelled)
                 return false;
 
-            return utilizing.TryGetComponent(out ToolComponent? tool) && await tool.UseTool(user, Owner, 0.5f, Tool);
+            return utilizing.TryGetComponent(out ToolComponent? tool) && await tool.UseTool(user, Owner, 0.5f + attempt.Delay, Tool);
         }
 
         /// <summary>
@@ -153,6 +153,13 @@ namespace Content.Server.GameObjects.Components
     {
         public IEntity User { get; }
         public IEntity Tool { get; }
+
+        /// <summary>
+        ///     Extra delay to add to the do_after.
+        ///     Add to this, don't replace it.
+        ///     Output parameter.
+        /// </summary>
+        public float Delay { get; set; } = 0f;
 
         protected BaseAnchoredAttemptEvent(IEntity user, IEntity tool)
         {
