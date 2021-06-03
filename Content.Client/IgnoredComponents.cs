@@ -17,6 +17,8 @@ namespace Content.Client
             "OnUseTimerTrigger",
             "WarpPoint",
             "EmitSoundOnUse",
+            "EmitSoundOnLand",
+            "EmitSoundOnActivate",
             "FootstepModifier",
             "HeatResistance",
             "ItemTeleporter",
