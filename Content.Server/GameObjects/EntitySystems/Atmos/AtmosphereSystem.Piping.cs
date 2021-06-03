@@ -735,7 +735,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         {
             port = null;
 
-            if (gridId.IsValid())
+            if (!gridId.IsValid())
                 return false;
 
             var grid = _mapManager.GetGrid(gridId);
