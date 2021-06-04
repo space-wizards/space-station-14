@@ -6,7 +6,6 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 
-
 namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
@@ -34,7 +33,7 @@ namespace Content.Server.Chemistry.Metabolism
         [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
         
-
+        private float accumulatedHealth = 0;
         /// <summary>
         /// Remove reagent at set rate, changes damage if a DamageableComponent can be found.
         /// </summary>
@@ -44,9 +43,6 @@ namespace Content.Server.Chemistry.Metabolism
         /// <returns></returns>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            var metabolismAmount = ReagentUnit.New(MetabolismRate.Float());
-            float accumulatedHealth = 0;
-
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {
                 health.ChangeDamage(DamageType, (int)HealthChange, true);
@@ -64,12 +60,8 @@ namespace Content.Server.Chemistry.Metabolism
                     health.ChangeDamage(DamageType, -1, true);
                     accumulatedHealth += 1;
                 }
-                
-                
-
             }
-
-            return metabolismAmount;
+            return MetabolismRate;
         }
     }
 }
