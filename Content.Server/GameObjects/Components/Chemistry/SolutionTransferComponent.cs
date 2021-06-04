@@ -4,6 +4,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -47,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.CanReach || eventArgs.Target == null)
+            if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
             if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? ownerSolution))

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -9,7 +10,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// <summary>
     /// Used by the client to "predict" when doors will change how collideable they are as part of their opening / closing.
     /// </summary>
-    public class ClientDoorSystem : EntitySystem
+    internal sealed class DoorSystem : SharedDoorSystem
     {
         /// <summary>
         /// List of doors that need to be periodically checked.

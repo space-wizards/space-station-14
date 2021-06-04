@@ -10,7 +10,8 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
       mass: 50
       layer:
       - SmallImpassable
@@ -34,7 +35,8 @@
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
       mass: 50
       layer:
       - SmallImpassable

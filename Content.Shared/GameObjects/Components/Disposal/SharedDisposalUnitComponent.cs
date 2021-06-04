@@ -1,24 +1,19 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalUnitComponent : Component, ICollideSpecial, IDragDropOn
+    public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
     {
         public override string Name => "DisposalUnit";
-
-        private readonly List<IEntity> _intersecting = new();
 
         [ViewVariables]
         public bool Anchored =>
@@ -73,44 +68,9 @@ namespace Content.Shared.GameObjects.Components.Disposal
             Pressurizing
         }
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collided)
-        {
-            if (IsExiting(collided.Owner)) return true;
-            if (!Owner.TryGetComponent(out IContainerManager? manager)) return false;
-
-            if (manager.ContainsEntity(collided.Owner))
-            {
-                if (!_intersecting.Contains(collided.Owner))
-                {
-                    _intersecting.Add(collided.Owner);
-                }
-                return true;
-            }
-            return false;
-        }
-
         public virtual void Update(float frameTime)
         {
-            UpdateIntersecting();
-        }
-
-        private bool IsExiting(IEntity entity)
-        {
-            return _intersecting.Contains(entity);
-        }
-
-        private void UpdateIntersecting()
-        {
-            if(_intersecting.Count == 0) return;
-
-            // TODO: Yeah look this sucks but we'll fix it someday.
-            for (var i = _intersecting.Count - 1; i >= 0; i--)
-            {
-                var entity = _intersecting[i];
-
-                if (IoCManager.Resolve<IEntityLookup>().IsIntersecting(entity, Owner))
-                    _intersecting.RemoveAt(i);
-            }
+            return;
         }
 
         [Serializable, NetSerializable]

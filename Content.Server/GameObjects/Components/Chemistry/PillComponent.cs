@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             trueTarget.PopupMessage(user, Loc.GetString("You swallow the pill."));
 
-            Owner.Delete();
+            Owner.QueueDelete();
             return true;
         }
     }
