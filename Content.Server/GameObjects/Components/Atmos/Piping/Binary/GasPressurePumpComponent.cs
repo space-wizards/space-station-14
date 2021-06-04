@@ -6,9 +6,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
 {
     [RegisterComponent]
-    public class GasPumpComponent : Component
+    public class GasPressurePumpComponent : Component
     {
-        public override string Name => "GasPump";
+        public override string Name => "GasPressurePump";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;

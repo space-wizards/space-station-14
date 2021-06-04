@@ -26,4 +26,10 @@ namespace Content.Shared.GameObjects.Components.Atmos
     {
         Enabled,
     }
+
+    [Serializable, NetSerializable]
+    public enum PumpVisuals
+    {
+        Enabled,
+    }
 }

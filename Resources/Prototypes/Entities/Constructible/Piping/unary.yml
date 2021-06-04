@@ -15,7 +15,7 @@
 
 - type: entity
   parent: GasUnaryBase
-  id: GasVent
+  id: GasVentPump
   name: air vent
   description: Has a valve and a pump attached to it.
   placement:
@@ -33,7 +33,7 @@
       visuals:
         - type: PipeConnectorVisualizer
         - type: VentPumpVisualizer
-    - type: GasVent
+    - type: GasVentPump
 
 - type: entity
   parent: GasUnaryBase
@@ -56,7 +56,7 @@
 
 - type: entity
   parent: GasUnaryBase
-  id: GasScrubber
+  id: GasVentScrubber
   name: air scrubber
   description: Has a valve and pump attached to it.
   placement:
@@ -75,7 +75,7 @@
         - type: PipeConnectorVisualizer
         - type: ScrubberVisualizer
     - type: AtmosDevice
-    - type: GasScrubber
+    - type: GasVentScrubber
 
 - type: entity
   parent: GasUnaryBase

@@ -19,7 +19,7 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasPump
+  id: GasPressurePump
   placement:
     mode: SnapgridCenter
   components:
@@ -33,7 +33,9 @@
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
-  - type: GasPump
+    - type: PumpVisualizer
+      enabledState: pumpPressureOn
+  - type: GasPressurePump
 
 - type: entity
   parent: GasBinaryBase

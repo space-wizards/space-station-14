@@ -38,7 +38,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             InitializeCVars();
             InitializeAirtight();
             InitializeDevices();
-            InitializePiping();
 
             #region Events
 
