@@ -1,8 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
@@ -16,45 +18,43 @@ namespace Content.Client.GameObjects.Components.Disposal
     {
         private readonly Label _unitState;
         private readonly ProgressBar _pressureBar;
-        private readonly Label _pressurePercentage;
         public readonly Button Engage;
         public readonly Button Eject;
         public readonly Button Power;
 
         public DisposalUnitWindow()
         {
-            MinSize = SetSize = (300, 225);
-
+            IoCManager.InjectDependencies(this);
+            MinSize = SetSize = (300, 140);
+            Resizable = false;
             Contents.AddChild(new VBoxContainer
             {
                 Children =
                 {
                     new HBoxContainer
                     {
+                        SeparationOverride = 4,
                         Children =
                         {
-                            new Label {Text = Loc.GetString("State: ")},
-                            (_unitState = new Label {Text = Loc.GetString("Ready")})
+                            new Label {Text = Loc.GetString("ui-disposal-unit-label-state")},
+                            (_unitState = new Label {Text = Loc.GetString("ui-disposal-unit-label-status")})
                         }
                     },
-                    new Control {MinSize = (0, 10)},
+                    new Control {MinSize = (0, 5)},
                     new HBoxContainer
                     {
+                        SeparationOverride = 4,
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Pressure:")},
+                            new Label {Text = Loc.GetString("ui-disposal-unit-label-pressure")},
                             (_pressureBar = new ProgressBar
                             {
-                                MinSize = (200, 20),
+                                MinSize = (190, 20),
                                 HorizontalAlignment = HAlignment.Right,
                                 MinValue = 0,
                                 MaxValue = 1,
                                 Page = 0,
-                                Value = 0.5f,
-                                Children =
-                                {
-                                    (_pressurePercentage = new Label())
-                                }
+                                Value = 0.5f
                             })
                         }
                     },
@@ -63,29 +63,25 @@ namespace Content.Client.GameObjects.Components.Disposal
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Handle:")},
                             (Engage = new Button
                             {
-                                Text = Loc.GetString("Engage"),
+                                Text = Loc.GetString("ui-disposal-unit-button-flush"),
+                                StyleClasses = {StyleBase.ButtonOpenRight},
                                 ToggleMode = true
+                            }),
+
+                            (Eject = new Button
+                            {
+                                Text = Loc.GetString("ui-disposal-unit-button-eject"),
+                                StyleClasses = {StyleBase.ButtonOpenBoth}
+                            }),
+
+                            (Power = new CheckButton
+                            {
+                                Text = Loc.GetString("ui-disposal-unit-button-power"),
+                                StyleClasses = {StyleBase.ButtonOpenLeft}
                             })
-                        }
-                    },
-                    new Control {MinSize = (0, 10)},
-                    new HBoxContainer
-                    {
-                        Children =
-                        {
-                            new Label {Text = Loc.GetString("Eject:")},
-                            (Eject = new Button {Text = Loc.GetString("Eject Contents")})
-                        }
-                    },
-                    new Control {MinSize = (0, 10)},
-                    new HBoxContainer
-                    {
-                        Children =
-                        {
-                            (Power = new CheckButton {Text = Loc.GetString("Power")}),
+
                         }
                     }
                 }
@@ -127,9 +123,6 @@ namespace Content.Client.GameObjects.Components.Disposal
             var foregroundStyleBoxOverride = (StyleBoxFlat) _pressureBar.ForegroundStyleBoxOverride;
             foregroundStyleBoxOverride.BackgroundColor =
                 Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
-
-            var percentage = pressure / _pressureBar.MaxValue * 100;
-            _pressurePercentage.Text = $" {percentage:0}%";
         }
 
         public void UpdateState(DisposalUnitBoundUserInterfaceState state)

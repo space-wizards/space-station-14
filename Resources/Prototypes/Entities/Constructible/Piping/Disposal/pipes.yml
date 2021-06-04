@@ -1,4 +1,6 @@
-﻿- type: entity
+# Base
+
+- type: entity
   id: DisposalPipeBase
   abstract: true
   placement:
@@ -31,6 +33,8 @@
   name: disposal holder
   components:
   - type: DisposalHolder
+
+# Pipes
 
 - type: entity
   id: DisposalPipe
@@ -107,77 +111,6 @@
           !type:PhysShapeAabb
             bounds: "-0.5,-0.25,0.4,0.25"
         layer: [ Underplating ]
-
-- type: entity
-  id: DisposalUnit
-  parent: BaseConstructible
-  name: disposal unit
-  description: A pneumatic waste disposal unit
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Disposal
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/disposal.rsi
-    layers:
-    - state: condisposal
-      map: ["enum.DisposalUnitVisualLayers.Base"]
-    - state: dispover-handle
-      map: ["enum.DisposalUnitVisualLayers.Handle"]
-    - state: dispover-ready
-      map: ["enum.DisposalUnitVisualLayers.Light"]
-  - type: PowerReceiver
-  - type: DisposalUnit
-    flushTime: 2
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.25,0.4,0.25"
-      mask:
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-  - type: Anchorable
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-  - type: Appearance
-    visuals:
-    - type: DisposalUnitVisualizer
-      state_unanchored: condisposal
-      state_anchored: disposal
-      state_charging: disposal-charging
-      overlay_charging: dispover-charge
-      overlay_ready: dispover-ready
-      overlay_full: dispover-full
-      overlay_engaged: dispover-handle
-      state_flush: disposal-flush
-      flush_sound: /Audio/Machines/disposalflush.ogg
-      flush_time: 2
-  - type: UserInterface
-    interfaces:
-    - key: enum.DisposalUnitUiKey.Key
-      type: DisposalUnitBoundUserInterface
 
 - type: entity
   id: DisposalRouter
@@ -352,80 +285,3 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.25"
       layer: [ Underplating ]
-
-- type: entity
-  id: DisposalMailingUnit
-  name: disposal mailing unit
-  description: A pneumatic waste disposal unit
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Disposal
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/disposal.rsi
-    layers:
-    - state: condisposal
-      map: ["enum.DisposalUnitVisualLayers.Base"]
-    - state: dispover-handle
-      map: ["enum.DisposalUnitVisualLayers.Handle"]
-    - state: dispover-ready
-      map: ["enum.DisposalUnitVisualLayers.Light"]
-  - type: PowerReceiver
-  - type: Configuration
-    keys:
-    - Tag
-  - type: DisposalMailingUnit
-    flushTime: 2
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.3,0.35,0.3"
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: SnapGrid
-  - type: Anchorable
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Appearance
-    visuals:
-    - type: DisposalUnitVisualizer
-      state_unanchored: condisposal
-      state_anchored: disposal
-      state_charging: disposal-charging
-      overlay_charging: dispover-charge
-      overlay_ready: dispover-ready
-      overlay_full: dispover-full
-      overlay_engaged: dispover-handle
-      state_flush: disposal-flush
-      flush_sound: /Audio/Machines/disposalflush.ogg
-      flush_time: 2
-  - type: UserInterface
-    interfaces:
-    - key: enum.DisposalMailingUnitUiKey.Key
-      type: DisposalMailingUnitBoundUserInterface
-    - key: enum.ConfigurationUiKey.Key
-      type: ConfigurationBoundUserInterface
-  - type: Pullable

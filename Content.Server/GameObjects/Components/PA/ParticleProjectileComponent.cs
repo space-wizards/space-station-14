@@ -20,21 +20,7 @@ namespace Content.Server.GameObjects.Components.PA
         private ParticleAcceleratorPowerState _state;
         void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            if (otherFixture.Body.Owner.TryGetComponent<ServerSingularityComponent>(out var singularityComponent))
-            {
-                var multiplier = _state switch
-                {
-                    ParticleAcceleratorPowerState.Standby => 0,
-                    ParticleAcceleratorPowerState.Level0 => 1,
-                    ParticleAcceleratorPowerState.Level1 => 3,
-                    ParticleAcceleratorPowerState.Level2 => 6,
-                    ParticleAcceleratorPowerState.Level3 => 10,
-                    _ => 0
-                };
-                singularityComponent.Energy += 10 * multiplier;
-                Owner.QueueDelete();
-            }
-            else if (otherFixture.Body.Owner.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
+            if (otherFixture.Body.Owner.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
             {
                 singularityGeneratorComponent.Power += _state switch
                 {
@@ -66,6 +52,22 @@ namespace Content.Server.GameObjects.Components.PA
                 return;
             }
             projectileComponent.IgnoreEntity(firer);
+
+            if (!Owner.TryGetComponent<SinguloFoodComponent>(out var singuloFoodComponent))
+            {
+                Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
+                return;
+            }
+            var multiplier = _state switch
+            {
+                ParticleAcceleratorPowerState.Standby => 0,
+                ParticleAcceleratorPowerState.Level0 => 1,
+                ParticleAcceleratorPowerState.Level1 => 3,
+                ParticleAcceleratorPowerState.Level2 => 6,
+                ParticleAcceleratorPowerState.Level3 => 10,
+                _ => 0
+            };
+            singuloFoodComponent.Energy = 10 * multiplier;
 
             var suffix = state switch
             {

@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Explosion
         ///     Max distance grenades can be thrown.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("distance")]
-        private float _throwDistance = 3;
+        private float _throwDistance = 50;
 
         /// <summary>
         ///     This is the end.
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Explosion
                     thrownCount++;
 
                     // TODO: Suss out throw strength
-                    grenade.TryThrow(angle.ToVec().Normalized * 50);
+                    grenade.TryThrow(angle.ToVec().Normalized * _throwDistance);
 
                     grenade.SpawnTimer(delay, () =>
                     {

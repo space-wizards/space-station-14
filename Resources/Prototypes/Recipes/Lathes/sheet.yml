@@ -26,7 +26,8 @@
   result: SheetRGlass1
   completetime: 500
   materials:
-    Glass: 200
+    Glass: 100
+    Steel: 50
 
 - type: latheRecipe
   id: SheetPlastic

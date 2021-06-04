@@ -168,8 +168,8 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-			if(otherFixture.Body.Owner.HasTag("EmitterBolt"))            {
-                ReceivePower(4);
+            if (otherFixture.Body.Owner.HasTag("EmitterBolt")) {
+                ReceivePower(6);
             }
         }
 
