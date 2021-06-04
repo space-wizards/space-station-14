@@ -26,26 +26,27 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             IoCManager.InjectDependencies(this);
             MinSize = SetSize = (300, 140);
+            Resizable = false;
             Contents.AddChild(new VBoxContainer
             {
                 Children =
                 {
                     new HBoxContainer
                     {
+                        SeparationOverride = 4,
                         Children =
                         {
                             new Label {Text = Loc.GetString("ui-disposal-unit-label-state")},
-                            new Control {MinSize = (4, 0)},
                             (_unitState = new Label {Text = Loc.GetString("ui-disposal-unit-label-status")})
                         }
                     },
                     new Control {MinSize = (0, 5)},
                     new HBoxContainer
                     {
+                        SeparationOverride = 4,
                         Children =
                         {
                             new Label {Text = Loc.GetString("ui-disposal-unit-label-pressure")},
-                            new Control {MinSize = (4, 0)},
                             (_pressureBar = new ProgressBar
                             {
                                 MinSize = (190, 20),
