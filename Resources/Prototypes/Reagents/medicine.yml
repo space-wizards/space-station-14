@@ -201,7 +201,7 @@
 - type: reagent
   id: Paroxetine
   name: paroxetine
-  desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.
+  desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.  
   physicalDesc: acrid
   color: "#fffbad"
 
