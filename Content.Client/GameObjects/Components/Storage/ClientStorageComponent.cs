@@ -14,6 +14,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -188,7 +189,6 @@ namespace Content.Client.GameObjects.Components.Storage
             public StorageWindow(ClientStorageComponent storageEntity)
             {
                 StorageEntity = storageEntity;
-                SetSize = (200, 320);
                 Title = "Storage Item";
                 RectClipContent = true;
 
@@ -275,6 +275,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 });
 
                 var longestEntry = "";
+                var buttonHeight = 0;
                 foreach (var group in storedGrouped)
                 {
                     var entity = group.Entity;
@@ -301,9 +302,15 @@ namespace Content.Client.GameObjects.Components.Storage
                     _entityList.AddChild(button);
                 }
 
+                Logger.Debug($"Elist height: {_entityList.Size}");
                 // Set UI size based on # of items and length of longest item name
-                SetSize = (Math.Clamp((longestEntry.Length + 8) * 12, 200, 300),
-                    Math.Clamp(storedGrouped.Count() * 40 + 50, 200, 500));
+                var setX = Math.Clamp((longestEntry.Length + 8) * 12, 200, 300);
+                var setY = Math.Clamp(storedGrouped.Count() * 45, 200, 500);
+
+                // Only dynamically resize if we're making it larger; it would be annoying if we made it smaller, since they
+                // may have manually resized it to be larger on purpose
+                SetSize = (Size.X < setX ? setX : Size.X,
+                    Size.Y < setY ? setY : Size.Y);
 
                 // Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)

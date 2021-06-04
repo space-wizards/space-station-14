@@ -1,5 +1,4 @@
 ﻿using Content.Client.VendingMachines;
-using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
@@ -11,34 +10,24 @@ namespace Content.Client.GameObjects.Components.VendingMachines
     {
         [ViewVariables] private VendingMachineMenu? _menu;
 
-        public SharedVendingMachineComponent? VendingMachine { get; private set; }
-
         public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendMessage(new InventorySyncRequestMessage());
         }
 
         protected override void Open()
         {
             base.Open();
 
-            if (!Owner.Owner.TryGetComponent(out SharedVendingMachineComponent? vendingMachine))
-            {
-                return;
-            }
-
-            VendingMachine = vendingMachine;
-
             _menu = new VendingMachineMenu(this) {Title = Owner.Owner.Name};
-            _menu.Populate(VendingMachine.Inventory);
+            SendMessage(new InventorySyncRequestMessage());
 
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }
 
-        public void Eject(string ID)
+        public void Eject(string id)
         {
-            SendMessage(new VendingMachineEjectMessage(ID));
+            SendMessage(new VendingMachineEjectMessage(id));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

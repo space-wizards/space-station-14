@@ -12,7 +12,7 @@ using static Content.Shared.GameObjects.Components.VendingMachines.SharedVending
 
 namespace Content.Client.VendingMachines
 {
-    class VendingMachineMenu : SS14Window
+    internal class VendingMachineMenu : SS14Window
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -62,7 +62,7 @@ namespace Content.Client.VendingMachines
             }
 
             SetSize = (Math.Clamp((longestEntry.Length + 8) * 12, 300, 400),
-                Math.Clamp(_items.Count * 40 + 50, 200, 500));
+                Math.Clamp(_items.Count * 45, 200, 500));
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
