@@ -35,6 +35,11 @@
       sprite: Objects/Weapons/Melee/flash.rsi
       state: flash
     - type: Flash
+    - type: MeleeWeapon
+      damage: 0
+      range: 1
+      arcWidth: 10
+      arc: default
     - type: Item
       size: 2
       sprite: Objects/Weapons/Melee/flash.rsi

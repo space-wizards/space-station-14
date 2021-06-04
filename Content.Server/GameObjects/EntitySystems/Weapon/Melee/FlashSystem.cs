@@ -19,33 +19,39 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FlashComponent, ClickAttackEvent>(OnClickAttack);
-            SubscribeLocalEvent<FlashComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<FlashComponent, MeleeInteractEvent>(OnMeleeInteract);
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnExamined);
         }
 
-        public void OnClickAttack(EntityUid uid, FlashComponent comp, ClickAttackEvent args)
+        public void OnMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
             if (!UseFlash(comp, args.User))
             {
                 return;
             }
 
-            if (args.TargetEntity != null)
-                FlashEntity(args.TargetEntity, args.User, comp.FlashDuration, comp.SlowTo);
+            args.Handled = true;
+            foreach (IEntity e in args.HitEntities)
+            {
+                FlashEntity(e, args.User, comp.FlashDuration, comp.SlowTo);
+            }
         }
 
-        public void OnAfterInteract(EntityUid uid, FlashComponent comp, AfterInteractEvent args)
+        private void OnMeleeInteract(EntityUid uid, FlashComponent comp, MeleeInteractEvent args)
         {
             if (!UseFlash(comp, args.User))
             {
                 return;
             }
 
-            if (args.Target != null)
-                FlashEntity(args.Target, args.User, comp.FlashDuration, comp.SlowTo);
+            if (args.Entity.HasComponent<FlashableComponent>())
+            {
+                args.CanInteract = true;
+                FlashEntity(args.Entity, args.User, comp.FlashDuration, comp.SlowTo);
+            }
         }
 
         public void OnUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)

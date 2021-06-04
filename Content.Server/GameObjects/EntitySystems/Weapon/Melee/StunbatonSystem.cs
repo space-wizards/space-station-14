@@ -26,24 +26,13 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StunbatonComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<StunbatonComponent, MeleeInteractEvent>(OnMeleeInteract);
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ThrowCollideEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
             SubscribeLocalEvent<StunbatonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
-        }
-
-        private void OnAfterInteract(EntityUid uid, StunbatonComponent comp, AfterInteractEvent args)
-        {
-            if (!comp.Activated || args.Target == null)
-                return;
-
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
-                return;
-
-            StunEntity(args.Target, comp);
         }
 
         private void OnMeleeHit(EntityUid uid, StunbatonComponent comp, MeleeHitEvent args)
@@ -57,6 +46,21 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             foreach (IEntity entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
+            }
+        }
+
+        private void OnMeleeInteract(EntityUid uid, StunbatonComponent comp, MeleeInteractEvent args)
+        {
+            if (!comp.Activated)
+                return;
+
+            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+                return;
+
+            if (args.Entity.HasComponent<StunnableComponent>())
+            {
+                args.CanInteract = true;
+                StunEntity(args.Entity, comp);
             }
         }
 

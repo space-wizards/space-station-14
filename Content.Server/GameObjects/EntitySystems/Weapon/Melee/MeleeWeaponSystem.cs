@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
+            SubscribeLocalEvent<MeleeWeaponComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         }
 
@@ -73,24 +74,28 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
             if (target != null)
             {
-                SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, target);
+                // Raise event before doing damage so we can cancel damage if the event is handled
+                var hitEvent = new MeleeHitEvent(new List<IEntity>() {target}, args.User);
+                RaiseLocalEvent(uid, hitEvent, false);
+
+                if (!hitEvent.Handled)
+                {
+                    var targets = new[] {target};
+                    SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
+
+                    if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
+                    {
+                        damageableComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
+                    }
+
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, target);
+                }
             }
             else
             {
                 SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User);
                 return;
             }
-
-            if (target.TryGetComponent(out IDamageableComponent? damageComponent))
-            {
-                damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
-            }
-
-            RaiseLocalEvent(uid, new MeleeHitEvent(new List<IEntity>() { target }, args.User), false);
-
-            var targets = new[] { target };
-
-            SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
             comp.LastAttackTime = curTime;
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
@@ -116,33 +121,82 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(args.User.Transform.WorldPosition, angle, comp.ArcWidth, comp.Range, owner.Transform.MapID, args.User);
 
-            if (entities.Count != 0)
-            {
-                SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, entities.First().Transform.Coordinates);
-            }
-            else
-            {
-                SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User.Transform.Coordinates);
-            }
-
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
             {
                 if (!entity.Transform.IsMapTransform || entity == args.User)
                     continue;
 
-                if (entity.TryGetComponent(out IDamageableComponent? damageComponent))
+                if (ComponentManager.HasComponent<IDamageableComponent>(entity.Uid))
                 {
-                    damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
                     hitEntities.Add(entity);
                 }
             }
 
-            RaiseLocalEvent(uid, new MeleeHitEvent(hitEntities, args.User), false);
+            // Raise event before doing damage so we can cancel damage if handled
+            var hitEvent = new MeleeHitEvent(hitEntities, args.User);
+            RaiseLocalEvent(uid, hitEvent, false);
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
+
+            if (!hitEvent.Handled)
+            {
+                if (entities.Count != 0)
+                {
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, entities.First().Transform.Coordinates);
+                }
+                else
+                {
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User.Transform.Coordinates);
+                }
+
+                foreach (var entity in hitEntities)
+                {
+                    if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
+                    {
+                        damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
+                    }
+                }
+            }
 
             comp.LastAttackTime = curTime;
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.ArcCooldownTime);
+
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+        }
+
+        /// <summary>
+        ///     Used for melee weapons that want some behavior on AfterInteract,
+        ///     but also want the cooldown (stun batons, flashes)
+        /// </summary>
+        private void OnAfterInteract(EntityUid uid, MeleeWeaponComponent comp, AfterInteractEvent args)
+        {
+            if (!args.CanReach)
+                return;
+
+            var curTime = _gameTiming.CurTime;
+
+            if (curTime < comp.CooldownEnd)
+            {
+                return;
+            }
+
+            var owner = EntityManager.GetEntity(uid);
+
+            if (args.Target == null)
+                return;
+
+            var location = args.User.Transform.Coordinates;
+            var diff = args.ClickLocation.ToMapPos(owner.EntityManager) - location.ToMapPos(owner.EntityManager);
+            var angle = Angle.FromWorldVec(diff);
+
+            var hitEvent = new MeleeInteractEvent(args.Target, args.User);
+            RaiseLocalEvent(uid, hitEvent, false);
+
+            if (!hitEvent.CanInteract) return;
+            SendAnimation(comp.ClickArc, angle, args.User, owner, new List<IEntity>() { args.Target }, comp.ClickAttackEffect, false);
+
+            comp.LastAttackTime = curTime;
+            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
 
             RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
         }
@@ -214,14 +268,54 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
         }
     }
 
-    public class MeleeHitEvent : EntityEventArgs
+    /// <summary>
+    ///     Raised directed on the melee weapon entity used to attack something in combat mode,
+    ///     whether through a click attack or wide attack.
+    /// </summary>
+    public class MeleeHitEvent : HandledEntityEventArgs
     {
+        /// <summary>
+        ///     A list containing every hit entity. Can be zero.
+        /// </summary>
         public IEnumerable<IEntity> HitEntities { get; }
+
+        /// <summary>
+        /// The user who attacked with the melee wepaon.
+        /// </summary>
         public IEntity User { get; }
 
         public MeleeHitEvent(List<IEntity> hitEntities, IEntity user)
         {
             HitEntities = hitEntities;
+            User = user;
+        }
+    }
+
+    /// <summary>
+    ///     Raised directed on the melee weapon entity used to attack something in combat mode,
+    ///     whether through a click attack or wide attack.
+    /// </summary>
+    public class MeleeInteractEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     The entity interacted with.
+        /// </summary>
+        public IEntity Entity { get; }
+
+        /// <summary>
+        ///     The user who interacted using the melee weapon.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Modified by the event handler to specify whether they could successfully interact with the entity.
+        ///     Used to know whether to send the hit animation or not.
+        /// </summary>
+        public bool CanInteract { get; set; } = false;
+
+        public MeleeInteractEvent(IEntity entity, IEntity user)
+        {
+            Entity = entity;
             User = user;
         }
     }
