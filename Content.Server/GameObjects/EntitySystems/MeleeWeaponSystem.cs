@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystemMessages;
@@ -29,8 +30,9 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
-            SubscribeLocalEvent<MeleeWeaponComponent, NormalAttackEvent>(OnNormalAttack);
+            SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
+            SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
             SubscribeLocalEvent<ItemCooldownComponent, RefreshItemCooldownEvent>(OnCooldownRefreshed);
         }
 
@@ -58,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems
             RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
         }
 
-        private void OnNormalAttack(EntityUid uid, MeleeWeaponComponent comp, NormalAttackEvent args)
+        private void OnClickAttack(EntityUid uid, MeleeWeaponComponent comp, ClickAttackEvent args)
         {
             var curTime = _gameTiming.CurTime;
             if (!_entityManager.TryGetEntity(uid, out var owner))
@@ -189,6 +191,36 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return resSet;
+        }
+
+        private void OnChemicalInjectorHit(EntityUid uid, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
+        {
+            if (!ComponentManager.TryGetComponent<SolutionContainerComponent>(uid, out var solutionContainer))
+                return;
+
+            var hitBloodstreams = new List<BloodstreamComponent>();
+            foreach (var entity in args.HitEntities)
+            {
+                if (entity.Deleted)
+                    continue;
+
+                if (entity.TryGetComponent<BloodstreamComponent>(out var bloodstream))
+                    hitBloodstreams.Add(bloodstream);
+            }
+
+            if (!hitBloodstreams.Any())
+                return;
+
+            var removedSolution = solutionContainer.Solution.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+            var removedVol = removedSolution.TotalVolume;
+            var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
+            var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);
+
+            foreach (var bloodstream in hitBloodstreams)
+            {
+                var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
+                bloodstream.TryTransferSolution(individualInjection);
+            }
         }
 
         private void OnCooldownRefreshed(EntityUid uid, ItemCooldownComponent comp, RefreshItemCooldownEvent args)

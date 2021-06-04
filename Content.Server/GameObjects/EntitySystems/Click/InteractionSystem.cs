@@ -841,7 +841,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     if(wideAttack)
                         RaiseLocalEvent(item.Uid, new WideAttackEvent(player, coordinates), false);
                     else
-                        RaiseLocalEvent(item.Uid, new NormalAttackEvent(player, coordinates, targetUid), false);
+                        RaiseLocalEvent(item.Uid, new ClickAttackEvent(player, coordinates, targetUid), false);
                 }
                 else
                 {

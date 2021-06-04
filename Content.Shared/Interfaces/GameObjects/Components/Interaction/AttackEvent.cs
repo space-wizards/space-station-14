@@ -8,9 +8,9 @@ using Robust.Shared.Map;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     Raised when a target entity is attacked by a user.
+    ///     Raised when a target entity is click attacked by a user.
     /// </summary>
-    public class NormalAttackEvent : EntityEventArgs
+    public class ClickAttackEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the attack.
@@ -37,7 +37,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public bool Succeeded { get; set;  }
 
-        public NormalAttackEvent(IEntity user, EntityCoordinates clickLocation, EntityUid target = default)
+        public ClickAttackEvent(IEntity user, EntityCoordinates clickLocation, EntityUid target = default)
         {
             User = user;
             ClickLocation = clickLocation;
