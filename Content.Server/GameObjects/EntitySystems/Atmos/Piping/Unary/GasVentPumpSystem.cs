@@ -19,6 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
             base.Initialize();
 
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceUpdateEvent>(OnGasVentPumpUpdated);
+            SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceLeaveAtmosphereEvent>(OnGasVentPumpLeaveAtmosphere);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -86,6 +87,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
                     pipe.Air.Merge(removed);
                     environment.Invalidate();
                 }
+            }
+        }
+
+        private void OnGasVentPumpLeaveAtmosphere(EntityUid uid, GasVentPumpComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        {
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
             }
         }
     }

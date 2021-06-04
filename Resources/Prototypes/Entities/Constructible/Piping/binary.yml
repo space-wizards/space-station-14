@@ -33,7 +33,7 @@
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
-    - type: PumpVisualizer
+    - type: PressurePumpVisualizer
       enabledState: pumpPressureOn
   - type: GasPressurePump
 

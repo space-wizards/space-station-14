@@ -21,6 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
             base.Initialize();
 
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceUpdateEvent>(OnVentScrubberUpdated);
+            SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceLeaveAtmosphereEvent>(OnVentScrubberLeaveAtmosphere);
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
@@ -55,6 +56,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
             {
                 // Pass null appearance, we don't need to set it there.
                 Scrub(scrubber, null, adjacent, outlet);
+            }
+        }
+
+        private void OnVentScrubberLeaveAtmosphere(EntityUid uid, GasVentScrubberComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        {
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(ScrubberVisuals.State, ScrubberState.Off);
             }
         }
 

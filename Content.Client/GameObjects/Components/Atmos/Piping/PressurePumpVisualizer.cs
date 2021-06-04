@@ -5,10 +5,10 @@ using JetBrains.Annotations;
 namespace Content.Client.GameObjects.Components.Atmos.Piping
 {
     [UsedImplicitly]
-    public class PumpVisualizer : EnabledAtmosDeviceVisualizer
+    public class PressurePumpVisualizer : EnabledAtmosDeviceVisualizer
     {
         protected override object LayerMap => Layers.Enabled;
-        protected override Enum DataKey => PumpVisuals.Enabled;
+        protected override Enum DataKey => PressurePumpVisuals.Enabled;
 
         enum Layers
         {

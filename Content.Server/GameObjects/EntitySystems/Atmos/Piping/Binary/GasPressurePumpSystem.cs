@@ -19,12 +19,13 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
             base.Initialize();
 
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceUpdateEvent>(OnPumpUpdated);
+            SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceLeaveAtmosphereEvent>(OnPumpLeaveAtmosphere);
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
             var appearance = pump.Owner.GetComponentOrNull<AppearanceComponent>();
-            appearance?.SetData(PumpVisuals.Enabled, false);
+            appearance?.SetData(PressurePumpVisuals.Enabled, false);
 
             if (!pump.Enabled)
                 return;
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
 
             if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
             {
-                appearance?.SetData(PumpVisuals.Enabled, true);
+                appearance?.SetData(PressurePumpVisuals.Enabled, true);
 
                 // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
                 var pressureDelta = pump.TargetPressure - outputStartingPressure;
@@ -53,5 +54,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
                 outlet.Air.Merge(removed);
             }
         }
+
+        private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        {
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PressurePumpVisuals.Enabled, false);
+            }
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 #nullable enable
 using Content.Server.Atmos;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -24,13 +25,34 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public IGridAtmosphereComponent? Atmosphere { get; set; }
     }
 
-    public class AtmosDeviceUpdateEvent : EntityEventArgs
+    public abstract class BaseAtmosDeviceEvent : EntityEventArgs
     {
         public IGridAtmosphereComponent Atmosphere { get; }
 
-        public AtmosDeviceUpdateEvent(IGridAtmosphereComponent atmosphere)
+        public BaseAtmosDeviceEvent(IGridAtmosphereComponent atmosphere)
         {
             Atmosphere = atmosphere;
+        }
+    }
+
+    public class AtmosDeviceUpdateEvent : BaseAtmosDeviceEvent
+    {
+        public AtmosDeviceUpdateEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
+        {
+        }
+    }
+
+    public class AtmosDeviceJoinAtmosphereEvent : BaseAtmosDeviceEvent
+    {
+        public AtmosDeviceJoinAtmosphereEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
+        {
+        }
+    }
+
+    public class AtmosDeviceLeaveAtmosphereEvent : BaseAtmosDeviceEvent
+    {
+        public AtmosDeviceLeaveAtmosphereEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
+        {
         }
     }
 }

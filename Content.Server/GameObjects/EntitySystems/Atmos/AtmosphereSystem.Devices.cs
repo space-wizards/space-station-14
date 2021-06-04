@@ -43,12 +43,18 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             component.Atmosphere = atmosphere;
             atmosphere.AddAtmosDevice(component);
+
+            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceJoinAtmosphereEvent(atmosphere), false);
         }
 
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
-            component.Atmosphere?.RemoveAtmosDevice(component);
+            var atmosphere = component.Atmosphere;
+            atmosphere?.RemoveAtmosDevice(component);
             component.Atmosphere = null;
+
+            if(atmosphere != null)
+                RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceLeaveAtmosphereEvent(atmosphere), false);
         }
 
         public void RejoinAtmosphere(AtmosDeviceComponent component)
