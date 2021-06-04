@@ -95,30 +95,9 @@ ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-admin-menu = Open admin menu
-ui-options-function-lock-action-slots = (Un)lock dragging and clearing action slots
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
-
-ui-options-function-hotbar1 = Hotbar slot 1
-ui-options-function-hotbar2 = Hotbar slot 2
-ui-options-function-hotbar3 = Hotbar slot 3
-ui-options-function-hotbar4 = Hotbar slot 4
-ui-options-function-hotbar5 = Hotbar slot 5
-ui-options-function-hotbar6 = Hotbar slot 6
-ui-options-function-hotbar7 = Hotbar slot 7
-ui-options-function-hotbar8 = Hotbar slot 8
-ui-options-function-hotbar9 = Hotbar slot 9
-ui-options-function-hotbar0 = Hotbar slot 0
-ui-options-function-loadout1 = Hotbar Loadout 1
-ui-options-function-loadout2 = Hotbar Loadout 2
-ui-options-function-loadout3 = Hotbar Loadout 3
-ui-options-function-loadout4 = Hotbar Loadout 4
-ui-options-function-loadout5 = Hotbar Loadout 5
-ui-options-function-loadout6 = Hotbar Loadout 6
-ui-options-function-loadout7 = Hotbar Loadout 7
-ui-options-function-loadout8 = Hotbar Loadout 8
-ui-options-function-loadout9 = Hotbar Loadout 9
 
 ui-options-function-editor-place-object = Place object
 ui-options-function-editor-cancel-place = Cancel placement

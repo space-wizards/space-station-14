@@ -44,7 +44,6 @@ namespace Content.Client.GameObjects.Components.Mobs
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
-
         protected override void Shutdown()
         {
             base.Shutdown();
@@ -118,9 +117,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates(), _ui.Locked);
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             _ui.UpdateUI();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public void AttemptAction(ActionSlot slot)

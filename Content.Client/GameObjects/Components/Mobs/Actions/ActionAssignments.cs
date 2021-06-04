@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-
 using Content.Shared.Actions;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Client.GameObjects.Components.Mobs.Actions
 {
