@@ -2,7 +2,9 @@ using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.Atmos.Piping.Unary;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
@@ -15,10 +17,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
             base.Initialize();
 
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
+            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceLeaveAtmosphereEvent>(OnThermoMachineLeaveAtmosphere);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
+            var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
+            appearance?.SetData(ThermoMachineVisuals.Enabled, false);
+
             if (!thermoMachine.Enabled)
                 return;
 
@@ -34,11 +40,20 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
 
             if (combinedHeatCapacity > 0)
             {
+                appearance?.SetData(ThermoMachineVisuals.Enabled, true);
                 var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
                 inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
             }
 
             // TODO ATMOS: Active power usage.
+        }
+
+        private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        {
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(ThermoMachineVisuals.Enabled, false);
+            }
         }
     }
 }

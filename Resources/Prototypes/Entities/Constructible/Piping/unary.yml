@@ -95,9 +95,6 @@
     - type: Sprite
       netsync: false
       sprite: Constructible/Atmos/thermomachine.rsi
-      layers:
-        - state: heaterPipe
-        - state: heater
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
@@ -109,6 +106,14 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Sprite
+      layers:
+        - state: freezer_off
+        - state: pipe
+    - type: Appearance
+      visuals:
+        - type: ThermoMachineVisualizer
+          enabledState: freezer_on
     - type: GasThermoMachine
       mode: Freezer
       minTemperature: 73.15
@@ -119,6 +124,14 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Sprite
+      layers:
+        - state: heater_off
+        - state: pipe
+    - type: Appearance
+      visuals:
+        - type: ThermoMachineVisualizer
+          enabledState: heater_on
     - type: GasThermoMachine
       mode: Heater
       maxTemperature: 573.15 # This is changed when parts are refreshed.
