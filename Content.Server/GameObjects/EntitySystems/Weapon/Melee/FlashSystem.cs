@@ -89,7 +89,8 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
         }
 
         // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
-        // TODO: Merge with the code in FlashableComponent
+        // TODO: Merge with the code in FlashableComponent--raise an event on the target, that FlashableComponent or
+        // another comp will catch
         private void FlashEntity(IEntity target, IEntity user, float flashDuration, float slowTo)
         {
             if (target.TryGetComponent<FlashableComponent>(out var flashable))
