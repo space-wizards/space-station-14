@@ -35,11 +35,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("aoeFlashDuration")]
-        public int AoeFlashDuration => FlashDuration / 3;
+        public int AoeFlashDuration = 2000;
 
         [DataField("slowTo")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SlowTo = 0.75f;
+        public float SlowTo = 0.5f;
 
         public bool Flashing;
 

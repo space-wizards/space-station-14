@@ -25,7 +25,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class StunbatonComponent : Component, IInteractUsing
+    public class StunbatonComponent : Component
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -34,8 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public bool Activated = false;
 
         [ViewVariables]
-        [ComponentDependency]
-        public readonly PowerCellSlotComponent CellSlot = default!;
+        public PowerCellSlotComponent CellSlot = default!;
         public PowerCellComponent? Cell => CellSlot.Cell;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -56,12 +55,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 50;
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        public override void Initialize()
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
-            if (!CellSlot.InsertCell(eventArgs.Using)) return false;
-            Dirty();
-            return true;
+            base.Initialize();
+            CellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
         }
     }
 }

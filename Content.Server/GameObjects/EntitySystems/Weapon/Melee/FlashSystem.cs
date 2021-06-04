@@ -19,28 +19,21 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<FlashComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnExamined);
         }
 
-        public void OnMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
+        public void OnClickAttack(EntityUid uid, FlashComponent comp, ClickAttackEvent args)
         {
-            if (args.HitEntities.Count == 0)
-            {
-                return;
-            }
-
             if (!UseFlash(comp, args.User))
             {
                 return;
             }
 
-            foreach (var entity in args.HitEntities)
-            {
-                FlashEntity(entity, args.User, comp.FlashDuration, comp.SlowTo);
-            }
+            if (args.TargetEntity != null)
+                FlashEntity(args.TargetEntity, args.User, comp.FlashDuration, comp.SlowTo);
         }
 
         public void OnUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)

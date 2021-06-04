@@ -13,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -20,17 +21,30 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 {
     public class StunbatonSystem : EntitySystem
     {
-        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<StunbatonComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ThrowCollideEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+            SubscribeLocalEvent<StunbatonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+        }
+
+        private void OnAfterInteract(EntityUid uid, StunbatonComponent comp, AfterInteractEvent args)
+        {
+            if (!comp.Activated || args.Target == null || comp.Cell == null)
+                return;
+
+            if (!comp.Cell.TryUseCharge(comp.EnergyPerUse))
+                return;
+
+            StunEntity(args.Target, comp);
         }
 
         private void OnMeleeHit(EntityUid uid, StunbatonComponent comp, MeleeHitEvent args)
@@ -41,15 +55,10 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             if (!comp.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            foreach (var entity in args.HitEntities)
+            foreach (IEntity entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
             }
-
-            if (!(comp.Cell.CurrentCharge < comp.EnergyPerUse)) return;
-
-            SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
-            TurnOff(comp);
         }
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
@@ -81,6 +90,12 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             }
         }
 
+        private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
+        {
+            if (!ActionBlockerSystem.CanInteract(args.User)) return;
+            if (!comp.CellSlot.InsertCell(args.Used)) return;
+        }
+
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
         {
             args.Message.AddText("\n");
@@ -92,7 +107,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
-            if (!entity.TryGetComponent(out StunnableComponent? stunnable)) return;
+            if (!entity.TryGetComponent(out StunnableComponent? stunnable) || comp.Cell == null || !comp.Activated) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), "/Audio/Weapons/egloves.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             if(!stunnable.SlowedDown)
@@ -109,6 +124,12 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                 else
                     stunnable.Slowdown(comp.SlowdownTime);
             }
+
+
+            if (!(comp.Cell.CurrentCharge < comp.EnergyPerUse)) return;
+
+            SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            TurnOff(comp);
         }
 
         private void TurnOff(StunbatonComponent comp)

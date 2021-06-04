@@ -24,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent, ISolutionChange, IAfterInteract
+    public sealed class HyposprayComponent : SharedHyposprayComponent, ISolutionChange
     {
         [DataField("ClumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -41,14 +41,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             base.Initialize();
 
             Dirty();
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.CanReach)
-                return false;
-
-            return TryDoInject(eventArgs.Target, eventArgs.User);
         }
 
         public bool TryDoInject(IEntity? target, IEntity user)

@@ -158,7 +158,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             }
 
             RaiseLocalEvent(uid, new MeleeHitEvent(hitEntities, args.User), false);
-
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
 
             comp.LastAttackTime = curTime;
