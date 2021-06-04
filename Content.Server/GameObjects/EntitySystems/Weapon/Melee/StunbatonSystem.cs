@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             if (!comp.Activated || args.Target == null)
                 return;
 
-            if (!ComponentManager.TryGetComponent<PowerCellComponent>(uid, out var cell) || !cell.TryUseCharge(comp.EnergyPerUse))
+            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             StunEntity(args.Target, comp);
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             if (!comp.Activated || !args.HitEntities.Any())
                 return;
 
-            if (!ComponentManager.TryGetComponent<PowerCellComponent>(uid, out var cell) || !cell.TryUseCharge(comp.EnergyPerUse))
+            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             foreach (IEntity entity in args.HitEntities)
@@ -75,8 +75,8 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowCollideEvent args)
         {
-            if (!ComponentManager.TryGetComponent<PowerCellComponent>(uid, out var cell)) return;
-            if (!comp.Activated || !cell.TryUseCharge(comp.EnergyPerUse)) return;
+            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
+            if (!comp.Activated || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse)) return;
 
             StunEntity(args.Target, comp);
         }
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             args.Message.AddText("\n");
             var msg = comp.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
-                : Loc.GetString("comp-stun-baton-examined-off");
+                : Loc.GetString("comp-stunbaton-examined-off");
             args.Message.AddMarkup(msg);
         }
 
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             }
 
 
-            if (!comp.Owner.TryGetComponent<PowerCellComponent>(out var cell) || !(cell.CurrentCharge < comp.EnergyPerUse)) return;
+            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
@@ -160,14 +160,17 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                 !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!comp.Owner.TryGetComponent<PowerCellComponent>(out var cell))
+            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot))
+                return;
+
+            if (slot.Cell == null)
             {
                 SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-missing-cell"));
                 return;
             }
 
-            if (cell.CurrentCharge < comp.EnergyPerUse)
+            if (slot.Cell != null && slot.Cell.CurrentCharge < comp.EnergyPerUse)
             {
                 SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-dead-cell"));
