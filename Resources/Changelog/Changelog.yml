@@ -1260,3 +1260,10 @@ Entries:
       or other 'effectively inanimate' object., type: Fix}
   id: 222
   time: '2021-06-03T08:03:19.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Throwing entities into disposal units now work, type: Fix}
+  - {message: Slims down disposal unit UI, type: Tweak}
+  - {message: Disposal mailing units for now, type: Remove}
+  id: 223
+  time: '2021-06-04T00:26:08.0000000+00:00'
