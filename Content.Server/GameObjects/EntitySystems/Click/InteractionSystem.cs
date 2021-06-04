@@ -817,7 +817,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-
             // In a container where the target entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
                 (!EntityManager.TryGetEntity(targetUid, out var target) ||
@@ -832,8 +831,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var eventArgs = new AttackEvent(player, coordinates, wideAttack, targetUid);
-
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))
             {
@@ -841,12 +838,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
                 if (item != null)
                 {
-                    RaiseLocalEvent(item.Uid, eventArgs, false);
-                    foreach (var attackComponent in item.GetAllComponents<IAttack>())
-                    {
-                        if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
-                            return;
-                    }
+                    if(wideAttack)
+                        RaiseLocalEvent(item.Uid, new WideAttackEvent(player, coordinates), false);
+                    else
+                        RaiseLocalEvent(item.Uid, new NormalAttackEvent(player, coordinates, targetUid), false);
                 }
                 else
                 {
@@ -860,15 +855,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                         }
                     }
                 }
-            }
-
-            RaiseLocalEvent(player.Uid, eventArgs);
-            foreach (var attackComponent in player.GetAllComponents<IAttack>())
-            {
-                if (wideAttack)
-                    attackComponent.WideAttack(eventArgs);
-                else
-                    attackComponent.ClickAttack(eventArgs);
             }
         }
     }
