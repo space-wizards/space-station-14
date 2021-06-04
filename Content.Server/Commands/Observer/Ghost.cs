@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Content.Server.Administration;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
@@ -14,7 +15,6 @@ namespace Content.Server.Commands.Observer
         public string Command => "ghost";
         public string Description => "Give up on life and become a ghost.";
         public string Help => "ghost";
-        public bool CanReturn { get; set; } = true;
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -32,7 +32,7 @@ namespace Content.Server.Commands.Observer
                 return;
             }
 
-            if (!IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, CanReturn))
+            if (!IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, true))
             {
                 shell?.WriteLine("You can't ghost right now.");
                 return;

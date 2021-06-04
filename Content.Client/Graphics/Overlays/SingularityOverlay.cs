@@ -43,10 +43,8 @@ namespace Content.Client.Graphics.Overlays
             SingularityQuery(args.Viewport.Eye);
 
             var viewportWB = args.WorldBounds;
-            // This is a blatant cheat.
-            // The correct way of doing this would be if the singularity shader performed the matrix transforms.
-            // I don't need to explain why I'm not doing that.
-            var resolution = Math.Max(0.125f, Math.Min(args.Viewport.RenderScale.X, args.Viewport.RenderScale.Y));
+            // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
+            _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
             foreach (SingularityShaderInstance instance in _singularities.Values)
             {
                 // To be clear, this needs to use "inside-viewport" pixels.
@@ -56,8 +54,8 @@ namespace Content.Client.Graphics.Overlays
                 _shader?.SetParameter("positionInput", tempCoords);
                 if (ScreenTexture != null)
                     _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-                _shader?.SetParameter("intensity", instance.Intensity / resolution);
-                _shader?.SetParameter("falloff", instance.Falloff / resolution);
+                _shader?.SetParameter("intensity", instance.Intensity);
+                _shader?.SetParameter("falloff", instance.Falloff);
 
                 var worldHandle = args.WorldHandle;
                 worldHandle.UseShader(_shader);

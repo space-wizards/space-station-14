@@ -1,7 +1,7 @@
 #nullable enable
 using System;
-using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Console;
 using Robust.Shared.Console;
@@ -17,6 +17,7 @@ namespace Content.Server.GameObjects.Components.Observer
     public class GhostOnMoveComponent : Component, IRelayMoveInput, IGhostOnMove
     {
         public override string Name => "GhostOnMove";
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         [DataField("canReturn")] public bool CanReturn { get; set; } = true;
 
@@ -26,8 +27,7 @@ namespace Content.Server.GameObjects.Components.Observer
             if (Owner.HasComponent<VisitingMindComponent>()) return;
             if (!Owner.TryGetComponent(out MindComponent? mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
 
-            var host = IoCManager.Resolve<IServerConsoleHost>();
-            new Ghost().Execute(new ConsoleShell(host, session), string.Empty, Array.Empty<string>());
+            _gameTicker.OnGhostAttempt(mind.Mind!, CanReturn);
         }
     }
 }
