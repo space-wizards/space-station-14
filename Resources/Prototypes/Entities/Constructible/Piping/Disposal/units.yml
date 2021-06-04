@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   id: DisposalUnitBase
-  parent: BaseConstructible
+  parent: BaseMachinePowered
   description: A pneumatic waste disposal unit.
   placement:
     mode: SnapgridCenter
@@ -18,8 +18,6 @@
       map: ["enum.DisposalUnitVisualLayers.Handle"]
     - state: dispover-ready
       map: ["enum.DisposalUnitVisualLayers.Light"]
-  - type: PowerReceiver
-  - type: InteractionOutline
   - type: Physics
     bodyType: Static
     fixtures:
@@ -33,9 +31,6 @@
       - Opaque
       - Impassable
       - MobImpassable
-  - type: Anchorable
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
