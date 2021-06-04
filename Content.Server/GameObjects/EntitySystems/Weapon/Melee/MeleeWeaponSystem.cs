@@ -19,7 +19,7 @@ using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 {
     public sealed class MeleeWeaponSystem : EntitySystem
     {
@@ -32,8 +32,9 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
-            SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
             SubscribeLocalEvent<ItemCooldownComponent, RefreshItemCooldownEvent>(OnCooldownRefreshed);
+
+            SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         }
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
@@ -97,7 +98,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
             }
 
-            RaiseLocalEvent(uid, new MeleeHitEvent(new List<IEntity>() { target }), false);
+            RaiseLocalEvent(uid, new MeleeHitEvent(new List<IEntity>() { target }, args.User), false);
 
             var targets = new[] { target };
 
@@ -156,7 +157,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            RaiseLocalEvent(uid, new MeleeHitEvent(hitEntities), false);
+            RaiseLocalEvent(uid, new MeleeHitEvent(hitEntities, args.User), false);
 
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
 
@@ -244,10 +245,12 @@ namespace Content.Server.GameObjects.EntitySystems
     public class MeleeHitEvent : EntityEventArgs
     {
         public readonly List<IEntity> HitEntities;
+        public IEntity User;
 
-        public MeleeHitEvent(List<IEntity> hitEntities)
+        public MeleeHitEvent(List<IEntity> hitEntities, IEntity user)
         {
             HitEntities = hitEntities;
+            User = user;
         }
     }
 
