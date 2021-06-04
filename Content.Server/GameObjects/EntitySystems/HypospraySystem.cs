@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 

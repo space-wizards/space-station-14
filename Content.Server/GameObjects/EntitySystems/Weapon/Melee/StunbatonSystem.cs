@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Items.Storage;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
@@ -13,7 +13,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -38,10 +37,10 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void OnAfterInteract(EntityUid uid, StunbatonComponent comp, AfterInteractEvent args)
         {
-            if (!comp.Activated || args.Target == null || comp.Cell == null)
+            if (!comp.Activated || args.Target == null)
                 return;
 
-            if (!comp.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!ComponentManager.TryGetComponent<PowerCellComponent>(uid, out var cell) || !cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             StunEntity(args.Target, comp);
@@ -49,10 +48,10 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void OnMeleeHit(EntityUid uid, StunbatonComponent comp, MeleeHitEvent args)
         {
-            if (!comp.Activated || args.HitEntities.Count == 0 || comp.Cell == null)
+            if (!comp.Activated || !args.HitEntities.Any())
                 return;
 
-            if (!comp.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!ComponentManager.TryGetComponent<PowerCellComponent>(uid, out var cell) || !cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             foreach (IEntity entity in args.HitEntities)
@@ -76,8 +75,8 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowCollideEvent args)
         {
-            if (!comp.Activated || comp.Cell == null || !comp.Cell.TryUseCharge(comp.EnergyPerUse) || !args.Target.TryGetComponent(out StunnableComponent? stunnable))
-                return;
+            if (!ComponentManager.TryGetComponent<PowerCellComponent>(uid, out var cell)) return;
+            if (!comp.Activated || !cell.TryUseCharge(comp.EnergyPerUse)) return;
 
             StunEntity(args.Target, comp);
         }
@@ -93,7 +92,8 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
             if (!ActionBlockerSystem.CanInteract(args.User)) return;
-            if (!comp.CellSlot.InsertCell(args.Used)) return;
+            if (ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
+                cellslot.InsertCell(args.Used);
         }
 
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
-            if (!entity.TryGetComponent(out StunnableComponent? stunnable) || comp.Cell == null || !comp.Activated) return;
+            if (!entity.TryGetComponent(out StunnableComponent? stunnable) || !comp.Activated) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), "/Audio/Weapons/egloves.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             if(!stunnable.SlowedDown)
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             }
 
 
-            if (!(comp.Cell.CurrentCharge < comp.EnergyPerUse)) return;
+            if (!comp.Owner.TryGetComponent<PowerCellComponent>(out var cell) || !(cell.CurrentCharge < comp.EnergyPerUse)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
@@ -139,11 +139,10 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                 return;
             }
 
-            var sprite = comp.Owner.GetComponent<SpriteComponent>();
-            var item = comp.Owner.GetComponent<ItemComponent>();
+            if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
+                !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
-
             item.EquippedPrefix = "off";
             // TODO stunbaton visualizer
             sprite.LayerSetState(0, "stunbaton_off");
@@ -157,21 +156,21 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                 return;
             }
 
-            var sprite = comp.Owner.GetComponent<SpriteComponent>();
-            var item = comp.Owner.GetComponent<ItemComponent>();
+            if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
+                !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (comp.Cell == null)
+            if (!comp.Owner.TryGetComponent<PowerCellComponent>(out var cell))
             {
                 SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
-                user.PopupMessage(Loc.GetString("Cell missing..."));
+                user.PopupMessage(Loc.GetString("comp-stunbaton-activated-missing-cell"));
                 return;
             }
 
-            if (comp.Cell.CurrentCharge < comp.EnergyPerUse)
+            if (cell.CurrentCharge < comp.EnergyPerUse)
             {
                 SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
-                user.PopupMessage(Loc.GetString("Dead cell..."));
+                user.PopupMessage(Loc.GetString("comp-stunbaton-activated-dead-cell"));
                 return;
             }
 

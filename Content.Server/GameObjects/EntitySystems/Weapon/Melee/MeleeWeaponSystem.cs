@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
@@ -24,7 +23,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -32,8 +30,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
-            SubscribeLocalEvent<ItemCooldownComponent, RefreshItemCooldownEvent>(OnCooldownRefreshed);
-
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         }
 
@@ -58,24 +54,17 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                 comp.CooldownEnd = curTime + cool;
             }
 
-            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
         }
 
         private void OnClickAttack(EntityUid uid, MeleeWeaponComponent comp, ClickAttackEvent args)
         {
             var curTime = _gameTiming.CurTime;
-            if (!_entityManager.TryGetEntity(uid, out var owner))
-            {
-                args.Succeeded = false;
-                return;
-            }
 
             if (curTime < comp.CooldownEnd || !args.Target.IsValid())
-            {
-                args.Succeeded = false;
                 return;
-            }
 
+            var owner = EntityManager.GetEntity(uid);
             var target = args.TargetEntity;
 
             var location = args.User.Transform.Coordinates;
@@ -89,7 +78,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             else
             {
                 SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User);
-                args.Succeeded = false;
                 return;
             }
 
@@ -108,8 +96,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
 
             RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
-            args.Succeeded = true;
-            return;
         }
 
         private void OnWideAttack(EntityUid uid, MeleeWeaponComponent comp, WideAttackEvent args)
@@ -118,15 +104,10 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
             if (curTime < comp.CooldownEnd)
             {
-                args.Succeeded = false;
                 return;
             }
 
-            if (!_entityManager.TryGetEntity(uid, out var owner))
-            {
-                args.Succeeded = false;
-                return;
-            }
+            var owner = EntityManager.GetEntity(uid);
 
             var location = args.User.Transform.Coordinates;
             var diff = args.ClickLocation.ToMapPos(owner.EntityManager) - location.ToMapPos(owner.EntityManager);
@@ -164,8 +145,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.ArcCooldownTime);
 
             RaiseLocalEvent(uid, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
-            args.Succeeded = true;
-            return;
         }
 
         private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, float arcWidth, float range, MapId mapId, IEntity ignore)
@@ -208,7 +187,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                     hitBloodstreams.Add(bloodstream);
             }
 
-            if (!hitBloodstreams.Any())
+            if (hitBloodstreams.Count < 1)
                 return;
 
             var removedSolution = solutionContainer.Solution.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
@@ -221,12 +200,6 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
                 var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
                 bloodstream.TryTransferSolution(individualInjection);
             }
-        }
-
-        private void OnCooldownRefreshed(EntityUid uid, ItemCooldownComponent comp, RefreshItemCooldownEvent args)
-        {
-            comp.CooldownStart = args.LastAttackTime;
-            comp.CooldownEnd = args.CooldownEnd;
         }
 
         public void SendAnimation(string arc, Angle angle, IEntity attacker, IEntity source, IEnumerable<IEntity> hits, bool textureEffect = false, bool arcFollowAttacker = true)
@@ -243,25 +216,13 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
     public class MeleeHitEvent : EntityEventArgs
     {
-        public readonly List<IEntity> HitEntities;
-        public IEntity User;
+        public IEnumerable<IEntity> HitEntities { get; }
+        public IEntity User { get; }
 
         public MeleeHitEvent(List<IEntity> hitEntities, IEntity user)
         {
             HitEntities = hitEntities;
             User = user;
-        }
-    }
-
-    public class RefreshItemCooldownEvent : EntityEventArgs
-    {
-        public TimeSpan LastAttackTime;
-        public TimeSpan CooldownEnd;
-
-        public RefreshItemCooldownEvent(TimeSpan lastAttackTime, TimeSpan cooldownEnd)
-        {
-            LastAttackTime = lastAttackTime;
-            CooldownEnd = cooldownEnd;
         }
     }
 }

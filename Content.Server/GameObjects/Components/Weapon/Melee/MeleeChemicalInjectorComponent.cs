@@ -1,14 +1,7 @@
-﻿#nullable enable
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
+﻿using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee

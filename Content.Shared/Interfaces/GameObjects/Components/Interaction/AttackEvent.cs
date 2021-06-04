@@ -1,6 +1,3 @@
-#nullable enable
-using System;
-using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -8,10 +5,15 @@ using Robust.Shared.Map;
 namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     Raised when a target entity is click attacked by a user.
+    ///     Raised directed on the used entity when a target entity is click attacked by a user.
     /// </summary>
     public class ClickAttackEvent : EntityEventArgs
     {
+        /// <summary>
+        ///     Entity used to attack, for broadcast purposes.
+        /// </summary>
+        public IEntity Used { get; }
+
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
@@ -32,13 +34,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity? TargetEntity { get; }
 
-        /// <summary>
-        ///     Modified by the handler to indicate whether the attack succeeded.
-        /// </summary>
-        public bool Succeeded { get; set;  }
-
-        public ClickAttackEvent(IEntity user, EntityCoordinates clickLocation, EntityUid target = default)
+        public ClickAttackEvent(IEntity used, IEntity user, EntityCoordinates clickLocation, EntityUid target = default)
         {
+            Used = used;
             User = user;
             ClickLocation = clickLocation;
             Target = target;
@@ -49,10 +47,15 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when a target entity is wide attacked by a user.
+    ///     Raised directed on the used entity when a target entity is wide attacked by a user.
     /// </summary>
     public class WideAttackEvent : EntityEventArgs
     {
+        /// <summary>
+        ///     Entity used to attack, for broadcast purposes.
+        /// </summary>
+        public IEntity Used { get; }
+
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
@@ -63,13 +66,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        /// <summary>
-        ///     Modified by the handler to indicate whether the attack succeeded.
-        /// </summary>
-        public bool Succeeded { get; set;  }
-
-        public WideAttackEvent(IEntity user, EntityCoordinates clickLocation)
+        public WideAttackEvent(IEntity used, IEntity user, EntityCoordinates clickLocation)
         {
+            Used = used;
             User = user;
             ClickLocation = clickLocation;
         }

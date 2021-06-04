@@ -66,7 +66,9 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
             if (comp.HasUses)
             {
                 // TODO flash visualizer
-                var sprite = comp.Owner.GetComponent<SpriteComponent>();
+                if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite))
+                    return false;
+
                 if (--comp.Uses == 0)
                 {
                     sprite.LayerSetState(0, "burnt");

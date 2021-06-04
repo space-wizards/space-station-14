@@ -1,22 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
@@ -24,25 +9,23 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class MeleeWeaponComponent : Component
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         public override string Name => "MeleeWeapon";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
-        public string HitSound = "/Audio/Weapons/genhit1.ogg";
+        public string HitSound { get; set; } = "/Audio/Weapons/genhit1.ogg";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]
-        public string MissSound = "/Audio/Weapons/punchmiss.ogg";
+        public string MissSound { get; set; } = "/Audio/Weapons/punchmiss.ogg";
 
         [ViewVariables]
         [DataField("arcCooldownTime")]
-        public float ArcCooldownTime { get; private set; } = 1f;
+        public float ArcCooldownTime { get; } = 1f;
 
         [ViewVariables]
         [DataField("cooldownTime")]
-        public float CooldownTime { get; private set; } = 1f;
+        public float CooldownTime { get; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clickArc")]

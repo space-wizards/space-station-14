@@ -839,21 +839,15 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     if(wideAttack)
-                        RaiseLocalEvent(item.Uid, new WideAttackEvent(player, coordinates), false);
+                        RaiseLocalEvent(item.Uid, new WideAttackEvent(item, player, coordinates), false);
                     else
-                        RaiseLocalEvent(item.Uid, new ClickAttackEvent(player, coordinates, targetUid), false);
+                        RaiseLocalEvent(item.Uid, new ClickAttackEvent(item, player, coordinates, targetUid), false);
                 }
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt))
-                    {
-                        if (targetEnt.HasComponent<ItemComponent>())
-                        {
-                            Interaction(player, targetEnt);
-                            return;
-                        }
-                    }
+                    if (!EntityManager.TryGetEntity(targetUid, out var targetEnt) || !targetEnt.HasComponent<ItemComponent>()) return;
+                    Interaction(player, targetEnt);
                 }
             }
         }
