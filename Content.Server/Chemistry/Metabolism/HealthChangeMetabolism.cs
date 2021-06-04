@@ -6,7 +6,6 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 
-
 namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
@@ -33,7 +32,8 @@ namespace Content.Server.Chemistry.Metabolism
         /// </summary> 
         [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
-        
+
+        private float _accumulatedHealth;
 
         /// <summary>
         /// Remove reagent at set rate, changes damage if a DamageableComponent can be found.
@@ -44,32 +44,25 @@ namespace Content.Server.Chemistry.Metabolism
         /// <returns></returns>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            var metabolismAmount = ReagentUnit.New(MetabolismRate.Float());
-            float accumulatedHealth = 0;
-
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {
                 health.ChangeDamage(DamageType, (int)HealthChange, true);
                 float decHealthChange = (float) (HealthChange - (int) HealthChange);
-                accumulatedHealth += decHealthChange;
+                _accumulatedHealth += decHealthChange;
 
-                if (accumulatedHealth >= 1)
+                if (_accumulatedHealth >= 1)
                 {
                     health.ChangeDamage(DamageType, 1, true);
-                    accumulatedHealth -= 1;
+                    _accumulatedHealth -= 1;
                 }
                 
-                else if(accumulatedHealth <= -1)
+                else if(_accumulatedHealth <= -1)
                 {
                     health.ChangeDamage(DamageType, -1, true);
-                    accumulatedHealth += 1;
+                    _accumulatedHealth += 1;
                 }
-                
-                
-
             }
-
-            return metabolismAmount;
+            return MetabolismRate;
         }
     }
 }
