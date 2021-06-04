@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 .GetAllComponents<TNetConnector>()
                 .Where(powerComp => (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
                 .ToList();
-            _netConnectorComponents.Add(node, newNetConnectorComponents);
+            _netConnectorComponents[node] = newNetConnectorComponents;
             foreach (var netConnectorComponent in newNetConnectorComponents)
             {
                 SetNetConnectorNet(netConnectorComponent);

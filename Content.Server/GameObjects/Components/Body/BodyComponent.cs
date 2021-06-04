@@ -2,6 +2,8 @@
 using System;
 using Content.Server.Commands.Observer;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -28,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Body
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
         private Container _partContainer = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         protected override bool CanAddPart(string slotId, IBodyPart part)
         {
@@ -92,11 +95,11 @@ namespace Content.Server.GameObjects.Components.Body
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
             if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
-                mobState.IsDead())
+                mobState.IsDead() &&
+                Owner.TryGetComponent(out MindComponent? mind) &&
+                mind.HasMind)
             {
-                var host = IoCManager.Resolve<IServerConsoleHost>();
-
-                new Ghost().Execute(new ConsoleShell(host, session), string.Empty, Array.Empty<string>());
+                 _gameTicker.OnGhostAttempt(mind.Mind!, true);
             }
         }
 
