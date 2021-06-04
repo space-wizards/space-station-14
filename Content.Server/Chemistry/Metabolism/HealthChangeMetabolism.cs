@@ -32,14 +32,9 @@ namespace Content.Server.Chemistry.Metabolism
         /// </summary> 
         [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
-<<<<<<< HEAD
 
         private float _accumulatedHealth;
 
-=======
-        
-        private float accumulatedHealth = 0;
->>>>>>> efc725fa5533e95f4c9664c19137b40dcc7ff2f3
         /// <summary>
         /// Remove reagent at set rate, changes damage if a DamageableComponent can be found.
         /// </summary>
