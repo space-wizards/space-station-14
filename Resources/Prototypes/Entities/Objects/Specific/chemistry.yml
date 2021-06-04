@@ -21,6 +21,11 @@
     maxVol: 50
     caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Spillable
   - type: Drink
     isOpen: true
@@ -101,6 +106,11 @@
     minTransferAmount: 1
     transferAmount: 1
     maxTransferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Spillable
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi

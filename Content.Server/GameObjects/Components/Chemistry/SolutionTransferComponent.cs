@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Eui;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -64,6 +65,39 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [DataField("canSend")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanSend { get; set; } = true;
+
+        /// <summary>
+        /// Whether you're allowed to change the transfer amount.
+        /// </summary>
+        [DataField("canChangeTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanChangeTransferAmount { get; set; } = false;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(TransferAmountUiKey.Key);
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+        }
+
+        public void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+        {
+            switch (serverMsg.Message)
+            {
+                case TransferAmountSetValueMessage svm:
+                    var amount = Math.Clamp(svm.Value.Int(), MinimumTransferAmount.Int(),
+                        MaximumTransferAmount.Int());
+
+                    serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+                    SetTransferAmount(ReagentUnit.New(amount));
+                    break;
+            }
+        }
 
         public void SetTransferAmount(ReagentUnit amount)
         {
@@ -153,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!ActionBlockerSystem.CanInteract(user) || !component.CanChangeTransferAmount)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -169,9 +203,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     return;
                 }
 
-                var eui = IoCManager.Resolve<EuiManager>();
-                var amountEui = new TransferAmountEui(component);
-                eui.OpenEui(amountEui, actor.PlayerSession);
+                component.UserInterface?.Open(actor.PlayerSession);
             }
         }
     }
