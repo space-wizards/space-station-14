@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -47,6 +48,8 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             _window = new StorageWindow(this) {Title = Owner.Name};
+            _window.ListContainer.GenerateItem += GenerateButton;
+            _window.ListContainer.ItemPressed += Interact;
         }
 
         public override void OnRemove()
@@ -104,7 +107,7 @@ namespace Content.Client.GameObjects.Components.Storage
             _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            _window?.BuildEntityList();
+            _window?.BuildEntityList(storageState.StoredEntities.ToList());
         }
 
         /// <summary>
@@ -173,13 +176,52 @@ namespace Content.Client.GameObjects.Components.Storage
         }
 
         /// <summary>
+        /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
+        /// </summary>
+        private void GenerateButton(EntityUid entityUid, Control button)
+        {
+            if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                return;
+
+            entity.TryGetComponent(out ISpriteComponent? sprite);
+            entity.TryGetComponent(out ItemComponent? item);
+
+            button.AddChild(new HBoxContainer
+            {
+                SeparationOverride = 2,
+                Children =
+                {
+                    new SpriteView
+                    {
+                        HorizontalAlignment = HAlignment.Left,
+                        VerticalAlignment = VAlignment.Center,
+                        MinSize = new Vector2(32.0f, 32.0f),
+                        OverrideDirection = Direction.South,
+                        Sprite = sprite
+                    },
+                    new Label
+                    {
+                        HorizontalExpand = true,
+                        ClipText = true,
+                        Text = entity.Name
+                    },
+                    new Label
+                    {
+                        Align = Label.AlignMode.Right,
+                        Text = item?.Size.ToString() ?? "None"
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// GUI class for client storage component
         /// </summary>
         private class StorageWindow : SS14Window
         {
-            private Control VSplitContainer;
-            private readonly VBoxContainer _entityList;
+            private Control _vBox;
             private readonly Label _information;
+            public readonly EntityListDisplay ListContainer;
             public ClientStorageComponent StorageEntity;
 
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
@@ -194,14 +236,15 @@ namespace Content.Client.GameObjects.Components.Storage
 
                 var containerButton = new ContainerButton
                 {
+                    Name = "StorageContainerButton",
                     MouseFilter = MouseFilterMode.Pass,
                 };
+                Contents.AddChild(containerButton);
 
                 var innerContainerButton = new PanelContainer
                 {
                     PanelOverride = _unHoveredBox,
                 };
-
 
                 containerButton.AddChild(innerContainerButton);
                 containerButton.OnPressed += args =>
@@ -214,40 +257,29 @@ namespace Content.Client.GameObjects.Components.Storage
                     }
                 };
 
-                VSplitContainer = new VBoxContainer()
+                _vBox = new VBoxContainer()
                 {
                     MouseFilter = MouseFilterMode.Ignore,
                 };
-                containerButton.AddChild(VSplitContainer);
+                containerButton.AddChild(_vBox);
                 _information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
                     VerticalAlignment = VAlignment.Center
                 };
-                VSplitContainer.AddChild(_information);
+                _vBox.AddChild(_information);
 
-                var listScrollContainer = new ScrollContainer
+                ListContainer = new EntityListDisplay
                 {
-                    VerticalExpand = true,
-                    HorizontalExpand = true,
-                    HScrollEnabled = false,
-                    VScrollEnabled = true,
+                    Name = "EntityListContainer",
                 };
-                _entityList = new VBoxContainer
-                {
-                    HorizontalExpand = true
-                };
-                listScrollContainer.AddChild(_entityList);
-                VSplitContainer.AddChild(listScrollContainer);
-
-                Contents.AddChild(containerButton);
-
-                listScrollContainer.OnMouseEntered += args =>
+                _vBox.AddChild(ListContainer);
+                ListContainer.OnMouseEntered += args =>
                 {
                     innerContainerButton.PanelOverride = _hoveredBox;
                 };
 
-                listScrollContainer.OnMouseExited += args =>
+                ListContainer.OnMouseExited += args =>
                 {
                     innerContainerButton.PanelOverride = _unHoveredBox;
                 };
@@ -262,118 +294,20 @@ namespace Content.Client.GameObjects.Components.Storage
             /// <summary>
             /// Loops through stored entities creating buttons for each, updates information labels
             /// </summary>
-            public void BuildEntityList()
+            public void BuildEntityList(List<EntityUid> entityUids)
             {
-                _entityList.DisposeAllChildren();
-
-                var storageList = StorageEntity.StoredEntities;
-
-                var storedGrouped = storageList.GroupBy(e => e).Select(e => new
-                {
-                    Entity = e.Key,
-                    Amount = e.Count()
-                });
-
-                foreach (var group in storedGrouped)
-                {
-                    var entity = group.Entity;
-                    var button = new EntityButton()
-                    {
-                        EntityUid = entity.Uid,
-                        MouseFilter = MouseFilterMode.Stop,
-                    };
-                    button.ActualButton.OnToggled += OnItemButtonToggled;
-                    //Name and Size labels set
-                    button.EntityName.Text = entity.Name;
-
-                    button.EntitySize.Text = group.Amount.ToString();
-
-                    //Gets entity sprite and assigns it to button texture
-                    if (entity.TryGetComponent(out ISpriteComponent? sprite))
-                    {
-                        button.EntitySpriteView.Sprite = sprite;
-                    }
-
-                    _entityList.AddChild(button);
-                }
+                ListContainer.PopulateList(entityUids);
 
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
-                    _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
+                    _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", entityUids.Count,
                         StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
                 }
                 else
                 {
-                    _information.Text = String.Format("Items: {0}", storageList.Count);
+                    _information.Text = String.Format("Items: {0}", entityUids.Count);
                 }
-            }
-
-            /// <summary>
-            /// Function assigned to button toggle which removes the entity from storage
-            /// </summary>
-            /// <param name="args"></param>
-            private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
-            {
-                if (args.Button.Parent is not EntityButton button)
-                {
-                    return;
-                }
-
-                args.Button.Pressed = false;
-                StorageEntity.Interact(button.EntityUid);
-            }
-        }
-
-        /// <summary>
-        /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
-        /// </summary>
-        private class EntityButton : Control
-        {
-            public EntityUid EntityUid { get; set; }
-            public Button ActualButton { get; }
-            public SpriteView EntitySpriteView { get; }
-            public Label EntityName { get; }
-            public Label EntitySize { get; }
-
-            public EntityButton()
-            {
-                ActualButton = new Button
-                {
-                    HorizontalExpand = true,
-                    VerticalExpand = true,
-                    ToggleMode = true,
-                    MouseFilter = MouseFilterMode.Stop
-                };
-                AddChild(ActualButton);
-
-                var hBoxContainer = new HBoxContainer();
-                EntitySpriteView = new SpriteView
-                {
-                    MinSize = new Vector2(32.0f, 32.0f),
-                    OverrideDirection = Direction.South
-                };
-                EntityName = new Label
-                {
-                    VerticalAlignment = VAlignment.Center,
-                    HorizontalExpand = true,
-                    Margin = new Thickness(0, 0, 6, 0),
-                    Text = "Backpack",
-                    ClipText = true
-                };
-
-                hBoxContainer.AddChild(EntitySpriteView);
-                hBoxContainer.AddChild(EntityName);
-
-                EntitySize = new Label
-                {
-                    VerticalAlignment = VAlignment.Bottom,
-                    Text = "Size 6",
-                    Align = Label.AlignMode.Right,
-                };
-
-                hBoxContainer.AddChild(EntitySize);
-                AddChild(hBoxContainer);
             }
         }
     }
