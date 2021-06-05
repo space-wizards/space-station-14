@@ -311,7 +311,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
 
             item.RemovedFromSlot();
-            item.Owner.Transform.Coordinates = coords;
+            if (coords.EntityId == EntityUid.Invalid)
+                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+            else
+                item.Owner.Transform.Coordinates = coords;
 
             if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
