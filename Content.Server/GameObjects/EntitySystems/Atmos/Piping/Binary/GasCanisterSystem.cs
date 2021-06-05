@@ -4,11 +4,14 @@ using Content.Server.GameObjects.Components.Atmos.Piping.Binary;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -25,6 +28,8 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
 
             SubscribeLocalEvent<GasCanisterComponent, ComponentStartup>(OnCanisterStartup);
             SubscribeLocalEvent<GasCanisterComponent, AtmosDeviceUpdateEvent>(OnCanisterUpdated);
+            SubscribeLocalEvent<GasCanisterComponent, ActivateInWorldEvent>(OnCanisterActivate);
+            SubscribeLocalEvent<GasCanisterComponent, AttackHandEvent>(OnCanisterInteractHand);
             SubscribeLocalEvent<GasCanisterComponent, InteractUsingEvent>(OnCanisterInteractUsing);
             SubscribeLocalEvent<GasCanisterComponent, EntInsertedIntoContainerMessage>(OnCanisterContainerInserted);
             SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerRemoved);
@@ -32,6 +37,9 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
 
         private void OnCanisterStartup(EntityUid uid, GasCanisterComponent canister, ComponentStartup args)
         {
+            if(canister.Owner.GetUIOrNull(GasCanisterUiKey.Key) is {} ui)
+                ui.OnReceiveMessage += msg => OnCanisterUIMessage(uid, canister, msg);
+
             if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
@@ -42,6 +50,24 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
             portNode.TryAssignGroupIfNeeded();
             portNode.Air.Merge(canister.InitialMixture);
             portNode.Air.Temperature = canister.InitialMixture.Temperature;
+        }
+
+        private void OnCanisterUIMessage(EntityUid uid, GasCanisterComponent canister, ServerBoundUserInterfaceMessage msg)
+        {
+            if (msg.Session.AttachedEntity is not {} entity
+                || !ActionBlockerSystem.CanInteract(entity)
+                || !ActionBlockerSystem.CanUse(entity))
+                return;
+
+            switch (msg.Message)
+            {
+                case CanisterUiButtonPressedMessage pressed:
+                    break;
+                case CanisterLabelChangedMessage labelChange:
+                    break;
+                case CanisterReleasePressureButtonPressedMessage releasePressed:
+                    break;
+            }
         }
 
         private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
@@ -75,6 +101,25 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 3);
             }
+        }
+
+        private void OnCanisterActivate(EntityUid uid, GasCanisterComponent component, ActivateInWorldEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            component.Owner.GetUIOrNull(GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
+            args.Handled = true;
+        }
+
+
+        private void OnCanisterInteractHand(EntityUid uid, GasCanisterComponent component, AttackHandEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            component.Owner.GetUIOrNull(GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
+            args.Handled = true;
         }
 
         private void OnCanisterInteractUsing(EntityUid uid, GasCanisterComponent component, InteractUsingEvent args)
