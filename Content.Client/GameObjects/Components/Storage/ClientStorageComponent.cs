@@ -49,8 +49,8 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             _window = new StorageWindow(this) {Title = Owner.Name};
-            _window.ListContainer.GenerateItem += GenerateButton;
-            _window.ListContainer.ItemPressed += Interact;
+            _window.EntityList.GenerateItem += GenerateButton;
+            _window.EntityList.ItemPressed += Interact;
         }
 
         public override void OnRemove()
@@ -222,7 +222,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             private Control _vBox;
             private readonly Label _information;
-            public readonly EntityListDisplay ListContainer;
+            public readonly EntityListDisplay EntityList;
             public ClientStorageComponent StorageEntity;
 
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
@@ -270,17 +270,17 @@ namespace Content.Client.GameObjects.Components.Storage
                 };
                 _vBox.AddChild(_information);
 
-                ListContainer = new EntityListDisplay
+                EntityList = new EntityListDisplay
                 {
                     Name = "EntityListContainer",
                 };
-                _vBox.AddChild(ListContainer);
-                ListContainer.OnMouseEntered += args =>
+                _vBox.AddChild(EntityList);
+                EntityList.OnMouseEntered += args =>
                 {
                     innerContainerButton.PanelOverride = _hoveredBox;
                 };
 
-                ListContainer.OnMouseExited += args =>
+                EntityList.OnMouseExited += args =>
                 {
                     innerContainerButton.PanelOverride = _unHoveredBox;
                 };
@@ -297,7 +297,7 @@ namespace Content.Client.GameObjects.Components.Storage
             /// </summary>
             public void BuildEntityList(List<EntityUid> entityUids)
             {
-                ListContainer.PopulateList(entityUids);
+                EntityList.PopulateList(entityUids);
 
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
