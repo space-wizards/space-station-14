@@ -232,6 +232,7 @@
     safe: false
   - type: Speech
   - type: Emoting
+  - type: StandingState
 
 - type: entity
   save: false

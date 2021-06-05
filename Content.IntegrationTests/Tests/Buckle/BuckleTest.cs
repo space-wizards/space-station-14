@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
 using Content.Shared.Utility;
@@ -82,7 +83,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.Buckled);
                 Assert.True(ActionBlockerSystem.CanMove(human));
                 Assert.True(ActionBlockerSystem.CanChangeDirection(human));
-                Assert.True(EffectBlockerSystem.CanFall(human));
+                var block = new BlockDownEvent();
+                entityManager.EventBus.RaiseLocalEvent(human.Uid, block);
+                Assert.False(block.Cancelled);
 
                 // Default state, no buckled entities, strap
                 Assert.True(chair.TryGetComponent(out strap));
@@ -99,7 +102,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
                 Assert.False(ActionBlockerSystem.CanMove(human));
                 Assert.False(ActionBlockerSystem.CanChangeDirection(human));
-                Assert.False(EffectBlockerSystem.CanFall(human));
+                var stand = new BlockStandEvent();
+                entityManager.EventBus.RaiseLocalEvent(human.Uid, stand);
+                Assert.False(stand.Cancelled);
                 Assert.That(human.Transform.WorldPosition, Is.EqualTo(chair.Transform.WorldPosition));
 
                 // Side effects of buckling for the strap
@@ -130,7 +135,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.Buckled);
                 Assert.True(ActionBlockerSystem.CanMove(human));
                 Assert.True(ActionBlockerSystem.CanChangeDirection(human));
-                Assert.True(EffectBlockerSystem.CanFall(human));
+                var block = new BlockDownEvent();
+                human.EntityManager.EventBus.RaiseLocalEvent(human.Uid, block);
+                Assert.False(block.Cancelled);
 
                 // Unbuckle, strap
                 Assert.IsEmpty(strap.BuckledEntities);
@@ -185,7 +192,9 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.Buckled);
                 Assert.True(ActionBlockerSystem.CanMove(human));
                 Assert.True(ActionBlockerSystem.CanChangeDirection(human));
-                Assert.True(EffectBlockerSystem.CanFall(human));
+                var stand = new BlockStandEvent();
+                human.EntityManager.EventBus.RaiseLocalEvent(human.Uid, stand);
+                Assert.False(stand.Cancelled);
 
                 // Re-buckle
                 Assert.True(buckle.TryBuckle(human, chair));

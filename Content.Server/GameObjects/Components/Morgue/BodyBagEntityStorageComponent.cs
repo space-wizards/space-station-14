@@ -38,12 +38,12 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);
-            LabelContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "body_bag_label", out _);
+            LabelContainer = Owner.EnsureContainer<ContainerSlot>("body_bag_label", out _);
         }
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<IBody>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            if (entity.HasComponent<IBody>() && StandingStateSystem.IsDown(entity)) return false;
             return base.AddToContents(entity);
         }
 

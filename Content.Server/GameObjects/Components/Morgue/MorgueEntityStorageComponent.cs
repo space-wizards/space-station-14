@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);
-            TrayContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "morgue_tray", out _);
+            TrayContainer = Owner.EnsureContainer<ContainerSlot>("morgue_tray", out _);
         }
 
         public override Vector2 ContentsDumpPosition()
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<IBody>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            if (entity.HasComponent<IBody>() && !StandingStateSystem.IsDown(entity)) return false;
             return base.AddToContents(entity);
         }
 

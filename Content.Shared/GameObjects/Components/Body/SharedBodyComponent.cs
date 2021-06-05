@@ -187,7 +187,7 @@ namespace Content.Shared.GameObjects.Components.Body
             if (part.PartType == BodyPartType.Leg &&
                 GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
-                EntitySystem.Get<SharedStandingStateSystem>().Down(Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
             }
 
             // creadth: immediately kill entity if last vital part removed

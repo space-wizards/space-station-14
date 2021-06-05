@@ -49,11 +49,6 @@ namespace Content.Shared.GameObjects.Components.Buckle
             return !Buckled;
         }
 
-        bool IEffectBlocker.CanFall()
-        {
-            return !Buckled;
-        }
-
         bool IDraggable.CanDrop(CanDropEvent args)
         {
             return args.Target.HasComponent<SharedStrapComponent>();

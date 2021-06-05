@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -351,7 +352,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                 if (mob != null)
                 {
                     if (Handheld)
-                        EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+                        EntitySystem.Get<SharedHandsSystem>().DropAllItemsInHands(mob, false);
 
                     if (mob.TryGetComponent(out StunnableComponent? stun))
                     {

@@ -25,7 +25,7 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class HandsSystem : EntitySystem
+    internal sealed class HandsSystem : SharedHandsSystem
     {
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -53,10 +53,19 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
-
             CommandBinds.Unregister<HandsSystem>();
+        }
+
+        public override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
+        {
+            base.DropAllItemsInHands(entity, doMobChecks);
+
+            if (!entity.TryGetComponent(out IHandsComponent? hands)) return;
+
+            foreach (var heldItem in hands.GetAllHeldItems())
+            {
+                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
+            }
         }
 
         private static void HandleContainerModified(ContainerModifiedMessage args)

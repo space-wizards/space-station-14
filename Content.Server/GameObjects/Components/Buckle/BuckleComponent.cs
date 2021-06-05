@@ -10,6 +10,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -130,11 +131,11 @@ namespace Content.Server.GameObjects.Components.Buckle
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptStandEvent());
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner, force: true);
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
                     ownTransform.WorldRotation = Angle.South;
                     break;
             }
@@ -339,11 +340,11 @@ namespace Content.Server.GameObjects.Components.Buckle
             if (_stunnable != null && _stunnable.KnockedDown
                 || (_mobState?.IsIncapacitated() ?? false))
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
             }
             else
             {
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptStandEvent());
             }
 
             _mobState?.CurrentState?.EnterState(Owner);

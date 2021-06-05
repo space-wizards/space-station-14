@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             base.EnterState(entity);
 
-            EntitySystem.Get<StandingStateSystem>().Standing(entity);
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new AttemptStandEvent());
 
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {

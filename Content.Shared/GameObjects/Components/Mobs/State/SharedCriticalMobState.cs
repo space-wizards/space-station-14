@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             base.ExitState(entity);
 
-            EntitySystem.Get<SharedStandingStateSystem>().Standing(entity);
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new AttemptStandEvent());
         }
 
         public override bool CanInteract()

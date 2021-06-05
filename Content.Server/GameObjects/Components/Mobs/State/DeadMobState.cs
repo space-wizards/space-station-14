@@ -2,6 +2,7 @@
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 stun.CancelAll();
             }
 
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new AttemptDownEvent());
         }
     }
 }

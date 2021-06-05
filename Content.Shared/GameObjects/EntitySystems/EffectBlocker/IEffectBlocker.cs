@@ -9,7 +9,6 @@ namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
     /// </summary>
     public interface IEffectBlocker
     {
-        bool CanFall() => true;
         bool CanSlip() => true;
     }
 }

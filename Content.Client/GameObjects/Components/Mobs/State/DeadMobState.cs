@@ -1,6 +1,7 @@
 ﻿using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
@@ -17,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }
 
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new AttemptDownEvent());
 
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
@@ -29,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
         {
             base.ExitState(entity);
 
-            EntitySystem.Get<StandingStateSystem>().Standing(entity);
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new AttemptStandEvent());
 
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {

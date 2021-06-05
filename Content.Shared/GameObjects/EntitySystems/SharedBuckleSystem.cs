@@ -10,6 +10,15 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
+            SubscribeLocalEvent<SharedBuckleComponent, BlockDownEvent>(HandleDown);
+        }
+
+        private void HandleDown(EntityUid uid, SharedBuckleComponent component, BlockDownEvent args)
+        {
+            if (component.Buckled)
+            {
+                args.Cancel();
+            }
         }
 
         private void PreventCollision(EntityUid uid, SharedBuckleComponent component, PreventCollideEvent args)

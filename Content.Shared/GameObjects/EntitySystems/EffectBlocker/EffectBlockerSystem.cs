@@ -12,18 +12,6 @@ namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
     [UsedImplicitly]
     public class EffectBlockerSystem : EntitySystem
     {
-        public static bool CanFall(IEntity entity)
-        {
-            var canFall = true;
-
-            foreach (var blocker in entity.GetAllComponents<IEffectBlocker>())
-            {
-                canFall &= blocker.CanFall(); // Sets var to false if false
-            }
-
-            return canFall;
-        }
-
         public static bool CanSlip(IEntity entity)
         {
             var canSlip = true;

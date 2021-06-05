@@ -1,51 +1,116 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Rotation;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public abstract class SharedStandingStateSystem : EntitySystem
+    public class StandingStateSystem : EntitySystem
     {
-        protected abstract bool OnDown(IEntity entity, bool playSound = true, bool dropItems = true,
-            bool force = false);
-
-        protected abstract bool OnStand(IEntity entity);
-
-        /// <summary>
-        ///     Set's the mob standing state to down.
-        /// </summary>
-        /// <param name="entity">The mob in question</param>
-        /// <param name="playSound">Whether to play a sound when falling down or not</param>
-        /// <param name="dropItems">Whether to make the mob drop all the items on his hands</param>
-        /// <param name="force">Whether or not to check if the entity can fall.</param>
-        /// <returns>False if the mob was already downed or couldn't set the state</returns>
-        public bool Down(IEntity entity, bool playSound = true, bool dropItems = true, bool force = false)
+        public static bool IsDown(IEntity entity)
         {
-            if (dropItems)
+            return entity.TryGetComponent(out StandingStateComponent? component) &&
+                   component.Standing;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<StandingStateComponent, AttemptStandEvent>(HandleStandAttempt);
+            SubscribeLocalEvent<StandingStateComponent, AttemptDownEvent>(HandleDownAttempt);
+        }
+
+        private void HandleDownAttempt(EntityUid uid, StandingStateComponent component, AttemptDownEvent args)
+        {
+            if (!component.Standing || !EntityManager.TryGetEntity(uid, out var entity)) return;
+
+            var msg = new BlockDownEvent();
+            EntityManager.EventBus.RaiseLocalEvent(uid, msg);
+
+            if (msg.Cancelled) return;
+
+            component.Standing = false;
+
+            // Seemed like the best place to put it
+            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
-                DropAllItemsInHands(entity, false);
+                appearance.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
             }
 
-            if (!force && !EffectBlockerSystem.CanFall(entity))
+            // Currently shit is only downed by server but when it's predicted we can probably only play this on server / client
+            var sound = component.DownSoundCollection;
+
+            if (!string.IsNullOrEmpty(sound))
             {
-                return false;
+                var file = AudioHelpers.GetRandomFileFromSoundCollection(sound);
+                SoundSystem.Play(Filter.Pvs(entity), file, entity, AudioHelpers.WithVariation(0.25f));
             }
-
-            return OnDown(entity, playSound, dropItems, force);
         }
 
-        /// <summary>
-        ///     Sets the mob's standing state to standing.
-        /// </summary>
-        /// <param name="entity">The mob in question.</param>
-        /// <returns>False if the mob was already standing or couldn't set the state</returns>
-        public bool Standing(IEntity entity)
+        private void HandleStandAttempt(EntityUid uid, StandingStateComponent component, AttemptStandEvent args)
         {
-            return OnStand(entity);
-        }
+            if (component.Standing || !EntityManager.TryGetEntity(uid, out var entity)) return;
 
-        public virtual void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
-        {
+            var msg = new BlockStandEvent();
+            EntityManager.EventBus.RaiseLocalEvent(uid, msg);
+
+            if (msg.Cancelled) return;
+
+            component.Standing = true;
+
+            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                appearance.SetData(RotationVisuals.RotationState, RotationState.Vertical);
+            }
         }
+    }
+
+    /// <summary>
+    /// Subscribe if you can potentially block a down attempt.
+    /// </summary>
+    public sealed class BlockDownEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    /// <summary>
+    /// Subscribe if you can potentially block a stand attempt.
+    /// </summary>
+    public sealed class BlockStandEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    /// <summary>
+    /// Attempt to knock an entity down.
+    /// </summary>
+    public sealed class AttemptDownEvent : EntityEventArgs
+    {
+    }
+
+    // Stando powa
+    /// <summary>
+    /// Atempt to stand an entity.
+    /// </summary>
+    public sealed class AttemptStandEvent : EntityEventArgs
+    {
+    }
+
+
+    /// <summary>
+    /// Raised when an entity becomes standing
+    /// </summary>
+    public sealed class StandEvent : EntityEventArgs
+    {
+    }
+
+    /// <summary>
+    /// Raised when an entity is not standing
+    /// </summary>
+    public sealed class DownEvent : EntityEventArgs
+    {
     }
 }

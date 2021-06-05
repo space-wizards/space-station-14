@@ -130,7 +130,6 @@ namespace Content.Server.GameObjects.Components.Morgue
             }
 
             victim.PopupMessageOtherClients(Loc.GetString("{0:theName} is cremating {0:themself}!", victim));
-            EntitySystem.Get<SharedStandingStateSystem>().Down(victim, false, false, true);
 
             if (CanInsert(victim))
             {
@@ -141,6 +140,7 @@ namespace Content.Server.GameObjects.Components.Morgue
                 victim.Delete();
             }
 
+            victim.EntityManager.EventBus.RaiseLocalEvent(victim.Uid, new AttemptDownEvent());
             Cremate();
 
             return SuicideKind.Heat;

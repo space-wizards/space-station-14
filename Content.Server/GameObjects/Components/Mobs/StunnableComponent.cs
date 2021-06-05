@@ -5,6 +5,7 @@ using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -24,13 +25,13 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         protected override void OnKnockdown()
         {
-            EntitySystem.Get<StandingStateSystem>().Down(Owner);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
         }
 
         protected override void OnKnockdownEnd()
         {
             if(Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptStandEvent());
         }
 
         public void CancelAll()
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (KnockedDown &&
                 Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
             {
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptStandEvent());
             }
 
             KnockdownTimer = null;
