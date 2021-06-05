@@ -64,11 +64,6 @@ namespace Content.Client.UserInterface.Stylesheets
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
 
-        public static readonly Color ButtonStorageColorDefault = Color.FromHex("#ab3232");
-        public static readonly Color ButtonStorageColorHovered = Color.FromHex("#cf2f2f");
-        public static readonly Color ButtonStorageColorPressed = Color.FromHex("#3e6c45");
-        public static readonly Color ButtonStorageColorDisabled = Color.FromHex("#602a2a");
-
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
