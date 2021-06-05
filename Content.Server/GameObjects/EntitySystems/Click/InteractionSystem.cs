@@ -838,18 +838,40 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
                 if (item != null)
                 {
-                    if(wideAttack)
-                        RaiseLocalEvent(item.Uid, new WideAttackEvent(item, player, coordinates), false);
+                    if (wideAttack)
+                    {
+                        var ev = new WideAttackEvent(item, player, coordinates);
+                        RaiseLocalEvent(item.Uid, ev, false);
+
+                        if(ev.Handled)
+                            return;
+                    }
                     else
-                        RaiseLocalEvent(item.Uid, new ClickAttackEvent(item, player, coordinates, targetUid), false);
+                    {
+                        var ev = new ClickAttackEvent(item, player, coordinates, targetUid);
+                        RaiseLocalEvent(item.Uid, ev, false);
+
+                        if(ev.Handled)
+                            return;
+                    }
                 }
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if (!EntityManager.TryGetEntity(targetUid, out var targetEnt) || !targetEnt.HasComponent<ItemComponent>()) return;
-                    Interaction(player, targetEnt);
+                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt) && targetEnt.HasComponent<ItemComponent>())
+                    {
+                        Interaction(player, targetEnt);
+                        return;
+                    }
                 }
             }
+
+            // TODO: Make this saner?
+            // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
+            if(wideAttack)
+                RaiseLocalEvent(player.Uid, new WideAttackEvent(player, player, coordinates), false);
+            else
+                RaiseLocalEvent(player.Uid, new ClickAttackEvent(player, player, coordinates, targetUid), false);
         }
     }
 }
