@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.GameObjects.EntitySystems;
@@ -221,7 +221,7 @@ namespace Content.Client.UserInterface.Stylesheets
             chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
-            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button_bordered.svg.96dpi.png");
+            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
             var chatFilterButton = new StyleBoxTexture
             {
                 Texture = chatFilterButtonTex,

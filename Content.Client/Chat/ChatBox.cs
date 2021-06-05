@@ -148,7 +148,7 @@ namespace Content.Client.Chat
                                         {
                                             (_channelSelector = new ChannelSelectorButton
                                             {
-                                                StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
+                                                StyleClasses = { StyleBase.ButtonOpenLeft },
                                                 MinWidth = 75,
                                                 Text = Loc.GetString("hud-chatbox-ooc"),
                                                 ToggleMode = true
@@ -185,10 +185,10 @@ namespace Content.Client.Chat
                             {
                                 Children =
                                 {
-                                    new Control{MinSize = (10,0)},
+                                    new Control{MinSize = (4,0)},
                                     (_filterVBox = new VBoxContainer
                                     {
-                                        SeparationOverride = 10
+                                        SeparationOverride = 4
                                     })
                                 }
                             }
@@ -203,7 +203,7 @@ namespace Content.Client.Chat
                 {
                     (_channelSelectorHBox = new HBoxContainer
                     {
-                        SeparationOverride = 4
+                        SeparationOverride = 1
                     })
                 }
             };
@@ -917,7 +917,7 @@ namespace Content.Client.Chat
         public ChannelItemButton(ChatChannel channel)
         {
             Channel = channel;
-            AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
+            AddStyleClass(StyleBase.ButtonOpenBoth);
             Text = ChatBox.ChannelSelectorName(channel);
         }
     }
