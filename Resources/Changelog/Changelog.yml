@@ -1272,3 +1272,8 @@ Entries:
   - {message: added several simple (and probably unbalanced) medicines., type: Add}
   id: 224
   time: '2021-06-05T06:23:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Dead bodies can be pulled again, type: Fix}
+  id: 225
+  time: '2021-06-05T07:23:24.0000000+00:00'
