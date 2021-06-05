@@ -27,7 +27,7 @@ namespace Content.Shared.Physics
         MapGrid         = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
         MobMask = Impassable | MobImpassable | VaultImpassable | SmallImpassable,
-        ThrownItem = MobImpassable | Impassable,
+        ThrownItem = VaultImpassable,
         // 32 possible groups
         AllMask = -1,
     }

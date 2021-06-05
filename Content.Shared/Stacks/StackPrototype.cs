@@ -17,12 +17,12 @@ namespace Content.Shared.Stacks
         public string Name { get; } = string.Empty;
 
         [DataField("icon")]
-        public SpriteSpecifier? Icon { get; }
+        public SpriteSpecifier? Icon { get; } = null;
 
         /// <summary>
         ///     The entity id that will be spawned by default from this stack.
         /// </summary>
-        [DataField("spawn")]
-        public string? Spawn { get; }
+        [DataField("spawn", required: true)]
+        public string Spawn { get; } = string.Empty;
     }
 }

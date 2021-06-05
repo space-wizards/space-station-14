@@ -47820,4 +47820,46 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 4897
+  type: ParticleAcceleratorEndCapUnfinished
+  components:
+  - pos: 49.5,-9.5
+    parent: 853
+    type: Transform
+- uid: 4898
+  type: ParticleAcceleratorFuelChamberUnfinished
+  components:
+  - pos: 49.5,-10.5
+    parent: 853
+    type: Transform
+- uid: 4899
+  type: ParticleAcceleratorPowerBoxUnfinished
+  components:
+  - pos: 49.5,-11.5
+    parent: 853
+    type: Transform
+- uid: 4900
+  type: ParticleAcceleratorControlBoxUnfinished
+  components:
+  - pos: 48.5,-10.5
+    parent: 853
+    type: Transform
+- uid: 4901
+  type: ParticleAcceleratorEmitterCenterUnfinished
+  components:
+  - pos: 49.5,-12.5
+    parent: 853
+    type: Transform
+- uid: 4902
+  type: ParticleAcceleratorEmitterLeftUnfinished
+  components:
+  - pos: 48.5,-12.5
+    parent: 853
+    type: Transform
+- uid: 4903
+  type: ParticleAcceleratorEmitterRightUnfinished
+  components:
+  - pos: 50.5,-12.5
+    parent: 853
+    type: Transform
 ...

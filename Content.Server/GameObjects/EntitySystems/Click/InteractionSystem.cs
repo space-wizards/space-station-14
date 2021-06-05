@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Pulling;
+using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Rotatable;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
@@ -389,12 +391,27 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
         private void ClickFace(IEntity player, EntityCoordinates coordinates)
         {
+            var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+            if (diff.LengthSquared <= 0.01f)
+                return;
+            var diffAngle = Angle.FromWorldVec(diff);
             if (ActionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coordinates.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
-                if (diff.LengthSquared > 0.01f)
+                player.Transform.LocalRotation = diffAngle;
+            }
+            else
+            {
+                if (player.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
                 {
-                    player.Transform.LocalRotation = Angle.FromWorldVec(diff);
+                    // We're buckled to another object. Is that object rotatable?
+                    if (buckle.BuckledTo!.Owner.TryGetComponent(out SharedRotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
+                    {
+                        // Note the assumption that even if unanchored, player can only do spinnychair with an "independent wheel".
+                        // (Since the player being buckled to it holds it down with their weight.)
+                        // This is logically equivalent to RotateWhileAnchored.
+                        // Barstools and office chairs have independent wheels, while regular chairs don't.
+                        rotatable.Owner.Transform.LocalRotation = diffAngle;
+                    }
                 }
             }
         }

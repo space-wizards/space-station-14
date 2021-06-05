@@ -37,11 +37,29 @@
 - type: latheRecipe
   id: CableStack
   name: cable coil
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coil-30.png
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: ApcExtensionCableStack1
   completetime: 500
   materials:
     Steel: 100
+
+- type: latheRecipe
+  id: MVWireStack
+  name: MV cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
+  result: MVWireStack1
+  completetime: 500
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  id: HVWireStack
+  name: HV cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
+  result: HVWireStack1
+  completetime: 500
+  materials:
+    Steel: 200
 
 - type: latheRecipe
   id: Crowbar

@@ -269,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.Delete();
+                Owner.QueueDelete();
                 return;
             }
 
@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
 
-                    Owner.Delete();
+                    Owner.QueueDelete();
                     return;
                 }
 

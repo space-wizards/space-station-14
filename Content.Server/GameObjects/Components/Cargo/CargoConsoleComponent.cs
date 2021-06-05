@@ -133,9 +133,13 @@ namespace Content.Server.GameObjects.Components.Cargo
                     var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
                     if (capacity.CurrentCapacity == capacity.MaxCapacity)
                         break;
+                    if (!_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
+                        break;
+                    if (!_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber))
+                        break;
                     if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
-                    _cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber);
+                    
                     UpdateUIState();
                     break;
                 }

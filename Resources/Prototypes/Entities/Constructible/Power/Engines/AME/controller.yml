@@ -16,14 +16,13 @@
         !type:PhysShapeAabb
           bounds: "-0.45, -0.45, 0.45, 0.45"
       mass: 25
-      layer:
-      - Opaque
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
       - Impassable
       - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
       - SmallImpassable
   - type: Damageable
     resistances: metallicResistances
@@ -72,3 +71,16 @@
   components:
   - type: Physics
     bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.45, 0.45"
+      mass: 25
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - SmallImpassable
