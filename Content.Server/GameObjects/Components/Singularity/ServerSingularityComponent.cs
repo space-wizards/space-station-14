@@ -1,35 +1,28 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Observer;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.Physics;
+using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics.Shapes;
-using Robust.Shared.Random;
-using Robust.Server.GameObjects;
-using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
-
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Energy
         {
             get => _energy;
@@ -58,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         }
         private int _energy = 180;
 
+        [ViewVariables]
         public int Level
         {
             get => _level;
@@ -67,12 +61,19 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value < 0) value = 0;
                 if (value > 6) value = 6;
 
+                if ((_level > 1) && (value <= 1))
+                {
+                    // Prevents it getting stuck (see SingularityController.MoveSingulo)
+                    if (_collidableComponent != null) _collidableComponent.LinearVelocity = Vector2.Zero;
+                }
                 _level = value;
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent?.LayerSetRSI(0, "Constructible/Power/Singularity/singularity_" + _level + ".rsi");
-                _spriteComponent?.LayerSetState(0, "singularity_" + _level);
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(SingularityVisuals.Level, _level);
+                }
 
                 if (_collidableComponent != null && _collidableComponent.Fixtures.Any() && _collidableComponent.Fixtures[0].Shape is PhysShapeCircle circle)
                 {
@@ -84,6 +85,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         }
         private int _level;
 
+        [ViewVariables]
         public int EnergyDrain =>
             Level switch
             {
@@ -96,9 +98,15 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private PhysicsComponent? _collidableComponent;
-        private SpriteComponent? _spriteComponent;
-        private RadiationPulseComponent? _radiationPulseComponent;
+        // This is an interesting little workaround.
+        // See, two singularities queuing deletion of each other at the same time will annihilate.
+        // This is undesirable behaviour, so this flag allows the imperatively first one processed to take priority.
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool BeingDeletedByAnotherSingularity { get; set; } = false;
+
+        private PhysicsComponent _collidableComponent = default!;
+        private RadiationPulseComponent _radiationPulseComponent = default!;
+        private SpriteComponent _spriteComponent = default!;
         private IPlayingAudioStream? _playingSound;
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -110,6 +118,10 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             base.Initialize();
 
+            Owner.EnsureComponent(out _radiationPulseComponent);
+            Owner.EnsureComponent(out _collidableComponent);
+            Owner.EnsureComponent(out _spriteComponent);
+
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
@@ -117,14 +129,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
 
-            if (!Owner.TryGetComponent(out _spriteComponent))
-                Logger.Error("SingularityComponent was spawned without SpriteComponent");
-            if (!Owner.TryGetComponent(out _radiationPulseComponent))
-                Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
-            if (!Owner.TryGetComponent(out _collidableComponent))
-                Logger.Error("SingularityComponent was spawned without CollidableComponent!");
-            else
-                _collidableComponent.Hard = false;
             Level = 1;
         }
 
@@ -133,13 +137,18 @@ namespace Content.Server.GameObjects.Components.Singularity
             Energy -= EnergyDrain * seconds;
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
-            var otherEntity = otherBody.Entity;
+            // If we're being deleted by another singularity, this call is probably for that singularity.
+            // Even if not, just don't bother.
+            if (BeingDeletedByAnotherSingularity)
+                return;
+
+            var otherEntity = otherFixture.Body.Owner;
 
             if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourBody.GetWorldAABB()))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourFixture.Body.GetWorldAABB()))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;
@@ -155,8 +164,16 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (otherEntity.IsInContainer())
                 return;
 
-            otherEntity.Delete();
-            Energy++;
+            // Singularity priority management / etc.
+            if (otherEntity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
+                otherSingulo.BeingDeletedByAnotherSingularity = true;
+
+            otherEntity.QueueDelete();
+
+            if (otherEntity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
+                Energy += singuloFood.Energy;
+            else
+                Energy++;
         }
 
         public override void OnRemove()

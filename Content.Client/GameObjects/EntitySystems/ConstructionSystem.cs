@@ -51,8 +51,12 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Shutdown()
         {
-            CommandBinds.Unregister<ConstructionSystem>();
             base.Shutdown();
+
+            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
+            UnsubscribeNetworkEvent<AckStructureConstructionMessage>();
+
+            CommandBinds.Unregister<ConstructionSystem>();
         }
 
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
@@ -180,7 +184,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                ghost.Owner.Delete();
+                ghost.Owner.QueueDelete();
                 _ghosts.Remove(ghostId);
             }
         }
@@ -192,7 +196,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                ghost.Owner.Delete();
+                ghost.Owner.QueueDelete();
             }
 
             _ghosts.Clear();

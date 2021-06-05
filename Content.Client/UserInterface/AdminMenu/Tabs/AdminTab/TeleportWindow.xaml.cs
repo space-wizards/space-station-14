@@ -7,6 +7,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 
 namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminTab
 {
@@ -14,7 +15,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminTab
     [UsedImplicitly]
     public partial class TeleportWindow : SS14Window
     {
-        private IPlayerSession? _selectedSession;
+        private ICommonSession? _selectedSession;
 
         protected override void EnteredTree()
         {
@@ -22,7 +23,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminTab
             PlayerList.OnSelectionChanged += OnListOnOnSelectionChanged;
         }
 
-        private void OnListOnOnSelectionChanged(IPlayerSession? obj)
+        private void OnListOnOnSelectionChanged(ICommonSession? obj)
         {
             _selectedSession = obj;
             SubmitButton.Disabled = _selectedSession == null;

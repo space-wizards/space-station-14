@@ -30,7 +30,7 @@ namespace Content.Server.GlobalVerbs
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
                 if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
@@ -38,7 +38,7 @@ namespace Content.Server.GlobalVerbs
                     return;
                 }
 
-                if (groupController.CanCommand(player.playerSession, "rejuvenate"))
+                if (groupController.CanCommand(player.PlayerSession, "rejuvenate"))
                 {
                     data.Visibility = VerbVisibility.Visible;
                 }
@@ -48,9 +48,9 @@ namespace Content.Server.GlobalVerbs
         public override void Activate(IEntity user, IEntity target)
         {
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (user.TryGetComponent<IActorComponent>(out var player))
+            if (user.TryGetComponent<ActorComponent>(out var player))
             {
-                if (groupController.CanCommand(player.playerSession, "rejuvenate"))
+                if (groupController.CanCommand(player.PlayerSession, "rejuvenate"))
                     PerformRejuvenate(target);
             }
         }

@@ -126,10 +126,10 @@ namespace Content.Client.UserInterface
             {
                 _entity = entity;
                 BuildNewEntityStatus();
+                _itemNameLabel.Text = entity.Name;
             }
 
             _panel.Visible = true;
-            _itemNameLabel.Text = entity.Name;
         }
 
         private void ClearOldStatus()

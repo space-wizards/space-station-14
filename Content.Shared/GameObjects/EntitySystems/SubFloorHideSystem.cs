@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -12,6 +13,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     /// <summary>
     ///     Entity system backing <see cref="SubFloorHideComponent"/>.
     /// </summary>
+    [UsedImplicitly]
     public class SubFloorHideSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -34,12 +36,11 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void UpdateAll()
         {
-            foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>(true))
+            foreach (var comp in ComponentManager.EntityQuery<SubFloorHideComponent>(true))
             {
-                if (!_mapManager.TryGetGrid(comp.Owner.Transform.GridID, out var grid)) return;
-
-                var snapPos = comp.Owner.GetComponent<SnapGridComponent>();
-                UpdateTile(grid, snapPos.Position);
+                var transform = comp.Owner.Transform;
+                if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+                UpdateTile(grid, grid.TileIndicesFor(transform.Coordinates));
             }
         }
 
@@ -52,18 +53,34 @@ namespace Content.Shared.GameObjects.EntitySystems
             _mapManager.GridChanged += MapManagerOnGridChanged;
             _mapManager.TileChanged += MapManagerOnTileChanged;
 
-            SubscribeLocalEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
+            SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
+            SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
+            SubscribeLocalEvent<SubFloorHideComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
         }
 
-        private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)
+        public override void Shutdown()
         {
-            if (!_mapManager.TryGetGrid(ev.Sender.Transform.GridID, out var grid))
-            {
-                return;
-            }
+            base.Shutdown();
 
-            var indices = grid.WorldToTile(ev.Sender.Transform.WorldPosition);
-            UpdateTile(grid, indices);
+            _mapManager.GridChanged -= MapManagerOnGridChanged;
+            _mapManager.TileChanged -= MapManagerOnTileChanged;
+        }
+
+        private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
+        {
+            UpdateEntity(uid);
+        }
+
+        private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
+        {
+            UpdateEntity(uid);
+        }
+
+        private void OnSnapGridPositionChanged(EntityUid uid, SubFloorHideComponent component, SnapGridPositionChangedEvent ev)
+        {
+            // We do this directly instead of calling UpdateEntity.
+            if(_mapManager.TryGetGrid(ev.NewGrid, out var grid))
+                UpdateTile(grid, ev.Position);
         }
 
         private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
@@ -79,26 +96,33 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
         }
 
+        private void UpdateEntity(EntityUid uid)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out ITransformComponent? transform) ||
+                !_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+
+            UpdateTile(grid, grid.WorldToTile(transform.WorldPosition));
+        }
+
         private void UpdateTile(IMapGrid grid, Vector2i position)
         {
             var tile = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
+            foreach (var anchored in grid.GetAnchoredEntities(position))
             {
-                var entity = snapGridComponent.Owner;
-                if (!entity.TryGetComponent(out SubFloorHideComponent? subFloorComponent))
+                if (!ComponentManager.TryGetComponent(anchored, out SubFloorHideComponent? subFloorComponent))
                 {
                     continue;
                 }
 
                 // Show sprite
-                if (entity.TryGetComponent(out SharedSpriteComponent? spriteComponent))
+                if (ComponentManager.TryGetComponent(anchored, out SharedSpriteComponent ? spriteComponent))
                 {
                     spriteComponent.Visible = ShowAll || !subFloorComponent.Running || tileDef.IsSubFloor;
                 }
 
                 // So for collision all we care about is that the component is running.
-                if (entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+                if (ComponentManager.TryGetComponent(anchored, out PhysicsComponent ? physicsComponent))
                 {
                     physicsComponent.CanCollide = !subFloorComponent.Running;
                 }

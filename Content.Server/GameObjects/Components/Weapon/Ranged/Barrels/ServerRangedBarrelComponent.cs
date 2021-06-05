@@ -10,7 +10,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -51,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("allSelectors")]
         private FireRateSelector _allRateSelectors;
 
-        [field: DataField("fireRate")]
+        [DataField("fireRate")]
         public override float FireRate { get; } = 2f;
 
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
@@ -93,14 +92,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [DataField("ammoSpreadRatio")]
         public float SpreadRatio { get; private set; }
 
-        [field: DataField("canMuzzleFlash")]
+        [DataField("canMuzzleFlash")]
         public bool CanMuzzleFlash { get; } = true;
 
         // Sounds
-        [field: DataField("soundGunshot")]
+        [DataField("soundGunshot")]
         public string? SoundGunshot { get; set; }
 
-        [field: DataField("soundEmpty")]
+        [DataField("soundEmpty")]
         public string SoundEmpty { get; } = "/Audio/Weapons/Guns/Empty/empty.ogg";
 
         void ISerializationHooks.BeforeSerialization()

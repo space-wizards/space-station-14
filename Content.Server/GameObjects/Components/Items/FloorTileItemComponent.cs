@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
@@ -13,6 +14,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameObjects.Components.Items
 {
@@ -22,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
-        [DataField("outputs")]
+        [DataField("outputs", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
 
         public override void Initialize()
@@ -78,8 +80,14 @@ namespace Content.Server.GameObjects.Components.Items
                     var tile = mapGrid.GetTileRef(location);
                     var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
                     {
+                        var stackUse = new StackUseEvent() {Amount = 1};
+                        Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                        if (!stackUse.Result)
+                            continue;
+
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);
                         break;
                     }

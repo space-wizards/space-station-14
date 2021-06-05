@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -63,6 +64,8 @@ namespace Content.IntegrationTests.Tests.Disposal
   name: HumanDummy
   id: HumanDummy
   components:
+  - type: Body
+  - type: MobState
   - type: Damageable
     damagePrototype: biologicalDamageContainer
 
@@ -70,6 +73,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   name: WrenchDummy
   id: WrenchDummy
   components:
+  - type: Item
   - type: Tool
     qualities:
       - Anchoring
@@ -120,16 +124,13 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Assert.True(disposalTrunk.HasComponent<DisposalEntryComponent>());
 
                 // Can't insert, unanchored and unpowered
-                var disposalUnitAnchorable = disposalUnit.GetComponent<AnchorableComponent>();
-                await disposalUnitAnchorable.TryUnAnchor(human, null, true);
+                var physics = disposalUnit.GetComponent<IPhysBody>();
+                physics.BodyType = BodyType.Dynamic;
                 Assert.False(unit.Anchored);
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit
-                await disposalUnitAnchorable.TryAnchor(human, null, true);
-                Assert.True(disposalUnit.TryGetComponent(out AnchorableComponent? anchorableUnit));
-                Assert.True(await anchorableUnit!.TryAnchor(human, wrench));
-                Assert.True(unit.Anchored);
+                physics.BodyType = BodyType.Static;
 
                 // No power
                 Assert.False(unit.Powered);

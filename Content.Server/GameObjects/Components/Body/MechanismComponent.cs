@@ -68,21 +68,21 @@ namespace Content.Server.GameObjects.Components.Body
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
 
-            foreach (var (key, value) in body.Parts)
+            foreach (var (part, slot) in body.Parts)
             {
                 // For each limb in the target, add it to our cache if it is a valid option.
-                if (value.CanAddMechanism(this))
+                if (part.CanAddMechanism(this))
                 {
-                    OptionsCache.Add(IdHash, value);
-                    toSend.Add(key + ": " + value.Name, IdHash++);
+                    OptionsCache.Add(IdHash, slot);
+                    toSend.Add(part + ": " + part.Name, IdHash++);
                 }
             }
 
             if (OptionsCache.Count > 0 &&
-                eventArgs.User.TryGetComponent(out IActorComponent? actor))
+                eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                OpenSurgeryUI(actor.playerSession);
-                UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
+                OpenSurgeryUI(actor.PlayerSession);
+                UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
                 PerformerCache = eventArgs.User;
                 BodyCache = body;
             }
@@ -99,12 +99,12 @@ namespace Content.Server.GameObjects.Components.Body
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out IActorComponent? actor))
+                !PerformerCache.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            CloseSurgeryUI(actor.playerSession);
+            CloseSurgeryUI(actor.PlayerSession);
 
             if (BodyCache == null)
             {

@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent
     {
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
         }

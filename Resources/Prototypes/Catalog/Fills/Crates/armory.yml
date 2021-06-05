@@ -6,9 +6,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: SmgDrozd
+      - id: SmgDrozd
         amount: 2
-      - name: MagazineMagnumSmg
+      - id: MagazineMagnumSmg
         amount: 4
 
 - type: entity
@@ -19,7 +19,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ShotgunGladstone
+      - id: ShotgunGladstone
         amount: 2
-      - name: ShellShotgun
+      - id: ShellShotgun
         amount: 18

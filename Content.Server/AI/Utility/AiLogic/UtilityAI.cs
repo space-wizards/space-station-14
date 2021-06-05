@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Utility.Actions;
@@ -35,7 +36,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        [field: DataField("behaviorSets")]
+        [DataField("behaviorSets")]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();
@@ -137,6 +138,9 @@ namespace Content.Server.AI.Utility.AiLogic
                     break;
                 default:
                     Logger.FatalS("ai", _actionRequest.Exception.ToString());
+                    ExceptionDispatchInfo.Capture(_actionRequest.Exception).Throw();
+                    // The code never actually reaches here, because the above throws.
+                    // This is to tell the compiler that the flow never leaves here.
                     throw _actionRequest.Exception;
             }
             var action = _actionRequest.Result;

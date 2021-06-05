@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     plank.RandomOffset(0.25f);
                 }
 
-                Owner.Delete();
+                Owner.QueueDelete();
 
                 return true;
             }

@@ -20,12 +20,12 @@ namespace Content.Server.GlobalVerbs
 
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!groupController.CanCommand(actor.playerSession, "deleteentity"))
+            if (!groupController.CanCommand(actor.PlayerSession, "deleteentity"))
             {
                 return;
             }
@@ -40,12 +40,12 @@ namespace Content.Server.GlobalVerbs
         {
             var groupController = IoCManager.Resolve<IConGroupController>();
 
-            if (!user.TryGetComponent(out IActorComponent? actor))
+            if (!user.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!groupController.CanCommand(actor.playerSession, "deleteentity"))
+            if (!groupController.CanCommand(actor.PlayerSession, "deleteentity"))
             {
                 return;
             }

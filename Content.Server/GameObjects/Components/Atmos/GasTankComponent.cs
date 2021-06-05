@@ -36,9 +36,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-        [DataField("pressureResistance")]
-        private float _pressureResistance = Atmospherics.OneAtmosphere * 5f;
-
         private int _integrity = 3;
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
@@ -159,15 +156,15 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
-            OpenInterface(actor.playerSession);
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
+            OpenInterface(actor.PlayerSession);
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
-            OpenInterface(actor.playerSession);
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            OpenInterface(actor.PlayerSession);
         }
 
         public void ConnectToInternals()
@@ -269,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.Delete();
+                Owner.QueueDelete();
                 return;
             }
 
@@ -283,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
 
-                    Owner.Delete();
+                    Owner.QueueDelete();
                     return;
                 }
 
@@ -330,7 +327,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
-                if (!user.HasComponent<IActorComponent>())
+                if (!user.HasComponent<ActorComponent>())
                 {
                     return;
                 }
@@ -341,12 +338,12 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             protected override void Activate(IEntity user, GasTankComponent component)
             {
-                if (!user.TryGetComponent<IActorComponent>(out var actor))
+                if (!user.TryGetComponent<ActorComponent>(out var actor))
                 {
                     return;
                 }
 
-                component.OpenInterface(actor.playerSession);
+                component.OpenInterface(actor.PlayerSession);
             }
         }
     }

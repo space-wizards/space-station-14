@@ -14,7 +14,7 @@
       sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     - type: StorageFill
       contents:
-        - name: CigPackGreen
+        - id: CigPackGreen
           amount: 6
     - type: Appearance
       visuals:
@@ -35,7 +35,7 @@
       sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/red.rsi
     - type: StorageFill
       contents:
-        - name: CigPackRed
+        - id: CigPackRed
           amount: 6
 
 - type: entity
@@ -52,7 +52,7 @@
       sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/blue.rsi
     - type: StorageFill
       contents:
-        - name: CigPackBlue
+        - id: CigPackBlue
           amount: 6
 
 - type: entity
@@ -69,5 +69,5 @@
       sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/black.rsi
     - type: StorageFill
       contents:
-        - name: CigPackBlack
+        - id: CigPackBlack
           amount: 6

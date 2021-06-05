@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public override bool CanDragDropOn(DragDropEventArgs eventArgs)
+        public override bool CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!base.CanDragDropOn(eventArgs))
                 return false;
@@ -80,8 +80,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            if (body.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
-                body.GetPartsOfType(BodyPartType.Foot).Count == 0)
+            if (!body.HasPartOfType(BodyPartType.Leg) ||
+                !body.HasPartOfType(BodyPartType.Foot))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Movement
             return true;
         }
 
-        public override bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEvent eventArgs)
         {
             if (eventArgs.User == eventArgs.Dragged)
             {

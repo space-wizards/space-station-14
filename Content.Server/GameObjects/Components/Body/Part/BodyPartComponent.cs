@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
@@ -61,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
         {
             base.Initialize();
 
-            _mechanismContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-{nameof(BodyPartComponent)}");
+            _mechanismContainer = Owner.EnsureContainer<Container>($"{Name}-{nameof(BodyPartComponent)}");
 
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be
@@ -123,32 +122,30 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
             // Here we are trying to grab a list of all empty BodySlots adjacent to an existing BodyPart that can be
             // attached to. i.e. an empty left hand slot, connected to an occupied left arm slot would be valid.
-            var unoccupiedSlots = body.Slots.Keys.ToList().Except(body.Parts.Keys.ToList()).ToList();
-            foreach (var slot in unoccupiedSlots)
+            foreach (var slot in body.EmptySlots)
             {
-                if (!body.TryGetSlotType(slot, out var typeResult) ||
-                    typeResult != PartType ||
-                    !body.TryGetPartConnections(slot, out var parts))
+                if (slot.PartType != PartType)
                 {
                     continue;
                 }
 
-                foreach (var connectedPart in parts)
+                foreach (var connection in slot.Connections)
                 {
-                    if (!connectedPart.CanAttachPart(this))
+                    if (connection.Part == null ||
+                        !connection.Part.CanAttachPart(this))
                     {
                         continue;
                     }
 
                     _optionsCache.Add(_idHash, slot);
-                    toSend.Add(slot, _idHash++);
+                    toSend.Add(slot.Id, _idHash++);
                 }
             }
 
             if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
-                BodyPartSlotRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
+                OpenSurgeryUI(eventArgs.User.GetComponent<ActorComponent>().PlayerSession);
+                BodyPartSlotRequest(eventArgs.User.GetComponent<ActorComponent>().PlayerSession,
                     toSend);
                 _surgeonCache = eventArgs.User;
                 _owningBodyCache = body;
@@ -167,12 +164,12 @@ namespace Content.Server.GameObjects.Components.Body.Part
         private void ReceiveBodyPartSlot(int key)
         {
             if (_surgeonCache == null ||
-                !_surgeonCache.TryGetComponent(out IActorComponent? actor))
+                !_surgeonCache.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            CloseSurgeryUI(actor.playerSession);
+            CloseSurgeryUI(actor.PlayerSession);
 
             if (_owningBodyCache == null)
             {
@@ -236,14 +233,14 @@ namespace Content.Server.GameObjects.Components.Body.Part
                     return;
                 }
 
-                if (!user.TryGetComponent(out IActorComponent? actor))
+                if (!user.TryGetComponent(out ActorComponent? actor))
                 {
                     return;
                 }
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
-                if (!groupController.CanCommand(actor.playerSession, "attachbodypart"))
+                if (!groupController.CanCommand(actor.PlayerSession, "attachbodypart"))
                 {
                     return;
                 }
@@ -269,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
                     return;
                 }
 
-                body.TryAddPart($"{nameof(AttachBodyPartVerb)}-{component.Owner.Uid}", component, true);
+                body.SetPart($"{nameof(AttachBodyPartVerb)}-{component.Owner.Uid}", component);
             }
         }
     }

@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
@@ -14,6 +15,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IUnequippedHand
     {
+        [Obsolete("Use UnequippedHandMessage instead")]
         void UnequippedHand(UnequippedHandEventArgs eventArgs);
     }
 
@@ -28,10 +30,10 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when removing the entity from an inventory slot.
+    ///     Raised when removing an entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class UnequippedHandMessage : HandledEntityEventArgs
+    public class UnequippedHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -44,11 +46,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity Unequipped { get; }
 
         /// <summary>
-        ///     Hand the item is removed from.
+        ///     Hand that the item is removed from.
         /// </summary>
         public SharedHand Hand { get; }
 
-        public UnequippedHandMessage(IEntity user, IEntity unequipped, SharedHand hand)
+        public UnequippedHandEvent(IEntity user, IEntity unequipped, SharedHand hand)
         {
             User = user;
             Unequipped = unequipped;

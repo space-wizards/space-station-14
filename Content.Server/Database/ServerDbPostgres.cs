@@ -130,7 +130,7 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.HWId!.SequenceEqual(hwId));
+                    .Where(b => b.HWId!.SequenceEqual(hwId.Value.ToArray()));
 
                 query = query == null ? newQ : query.Union(newQ);
             }

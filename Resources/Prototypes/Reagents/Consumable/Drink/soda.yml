@@ -1,0 +1,16 @@
+- type: reagent
+  id: Cola
+  name: cola
+  desc: A sweet, carbonated soft drink. Caffeine free.
+  physicalDesc: fizzy
+  color: "#422912"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1

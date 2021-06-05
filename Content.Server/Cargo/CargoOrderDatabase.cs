@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Prototypes.Cargo;
@@ -84,20 +84,23 @@ namespace Content.Server.Cargo
         ///     Approves an order in the database.
         /// </summary>
         /// <param name="order">The order to be approved.</param>
-        public void ApproveOrder(int orderNumber)
+        public bool ApproveOrder(int orderNumber)
         {
             if (CurrentOrderSize == MaxOrderSize)
-                return;
+                return false;
             if (!_orders.TryGetValue(orderNumber, out var order))
-                return;
+                return false;
+            if (order.Approved)
+                return false;
             else if (CurrentOrderSize + order.Amount > MaxOrderSize)
             {
-                AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)","")), order.ProductId,
+                AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)", "")), order.ProductId,
                     order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
                 order.Amount = MaxOrderSize - CurrentOrderSize;
             }
             order.Approved = true;
             CurrentOrderSize += order.Amount;
+            return true;
         }
 
         /// <summary>

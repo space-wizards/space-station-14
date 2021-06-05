@@ -53,7 +53,11 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 CloseAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
+
+                if (_closeSound != null)
+                {
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
+                }
             }
 
             OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
@@ -75,7 +79,11 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
+
+                if (_openSound != null)
+                {
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
+                }
             }
 
             DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
@@ -87,7 +95,11 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
+
+                if (_denySound != null)
+                {
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
+                }
             }
         }
 

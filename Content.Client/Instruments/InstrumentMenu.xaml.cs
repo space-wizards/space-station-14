@@ -179,9 +179,9 @@ namespace Content.Client.Instruments
             _owner.Instrument.PlayerTick = (int)Math.Ceiling(PlaybackSlider.Value);
         }
 
-        protected override void Update(FrameEventArgs args)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            base.Update(args);
+            base.FrameUpdate(args);
 
             if (_owner.Instrument == null) return;
 

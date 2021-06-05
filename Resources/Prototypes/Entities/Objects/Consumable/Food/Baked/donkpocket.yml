@@ -1,0 +1,217 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodDonkpocketBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    netsync: false
+  - type: SolutionContainer
+    maxVol: 10
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 3
+  - type: Item
+    size: 1
+
+# Donkpocket
+
+# Warm gives +5 nutriment.
+
+- type: entity
+  name: donk-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocket
+  description: The food of choice for the seasoned traitor.
+  components:
+  - type: Sprite
+    state: plain
+
+- type: entity
+  name: warm donk-pocket
+  parent: FoodDonkpocket
+  id: FoodDonkpocketWarm
+  description: The heated food of choice for the seasoned traitor.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 7
+
+- type: entity
+  name: dank-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketDank
+  description: The food of choice for the seasoned botanist.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    state: dank
+
+- type: entity
+  name: warm dank-pocket
+  parent: FoodDonkpocketDank
+  id: FoodDonkpocketDankWarm
+  description: The heated food of choice for the seasoned botanist.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+
+- type: entity
+  name: spicy-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketSpicy
+  description: The classic snack food, now with a heat-activated spicy flair.
+  components:
+  - type: Sprite
+    state: plain
+
+- type: entity
+  name: warm spicy-pocket
+  parent: FoodDonkpocketDank
+  id: FoodDonkpocketSpicyWarm
+  description: The classic snack food, now maybe a bit too spicy.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+  - type: Sprite
+    state: spicy
+
+- type: entity
+  name: teriyaki-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketTeriyaki
+  description: An East Asian take on the classic stationside snack.
+  components:
+  - type: Sprite
+    state: teriyaki
+
+- type: entity
+  name: warm teriyaki-pocket
+  parent: FoodDonkpocketTeriyaki
+  id: FoodDonkpocketTeriyakiWarm
+  description: An East Asian take on the classic stationside snack, now steamy and warm.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+
+- type: entity
+  name: pizza-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketPizza
+  description: Delicious, cheesy and surprisingly filling.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+  - type: Sprite
+    state: pizza
+
+- type: entity
+  name: warm pizza-pocket
+  parent: FoodDonkpocketPizza
+  id: FoodDonkpocketPizzaWarm
+  description: An East Asian take on the classic stationside snack, now steamy and warm.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+
+- type: entity
+  name: honk-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketHonk
+  description: The award-winning donk-pocket that won the hearts of clowns and humans alike.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    state: banana
+
+- type: entity
+  name: warm honk-pocket
+  parent: FoodDonkpocketHonk
+  id: FoodDonkpocketHonkWarm
+  description: The award-winning donk-pocket, now warm and toasty.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+
+- type: entity
+  name: berry-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketBerry
+  description: A relentlessly sweet donk-pocket first created for use in Operation Iraqi Freedom.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    state: berry
+
+- type: entity
+  name: warm berry-pocket
+  parent: FoodDonkpocketBerry
+  id: FoodDonkpocketBerryWarm
+  description: A relentlessly sweet donk-pocket, now warm and delicious.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+
+- type: entity
+  name: gondola-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketGondola
+  description: The choice to use real gondola meat in the recipe is controversial, to say the least.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+  - type: Sprite
+    state: gondola
+
+- type: entity
+  name: warm gondola-pocket
+  parent: FoodDonkpocketGondola
+  id: FoodDonkpocketGondolaWarm
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10

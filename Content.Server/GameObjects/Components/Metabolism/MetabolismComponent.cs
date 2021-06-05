@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +27,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
     [RegisterComponent]
     public class MetabolismComponent : Component
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         [ComponentDependency] private readonly IBody? _body = default!;
 
         public override string Name => "Metabolism";

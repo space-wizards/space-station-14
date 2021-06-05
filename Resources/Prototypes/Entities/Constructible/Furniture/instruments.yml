@@ -1,26 +1,16 @@
 ﻿- type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
+  parent: BaseConstructibleDynamic
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Instrument
     handheld: false
-  - type: Clickable
   - type: InteractionOutline
-  - type: Anchorable
-  - type: Physics
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb {}
-        layer: [MobMask]
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-  - type: SnapGrid
-    offset: Center
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -45,19 +35,18 @@
   - type: Instrument
     program: 1
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: piano
+  - type: Climbable
 
 - type: entity
   name: minimoog
   parent: BasePlaceableInstrument
   id: MinimoogInstrument
-  description: 'This is a minimoog, like a space piano, but more spacey!'
+  description: This is a minimoog, like a space piano, but more spacey!
   components:
   - type: Instrument
     program: 81
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: minimoog
 
 - type: entity
@@ -69,17 +58,4 @@
   - type: Instrument
     program: 20
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: church_organ
-
-- type: entity
-  name: xylophone
-  parent: BasePlaceableInstrument
-  id: XylophoneInstrument
-  description: Rainbow colored glockenspiel.
-  components:
-  - type: Instrument
-    program: 13
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
-    state: xylophone

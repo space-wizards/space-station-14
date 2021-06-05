@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             {
                 count++;
                 if (!hasMob && entity.HasComponent<IBody>()) hasMob = true;
-                if (!hasSoul && entity.TryGetComponent<BasicActorComponent>(out var actor) && actor.playerSession != null) hasSoul = true;
+                if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null) hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
             Appearance?.SetData(MorgueVisuals.HasMob, hasMob);

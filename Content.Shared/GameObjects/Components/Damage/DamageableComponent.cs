@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -257,17 +257,24 @@ namespace Content.Shared.GameObjects.Components.Damage
                 finalDamage = Resistances.CalculateDamage(type, amount);
             }
 
+            if (finalDamage == 0)
+                return false;
+
             if (!_damageList.TryGetValue(type, out var current))
             {
                 return false;
             }
 
-            _damageList[type] = current + finalDamage;
-
-            if (_damageList[type] < 0)
+            if (current + finalDamage < 0)
             {
+                if (current == 0)
+                    return false;
                 _damageList[type] = 0;
                 finalDamage = -current;
+            }
+            else
+            {
+                _damageList[type] = current + finalDamage;
             }
 
             current = _damageList[type];

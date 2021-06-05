@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: BarDrobe
+  name: BarDrobe
+  description: A stylish vendor to dispense the most stylish bar clothing!
+  spriteName: bardrobe
+  startingInventory:
+    ClothingHeadHatTophat : 2
+    ClothingEyesGlassesBeer : 2
+    ClothingHeadsetService: 2
+    ClothingUniformJumpsuitBartender: 2
+    ClothingUniformJumpskirtBartender: 2
+    ClothingUniformJumpsuitBartenderPurple: 2
+    ClothingShoesColorBlack : 2
+    ClothingOuterVestKevlar : 1

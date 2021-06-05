@@ -1,102 +1,31 @@
 ﻿- type: entity
   id: ComputerFrame
+  parent: BaseConstructibleDynamic
   name: computer frame
-  description: "A computer under construction. It needs a circuit board."
-  placement:
-    mode: SnapgridCenter
+  description: A computer under construction. It needs a circuit board.
   components:
-    - type: Physics
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
       mass: 25
-      bodyType: Static
-      fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.5,0.25"
-        layer:
-        - Impassable
+      mask:
         - MobImpassable
-        - VaultImpassable
+      layer:
         - Opaque
-        mask:
-        - Impassable
         - MobImpassable
+        - SmallImpassable
         - VaultImpassable
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Anchorable
-    - type: Rotatable
-    - type: Pullable
-    - type: Construction
-      graph: computer
-      node: frameUnsecured
-    - type: Sprite
-      sprite: "Constructible/Misc/stock_parts.rsi"
-      state: "0"
-
-- type: entity
-  id: ComputerBroken
-  name: broken computer
-  description: "This computer has seen better days."
-  components:
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - Opaque
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: Clickable
   - type: InteractionOutline
-  - type: Anchorable
-  - type: Construction
-    graph: computer
-    node: monitorBroken
-  - type: Sprite
-    sprite: "Constructible/Power/computers.rsi"
-    state: "broken"
-
-- type: entity
-  id: ComputerBase
-  name: computer
-  abstract: true
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Construction
-    graph: computer
-    node: computer
   - type: Rotatable
-  - type: Physics
-    mass: 25
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - Opaque
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: Computer
-  - type: PowerReceiver
-  - type: Anchorable
-  - type: Pullable
+  - type: Construction
+    graph: computer
+    node: frameUnsecured
+  - type: Sprite
+    sprite: "Constructible/Misc/stock_parts.rsi"
+    state: "0"
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -105,10 +34,54 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: monitorBroken
       - !type:DoActsBehavior
         acts: ["Destruction"]
+
+- type: entity
+  parent: ComputerFrame
+  id: ComputerBroken
+  name: broken computer
+  description: This computer has seen better days.
+  components:
+  - type: Construction
+    graph: computer
+    node: monitorBroken
+  - type: Sprite
+    sprite: "Constructible/Power/computers.rsi"
+    state: "broken"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: ComputerFrame
+  id: ComputerBase
+  name: computer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Construction
+    graph: computer
+    node: computer
+  - type: Computer
+  - type: PowerReceiver
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:
@@ -129,10 +102,10 @@
       screen: generic
 
 - type: entity
-  id: ComputerAlert
   parent: ComputerBase
+  id: ComputerAlert
   name: alerts computer
-  description: "Used to access the station's automated alert system."
+  description: Used to access the station's automated alert system.
   components:
   - type: Appearance
     visuals:
@@ -141,10 +114,10 @@
       screen: "alert-2"
 
 - type: entity
-  id: ComputerPowerMonitoring
   parent: ComputerBase
+  id: ComputerPowerMonitoring
   name: power monitoring computer
-  description: "It monitors power levels across the station."
+  description: It monitors power levels across the station.
   components:
   - type: Appearance
     visuals:
@@ -153,10 +126,10 @@
       screen: power_monitor
 
 - type: entity
-  id: ComputerMedicalRecords
   parent: ComputerBase
+  id: ComputerMedicalRecords
   name: medical records computer
-  description: "This can be used to check medical records."
+  description: This can be used to check medical records.
   components:
   - type: Appearance
     visuals:
@@ -165,10 +138,10 @@
       screen: medcomp
 
 - type: entity
-  id: ComputerResearchAndDevelopment
   parent: ComputerBase
+  id: ComputerResearchAndDevelopment
   name: R&D computer
-  description: "A computer used to interface with R&D tools."
+  description: A computer used to interface with R&D tools.
   components:
   - type: Appearance
     visuals:
@@ -191,10 +164,10 @@
     board: ResearchComputerCircuitboard
 
 - type: entity
-  id: ComputerId
   parent: ComputerBase
+  id: ComputerId
   name: ID card computer
-  description: "Terminal for programming Nanotrasen employee ID cards to access parts of the station."
+  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
@@ -212,10 +185,10 @@
     board: IDComputerCircuitboard
 
 - type: entity
-  id: computerBodyScanner
   parent: ComputerBase
+  id: computerBodyScanner
   name: body scanner computer
-  description: "That's a body scanner."
+  description: That's a body scanner.
   components:
   - type: BodyScanner
   - type: UserInterface
@@ -231,10 +204,10 @@
     board: BodyScannerComputerCircuitboard
 
 - type: entity
-  id: ComputerComms
   parent: ComputerBase
+  id: ComputerComms
   name: communications computer
-  description: "This can be used for various important functions. Still under developement."
+  description: This can be used for various important functions. Still under development.
   components:
   - type: Appearance
     visuals:
@@ -250,10 +223,10 @@
     board: CommsComputerCircuitboard
 
 - type: entity
-  id: ComputerSolarControl
   parent: ComputerBase
-  name: Solar Control Computer
-  description: "A controller for solar panel arrays."
+  id: ComputerSolarControl
+  name: solar control computer
+  description: A controller for solar panel arrays.
   components:
   - type: Appearance
     visuals:

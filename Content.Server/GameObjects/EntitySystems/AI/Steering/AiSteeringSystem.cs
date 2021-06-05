@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
@@ -151,6 +152,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     case null:
                         break;
                     default:
+                        ExceptionDispatchInfo.Capture(request.Job.Exception).Throw();
                         throw request.Job.Exception;
                 }
                 _pathfindingRequests.Remove(entity);
@@ -245,7 +247,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if (entity.Deleted || !entity.TryGetComponent(out AiControllerComponent? controller) || !ActionBlockerSystem.CanMove(entity))
+            if (entity.Deleted ||
+                !entity.TryGetComponent(out AiControllerComponent? controller) ||
+                !ActionBlockerSystem.CanMove(entity) ||
+                !entity.Transform.GridID.IsValid())
             {
                 return SteeringStatus.NoPath;
             }

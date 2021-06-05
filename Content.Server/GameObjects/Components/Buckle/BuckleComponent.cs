@@ -256,11 +256,12 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             Appearance?.SetData(BuckleVisuals.Buckled, true);
 
+            ReAttach(strap);
+
             BuckledTo = strap;
             LastEntityBuckledTo = BuckledTo.Owner.Uid;
             DontCollide = true;
 
-            ReAttach(strap);
             UpdateBuckleStatus();
 
             SendMessage(new BuckleMessage(Owner, to));
@@ -389,13 +390,13 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         public override void OnRemove()
         {
-            base.OnRemove();
-
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);
 
             _buckleTime = default;
             UpdateBuckleStatus();
+
+            base.OnRemove();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -412,12 +413,12 @@ namespace Content.Server.GameObjects.Components.Buckle
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
         }
 
-        public void Update()
+        public void Update(PhysicsComponent physics)
         {
-            if (!DontCollide || Physics == null)
+            if (!DontCollide)
                 return;
 
-            Physics.WakeBody();
+            physics.WakeBody();
 
             if (!IsOnStrapEntityThisFrame && DontCollide)
             {

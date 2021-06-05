@@ -1,27 +1,19 @@
-﻿using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+#nullable enable
+using Content.Shared.GameObjects.Components.Rotatable;
+using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Rotatable
 {
     [RegisterComponent]
-    public class RotatableComponent : Component
+    [ComponentReference(typeof(SharedRotatableComponent))]
+    public class RotatableComponent : SharedRotatableComponent
     {
-        public override string Name => "Rotatable";
-
-        /// <summary>
-        ///     If true, this entity can be rotated even while anchored.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rotateWhileAnchored")]
-        public bool RotateWhileAnchored { get; private set; }
-
         private void TryRotate(IEntity user, Angle angle)
         {
             if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysBody? physics))

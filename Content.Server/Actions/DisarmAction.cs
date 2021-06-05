@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
@@ -40,10 +41,10 @@ namespace Content.Server.Actions
 
             if (disarmedActs.Length == 0)
             {
-                if (args.Performer.TryGetComponent(out IActorComponent? actor))
+                if (args.Performer.TryGetComponent(out ActorComponent? actor))
                 {
                     // Fall back to a normal interaction with the entity
-                    var player = actor.playerSession;
+                    var player = actor.PlayerSession;
                     var coordinates = args.Target.Transform.Coordinates;
                     var target = args.Target.Uid;
                     EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);
@@ -88,7 +89,7 @@ namespace Content.Server.Actions
                     return;
             }
 
-            SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Effects/thudswoosh.ogg", args.Performer,
+            SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Effects/thudswoosh.ogg", args.Performer.Transform.Coordinates,
                 AudioHelpers.WithVariation(0.025f));
         }
     }

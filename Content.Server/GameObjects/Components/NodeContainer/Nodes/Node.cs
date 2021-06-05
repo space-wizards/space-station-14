@@ -73,6 +73,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        public virtual void OnSnapGridMove()
+        {
+        }
+
         public virtual void OnContainerShutdown()
         {
             _deleting = true;

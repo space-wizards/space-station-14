@@ -23,7 +23,7 @@
     caps: Refillable
     contents:
       reagents:
-        - ReagentId: chem.WeldingFuel
+        - ReagentId: WeldingFuel
           Quantity: 100
   - type: Welder
     weldSoundCollection: Welder
@@ -47,7 +47,7 @@
     caps: Refillable
     contents:
       reagents:
-        - ReagentId: chem.WeldingFuel
+        - ReagentId: WeldingFuel
           Quantity: 1000
   - type: PointLight
     enabled: false
@@ -69,7 +69,7 @@
     caps: Refillable
     contents:
       reagents:
-        - ReagentId: chem.WeldingFuel
+        - ReagentId: WeldingFuel
           Quantity: 25
   - type: PointLight
     enabled: false

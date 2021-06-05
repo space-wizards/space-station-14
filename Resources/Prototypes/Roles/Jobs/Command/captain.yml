@@ -27,6 +27,7 @@
   - External
   - Janitor
   - Theatre
+  - Bar
 
 - type: startingGear
   id: CaptainGear
@@ -40,5 +41,6 @@
     outerclothing: ClothingOuterHardsuitCap
     idcard: CaptainPDA
     ears: ClothingHeadsetAltCommand
+  innerclothingskirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled

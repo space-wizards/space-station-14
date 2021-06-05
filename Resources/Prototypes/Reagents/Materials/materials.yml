@@ -1,42 +1,23 @@
 - type: material
-  id: MaterialBase
-  density: 5000
-  electricResistivity: 6.9e-7
-  thermalConductivity: 18
-  specificHeat: 500
-
-- type: material
-  id: plasma
+  id: Plasma
+  stack: Plasma
   name: plasma
   icon: Objects/Materials/Sheets/other.rsi/plasma.png
-  density: 200
-  electricResistivity: 2.1e-1
-  thermalConductivity: 80
-  specificHeat: 2000
 
 - type: material
-  id: phoron
+  id: Phoron
+  stack: Phoron
   name: phoron
   icon: Objects/Materials/Sheets/other.rsi/phoron.png
-  density: 200
-  electricResistivity: 2.1e-1
-  thermalConductivity: 80
-  specificHeat: 2000
 
 - type: material
-  id: plastic
+  id: Plastic
+  stack: Plastic
   name: plastic
   icon: Objects/Materials/Sheets/other.rsi/plastic.png
-  density: 6500
-  electricResistivity: 1.0e+13
-  thermalConductivity: 1.5
-  specificHeat: 600
 
 - type: material
-  id: wood
+  id: Wood
+  stack: WoodPlank
   name: wood
   icon: Objects/Materials/materials.rsi/wood.png
-  density: 6000
-  electricResistivity: 1.0e+13
-  thermalConductivity: 1.5
-  specificHeat: 600

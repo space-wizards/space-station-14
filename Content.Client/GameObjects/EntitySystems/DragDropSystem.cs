@@ -145,7 +145,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var canDrag = false;
             foreach (var draggable in entity.GetAllComponents<IDraggable>())
             {
-                var dragEventArgs = new StartDragDropEventArgs(dragger, entity);
+                var dragEventArgs = new StartDragDropEvent(dragger, entity);
 
                 if (!draggable.CanStartDrag(dragEventArgs))
                 {
@@ -315,7 +315,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (entity == _dragDropHelper.Dragged) continue;
 
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
+                var dropArgs = new DragDropEvent(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
 
                 // TODO: Cache valid CanDragDrops
                 if (ValidDragDrop(dropArgs) != true) continue;
@@ -331,7 +331,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (!draggable.CanDrop(dropArgs)) continue;
 
                     // tell the server about the drop attempt
-                    RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _dragDropHelper.Dragged!.Uid,
+                    RaiseNetworkEvent(new DragDropRequestEvent(args.Coordinates, _dragDropHelper.Dragged!.Uid,
                         entity.Uid));
 
                     draggable.Drop(dropArgs);
@@ -372,7 +372,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // TODO: Duplicated in SpriteSystem
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = EntityManager.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
+            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, true);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||
@@ -380,7 +380,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEventArgs(_dragger!, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
+                var dropArgs = new DragDropEvent(_dragger!, pvsEntity.Transform.Coordinates, _dragDropHelper.Dragged, pvsEntity);
 
                 var valid = ValidDragDrop(dropArgs);
                 if (valid == null) continue;
@@ -414,7 +414,7 @@ namespace Content.Client.GameObjects.EntitySystems
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns>null if the target doesn't support IDragDropOn</returns>
-        private bool? ValidDragDrop(DragDropEventArgs eventArgs)
+        private bool? ValidDragDrop(DragDropEvent eventArgs)
         {
             bool? valid = null;
 

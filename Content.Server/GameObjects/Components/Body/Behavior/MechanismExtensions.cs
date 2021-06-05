@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
     {
         public static bool HasMechanismBehavior<T>(this IBody body) where T : IMechanismBehavior
         {
-            return body.Parts.Values.Any(p => p.HasMechanismBehavior<T>());
+            return body.Parts.Any(p => p.Key.HasMechanismBehavior<T>());
         }
 
         public static bool HasMechanismBehavior<T>(this IBodyPart part) where T : IMechanismBehavior
@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public static IEnumerable<IMechanismBehavior> GetMechanismBehaviors(this IBody body)
         {
-            foreach (var part in body.Parts.Values)
+            foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             foreach (var behavior in mechanism.Behaviors.Values)
             {
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public static IEnumerable<T> GetMechanismBehaviors<T>(this IBody body) where T : class, IMechanismBehavior
         {
-            foreach (var part in body.Parts.Values)
+            foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             foreach (var behavior in mechanism.Behaviors.Values)
             {

@@ -8,12 +8,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    mass: 25
     bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 25
       mask:
       - Impassable
       - VaultImpassable
@@ -22,7 +22,6 @@
       - Opaque
       - MobImpassable
   - type: SnapGrid
-    offset: Center
   - type: Lathe
   - type: MaterialStorage
   - type: Anchorable
@@ -76,20 +75,13 @@
     recipes:
       - Brutepack
       - Ointment
-      - LightTube
-      - LightBulb
-      - SheetSteel
-      - GlassStack
       - Wirecutter
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
       - Crowbar
       - Multitool
       - MiniHoe
-      - Scythe
-      - Hatchet
       - Shovel
       - Spade
   - type: Appearance
@@ -139,20 +131,50 @@
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
     protolatherecipes:
-      - Brutepack
-      - Ointment
       - LightTube
       - LightBulb
       - SheetSteel
       - GlassStack
-      - Wirecutter
-      - Screwdriver
-      - Welder
-      - Wrench
+      - SheetRGlass
+      - SheetPlastic
       - CableStack
-      - Crowbar
-      - Multitool
+      - MVWireStack
+      - HVWireStack
       - ConveyorAssembly
+      - RCD
+      - RCDAmmo
+      - Scythe
+      - Hatchet
+      - Shovel
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - BoneSaw
+      - Hemostat
+      - Beaker
+      - LargeBeaker
+      - CryostasisBeaker
+      - Dropper
+      - Syringe
+      - Flash
+      - Handcuffs
+      - Stunbaton
+      - CartridgePistolBase
+      - ShellShotgunBase
+      - CartridgeLRifleBase
+      - CartridgeMagnumBase
+      - FirelockElectronics
+      - DoorElectronics
+      - APCElectronics
+      - Bucket
+      - MopItem
+      - SprayBottle
+      - FireExtinguisher
+      - KitchenKnife
+      - ButchCleaver
+      - FlashlightLantern
+
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key

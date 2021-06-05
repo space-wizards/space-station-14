@@ -10,6 +10,24 @@
     tags:
     - Teleportable
     - FootstepSound
+  - type: Reactive
+    reactions:
+    - !type:ExtinguishReaction
+      touch: true
+      reagents:
+      - Water
+    - !type:FlammableReaction
+      touch: true
+      reagents:
+      - WeldingFuel
+      - Thermite
+      - Plasma
+      - Ethanol
+    - !type:WashCreamPieReaction
+      touch: true
+      reagents:
+      - Water
+      - SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -115,18 +133,21 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
+    - map: [ "enum.Slots.POCKET1" ]
+    - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
     bodyType: KinematicController
-    mass: 70
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
+      mass: 70
       restitution: 0.0
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
@@ -144,7 +165,6 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Metabolism
@@ -296,15 +316,18 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: ["enum.Slots.MASK"]
       - map: ["enum.Slots.HEAD"]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
-      mass: 85
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable
@@ -316,7 +339,6 @@
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
-      centerSlot: torso
     - type: Damageable
       damageContainer: biologicalDamageContainer
     - type: MobState

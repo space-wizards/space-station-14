@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components.IconSmoothing
@@ -25,6 +28,8 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     [RegisterComponent]
     public class IconSmoothComponent : Component
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         [DataField("mode")]
         private IconSmoothingMode _mode = IconSmoothingMode.Corners;
 
@@ -32,20 +37,18 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         internal ISpriteComponent? Sprite { get; private set; }
 
-        internal SnapGridComponent? SnapGrid { get; private set; }
-
         private (GridId, Vector2i) _lastPosition;
 
         /// <summary>
         ///     We will smooth with other objects with the same key.
         /// </summary>
-        [field: DataField("key")]
+        [DataField("key")]
         public string? SmoothKey { get; }
 
         /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
-        [field: DataField("base")]
+        [DataField("base")]
         public string StateBase { get; } = string.Empty;
 
         /// <summary>
@@ -62,7 +65,6 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             base.Initialize();
 
-            SnapGrid = Owner.GetComponent<SnapGridComponent>();
             Sprite = Owner.GetComponent<ISpriteComponent>();
         }
 
@@ -71,15 +73,12 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             base.Startup();
 
-            if (SnapGrid != null)
+            if (Owner.Transform.Anchored)
             {
-                SnapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
-                _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
-
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner,null, SnapGrid.Offset, Mode));
+                UpdateLastPosition();
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
             }
 
             if (Sprite != null && Mode == IconSmoothingMode.Corners)
@@ -96,15 +95,39 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             }
         }
 
+        private void UpdateLastPosition()
+        {
+            if (_mapManager.TryGetGrid(Owner.Transform.GridID, out var grid))
+            {
+                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+            }
+            else
+            {
+                // When this is called during component startup, the transform can end up being with an invalid grid ID.
+                // In that case, use this.
+                _lastPosition = (GridId.Invalid, new Vector2i(0, 0));
+            }
+        }
+
         internal virtual void CalculateNewSprite()
+        {
+            if (!_mapManager.TryGetGrid(Owner.Transform.GridID, out var grid))
+            {
+                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {Owner.Transform.GridID} was missing.");
+                return;
+            }
+            CalculateNewSprite(grid);
+        }
+
+        internal virtual void CalculateNewSprite(IMapGrid grid)
         {
             switch (Mode)
             {
                 case IconSmoothingMode.Corners:
-                    CalculateNewSpriteCorners();
+                    CalculateNewSpriteCorners(grid);
                     break;
                 case IconSmoothingMode.CardinalFlags:
-                    CalculateNewSpriteCardinal();
+                    CalculateNewSpriteCardinal(grid);
                     break;
                 case IconSmoothingMode.NoSprite:
                     break;
@@ -113,35 +136,36 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             }
         }
 
-        private void CalculateNewSpriteCardinal()
+        private void CalculateNewSpriteCardinal(IMapGrid grid)
         {
-            if (SnapGrid == null || Sprite == null)
+            if (!Owner.Transform.Anchored || Sprite == null)
             {
                 return;
             }
 
             var dirs = CardinalConnectDirs.None;
 
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.North)))
+            var position = Owner.Transform.Coordinates;
+            if (MatchingEntity(grid.GetInDir(position, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.South)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.South)))
                 dirs |= CardinalConnectDirs.South;
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.East)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.East)))
                 dirs |= CardinalConnectDirs.East;
-            if (MatchingEntity(SnapGrid.GetInDir(Direction.West)))
+            if (MatchingEntity(grid.GetInDir(position, Direction.West)))
                 dirs |= CardinalConnectDirs.West;
 
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
         }
 
-        private void CalculateNewSpriteCorners()
+        private void CalculateNewSpriteCorners(IMapGrid grid)
         {
             if (Sprite == null)
             {
                 return;
             }
 
-            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill();
+            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill(grid);
 
             Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
             Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
@@ -149,21 +173,22 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
         }
 
-        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill()
+        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid grid)
         {
-            if (SnapGrid == null)
+            if (!Owner.Transform.Anchored)
             {
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
 
-            var n = MatchingEntity(SnapGrid.GetInDir(Direction.North));
-            var ne = MatchingEntity(SnapGrid.GetInDir(Direction.NorthEast));
-            var e = MatchingEntity(SnapGrid.GetInDir(Direction.East));
-            var se = MatchingEntity(SnapGrid.GetInDir(Direction.SouthEast));
-            var s = MatchingEntity(SnapGrid.GetInDir(Direction.South));
-            var sw = MatchingEntity(SnapGrid.GetInDir(Direction.SouthWest));
-            var w = MatchingEntity(SnapGrid.GetInDir(Direction.West));
-            var nw = MatchingEntity(SnapGrid.GetInDir(Direction.NorthWest));
+            var position = Owner.Transform.Coordinates;
+            var n = MatchingEntity(grid.GetInDir(position, Direction.North));
+            var ne = MatchingEntity(grid.GetInDir(position, Direction.NorthEast));
+            var e = MatchingEntity(grid.GetInDir(position, Direction.East));
+            var se = MatchingEntity(grid.GetInDir(position, Direction.SouthEast));
+            var s = MatchingEntity(grid.GetInDir(position, Direction.South));
+            var sw = MatchingEntity(grid.GetInDir(position, Direction.SouthWest));
+            var w = MatchingEntity(grid.GetInDir(position, Direction.West));
+            var nw = MatchingEntity(grid.GetInDir(position, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
             var cornerNE = CornerFill.None;
@@ -234,28 +259,27 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             base.Shutdown();
 
-            if (SnapGrid != null)
+            if (Owner.Transform.Anchored)
             {
-                SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
         }
 
-        private void SnapGridOnPositionChanged()
+        public void SnapGridOnPositionChanged()
         {
-            if (SnapGrid != null)
+            if (Owner.Transform.Anchored)
             {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, SnapGrid.Offset, Mode));
-                _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
+                UpdateLastPosition();
             }
         }
 
         [System.Diagnostics.Contracts.Pure]
-        protected bool MatchingEntity(IEnumerable<IEntity> candidates)
+        protected bool MatchingEntity(IEnumerable<EntityUid> candidates)
         {
             foreach (var entity in candidates)
             {
-                if (!entity.TryGetComponent(out IconSmoothComponent? other))
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

@@ -4,15 +4,15 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Preferences.Appearance;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.SharedMagicMirrorComponent;
-using static Content.Client.StaticIoC;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects.Components
         {
             _slider = new Slider
             {
-                StyleClasses = { styleClass },
+                StyleClasses = {styleClass},
                 HorizontalExpand = true,
                 VerticalAlignment = VAlignment.Center,
                 MaxValue = byte.MaxValue
@@ -110,10 +110,10 @@ namespace Content.Client.GameObjects.Components
             AddChild(new HBoxContainer
             {
                 Children =
-                    {
-                        _slider,
-                        _textBox
-                    }
+                {
+                    _slider,
+                    _textBox
+                }
             });
 
             _slider.OnValueChanged += _ =>
@@ -151,47 +151,42 @@ namespace Content.Client.GameObjects.Components
         }
     }
 
-    public class FacialHairStylePicker : HairStylePicker
+    public sealed class HairStylePicker : Control
     {
-        public override void Populate()
-        {
-            var humanFacialHairRSIPath = SharedSpriteComponent.TextureRoot / "Mobs/Customization/human_facial_hair.rsi";
-            var humanFacialHairRSI = ResC.GetResource<RSIResource>(humanFacialHairRSIPath).RSI;
+        [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;
 
-            var styles = HairStyles.FacialHairStylesMap.ToList();
-            styles.Sort(HairStyles.FacialHairStyleComparer);
-
-            foreach (var (styleName, styleState) in HairStyles.FacialHairStylesMap)
-            {
-                Items.AddItem(styleName, humanFacialHairRSI[styleState].Frame0);
-            }
-        }
-    }
-
-    public class HairStylePicker : Control
-    {
         public event Action<Color>? OnHairColorPicked;
         public event Action<string>? OnHairStylePicked;
 
-        protected readonly ItemList Items;
+        private readonly ItemList _items;
 
+        private readonly Control _colorContainer;
         private readonly ColorSlider _colorSliderR;
         private readonly ColorSlider _colorSliderG;
         private readonly ColorSlider _colorSliderB;
 
         private Color _lastColor;
+        private SpriteAccessoryCategories _categories;
 
-        public void SetData(Color color, string styleName)
+        public void SetData(Color color, string styleId, SpriteAccessoryCategories categories, bool canColor)
         {
+            if (_categories != categories)
+            {
+                _categories = categories;
+                Populate();
+            }
+
+            _colorContainer.Visible = canColor;
             _lastColor = color;
 
             _colorSliderR.ColorValue = color.RByte;
             _colorSliderG.ColorValue = color.GByte;
             _colorSliderB.ColorValue = color.BByte;
 
-            foreach (var item in Items)
+            foreach (var item in _items)
             {
-                item.Selected = item.Text == styleName;
+                var prototype = (SpriteAccessoryPrototype) item.Metadata!;
+                item.Selected = prototype.ID == styleId;
             }
 
             UpdateStylePickerColor();
@@ -199,7 +194,7 @@ namespace Content.Client.GameObjects.Components
 
         private void UpdateStylePickerColor()
         {
-            foreach (var item in Items)
+            foreach (var item in _items)
             {
                 item.IconModulate = _lastColor;
             }
@@ -207,25 +202,29 @@ namespace Content.Client.GameObjects.Components
 
         public HairStylePicker()
         {
+            IoCManager.InjectDependencies(this);
+
             var vBox = new VBoxContainer();
             AddChild(vBox);
 
-            vBox.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
-            vBox.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
-            vBox.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
+            _colorContainer = new VBoxContainer();
+            vBox.AddChild(_colorContainer);
+            _colorContainer.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
+            _colorContainer.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
+            _colorContainer.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
 
             Action colorValueChanged = ColorValueChanged;
             _colorSliderR.OnValueChanged += colorValueChanged;
             _colorSliderG.OnValueChanged += colorValueChanged;
             _colorSliderB.OnValueChanged += colorValueChanged;
 
-            Items = new ItemList
+            _items = new ItemList
             {
                 VerticalExpand = true,
                 MinSize = (300, 250)
             };
-            vBox.AddChild(Items);
-            Items.OnItemSelected += ItemSelected;
+            vBox.AddChild(_items);
+            _items.OnItemSelected += ItemSelected;
         }
 
         private void ColorValueChanged()
@@ -241,27 +240,28 @@ namespace Content.Client.GameObjects.Components
             UpdateStylePickerColor();
         }
 
-        public virtual void Populate()
+        public void Populate()
         {
-            var humanHairRSIPath = SharedSpriteComponent.TextureRoot / "Mobs/Customization/human_hair.rsi";
-            var humanHairRSI = ResC.GetResource<RSIResource>(humanHairRSIPath).RSI;
+            var styles = _spriteAccessoryManager
+                .AccessoriesForCategory(_categories)
+                .ToList();
+            styles.Sort(HairStyles.SpriteAccessoryComparer);
 
-            var styles = HairStyles.HairStylesMap.ToList();
-            styles.Sort(HairStyles.HairStyleComparer);
-
-            foreach (var (styleName, styleState) in styles)
+            foreach (var style in styles)
             {
-                Items.AddItem(styleName, humanHairRSI[styleState].Frame0);
+                var item = _items.AddItem(style.Name, style.Sprite.Frame0());
+                item.Metadata = style;
             }
         }
 
         private void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            var hairColor = Items[args.ItemIndex].Text;
+            var prototype = (SpriteAccessoryPrototype?) _items[args.ItemIndex].Metadata;
+            var style = prototype?.ID;
 
-            if (hairColor != null)
+            if (style != null)
             {
-                OnHairStylePicked?.Invoke(hairColor);
+                OnHairStylePicked?.Invoke(style);
             }
         }
 
@@ -321,7 +321,7 @@ namespace Content.Client.GameObjects.Components
     public class MagicMirrorWindow : SS14Window
     {
         private readonly HairStylePicker _hairStylePicker;
-        private readonly FacialHairStylePicker _facialHairStylePicker;
+        private readonly HairStylePicker _facialHairStylePicker;
         private readonly EyeColorPicker _eyeColorPicker;
 
         public MagicMirrorWindow(MagicMirrorBoundUserInterface owner)
@@ -330,12 +330,10 @@ namespace Content.Client.GameObjects.Components
             Title = Loc.GetString("Magic Mirror");
 
             _hairStylePicker = new HairStylePicker {HorizontalExpand = true};
-            _hairStylePicker.Populate();
             _hairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, false);
             _hairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, false);
 
-            _facialHairStylePicker = new FacialHairStylePicker {HorizontalExpand = true};
-            _facialHairStylePicker.Populate();
+            _facialHairStylePicker = new HairStylePicker {HorizontalExpand = true};
             _facialHairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, true);
             _facialHairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, true);
 
@@ -363,8 +361,8 @@ namespace Content.Client.GameObjects.Components
 
         public void SetInitialData(MagicMirrorInitialDataMessage initialData)
         {
-            _facialHairStylePicker.SetData(initialData.FacialHairColor, initialData.FacialHairName);
-            _hairStylePicker.SetData(initialData.HairColor, initialData.HairName);
+            _facialHairStylePicker.SetData(initialData.FacialHairColor, initialData.FacialHairId, initialData.CategoriesFacialHair, initialData.CanColorFacialHair);
+            _hairStylePicker.SetData(initialData.HairColor, initialData.HairId, initialData.CategoriesHair, initialData.CanColorHair);
             _eyeColorPicker.SetData(initialData.EyeColor);
         }
     }

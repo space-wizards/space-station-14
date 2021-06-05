@@ -18,6 +18,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     [RequiresExplicitImplementation]
     public interface IEquipped
     {
+        [Obsolete("Use EquippedMessage instead")]
         void Equipped(EquippedEventArgs eventArgs);
     }
 
@@ -42,10 +43,10 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when equipping the entity in an inventory slot.
+    ///     Raised when equipping an entity in an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class EquippedMessage : HandledEntityEventArgs
+    public class EquippedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that equipped the item.
@@ -58,11 +59,11 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public IEntity Equipped { get; }
 
         /// <summary>
-        ///     Slot where the item was placed.
+        ///     Slot that the item was placed into.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public EquippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public EquippedEvent(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
             Equipped = equipped;

@@ -20,7 +20,6 @@
       - VaultImpassable
       - SmallImpassable
   - type: SnapGrid
-    offset: Center
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/conveyor.rsi

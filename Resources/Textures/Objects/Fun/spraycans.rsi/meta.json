@@ -8,52 +8,52 @@
   },
   "states": [
     {
-        "name": "death"
+      "name": "death"
     },
     {
-        "name": "death2"
+      "name": "death2"
     },
     {
-        "name": "death2_cap"
+      "name": "death2_cap"
     },
     {
-        "name": "death_cap"
+      "name": "death_cap"
     },
     {
-        "name": "mime"
+      "name": "mime"
     },
     {
-        "name": "mime2"
+      "name": "mime2"
     },
     {
-        "name": "mime2_cap"
+      "name": "mime2_cap"
     },
     {
-        "name": "mime_cap"
+      "name": "mime_cap"
     },
     {
-        "name": "rainbow"
+      "name": "rainbow"
     },
     {
-        "name": "rainbow2"
+      "name": "rainbow2"
     },
     {
-        "name": "rainbow2_cap"
+      "name": "rainbow2_cap"
     },
     {
-        "name": "rainbow_cap"
+      "name": "rainbow_cap"
     },
     {
-        "name": "spray"
+      "name": "spray"
     },
     {
-        "name": "spray_cap"
+      "name": "spray_cap"
     },
     {
-        "name": "spray_cap_colors"
+      "name": "spray_cap_colors"
     },
     {
-        "name": "spray_colors"
+      "name": "spray_colors"
     }
   ]
 }

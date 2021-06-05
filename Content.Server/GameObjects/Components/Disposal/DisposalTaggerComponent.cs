@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public bool Anchored =>
             !Owner.TryGetComponent(out PhysicsComponent? physics) ||
-            physics.Anchored;
+            physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
 
@@ -121,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent? actor))
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!user.TryGetComponent(out IActorComponent? actor) || !groupController.CanAdminMenu(actor.playerSession))
+                if (!user.TryGetComponent(out ActorComponent? actor) || !groupController.CanAdminMenu(actor.PlayerSession))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -164,17 +165,17 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalTaggerComponent component)
             {
-                if (user.TryGetComponent(out IActorComponent? actor))
+                if (user.TryGetComponent(out ActorComponent? actor))
                 {
                     component.OpenUserInterface(actor);
                 }
             }
         }
 
-        private void OpenUserInterface(IActorComponent actor)
+        private void OpenUserInterface(ActorComponent actor)
         {
             UpdateUserInterface();
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Open(actor.PlayerSession);
         }
     }
 }

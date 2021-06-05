@@ -34,6 +34,7 @@ using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Server.GameObjects.Components.Construction;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.GameObjects.Components.Doors
 {
@@ -154,9 +155,9 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private bool _beingWelded;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("canCrush")]
-        private bool _canCrush = true;
+        //[ViewVariables(VVAccess.ReadWrite)]
+        //[DataField("canCrush")]
+        //private bool _canCrush = true; // TODO implement door crushing
 
         protected override void Startup()
         {
@@ -215,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        void IStartCollide.CollideWith(IPhysBody ourBody, IPhysBody otherBody, in Manifold manifold)
+        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
         {
             if (State != DoorState.Closed)
             {
@@ -229,23 +230,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (otherBody.Entity.HasComponent<IBody>())
-            {
-                if (!otherBody.Entity.TryGetComponent<IMoverComponent>(out var mover)) return;
+                TryOpen(otherFixture.Body.Owner);
 
-                /*
-                // TODO: temporary hack to fix the physics system raising collision events akwardly.
-                // E.g. when moving parallel to a door by going off the side of a wall.
-                var (walking, sprinting) = mover.VelocityDir;
-                // Also TODO: walking and sprint dir are added together here
-                // instead of calculating their contribution correctly.
-                var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
-                if (dotProduct <= -0.85f)
-                    TryOpen(entity);
-                */
-
-                TryOpen(otherBody.Entity);
-            }
         }
 
         #region Opening
@@ -280,14 +266,14 @@ namespace Content.Server.GameObjects.Components.Doors
                 return true;
             }
 
-            var doorSystem = EntitySystem.Get<ServerDoorSystem>();
+            var doorSystem = EntitySystem.Get<DoorSystem>();
             var isAirlockExternal = HasAccessType("External");
 
             return doorSystem.AccessType switch
             {
-                ServerDoorSystem.AccessTypes.AllowAll => true,
-                ServerDoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
-                ServerDoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
+                DoorSystem.AccessTypes.AllowAll => true,
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
+                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
                 _ => access.IsAllowed(user)
             };
         }
@@ -430,7 +416,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 var broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
-                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Entity.Transform.MapID, physicsComponent.GetWorldAABB()))
+                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
                 {
                     if ((physicsComponent.CollisionMask & e.CollisionLayer) != 0 && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
                 }
@@ -510,8 +496,8 @@ namespace Content.Server.GameObjects.Components.Doors
             // Crush
             foreach (var e in collidingentities)
             {
-                if (!e.Entity.TryGetComponent(out StunnableComponent? stun)
-                    || !e.Entity.TryGetComponent(out IDamageableComponent? damage))
+                if (!e.Owner.TryGetComponent(out StunnableComponent? stun)
+                    || !e.Owner.TryGetComponent(out IDamageableComponent? damage))
                 {
                     continue;
                 }
@@ -522,7 +508,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     continue;
 
                 hitsomebody = true;
-                CurrentlyCrushing.Add(e.Entity.Uid);
+                CurrentlyCrushing.Add(e.Owner.Uid);
 
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);

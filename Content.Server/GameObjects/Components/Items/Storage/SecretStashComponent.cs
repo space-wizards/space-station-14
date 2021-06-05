@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.Containers;
@@ -65,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!hands.Drop(itemToHide, _itemContainer))
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("You hide {0:theName} in {1}.", itemToHide, SecretPartName));
+            Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-hide", ("item", itemToHide), ("this", SecretPartName)));
             return true;
         }
 

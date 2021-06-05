@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

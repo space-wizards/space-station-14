@@ -18,11 +18,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables] [DataField("range")] protected float Range = SharedInteractionSystem.InteractionRange / 1.4f;
 
-        public virtual bool CanDragDropOn(DragDropEventArgs eventArgs)
+        public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
             return eventArgs.Dragged.HasComponent<SharedClimbingComponent>();
         }
 
-        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

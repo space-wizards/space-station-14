@@ -36,7 +36,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IReagentReaction, IExamine
+    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
@@ -655,7 +655,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     if (seeds.Seed == null)
                     {
                         user.PopupMessageCursor(Loc.GetString("The packet seems to be empty. You throw it away."));
-                        usingItem.Delete();
+                        usingItem.QueueDelete();
                         return false;
                     }
 
@@ -667,7 +667,7 @@ namespace Content.Server.GameObjects.Components.Botany
                     Health = Seed.Endurance;
                     _lastCycle = _gameTiming.CurTime;
 
-                    usingItem.Delete();
+                    usingItem.QueueDelete();
 
                     CheckLevelSanity();
                     UpdateSprite();
@@ -799,30 +799,12 @@ namespace Content.Server.GameObjects.Components.Botany
                     ForceUpdateByExternalCause();
                 }
 
-                usingItem.Delete();
+                usingItem.QueueDelete();
 
                 return true;
             }
 
             return false;
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            if(_solutionContainer == null)
-                return ReagentUnit.Zero;
-
-            _solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted);
-            return accepted;
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            if(_solutionContainer == null)
-                return ReagentUnit.Zero;
-
-            _solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted);
-            return accepted;
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

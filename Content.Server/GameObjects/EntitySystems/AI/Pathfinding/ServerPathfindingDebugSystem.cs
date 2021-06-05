@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 routeDebug.TimeTaken
                 );
 
-            EntityManager.EntityNetManager.SendSystemNetworkMessage(systemMessage);
+            RaiseNetworkEvent(systemMessage);
         }
 
         private void DispatchJpsDebug(SharedAiDebug.JpsRouteDebug routeDebug)
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 routeDebug.TimeTaken
             );
 
-            EntityManager.EntityNetManager.SendSystemNetworkMessage(systemMessage);
+            RaiseNetworkEvent(systemMessage);
         }
 
         private void DispatchGraph(SharedAiDebug.RequestPathfindingGraphMessage message)
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             var systemMessage = new SharedAiDebug.PathfindingGraphMessage(result);
-            EntityManager.EntityNetManager.SendSystemNetworkMessage(systemMessage);
+            RaiseNetworkEvent(systemMessage);
         }
     }
 #endif

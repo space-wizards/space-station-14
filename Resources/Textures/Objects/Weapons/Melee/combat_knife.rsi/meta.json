@@ -1,22 +1,22 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken/modified from tgstation at commit https://github.com/tgstation/tgstation/pull/30680/commits/a494d500b42bc8c7275c57219e08e65b825e94f6",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken/modified from tgstation at https://github.com/tgstation/tgstation/pull/30680/commits/a494d500b42bc8c7275c57219e08e65b825e94f6",
+  "size": {
+      "x": 32,
+      "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
-        }
-    ]
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
 }

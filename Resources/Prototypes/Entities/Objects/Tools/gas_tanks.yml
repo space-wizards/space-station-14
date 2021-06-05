@@ -1,122 +1,134 @@
 ﻿- type: entity
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
   id: GasTankBase
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/generic.rsi
-      state: icon
-    - type: UserInterface
-      interfaces:
-        - key: enum.SharedGasTankUiKey.Key
-          type: GasTankBoundUserInterface
-    - type: Clothing
-      sprite: Objects/Tanks/generic.rsi
-      QuickEquip: false
-    - type: GasTank
-    - type: ItemActions
-      actions:
-        - actionType: ToggleInternals
+  - type: Sprite
+    sprite: Objects/Tanks/generic.rsi
+    state: icon
+  - type: UserInterface
+    interfaces:
+    - key: enum.SharedGasTankUiKey.Key
+      type: GasTankBoundUserInterface
+  - type: Clothing
+    sprite: Objects/Tanks/generic.rsi
+    QuickEquip: false
+  - type: GasTank
+  - type: ItemActions
+    actions:
+    - actionType: ToggleInternals
 
 - type: entity
+  parent: GasTankBase
   id: OxygenTank
-  parent: GasTankBase
-  suffix: ent-gas-tank-suffix-empty
+  name: oxygen tank
+  description: A tank of oxygen.
+#  suffix: ent-gas-tank-suffix-empty
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/oxygen.rsi
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 70
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/oxygen.rsi
-      Slots:
-        - Back
+  - type: Sprite
+    sprite: Objects/Tanks/oxygen.rsi
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/oxygen.rsi
+    Slots:
+    - Back
 
 - type: entity
+  parent: OxygenTank
   id: YellowOxygenTank
-  parent: OxygenTank
-  suffix: ent-gas-tank-suffix-empty
+  name: oxygen tank
+  description: A tank of oxygen. This one is in yellow.
+#  suffix: ent-gas-tank-suffix-empty
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/yellow.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/yellow.rsi
-      Slots:
-        - Back
+  - type: Sprite
+    sprite: Objects/Tanks/yellow.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/yellow.rsi
+    Slots:
+    - Back
 
 - type: entity
+  parent: OxygenTank
   id: RedOxygenTank
-  parent: OxygenTank
-  suffix: ent-gas-tank-suffix-empty
+  name: oxygen tank
+  description: A tank of oxygen. This one is in red.
+#  suffix: ent-gas-tank-suffix-empty
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/red.rsi
-    - type: Clothing
-      sprite: Objects/Tanks/red.rsi
-      Slots:
-        - Back
+  - type: Sprite
+    sprite: Objects/Tanks/red.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/red.rsi
+    Slots:
+    - Back
 
 - type: entity
+  parent: OxygenTank
   id: EmergencyOxygenTank
-  parent: OxygenTank
-  suffix: ent-gas-tank-suffix-empty
+  name: extended-capacity emergency oxygen tank
+  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
+#  suffix: ent-gas-tank-suffix-empty
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/emergency.rsi
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 2
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/emergency.rsi
-      Slots:
-        - Pocket
-        - Belt
+  - type: Sprite
+    sprite: Objects/Tanks/emergency.rsi
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 2
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/emergency.rsi
+    Slots:
+    - Pocket
+    - Belt
 
 - type: entity
-  id: ExtendedEmergencyOxygenTank
   parent: EmergencyOxygenTank
-  suffix: ent-gas-tank-suffix-empty
+  id: ExtendedEmergencyOxygenTank
+  name: double emergency oxygen tank
+  description: Used for emergencies. Contains little oxygen, so try to conserve it until you actually need it.
+#  suffix: ent-gas-tank-suffix-empty
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/emergency_yellow.rsi
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 6
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/emergency_yellow.rsi
-      Slots:
-        - Pocket
-        - Belt
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_yellow.rsi
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 6
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/emergency_yellow.rsi
+    Slots:
+    - Pocket
+    - Belt
 
 - type: entity
-  id: DoubleEmergencyOxygenTank
   parent: ExtendedEmergencyOxygenTank
-  suffix: ent-gas-tank-suffix-empty
+  id: DoubleEmergencyOxygenTank
+#  suffix: ent-gas-tank-suffix-empty
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/emergency_double.rsi
-    - type: GasTank
-      outputPressure: 21.27825
-      air:
-        volume: 10
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/emergency_double.rsi
-      Slots:
-        - Pocket
-        - Belt
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_double.rsi
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 10
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/emergency_double.rsi
+    Slots:
+    - Pocket
+    - Belt
 
 - type: entity
-  id: AirTank
   parent: GasTankBase
-  suffix: ent-gas-tank-suffix-empty
+  id: AirTank
+  name: air tank
+  description: Mixed anyone?
+#  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
@@ -131,9 +143,11 @@
         - Back
 
 - type: entity
-  id: PlasmaTank
   parent: GasTankBase
-  suffix: ent-gas-tank-suffix-empty
+  id: PlasmaTank
+  name: plasma tank
+  description: Contains dangerous plasma. Do not inhale. Extremely flammable.
+#  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/plasma.rsi

@@ -1,6 +1,5 @@
-﻿#nullable enable
+#nullable enable
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Pulling;
@@ -10,15 +9,17 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
+    // TODO: Move this component's logic to an EntitySystem.
     [RegisterComponent]
     public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
+
+        [ComponentDependency] private PhysicsComponent? _physicsComponent = default!;
 
         [ViewVariables]
         [DataField("tool")]
@@ -29,51 +30,52 @@ namespace Content.Server.GameObjects.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("snap")]
-        public bool Snap { get; private set; }
+        public bool Snap { get; private set; } = true;
 
         /// <summary>
         ///     Checks if a tool can change the anchored status.
         /// </summary>
         /// <param name="user">The user doing the action</param>
-        /// <param name="utilizing">The tool being used, can be null if forcing it</param>
-        /// <param name="force">Whether or not to check if the tool is valid</param>
+        /// <param name="utilizing">The tool being used</param>
+        /// <param name="anchoring">True if we're anchoring, and false if we're unanchoring.</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity user, IEntity? utilizing, [NotNullWhen(true)] bool force = false)
+        private async Task<bool> Valid(IEntity user, IEntity utilizing, bool anchoring)
         {
             if (!Owner.HasComponent<IPhysBody>())
             {
                 return false;
             }
 
-            if (!force)
-            {
-                if (utilizing == null ||
-                    !utilizing.TryGetComponent(out ToolComponent? tool) ||
-                    !(await tool.UseTool(user, Owner, 0.5f, Tool)))
-                {
-                    return false;
-                }
-            }
+            BaseAnchoredAttemptEvent attempt =
+                anchoring ? new AnchorAttemptEvent(user, utilizing) : new UnanchorAttemptEvent(user, utilizing);
 
-            return true;
+            // Need to cast the event or it will be raised as BaseAnchoredAttemptEvent.
+            if (anchoring)
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, (AnchorAttemptEvent) attempt, false);
+            else
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, (UnanchorAttemptEvent) attempt, false);
+
+            if (attempt.Cancelled)
+                return false;
+
+            return utilizing.TryGetComponent(out ToolComponent? tool) && await tool.UseTool(user, Owner, 0.5f + attempt.Delay, Tool);
         }
 
         /// <summary>
         ///     Tries to anchor the owner of this component.
         /// </summary>
         /// <param name="user">The entity doing the anchoring</param>
-        /// <param name="utilizing">The tool being used, if any</param>
-        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <param name="utilizing">The tool being used</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryAnchor(IEntity user, IEntity utilizing)
         {
-            if (!(await Valid(user, utilizing, force)))
+            if (!(await Valid(user, utilizing, true)))
             {
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysBody>();
-            physics.BodyType = BodyType.Static;
+            if (_physicsComponent == null)
+                return false;
 
             // Snap rotation to cardinal (multiple of 90)
             var rot = Owner.Transform.LocalRotation;
@@ -88,7 +90,13 @@ namespace Content.Server.GameObjects.Components
             }
 
             if (Snap)
-                Owner.SnapToGrid(SnapGridOffset.Center, Owner.EntityManager);
+                Owner.SnapToGrid(Owner.EntityManager);
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BeforeAnchoredEvent(user, utilizing), false);
+
+            _physicsComponent.BodyType = BodyType.Static;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredEvent(user, utilizing), false);
 
             return true;
         }
@@ -100,15 +108,21 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryUnAnchor(IEntity user, IEntity utilizing)
         {
-            if (!(await Valid(user, utilizing, force)))
+            if (!(await Valid(user, utilizing, false)))
             {
                 return false;
             }
 
-            var physics = Owner.GetComponent<IPhysBody>();
-            physics.BodyType = BodyType.Dynamic;
+            if (_physicsComponent == null)
+                return false;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BeforeUnanchoredEvent(user, utilizing), false);
+
+            _physicsComponent.BodyType = BodyType.Dynamic;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredEvent(user, utilizing), false);
 
             return true;
         }
@@ -117,30 +131,88 @@ namespace Content.Server.GameObjects.Components
         ///     Tries to toggle the anchored status of this component's owner.
         /// </summary>
         /// <param name="user">The entity doing the unanchoring</param>
-        /// <param name="utilizing">The tool being used, if any</param>
-        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <param name="utilizing">The tool being used</param>
         /// <returns>true if toggled, false otherwise</returns>
-        private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryToggleAnchor(IEntity user, IEntity utilizing)
         {
-            if (!Owner.TryGetComponent(out IPhysBody? physics))
-            {
+            if (_physicsComponent == null)
                 return false;
-            }
 
-            return physics.BodyType == BodyType.Static ?
-                await TryUnAnchor(user, utilizing, force) :
-                await TryAnchor(user, utilizing, force);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponent<PhysicsComponent>();
+            return _physicsComponent.BodyType == BodyType.Static ?
+                await TryUnAnchor(user, utilizing) :
+                await TryAnchor(user, utilizing);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return await TryToggleAnchor(eventArgs.User, eventArgs.Using);
         }
+    }
+
+    public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs
+    {
+        public IEntity User { get; }
+        public IEntity Tool { get; }
+
+        /// <summary>
+        ///     Extra delay to add to the do_after.
+        ///     Add to this, don't replace it.
+        ///     Output parameter.
+        /// </summary>
+        public float Delay { get; set; } = 0f;
+
+        protected BaseAnchoredAttemptEvent(IEntity user, IEntity tool)
+        {
+            User = user;
+            Tool = tool;
+        }
+    }
+
+    public class AnchorAttemptEvent : BaseAnchoredAttemptEvent
+    {
+        public AnchorAttemptEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    public class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
+    {
+        public UnanchorAttemptEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    public abstract class BaseAnchoredEvent : EntityEventArgs
+    {
+        public IEntity User { get; }
+        public IEntity Tool { get; }
+
+        protected BaseAnchoredEvent(IEntity user, IEntity tool)
+        {
+            User = user;
+            Tool = tool;
+        }
+    }
+
+    /// <summary>
+    ///     Raised just before the entity's body type is changed.
+    /// </summary>
+    public class BeforeAnchoredEvent : BaseAnchoredEvent
+    {
+        public BeforeAnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    public class AnchoredEvent : BaseAnchoredEvent
+    {
+        public AnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    /// <summary>
+    ///     Raised just before the entity's body type is changed.
+    /// </summary>
+    public class BeforeUnanchoredEvent : BaseAnchoredEvent
+    {
+        public BeforeUnanchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+    }
+
+    public class UnanchoredEvent : BaseAnchoredEvent
+    {
+        public UnanchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
     }
 }

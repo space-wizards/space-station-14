@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -18,7 +19,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -59,6 +59,9 @@ namespace Content.Server.GameObjects.Components.Construction
         public ConstructionGraphEdge? Edge { get; private set; } = null;
 
         public IReadOnlyCollection<string> Containers => _containers;
+
+        [ViewVariables]
+        int IInteractUsing.Priority => 2;
 
         [ViewVariables]
         public ConstructionGraphNode? Target
@@ -262,11 +265,17 @@ namespace Content.Server.GameObjects.Components.Construction
                             break;
 
                         case MaterialConstructionGraphStep materialStep:
-                            if (materialStep.EntityValid(eventArgs.Using, out var sharedStack)
+                            if (materialStep.EntityValid(eventArgs.Using, out var stack)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
-                                var stack = (StackComponent) sharedStack;
-                                valid = stack.Split(materialStep.Amount, eventArgs.User.Transform.Coordinates, out entityUsing);
+                                var splitStack = new StackSplitEvent() {Amount = materialStep.Amount, SpawnPosition = eventArgs.User.Transform.Coordinates};
+                                Owner.EntityManager.EventBus.RaiseLocalEvent(stack.Owner.Uid, splitStack);
+
+                                if (splitStack.Result != null)
+                                {
+                                    entityUsing = splitStack.Result;
+                                    valid = true;
+                                }
                             }
 
                             break;
@@ -461,7 +470,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (string.IsNullOrEmpty(_graphIdentifier))
             {
-                Logger.Error($"Prototype {Owner.Prototype?.ID}'s construction component didn't have a graph identifier!");
+                Logger.Warning($"Prototype {Owner.Prototype?.ID}'s construction component didn't have a graph identifier!");
                 return;
             }
 

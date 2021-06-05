@@ -6,19 +6,19 @@
   components:
   - type: StorageFill
     contents:
-      - name: BananaSeeds
+      - id: BananaSeeds
         amount: 2
-      - name: EggySeeds
+      - id: EggySeeds
         amount: 2
-      - name: TowercapSeeds
+      - id: TowercapSeeds
         amount: 2
-#      - name: NettleSeeds
+#      - id: NettleSeeds
 #        amount: 2
-#      - name: RainbowBunchSeeds
+#      - id: RainbowBunchSeeds
 #        amount: 2
-#      - name: StrangeSeeds
+#      - id: StrangeSeeds
 #        amount: 2
-#      - name: BunchaOfMyceliumSeeds
+#      - id: BunchaOfMyceliumSeeds
 #        amount: 2
 
 - type: entity
@@ -29,21 +29,21 @@
   components:
   - type: StorageFill
     contents:
-      - name: HydroponicsToolMiniHoe
+      - id: HydroponicsToolMiniHoe
         amount: 1
-      - name: PlantBGoneSpray
+      - id: PlantBGoneSpray
         amount: 1
-      - name: WeedSpray
+      - id: WeedSpray
         amount: 1
-      - name: PestSpray
+      - id: PestSpray
         amount: 1
-      - name: HydroponicsToolScythe
+      - id: HydroponicsToolScythe
         amount: 1
-      - name: HydroponicsToolHatchet
+      - id: HydroponicsToolHatchet
         amount: 1
-      - name: ClothingOuterApronBotanist
+      - id: ClothingOuterApronBotanist
         amount: 1
-      - name: ClothingHandsGlovesLeather
+      - id: ClothingHandsGlovesLeather
         amount: 1
 
 - type: entity
@@ -54,33 +54,33 @@
   components:
   - type: StorageFill
     contents:
-#      - name: ChiliSeeds
+#      - id: ChiliSeeds
 #        amount: 1
-#      - name: CottonSeeds
+#      - id: CottonSeeds
 #        amount: 1
-#      - name: BerrySeeds
+#      - id: BerrySeeds
 #        amount: 1
-      - name: CornSeeds
+      - id: CornSeeds
         amount: 1
-      - name: EggplantSeeds
+      - id: EggplantSeeds
         amount: 1
-      - name: TomatoSeeds
+      - id: TomatoSeeds
         amount: 1
-#      - name: SoybeanSeeds
+#      - id: SoybeanSeeds
 #        amount: 1
-      - name: WheatSeeds
+      - id: WheatSeeds
         amount: 1
-#      - name: RiceSeeds
+#      - id: RiceSeeds
 #        amount: 1
-      - name: CarrotSeeds
+      - id: CarrotSeeds
         amount: 1
-#      - name: SunflowerSeeds
+#      - id: SunflowerSeeds
 #        amount: 1
-      - name: ChanterelleSeeds
+      - id: ChanterelleSeeds
         amount: 1
-      - name: PotatoSeeds
+      - id: PotatoSeeds
         amount: 1
-      - name: SugarcaneSeeds
+      - id: SugarcaneSeeds
         amount: 1
-      - name: LemonSeeds
+      - id: LemonSeeds
         amount: 1

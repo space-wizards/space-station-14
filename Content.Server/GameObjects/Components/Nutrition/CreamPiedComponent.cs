@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class CreamPiedComponent : SharedCreamPiedComponent, IReagentReaction, IThrowCollide
+    public class CreamPiedComponent : SharedCreamPiedComponent, IThrowCollide
     {
         private bool _creamPied;
 
@@ -36,19 +36,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if(CreamPied)
                 CreamPied = false;
-        }
-
-        ReagentUnit IReagentReaction.ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
-        {
-            switch (reagent.ID)
-            {
-                case "chem.SpaceCleaner":
-                case "chem.Water":
-                    Wash();
-                    break;
-            }
-
-            return ReagentUnit.Zero;
         }
 
         void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)

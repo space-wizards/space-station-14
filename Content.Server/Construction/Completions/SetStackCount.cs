@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -19,14 +20,9 @@ namespace Content.Server.Construction.Completions
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted) return;
-            if(!entity.TryGetComponent(out StackComponent? stackComponent)) return;
+            if(!entity.HasComponent<StackComponent>()) return;
 
-            stackComponent.Count = Math.Min(stackComponent.MaxCount, Amount);
-
-            if (Amount > stackComponent.MaxCount)
-            {
-                Logger.Warning("StackCount is bigger than maximum stack capacity, for entity " + entity.Name);
-            }
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new StackChangeCountEvent(Amount), false);
         }
     }
 }

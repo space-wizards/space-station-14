@@ -13,8 +13,10 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -36,6 +38,8 @@ namespace Content.Server.GameObjects.Components.PA
     [RegisterComponent]
     public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override string Name => "ParticleAcceleratorControlBox";
 
         [ViewVariables]
@@ -44,7 +48,7 @@ namespace Content.Server.GameObjects.Components.PA
         /// <summary>
         ///     Power receiver for the control console itself.
         /// </summary>
-        [ViewVariables] private PowerReceiverComponent? _powerReceiverComponent;
+        [ViewVariables] private PowerReceiverComponent _powerReceiverComponent = default!;
 
         [ViewVariables] private ParticleAcceleratorFuelChamberComponent? _partFuelChamber;
         [ViewVariables] private ParticleAcceleratorEndCapComponent? _partEndCap;
@@ -104,12 +108,9 @@ namespace Content.Server.GameObjects.Components.PA
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (!Owner.TryGetComponent(out _powerReceiverComponent))
-            {
-                Logger.Error("ParticleAcceleratorControlBox was created without PowerReceiverComponent");
-                return;
-            }
-            _powerReceiverComponent.Load = 250;
+            Owner.EnsureComponent(out _powerReceiverComponent);
+
+            _powerReceiverComponent!.Load = 250;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -219,14 +220,14 @@ namespace Content.Server.GameObjects.Components.PA
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
             if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
             {
-                wires.OpenInterface(actor.playerSession);
+                wires.OpenInterface(actor.PlayerSession);
             }
             else
             {
@@ -235,7 +236,7 @@ namespace Content.Server.GameObjects.Components.PA
                     return;
                 }
 
-                UserInterface?.Toggle(actor.playerSession);
+                UserInterface?.Toggle(actor.PlayerSession);
                 UpdateUI();
             }
         }
@@ -381,11 +382,13 @@ namespace Content.Server.GameObjects.Components.PA
             _partEmitterRight = null;
 
             // Find fuel chamber first by scanning cardinals.
-            if (SnapGrid != null)
+            if (Owner.Transform.Anchored)
             {
-                foreach (var maybeFuel in SnapGrid.GetCardinalNeighborCells())
+                var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+                var coords = Owner.Transform.Coordinates;
+                foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
-                    if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
                         break;
                     }
@@ -455,9 +458,11 @@ namespace Content.Server.GameObjects.Components.PA
         private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
             where T : ParticleAcceleratorPartComponent
         {
-            foreach (var ent in SnapGrid!.GetOffset(offset))
+            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var coords = Owner.Transform.Coordinates;
+            foreach (var ent in grid.GetOffset(coords, offset))
             {
-                if (ent.TryGetComponent(out part) && !part.Deleted)
+                if (Owner.EntityManager.ComponentManager.TryGetComponent(ent, out part) && !part.Deleted)
                 {
                     return true;
                 }

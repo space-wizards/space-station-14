@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Research
         ///     Whether new recipes can be added to this database or not.
         /// </summary>
         [ViewVariables]
-        [field: DataField("static")]
+        [DataField("static")]
         public bool Static { get; private set; } = false;
 
         public override ComponentState GetComponentState(ICommonSession player)

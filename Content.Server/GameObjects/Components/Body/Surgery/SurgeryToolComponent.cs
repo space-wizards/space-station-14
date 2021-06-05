@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return false;
             }
@@ -69,20 +69,20 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
 
-                foreach (var (key, value) in body.Parts)
+                foreach (var (part, slot) in body.Parts)
                 {
                     // For each limb in the target, add it to our cache if it is a valid option.
-                    if (value.SurgeryCheck(_surgeryType))
+                    if (part.SurgeryCheck(_surgeryType))
                     {
-                        _optionsCache.Add(_idHash, value);
-                        toSend.Add(key + ": " + value.Name, _idHash++);
+                        _optionsCache.Add(_idHash, part);
+                        toSend.Add(slot.Id + ": " + part.Name, _idHash++);
                     }
                 }
 
                 if (_optionsCache.Count > 0)
                 {
-                    OpenSurgeryUI(actor.playerSession);
-                    UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
+                    OpenSurgeryUI(actor.PlayerSession);
+                    UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
                     PerformerCache = eventArgs.User; // Also, cache the data.
                     BodyCache = body;
                 }
@@ -131,8 +131,8 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             if (_optionsCache.Count > 0 && PerformerCache != null)
             {
-                OpenSurgeryUI(PerformerCache.GetComponent<BasicActorComponent>().playerSession);
-                UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<BasicActorComponent>().playerSession,
+                OpenSurgeryUI(PerformerCache.GetComponent<ActorComponent>().PlayerSession);
+                UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<ActorComponent>().PlayerSession,
                     toSend);
                 _callbackCache = callback;
             }
@@ -214,12 +214,12 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out IActorComponent? actor))
+                !PerformerCache.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
 
-            CloseSurgeryUI(actor.playerSession);
+            CloseSurgeryUI(actor.PlayerSession);
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject) ||
                 BodyCache == null)
@@ -248,13 +248,13 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 !_optionsCache.TryGetValue(key, out var targetObject) ||
                 targetObject is not MechanismComponent target ||
                 PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out IActorComponent? actor))
+                !PerformerCache.TryGetComponent(out ActorComponent? actor))
             {
                 NotUsefulAnymorePopup();
                 return;
             }
 
-            CloseSurgeryUI(actor.playerSession);
+            CloseSurgeryUI(actor.PlayerSession);
             _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
         }
 

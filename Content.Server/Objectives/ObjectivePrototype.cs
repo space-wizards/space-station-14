@@ -13,7 +13,7 @@ namespace Content.Server.Objectives
     public class ObjectivePrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [ViewVariables] [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";

@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
+            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.Coordinates);
             var tile = gam?.GetTile(Owner.Transform.Coordinates)?.Air;
             if (tile != null)
             {
@@ -185,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(Owner.EntityManager));
+            var gam = atmosSystem.GetGridAtmosphere(pos);
             var tile = gam.GetTile(pos)?.Air;
             if (tile == null)
             {
@@ -257,9 +257,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return true;
             }
 
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                OpenInterface(actor.playerSession, eventArgs.ClickLocation);
+                OpenInterface(actor.PlayerSession, eventArgs.ClickLocation);
             }
 
             return true;
@@ -269,17 +269,17 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                CloseInterface(actor.playerSession);
+                CloseInterface(actor.PlayerSession);
             }
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
-                ToggleInterface(actor.playerSession);
+                ToggleInterface(actor.PlayerSession);
                 return true;
             }
             return false;

@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -37,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 internals.AreInternalsWorking())
                 return;
 
+            var chemistry = EntitySystem.Get<ChemistrySystem>();
             var cloneSolution = SolutionContainerComponent.Solution.Clone();
             var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
@@ -44,8 +46,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
-                var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                transferSolution.RemoveReagent(reagentQuantity.ReagentId,reagent.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.Quantity));
+                chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 
             bloodstream.TryTransferSolution(transferSolution);

@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -7,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Map;
@@ -38,19 +40,26 @@ namespace Content.Server.GameObjects.Components.Power
                 return true;
             if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager), out var grid))
                 return true;
-            var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
-            var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
+            var snapPos = grid.TileIndicesFor(eventArgs.ClickLocation);
             if(grid.GetTileRef(snapPos).Tile.IsEmpty)
                 return true;
-            foreach (var snapComp in snapCell)
+            foreach (var anchored in grid.GetAnchoredEntities(snapPos))
             {
-                if (snapComp.Owner.TryGetComponent<WireComponent>(out var wire) && wire.WireType == _blockingWireType)
+                if (Owner.EntityManager.ComponentManager.TryGetComponent<WireComponent>(anchored, out var wire) && wire.WireType == _blockingWireType)
                 {
                     return true;
                 }
             }
-            if (Owner.TryGetComponent<StackComponent>(out var stack) && !stack.Use(1))
-                return true;
+
+            if (Owner.HasComponent<StackComponent>())
+            {
+                var stackUse = new StackUseEvent(){Amount = 1};
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
+
+                if(!stackUse.Result)
+                    return true;
+            }
+
             Owner.EntityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
             return true;
         }

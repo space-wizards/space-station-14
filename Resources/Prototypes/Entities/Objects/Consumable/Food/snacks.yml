@@ -1,0 +1,281 @@
+# Base
+
+- type: entity
+  parent: BaseItem
+  id: FoodSnackBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    netsync: false
+  - type: LoopingSound
+  - type: SolutionContainer
+    maxVol: 30 # Room for extra condiments
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    HeldPrefix: packet
+
+# Snacks
+
+# "Snacks" means food in a packet. Down the line this stuff can have multiple
+# reagents and shit for healing or different effects.
+
+- type: entity
+  name: boritos
+  parent: FoodSnackBase
+  id: FoodSnackBoritos
+  description: Crunchy, salty tortilla chips. You could probably make nachos with these.
+  components:
+  - type: Sprite
+    state: boritos
+  - type: Item
+    color: blue
+  - type: Food
+    trash: FoodPacketBoritosTrash
+
+- type: entity
+  name: cheesie honkers
+  parent: FoodSnackBase
+  id: FoodSnackCheesie
+  description: Bite sized cheesie snacks that will honk all over your mouth.
+  components:
+  - type: Sprite
+    state: cheesiehonkers
+  - type: Item
+    color: orange
+  - type: Food
+    trash: FoodPacketCheesieTrash
+
+- type: entity
+  name: chips
+  parent: FoodSnackBase
+  id: FoodSnackChips
+  description: Commander Riker's What-The-Crisps.
+  components:
+  - type: Sprite
+    state: chips
+  - type: Item
+    color: green
+  - type: Food
+    trash: FoodPacketChipsTrash
+
+- type: entity
+  name: chocolate bar
+  parent: FoodSnackBase
+  id: FoodSnackChocolate
+  description: Tastes like cardboard.
+  components:
+  - type: Sprite
+    layers:
+      - state: chocolatebar-open
+      - state: chocolatebar
+  - type: Item
+    color: red
+  - type: Food
+    trash: FoodPacketChocolateTrash
+
+- type: entity
+  name: energy bar
+  parent: FoodSnackBase
+  id: FoodSnackEnergybar
+  description: An energy bar with a lot of punch.
+  components:
+  - type: Sprite
+    state: energybar
+  - type: Item
+    color: green
+  - type: Food
+    trash: FoodPacketEnergyTrash
+
+- type: entity
+  name: popcorn
+  parent: FoodSnackBase
+  id: FoodSnackPopcorn
+  description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
+  components:
+  - type: Sprite
+    state: popcorn
+  - type: Item
+    color: blue
+  - type: Food
+    trash: FoodPacketPopcornTrash
+
+- type: entity
+  name: 4no raisins
+  parent: FoodSnackBase
+  id: FoodSnackRaisins
+  description: Best raisins in the universe. Not sure why.
+  components:
+  - type: Sprite
+    state: raisins
+  - type: Item
+    color: red
+  - type: Food
+    trash: FoodPacketRaisinsTrash
+
+- type: entity
+  name: Sus Jerky
+  parent: FoodSnackBase
+  id: FoodSnackSus
+  description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
+  components:
+  - type: Sprite
+    state: susjerky
+  - type: Item
+    color: red
+  - type: Food
+    trash: FoodPacketSusTrash
+
+- type: entity
+  name: syndi-cakes
+  parent: FoodSnackBase
+  id: FoodSnackSyndi
+  description: An extremely moist snack cake that tastes just as good after being nuked.
+  components:
+  - type: Sprite
+    state: syndicakes
+  - type: Item
+    color: white
+  - type: Food
+    trash: FoodPacketSyndiTrash
+
+# Trash
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: FoodPacketTrash
+  description: This is rubbish.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    netsync: false
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    HeldPrefix: packet
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketBoritosTrash
+  name: boritos bag
+  components:
+  - type: Sprite
+    state: boritos-trash
+  - type: Item
+    color: blue
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketCheesieTrash
+  name: cheesie honkers
+  components:
+  - type: Sprite
+    state: cheesiehonkers-trash
+  - type: Item
+    color: orange
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketChipsTrash
+  name: chips
+  components:
+  - type: Sprite
+    state: chips-trash
+  - type: Item
+    color: green
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketChocolateTrash
+  name: chocolate wrapper
+  components:
+  - type: Sprite
+    state: chocolatebar-trash
+  - type: Item
+    color: red
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketEnergyTrash
+  name: energybar wrapper
+  components:
+  - type: Sprite
+    state: energybar-trash
+  - type: Item
+    color: green
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketPistachioTrash
+  name: pistachios packet
+  components:
+  - type: Sprite
+    state: pistachio-trash
+  - type: Item
+    color: green
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketPopcornTrash
+  name: popcorn box
+  components:
+  - type: Sprite
+    state: popcorn-trash
+  - type: Item
+    state: blue
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketRaisinsTrash
+  name: 4no raisins
+  components:
+  - type: Sprite
+    state: raisins-trash
+  - type: Item
+    color: red
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketSemkiTrash
+  name: semki packet
+  components:
+  - type: Sprite
+    state: semki-trash
+  - type: Item
+    color: orange
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketSusTrash
+  name: sus jerky
+  components:
+  - type: Sprite
+    state: susjerky-trash
+  - type: Item
+    color: red
+
+- type: entity
+  abstract: true
+  parent: FoodPacketTrash
+  id: FoodPacketSyndiTrash
+  name: syndi-cakes box
+  components:
+  - type: Sprite
+    state: syndicakes-trash
+  - type: Item
+    color: white

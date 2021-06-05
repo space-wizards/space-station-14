@@ -1,0 +1,156 @@
+- type: cargoProduct
+  name: "bee crate"
+  id: livestockbee
+  description: "A crate containing a swarm of eight bees"
+  icon:
+    sprite: Mobs/Animals/bee.rsi
+    state: 0
+  product: CrateNPCBee
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "butterfly crate"
+  id: livestockbutterfly
+  description: "A crate containing five butterflies"
+  icon:
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  product: CrateNPCButterflies
+  cost: 1000
+  category: Livestock
+  group: market
+  
+- type: cargoProduct
+  name: "cat crate"
+  id: livestockcat
+  description: "A crate containing a single cat"
+  icon:
+    sprite: Mobs/Pets/cat.rsi
+    state: cat
+  product: CrateNPCCat
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "chicken crate"
+  id: livestockchicken
+  description: "A crate containing a four fully grown chickens"
+  icon:
+    sprite: Mobs/Animals/chicken.rsi
+    state: icon-1
+  product: CrateNPCChicken
+  cost: 1500
+  category: Livestock
+  group: market
+  
+- type: cargoProduct
+  name: "corgi crate"
+  id: livestockcorgi
+  description: "A crate containing a single corgi"
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: corgi
+  product: CrateNPCCorgi
+  cost: 1000
+  category: Livestock
+  group: market
+  
+- type: cargoProduct
+  name: "cow crate"
+  id: livestockcow
+  description: "A crate containing a single cow"
+  icon:
+    sprite: Mobs/Animals/cow.rsi
+    state: cow
+  product: CrateNPCCow
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "goat crate"
+  id: livestockgoat
+  description: "A crate containing a single goat"
+  icon:
+    sprite: Mobs/Animals/goat.rsi
+    state: goat
+  product: CrateNPCGoat
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "goose crate"
+  id: livestockgoose
+  description: "A crate containing two geese"
+  icon:
+    sprite: Mobs/Animals/goose.rsi
+    state: goose
+  product: CrateNPCGoose
+  cost: 1500
+  category: Livestock
+  group: market
+  
+- type: cargoProduct
+  name: "gorilla crate"
+  id: livestockgorilla
+  description: "A crate containing a single gorilla"
+  icon:
+    sprite: Mobs/Animals/gorilla.rsi
+    state: icon
+  product: CrateNPCGorilla
+  cost: 2000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "monkey cube crate"
+  id: livestockmonkeycube
+  description: "A crate containing three boxes of monkey cubes "
+  icon:
+    sprite: Mobs/Animals/monkey.rsi
+    state: monkey
+  product: CrateNPCMonkeyCube
+  cost: 1500
+  category: Livestock
+  group: market
+  
+- type: cargoProduct
+  name: "parrot crate"
+  id: livestockparrot
+  description: "A crate containing three parrots"
+  icon:
+    sprite: Mobs/Animals/parrot.rsi
+    state: parrot
+  product: CrateNPCParrot
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "penguin crate"
+  id: livestockpenguin
+  description: "A crate containing two penguins"
+  icon:
+    sprite: Mobs/Animals/penguin.rsi
+    state: penguin
+  product: CrateNPCPenguin
+  cost: 2000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "snake crate"
+  id: livestocksnake
+  description: "A crate containing three snakes"
+  icon:
+    sprite: Mobs/Animals/snake.rsi
+    state: snake
+  product: CrateNPCSnake
+  cost: 1000
+  category: Livestock
+  group: market
+  

@@ -22,22 +22,22 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             [DataField("behavior")] public ToolQuality Behavior { get; private set; } = ToolQuality.None;
 
-            [field: DataField("state")]
+            [DataField("state")]
             public string State { get; } = string.Empty;
 
-            [field: DataField("texture")]
+            [DataField("texture")]
             public string Texture { get; } = string.Empty;
 
-            [field: DataField("sprite")]
+            [DataField("sprite")]
             public string Sprite { get; } = string.Empty;
 
-            [field: DataField("useSound")]
+            [DataField("useSound")]
             public string Sound { get; } = string.Empty;
 
-            [field: DataField("useSoundCollection")]
+            [DataField("useSoundCollection")]
             public string SoundCollection { get; } = string.Empty;
 
-            [field: DataField("changeSound")]
+            [DataField("changeSound")]
             public string ChangeSound { get; } = string.Empty;
         }
 

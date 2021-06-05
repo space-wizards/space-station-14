@@ -13,8 +13,12 @@ namespace Content.Client.Input
         {
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
+            common.AddFunction(ContentKeyFunctions.FocusLocalChat);
+            common.AddFunction(ContentKeyFunctions.FocusRadio);
             common.AddFunction(ContentKeyFunctions.FocusOOC);
             common.AddFunction(ContentKeyFunctions.FocusAdminChat);
+            common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
+            common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenInfo);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
@@ -37,7 +41,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
             human.AddFunction(ContentKeyFunctions.SmartEquipBelt);
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
-            human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
             human.AddFunction(ContentKeyFunctions.WideAttack);
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);

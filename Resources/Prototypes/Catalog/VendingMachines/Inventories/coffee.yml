@@ -1,0 +1,9 @@
+﻿- type: vendingMachineInventory
+  id: HotDrinksMachineInventory
+  name: Hot drinks machine
+  description: "Served boiling so it stays hot all shift!"
+  animationDuration: 3.4
+  spriteName: coffee
+  startingInventory:
+    DrinkHotCoffee: 20
+    DrinkTeaGlass: 20

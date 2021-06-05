@@ -44,6 +44,8 @@
       - state: beakerlarge1  
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainer
     maxVol: 100
   - type: Appearance

@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
@@ -31,7 +32,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
-        private SpaceGridAtmosphereComponent _spaceAtmos = default!;
         private GridTileLookupSystem? _gridTileLookup = null;
 
         /// <summary>
@@ -51,10 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
-            _spaceAtmos = new SpaceGridAtmosphereComponent();
-            _spaceAtmos.Initialize();
-            IoCManager.InjectDependencies(_spaceAtmos);
-
+            _mapManager.MapCreated += OnMapCreated;
             _mapManager.TileChanged += OnTileChanged;
 
             Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
@@ -65,17 +62,25 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Required for airtight components.
-            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            SubscribeLocalEvent<RotateEvent>(RotateEvent);
+            SubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
 
             _cfg.OnValueChanged(CCVars.SpaceWind, OnSpaceWindChanged, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, OnMonstermosEqualizationChanged, true);
+            _cfg.OnValueChanged(CCVars.Superconduction, OnSuperconductionChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, OnAtmosMaxProcessTimeChanged, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, OnAtmosTickRateChanged, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, OnExcitedGroupsSpaceIsAllConsumingChanged, true);
         }
 
+        private static void HandleSnapGridMove(EntityUid uid, AirtightComponent component, SnapGridPositionChangedEvent args)
+        {
+            component.OnTransformMove();
+        }
+
         public bool SpaceWind { get; private set; }
         public bool MonstermosEqualization { get; private set; }
+        public bool Superconduction { get; private set; }
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
@@ -100,6 +105,11 @@ namespace Content.Server.GameObjects.EntitySystems
             MonstermosEqualization = obj;
         }
 
+        private void OnSuperconductionChanged(bool obj)
+        {
+            Superconduction = obj;
+        }
+
         private void OnSpaceWindChanged(bool obj)
         {
             SpaceWind = obj;
@@ -109,7 +119,10 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+            _mapManager.MapCreated -= OnMapCreated;
+
+            UnsubscribeLocalEvent<RotateEvent>();
+            UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
         private void RotateEvent(RotateEvent ev)
@@ -120,18 +133,39 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public IGridAtmosphereComponent GetGridAtmosphere(GridId gridId)
+        public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
             if (!gridId.IsValid())
+                return null;
+
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
+                return null;
+
+            return ComponentManager.TryGetComponent(grid.GridEntityId, out IGridAtmosphereComponent? gridAtmosphere)
+                ? gridAtmosphere : null;
+        }
+
+        public IGridAtmosphereComponent GetGridAtmosphere(EntityCoordinates coordinates)
+        {
+            return GetGridAtmosphere(coordinates.ToMap(EntityManager));
+        }
+
+        public IGridAtmosphereComponent GetGridAtmosphere(MapCoordinates coordinates)
+        {
+            if (coordinates.MapId == MapId.Nullspace)
             {
-                return _spaceAtmos;
+                throw new ArgumentException($"Coordinates cannot be in nullspace!", nameof(coordinates));
             }
 
-            var grid = _mapManager.GetGrid(gridId);
+            if (_mapManager.TryFindGridAt(coordinates, out var grid))
+            {
+                if (ComponentManager.TryGetComponent(grid.GridEntityId, out IGridAtmosphereComponent? atmos))
+                {
+                    return atmos;
+                }
+            }
 
-            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return _spaceAtmos;
-
-            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : _spaceAtmos;
+            return _mapManager.GetMapEntity(coordinates.MapId).GetComponent<IGridAtmosphereComponent>();
         }
 
         public override void Update(float frameTime)
@@ -157,7 +191,18 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            GetGridAtmosphere(eventArgs.NewTile.GridIndex)?.Invalidate(eventArgs.NewTile.GridIndices);
+            GetGridAtmosphere(eventArgs.NewTile.GridPosition(_mapManager))?.Invalidate(eventArgs.NewTile.GridIndices);
+        }
+
+        private void OnMapCreated(object? sender, MapEventArgs e)
+        {
+            if (e.Map == MapId.Nullspace)
+                return;
+
+            var map = _mapManager.GetMapEntity(e.Map);
+
+            if (!map.HasComponent<IGridAtmosphereComponent>())
+                map.AddComponent<SpaceGridAtmosphereComponent>();
         }
     }
 }

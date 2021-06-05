@@ -1,11 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using System;
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
@@ -13,11 +11,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalUnitComponent : Component, ICollideSpecial, IDragDropOn
+    public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
     {
         public override string Name => "DisposalUnit";
-
-        private readonly List<IEntity> _intersecting = new();
 
         [ViewVariables]
         public bool Anchored =>
@@ -72,43 +68,9 @@ namespace Content.Shared.GameObjects.Components.Disposal
             Pressurizing
         }
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collided)
-        {
-            if (IsExiting(collided.Entity)) return true;
-            if (!Owner.TryGetComponent(out IContainerManager? manager)) return false;
-
-            if (manager.ContainsEntity(collided.Entity))
-            {
-                if (!_intersecting.Contains(collided.Entity))
-                {
-                    _intersecting.Add(collided.Entity);
-                }
-                return true;
-            }
-            return false;
-        }
-
         public virtual void Update(float frameTime)
         {
-            UpdateIntersecting();
-        }
-
-        private bool IsExiting(IEntity entity)
-        {
-            return _intersecting.Contains(entity);
-        }
-
-        private void UpdateIntersecting()
-        {
-            if(_intersecting.Count == 0) return;
-
-            for (var i = _intersecting.Count - 1; i >= 0; i--)
-            {
-                var entity = _intersecting[i];
-
-                if (!Owner.EntityManager.IsIntersecting(entity, Owner))
-                    _intersecting.RemoveAt(i);
-            }
+            return;
         }
 
         [Serializable, NetSerializable]
@@ -168,7 +130,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedStorableComponent? storable) &&
+            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
                 !entity.HasComponent<IBody>())
             {
                 return false;
@@ -182,15 +144,14 @@ namespace Content.Shared.GameObjects.Components.Disposal
                     return false;
                 }
             }
-
             return true;
         }
 
-        public virtual bool CanDragDropOn(DragDropEventArgs eventArgs)
+        public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
             return CanInsert(eventArgs.Dragged);
         }
 
-        public abstract bool DragDropOn(DragDropEventArgs eventArgs);
+        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

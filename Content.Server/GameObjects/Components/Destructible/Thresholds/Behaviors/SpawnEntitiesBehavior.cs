@@ -1,8 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -31,16 +32,15 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behavior
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
-                    var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates);
-                    var stack = spawned.GetComponent<StackComponent>();
-                    stack.Count = count;
+                    var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
+                    owner.EntityManager.EventBus.RaiseLocalEvent(spawned.Uid, new StackChangeCountEvent(count), false);
                     spawned.RandomOffset(0.5f);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates);
+                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
                         spawned.RandomOffset(0.5f);
                     }
                 }

@@ -71,19 +71,22 @@ namespace Content.IntegrationTests.Tests
                     prototypes.Add(prototype);
                 }
 
-                //Iterate list of prototypes to spawn
-                foreach (var prototype in prototypes)
+                Assert.Multiple(() =>
                 {
-                    Assert.DoesNotThrow(() =>
-                        {
-                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
-                            testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
-                            server.RunTicks(2);
-                            Assert.That(testEntity.Initialized);
-                            entityMan.DeleteEntity(testEntity.Uid);
-                        }, "Entity '{0}' threw an exception.",
-                        prototype.ID);
-                }
+                    //Iterate list of prototypes to spawn
+                    foreach (var prototype in prototypes)
+                    {
+                        Assert.DoesNotThrow(() =>
+                            {
+                                Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
+                                testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
+                                server.RunTicks(2);
+                                Assert.That(testEntity.Initialized);
+                                entityMan.DeleteEntity(testEntity.Uid);
+                            }, "Entity '{0}' threw an exception.",
+                            prototype.ID);
+                    }
+                });
             });
 
             await server.WaitIdleAsync();
@@ -99,14 +102,19 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
-                "MapGrid"
+                "MapGrid",
+                "Actor", // We aren't testing actor components, those need their player session set.
             };
 
             var testEntity = @"
 - type: entity
   id: AllComponentsOneToOneDeleteTestEntity";
 
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption {ExtraPrototypes = testEntity});
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ExtraPrototypes = testEntity,
+                FailureLogLevel = LogLevel.Error
+            });
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -142,43 +150,46 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                var testLocation = grid.ToCoordinates();
-
-                foreach (var type in componentFactory.AllRegisteredTypes)
+                Assert.Multiple(() =>
                 {
-                    var component = (Component) componentFactory.GetComponent(type);
+                    var testLocation = grid.ToCoordinates();
 
-                    // If this component is ignored
-                    if (skipComponents.Contains(component.Name))
+                    foreach (var type in componentFactory.AllRegisteredTypes)
                     {
-                        continue;
-                    }
+                        var component = (Component) componentFactory.GetComponent(type);
 
-                    var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
-
-                    Assert.That(entity.Initialized);
-
-                    // The component may already exist if it is a mandatory component
-                    // such as MetaData or Transform
-                    if (entity.HasComponent(type))
-                    {
-                        continue;
-                    }
-
-                    component.Owner = entity;
-
-                    Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
-
-                    Assert.DoesNotThrow(() =>
+                        // If this component is ignored
+                        if (skipComponents.Contains(component.Name))
                         {
-                            entityManager.ComponentManager.AddComponent(entity, component);
-                        }, "Component '{0}' threw an exception.",
-                        component.Name);
+                            continue;
+                        }
 
-                    server.RunTicks(2);
+                        var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
-                    entityManager.DeleteEntity(entity.Uid);
-                }
+                        Assert.That(entity.Initialized);
+
+                        // The component may already exist if it is a mandatory component
+                        // such as MetaData or Transform
+                        if (entity.HasComponent(type))
+                        {
+                            continue;
+                        }
+
+                        component.Owner = entity;
+
+                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+
+                        Assert.DoesNotThrow(() =>
+                            {
+                                entityManager.ComponentManager.AddComponent(entity, component);
+                            }, "Component '{0}' threw an exception.",
+                            component.Name);
+
+                        server.RunTicks(2);
+
+                        entityManager.DeleteEntity(entity.Uid);
+                    }
+                });
             });
 
             await server.WaitIdleAsync();
@@ -194,14 +205,19 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
-                "MapGrid"
+                "MapGrid",
+                "Actor", // We aren't testing actor components, those need their player session set.
             };
 
             var testEntity = @"
 - type: entity
   id: AllComponentsOneEntityDeleteTestEntity";
 
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption {ExtraPrototypes = testEntity});
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            {
+                ExtraPrototypes = testEntity,
+                FailureLogLevel = LogLevel.Error
+            });
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -271,44 +287,46 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                foreach (var distinct in distinctComponents)
+                Assert.Multiple(() =>
                 {
-                    var testLocation = grid.ToCoordinates();
-                    var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
-
-                    Assert.That(entity.Initialized);
-
-                    foreach (var type in distinct.components)
+                    foreach (var distinct in distinctComponents)
                     {
-                        var component = (Component) componentFactory.GetComponent(type);
+                        var testLocation = grid.ToCoordinates();
+                        var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
-                        // If the entity already has this component, if it was ensured or added by another
-                        if (entity.HasComponent(component.GetType()))
+                        Assert.That(entity.Initialized);
+
+                        foreach (var type in distinct.components)
                         {
-                            continue;
-                        }
+                            var component = (Component) componentFactory.GetComponent(type);
 
-                        // If this component is ignored
-                        if (skipComponents.Contains(component.Name))
-                        {
-                            continue;
-                        }
-
-                        component.Owner = entity;
-
-                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
-
-                        Assert.DoesNotThrow(() =>
+                            // If the entity already has this component, if it was ensured or added by another
+                            if (entity.HasComponent(component.GetType()))
                             {
-                                entityManager.ComponentManager.AddComponent(entity, component);
-                            }, "Component '{0}' threw an exception.",
-                            component.Name);
+                                continue;
+                            }
+
+                            // If this component is ignored
+                            if (skipComponents.Contains(component.Name))
+                            {
+                                continue;
+                            }
+
+                            component.Owner = entity;
+
+                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+
+                            Assert.DoesNotThrow(() =>
+                                {
+                                    entityManager.ComponentManager.AddComponent(entity, component);
+                                }, "Component '{0}' threw an exception.",
+                                component.Name);
+                        }
+
+                        server.RunTicks(2);
+                        entityManager.DeleteEntity(entity.Uid);
                     }
-
-                    server.RunTicks(2);
-
-                    entityManager.DeleteEntity(entity.Uid);
-                }
+                });
             });
 
             await server.WaitIdleAsync();
