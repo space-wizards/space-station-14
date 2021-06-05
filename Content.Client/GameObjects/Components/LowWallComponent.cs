@@ -28,49 +28,29 @@ namespace Content.Client.GameObjects.Components
 
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        public CornerFill LastCornerNE { get; private set; }
-        public CornerFill LastCornerSE { get; private set; }
-        public CornerFill LastCornerSW { get; private set; }
-        public CornerFill LastCornerNW { get; private set; }
-
-        [ViewVariables] private IEntity? _overlayEntity;
+        [ViewVariables]
+        public CornerFill LastWallCornerNE { get; private set; }
+        [ViewVariables]
+        public CornerFill LastWallCornerSE { get; private set; }
+        [ViewVariables]
+        public CornerFill LastWallCornerSW { get; private set; }
+        [ViewVariables]
+        public CornerFill LastWallCornerNW { get; private set; }
 
         [ViewVariables]
-        private ISpriteComponent? _overlaySprite;
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            _overlayEntity = Owner.EntityManager.SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
-            _overlayEntity.Transform.AttachParent(Owner);
-            _overlayEntity.Transform.LocalPosition = Vector2.Zero;
-
-            _overlaySprite = _overlayEntity.GetComponent<ISpriteComponent>();
-
-            var overState0 = $"{StateBase}over_0";
-            _overlaySprite.LayerMapSet(OverCornerLayers.SE, _overlaySprite.AddLayerState(overState0));
-            _overlaySprite.LayerSetDirOffset(OverCornerLayers.SE, DirectionOffset.None);
-            _overlaySprite.LayerMapSet(OverCornerLayers.NE, _overlaySprite.AddLayerState(overState0));
-            _overlaySprite.LayerSetDirOffset(OverCornerLayers.NE, DirectionOffset.CounterClockwise);
-            _overlaySprite.LayerMapSet(OverCornerLayers.NW, _overlaySprite.AddLayerState(overState0));
-            _overlaySprite.LayerSetDirOffset(OverCornerLayers.NW, DirectionOffset.Flip);
-            _overlaySprite.LayerMapSet(OverCornerLayers.SW, _overlaySprite.AddLayerState(overState0));
-            _overlaySprite.LayerSetDirOffset(OverCornerLayers.SW, DirectionOffset.Clockwise);
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            _overlayEntity?.Delete();
-        }
+        public CornerFill LastOverlayCornerNE { get; private set; }
+        [ViewVariables]
+        public CornerFill LastOverlayCornerSE { get; private set; }
+        [ViewVariables]
+        public CornerFill LastOverlayCornerSW { get; private set; }
+        [ViewVariables]
+        public CornerFill LastOverlayCornerNW { get; private set; }
 
         internal override void CalculateNewSprite()
         {
             base.CalculateNewSprite();
 
-            if (Sprite == null || !Owner.Transform.Anchored || _overlaySprite == null)
+            if (Sprite == null || !Owner.Transform.Anchored)
             {
                 return;
             }
@@ -88,119 +68,119 @@ namespace Content.Client.GameObjects.Components
             var (nw, nwl) = MatchingWall(grid.GetInDir(coords, Direction.NorthWest));
 
             // ReSharper disable InconsistentNaming
-            var cornerNE = CornerFill.None;
-            var cornerSE = CornerFill.None;
-            var cornerSW = CornerFill.None;
-            var cornerNW = CornerFill.None;
+            var wallCornerNE = CornerFill.None;
+            var wallCornerSE = CornerFill.None;
+            var wallCornerSW = CornerFill.None;
+            var wallCornerNW = CornerFill.None;
 
-            var lowCornerNE = CornerFill.None;
-            var lowCornerSE = CornerFill.None;
-            var lowCornerSW = CornerFill.None;
-            var lowCornerNW = CornerFill.None;
+            var overlayCornerNE = CornerFill.None;
+            var overlayCornerSE = CornerFill.None;
+            var overlayCornerSW = CornerFill.None;
+            var overlayCornerNW = CornerFill.None;
             // ReSharper restore InconsistentNaming
 
             if (n)
             {
-                cornerNE |= CornerFill.CounterClockwise;
-                cornerNW |= CornerFill.Clockwise;
+                wallCornerNE |= CornerFill.CounterClockwise;
+                wallCornerNW |= CornerFill.Clockwise;
 
-                if (!nl)
+                if (!nl && !e && !w)
                 {
-                    lowCornerNE |= CornerFill.CounterClockwise;
-                    lowCornerNW |= CornerFill.Clockwise;
+                    overlayCornerNE |= CornerFill.CounterClockwise;
+                    overlayCornerNW |= CornerFill.Clockwise;
                 }
             }
 
             if (ne)
             {
-                cornerNE |= CornerFill.Diagonal;
+                wallCornerNE |= CornerFill.Diagonal;
 
                 if (!nel && (nl || el || n && e))
                 {
-                    lowCornerNE |= CornerFill.Diagonal;
+                    overlayCornerNE |= CornerFill.Diagonal;
                 }
             }
 
             if (e)
             {
-                cornerNE |= CornerFill.Clockwise;
-                cornerSE |= CornerFill.CounterClockwise;
+                wallCornerNE |= CornerFill.Clockwise;
+                wallCornerSE |= CornerFill.CounterClockwise;
 
                 if (!el)
                 {
-                    lowCornerNE |= CornerFill.Clockwise;
-                    lowCornerSE |= CornerFill.CounterClockwise;
+                    overlayCornerNE |= CornerFill.Clockwise;
+                    overlayCornerSE |= CornerFill.CounterClockwise;
                 }
             }
 
             if (se)
             {
-                cornerSE |= CornerFill.Diagonal;
+                wallCornerSE |= CornerFill.Diagonal;
 
                 if (!sel && (sl || el || s && e))
                 {
-                    lowCornerSE |= CornerFill.Diagonal;
+                    overlayCornerSE |= CornerFill.Diagonal;
                 }
             }
 
             if (s)
             {
-                cornerSE |= CornerFill.Clockwise;
-                cornerSW |= CornerFill.CounterClockwise;
+                wallCornerSE |= CornerFill.Clockwise;
+                wallCornerSW |= CornerFill.CounterClockwise;
 
                 if (!sl)
                 {
-                    lowCornerSE |= CornerFill.Clockwise;
-                    lowCornerSW |= CornerFill.CounterClockwise;
+                    overlayCornerSE |= CornerFill.Clockwise;
+                    overlayCornerSW |= CornerFill.CounterClockwise;
                 }
             }
 
             if (sw)
             {
-                cornerSW |= CornerFill.Diagonal;
+                wallCornerSW |= CornerFill.Diagonal;
 
                 if (!swl && (sl || wl || s && w))
                 {
-                    lowCornerSW |= CornerFill.Diagonal;
+                    overlayCornerSW |= CornerFill.Diagonal;
                 }
             }
 
             if (w)
             {
-                cornerSW |= CornerFill.Clockwise;
-                cornerNW |= CornerFill.CounterClockwise;
+                wallCornerSW |= CornerFill.Clockwise;
+                wallCornerNW |= CornerFill.CounterClockwise;
 
                 if (!wl)
                 {
-                    lowCornerSW |= CornerFill.Clockwise;
-                    lowCornerNW |= CornerFill.CounterClockwise;
+                    overlayCornerSW |= CornerFill.Clockwise;
+                    overlayCornerNW |= CornerFill.CounterClockwise;
                 }
             }
 
             if (nw)
             {
-                cornerNW |= CornerFill.Diagonal;
+                wallCornerNW |= CornerFill.Diagonal;
 
                 if (!nwl && (nl || wl || n && w))
                 {
-                    lowCornerNW |= CornerFill.Diagonal;
+                    overlayCornerNW |= CornerFill.Diagonal;
                 }
             }
 
-            Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
-            Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
-            Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) cornerSW}");
-            Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
+            Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) wallCornerNE}");
+            Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) wallCornerSE}");
+            Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) wallCornerSW}");
+            Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) wallCornerNW}");
 
-            _overlaySprite.LayerSetState(OverCornerLayers.NE, $"{StateBase}over_{(int) lowCornerNE}");
-            _overlaySprite.LayerSetState(OverCornerLayers.SE, $"{StateBase}over_{(int) lowCornerSE}");
-            _overlaySprite.LayerSetState(OverCornerLayers.SW, $"{StateBase}over_{(int) lowCornerSW}");
-            _overlaySprite.LayerSetState(OverCornerLayers.NW, $"{StateBase}over_{(int) lowCornerNW}");
+            LastWallCornerNE = wallCornerNE;
+            LastWallCornerSE = wallCornerSE;
+            LastWallCornerSW = wallCornerSW;
+            LastWallCornerNW = wallCornerNW;
 
-            LastCornerNE = cornerNE;
-            LastCornerSE = cornerSE;
-            LastCornerSW = cornerSW;
-            LastCornerNW = cornerNW;
+            LastOverlayCornerNE = overlayCornerNE;
+            LastOverlayCornerSE = overlayCornerSE;
+            LastOverlayCornerSW = overlayCornerSW;
+            LastOverlayCornerNW = overlayCornerNW;
 
             foreach (var entity in grid.GetLocal(coords))
             {
@@ -228,15 +208,6 @@ namespace Content.Client.GameObjects.Components
             }
 
             return (false, false);
-        }
-
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private enum OverCornerLayers : byte
-        {
-            SE,
-            NE,
-            NW,
-            SW,
         }
     }
 }

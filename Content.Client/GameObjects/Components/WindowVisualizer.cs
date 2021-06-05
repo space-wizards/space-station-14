@@ -42,10 +42,10 @@ namespace Content.Client.GameObjects.Components
                     sprite.LayerSetVisible((WindowDamageLayers) val, true);
                 }
 
-                sprite.LayerSetState(WindowDamageLayers.DamageNE, $"{(int) lowWall.LastCornerNE}_{level}");
-                sprite.LayerSetState(WindowDamageLayers.DamageSE, $"{(int) lowWall.LastCornerSE}_{level}");
-                sprite.LayerSetState(WindowDamageLayers.DamageSW, $"{(int) lowWall.LastCornerSW}_{level}");
-                sprite.LayerSetState(WindowDamageLayers.DamageNW, $"{(int) lowWall.LastCornerNW}_{level}");
+                sprite.LayerSetState(WindowDamageLayers.DamageNE, $"{(int) lowWall.LastWallCornerNE}_{level}");
+                sprite.LayerSetState(WindowDamageLayers.DamageSE, $"{(int) lowWall.LastWallCornerSE}_{level}");
+                sprite.LayerSetState(WindowDamageLayers.DamageSW, $"{(int) lowWall.LastWallCornerSW}_{level}");
+                sprite.LayerSetState(WindowDamageLayers.DamageNW, $"{(int) lowWall.LastWallCornerNW}_{level}");
 
             }
         }
