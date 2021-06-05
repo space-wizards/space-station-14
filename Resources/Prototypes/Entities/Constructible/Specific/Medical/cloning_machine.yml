@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CloningPod
-  parent: BaseMachine
+  parent: BaseMachinePowered
   name: cloning pod
   description: A Cloning Pod. 50% reliable.
   components:

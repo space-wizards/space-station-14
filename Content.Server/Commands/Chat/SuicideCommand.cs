@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Server.Utility;
 using Content.Shared.Damage;
@@ -69,8 +70,10 @@ namespace Content.Server.Commands.Chat
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var owner = player.ContentData()?.Mind?.OwnedComponent?.Owner;
+            var mind = player.ContentData()?.Mind;
+            var owner = mind?.OwnedComponent?.Owner;
 
+            // This check also proves mind not-null for at the end when the mob is ghosted.
             if (owner == null)
             {
                 shell.WriteLine("You don't have a mind!");
@@ -121,9 +124,9 @@ namespace Content.Server.Commands.Chat
 
             dmgComponent.SetDamage(DamageType.Piercing, 200, owner);
 
-            // Prevent the player from returning to the body. Yes, this is an ugly hack.
-            var ghost = new Ghost(){CanReturn = false};
-            ghost.Execute(shell, argStr, Array.Empty<string>());
+            // Prevent the player from returning to the body.
+            // Note that mind cannot be null because otherwise owner would be null.
+            IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind!, false);
         }
     }
 }

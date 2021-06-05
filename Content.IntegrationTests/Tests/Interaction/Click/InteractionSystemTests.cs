@@ -404,14 +404,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Reflect(false)]
         private class TestInteractionSystem : EntitySystem
         {
-            public EntityEventHandler<AttackEvent> AttackEvent;
+            public EntityEventHandler<ClickAttackEvent> AttackEvent;
             public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
             public EntityEventHandler<InteractHandEvent> InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
-                SubscribeLocalEvent<AttackEvent>((e) => AttackEvent?.Invoke(e));
+                SubscribeLocalEvent<ClickAttackEvent>((e) => AttackEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
             }

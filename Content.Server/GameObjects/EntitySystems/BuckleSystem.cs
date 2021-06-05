@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -11,7 +12,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class BuckleSystem : EntitySystem
+    internal sealed class BuckleSystem : SharedBuckleSystem
     {
         public override void Initialize()
         {
@@ -40,9 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BuckleComponent>())
+            foreach (var (buckle, physics) in ComponentManager.EntityQuery<BuckleComponent, PhysicsComponent>())
             {
-                comp.Update();
+                buckle.Update(physics);
             }
         }
 

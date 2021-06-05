@@ -714,7 +714,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return await InteractDoAfter(user, used, target, clickLocation, false);
             else
                 return await InteractDoAfter(user, used, null, clickLocation, false);
-            return false;
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
@@ -725,16 +724,18 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!ActionBlockerSystem.CanAttack(user))
                 return;
 
+            IEntity? targetEnt = null;
+
             if (!wideAttack)
             {
                 // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
-                EntityManager.TryGetEntity(targetUid, out var target);
+                EntityManager.TryGetEntity(targetUid, out targetEnt);
 
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !user.IsInSameOrParentContainer(target))
+                if (targetEnt != null && !user.IsInSameOrParentContainer(targetEnt))
                 {
                     Logger.WarningS("system.interaction",
-                        $"User entity named {user.Name} clicked on object {target.Name} that isn't the parent, child, or in the same container");
+                        $"User entity named {user.Name} clicked on object {targetEnt.Name} that isn't the parent, child, or in the same container");
                     return;
                 }
 
@@ -743,8 +744,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     return;
             }
 
-            var eventArgs = new AttackEvent(user, coordinates, wideAttack, targetUid);
-
             // Verify user has a hand, and find what object he is currently holding in his active hand
             if (user.TryGetComponent<IHandsComponent>(out var hands))
             {
@@ -752,30 +751,18 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
                 if (item != null)
                 {
-                    RaiseLocalEvent(item.Uid, eventArgs, false);
-                    foreach (var attackComponent in item.GetAllComponents<IAttack>())
-                    {
-                        if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
-                            return;
-                    }
+                    if(wideAttack)
+                        RaiseLocalEvent(item.Uid, new WideAttackEvent(item, user, coordinates), false);
+                    else
+                        RaiseLocalEvent(item.Uid, new ClickAttackEvent(item, user, coordinates, targetUid), false);
                 }
                 else if (!wideAttack &&
-                    EntityManager.TryGetEntity(targetUid, out var targetEnt) &&
+                    (targetEnt != null || EntityManager.TryGetEntity(targetUid, out targetEnt)) &&
                     targetEnt.HasComponent<ItemComponent>())
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, targetEnt);
-                    return;
                 }
-            }
-
-            RaiseLocalEvent(user.Uid, eventArgs);
-            foreach (var attackComponent in user.GetAllComponents<IAttack>())
-            {
-                if (wideAttack)
-                    attackComponent.WideAttack(eventArgs);
-                else
-                    attackComponent.ClickAttack(eventArgs);
             }
         }
     }

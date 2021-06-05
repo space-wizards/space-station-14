@@ -48,15 +48,19 @@ namespace Content.Server.GameTicking
             }
 
             var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
-            var canReturn = false;
+            // Ok, so, this is the master place for the logic for if ghosting is "too cheaty" to allow returning.
+            // There's no reason at this time to move it to any other place, especially given that the 'side effects required' situations would also have to be moved.
+            // + If CharacterDeadPhysically applies, we're physically dead. Therefore, ghosting OK, and we can return (this is critical for gibbing)
+            //   Note that we could theoretically be ICly dead and still physically alive and vice versa.
+            //   (For example, a zombie could be dead ICly, but may retain memories and is definitely physically active)
+            // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
+            ///   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
+            //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
+            var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
             if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out IMobStateComponent? mobState))
             {
-                if (mobState.IsDead())
-                {
-                    canReturn = true;
-                }
-                else if (mobState.IsCritical())
+                if (mobState.IsCritical())
                 {
                     canReturn = true;
 
@@ -65,10 +69,6 @@ namespace Content.Server.GameTicking
                         //todo: what if they dont breathe lol
                         damageable.SetDamage(DamageType.Asphyxiation, 200, playerEntity);
                     }
-                }
-                else
-                {
-                    canReturn = false;
                 }
             }
 

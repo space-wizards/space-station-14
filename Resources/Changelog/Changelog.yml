@@ -1239,3 +1239,41 @@ Entries:
       incorrect client-side., type: Fix}
   id: 219
   time: '2021-05-30T06:54:38.996745+00:00'
+- author: TheDracheX
+  changes:
+  - {message: Fixed cargo points overflowing with large order quantities, type: Fix}
+  id: 220
+  time: '2021-06-01T04:45:28.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Render scale (low viewport resolution) will no longer alter singularity
+      intensity. This might reduce effect intensity, I am not sure.', type: Fix}
+  - {message: Singularity should actually not wander off into a corner this time.,
+    type: Fix}
+  - {message: Singularity generators and substations should be easier to pull around
+      through single-tile spaces., type: Fix}
+  id: 221
+  time: '2021-06-03T07:55:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You no longer technically 'go catatonic' when ghosting from a brain
+      or other 'effectively inanimate' object., type: Fix}
+  id: 222
+  time: '2021-06-03T08:03:19.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Throwing entities into disposal units now work, type: Fix}
+  - {message: Slims down disposal unit UI, type: Tweak}
+  - {message: Disposal mailing units for now, type: Remove}
+  id: 223
+  time: '2021-06-04T00:26:08.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: added several simple (and probably unbalanced) medicines., type: Add}
+  id: 224
+  time: '2021-06-05T06:23:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Dead bodies can be pulled again, type: Fix}
+  id: 225
+  time: '2021-06-05T07:23:24.0000000+00:00'
