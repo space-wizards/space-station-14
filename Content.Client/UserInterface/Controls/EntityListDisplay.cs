@@ -99,6 +99,39 @@ namespace Content.Client.UserInterface.Controls
         {
             var separation = (int) (ActualSeparation * UIScale);
 
+            #region Scroll
+            var cHeight = _totalHeight;
+            var vBarSize = _vScrollBar.DesiredSize.X;
+            var (sWidth, sHeight) = finalSize;
+
+            try
+            {
+                // Suppress events to avoid weird recursion.
+                _suppressScrollValueChanged = true;
+
+                if (sHeight < cHeight)
+                    sWidth -= vBarSize;
+
+                if (sHeight < cHeight)
+                {
+                    _vScrollBar.Visible = true;
+                    _vScrollBar.Page = sHeight;
+                    _vScrollBar.MaxValue = cHeight;
+                }
+                else
+                    _vScrollBar.Visible = false;
+            }
+            finally
+            {
+                _suppressScrollValueChanged = false;
+            }
+
+            if (_vScrollBar.Visible)
+            {
+                _vScrollBar.Arrange(UIBox2.FromDimensions(Vector2.Zero, finalSize));
+            }
+            #endregion
+
             #region Rebuild Children
             /*
              * Example:
@@ -182,7 +215,7 @@ namespace Content.Client.UserInterface.Controls
 
             #region Layout Children
             // Use pixel position
-            var finalPixel = (Vector2i) (finalSize * UIScale);
+            var pixelWidth = (int)(sWidth * UIScale);
 
             var offset = (int) -((scroll.Y - _topIndex * (_itemHeight + separation)) * UIScale);
             var first = true;
@@ -195,43 +228,10 @@ namespace Content.Client.UserInterface.Controls
                 first = false;
 
                 var size = child.DesiredPixelSize.Y;
-                var targetBox = new UIBox2i(0, offset, finalPixel.X, offset + size);
+                var targetBox = new UIBox2i(0, offset, pixelWidth, offset + size);
                 child.ArrangePixel(targetBox);
 
                 offset += size;
-            }
-            #endregion
-
-            #region Scroll
-            var cHeight = _totalHeight;
-            var vBarSize = _vScrollBar.DesiredSize.X;
-            var (sWidth, sHeight) = finalSize;
-
-            try
-            {
-                // Suppress events to avoid weird recursion.
-                _suppressScrollValueChanged = true;
-
-                if (sHeight < cHeight)
-                    sWidth -= vBarSize;
-
-                if (sHeight < cHeight)
-                {
-                    _vScrollBar.Visible = true;
-                    _vScrollBar.Page = sHeight;
-                    _vScrollBar.MaxValue = cHeight;
-                }
-                else
-                    _vScrollBar.Visible = false;
-            }
-            finally
-            {
-                _suppressScrollValueChanged = false;
-            }
-
-            if (_vScrollBar.Visible)
-            {
-                _vScrollBar.Arrange(UIBox2.FromDimensions(Vector2.Zero, finalSize));
             }
             #endregion
 
@@ -241,7 +241,7 @@ namespace Content.Client.UserInterface.Controls
         protected override Vector2 MeasureOverride(Vector2 availableSize)
         {
             _vScrollBar.Measure(availableSize);
-            //availableSize.X -= _vScrollBar.DesiredSize.X;
+            availableSize.X -= _vScrollBar.DesiredSize.X;
 
             var constraint = new Vector2(availableSize.X, float.PositiveInfinity);
 
