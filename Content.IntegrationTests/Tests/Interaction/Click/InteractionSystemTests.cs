@@ -20,24 +20,16 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Reflect(false)]
         private class TestAttackEntitySystem : EntitySystem
         {
-            public EntityEventHandler<AttackEvent> AttackEvent;
+            public EntityEventHandler<ClickAttackEvent> ClickAttackEvent;
             public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
             public EntityEventHandler<AttackHandEvent> InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
-                SubscribeLocalEvent<AttackEvent>((e) => AttackEvent?.Invoke(e));
+                SubscribeLocalEvent<ClickAttackEvent>((e) => ClickAttackEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<AttackHandEvent>((e) => InteractHandEvent?.Invoke(e));
-            }
-
-            public override void Shutdown()
-            {
-                base.Shutdown();
-                UnsubscribeLocalEvent<AttackEvent>();
-                UnsubscribeLocalEvent<InteractUsingEvent>();
-                UnsubscribeLocalEvent<AttackHandEvent>();
             }
         }
 
@@ -88,7 +80,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(entitySystemManager.TryGetEntitySystem<InteractionSystem>(out var interactionSystem));
 
                 Assert.That(entitySystemManager.TryGetEntitySystem<TestAttackEntitySystem>(out var testAttackEntitySystem));
-                testAttackEntitySystem.AttackEvent = (ev) =>
+                testAttackEntitySystem.ClickAttackEvent = (ev) =>
                 {
                     Assert.That(ev.Target, Is.EqualTo(containerEntity.Uid));
                     attack = true;
