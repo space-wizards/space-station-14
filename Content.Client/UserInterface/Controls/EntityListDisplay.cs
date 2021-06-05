@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Content.Client.UserInterface.Stylesheets;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.UserInterface.Controls
 {
     public class EntityListDisplay : Control
     {
@@ -166,7 +167,6 @@ namespace Content.Client.GameObjects.Components.Storage
                         var entity = _entityUids[i];
 
                         var button = new EntityContainerButton(entity);
-                        button.AddStyleClass(ContainerButton.StyleClassButtonThin);
                         button.OnPressed += OnItemPressed;
 
                         GenerateItem?.Invoke(entity, button);
@@ -184,7 +184,7 @@ namespace Content.Client.GameObjects.Components.Storage
             // Use pixel position
             var finalPixel = (Vector2i) (finalSize * UIScale);
 
-            var offset = (int) -(scroll.Y - (_topIndex * (_itemHeight + separation)) * UIScale);
+            var offset = (int) -((scroll.Y - _topIndex * (_itemHeight + separation)) * UIScale);
             var first = true;
             foreach (var child in Children)
             {
@@ -254,7 +254,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 childSize = Vector2.ComponentMax(childSize, child.DesiredSize);
             }
 
-            _totalHeight = (childSize.Y * _count) + (ActualSeparation * (_count - 1));
+            _totalHeight = childSize.Y * _count + ActualSeparation * (_count - 1);
 
             // Unlike WPF/Avalonia we report ZERO here instead of available size.
             // This is to fix a bunch of jank with e.g. BoxContainer.
@@ -287,15 +287,16 @@ namespace Content.Client.GameObjects.Components.Storage
 
             args.Handle();
         }
+    }
 
-        private class EntityContainerButton : ContainerButton
+    public class EntityContainerButton : ContainerButton
+    {
+        public EntityUid EntityUid;
+
+        public EntityContainerButton(EntityUid entityUid)
         {
-            public EntityUid EntityUid;
-
-            public EntityContainerButton(EntityUid entityUid)
-            {
-                EntityUid = entityUid;
-            }
+            EntityUid = entityUid;
+            AddStyleClass(StyleNano.StyleClassStorageButton);
         }
     }
 }

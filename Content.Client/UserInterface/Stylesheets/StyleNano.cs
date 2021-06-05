@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.GameObjects.EntitySystems;
@@ -37,6 +37,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassContextMenuCount = "contextMenuCount";
+        public const string StyleClassStorageButton = "storageButton";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -62,6 +63,11 @@ namespace Content.Client.UserInterface.Stylesheets
         public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
+
+        public static readonly Color ButtonStorageColorDefault = Color.FromHex("#ab3232");
+        public static readonly Color ButtonStorageColorHovered = Color.FromHex("#cf2f2f");
+        public static readonly Color ButtonStorageColorPressed = Color.FromHex("#3e6c45");
+        public static readonly Color ButtonStorageColorDisabled = Color.FromHex("#602a2a");
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -137,6 +143,12 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             hotbarBackground.SetPatchMargin(StyleBox.Margin.All, 2);
             hotbarBackground.SetExpandMargin(StyleBox.Margin.All, 4);
+
+            var buttonStorage = new StyleBoxTexture(BaseButton);
+            buttonStorage.SetPatchMargin(StyleBox.Margin.All, 10);
+            buttonStorage.SetPadding(StyleBox.Margin.All, 0);
+            buttonStorage.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
+            buttonStorage.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             var buttonRectTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
             var buttonRect = new StyleBoxTexture(BaseButton)
@@ -494,6 +506,26 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
+
+                // Thin buttons (No padding nor vertical margin)
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
                 // action slot hotbar buttons
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]

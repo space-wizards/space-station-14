@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.GameObjects.Components.Items;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces.GameObjects.Components;
