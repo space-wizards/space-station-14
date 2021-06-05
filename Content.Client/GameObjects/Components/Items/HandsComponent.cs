@@ -142,7 +142,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         public void UpdateHandVisualizer()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
                 appearance.SetData(HeldItemsVisuals.VisualState, GetHeldItemVisualState());
         }
 
