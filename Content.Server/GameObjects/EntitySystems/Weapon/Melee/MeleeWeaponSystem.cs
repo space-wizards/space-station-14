@@ -60,6 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void OnClickAttack(EntityUid uid, MeleeWeaponComponent comp, ClickAttackEvent args)
         {
+            args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
             if (curTime < comp.CooldownEnd || !args.Target.IsValid())
@@ -105,6 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
 
         private void OnWideAttack(EntityUid uid, MeleeWeaponComponent comp, WideAttackEvent args)
         {
+            args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
             if (curTime < comp.CooldownEnd)

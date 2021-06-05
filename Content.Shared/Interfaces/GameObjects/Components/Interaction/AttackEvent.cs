@@ -7,7 +7,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// <summary>
     ///     Raised directed on the used entity when a target entity is click attacked by a user.
     /// </summary>
-    public class ClickAttackEvent : EntityEventArgs
+    public class ClickAttackEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
@@ -49,7 +49,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// <summary>
     ///     Raised directed on the used entity when a target entity is wide attacked by a user.
     /// </summary>
-    public class WideAttackEvent : EntityEventArgs
+    public class WideAttackEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
