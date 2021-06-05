@@ -1,7 +1,9 @@
-﻿using System.Drawing;
-using System.Numerics;
-using ImGuiNET;
+﻿using ImGuiNET;
+using Robust.Shared.Maths;
 using static ImGuiNET.ImGui;
+using Color = System.Drawing.Color;
+using Vector2 = System.Numerics.Vector2;
+using RobustVec2 = Robust.Shared.Maths.Vector2;
 
 namespace Pow3r
 {
@@ -243,26 +245,24 @@ namespace Pow3r
             {
                 foreach (var generator in network.Supplies)
                 {
-                    bgDrawList.AddLine(network.CurrentWindowPos, generator.CurrentWindowPos, CvtColor(Color.LawnGreen),
-                        3);
+                    DrawArrowLine(bgDrawList, network.CurrentWindowPos, generator.CurrentWindowPos, Color.LawnGreen);
                 }
 
                 foreach (var load in network.Loads)
                 {
-                    bgDrawList.AddLine(network.CurrentWindowPos, load.CurrentWindowPos, CvtColor(Color.Red), 3);
+                    DrawArrowLine(bgDrawList, load.CurrentWindowPos, network.CurrentWindowPos, Color.Red);
                 }
 
                 foreach (var battery in network.BatteriesLoading)
                 {
-                    bgDrawList.AddLine(network.CurrentWindowPos, battery.CurrentWindowPos, CvtColor(Color.Purple), 3);
+                    DrawArrowLine(bgDrawList, battery.CurrentWindowPos, network.CurrentWindowPos, Color.Purple);
                 }
 
                 foreach (var battery in network.BatteriesSupplying)
                 {
-                    bgDrawList.AddLine(network.CurrentWindowPos, battery.CurrentWindowPos, CvtColor(Color.Cyan), 3);
+                    DrawArrowLine(bgDrawList, network.CurrentWindowPos, battery.CurrentWindowPos, Color.Cyan);
                 }
             }
-
 
             if (_showDemo)
             {
@@ -297,6 +297,37 @@ namespace Pow3r
         }
 
 
+        private void DrawArrowLine(ImDrawListPtr ptr, Vector2 a, Vector2 b, Color color)
+        {
+            // A: to
+            // B: from
+
+            const float wingLength = 15;
+            const float thickness = 3;
+
+            var cvtColor = CvtColor(color);
+
+            ptr.AddLine(a, b, cvtColor, thickness);
+
+            var angleA = Angle.FromDegrees(45);
+            var angleB = Angle.FromDegrees(-45);
+
+            var mid = (a + b) / 2;
+            var dir = -Vector2.Normalize(a - b);
+
+            var rVec = new RobustVec2(dir.X, dir.Y);
+
+            var wingADir = CvtVec(angleA.RotateVec(rVec));
+            var wingBDir = CvtVec(angleB.RotateVec(rVec));
+
+            var wingA = wingADir * wingLength + mid;
+            var wingB = wingBDir * wingLength + mid;
+
+            ptr.AddLine(mid, wingA, cvtColor, thickness);
+            ptr.AddLine(mid, wingB, cvtColor, thickness);
+
+        }
+
         private static uint CvtColor(Color color)
         {
             return color.R | ((uint) color.G << 8) | ((uint) color.B << 16) | ((uint) color.A << 24);
@@ -305,6 +336,11 @@ namespace Pow3r
         private static Vector2 CalcWindowCenter()
         {
             return GetWindowPos() + GetWindowSize() / 2;
+        }
+
+        private static Vector2 CvtVec(RobustVec2 vec)
+        {
+            return new Vector2(vec.X, vec.Y);
         }
     }
 }

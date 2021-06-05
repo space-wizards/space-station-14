@@ -11,4 +11,8 @@
       <PackageReference Include="OpenTK" Version="4.5.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    </ItemGroup>
+
 </Project>
