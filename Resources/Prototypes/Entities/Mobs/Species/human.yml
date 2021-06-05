@@ -23,6 +23,7 @@
       - Thermite
       - Plasma
       - Ethanol
+      - Oil
     - !type:WashCreamPieReaction
       touch: true
       reagents:
