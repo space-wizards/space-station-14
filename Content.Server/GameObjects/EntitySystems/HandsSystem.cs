@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!hands.TryGetActiveHeldEntity(out var throwEnt))
                 return false;
 
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>().TryThrowInteraction(hands.Owner, throwEnt))
+            if (!Get<InteractionSystem>().TryThrowInteraction(hands.Owner, throwEnt))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
