@@ -1277,3 +1277,9 @@ Entries:
   - {message: Dead bodies can be pulled again, type: Fix}
   id: 225
   time: '2021-06-05T07:23:24.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Added error messages to cloning pod and medical scanner., type: Add}
+  - {message: Cloning pod is no longer pure network spam., type: Fix}
+  id: 226
+  time: '2021-06-05T17:33:00.0000000+00:00'
