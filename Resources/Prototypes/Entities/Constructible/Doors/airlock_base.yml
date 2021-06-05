@@ -5,6 +5,7 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: RCDDeconstructWhitelist
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
@@ -83,6 +84,7 @@
   components:
   - type: Clickable
   - type: RCDDeconstructWhitelist
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Mobs
