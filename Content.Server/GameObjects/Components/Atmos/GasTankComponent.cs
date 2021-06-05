@@ -33,8 +33,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
+        public override string Name => "GasTank";
+
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
