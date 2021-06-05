@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Utility;
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 if (!part.TryAddMechanism(this))
                 {
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("You can't fit it in!"));
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("mechanism-component-cannot-fit-message"));
                 }
             }
 
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Body
             else // If surgery cannot be performed, show message saying so.
             {
                 eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("You see no way to install the {0}.", Owner.Name));
+                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Owner.Name)));
             }
         }
 
@@ -115,14 +115,14 @@ namespace Content.Server.GameObjects.Components.Body
             if (!OptionsCache.TryGetValue(key, out var targetObject))
             {
                 BodyCache.Owner.PopupMessage(PerformerCache,
-                    Loc.GetString("You see no useful way to use the {0} anymore.", Owner.Name));
+                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Owner.Name)));
                 return;
             }
 
             var target = (IBodyPart) targetObject;
             var message = target.TryAddMechanism(this)
-                ? Loc.GetString("You jam {0:theName} inside {1:them}.", Owner, PerformerCache)
-                : Loc.GetString("You can't fit it in!");
+                ? Loc.GetString("mechanism-component-jam-inside-message",("ownerName", Owner),("them", PerformerCache))
+                : Loc.GetString("mechanism-component-cannot-fit-message");
 
             BodyCache.Owner.PopupMessage(PerformerCache, message);
 

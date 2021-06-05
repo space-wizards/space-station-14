@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Collections.Generic;
 using Content.Client.StationEvents;
@@ -21,7 +21,7 @@ namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminbusTab
         protected override void EnteredTree()
         {
             _data = IoCManager.Resolve<IStationEventManager>().StationEvents.ToList();
-            _data.Add(_data.Any() ? Loc.GetString("Not loaded") : Loc.GetString("Random"));
+            _data.Add(_data.Any() ? Loc.GetString("station-events-window-not-loaded-text") : Loc.GetString("generic-random"));
             foreach (var stationEvent in _data)
             {
                 EventsOptions.AddItem(stationEvent);

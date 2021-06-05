@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Cargo;
+using Content.Client.GameObjects.Components.Cargo;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
@@ -19,7 +19,7 @@ namespace Content.Client.UserInterface.Cargo
             MinSize = SetSize = (300, 300);
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("Galactic Bank Selection");
+            Title = Loc.GetString("galactic-bank-selection-menu-title");
 
             _accounts = new ItemList() { SelectMode = ItemList.ItemListSelectMode.Single };
 

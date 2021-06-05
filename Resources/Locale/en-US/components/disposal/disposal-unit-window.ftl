@@ -1,7 +1,3 @@
-### Disposal UIs
-
-## Disposal Units
-
 ui-disposal-unit-title = Disposal Unit
 
 ui-disposal-unit-label-state = State:

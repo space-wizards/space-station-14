@@ -1,0 +1,16 @@
+chem-master-window-container-label = Container
+chem-master-window-eject-button = Eject
+chem-master-window-no-container-loaded-text = No container loaded.
+chem-master-window-buffer-text = Buffer
+chem-master-window-buffer-label = buffer:
+chem-master-window-buffer-empty-text = Buffer empty.
+chem-master-window-transfer-button = Transfer
+chem-master-window-discard-button = Discard
+chem-master-window-packaging-text = Packaging
+chem-master-window-pills-label = Pills:
+chem-master-window-max-pills-volume-text = max 50u/each
+chem-master-window-max-bottle-volume-text = max 30u/each
+chem-master-window-create-pill-button = Create
+chem-master-window-create-bottle-button = Create
+cham-master-window-bottles-label = Bottles:
+chem-master-window-unknown-reagent-text = Unknown reagent

@@ -96,7 +96,7 @@ namespace Content.Client.UserInterface
             var randomizePanel = HighlightedContainer();
             var randomizeEverythingButton = new Button
             {
-                Text = Loc.GetString("Randomize everything")
+                Text = Loc.GetString("humanoid-profile-editor-randomize-everything-button")
             };
             randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
             randomizePanel.AddChild(randomizeEverythingButton);
@@ -111,7 +111,7 @@ namespace Content.Client.UserInterface
             {
                 VerticalExpand = true
             };
-            var nameLabel = new Label { Text = Loc.GetString("Name:") };
+            var nameLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-name-label") };
             _nameEdit = new LineEdit
             {
                 MinSize = (270, 0),
@@ -120,7 +120,7 @@ namespace Content.Client.UserInterface
             _nameEdit.OnTextChanged += args => { SetName(args.Text); };
             var nameRandomButton = new Button
             {
-                Text = Loc.GetString("Randomize"),
+                Text = Loc.GetString("humanoid-profile-editor-name-random-button"),
             };
             nameRandomButton.OnPressed += args => RandomizeName();
             nameHBox.AddChild(nameLabel);
@@ -152,7 +152,7 @@ namespace Content.Client.UserInterface
                 }
             };
             tabContainer.AddChild(appearanceVBox);
-            tabContainer.SetTabTitle(0, Loc.GetString("Appearance"));
+            tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
             var sexAndAgeRow = new HBoxContainer
             {
@@ -165,13 +165,13 @@ namespace Content.Client.UserInterface
 
             var sexPanel = HighlightedContainer();
             var sexHBox = new HBoxContainer();
-            var sexLabel = new Label { Text = Loc.GetString("Sex:") };
+            var sexLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-sex-label") };
 
             var sexButtonGroup = new ButtonGroup();
 
             _sexMaleButton = new Button
             {
-                Text = Loc.GetString("Male"),
+                Text = Loc.GetString("generic-male"),
                 Group = sexButtonGroup
             };
             _sexMaleButton.OnPressed += args =>
@@ -186,7 +186,7 @@ namespace Content.Client.UserInterface
 
             _sexFemaleButton = new Button
             {
-                Text = Loc.GetString("Female"),
+                Text = Loc.GetString("generic-female"),
                 Group = sexButtonGroup
             };
             _sexFemaleButton.OnPressed += _ =>
@@ -212,7 +212,7 @@ namespace Content.Client.UserInterface
 
             var agePanel = HighlightedContainer();
             var ageHBox = new HBoxContainer();
-            var ageLabel = new Label { Text = Loc.GetString("Age:") };
+            var ageLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-age-label") };
             _ageEdit = new LineEdit { MinSize = (40, 0) };
             _ageEdit.OnTextChanged += args =>
             {
@@ -231,14 +231,14 @@ namespace Content.Client.UserInterface
 
             var genderPanel = HighlightedContainer();
             var genderHBox = new HBoxContainer();
-            var genderLabel = new Label { Text = Loc.GetString("Pronouns:") };
+            var genderLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-pronouns-label") };
 
             _genderButton = new OptionButton();
 
-            _genderButton.AddItem(Loc.GetString("He / Him"), (int) Gender.Male);
-            _genderButton.AddItem(Loc.GetString("She / Her"), (int) Gender.Female);
-            _genderButton.AddItem(Loc.GetString("They / Them"), (int) Gender.Epicene);
-            _genderButton.AddItem(Loc.GetString("It / It"), (int) Gender.Neuter);
+            _genderButton.AddItem(Loc.GetString("generic-male-pronouns"), (int) Gender.Male);
+            _genderButton.AddItem(Loc.GetString("generic-female-pronouns"), (int) Gender.Female);
+            _genderButton.AddItem(Loc.GetString("generic-epicene-pronouns"), (int) Gender.Epicene);
+            _genderButton.AddItem(Loc.GetString("generic-neuter-pronouns"), (int) Gender.Neuter);
 
             _genderButton.OnItemSelected += args =>
             {
@@ -315,12 +315,12 @@ namespace Content.Client.UserInterface
 
             var clothingPanel = HighlightedContainer();
             var clothingHBox = new HBoxContainer();
-            var clothingLabel = new Label { Text = Loc.GetString("Clothing:") };
+            var clothingLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-clothing-label") };
 
             _clothingButton = new OptionButton();
 
-            _clothingButton.AddItem(Loc.GetString("Jumpsuit"), (int) ClothingPreference.Jumpsuit);
-            _clothingButton.AddItem(Loc.GetString("Jumpskirt"), (int) ClothingPreference.Jumpskirt);
+            _clothingButton.AddItem(Loc.GetString("preference-jumpsuit"), (int) ClothingPreference.Jumpsuit);
+            _clothingButton.AddItem(Loc.GetString("preference-jumpskirt"), (int) ClothingPreference.Jumpskirt);
 
             _clothingButton.OnItemSelected += args =>
             {
@@ -339,13 +339,13 @@ namespace Content.Client.UserInterface
 
             var backpackPanel = HighlightedContainer();
             var backpackHBox = new HBoxContainer();
-            var backpackLabel = new Label { Text = Loc.GetString("Backpack:") };
+            var backpackLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-backpack-label") };
 
             _backpackButton = new OptionButton();
 
-            _backpackButton.AddItem(Loc.GetString("Backpack"), (int) BackpackPreference.Backpack);
-            _backpackButton.AddItem(Loc.GetString("Satchel"), (int) BackpackPreference.Satchel);
-            _backpackButton.AddItem(Loc.GetString("Duffelbag"), (int) BackpackPreference.Duffelbag);
+            _backpackButton.AddItem(Loc.GetString("preference-backpack"), (int) BackpackPreference.Backpack);
+            _backpackButton.AddItem(Loc.GetString("preference-satchel"), (int) BackpackPreference.Satchel);
+            _backpackButton.AddItem(Loc.GetString("preference-duffelbag"), (int) BackpackPreference.Duffelbag);
 
             _backpackButton.OnItemSelected += args =>
             {
@@ -364,7 +364,7 @@ namespace Content.Client.UserInterface
 
             var eyesPanel = HighlightedContainer();
             var eyesVBox = new VBoxContainer();
-            var eyesLabel = new Label { Text = Loc.GetString("Eye color:") };
+            var eyesLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-eyes-label") };
 
             _eyesPicker = new EyeColorPicker();
 
@@ -408,14 +408,14 @@ namespace Content.Client.UserInterface
 
             tabContainer.AddChild(jobVBox);
 
-            tabContainer.SetTabTitle(1, Loc.GetString("Jobs"));
+            tabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
 
             _preferenceUnavailableButton.AddItem(
-                Loc.GetString("Stay in lobby if preference unavailable."),
+                Loc.GetString("humanoid-profile-editor-preference-unavailable-stay-in-lobby-button"),
                 (int) PreferenceUnavailableMode.StayInLobby);
             _preferenceUnavailableButton.AddItem(
-                Loc.GetString("Be an {0} if preference unavailable.",
-                    Loc.GetString(SharedGameTicker.OverflowJobName)),
+                Loc.GetString("humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button",
+                              ("overflowJob", Loc.GetString(SharedGameTicker.OverflowJobName))),
                 (int) PreferenceUnavailableMode.SpawnAsOverflow);
 
             _preferenceUnavailableButton.OnItemSelected += args =>
@@ -440,7 +440,8 @@ namespace Content.Client.UserInterface
                         category = new VBoxContainer
                         {
                             Name = department,
-                            ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                            ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
+                                                    ("departmentName", department))
                         };
 
                             if (firstCategory)
@@ -462,7 +463,8 @@ namespace Content.Client.UserInterface
                             {
                                 new Label
                                 {
-                                    Text = Loc.GetString("{0} jobs", department)
+                                    Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
+                                                         ("departmentName" ,department))
                                 }
                             }
                         });
@@ -525,7 +527,7 @@ namespace Content.Client.UserInterface
 
             tabContainer.AddChild(antagVBox);
 
-            tabContainer.SetTabTitle(2, Loc.GetString("Antags"));
+            tabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
 
             _antagPreferences = new List<AntagPreferenceSelector>();
 
@@ -558,15 +560,15 @@ namespace Content.Client.UserInterface
             var importExportHBox = new HBoxContainer();
             var importButton = new Button
             {
-                Text = Loc.GetString("Import"),
+                Text = Loc.GetString("generic-import"),
                 Disabled = true,
-                ToolTip = "Not yet implemented!"
+                ToolTip = Loc.GetString("generic-not-yet-implemented")
             };
             var exportButton = new Button
             {
-                Text = Loc.GetString("Export"),
+                Text = Loc.GetString("generic-export"),
                 Disabled = true,
-                ToolTip = "Not yet implemented!"
+                ToolTip = Loc.GetString("generic-not-yet-implemented")
             };
             importExportHBox.AddChild(importButton);
             importExportHBox.AddChild(exportButton);
@@ -581,7 +583,7 @@ namespace Content.Client.UserInterface
                 var panel = HighlightedContainer();
                 _saveButton = new Button
                 {
-                    Text = Loc.GetString("Save"),
+                    Text = Loc.GetString("generic-save"),
                     HorizontalAlignment = HAlignment.Center
                 };
                 _saveButton.OnPressed += args => { Save(); };
@@ -886,10 +888,10 @@ namespace Content.Client.UserInterface
                 };
 
                 // Text, Value
-                _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
-                _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
-                _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
-                _optionButton.AddItem(Loc.GetString("Never"), (int) JobPriority.Never);
+                _optionButton.AddItem(Loc.GetString("generic-high"), (int) JobPriority.High);
+                _optionButton.AddItem(Loc.GetString("generic-medium"), (int) JobPriority.Medium);
+                _optionButton.AddItem(Loc.GetString("generic-low"), (int) JobPriority.Low);
+                _optionButton.AddItem(Loc.GetString("generic-never"), (int) JobPriority.Never);
 
                 _optionButton.OnItemSelected += args =>
                 {

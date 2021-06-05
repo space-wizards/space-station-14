@@ -54,11 +54,6 @@ namespace Content.Server.Chat
 
         private const int VoiceRange = 7; // how far voice goes in world units
 
-        /// <summary>
-        /// The message displayed to the player when it exceeds the chat character limit
-        /// </summary>
-        private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
-
         //TODO: make prio based?
         private readonly List<TransformChat> _chatTransformHandlers = new();
         private bool _oocEnabled = true;
@@ -81,13 +76,13 @@ namespace Content.Server.Chat
         private void OnOocEnabledChanged(bool val)
         {
             _oocEnabled = val;
-            DispatchServerAnnouncement(val ? "OOC chat has been enabled." : "OOC chat has been disabled.");
+            DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
         }
 
         private void OnAdminOocEnabledChanged(bool val)
         {
             _adminOocEnabled = val;
-            DispatchServerAnnouncement(val ? "Admin OOC chat has been enabled." : "Admin OOC chat has been disabled.");
+            DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
 
         public void DispatchServerAnnouncement(string message)
@@ -95,7 +90,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
-            msg.MessageWrap = "SERVER: {0}";
+            msg.MessageWrap = Loc.GetString("chat-manager-server-wrap-message");
             _netManager.ServerSendToAll(msg);
             Logger.InfoS("SERVER", message);
         }
@@ -105,7 +100,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = $"{sender} Announcement:\n{{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             _netManager.ServerSendToAll(msg);
         }
 
@@ -114,7 +109,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
-            msg.MessageWrap = "SERVER: {0}";
+            msg.MessageWrap = Loc.GetString("chat-manager-server-wrap-message");
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
@@ -129,7 +124,7 @@ namespace Content.Server.Chat
             if (source.TryGetComponent(out ActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
-                var feedback = Loc.GetString(MaxLengthExceededMessage, MaxMessageLength);
+                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message",("limit", MaxMessageLength));
 
                 DispatchServerMessage(actor.PlayerSession, feedback);
 
@@ -168,7 +163,7 @@ namespace Content.Server.Chat
                 }
                 else
                 {
-                    source.PopupMessage(Loc.GetString("You don't have a headset on!"));
+                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
                 }
             }
             else
@@ -186,7 +181,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("{0} says, \"{{0}}\"", source.Name);
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", source.Name));
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients);
         }
@@ -207,7 +202,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (action.Length > MaxMessageLength)
             {
-                DispatchServerMessage(actor.PlayerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message",("limit", MaxMessageLength)));
                 return;
             }
 
@@ -219,7 +214,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Emotes;
             msg.Message = action;
-            msg.MessageWrap = $"{source.Name} {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",source.Name));
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -241,7 +236,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
                 return;
             }
 
@@ -250,7 +245,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
-            msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerName",player.Name));
             if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
@@ -259,7 +254,7 @@ namespace Content.Server.Chat
             if (player.ConnectedClient.UserData.PatronTier is { } patron &&
                      PatronOocColors.TryGetValue(patron, out var patronColor))
             {
-                msg.MessageWrap = $"OOC: [color={patronColor}]{player.Name}[/color]: {{0}}";
+                msg.MessageWrap = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name));
             }
 
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
@@ -273,7 +268,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message",("limit", MaxMessageLength)));
                 return;
             }
 
@@ -284,7 +279,9 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity?.Name}: {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
+                                            ("deadChannelName", Loc.GetString("generic-dead").ToUpperInvariant()),
+                                            ("playerName", player.AttachedEntity?.Name ?? "???"));
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -294,7 +291,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
                 return;
             }
 
@@ -305,7 +302,9 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"{Loc.GetString("ADMIN")}:(${player.ConnectedClient.UserName}): {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
+                                            ("adminChannelName", Loc.GetString("generic-admin").ToUpperInvariant()),
+                                            ("userName", player.ConnectedClient.UserName));
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
@@ -322,7 +321,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
+                DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
                 return;
             }
 
@@ -334,7 +333,9 @@ namespace Content.Server.Chat
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
-            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
+                                            ("adminChannelName", Loc.GetString("generic-admin").ToUpperInvariant()),
+                                            ("playerName", player.Name));
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
@@ -348,7 +349,8 @@ namespace Content.Server.Chat
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
-            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                                            ("adminChannelName", Loc.GetString("generic-admin").ToUpperInvariant()));
 
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -360,7 +362,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
-            msg.MessageWrap = $"OOC: (D){sender}: {{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             _netManager.ServerSendToAll(msg);
         }
 

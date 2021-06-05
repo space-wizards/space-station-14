@@ -154,7 +154,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     }),
                     (_serialLabel = new Label
                     {
-                        Text = "DEAD-BEEF",
+                        Text = Loc.GetString("wires-menu-dead-beef-text"),
                         FontOverride = fontSmall,
                         FontColorOverride = Color.Gray,
                         VerticalAlignment = VAlignment.Center,

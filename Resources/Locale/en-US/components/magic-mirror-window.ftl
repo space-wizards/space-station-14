@@ -1,0 +1,1 @@
+magic-mirror-window-title = Magic Mirror

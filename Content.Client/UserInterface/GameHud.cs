@@ -196,7 +196,7 @@ namespace Content.Client.UserInterface
             // Escape
             _buttonEscapeMenu = new TopButton(escapeTexture, EngineKeyFunctions.EscapeMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open escape menu."),
+                ToolTip = Loc.GetString("game-hud-open-escape-menu-button-tooltip"),
                 MinSize = (70, 64),
                 StyleClasses = {StyleBase.ButtonOpenRight}
             };
@@ -208,7 +208,7 @@ namespace Content.Client.UserInterface
             // Character
             _buttonCharacterMenu = new TopButton(characterTexture, ContentKeyFunctions.OpenCharacterMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open character menu."),
+                ToolTip = Loc.GetString("game-hud-open-character-menu-button-tooltip"),
                 MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
@@ -221,7 +221,7 @@ namespace Content.Client.UserInterface
             // Inventory
             _buttonInventoryMenu = new TopButton(inventoryTexture, ContentKeyFunctions.OpenInventoryMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open inventory menu."),
+                ToolTip = Loc.GetString("game-hud-open-inventory-menu-button-tooltip"),
                 MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
@@ -234,7 +234,7 @@ namespace Content.Client.UserInterface
             // Crafting
             _buttonCraftingMenu = new TopButton(craftingTexture, ContentKeyFunctions.OpenCraftingMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open crafting menu."),
+                ToolTip = Loc.GetString("game-hud-open-crafting-menu-button-tooltip"),
                 MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
@@ -247,7 +247,7 @@ namespace Content.Client.UserInterface
             // Actions
             _buttonActionsMenu = new TopButton(actionsTexture, ContentKeyFunctions.OpenActionsMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open actions menu."),
+                ToolTip = Loc.GetString("game-hud-open-actions-menu-button-tooltip"),
                 MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
@@ -260,7 +260,7 @@ namespace Content.Client.UserInterface
             // Admin
             _buttonAdminMenu = new TopButton(adminTexture, ContentKeyFunctions.OpenAdminMenu, _inputManager)
             {
-                ToolTip = Loc.GetString("Open admin menu."),
+                ToolTip = Loc.GetString("game-hud-open-admin-menu-button-tooltip"),
                 MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}
@@ -273,7 +273,7 @@ namespace Content.Client.UserInterface
             // Sandbox
             _buttonSandboxMenu = new TopButton(sandboxTexture, ContentKeyFunctions.OpenSandboxWindow, _inputManager)
             {
-                ToolTip = Loc.GetString("Open sandbox menu."),
+                ToolTip = Loc.GetString("game-hud-open-sandbox-menu-button-tooltip"),
                 MinSize = topMinSize,
                 Visible = false,
                 StyleClasses = {StyleBase.ButtonSquare}

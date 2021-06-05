@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics;
@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Crayon
         public CrayonWindow(CrayonBoundUserInterface owner)
         {
             MinSize = SetSize = (250, 300);
-            Title = Loc.GetString("Crayon");
+            Title = Loc.GetString("crayon-window-title");
             Owner = owner;
 
             var vbox = new VBoxContainer();

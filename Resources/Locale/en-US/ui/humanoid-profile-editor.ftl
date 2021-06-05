@@ -1,0 +1,16 @@
+humanoid-profile-editor-randomize-everything-button = Randomize everything
+humanoid-profile-editor-name-label = Name:
+humanoid-profile-editor-name-random-button = Randomize
+humanoid-profile-editor-appearance-tab = Appearance
+humanoid-profile-editor-sex-label = Sex:
+humanoid-profile-editor-age-label = Age:
+humanoid-profile-editor-pronouns-label = Pronouns:
+humanoid-profile-editor-clothing-label = Clothing:
+humanoid-profile-editor-backpack-label = Backpack:
+humanoid-profile-editor-eyes-label = Eye color:
+humanoid-profile-editor-jobs-tab = Jobs
+humanoid-profile-editor-preference-unavailable-stay-in-lobby-button = Stay in lobby if preference unavailable.
+humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Be an {$overflowJob} if preference unavailable.
+humanoid-profile-editor-jobs-amount-in-department-tooltip = Jobs in the {$departmentName} department
+humanoid-profile-editor-department-jobs-label = {$departmentName} jobs
+humanoid-profile-editor-antags-tab = Antags

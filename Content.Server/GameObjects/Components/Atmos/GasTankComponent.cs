@@ -333,7 +333,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = "Open Control Panel";
+                data.Text = Loc.GetString("control-verb-open-control-panel-text");
             }
 
             protected override void Activate(IEntity user, GasTankComponent component)

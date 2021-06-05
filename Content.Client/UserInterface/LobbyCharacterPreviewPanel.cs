@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
@@ -34,12 +34,12 @@ namespace Content.Client.UserInterface
 
             var header = new NanoHeading
             {
-                Text = Loc.GetString("Character")
+                Text = Loc.GetString("lobby-character-preview-panel-header")
             };
 
             CharacterSetupButton = new Button
             {
-                Text = Loc.GetString("Customize"),
+                Text = Loc.GetString("lobby-character-preview-panel-character-setup-button"),
                 HorizontalAlignment = HAlignment.Left
             };
 
@@ -54,7 +54,7 @@ namespace Content.Client.UserInterface
 
             vBox.AddChild(header);
 
-            _unloaded = new Label {Text = "Your character preferences have not yet loaded, please stand by."};
+            _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
 
             _loaded = new VBoxContainer {Visible = false};
 
@@ -146,7 +146,7 @@ namespace Content.Client.UserInterface
                 foreach (var slot in AllSlots)
                 {
                     var itemType = gear.GetGear(slot, profile);
-                    if (itemType != "")
+                    if (itemType != string.Empty)
                     {
                         var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);

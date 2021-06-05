@@ -143,7 +143,7 @@ namespace Content.Client.State
         {
             if (_clientGameTicker.IsGameStarted)
             {
-                _lobby.StartTime.Text = "";
+                _lobby.StartTime.Text = string.Empty;
                 return;
             }
 
@@ -151,7 +151,7 @@ namespace Content.Client.State
 
             if (_clientGameTicker.Paused)
             {
-                text = Loc.GetString("Paused");
+                text = Loc.GetString("lobby-state-paused");
             }
             else
             {
@@ -159,7 +159,7 @@ namespace Content.Client.State
                 var seconds = difference.TotalSeconds;
                 if (seconds < 0)
                 {
-                    text = Loc.GetString(seconds < -5 ? "Right Now?" : "Right Now");
+                    text = Loc.GetString(seconds < -5 ? "lobby-state-right-now-question" : "lobby-state-right-now-confirmation");
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace Content.Client.State
                 }
             }
 
-            _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);
+            _lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
         private void PlayerManagerOnPlayerListUpdated(object? sender, EventArgs e)
@@ -209,14 +209,14 @@ namespace Content.Client.State
 
             if (_clientGameTicker.IsGameStarted)
             {
-                _lobby.ReadyButton.Text = Loc.GetString("Join");
+                _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
                 _lobby.ReadyButton.ToggleMode = false;
                 _lobby.ReadyButton.Pressed = false;
             }
             else
             {
-                _lobby.StartTime.Text = "";
-                _lobby.ReadyButton.Text = Loc.GetString("Ready Up");
+                _lobby.StartTime.Text = string.Empty;
+                _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Disabled = false;
                 _lobby.ReadyButton.Pressed = _clientGameTicker.AreWeReady;
@@ -246,10 +246,10 @@ namespace Content.Client.State
 
                     readyState = status switch
                     {
-                        PlayerStatus.NotReady => Loc.GetString("Not Ready"),
-                        PlayerStatus.Ready => Loc.GetString("Ready"),
-                        PlayerStatus.Observer => Loc.GetString("Observer"),
-                        _ => "",
+                        PlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
+                        PlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
+                        PlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
+                        _ => string.Empty,
                     };
                 }
 

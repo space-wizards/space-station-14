@@ -5,3 +5,6 @@ comp-gas-tank-examine = Pressure: [color=orange]{PRESSURE($pressure)}[/color].
 
 # Examine text when internals are active.
 comp-gas-tank-connected = {"\u000A"}Connected to external component
+
+## ControlVerb
+control-verb-open-control-panel-text = Open Control Panel

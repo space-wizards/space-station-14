@@ -92,7 +92,7 @@ namespace Content.Client.Research
         {
             _icon.Texture = Texture.Transparent;
             _nameLabel.Text = "-------";
-            _description.Text = "Not producing anything.";
+            _description.Text = "lathequeue-menu-not-producing-text";
         }
 
         public void PopulateList()

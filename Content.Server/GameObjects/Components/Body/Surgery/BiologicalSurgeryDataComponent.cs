@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,20 +96,20 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
 
             if (HasIncisionNotClamped())
             {
-                toReturn.Append(Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.",
-                    Owner, Parent.Name));
+                toReturn.Append(Loc.GetString("biological-surgery-data-component-has-incision-not-clamped-message",
+                    ("owner", Owner),("bodyPart", Parent.Name)));
             }
             else if (HasClampedIncisionNotRetracted())
             {
-                toReturn.AppendLine(Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.",
-                    Owner, Parent.Name));
+                toReturn.AppendLine(Loc.GetString("biological-surgery-data-component-has-clamped-incision-not-retracted-message",
+                    ("owner", Owner),("bodyPary", Parent.Name)));
             }
             else if (HasFullyOpenIncision())
             {
-                toReturn.AppendLine(Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name));
+                toReturn.AppendLine(Loc.GetString("biological-surgery-data-component-has-fully-open-incision-message", ("owner", Owner), ("bodyPart", Parent.Name)) + "\n");
                 foreach (var mechanism in _disconnectedOrgans)
                 {
-                    toReturn.AppendLine(Loc.GetString("{0:their} {1} is loose.", Owner, mechanism.Name));
+                    toReturn.AppendLine(Loc.GetString("biological-surgery-data-component-part-is-loose-message",("owner", Owner), ("bodyPart", mechanism.Name)));
                 }
             }
 
@@ -224,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Cut open the skin..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-open-skin-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Clamp the vessels..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-clamp-vessels-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -248,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Retracting the skin..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-retract-skin-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -260,7 +260,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Cauterizing the incision..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-cauterize-incision-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -298,7 +298,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Loosening the organ..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-loosen-organ-message"));
 
             if (!performer.HasComponent<DoAfterComponent>())
             {
@@ -339,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Removing the organ..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-organ-message"));
 
             if (!performer.HasComponent<DoAfterComponent>())
             {
@@ -360,7 +360,7 @@ namespace Content.Server.GameObjects.Components.Body.Surgery
             if (Parent == null) return;
             if (container is not IBody body) return;
 
-            performer.PopupMessage(Loc.GetString("Sawing off the limb!"));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-bodypart-message"));
 
             if (await SurgeryDoAfter(performer))
             {

@@ -6,6 +6,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using System.Linq;
 
 namespace Content.Server.Commands.StationEvents
 {
@@ -13,30 +14,24 @@ namespace Content.Server.Commands.StationEvents
     public sealed class StationEventCommand : IConsoleCommand
     {
         public string Command => "events";
-        public string Description => "Provides admin control to station events";
-        public string Help => $"events <running/list/pause/resume/stop/run <eventName/random>>\n{RunningHelp}\n{ListHelp}\n{PauseHelp}\n{ResumeHelp}\n{RunHelp}";
-
-        private const string RunningHelp = "running: return the current running event";
-
-        private const string ListHelp = "list: return all event names that can be run";
-
-        private const string PauseHelp = "pause: stop all random events from running and any one currently running";
-
-        private const string ResumeHelp = "resume: allow random events to run again";
-
-        private const string RunHelp =
-            "run <eventName/random>: start a particular event now; <eventName> is case-insensitive and not localized";
+        public string Description => Loc.GetString("station-event-command-description");
+        public string Help => Loc.GetString("station-event-command-help-text",
+                                            ("runningHelp", Loc.GetString("station-event-command-running-help-text")),
+                                            ("listHelp", Loc.GetString("station-event-command-list-help-text")),
+                                            ("pauseHelp", Loc.GetString("station-event-command-pause-help-text")),
+                                            ("resumeHelp", Loc.GetString("station-event-command-resume-help-text")),
+                                            ("runHelp", Loc.GetString("station-event-command-run-help-text")));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (args.Length == 0)
+            if (!args.Any())
             {
-                shell.WriteLine($"Invalid amount of arguments.\n{Help}");
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number") + $"\n{Help}");
                 return;
             }
 
-            switch (args[0])
+            switch (args.First())
             {
                 case "list":
                     List(shell, player);
@@ -57,14 +52,17 @@ namespace Content.Server.Commands.StationEvents
                 case "run":
                     if (args.Length != 2)
                     {
-                        shell.WriteLine($"Need 2 arguments, there were {args.Length}.\n{RunHelp}");
+                        shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                                                      ("properAmount", 2),
+                                                      ("currentAmount", args.Length))
+                                        + $"\n{Loc.GetString("station-event-command-run-help-text")}");
                         break;
                     }
 
                     Run(shell, player, args[1]);
                     break;
                 default:
-                    shell.WriteLine(Loc.GetString($"Invalid events command.\n{Help}"));
+                    shell.WriteLine(Loc.GetString($"shell-invalid-command-specific.", ("commandName", "events")) + $"\n{Help}");
                     break;
             }
         }
@@ -95,7 +93,8 @@ namespace Content.Server.Commands.StationEvents
 
         private void List(IConsoleShell shell, IPlayerSession? player)
         {
-            var resultText = "Random\n" + EntitySystem.Get<StationEventSystem>().GetEventNames();
+            var resultText = Loc.GetString("station-event-command-event-list",
+                                           ("otherEvents", EntitySystem.Get<StationEventSystem>().GetEventNames()));
             shell.WriteLine(resultText);
         }
 
@@ -105,12 +104,12 @@ namespace Content.Server.Commands.StationEvents
 
             if (!stationEventSystem.Enabled)
             {
-                shell.WriteLine(Loc.GetString("Station events are already paused"));
+                shell.WriteLine(Loc.GetString("station-event-command-events-already-paused-message"));
             }
             else
             {
                 stationEventSystem.Enabled = false;
-                shell.WriteLine(Loc.GetString("Station events paused"));
+                shell.WriteLine(Loc.GetString("station-event-command-events-paused-message"));
             }
         }
 
@@ -120,12 +119,12 @@ namespace Content.Server.Commands.StationEvents
 
             if (stationEventSystem.Enabled)
             {
-                shell.WriteLine(Loc.GetString("Station events are already running"));
+                shell.WriteLine(Loc.GetString("station-event-command-events-already-running-message"));
             }
             else
             {
                 stationEventSystem.Enabled = true;
-                shell.WriteLine(Loc.GetString("Station events resumed"));
+                shell.WriteLine(Loc.GetString("station-event-command-events-resumed-message"));
             }
         }
 

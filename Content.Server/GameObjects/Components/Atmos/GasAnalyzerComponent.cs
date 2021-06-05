@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
@@ -232,14 +232,14 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
+                        Owner.PopupMessage(player, Loc.GetString("gas-analyzer-component-player-has-no-hands-message"));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
                         return;
                     }
 
@@ -253,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (!eventArgs.CanReach)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
+                eventArgs.User.PopupMessage(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"));
                 return true;
             }
 

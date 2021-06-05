@@ -5,7 +5,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -61,7 +60,7 @@ namespace Content.Client.GameObjects.Components.Crayon
                 }
 
                 _parent._uiUpdateNeeded = false;
-                _label.SetMarkup(Loc.GetString("Drawing: [color={0}]{1}[/color] ({2}/{3})",
+                _label.SetMarkup(Loc.GetString("crayon-drawing-label",
                     _parent.Color,
                     _parent.SelectedState,
                     _parent.Charges,

@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
 using Robust.Client.Graphics;
@@ -89,7 +89,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 {
                     (_lblName = new Label
                     {
-                        Text = Loc.GetString("Gas Tank"),
+                        Text = Loc.GetString("gas-tank-window-label"),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,
@@ -137,7 +137,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             //internals
             _lblInternals = new RichTextLabel
                 {MinSize = (200, 0), VerticalAlignment = VAlignment.Center};
-            _btnInternals = new Button {Text = Loc.GetString("Toggle")};
+            _btnInternals = new Button {Text = Loc.GetString("generic-toggle") };
 
             _contentContainer.AddChild(
                 new HBoxContainer
@@ -154,7 +154,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             _contentContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Output Pressure"),
+                Text = Loc.GetString("gas-tank-window-output-pressure-label"),
                 Align = Label.AlignMode.Center
             });
             _spbPressure = new FloatSpinBox
@@ -180,11 +180,11 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
         public void UpdateState(GasTankBoundUserInterfaceState state)
         {
-            _lblPressure.SetMarkup(Loc.GetString("Pressure: {0:0.##} kPa", state.TankPressure));
+            _lblPressure.SetMarkup(Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", state.TankPressure)));
             _btnInternals.Disabled = !state.CanConnectInternals;
-            _lblInternals.SetMarkup(Loc.GetString("Internals: [color={0}]{1}[/color]",
-                state.InternalsConnected ? "green" : "red",
-                state.InternalsConnected ? "Connected" : "Disconnected"));
+            _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
+                ("colorName" ,state.InternalsConnected ? "green" : "red"),
+                ("status", state.InternalsConnected ? "Connected" : "Disconnected")));
             if (state.OutputPressure.HasValue)
             {
                 _spbPressure.Value = state.OutputPressure.Value;

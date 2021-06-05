@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using JetBrains.Annotations;
@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
             //Setup window layout/elements
             _window = new ReagentDispenserWindow
             {
-                Title = Loc.GetString("Reagent dispenser"),
+                Title = Loc.GetString("reagent-dispenser-bound-user-interface-title"),
             };
 
             _window.OpenCentered();

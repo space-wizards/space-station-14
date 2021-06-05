@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             get => LabelInput.Editable;
             set {
                 LabelInput.Editable = value;
-                EditLabelBtn.Text = value ? Loc.GetString("OK") : Loc.GetString("Edit");
+                EditLabelBtn.Text = value ? Loc.GetString("gas-canister-window-ok-text") : Loc.GetString("gas-canister-window-edit-text");
             }
         }
 
@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                     {
                                         Children =
                                         {
-                                            new Label(){ Text = Loc.GetString("Label: ") },
+                                            new Label(){ Text = $"{Loc.GetString("gas-canister-window-label-label")} " },
                                             (LabelInput = new LineEdit() { Text = Name ?? "", Editable = false,
                                                 MinSize = new Vector2(200, 30)}),
                                             (EditLabelBtn = new Button()),
@@ -58,7 +58,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                     {
                                         Children =
                                         {
-                                            new Label {Text = Loc.GetString("Pressure: ")},
+                                            new Label {Text = $"{Loc.GetString("gas-canister-window-pressure-label")} "},
                                             (_pressure = new Label())
                                         }
                                     },
@@ -70,7 +70,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                         {
                                             Children =
                                             {
-                                                new Label() {Text = Loc.GetString("Release pressure: ")},
+                                                new Label() {Text = $"{Loc.GetString("gas-canister-window-release-pressure-label")} "},
                                                 (_releasePressure = new Label())
                                             }
                                         },
@@ -94,8 +94,8 @@ namespace Content.Client.GameObjects.Components.Atmos
                                 {
                                     Children =
                                     {
-                                        new Label { Text = Loc.GetString("Valve: ") },
-                                        (ToggleValve = new CheckButton() { Text = Loc.GetString("Closed") })
+                                        new Label { Text = $"{Loc.GetString("gas-canister-window-valve-label")} " },
+                                        (ToggleValve = new CheckButton() { Text = Loc.GetString("gas-canister-window-valve-closed-text") })
                                     }
                                 }
                             },
@@ -121,8 +121,8 @@ namespace Content.Client.GameObjects.Components.Atmos
         /// <param name="state">The state the UI should reflect</param>
         public void UpdateState(GasCanisterBoundUserInterfaceState state)
         {
-            _pressure.Text = Loc.GetString("{0}kPa", state.Volume);
-            _releasePressure.Text = Loc.GetString("{0}kPa", state.ReleasePressure);
+            _pressure.Text = Loc.GetString("gas-canister-window-pressure-format-text", state.Volume);
+            _releasePressure.Text = Loc.GetString("gas-canister-window-pressure-format-text", state.ReleasePressure);
 
             // Update the canister label
             OldLabel = LabelInput.Text;
@@ -135,11 +135,11 @@ namespace Content.Client.GameObjects.Components.Atmos
             ToggleValve.Pressed = state.ValveOpened;
             if (ToggleValve.Pressed)
             {
-                ToggleValve.Text = Loc.GetString("Open");
+                ToggleValve.Text = Loc.GetString("gas-canister-window-valve-open-text");
             }
             else
             {
-                ToggleValve.Text = Loc.GetString("Closed");
+                ToggleValve.Text = Loc.GetString("gas-canister-window-valve-closed-text");
             }
         }
     }

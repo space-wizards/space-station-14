@@ -1,7 +1,11 @@
 # Action menu stuff (left panel, with hotbars etc)
 
-ui-actionmenu-function-lock-action-slots = (Un)lock dragging and clearing action slots
-ui-actionmenu-function-open-abilities-menu = Open action menu
+ui-actionmenu-title = Actions
+ui-actionmenu-filter-label = Filters: {selectedLabels}
+
+ui-actionsui-function-lock-action-slots = (Un)lock dragging and clearing action slots
+ui-actionsui-function-open-abilities-menu = Open action menu
+
 ui-actionmenu-function-hotbar1 = Hotbar slot 1
 ui-actionmenu-function-hotbar2 = Hotbar slot 2
 ui-actionmenu-function-hotbar3 = Hotbar slot 3

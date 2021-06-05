@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             if (_gameTiming.CurTime >= _lastGaspPopupTime + GaspPopupCooldown)
             {
                 _lastGaspPopupTime = _gameTiming.CurTime;
-                Owner.PopupMessageEveryone(Loc.GetString("Gasp"));
+                Owner.PopupMessageEveryone(Loc.GetString("lung-behavior-gasp"));
             }
 
             Inhale(CycleDelay);

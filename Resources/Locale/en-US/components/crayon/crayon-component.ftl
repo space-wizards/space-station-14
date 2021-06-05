@@ -1,0 +1,1 @@
+crayon-drawing-label = Drawing: [color={0}]{1}[/color] ({2}/{3})

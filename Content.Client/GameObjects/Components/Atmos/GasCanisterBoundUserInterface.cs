@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -17,9 +17,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public GasCanisterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-
         }
-
 
         /// <summary>
         /// When a button is pressed, send a network message to the server
@@ -30,7 +28,6 @@ namespace Content.Client.GameObjects.Components.Atmos
             SendMessage(new UiButtonPressedMessage(button));
         }
 
-
         /// <summary>
         /// When the release pressure is changed
         /// </summary>
@@ -40,13 +37,14 @@ namespace Content.Client.GameObjects.Components.Atmos
             SendMessage(new ReleasePressureButtonPressedMessage(value));
         }
 
-
         protected override void Open()
         {
             base.Open();
 
-            _window = new GasCanisterWindow();
-            _window.Title = Loc.GetString("Gas Canister");
+            _window = new GasCanisterWindow
+            {
+                Title = Loc.GetString("gas-canister-bound-user-interface-title")
+            };
 
             _window.OpenCentered();
             _window.OnClose += Close;
@@ -61,7 +59,6 @@ namespace Content.Client.GameObjects.Components.Atmos
             _window.EditLabelBtn.OnPressed += _ => EditLabel();
             _window.ToggleValve.OnPressed += _ => ToggleValve();
         }
-
 
         /// <summary>
         /// Called when the edit label button is pressed
@@ -85,12 +82,10 @@ namespace Content.Client.GameObjects.Components.Atmos
             }
         }
 
-
         private void ToggleValve()
         {
             SendMessage(new UiButtonPressedMessage(UiButton.ValveToggle));
         }
-
 
         /// <summary>
         /// Update the UI state based on server-sent info
@@ -100,14 +95,13 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             base.UpdateState(state);
 
-            if (!(state is GasCanisterBoundUserInterfaceState cast))
+            if (state is not GasCanisterBoundUserInterfaceState cast)
             {
                 return;
             }
 
             _window?.UpdateState(cast);
         }
-
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

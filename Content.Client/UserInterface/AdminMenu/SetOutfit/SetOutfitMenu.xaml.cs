@@ -27,9 +27,9 @@ namespace Content.Client.UserInterface.AdminMenu.SetOutfit
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            Title = Loc.GetString("Set Outfit");
+            Title = Loc.GetString("set-outfit-menu-title");
 
-            ConfirmButton.Text = Loc.GetString("Confirm");
+            ConfirmButton.Text = Loc.GetString("generic-confirm");
             ConfirmButton.OnPressed += ConfirmButtonOnOnPressed;
             SearchBar.OnTextChanged += SearchBarOnOnTextChanged;
             OutfitList.OnItemSelected += OutfitListOnOnItemSelected;

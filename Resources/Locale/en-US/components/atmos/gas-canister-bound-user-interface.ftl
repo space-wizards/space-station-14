@@ -1,0 +1,1 @@
+gas-canister-bound-user-interface-title = Gas Canister

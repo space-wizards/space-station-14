@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             IoCManager.InjectDependencies(this);
             Owner = owner;
-            Title = Loc.GetString("Body Scanner");
+            Title = Loc.GetString("body-scanner-display-title");
 
             var hSplit = new HBoxContainer
             {
@@ -57,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                                         {
                                             new Label
                                             {
-                                                Text = "Health: "
+                                                Text = $"{Loc.GetString("body-scanner-display-health-label")} "
                                             },
                                             (BodyPartHealth = new Label())
                                         }

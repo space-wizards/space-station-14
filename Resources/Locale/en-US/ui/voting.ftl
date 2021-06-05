@@ -28,3 +28,7 @@ ui-vote-fluff = Powered by Robust™ Anti-Tamper Technology
 
 # Button text in lobby/escape menu
 ui-vote-menu-button = Call vote
+
+# Vote menu command
+ui-vote-menu-command-description = Opens the voting menu
+ui-vote-menu-command-help-text = Usage: votemenu

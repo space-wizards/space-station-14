@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
@@ -73,7 +73,7 @@ namespace Content.Client.UserInterface
                     new Label
                     {
                         Margin = new Thickness(8, 0, 0, 0),
-                        Text = Loc.GetString("Character Setup"),
+                        Text = Loc.GetString("character-setup-gui-character-setup-label"),
                         StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                         VAlign = Label.VAlignMode.Center,
                     },
@@ -81,12 +81,12 @@ namespace Content.Client.UserInterface
                     {
                         HorizontalExpand = true,
                         HorizontalAlignment = HAlignment.Right,
-                        Text = Loc.GetString("Save"),
+                        Text = Loc.GetString("generic-save"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
                     }),
                     (CloseButton = new Button
                     {
-                        Text = Loc.GetString("Close"),
+                        Text = Loc.GetString("generic-close"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
                     })
                 }
@@ -124,7 +124,7 @@ namespace Content.Client.UserInterface
 
             _createNewCharacterButton = new Button
             {
-                Text = "Create new slot...",
+                Text = Loc.GetString("character-setup-gui-create-new-character-button"),
             };
             _createNewCharacterButton.OnPressed += args =>
             {
@@ -176,7 +176,8 @@ namespace Content.Client.UserInterface
             }
 
             _createNewCharacterButton.ToolTip =
-                $"A maximum of {_preferencesManager.Settings!.MaxCharacterSlots} characters are allowed.";
+                Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
+                ("maxCharacters", _preferencesManager.Settings!.MaxCharacterSlots));
 
             foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
@@ -260,7 +261,7 @@ namespace Content.Client.UserInterface
                 };
                 var deleteButton = new Button
                 {
-                    Text = "Delete",
+                    Text = Loc.GetString("generic-delete"),
                     Visible = !isSelectedCharacter,
                 };
                 deleteButton.OnPressed += _ =>

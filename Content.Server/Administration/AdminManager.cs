@@ -80,8 +80,8 @@ namespace Content.Server.Administration
                 return;
             }
 
-            _chat.SendAdminAnnouncement(Loc.GetString("{0} de-adminned themselves.", session.Name));
-            _chat.DispatchServerMessage(session, Loc.GetString("You are now a normal player."));
+            _chat.SendAdminAnnouncement(Loc.GetString("admin-manager-self-de-admin-message", ("exAdminName", session.Name)));
+            _chat.DispatchServerMessage(session, Loc.GetString("admin-manager-became-normal-player-message"));
 
             var plyData = session.ContentData()!;
             plyData.ExplicitlyDeadminned = true;
@@ -98,13 +98,13 @@ namespace Content.Server.Administration
                 throw new ArgumentException($"Player {session} is not an admin");
             }
 
-            _chat.DispatchServerMessage(session, Loc.GetString("You are now an admin."));
+            _chat.DispatchServerMessage(session, Loc.GetString("admin-manager-became-admin-message"));
 
             var plyData = session.ContentData()!;
             plyData.ExplicitlyDeadminned = false;
             reg.Data.Active = true;
 
-            _chat.SendAdminAnnouncement(Loc.GetString("{0} re-adminned themselves.", session.Name));
+            _chat.SendAdminAnnouncement(Loc.GetString("admin-manager-self-re-admin-message", ("newAdminName", session.Name)));
 
             SendPermsChangedEvent(session);
             UpdateAdminStatus(session);
@@ -125,7 +125,7 @@ namespace Content.Server.Administration
             {
                 // No longer admin.
                 _admins.Remove(player);
-                _chat.DispatchServerMessage(player, Loc.GetString("You are no longer an admin."));
+                _chat.DispatchServerMessage(player, Loc.GetString("admin-manager-no-longer-admin-message"));
             }
             else
             {
@@ -140,7 +140,7 @@ namespace Content.Server.Administration
                         RankId = rankId
                     };
                     _admins.Add(player, reg);
-                    _chat.DispatchServerMessage(player, Loc.GetString("You are now an admin."));
+                    _chat.DispatchServerMessage(player, Loc.GetString("admin-manager-became-admin-message"));
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Content.Server.Administration
                 {
                     aData.Active = true;
 
-                    _chat.DispatchServerMessage(player, Loc.GetString("Your admin permissions have been updated."));
+                    _chat.DispatchServerMessage(player, Loc.GetString("admin-manager-admin-permissions-updated-message"));
                 }
             }
 
@@ -251,7 +251,7 @@ namespace Content.Server.Administration
             foreach (var session in _playerManager.GetAllPlayers())
             {
                 var name = session.Name;
-                var username = session.AttachedEntity?.Name ?? "";
+                var username = session.AttachedEntity?.Name ?? string.Empty;
                 var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
                 netMsg.PlayersInfo.Add(new AdminMenuPlayerListMessage.PlayerInfo(name, username, antag));
@@ -309,7 +309,7 @@ namespace Content.Server.Administration
             {
                 if (_admins.Remove(e.Session) && _cfg.GetCVar(CCVars.AdminAnnounceLogout))
                 {
-                    _chat.SendAdminAnnouncement(Loc.GetString("Admin logout: {0}", e.Session.Name));
+                    _chat.SendAdminAnnouncement(Loc.GetString("admin-manager-admin-logout-message", ("name", e.Session.Name)));
                 }
             }
         }
@@ -338,7 +338,7 @@ namespace Content.Server.Administration
 
                 if (_cfg.GetCVar(CCVars.AdminAnnounceLogin))
                 {
-                    _chat.SendAdminAnnouncement(Loc.GetString("Admin login: {0}", session.Name));
+                    _chat.SendAdminAnnouncement(Loc.GetString("admin-manager-admin-login-message", ("name", session.Name)));
                 }
 
                 SendPermsChangedEvent(session);
@@ -353,7 +353,7 @@ namespace Content.Server.Administration
             {
                 var data = new AdminData
                 {
-                    Title = Loc.GetString("Host"),
+                    Title = Loc.GetString("generic-host"),
                     Flags = AdminFlagsHelper.Everything,
                 };
 

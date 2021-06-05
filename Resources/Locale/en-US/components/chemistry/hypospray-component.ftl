@@ -1,0 +1,1 @@
+hypospray-volume-text = Volume: [color=white]{0}/{1}[/color]

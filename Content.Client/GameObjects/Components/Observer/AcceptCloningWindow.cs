@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Observer
         public AcceptCloningWindow()
         {
 
-            Title = Loc.GetString("Cloning Machine");
+            Title = Loc.GetString("accept-cloning-window-title");
 
             Contents.AddChild(new VBoxContainer
             {
@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Observer
                         {
                             (new Label()
                             {
-                                Text = Loc.GetString("You are being cloned!\nTransfer your soul to the clone body?")
+                                Text = Loc.GetString("accept-cloning-window-prompt-text")
                             }),
                             new HBoxContainer
                             {
@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Observer
                                 {
                                     (AcceptButton = new Button
                                     {
-                                        Text = Loc.GetString("Yes"),
+                                        Text = Loc.GetString("generic-yes"),
                                     }),
 
                                     (new Control()
@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
                                     (DenyButton = new Button
                                     {
-                                        Text = Loc.GetString("No"),
+                                        Text = Loc.GetString("generic-no"),
                                     })
                                 }
                             },

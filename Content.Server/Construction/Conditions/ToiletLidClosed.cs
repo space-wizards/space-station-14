@@ -25,7 +25,7 @@ namespace Content.Server.Construction.Conditions
             if (!entity.TryGetComponent(out ToiletComponent? toilet)) return false;
             if (!toilet.LidOpen) return false;
 
-            message.AddMarkup(Loc.GetString("Use a [color=yellow]crowbar[/color] to close the lid.\n"));
+            message.AddMarkup(Loc.GetString("construction-condition-toilet-lid-closed") + "\n");
             return true;
         }
     }

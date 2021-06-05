@@ -34,7 +34,7 @@ namespace Content.Client.UserInterface
             MinSize = SetSize = (360, 560);
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("Late Join");
+            Title = Loc.GetString("late-join-gui-title");
 
             var jobList = new VBoxContainer();
             var vBox = new VBoxContainer
@@ -65,7 +65,8 @@ namespace Content.Client.UserInterface
                         category = new VBoxContainer
                         {
                             Name = department,
-                            ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                            ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
+                                                    ("departmentName", department))
                         };
 
                         if (firstCategory)
@@ -87,7 +88,7 @@ namespace Content.Client.UserInterface
                             {
                                 new Label
                                 {
-                                    Text = Loc.GetString("{0} jobs", department)
+                                    Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", department))
                                 }
                             }
                         });

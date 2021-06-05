@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Utility;
 using Robust.Client.Graphics;
@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 {
                     (_nameLabel = new Label
                     {
-                        Text = Loc.GetString("Gas Analyzer"),
+                        Text = Loc.GetString("gas-analyzer-window-name"),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center
@@ -95,7 +95,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                         MinSize = (20, 0),
                         HorizontalExpand = true,
                     },
-                    (refreshButton = new Button {Text = "Refresh"}), //TODO: refresh icon?
+                    (refreshButton = new Button {Text = "gas-analyzer-window-refresh-button"}), //TODO: refresh icon?
                     new Control
                     {
                         MinSize = (2, 0),
@@ -149,7 +149,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 _statusContainer.AddChild(new Label
                 {
-                    Text = Loc.GetString("Error: {0}", state.Error),
+                    Text = Loc.GetString("gas-analyzer-window-error-text", state.Error),
                     FontColorOverride = Color.Red
                 });
                 return;
@@ -157,11 +157,11 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Pressure: {0:0.##} kPa", state.Pressure)
+                Text = Loc.GetString("gas-analyzer-window-pressure-text", state.Pressure)
             });
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Temperature,
+                Text = Loc.GetString("gas-analyzer-window-temperature-text", state.Temperature,
                     TemperatureHelpers.KelvinToCelsius(state.Temperature))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
@@ -222,7 +222,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 });
                 tableVal.AddChild(new Label
                 {
-                    Text = Loc.GetString("{0:0.##} mol", gas.Amount)
+                    Text = Loc.GetString("gas-analyzer-window-molality-text", gas.Amount)
                 });
 
                 // Add to the gas bar //TODO: highlight the currently hover one
@@ -230,7 +230,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var right = (i == state.Gases.Length - 1) ? 0f : 2f;
                 gasBar.AddChild(new PanelContainer
                 {
-                    ToolTip = Loc.GetString("{0}: {1:0.##} mol ({2:0.#}%)", gas.Name, gas.Amount,
+                    ToolTip = Loc.GetString("gas-analyzer-window-molality-percentage-text", gas.Name, gas.Amount,
                         (gas.Amount / totalGasAmount) * 100),
                     HorizontalExpand = true,
                     SizeFlagsStretchRatio = gas.Amount,

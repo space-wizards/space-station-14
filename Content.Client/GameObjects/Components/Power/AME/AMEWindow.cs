@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
         {
             IoCManager.InjectDependencies(this);
 
-            Title = "Antimatter Control Unit";
+            Title = Loc.GetString("ame-window-title");
 
             MinSize = SetSize = (250, 250);
 
@@ -39,8 +39,8 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         {
                             Children =
                             {
-                                new Label {Text = Loc.GetString("Engine Status") + ": "},
-                                (InjectionStatus = new Label {Text = "Not Injecting"})
+                                new Label {Text = Loc.GetString("ame-window-engine-status-label") + ": "},
+                                (InjectionStatus = new Label {Text = "ame-window-engine-injection-status-not-injecting-label"})
                             }
                         },
                         new HBoxContainer
@@ -54,22 +54,22 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         {
                             Children =
                             {
-                                new Label {Text = Loc.GetString("Fuel Status") + ": "},
-                                (FuelAmount = new Label {Text = "No fuel inserted"})
+                                new Label {Text = Loc.GetString("ame-window-fuel-status-label") + ": "},
+                                (FuelAmount = new Label {Text = "ame-window-fuel-not-inserted-text"})
                             }
                         },
                         new HBoxContainer
                         {
                             Children =
                             {
-                                (EjectButton = new Button {Text = "Eject", StyleClasses = {StyleBase.ButtonOpenBoth}, Disabled = true}),
+                                (EjectButton = new Button {Text = "generic-eject", StyleClasses = {StyleBase.ButtonOpenBoth}, Disabled = true}),
                             }
                         },
                         new HBoxContainer
                         {
                             Children =
                             {
-                                new Label {Text = Loc.GetString("Injection amount") + ": "},
+                                new Label {Text = Loc.GetString("ame-window-injection-amount-label") + ": "},
                                 (InjectionAmount = new Label {Text = "0"})
                             }
                         },
@@ -77,16 +77,16 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         {
                             Children =
                             {
-                                (IncreaseFuelButton = new Button {Text = "Increase", StyleClasses = {StyleBase.ButtonOpenRight}}),
-                                (DecreaseFuelButton = new Button {Text = "Decrease", StyleClasses = {StyleBase.ButtonOpenLeft}}),
+                                (IncreaseFuelButton = new Button {Text = "generic-increase", StyleClasses = {StyleBase.ButtonOpenRight}}),
+                                (DecreaseFuelButton = new Button {Text = "generic-decrease", StyleClasses = {StyleBase.ButtonOpenLeft}}),
                             }
                         },
                         new HBoxContainer
                         {
                             Children =
                             {
-                                (RefreshPartsButton = new Button {Text = "Refresh Parts", StyleClasses = {StyleBase.ButtonOpenBoth }, Disabled = true }),
-                                 new Label { Text = Loc.GetString("Core count") + ": "},
+                                (RefreshPartsButton = new Button {Text = "ame-window-refresh-parts-button", StyleClasses = {StyleBase.ButtonOpenBoth }, Disabled = true }),
+                                 new Label { Text = Loc.GetString("ame-window-core-count-label") + ": "},
                                 (CoreCount = new Label { Text = "0"}),
                             }
                         }
@@ -136,7 +136,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
             {
                 EjectButton.Disabled = true;
                 ToggleInjection.Disabled = true;
-                FuelAmount.Text = Loc.GetString("No fuel inserted");
+                FuelAmount.Text = Loc.GetString("ame-window-fuel-not-inserted-text");
             }
             else
             {
@@ -152,11 +152,11 @@ namespace Content.Client.GameObjects.Components.Power.AME
 
             if (!castState.Injecting)
             {
-                InjectionStatus.Text = Loc.GetString("Not Injecting");
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label");
             }
             else
             {
-                InjectionStatus.Text = Loc.GetString("Injecting...");
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label");
             }
 
             RefreshPartsButton.Disabled = castState.Injecting;

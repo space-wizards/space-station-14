@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
         public SurgeryWindow()
         {
             MinSize = SetSize = (300, 400);
-            Title = Loc.GetString("Surgery");
+            Title = Loc.GetString("surgery-window-title");
             RectClipContent = true;
 
             var vSplitContainer = new VBoxContainer
@@ -105,7 +105,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
                     (DisplayText = new Label
                     {
                         VerticalAlignment = VAlignment.Center,
-                        Text = "N/A",
+                        Text = Loc.GetString("generic-not-available-shorthand"),
                     }),
                     (new Control
                     {
