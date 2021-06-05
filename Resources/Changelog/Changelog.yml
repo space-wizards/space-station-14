@@ -1288,3 +1288,8 @@ Entries:
   - {message: Added Oil, type: Add}
   id: 227
   time: '2021-06-05T17:53:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Interaction outlines removed from full-tile objects like walls, type: Tweak}
+  id: 228
+  time: '2021-06-05T18:19:06.0000000+00:00'
