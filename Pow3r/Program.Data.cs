@@ -13,13 +13,13 @@ namespace Pow3r
             public bool Enabled = true;
             public float MaxSupply;
 
-            // Actual power supplied last network update.
             public float SupplyRampRate;
             public float SupplyRampTolerance;
 
             // == Runtime parameters ==
             public Network LinkedNetwork;
 
+            // Actual power supplied last network update.
             public float CurrentSupply;
 
             // In-tick max supply thanks to ramp. Used during calculations.
@@ -27,7 +27,11 @@ namespace Pow3r
 
             // The amount of power we WANT to be supplying to match grid load.
             public float SupplyRampTarget;
+
+            // Position of the supply ramp.
             public float SupplyRampPosition;
+
+            // UI/vis stuff.
             public Vector2 CurrentWindowPos;
             public readonly float[] SuppliedPowerData = new float[MaxTickData];
 
