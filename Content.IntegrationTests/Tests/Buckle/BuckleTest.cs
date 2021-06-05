@@ -39,6 +39,7 @@ namespace Content.IntegrationTests.Tests.Buckle
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
+  - type: StandingState
 
 - type: entity
   name: {StrapDummyId}

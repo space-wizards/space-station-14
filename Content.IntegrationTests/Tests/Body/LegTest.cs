@@ -27,6 +27,7 @@ namespace Content.IntegrationTests.Tests.Body
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
+  - type: StandingState
 ";
 
         [Test]
