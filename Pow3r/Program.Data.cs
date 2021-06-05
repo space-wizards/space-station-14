@@ -70,7 +70,6 @@ namespace Pow3r
             // == Static parameters ==
             public bool Enabled;
             public float Capacity;
-            public float MaxPassthrough;
             public float MaxChargeRate;
             public float MaxSupply;
             public float SupplyRampTolerance;
@@ -81,10 +80,12 @@ namespace Pow3r
             public Network LinkedNetworkSupplying;
             public float SupplyRampPosition;
             public float CurrentSupply;
+            public float CurrentStorage;
 
             // == Display ==
             public Vector2 CurrentWindowPos;
             public readonly float[] SuppliedPowerData = new float[MaxTickData];
+            public readonly float[] StoredPowerData = new float[MaxTickData];
 
             public Battery(int id)
             {

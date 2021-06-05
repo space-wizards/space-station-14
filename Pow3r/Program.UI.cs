@@ -49,7 +49,7 @@ namespace Pow3r
             Begin("Timing");
 
             PlotLines("Tick time (ms)", ref _simTickTimes[0], MaxTickData, _tickDataIdx + 1,
-                $"",
+                $"{_simTickTimes[_tickDataIdx]:N2}",
                 0,
                 0.1f, new Vector2(250, 150));
 
@@ -101,7 +101,7 @@ namespace Pow3r
                 load.CurrentWindowPos = CalcWindowCenter();
 
                 PlotLines("", ref load.ReceivedPowerData[0], MaxTickData, _tickDataIdx + 1,
-                    $"{load.ReceivingPower:N1} W",
+                    $"Receiving: {load.ReceivingPower:N1} W",
                     0,
                     1000, new Vector2(250, 150));
 
@@ -146,7 +146,7 @@ namespace Pow3r
                 Text($"Ramp Position: {supply.SupplyRampPosition:N1}");
 
                 PlotLines("", ref supply.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
-                    $"{supply.CurrentSupply:N1} W",
+                    $"Supply: {supply.CurrentSupply:N1} W",
                     0, 1000, new Vector2(250, 150));
 
                 if (Button("Delete"))
@@ -181,7 +181,8 @@ namespace Pow3r
                 Begin($"Battery##Bat{battery.Id}");
 
                 Checkbox("Enabled", ref battery.Enabled);
-                SliderFloat("Available", ref battery.MaxSupply, 0, 1000, "%.0f W");
+                SliderFloat("Capacity", ref battery.Capacity, 0, 100000, "%.0f J");
+                SliderFloat("Max supply", ref battery.MaxSupply, 0, 1000, "%.0f W");
                 SliderFloat("Ramp", ref battery.SupplyRampRate, 0, 100, "%.0f W");
                 SliderFloat("Tolerance", ref battery.SupplyRampTolerance, 0, 100, "%.0f W");
 
@@ -190,8 +191,12 @@ namespace Pow3r
                 Text($"Ramp Position: {battery.SupplyRampPosition:N1}");
 
                 PlotLines("", ref battery.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
-                    $"{battery.CurrentSupply:N1} W",
-                    0, 1000, new Vector2(250, 150));
+                    $"Supply: {battery.CurrentSupply:N1} W",
+                    0, 1000, new Vector2(250, 75));
+
+                PlotLines("", ref battery.StoredPowerData[0], MaxTickData, _tickDataIdx + 1,
+                    $"Charge: {battery.CurrentStorage:N1} W",
+                    0, 100000, new Vector2(250, 75));
 
                 if (Button("Delete"))
                 {

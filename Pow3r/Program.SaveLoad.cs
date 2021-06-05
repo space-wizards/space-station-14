@@ -40,7 +40,6 @@ namespace Pow3r
             var tempBatteries = dat.Batteries.ToDictionary(x => x.Id,
                 x => new Battery(x.Id)
                 {
-                    MaxPassthrough = x.MaxPassthrough,
                     Capacity = x.Capacity,
                     Enabled = x.Enabled,
                     MaxSupply = x.MaxSupply,
@@ -103,7 +102,6 @@ namespace Pow3r
                     Id = b.Id,
                     Enabled = b.Enabled,
                     Capacity = b.Capacity,
-                    MaxPassthrough = b.MaxPassthrough,
                     MaxSupply = b.MaxSupply,
                     RampRate = b.SupplyRampRate,
                     RampTolerance = b.SupplyRampTolerance,
