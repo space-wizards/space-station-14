@@ -11,17 +11,16 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<HandsComponent, DownEvent>(HandleDropItems);
+            SubscribeLocalEvent<HandsComponent, BlockDropHandItemsEvent>(HandleDropItems);
         }
 
-        private void HandleDropItems(EntityUid uid, HandsComponent component, DownEvent args)
+        private void HandleDropItems(EntityUid uid, HandsComponent component, BlockDropHandItemsEvent args)
         {
             // So the directed event is only raised on the entity itself so we need to check container on a downed entity I supposed
             if (!component.Owner.TryGetContainerMan(out var conMan) ||
                 !conMan.Owner.HasComponent<CrematoriumEntityStorageComponent>()) return;
 
-            // Yes this is kinda shit but when the other caller to DropAllItemsInHands is fixed we can fix this.
-            Get<SharedHandsSystem>().DropAllItemsInHands(EntityManager.GetEntity(uid));
+            args.Cancel();
         }
     }
 }

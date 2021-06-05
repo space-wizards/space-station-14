@@ -27,6 +27,9 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             if (!component.Standing || !EntityManager.TryGetEntity(uid, out var entity)) return;
 
+            // Drop hands regardless unless blocky blocky.
+            EntityManager.EventBus.RaiseLocalEvent(uid, new DropHandItemsEvent());
+
             var msg = new BlockDownEvent();
             EntityManager.EventBus.RaiseLocalEvent(uid, msg);
 

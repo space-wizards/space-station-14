@@ -8,12 +8,13 @@ namespace Content.Shared.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedHandsComponent, DownEvent>(HandleDown);
+            SubscribeLocalEvent<SharedHandsComponent, DropHandItemsEvent>(HandleDown);
         }
 
-        private void HandleDown(EntityUid uid, SharedHandsComponent component, DownEvent args)
+        private void HandleDown(EntityUid uid, SharedHandsComponent component, DropHandItemsEvent args)
         {
-            var msg = new DropItemsOnDownEvent();
+            var msg = new BlockDropHandItemsEvent();
+            EntityManager.EventBus.RaiseLocalEvent(uid, msg);
 
             if (msg.Cancelled) return;
 
@@ -28,8 +29,12 @@ namespace Content.Shared.GameObjects.EntitySystems
     /// <summary>
     /// Cancel if you don't want to drop items on an entity being downed.
     /// </summary>
-    public sealed class DropItemsOnDownEvent : CancellableEntityEventArgs
+    public sealed class DropHandItemsEvent : EntityEventArgs
     {
-
     }
+
+    /// <summary>
+    /// Cancel whether an entity should drop all of its items.
+    /// </summary>
+    public sealed class BlockDropHandItemsEvent : CancellableEntityEventArgs {}
 }
