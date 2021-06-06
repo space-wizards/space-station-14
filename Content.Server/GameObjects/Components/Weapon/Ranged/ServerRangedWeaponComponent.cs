@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -173,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                user.PopupMessage(Loc.GetString("The gun blows up in your face!"));
+                user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
                 Owner.Delete();
                 return;

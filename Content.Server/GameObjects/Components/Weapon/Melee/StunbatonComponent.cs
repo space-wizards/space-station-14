@@ -165,14 +165,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
-                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("stunbaton-component-no-cell"));
                 return;
             }
 
             if (Cell.CurrentCharge < EnergyPerUse)
             {
                 SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
-                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                Owner.PopupMessage(user, Loc.GetString("stunbaton-component-dead-cell"));
                 return;
             }
 
@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (Activated)
             {
-                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("stunbaton-component-on-examine"));
             }
         }
 

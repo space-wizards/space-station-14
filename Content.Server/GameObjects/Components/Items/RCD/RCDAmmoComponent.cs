@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It holds {0} charges.", refillAmmo));
+            message.AddMarkup(Loc.GetString("rcd-ammo-component-on-examine-text",("ammo", refillAmmo)));
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -36,12 +36,12 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
             if (rcdComponent.MaxAmmo - rcdComponent._ammo < refillAmmo)
             {
-                rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is full!"));
+                rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-ammo-component-after-interact-full-text"));
                 return true;
             }
 
             rcdComponent._ammo = Math.Min(rcdComponent.MaxAmmo, rcdComponent._ammo + refillAmmo);
-            rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("You refill the RCD."));
+            rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-ammo-component-after-interact-refilled-text"));
 
             //Deleting a held item causes a lot of errors
             hands.Drop(Owner, false);

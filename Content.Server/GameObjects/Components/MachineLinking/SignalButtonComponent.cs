@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.MachineLinking.Signals;
+using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -32,11 +32,11 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             if (transmitter.TransmitSignal(new ToggleSignal()))
             {
                 // Since the button doesn't have an animation, I'm going to use a popup message
-                Owner.PopupMessage(user, Loc.GetString("Click."));
+                Owner.PopupMessage(user, Loc.GetString("generic-click"));
             }
             else
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-button-component-transmit-signal-no-receivers-message"));
             }
         }
 

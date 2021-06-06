@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Stacks;
@@ -25,7 +25,7 @@ namespace Content.Shared.Construction
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, MaterialPrototype.Name));
+            message.AddMarkup(Loc.GetString("construction-insert-material-entity",("amount", Amount),("materialName", MaterialPrototype.Name)));
         }
 
         public override bool EntityValid(IEntity entity)

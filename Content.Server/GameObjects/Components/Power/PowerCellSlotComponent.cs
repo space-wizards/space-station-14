@@ -112,9 +112,9 @@ namespace Content.Server.GameObjects.Components.Power
             if (!inDetailsRange) return;
             string sizeLetter = SlotSize switch
             {
-                PowerCellSize.Small => Loc.GetString("S"),
-                PowerCellSize.Medium => Loc.GetString("M"),
-                PowerCellSize.Large => Loc.GetString("L"),
+                PowerCellSize.Small => Loc.GetString("generic-small-shorthand"),
+                PowerCellSize.Medium => Loc.GetString("generic-medium-shorthand"),
+                PowerCellSize.Large => Loc.GetString("generic-large-shorthand"),
                 _ => "???"
             };
             if (DescFormatString != null) message.AddMarkup(string.Format(DescFormatString, sizeLetter));
@@ -189,12 +189,12 @@ namespace Content.Server.GameObjects.Components.Power
 
                 if (component.Cell == null)
                 {
-                    data.Text = Loc.GetString("No cell");
+                    data.Text = Loc.GetString("power-cell-component-no-cell");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = Loc.GetString("Eject cell");
+                    data.Text = Loc.GetString("power-cell-component-eject-cell");
                     data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
 

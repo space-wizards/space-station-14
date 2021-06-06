@@ -17,14 +17,17 @@ plant-holder-component-take-sample-message = You take a sample from the {$seedNa
 plant-holder-component-compost-message = You compost {$usingItem:theName} into {$owner:theName}.
 plant-holder-component-compost-others-message = {$user:TheName} composts {$usingItem:theName} into {$owner:theName}.
 plant-holder-component-nothing-planted-message = It has nothing planted in it..
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
+plant-holder-component-something-already-growing-message = [color=green]{$seedName}[/color] {$toBeForm} growing here.
+plant-holder-component-something-already-growing-low-health-message = The plant looks [color=red]{$healthState}[/color].
+plant-holder-component-plant-old-adjective = old and wilting
+plant-holder-component-plant-unhealthy-adjective = unhealthy
+plant-holder-component-dead-plant-matter-message = It is full of [color=red]dead plant matter[/color].
+plant-holder-component-weed-high-level-message = It is filled with [color=green]weeds[/color]!
+plant-holder-component-pest-high-level-message = It is filled with [color=gray]tiny worms[/color]!
+plant-holder-component-water-level-message = Water:     [color=cyan]{$waterLevel}[/color].
+plant-holder-component-nutrient-level-message = Nutrient: [color=orange]{$nutritionLevel}[/color].
+plant-holder-component-toxins-high-warning = The [color=red]toxicity level alert[/color] is flashing red.
+plant-holder-component-light-improper-warning = The [color=yellow]improper light level alert[/color] is blinking.
+plant-holder-component-heat-improper-warning = The [color=orange]improper temperature level alert[/color] is blinking.
+plant-holder-component-pressure-improper-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
+plant-holder-component-gas-missing-warning = The [color=cyan]improper gas environment alert[/color] is blinking.

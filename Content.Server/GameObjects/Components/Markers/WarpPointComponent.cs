@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Markers
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = Location == null ? "<null>" : $"'{Location}'";
-            message.AddText(Loc.GetString("This one's location ID is {0}", loc));
+            message.AddText(Loc.GetString("warp-point-component-on-examine-success", ("location", loc)));
         }
     }
 }

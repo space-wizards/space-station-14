@@ -1,0 +1,1 @@
+ghost-component-on-examine-message = Died [color=yellow]{$timeOfDeath}[/color].

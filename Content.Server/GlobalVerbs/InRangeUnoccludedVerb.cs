@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using Robust.Server.Console;
@@ -30,7 +30,7 @@ namespace Content.Server.GlobalVerbs
             }
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("In Range Unoccluded");
+            data.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
         }
 
@@ -48,8 +48,8 @@ namespace Content.Server.GlobalVerbs
             }
 
             var message = user.InRangeUnOccluded(target)
-                ? Loc.GetString("Not occluded")
-                : Loc.GetString("Occluded");
+                ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
+                : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
 
             target.PopupMessage(user, message);
         }

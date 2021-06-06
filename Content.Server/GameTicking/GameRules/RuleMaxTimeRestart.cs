@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -47,9 +47,9 @@ namespace Content.Server.GameTicking.GameRules
 
         private void TimerFired()
         {
-            _gameTicker.EndRound(Loc.GetString("Time has run out!"));
+            _gameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) RoundEndDelay.TotalSeconds)));
 
             Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
         }

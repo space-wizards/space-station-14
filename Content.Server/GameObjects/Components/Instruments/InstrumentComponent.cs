@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
@@ -200,11 +200,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                             if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                             {
                                 InstrumentPlayer.AttachedEntity?.PopupMessage(
-                                    Loc.GetString("Your fingers are beginning to a cramp a little!"));
+                                    Loc.GetString("instrument-component-finger-cramps-light-message"));
                             } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
                             {
                                 InstrumentPlayer.AttachedEntity?.PopupMessage(
-                                    Loc.GetString("Your fingers are seriously cramping up!"));
+                                    Loc.GetString("instrument-component-finger-cramps-serious-message"));
                             }
                         }
 
@@ -359,7 +359,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                         Clean();
                     }
 
-                    Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
+                    Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }
 
                 InstrumentPlayer = null;

@@ -1,0 +1,1 @@
+dice-component-on-examine-message = A dice with [color=lightgray]{$sidesAmount}[/color] sides.\nIt has landed on a [color=white]{$currentSide}[/color].

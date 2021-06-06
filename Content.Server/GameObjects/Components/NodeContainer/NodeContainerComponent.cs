@@ -93,15 +93,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                 {
                     case NodeGroupID.HVPower:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=orange]HV cables[/color].\n"));
+                            Loc.GetString("node-container-component-on-examine-details-hvpower") + "\n");
                         break;
                     case NodeGroupID.MVPower:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=yellow]MV cables[/color].\n"));
+                            Loc.GetString("node-container-component-on-examine-details-mvpower") + "\n");
                         break;
                     case NodeGroupID.Apc:
                         message.AddMarkup(
-                            Loc.GetString("It has a connector for [color=green]APC cables[/color].\n"));
+                            Loc.GetString("node-container-component-on-examine-details-apc") + "\n");
                         break;
                 }
             }

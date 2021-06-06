@@ -168,12 +168,12 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             if (IsBolted())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The airlock's bolts prevent it from being forced!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message "));
                 return false;
             }
             if (IsPowered())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 return false;
             }
             return true;

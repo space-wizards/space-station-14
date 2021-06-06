@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle Magboots");
+                data.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, MagbootsComponent component)

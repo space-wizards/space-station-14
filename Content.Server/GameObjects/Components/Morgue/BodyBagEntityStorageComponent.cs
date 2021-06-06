@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             {
                 if (LabelContainer?.ContainedEntity != null && LabelContainer.ContainedEntity.TryGetComponent<PaperComponent>(out var paper))
                 {
-                    message.AddText(Loc.GetString("The label reads: {0}", paper.Content));
+                    message.AddText(Loc.GetString("body-bag-entity-storage-component-on-examine-details", ("paper", paper.Content)));
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Morgue
 
             if (LabelContainer.ContainedEntity != null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("There's already a label attached."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("body-bag-entity-storage-component-interact-using-already-attached"));
                 return false;
             }
 
@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Morgue
 
             _appearance?.SetData(BodyBagVisuals.Label, true);
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("You attach {0:theName} to the body bag.", eventArgs.Using));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("body-bag-entity-storage-component-interact-using-success",("entity", eventArgs.Using)));
             return true;
         }
 
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Morgue
                     return;
                 }
 
-                data.Text = Loc.GetString("Remove label");
+                data.Text = Loc.GetString("remove-label-verb-get-data-text");
             }
 
             /// <inheritdoc />

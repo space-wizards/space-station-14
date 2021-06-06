@@ -175,14 +175,14 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             var entry = Inventory.Find(x => x.ID == id);
             if (entry == null)
             {
-                Owner.PopupMessageEveryone(Loc.GetString("Invalid item"));
+                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
                 Deny();
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                Owner.PopupMessageEveryone(Loc.GetString("Out of stock"));
+                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
                 Deny();
                 return;
             }
@@ -208,7 +208,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 if (sender == null || !accessReader.IsAllowed(sender))
                 {
-                    Owner.PopupMessageEveryone(Loc.GetString("Access denied"));
+                    Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();
                     return;
                 }

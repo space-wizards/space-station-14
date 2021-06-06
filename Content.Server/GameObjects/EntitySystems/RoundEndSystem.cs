@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             IsRoundEndCountdownStarted = true;
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("An emergency shuttle has been sent. ETA: {0} minutes.", RoundEndCountdownTime.Minutes), Loc.GetString("Station"));
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", RoundEndCountdownTime.Minutes)), Loc.GetString("Station"));
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
 
@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             IsRoundEndCountdownStarted = false;
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("The emergency shuttle has been recalled."), Loc.GetString("Station"));
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"));
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
 
@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.EntitySystems
             OnRoundEndCountdownFinished?.Invoke();
             _gameTicker.EndRound();
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting the round in {0} seconds...", RestartRoundTime));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", RestartRoundTime)));
 
             Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => _gameTicker.RestartRound(), CancellationToken.None);
         }

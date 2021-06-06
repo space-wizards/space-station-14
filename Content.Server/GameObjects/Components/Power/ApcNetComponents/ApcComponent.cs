@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 }
                 else
                 {
-                    user.PopupMessageCursor(Loc.GetString("Insufficient access!"));
+                    user.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
                 }
 
             }

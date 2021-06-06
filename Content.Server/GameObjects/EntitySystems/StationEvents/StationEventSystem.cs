@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,11 +107,11 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
                 stationEvent.Announce();
-                return Loc.GetString("Running event ") + stationEvent.Name;
+                return Loc.GetString("station-event-system-run-event", ("eventName", stationEvent.Name));
             }
 
             // I had string interpolation but lord it made it hard to read
-            return Loc.GetString("No event named ") + name;
+            return Loc.GetString("station-event-system-run-event-no-event-name", ("eventName", name));
         }
 
         /// <summary>
@@ -124,14 +124,14 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
             if (randomEvent == null)
             {
-                return Loc.GetString("No valid events available");
+                return Loc.GetString("station-event-system-run-random-event-no-valid-events");
             }
 
             CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
             CurrentEvent.Startup();
 
-            return Loc.GetString("Running ") + randomEvent.Name;
+            return Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Name));
         }
 
         /// <summary>
@@ -153,11 +153,11 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
             if (CurrentEvent == null)
             {
-                resultText = Loc.GetString("No event running currently");
+                resultText = Loc.GetString("station-event-system-stop-event-no-running-event");
             }
             else
             {
-                resultText = Loc.GetString("Stopped event ") + CurrentEvent.Name;
+                resultText = Loc.GetString("station-event-system-stop-event", ("eventName", CurrentEvent.Name));
                 CurrentEvent.Shutdown();
                 CurrentEvent = null;
             }

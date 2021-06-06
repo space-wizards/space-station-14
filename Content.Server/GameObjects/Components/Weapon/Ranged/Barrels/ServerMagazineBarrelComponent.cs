@@ -233,7 +233,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (Owner.TryGetContainer(out var container))
                 {
-                    Owner.PopupMessage(container.Owner, Loc.GetString("Bolt open"));
+                    Owner.PopupMessage(container.Owner, Loc.GetString("server-magazine-barrel-component-cycle-bolt-open"));
                 }
                 BoltOpen = true;
                 return;
@@ -273,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
                 }
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-use-entity-bolt-closed"));
                 BoltOpen = false;
                 return true;
             }
@@ -345,7 +345,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (MagNeedsOpenBolt && !BoltOpen)
             {
-                Owner.PopupMessage(user, Loc.GetString("Bolt needs to be open"));
+                Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-remove-magazine-bolt-closed"));
                 return;
             }
 
@@ -371,19 +371,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if ((MagazineTypes & magazineComponent.MagazineType) == 0)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Wrong magazine type"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-magazine-type"));
                     return false;
                 }
 
                 if (magazineComponent.Caliber != _caliber)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Wrong caliber"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-caliber"));
                     return false;
                 }
 
                 if (_magNeedsOpenBolt && !BoltOpen)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Need to open bolt first"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-bolt-closed"));
                     return false;
                 }
 
@@ -393,14 +393,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     {
                         SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Magazine inserted"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-success"));
                     _magazineContainer.Insert(eventArgs.Using);
                     Dirty();
                     UpdateAppearance();
                     return true;
                 }
 
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Already holding a magazine"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-already-holding-magazine"));
                 return false;
             }
 
@@ -409,26 +409,26 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (!BoltOpen)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Cannot insert ammo while bolt is closed"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-ammo-bolt-closed"));
                     return false;
                 }
 
                 if (ammoComponent.Caliber != _caliber)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Wrong caliber"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-caliber"));
                     return false;
                 }
 
                 if (_chamberContainer.ContainedEntity == null)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Ammo inserted"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-ammo-success"));
                     _chamberContainer.Insert(eventArgs.Using);
                     Dirty();
                     UpdateAppearance();
                     return true;
                 }
 
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Chamber full"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-ammo-full"));
                 return false;
             }
 
@@ -439,11 +439,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", Caliber));
+            message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine", ("caliber",Caliber)));
 
             foreach (var magazineType in GetMagazineTypes())
             {
-                message.AddMarkup(Loc.GetString("\nIt accepts [color=white]{0}[/color] magazines.", magazineType));
+                message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine-magazine-type",("magazineType", magazineType)));
             }
         }
 
@@ -458,7 +458,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject magazine");
+                data.Text = Loc.GetString("eject-magazine-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 if (component.MagNeedsOpenBolt)
                 {
@@ -488,7 +488,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return;
                 }
 
-                data.Text = Loc.GetString("Open bolt");
+                data.Text = Loc.GetString("open-bolt-verb-get-data-text");
                 data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -509,7 +509,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return;
                 }
 
-                data.Text = Loc.GetString("Close bolt");
+                data.Text = Loc.GetString("close-bolt-verb-get-data-text");
                 data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

@@ -303,12 +303,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (component.PowerCell == null)
                 {
-                    data.Text = Loc.GetString("No cell");
+                    data.Text = Loc.GetString("eject-cell-verb-get-data-text-no-cell");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = Loc.GetString("Eject cell");
+                    data.Text = Loc.GetString("eject-cell-verb-get-data-text");
                     data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
             }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             if (user != null)
             {
-                Owner.PopupMessage(user, Loc.GetString("Signal fetched."));
+                Owner.PopupMessage(user, Loc.GetString("signal-transmitter-component-get-signal-success"));
             }
 
             return this;

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Interfaces;
@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
             if (eventArgs.Using.TryGetComponent(out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("You extract some seeds from the {0}.", eventArgs.Using.Name));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", eventArgs.Using.Name)));
 
                 eventArgs.Using.QueueDelete();
 

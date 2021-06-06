@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if(Slippery)
             {
-                message.AddText(Loc.GetString("It looks slippery."));
+                message.AddText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }
         }
 

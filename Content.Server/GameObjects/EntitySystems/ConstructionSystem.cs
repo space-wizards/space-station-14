@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (existed)
             {
-                user.PopupMessageCursor(Loc.GetString("You can't start another construction now!"));
+                user.PopupMessageCursor(Loc.GetString("construction-system-construct-cannot-start-another-construction"));
                 return null;
             }
 
@@ -219,7 +219,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (failed)
             {
-                user.PopupMessageCursor(Loc.GetString("You don't have the materials to build that!"));
+                user.PopupMessageCursor(Loc.GetString("construction-system-construct-no-materials"));
                 FailCleanup();
                 return null;
             }
@@ -371,7 +371,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (!set.Add(ev.Ack))
                 {
-                    user.PopupMessageCursor(Loc.GetString("You are already building that!"));
+                    user.PopupMessageCursor(Loc.GetString("construction-system-already-building"));
                     return;
                 }
             }

@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             void Burn()
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You burn your hand!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }

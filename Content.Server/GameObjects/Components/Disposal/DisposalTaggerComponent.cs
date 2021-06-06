@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
                 return;
             }
 
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     return;
                 }
 
-                data.Text = Loc.GetString("Open Configuration");
+                data.Text = Loc.GetString("generic-open-configuration");
                 data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 

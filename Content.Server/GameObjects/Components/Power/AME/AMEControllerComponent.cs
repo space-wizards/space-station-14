@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
                 return;
             }
 
@@ -332,13 +332,13 @@ namespace Content.Server.GameObjects.Components.Power.AME
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have nothing on your hand."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-nothing-in-hands"));
                 return false;
             }
 
@@ -347,19 +347,19 @@ namespace Content.Server.GameObjects.Components.Power.AME
             {
                 if (HasJar)
                 {
-                    Owner.PopupMessage(args.User, Loc.GetString("The controller already has a jar loaded."));
+                    Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-already-has-jar"));
                 }
 
                 else
                 {
                     _jarSlot.Insert(activeHandEntity);
-                    Owner.PopupMessage(args.User, Loc.GetString("You insert the jar into the fuel slot."));
+                    Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-success"));
                     UpdateUserInterface();
                 }
             }
             else
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You can't put that in the controller..."));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-fail"));
             }
 
             return true;

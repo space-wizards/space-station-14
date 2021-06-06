@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,7 +23,7 @@ namespace Content.Shared.Construction
                 return;
             }
 
-            message.AddMarkup(Loc.GetString($"Next, use a [color=cyan]{Tool.GetToolName()}[/color]."));
+            message.AddMarkup(Loc.GetString("construction-use-tool-entity", ("toolName", Tool.GetToolName())));
         }
     }
 }

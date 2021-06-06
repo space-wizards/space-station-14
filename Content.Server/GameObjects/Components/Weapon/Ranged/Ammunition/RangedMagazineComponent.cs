@@ -98,13 +98,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("ranged-magazine-component-try-insert-ammo-wrong-caliber"));
                 return false;
             }
 
             if (ShotsLeft >= Capacity)
             {
-                Owner.PopupMessage(user, Loc.GetString("Magazine is full"));
+                Owner.PopupMessage(user, Loc.GetString("ranged-magazine-component-try-insert-ammo-is-full "));
                 return false;
             }
 
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var text = Loc.GetString("It's a [color=white]{0}[/color] magazine of [color=white]{1}[/color] caliber.", MagazineType, Caliber);
+            var text = Loc.GetString("ranged-magazine-component-on-examine", ("magazineType", MagazineType),("caliber", Caliber));
             message.AddMarkup(text);
         }
     }

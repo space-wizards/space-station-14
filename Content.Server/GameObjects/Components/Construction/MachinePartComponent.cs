@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -41,8 +41,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("[color=white]Rating:[/color] [color=cyan]{0}[/color]\n", Rating));
-            message.AddMarkup(Loc.GetString("[color=white]Type:[/color] [color=cyan]{0}[/color]\n", PartType));
+            message.AddMarkup(Loc.GetString("machine-part-component-on-examine-rating-text", ("rating", Rating)) + "\n");
+            message.AddMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type", PartType)) + "\n");
         }
     }
 }

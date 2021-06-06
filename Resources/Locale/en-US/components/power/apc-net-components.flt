@@ -1,0 +1,28 @@
+# ApcComponent
+apc-component-insufficient-access = Insufficient access!
+
+# PowerReceiverComponent
+power-receiver-component-on-examine-main = It appears to be {$stateText}.
+power-receiver-component-on-examine-powered = [color=darkgreen]powered[/color]
+power-receiver-component-on-examine-unpowered =  [color=darkred]un-powered[/color]
+
+## Power receiver users
+
+# Base Charger
+base-charger-on-interact-using-fail = Unable to insert capacitor
+
+# InsertVerb
+insert-verb-get-data-text = Insert {$itemName}
+
+# EjectVerb
+eject-verb-get-data-text = Eject {$containerName}
+
+# EmergencyLightComponent
+emergency-light-component-on-examine = The battery indicator displays: {$batteryStateText}.
+emergency-light-component-light-state-full = [color=darkgreen]Full[/color]
+emergency-light-component-light-state-empty = [color=darkgreen]Empty[/color]
+emergency-light-component-light-state-charging = [color=darkgreen]Charging[/color]
+emergency-light-component-light-state-on = [color=darkgreen]On[/color]
+
+# PoweredLightComponent
+powered-light-component-burn-hand = You burn your hand!

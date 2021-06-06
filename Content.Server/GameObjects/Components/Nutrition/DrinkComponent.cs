@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? contents) ||
                 contents.DrainAvailable <= 0)
             {
-                args.User.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
+                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty",("owner", Owner)));
                 return true;
             }
 
@@ -159,15 +159,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return;
             }
             var color = Empty ? "gray" : "yellow";
-            var openedText = Loc.GetString(Empty ? "Empty" : "Opened");
-            message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));
+            var openedText = Loc.GetString(Empty ? "generic-empty" : "generic-opened");
+            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text",("colorName", color),("text", openedText)));
         }
 
         private bool TryUseDrink(IEntity user, IEntity target, bool forced = false)
         {
             if (!Opened)
             {
-                target.PopupMessage(Loc.GetString("Open {0:theName} first!", Owner));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open",("owner", Owner)));
                 return false;
             }
 
@@ -177,7 +177,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 if (!forced)
                 {
-                    target.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
+                    target.PopupMessage(Loc.GetString("generic-entity-name-is-empty", ("entity",Owner)));
                 }
 
                 return false;
@@ -186,7 +186,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (!target.TryGetComponent(out IBody? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
-                target.PopupMessage(Loc.GetString("You can't drink {0:theName}!", Owner));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink",("owner", Owner)));
                 return false;
             }
 
@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                target.PopupMessage(Loc.GetString("You've had enough {0:theName}!", Owner));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough",("owner", Owner)));
 
                 if (!interactions.CanRefill)
                 {
@@ -221,7 +221,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 SoundSystem.Play(Filter.Pvs(target), _useSound, target, AudioParams.Default.WithVolume(-2f));
             }
 
-            target.PopupMessage(Loc.GetString("Slurp"));
+            target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
             UpdateAppearance();
 
             // TODO: Account for partial transfer.

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
@@ -206,7 +206,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     return;
                 }
 
-                data.Text = Loc.GetString("Enter");
+                data.Text = Loc.GetString("generic-enter");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -227,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject");
+                data.Text = Loc.GetString("generic-eject");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

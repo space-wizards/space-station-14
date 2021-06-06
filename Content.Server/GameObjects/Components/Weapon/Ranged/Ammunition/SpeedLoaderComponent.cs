@@ -76,13 +76,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("speed-loader-component-try-insert-ammo-wrong-caliber"));
                 return false;
             }
 
             if (AmmoLeft >= Capacity)
             {
-                Owner.PopupMessage(user, Loc.GetString("No room"));
+                Owner.PopupMessage(user, Loc.GetString("speed-loader-component-try-insert-ammo-no-room"));
                 return false;
             }
 

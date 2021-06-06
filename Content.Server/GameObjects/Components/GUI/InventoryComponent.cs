@@ -255,7 +255,7 @@ namespace Content.Server.GameObjects.Components.GUI
             var inventorySlot = _slotContainers[slot];
             if (!inventorySlot.Insert(item.Owner))
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("generic-cannot-equip");
                 return false;
             }
 
@@ -290,7 +290,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             if (mobCheck && !ActionBlockerSystem.CanEquip(Owner))
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("generic-cannot-equip");
                 return false;
             }
 
@@ -302,7 +302,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 }
                 else
                 {
-                    reason = Loc.GetString("This doesn't fit.");
+                    reason = Loc.GetString("generic-does-not-fit");
                 }
             }
 
@@ -314,14 +314,14 @@ namespace Content.Server.GameObjects.Components.GUI
 
             if (!pass && reason == null)
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("generic-cannot-equip");
             }
 
             var canEquip = pass && _slotContainers[slot].CanInsert(item.Owner);
 
             if (!canEquip)
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("generic-cannot-equip");
             }
 
             return canEquip;
@@ -681,7 +681,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return;
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Set Outfit");
+                data.Text = Loc.GetString("set-outfit-verb-get-data-text");
                 data.CategoryData = VerbCategories.Debug;
                 data.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
             }

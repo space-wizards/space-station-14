@@ -505,7 +505,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if(!Owner.HasComponent<AnchorableComponent>())
             {
-                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an {nameof(AnchorableComponent)}");
             }
 
             UpdateVisualState();
@@ -557,20 +557,20 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-cannot-do-that"));
                 return false;
             }
 
             if (eventArgs.User.IsInContainer())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-cannot-reach"));
                 return false;
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-no-hands"));
                 return false;
             }
 
@@ -655,7 +655,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Jump inside");
+                data.Text = Loc.GetString("self-insert-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
@@ -678,7 +678,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Flush");
+                data.Text = Loc.GetString("flush-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 

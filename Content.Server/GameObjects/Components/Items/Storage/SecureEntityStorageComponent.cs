@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 if (!reader.IsAllowed(user))
                 {
-                    Owner.PopupMessage(user, Loc.GetString("Access denied"));
+                    Owner.PopupMessage(user, Loc.GetString("secure-entity-storage-component-not-allowed-message"));
                     return false;
                 }
             }
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = Loc.GetString(component.Locked ? "Unlock" : "Lock");
+                data.Text = Loc.GetString(component.Locked ? "generic-unlock" : "generic-lock");
             }
 
             protected override void Activate(IEntity user, SecureEntityStorageComponent component)

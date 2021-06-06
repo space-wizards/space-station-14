@@ -295,7 +295,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
                 return;
             }
 
@@ -317,13 +317,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have nothing on your hand."));
+                Owner.PopupMessage(args.User, Loc.GetString("generic-nothing-in-hands"));
                 return false;
             }
 
@@ -332,12 +332,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (HasBeaker)
                 {
-                    Owner.PopupMessage(args.User, Loc.GetString("This dispenser already has a container in it."));
+                    Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-has-container-already-message"));
                 }
                 else if ((solution.Capabilities & SolutionContainerCaps.FitsInDispenser) == 0)
                 {
                     //If it can't fit in the dispenser, don't put it in. For example, buckets and mop buckets can't fit.
-                    Owner.PopupMessage(args.User, Loc.GetString("That can't fit in the dispenser."));
+                    Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-cannot-fit-message"));
                 }
                 else
                 {
@@ -347,7 +347,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You can't put this in the dispenser."));
+                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-cannot-put-entity-message", ("entity", activeHandEntity)));
             }
 
             return true;
@@ -371,7 +371,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Beaker");
+                data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
                 data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -35,7 +35,7 @@ namespace Content.Server.GlobalVerbs
             }
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("Make Ghost Role");
+            data.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
         }
 

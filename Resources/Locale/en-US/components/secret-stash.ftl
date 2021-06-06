@@ -1,3 +1,0 @@
-### Secret stash component. Stuff like potted plants, comfy chair cushions, etc...
-
-comp-secret-stash-action-hide = You hide { THE($item) } in { $this }

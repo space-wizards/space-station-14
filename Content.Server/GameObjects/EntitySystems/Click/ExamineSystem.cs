@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         static ExamineSystem()
         {
             _entityNotFoundMessage = new FormattedMessage();
-            _entityNotFoundMessage.AddText(Loc.GetString("That entity doesn't exist"));
+            _entityNotFoundMessage.AddText(Loc.GetString("examine-system-entity-does-not-exist"));
         }
 
         public override void Initialize()

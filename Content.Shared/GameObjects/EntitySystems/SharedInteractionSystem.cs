@@ -196,7 +196,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!inRange && popup)
             {
-                var message = Loc.GetString("You can't reach there!");
+                var message = Loc.GetString("generic-cannot-reach");
                 origin.PopupMessage(message);
             }
 
@@ -252,7 +252,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!inRange && popup)
             {
-                var message = Loc.GetString("You can't reach there!");
+                var message = Loc.GetString("generic-cannot-reach");
                 origin.PopupMessage(message);
             }
 
@@ -308,7 +308,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!inRange && popup)
             {
-                var message = Loc.GetString("You can't reach there!");
+                var message = Loc.GetString("generic-cannot-reach");
                 origin.PopupMessage(message);
             }
 
@@ -363,7 +363,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!inRange && popup)
             {
-                var message = Loc.GetString("You can't reach there!");
+                var message = Loc.GetString("generic-cannot-reach");
                 origin.PopupMessage(message);
             }
 
@@ -463,7 +463,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (popup)
                 {
-                    var message = Loc.GetString("You can't reach there!");
+                    var message = Loc.GetString("generic-cannot-reach");
                     target.PopupMessage(user, message);
                 }
 
@@ -474,7 +474,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (popup)
                 {
-                    var message = Loc.GetString("You can't reach there!");
+                    var message = Loc.GetString("generic-cannot-reach");
                     dropped.PopupMessage(user, message);
                 }
 

@@ -232,8 +232,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!inventoryComp.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem)
                 || !equipmentItem.Owner.TryGetComponent<ServerStorageComponent>(out var storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("You have no {0} to take something out of!",
-                    SlotNames[equipmentSlot].ToLower()));
+                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot",
+                                                  ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;
             }
 
@@ -247,8 +247,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("There's nothing in your {0} to take out!",
-                        SlotNames[equipmentSlot].ToLower()));
+                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot",
+                                                      ("slotName", SlotNames[equipmentSlot].ToLower())));
                 }
                 else
                 {

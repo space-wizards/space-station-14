@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Audio;
@@ -99,13 +99,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (_hasSafety && _safety)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Its safety is on!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-safety-on-message"));
                 return true;
             }
 
             if (CurrentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-is-empty-message"));
                 return true;
             }
 

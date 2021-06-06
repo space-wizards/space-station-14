@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (firstStomach == null)
             {
                 _contents.TryAddSolution(split);
-                trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
+                trueTarget.PopupMessage(user, Loc.GetString("pill-component-cannot-eat-more-message"));
                 return false;
             }
 
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
-            trueTarget.PopupMessage(user, Loc.GetString("You swallow the pill."));
+            trueTarget.PopupMessage(user, Loc.GetString("pill-component-swallow-success-message"));
 
             Owner.QueueDelete();
             return true;

@@ -1,0 +1,3 @@
+ame-controller-component-interact-using-already-has-jar = The controller already has a jar loaded.
+ame-controller-component-interact-using-success = You insert the jar into the fuel slot.
+ame-controller-component-interact-using-fail = You can't put that in the controller...

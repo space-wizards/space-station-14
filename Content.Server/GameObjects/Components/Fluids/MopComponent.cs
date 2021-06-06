@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (currentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop needs to be wet!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-dry-message"));
                 return false;
             }
 

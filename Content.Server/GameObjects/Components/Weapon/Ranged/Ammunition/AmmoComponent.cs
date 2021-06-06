@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -154,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var text = Loc.GetString("It's [color=white]{0}[/color] ammo.", Caliber);
+            var text = Loc.GetString("ammo-component-on-examine",("caliber", Caliber));
             message.AddMarkup(text);
         }
     }

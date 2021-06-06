@@ -268,7 +268,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-no-hands"));
                 return true;
             }
 

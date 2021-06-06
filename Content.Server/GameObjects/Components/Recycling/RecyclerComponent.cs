@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -153,10 +153,10 @@ namespace Content.Server.GameObjects.Components.Recycling
             if (mind != null)
             {
                 IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity?.PopupMessage(Loc.GetString("You recycle yourself!"));
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
             }
 
-            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+            victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
             if (victim.TryGetComponent<IBody>(out var body))
             {

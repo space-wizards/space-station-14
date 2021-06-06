@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.GameObjects.Components.MachineLinking;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
             if (!TransmitSignal(State))
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-two-way-lever-component-next-state-no-receivers-connected"));
             }
         }
 

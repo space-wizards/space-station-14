@@ -837,41 +837,47 @@ namespace Content.Server.GameObjects.Components.Botany
             }
             else if (!Dead)
             {
-                message.AddMarkup(Loc.GetString($"[color=green]{Seed.DisplayName}[/color] {(Seed.DisplayName.EndsWith('s') ? "are" : "is")} growing here.") + "\n");
+                message.AddMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
+                                                ("seedName", Seed.DisplayName),
+                                                ("toBeForm", Seed.DisplayName.EndsWith('s') ? "are" : "is"))
+                                  + "\n");
 
                 if(Health <= Seed.Endurance / 2)
-                    message.AddMarkup(Loc.GetString($"The plant looks [color=red]{(Age > Seed.Lifespan ? "old and wilting" : "unhealthy")}[/color].") + "\n");
+                    message.AddMarkup(Loc.GetString("plant-holder-component-something-already-growing-low-health-message",
+                                                    ("healthState", Loc.GetString(Age > Seed.Lifespan ? "plant-holder-component-plant-old-adjective" :
+                                                                                                        "plant-holder-component-plant-unhealthy-adjective")))
+                                      + "\n");
             }
             else
             {
-                message.AddMarkup(Loc.GetString("It is full of [color=red]dead plant matter[/color].") + "\n");
+                message.AddMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message") + "\n");
             }
 
             if(WeedLevel >= 5)
-                message.AddMarkup(Loc.GetString("It is filled with [color=green]weeds[/color]!") + "\n");
+                message.AddMarkup(Loc.GetString("plant-holder-component-weed-high-level-message") + "\n");
 
             if(PestLevel >= 5)
-                message.AddMarkup(Loc.GetString("It is filled with [color=gray]tiny worms[/color]!") + "\n");
+                message.AddMarkup(Loc.GetString("plant-holder-component-pest-high-level-message") + "\n");
 
-            message.AddMarkup(Loc.GetString($"Water:     [color=cyan]{(int)WaterLevel}[/color]") + "\n");
-            message.AddMarkup(Loc.GetString($"Nutrient: [color=orange]{(int)NutritionLevel}[/color]") + "\n");
+            message.AddMarkup(Loc.GetString($"plant-holder-component-water-level-message",("waterLevel", (int)WaterLevel)) + "\n");
+            message.AddMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message", ("nutritionLevel", (int)NutritionLevel)) + "\n");
 
             if (DrawWarnings)
             {
                 if(Toxins > 40f)
-                    message.AddMarkup(Loc.GetString("The [color=red]toxicity level alert[/color] is flashing red.") + "\n");
+                    message.AddMarkup(Loc.GetString("plant-holder-component-toxins-high-warning") + "\n");
 
                 if(ImproperLight)
-                    message.AddMarkup(Loc.GetString("The [color=yellow]improper light level alert[/color] is blinking.") + "\n");
+                    message.AddMarkup(Loc.GetString("plant-holder-component-light-improper-warning") + "\n");
 
                 if(ImproperHeat)
-                    message.AddMarkup(Loc.GetString("The [color=orange]improper temperature level alert[/color] is blinking.") + "\n");
+                    message.AddMarkup(Loc.GetString("plant-holder-component-heat-improper-warning") + "\n");
 
                 if(ImproperPressure)
-                    message.AddMarkup(Loc.GetString("The [color=lightblue]improper environment pressure alert[/color] is blinking.") + "\n");
+                    message.AddMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning") + "\n");
 
                 if(_missingGas > 0)
-                    message.AddMarkup(Loc.GetString("The [color=cyan]improper gas environment alert[/color] is blinking.") + "\n");
+                    message.AddMarkup(Loc.GetString("plant-holder-component-gas-missing-warning") + "\n");
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
             {
                 if (physics.BodyType == BodyType.Static)
                 {
-                    Owner.PopupMessage(user, Loc.GetString("It's stuck."));
+                    Owner.PopupMessage(user, Loc.GetString("rotatable-component-try-rotate-stuck"));
                     return;
                 }
             }
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
                 }
 
                 data.CategoryData = VerbCategories.Rotate;
-                data.Text = Loc.GetString("Rotate clockwise");
+                data.Text = Loc.GetString("rotate-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
             }
 
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
                 }
 
                 data.CategoryData = VerbCategories.Rotate;
-                data.Text = Loc.GetString("Rotate counter-clockwise");
+                data.Text = Loc.GetString("rotate-counter-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             }
 

@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Watercloset
             {
                 if (_secretStash.HasItemInside())
                 {
-                    message.AddMarkup(Loc.GetString("There is [color=darkgreen]something[/color] inside cistern!"));
+                    message.AddMarkup(Loc.GetString("toilet-component-on-examine-found-hidden-item"));
                 }
             }
         }
@@ -146,20 +146,20 @@ namespace Content.Server.GameObjects.Components.Watercloset
             if (victim.TryGetComponent<IBody>(out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
-                var othersMessage = Loc.GetString("{0:theName} sticks their head into {1:theName} and flushes it!", victim, Owner);
+                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim),("owner", Owner));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You stick your head into {0:theName} and flush it!", Owner);
+                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Owner));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Asphyxiation;
             }
             else
             {
-                var othersMessage = Loc.GetString("{0:theName} bashes themselves with {1:theName}!", victim, Owner);
+                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", victim),("owner", Owner));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("You bash yourself with {0:theName}!", Owner);
+                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Owner));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Blunt;

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -77,7 +77,9 @@ namespace Content.Server.GameObjects.Components
                 else if (eventArgs.User.TryGetComponent(out HandsComponent? hands))
                 {
                     Owner.PopupMessage(eventArgs.User,
-                        Loc.GetString("You take {0:extinguisherName} from the {1:cabinetName}", ItemContainer.ContainedEntity.Name, Owner.Name));
+                        Loc.GetString("extinquisher-cabinet-component-interact-hand-success-message",
+                                      ("extinquisher", ItemContainer.ContainedEntity.Name),
+                                      ("cabinet", Owner.Name)));
                     hands.PutInHandOrDrop(ItemContainer.ContainedEntity.GetComponent<ItemComponent>());
                 }
                 else if (ItemContainer.Remove(ItemContainer.ContainedEntity))

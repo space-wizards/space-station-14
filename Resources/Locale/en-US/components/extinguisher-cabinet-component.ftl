@@ -1,0 +1,1 @@
+extinquisher-cabinet-component-interact-hand-success-message = You take {$extinguisher:extinguisherName} from the {$cabinet:cabinetName}

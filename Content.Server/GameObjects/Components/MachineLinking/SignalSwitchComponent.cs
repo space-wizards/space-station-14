@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.MachineLinking;
+using Content.Shared.GameObjects.Components.MachineLinking;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
             if (!transmitter.TransmitSignal(_on))
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-switch-component-transmit-no-receivers-connected"));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle Switch");
+                data.Text = Loc.GetString("toggle-switch-verb-get-data-text");
                 data.Visibility = VerbVisibility.Visible;
             }
         }

@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(Loc.GetString("{0:TheName} is empty!", Owner));
+                user.PopupMessage(Loc.GetString("generic-entity-name-is-empty",("entity", Owner)));
                 return false;
             }
 
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (firstStomach == null)
             {
-                trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
+                trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }
 
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
-            trueTarget.PopupMessage(user, Loc.GetString("Nom"));
+            trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
 
             // If utensils were used
             if (utensils != null)

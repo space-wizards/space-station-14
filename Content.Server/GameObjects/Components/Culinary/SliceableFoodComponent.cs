@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Culinary
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString($"There are { Count } slices remaining."));
+            message.AddMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", Count)));
         }
     }
 }

@@ -263,7 +263,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
             {
                 if (_isShivering || _isSweating)
                 {
-                    Owner.PopupMessage(Loc.GetString("You feel comfortable"));
+                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-comfortable"));
                 }
 
                 _isShivering = false;
@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 if (!ActionBlockerSystem.CanSweat(Owner)) return;
                 if (!_isSweating)
                 {
-                    Owner.PopupMessage(Loc.GetString("You are sweating"));
+                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
                     _isSweating = true;
                 }
 
@@ -292,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 if (!ActionBlockerSystem.CanShiver(Owner)) return;
                 if (!_isShivering)
                 {
-                    Owner.PopupMessage(Loc.GetString("You are shivering"));
+                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-shivering"));
                     _isShivering = true;
                 }
 

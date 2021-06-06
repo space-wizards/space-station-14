@@ -213,13 +213,13 @@ namespace Content.Server.GameTicking
             if (_updateOnRoundEnd)
             {
                 _baseServer.Shutdown(
-                    Loc.GetString("Server is shutting down for update and will automatically restart."));
+                    Loc.GetString("game-ticker-restart-round-server-update"));
                 return;
             }
 
             Logger.InfoS("ticker", "Restarting round!");
 
-            SendServerMessage("Restarting round...");
+            SendServerMessage(Loc.GetString("game-ticker-restart-round"));
 
             RoundNumberMetric.Inc();
 
@@ -260,7 +260,7 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
 
-            SendServerMessage("The round is starting now...");
+            SendServerMessage("game-ticker-start-round");
 
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
@@ -324,8 +324,9 @@ namespace Content.Server.GameTicking
                 {
                     SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
-                    _chatManager.DispatchServerAnnouncement(
-                        $"Failed to start {Preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                                                                         ("failedGameMode", Preset.ModeTitle),
+                                                                         ("fallbackMode", newPreset.ModeTitle)));
                     if (!newPreset.Start(readyPlayers, force))
                     {
                         throw new ApplicationException("Fallback preset failed to start!");
@@ -337,7 +338,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    SendServerMessage($"Failed to start {Preset.ModeTitle} mode! Restarting round...");
+                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",("failedGameMode", Preset.ModeTitle)));
                     RestartRound();
                     DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
                     return;
@@ -402,7 +403,7 @@ namespace Content.Server.GameTicking
                         PlayerICName = mind.CurrentEntity?.Name,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
-                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
+                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("generic-unknown"),
                         Antag = antag,
                         Observer = status == PlayerStatus.Observer,
                     };
@@ -568,7 +569,7 @@ namespace Content.Server.GameTicking
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
-            _chatManager.DispatchServerAnnouncement($"Round start has been delayed for {time.TotalSeconds} seconds.");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start",("seconds",time.TotalSeconds)));
 
             return true;
         }
@@ -596,9 +597,9 @@ namespace Content.Server.GameTicking
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
-            _chatManager.DispatchServerAnnouncement(Paused
-                ? "Round start has been paused."
-                : "Round start countdown is now resumed.");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString(Paused
+                ? "game-ticker-pause-start"
+                : "game-ticker-pause-start-resumed"));
 
             return true;
         }
@@ -892,7 +893,7 @@ namespace Content.Server.GameTicking
             Timer.Spawn(UpdateRestartDelay, () =>
             {
                 _baseServer.Shutdown(
-                    Loc.GetString("Server is shutting down for update and will automatically restart."));
+                    Loc.GetString("game-ticker-restart-round-server-update"));
             }, _updateShutdownCts.Token);
         }
 
@@ -1023,8 +1024,7 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinGame(IPlayerSession session)
         {
-            _chatManager.DispatchServerMessage(session,
-                "Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!");
+            _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 
             if (_playersInLobby.ContainsKey(session))
                 _playersInLobby.Remove(session);
@@ -1104,10 +1104,7 @@ namespace Content.Server.GameTicking
 
             var gmTitle = Preset.ModeTitle;
             var desc = Preset.Description;
-            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
-
-The current game mode is: [color=white]{0}[/color].
-[color=yellow]{1}[/color]", gmTitle, desc);
+            return Loc.GetString("game-ticker-get-info-text",("gmTitle", gmTitle),("desc", desc));
         }
 
         private void UpdateInfoText()
