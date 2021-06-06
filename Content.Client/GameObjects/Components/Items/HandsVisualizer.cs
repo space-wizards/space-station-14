@@ -1,3 +1,4 @@
+using Content.Shared.GameObjects.Components.Items;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 namespace Content.Client.GameObjects.Components.Items
 {
     [UsedImplicitly]
-    public class HeldItemsVisualizer : AppearanceVisualizer
+    public class HandsVisualizer : AppearanceVisualizer
     {
         private List<string> _layerKeys = new();
 
@@ -19,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Items
             base.OnChangeData(component);
 
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
-            if (!component.TryGetData(HeldItemsVisuals.VisualState, out HeldItemsVisualState visualState)) return;
+            if (!component.TryGetData(HandsVisuals.VisualState, out HandsVisualState visualState)) return;
 
             foreach (var layerKey in _layerKeys)
             {
@@ -32,13 +33,13 @@ namespace Content.Client.GameObjects.Components.Items
             _layerKeys.Clear();
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
-            var heldItems = visualState.HeldItems;
+            var hands = visualState.Hands;
 
-            for (var i = 0; i < heldItems.Count; i++)
+            for (var i = 0; i < hands.Count; i++)
             {
-                var item = heldItems[i];
+                var hand = hands[i];
 
-                var rsi = resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / item.RsiPath).RSI;
+                var rsi = resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / hand.RsiPath).RSI;
 
                 var layerKey = "item" + i.ToString();
                 _layerKeys.Add(layerKey);
@@ -47,43 +48,47 @@ namespace Content.Client.GameObjects.Components.Items
                 var layer = sprite.LayerMapGet(layerKey);
                 sprite.LayerSetVisible(layer, true);
                 sprite.LayerSetRSI(layer, rsi);
-                sprite.LayerSetState(layer, item.State);
-                sprite.LayerSetColor(layer, item.Color);
+                sprite.LayerSetColor(layer, hand.Color);
 
+                var state = $"inhand-{hand.Location.ToString().ToLowerInvariant()}";
+                if (hand.EquippedPrefix != null)
+                    state = $"{hand.EquippedPrefix}-" + state;
+
+                sprite.LayerSetState(layer, state);
             }
         }
     }
 
-    public enum HeldItemsVisuals
+    public enum HandsVisuals
     {
         VisualState
     }
 
-    public class HeldItemsVisualState
+    public class HandsVisualState
     {
-        public List<ItemVisualState> HeldItems { get; } = new();
+        public List<HandVisualState> Hands { get; } = new();
 
-        public HeldItemsVisualState(List<ItemVisualState> heldItems)
+        public HandsVisualState(List<HandVisualState> hands)
         {
-            HeldItems = heldItems;
+            Hands = hands;
         }
     }
 
-    public class ItemVisualState
+    public class HandVisualState
     {
-        [ViewVariables]
         public string RsiPath { get; }
 
-        [ViewVariables]
-        public string State { get; }
+        public string? EquippedPrefix { get; }
 
-        [ViewVariables]
+        public HandLocation Location { get; }
+
         public Color Color { get; }
 
-        public ItemVisualState(string rsiPath, string state, Color color)
+        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
         {
             RsiPath = rsiPath;
-            State = state;
+            EquippedPrefix = equippedPrefix;
+            Location = location;
             Color = color;
         }
     }

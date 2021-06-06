@@ -145,7 +145,7 @@ namespace Content.Client.GameObjects.Components.Items
         public void UpdateHandVisualizer()
         {
             if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
-                appearance.SetData(HeldItemsVisuals.VisualState, GetHeldItemVisualState());
+                appearance.SetData(HandsVisuals.VisualState, GetHandsVisualState());
         }
 
         public void UpdateHandsGuiState()
@@ -184,28 +184,21 @@ namespace Content.Client.GameObjects.Components.Items
             return new HandsGuiState(handStates, ActiveHand);
         }
 
-        private HeldItemsVisualState GetHeldItemVisualState()
+        private HandsVisualState GetHandsVisualState()
         {
-            var itemStates = new List<ItemVisualState>();
+            var hands = new List<HandVisualState>();
             foreach (var hand in ReadOnlyHands)
             {
-                var heldEntity = hand.HeldEntity;
-                if (heldEntity == null)
+                if (hand.HeldEntity == null)
                     continue;
 
-                if (!heldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
+                if (!hand.HeldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
-                var state = $"inhand-{hand.Location.ToString().ToLowerInvariant()}";
-
-                var prefix = item.EquippedPrefix;
-
-                if (prefix != null)
-                    state = $"{prefix}-" + state;
-
-                itemStates.Add(new ItemVisualState(item.RsiPath, state, item.Color));
+                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
+                hands.Add(handState);
             }
-            return new HeldItemsVisualState(itemStates);
+            return new(hands);
         }
 
         private void RunPickupAnimation(PickupAnimationMessage msg)
