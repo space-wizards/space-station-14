@@ -227,7 +227,7 @@
   color: "#d49a2f"
   metabolism:
     - !type:HealthChangeMetabolism 
-      healthChange: 3 #you probably need something else for the "two units is deadly".
+      healthChange: 0.70 #you probably need something else for the "two units is deadly".
       damageClass: Toxin
       rate: 0.2 
 
