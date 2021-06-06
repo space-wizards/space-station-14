@@ -751,10 +751,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
                 if (item != null)
                 {
-                    if(wideAttack)
-                        RaiseLocalEvent(item.Uid, new WideAttackEvent(item, user, coordinates), false);
+                    if (wideAttack)
+                    {
+                        var ev = new WideAttackEvent(item, user, coordinates);
+                        RaiseLocalEvent(item.Uid, ev, false);
+
+                        if(ev.Handled)
+                            return;
+                    }
                     else
-                        RaiseLocalEvent(item.Uid, new ClickAttackEvent(item, user, coordinates, targetUid), false);
+                    {
+                        var ev = new ClickAttackEvent(item, user, coordinates, targetUid);
+                        RaiseLocalEvent(item.Uid, ev, false);
+
+                        if(ev.Handled)
+                            return;
+                    }
                 }
                 else if (!wideAttack &&
                     (targetEnt != null || EntityManager.TryGetEntity(targetUid, out targetEnt)) &&
@@ -762,8 +774,16 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, targetEnt);
+                    return;
                 }
             }
+
+            // TODO: Make this saner?
+            // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
+            if(wideAttack)
+                RaiseLocalEvent(user.Uid, new WideAttackEvent(user, user, coordinates), false);
+            else
+                RaiseLocalEvent(user.Uid, new ClickAttackEvent(user, user, coordinates, targetUid), false);
         }
     }
 }
