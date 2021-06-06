@@ -227,7 +227,7 @@
   color: "#d49a2f"
   metabolism:
     - !type:HealthChangeMetabolism 
-      healthChange: 0.70 #you probably need something else for the "two units is deadly".
+      healthChange: 0.67
       damageClass: Toxin
       rate: 0.2 
 
@@ -311,7 +311,6 @@
     - !type:HealthChangeMetabolism 
       healthChange: 7
       damageClass: Airloss
-
 
 - type: reagent
   id: Lipozine
