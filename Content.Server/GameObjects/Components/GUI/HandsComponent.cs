@@ -35,6 +35,8 @@ namespace Content.Server.GameObjects.Components.GUI
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
+        int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
+
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
@@ -194,9 +196,6 @@ namespace Content.Server.GameObjects.Components.GUI
 
             return true;
         }
-
-        // We want this to be the last disarm act to run.
-        int IDisarmedAct.Priority => int.MaxValue;
 
         private bool BreakPulls()
         {
