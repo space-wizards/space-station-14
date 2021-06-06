@@ -129,7 +129,9 @@ namespace Content.Client.GameObjects.Components.Items
 
         public void UpdateHandContainers()
         {
-            var containerMan = Owner.EnsureComponentWarn<ContainerManagerComponent>();
+            if (!Owner.TryGetComponent<ContainerManagerComponent>(out var containerMan))
+                return;
+
             foreach (var hand in Hands)
             {
                 if (hand.Container == null)
