@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Interfaces.GameObjects.Components;
 using NUnit.Framework;
@@ -82,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             server.Assert(() =>
             {
-                testInteractionSystem.AttackEvent          = (ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
+                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
@@ -154,7 +155,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             server.Assert(() =>
             {
-                testInteractionSystem.AttackEvent          = (ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
+                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
@@ -223,7 +224,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             server.Assert(() =>
             {
-                testInteractionSystem.AttackEvent          = (ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
+                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
@@ -293,7 +294,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var interactHand = false;
             server.Assert(() =>
             {
-                testInteractionSystem.AttackEvent          = (ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
+                testInteractionSystem.AttackEvent    = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(target.Uid)); attack = true; };
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
@@ -372,7 +373,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(container.Insert(user));
                 Assert.That(user.Transform.Parent.Owner, Is.EqualTo(containerEntity));
 
-                testInteractionSystem.AttackEvent           = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity.Uid)); attack = true; };
+                testInteractionSystem.AttackEvent     = (_, _, ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity.Uid)); attack = true; };
                 testInteractionSystem.InteractUsingEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent     = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactHand = true; };
 
@@ -404,14 +405,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Reflect(false)]
         private class TestInteractionSystem : EntitySystem
         {
-            public EntityEventHandler<ClickAttackEvent> AttackEvent;
+            public ComponentEventHandler<HandsComponent, ClickAttackEvent> AttackEvent;
             public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
             public EntityEventHandler<InteractHandEvent> InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
-                SubscribeLocalEvent<ClickAttackEvent>((e) => AttackEvent?.Invoke(e));
+                SubscribeLocalEvent<HandsComponent, ClickAttackEvent>((u, c, e) => AttackEvent?.Invoke(u, c, e));
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
             }
