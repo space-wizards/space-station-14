@@ -30,12 +30,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void SwapHandsPressed(ICommonSession? session)
         {
-            EntityManager.RaisePredictiveEvent(new SwapHandsMessage());
+            EntityManager.RaisePredictiveEvent(new RequestSwapHandsevent());
         }
 
         private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            EntityManager.RaisePredictiveEvent(new DropMessage(coords));
+            EntityManager.RaisePredictiveEvent(new RequestDropHeldEntityEvent(coords));
             return true;
         }
 

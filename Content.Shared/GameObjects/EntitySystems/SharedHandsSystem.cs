@@ -16,14 +16,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
-            SubscribeLocalEvent<SwapHandsMessage>(HandleSwapHands);
-            SubscribeNetworkEvent<SwapHandsMessage>(HandleSwapHands);
+            SubscribeLocalEvent<RequestSwapHandsevent>(HandleSwapHands);
+            SubscribeNetworkEvent<RequestSwapHandsevent>(HandleSwapHands);
 
-            SubscribeLocalEvent<DropMessage>(HandleDrop);
-            SubscribeNetworkEvent<DropMessage>(HandleDrop);
+            SubscribeLocalEvent<RequestDropHeldEntityEvent>(HandleDrop);
+            SubscribeNetworkEvent<RequestDropHeldEntityEvent>(HandleDrop);
         }
 
-        private void HandleSwapHands(SwapHandsMessage msg, EntitySessionEventArgs eventArgs)
+        private void HandleSwapHands(RequestSwapHandsevent msg, EntitySessionEventArgs eventArgs)
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
 
@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             hands.SwapHands();
         }
 
-        private void HandleDrop(DropMessage msg, EntitySessionEventArgs eventArgs)
+        private void HandleDrop(RequestDropHeldEntityEvent msg, EntitySessionEventArgs eventArgs)
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
 
@@ -47,16 +47,16 @@ namespace Content.Shared.GameObjects.EntitySystems
     }
 
     [Serializable, NetSerializable]
-    public class SwapHandsMessage : EntityEventArgs
+    public class RequestSwapHandsevent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public class DropMessage : EntityEventArgs
+    public class RequestDropHeldEntityEvent : EntityEventArgs
     {
         public EntityCoordinates DropTarget { get; }
 
-        public DropMessage(EntityCoordinates dropTarget)
+        public RequestDropHeldEntityEvent(EntityCoordinates dropTarget)
         {
             DropTarget = dropTarget;
         }
