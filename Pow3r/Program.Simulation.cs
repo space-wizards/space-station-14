@@ -1,28 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Numerics;
-using System.Text.Json;
 
 namespace Pow3r
 {
     internal sealed partial class Program
     {
-        private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
-        {
-            IncludeFields = true,
-        };
-
         private const int MaxTickData = 180;
 
-        private int _nextId;
-        private readonly List<Supply> _supplies = new();
-        private readonly List<Network> _networks = new();
-        private readonly List<Load> _loads = new();
-        private readonly List<Battery> _batteries = new();
+        private int _nextId = 1;
+        private Dictionary<NodeId, Supply> _supplies = new();
+        private Dictionary<NodeId, Network> _networks = new();
+        private Dictionary<NodeId, Load> _loads = new();
+        private Dictionary<NodeId, Battery> _batteries = new();
         private bool _showDemo;
         private Network _linking;
         private int _tickDataIdx;
@@ -32,6 +23,11 @@ namespace Pow3r
         private readonly Queue<object> _remQueue = new();
         private readonly Stopwatch _simStopwatch = new Stopwatch();
 
+        private NodeId AllocId()
+        {
+            return new(_nextId++);
+        }
+
         private void Tick(float frameTime)
         {
             if (_paused)
@@ -40,24 +36,26 @@ namespace Pow3r
             _simStopwatch.Restart();
             _tickDataIdx = (_tickDataIdx + 1) % MaxTickData;
 
-            _loads.ForEach(l => l.ReceivingPower = 0);
-            _supplies.ForEach(g => g.CurrentSupply = 0);
+            _loads.Values.ForEach(l => l.ReceivingPower = 0);
+            _supplies.Values.ForEach(g => g.CurrentSupply = 0);
 
-            foreach (var network in _networks)
+            foreach (var network in _networks.Values)
             {
                 // Clear some stuff.
                 network.MetDemand = 0;
 
                 // Add up demands in network.
                 network.DemandTotal = network.Loads
+                    .Select(l => _loads[l])
                     .Where(c => c.Enabled)
                     .Sum(c => c.DesiredPower);
 
                 // Add up supplies in network.
                 var availableSupplySum = 0f;
                 var maxSupplySum = 0f;
-                foreach (var supply in network.Supplies)
+                foreach (var supplyId in network.Supplies)
                 {
+                    var supply = _supplies[supplyId];
                     if (!supply.Enabled)
                         continue;
 
@@ -75,7 +73,7 @@ namespace Pow3r
             // Sort networks by tree height so that suppliers that have less possible loads go FIRST.
             // Idea being that a backup generator on a small subnet should do more work
             // so that a larger generator that covers more networks can put its power elsewhere.
-            var sortedByHeight = _networks.OrderBy(TotalSubLoadCount).ToList();
+            var sortedByHeight = _networks.Values.OrderBy(TotalSubLoadCount).ToList();
 
             // Go over every network with supply to send power.
             foreach (var network in sortedByHeight)
@@ -92,8 +90,9 @@ namespace Pow3r
                 var power = Math.Min(totalDemand, network.AvailableSupplyTotal);
 
                 // Distribute load across supplies in network.
-                foreach (var supply in network.Supplies)
+                foreach (var supplyId in network.Supplies)
                 {
+                    var supply = _supplies[supplyId];
                     if (!supply.Enabled)
                         continue;
 
@@ -131,13 +130,14 @@ namespace Pow3r
             }
 
             // Distribute power across loads in networks.
-            foreach (var network in _networks)
+            foreach (var network in _networks.Values)
             {
                 if (network.MetDemand == 0)
                     continue;
 
-                foreach (var load in network.Loads)
+                foreach (var loadId in network.Loads)
                 {
+                    var load = _loads[loadId];
                     if (!load.Enabled)
                         continue;
 
@@ -147,7 +147,7 @@ namespace Pow3r
             }
 
             // Update supplies to move their ramp position towards target, if necessary.
-            foreach (var supply in _supplies)
+            foreach (var supply in _supplies.Values)
             {
                 if (!supply.Enabled)
                 {
@@ -184,12 +184,12 @@ namespace Pow3r
             }
 
             // Update tick history.
-            foreach (var load in _loads)
+            foreach (var load in _loads.Values)
             {
                 load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
             }
 
-            foreach (var supply in _supplies)
+            foreach (var supply in _supplies.Values)
             {
                 supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
             }
@@ -197,33 +197,40 @@ namespace Pow3r
             _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;
         }
 
-        private static int TotalSubLoadCount(Network network)
+        private int TotalSubLoadCount(Network network)
         {
             // TODO: Cycle detection.
             var height = network.Loads.Count;
 
-            foreach (var battery in network.BatteriesLoading)
+            foreach (var batteryId in network.BatteriesLoading)
             {
-                if (battery.LinkedNetworkSupplying != null)
+                var battery = _batteries[batteryId];
+                if (battery.LinkedNetworkSupplying != default)
                 {
-                    height += TotalSubLoadCount(battery.LinkedNetworkSupplying);
+                    height += TotalSubLoadCount(_networks[battery.LinkedNetworkSupplying]);
                 }
             }
 
             return height;
         }
 
-        private static void GetLoadingNetworksRecursively(Network network, List<Network> networks,
+        private void GetLoadingNetworksRecursively(
+            Network network,
+            List<Network> networks,
             ref float totalDemand)
         {
             networks.Add(network);
             totalDemand += network.DemandTotal - network.MetDemand;
 
-            foreach (var battery in network.BatteriesLoading)
+            foreach (var batteryId in network.BatteriesLoading)
             {
-                if (battery.LinkedNetworkSupplying != null)
+                var battery = _batteries[batteryId];
+                if (battery.LinkedNetworkSupplying != default)
                 {
-                    GetLoadingNetworksRecursively(battery.LinkedNetworkSupplying, networks, ref totalDemand);
+                    GetLoadingNetworksRecursively(
+                        _networks[battery.LinkedNetworkSupplying],
+                        networks,
+                        ref totalDemand);
                 }
             }
         }
@@ -233,26 +240,30 @@ namespace Pow3r
         // This is updated here.
         private void RefreshLinks()
         {
-            foreach (var network in _networks)
+            foreach (var network in _networks.Values)
             {
-                foreach (var load in network.Loads)
+                foreach (var loadId in network.Loads)
                 {
-                    load.LinkedNetwork = network;
+                    var load = _loads[loadId];
+                    load.LinkedNetwork = network.Id;
                 }
 
-                foreach (var supply in network.Supplies)
+                foreach (var supplyId in network.Supplies)
                 {
-                    supply.LinkedNetwork = network;
+                    var supply = _supplies[supplyId];
+                    supply.LinkedNetwork = network.Id;
                 }
 
-                foreach (var battery in network.BatteriesLoading)
+                foreach (var batteryId in network.BatteriesLoading)
                 {
-                    battery.LinkedNetworkLoading = network;
+                    var battery = _batteries[batteryId];
+                    battery.LinkedNetworkLoading = network.Id;
                 }
 
-                foreach (var battery in network.BatteriesSupplying)
+                foreach (var batteryId in network.BatteriesSupplying)
                 {
-                    battery.LinkedNetworkSupplying = network;
+                    var battery = _batteries[batteryId];
+                    battery.LinkedNetworkSupplying = network.Id;
                 }
             }
         }
