@@ -137,7 +137,7 @@
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound:   /Audio/Voice/VOx/shriek1.ogg
+    sound: /Audio/Voice/Vox/shriek1.ogg
   - type: UseDelay
     delay: 1.0
 
