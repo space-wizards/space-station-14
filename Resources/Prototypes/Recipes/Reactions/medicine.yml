@@ -106,9 +106,8 @@
   reactants:
     Oxygen:
       amount: 2
-    Plasma:
+    StablePlasma:
       amount: 5
-      catalyst: true
   products:
     Dexalin: 3
 

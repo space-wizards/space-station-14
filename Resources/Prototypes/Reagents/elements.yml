@@ -188,6 +188,15 @@
   boilingPoint: 883.0
 
 - type: reagent
+  id: StablePlasma
+  name: stable plasma
+  desc: A miracle alien substance with many uses.
+  physicalDesc: glowing
+  color: "#D706F6"
+  meltingPoint: 90.0
+  boilingPoint: 900.0
+
+- type: reagent
   id: Uranium
   name: uranium
   desc: A grey metallic chemical element in the actinide series, weakly radioactive.
