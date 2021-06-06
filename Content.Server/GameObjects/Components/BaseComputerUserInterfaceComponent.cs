@@ -37,8 +37,6 @@ namespace Content.Server.GameObjects.Components
 
             if (UserInterface != null)
                 UserInterface.OnReceiveMessage += OnReceiveUIMessageCallback;
-
-            Owner.EnsureComponent<PowerReceiverComponent>();
         }
 
         /// <summary>
