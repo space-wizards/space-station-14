@@ -150,7 +150,8 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
-            SendMessage(new PowerCellChangedMessage(true));
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
             return cell;
         }
 
@@ -172,7 +173,8 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
-            SendMessage(new PowerCellChangedMessage(false));
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
             return true;
         }
 
@@ -238,14 +240,14 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
-    public class PowerCellChangedMessage : ComponentMessage
+    public class PowerCellChangedEvent : EntityEventArgs
     {
         /// <summary>
         /// If true, the cell was ejected; if false, it was inserted.
         /// </summary>
         public bool Ejected { get; }
 
-        public PowerCellChangedMessage(bool ejected)
+        public PowerCellChangedEvent(bool ejected)
         {
             Ejected = ejected;
         }

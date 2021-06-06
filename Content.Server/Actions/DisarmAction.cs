@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;

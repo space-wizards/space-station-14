@@ -1,29 +1,23 @@
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Mobs.State;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent, IAttack, ISolutionChange, IAfterInteract
+    public sealed class HyposprayComponent : SharedHyposprayComponent, ISolutionChange
     {
         [DataField("ClumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -42,23 +36,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             Dirty();
         }
 
-        bool IAttack.ClickAttack(AttackEvent eventArgs)
-        {
-            var target = eventArgs.TargetEntity;
-            var user = eventArgs.User;
-
-            return TryDoInject(target, user);
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.CanReach)
-                return false;
-
-            return TryDoInject(eventArgs.Target, eventArgs.User);
-        }
-
-        private bool TryDoInject(IEntity? target, IEntity user)
+        public bool TryDoInject(IEntity? target, IEntity user)
         {
             if (target == null || !EligibleEntity(target))
                 return false;
