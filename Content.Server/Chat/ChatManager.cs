@@ -100,9 +100,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender))
-                              + "\n" +
-                              "{{0}}";
+            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
             _netManager.ServerSendToAll(msg);
         }
 
@@ -126,7 +124,7 @@ namespace Content.Server.Chat
             if (source.TryGetComponent(out ActorComponent? actor) &&
                 message.Length > MaxMessageLength)
             {
-                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message",("limit", MaxMessageLength));
+                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
 
                 DispatchServerMessage(actor.PlayerSession, feedback);
 

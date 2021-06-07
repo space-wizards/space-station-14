@@ -358,7 +358,7 @@ namespace Content.Client.Chat
             var messageText = FormattedMessage.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
-                messageText = string.Format(message.MessageWrap, messageText);
+               messageText = string.Format(message.MessageWrap, messageText);
             }
 
             if (message.MessageColorOverride != Color.Transparent)
