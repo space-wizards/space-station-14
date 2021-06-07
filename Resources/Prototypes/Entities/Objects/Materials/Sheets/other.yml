@@ -13,6 +13,7 @@
   - type: Tag
     tags:
     - Sheet
+    - Grindable
 
 - type: entity
   parent: SheetOtherBase
@@ -103,6 +104,12 @@
     state: plasma
   - type: Stack
     count: 1
+  - type: SolutionContainer
+    caps: None
+    contents:
+      reagents:
+      - ReagentId: Plasma
+        Quantity: 10
 
 - type: entity
   parent: SheetOtherBase
