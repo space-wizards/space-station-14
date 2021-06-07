@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ItemCabinetComponent, ComponentInit>(OnCompInitialize);
+            SubscribeLocalEvent<ItemCabinetComponent, MapInitEvent>(OnMapInitialize);
 
             SubscribeLocalEvent<ItemCabinetComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemCabinetComponent, InteractHandEvent>(OnInteractHand);
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);
         }
 
-        private void OnCompInitialize(EntityUid uid, ItemCabinetComponent comp, ComponentInit args)
+        private void OnMapInitialize(EntityUid uid, ItemCabinetComponent comp, MapInitEvent args)
         {
             var owner = EntityManager.GetEntity(uid);
             comp.ItemContainer =

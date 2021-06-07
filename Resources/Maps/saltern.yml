@@ -47868,403 +47868,12 @@ entities:
     parent: 853
     type: Transform
 - uid: 4904
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -34.5,-2.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4905
-    type: ContainerContainer
-- uid: 4905
-  type: FireExtinguisher
-  components:
-  - parent: 4904
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4906
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -30.5,10.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4907
-    type: ContainerContainer
-- uid: 4907
-  type: FireExtinguisher
-  components:
-  - parent: 4906
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4908
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -18.5,8.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4909
-    type: ContainerContainer
-- uid: 4909
-  type: FireExtinguisher
-  components:
-  - parent: 4908
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4910
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -15.5,-0.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4911
-    type: ContainerContainer
-- uid: 4911
-  type: FireExtinguisher
-  components:
-  - parent: 4910
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4912
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 1.5,-3.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4913
-    type: ContainerContainer
-- uid: 4913
-  type: FireExtinguisher
-  components:
-  - parent: 4912
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4914
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 15.5,-3.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4915
-    type: ContainerContainer
-- uid: 4915
-  type: FireExtinguisher
-  components:
-  - parent: 4914
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4916
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 16.5,-14.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4917
-    type: ContainerContainer
-- uid: 4917
-  type: FireExtinguisher
-  components:
-  - parent: 4916
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4918
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 17.5,12.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4919
-    type: ContainerContainer
-- uid: 4919
-  type: FireExtinguisher
-  components:
-  - parent: 4918
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4920
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 37.5,8.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4921
-    type: ContainerContainer
-- uid: 4921
-  type: FireExtinguisher
-  components:
-  - parent: 4920
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4922
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 29.5,11.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4923
-    type: ContainerContainer
-- uid: 4923
-  type: FireExtinguisher
-  components:
-  - parent: 4922
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4924
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 36.5,0.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4925
-    type: ContainerContainer
-- uid: 4925
-  type: FireExtinguisher
-  components:
-  - parent: 4924
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4926
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 46.5,-11.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4927
-    type: ContainerContainer
-- uid: 4927
-  type: FireExtinguisher
-  components:
-  - parent: 4926
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4928
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 52.5,-11.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4929
-    type: ContainerContainer
-- uid: 4929
-  type: FireExtinguisher
-  components:
-  - parent: 4928
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4930
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -6.5,-18.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4931
-    type: ContainerContainer
-- uid: 4931
-  type: FireExtinguisher
-  components:
-  - parent: 4930
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4932
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -6.5,-13.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4933
-    type: ContainerContainer
-- uid: 4933
-  type: FireExtinguisher
-  components:
-  - parent: 4932
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4934
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -26.5,-1.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4935
-    type: ContainerContainer
-- uid: 4935
-  type: FireExtinguisher
-  components:
-  - parent: 4934
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4936
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -26.5,-4.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4937
-    type: ContainerContainer
-- uid: 4937
-  type: FireExtinguisher
-  components:
-  - parent: 4936
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4938
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -10.5,13.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4939
-    type: ContainerContainer
-- uid: 4939
-  type: FireExtinguisher
-  components:
-  - parent: 4938
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4940
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: -6.5,18.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4941
-    type: ContainerContainer
-- uid: 4941
-  type: FireExtinguisher
-  components:
-  - parent: 4940
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4942
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 11.5,9.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4943
-    type: ContainerContainer
-- uid: 4943
-  type: FireExtinguisher
-  components:
-  - parent: 4942
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4944
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 11.5,18.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4945
-    type: ContainerContainer
-- uid: 4945
-  type: FireExtinguisher
-  components:
-  - parent: 4944
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4946
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 5.5,24.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4947
-    type: ContainerContainer
-- uid: 4947
-  type: FireExtinguisher
-  components:
-  - parent: 4946
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4948
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 1.5,26.5
-    parent: 853
-    type: Transform
-  - containers:
-      item_cabinet: !type:ContainerSlot
-        ent: 4949
-    type: ContainerContainer
-- uid: 4949
-  type: FireExtinguisher
-  components:
-  - parent: 4948
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 4950
   type: TableReinforcedGlass
   components:
   - pos: 14.5,-0.5
     parent: 853
     type: Transform
-- uid: 4951
+- uid: 4905
   type: BoxSyringe
   components:
   - pos: 14.469343,-0.36327124
@@ -48276,7 +47885,7 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4952
+- uid: 4906
   type: BoxSyringe
   components:
   - pos: 14.469343,-0.73827124
@@ -48288,7 +47897,7 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4953
+- uid: 4907
   type: SheetPlasma1
   components:
   - pos: 14.484968,-1.2538962
@@ -48296,7 +47905,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4954
+- uid: 4908
   type: BoxBeaker
   components:
   - pos: 18.53261,0.71732765
@@ -48308,7 +47917,7 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4955
+- uid: 4909
   type: KitchenReagentGrinder
   components:
   - pos: 18.5,1.5
@@ -48319,13 +47928,13 @@ entities:
       ReagentGrinder-entityContainerContainer: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4956
+- uid: 4910
   type: TableReinforced
   components:
   - pos: 15.5,-3.5
     parent: 853
     type: Transform
-- uid: 4957
+- uid: 4911
   type: Poweredlight
   components:
   - pos: 15.496435,2.097836
@@ -48334,38 +47943,38 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 4958
+- uid: 4912
   type: ChairOfficeDark
   components:
   - rot: 3.141592653589793 rad
     pos: 17.5,0.5
     parent: 853
     type: Transform
-- uid: 4958
+- uid: 4913
   type: WallReinforced
   components:
   - pos: 14.5,-3.5
     parent: 853
     type: Transform
-- uid: 4959
+- uid: 4914
   type: ChairOfficeDark
   components:
   - pos: 15.5,-2.5
     parent: 853
     type: Transform
-- uid: 4960
+- uid: 4915
   type: SignChem
   components:
   - pos: 18.51248,-3.6306343
     parent: 853
     type: Transform
-- uid: 4961
+- uid: 4916
   type: Firelock
   components:
   - pos: 15.5,-3.5
     parent: 853
     type: Transform
-- uid: 4962
+- uid: 4917
   type: SheetPlasma1
   components:
   - pos: 14.531843,-1.5507712
@@ -48373,7 +47982,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4963
+- uid: 4918
   type: SheetPlasma1
   components:
   - pos: 14.578718,-1.8476462
@@ -48381,7 +47990,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4964
+- uid: 4919
   type: Dropper
   components:
   - pos: 14.531843,-2.2695212
@@ -48389,7 +47998,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4965
+- uid: 4920
   type: Dropper
   components:
   - pos: 14.531843,-2.5351462
@@ -48397,3 +48006,196 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 4921
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -26.5,-1.5
+    parent: 853
+    type: Transform
+- uid: 4922
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -26.5,-4.5
+    parent: 853
+    type: Transform
+- uid: 4923
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -15.5,-0.5
+    parent: 853
+    type: Transform
+- uid: 4924
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -18.5,8.5
+    parent: 853
+    type: Transform
+- uid: 4925
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -30.5,10.5
+    parent: 853
+    type: Transform
+- uid: 4926
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -34.5,-2.5
+    parent: 853
+    type: Transform
+- uid: 4927
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -16.5,-8.5
+    parent: 853
+    type: Transform
+- uid: 4928
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -6.5,-16.5
+    parent: 853
+    type: Transform
+- uid: 4929
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -6.5,-18.5
+    parent: 853
+    type: Transform
+- uid: 4930
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 8.5,-17.5
+    parent: 853
+    type: Transform
+- uid: 4931
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 16.5,-16.5
+    parent: 853
+    type: Transform
+- uid: 4932
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 24.5,-16.5
+    parent: 853
+    type: Transform
+- uid: 4933
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 25.5,-7.5
+    parent: 853
+    type: Transform
+- uid: 4934
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 32.5,-5.5
+    parent: 853
+    type: Transform
+- uid: 4935
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 41.5,-1.5
+    parent: 853
+    type: Transform
+- uid: 4936
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 46.5,-11.5
+    parent: 853
+    type: Transform
+- uid: 4937
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 52.5,-11.5
+    parent: 853
+    type: Transform
+- uid: 4938
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 45.5,6.5
+    parent: 853
+    type: Transform
+- uid: 4939
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 17.5,9.5
+    parent: 853
+    type: Transform
+- uid: 4940
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 9.5,12.5
+    parent: 853
+    type: Transform
+- uid: 4941
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -10.5,13.5
+    parent: 853
+    type: Transform
+- uid: 4942
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -6.5,18.5
+    parent: 853
+    type: Transform
+- uid: 4943
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 0.5,16.5
+    parent: 853
+    type: Transform
+- uid: 4944
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,18.5
+    parent: 853
+    type: Transform
+- uid: 4945
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 5.5,24.5
+    parent: 853
+    type: Transform
+- uid: 4946
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 1.5,26.5
+    parent: 853
+    type: Transform
+- uid: 4947
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -3.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 4948
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -13.5,-23.5
+    parent: 853
+    type: Transform
+- uid: 4949
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,-28.5
+    parent: 853
+    type: Transform
+- uid: 4950
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 20.5,-20.5
+    parent: 853
+    type: Transform
+- uid: 4951
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 29.5,11.5
+    parent: 853
+    type: Transform
+- uid: 4952
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 44.5,11.5
+    parent: 853
+    type: Transform
+...
