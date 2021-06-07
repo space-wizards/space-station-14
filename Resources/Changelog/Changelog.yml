@@ -1298,3 +1298,8 @@ Entries:
   - {message: Synaptizine damage per unit nerfed from 15 to 6, type: Tweak}
   id: 229
   time: '2021-06-06T18:14:46.0000000+00:00'
+- author: Timrod
+  changes:
+  - {message: Adds more starting equipment to Chemistry, type: Tweak}
+  id: 230
+  time: '2021-06-07T01:35:24.0000000+00:00'
