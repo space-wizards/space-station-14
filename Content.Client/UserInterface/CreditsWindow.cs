@@ -104,7 +104,7 @@ namespace Content.Client.UserInterface
                 Button patronButton;
                 vBox.AddChild(patronButton = new Button
                 {
-                    Text = "credits-window-become-patron-button",
+                    Text = Loc.GetString("credits-window-become-patron-button"),
                     HorizontalAlignment = HAlignment.Center
                 });
 

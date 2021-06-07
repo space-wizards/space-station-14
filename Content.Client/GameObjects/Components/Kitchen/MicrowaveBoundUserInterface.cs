@@ -285,7 +285,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                 CookTimeInfoLabel = new Label
                 {
-                    Text = $"{Loc.GetString("microwave-menu-cook-time-label")} 1",
+                    Text = Loc.GetString("microwave-menu-cook-time-label", ("time", 1)), // TODO, hardcoded value
                     Align = Label.AlignMode.Center,
                     Modulate = Color.White,
                     VerticalAlignment = VAlignment.Center
