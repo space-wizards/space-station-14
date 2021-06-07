@@ -1,1 +1,1 @@
-fire-extinguisher-component-after-interact-refilled-message = {$owner:TheName} is now refilled
+fire-extinguisher-component-after-interact-refilled-message = {$owner} is now refilled

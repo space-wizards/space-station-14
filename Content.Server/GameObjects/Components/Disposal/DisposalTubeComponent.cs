@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var directions = string.Join(", ", ConnectableDirections());
 
-            Owner.PopupMessage(entity, Loc.GetString("{0}", directions));
+            Owner.PopupMessage(entity, Loc.GetString("generic-insert-format", ("str",directions)));
         }
 
         private void UpdateVisualState()

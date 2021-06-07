@@ -6,9 +6,9 @@ chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
 chat-manager-max-message-length-exceeded-message = Your message exceeded {$limit} character limit
 chat-manager-no-headset-on-message = You don't have a headset on!
 chat-manager-server-wrap-message = SERVER: {0}
-chat-manager-sender-announcement-wrap-message = {$sender} Announcement:\n{{0}}
-chat-manager-entity-say-wrap-message = {$entityName} says, \"{{0}}\""
-chat-manager-entity-me-wrap-message = ${entityName} {{0}}
+chat-manager-sender-announcement-wrap-message = {$sender} Announcement:
+chat-manager-entity-say-wrap-message = {$entityName} says, "{{0}}"
+chat-manager-entity-me-wrap-message = {$entityName} {{0}}
 chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {{0}}
 chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {{0}}
 chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: {$playerName}: {{0}}

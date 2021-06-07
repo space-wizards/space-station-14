@@ -60,7 +60,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
                 _label.SetMarkup(Loc.GetString(
                     "hypospray-volume-text",
-                    _parent.CurrentVolume, _parent.TotalVolume));
+                    ("currentVolume", _parent.CurrentVolume),
+                    ("totalVolume", _parent.TotalVolume)));
             }
         }
     }

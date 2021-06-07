@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.Open();
 
-            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", Owner.Owner.Name)}");
+            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", Owner.Owner.Name))}");
 
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCentered();

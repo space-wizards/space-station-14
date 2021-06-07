@@ -180,7 +180,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
         public void UpdateState(GasTankBoundUserInterfaceState state)
         {
-            _lblPressure.SetMarkup(Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", state.TankPressure)));
+            _lblPressure.SetMarkup(Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", $"{state.TankPressure:0.##}")));
             _btnInternals.Disabled = !state.CanConnectInternals;
             _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
                 ("colorName" ,state.InternalsConnected ? "green" : "red"),

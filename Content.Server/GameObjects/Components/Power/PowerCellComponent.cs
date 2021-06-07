@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetString("power-cell-component-examine-details",("currentCharge", CurrentCharge / MaxCharge * 100)));
+                message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100}:F0")));
             }
         }
 

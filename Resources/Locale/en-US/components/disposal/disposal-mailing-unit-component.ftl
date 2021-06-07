@@ -1,5 +1,3 @@
-disposal-mailing-unit-component
-
 # SelfInsertVerb
 self-insert-verb-get-data-text = Jump inside
 

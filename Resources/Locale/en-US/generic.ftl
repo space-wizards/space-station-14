@@ -68,8 +68,8 @@ generic-large-shorthand = L
 # phrases
 generic-no-hands = You have no hands.
 generic-nothing-in-hands = You have nothing in your hand!
-generic-entity-name-is-empty = {$entity:TheName} is empty!
-generic-entity-name-is-full = {$entity:TheName} is full!
+generic-entity-name-is-empty = {$entity} is empty!
+generic-entity-name-is-full = {$entity} is full!
 generic-cannot-do-that = You can't do that!
 generic-cannot-reach = You can't reach there!
 generic-cannot-equip = You can't equip this!
@@ -92,6 +92,9 @@ generic-dead = Dead
 generic-admin = Admin
 generic-unknown = Unknown
 generic-open-configuration = Open Configuration
+
+# meta
+generic-insert-format = {$str}
 
 # clothing preferences # TODO this probably should be somewhere else
 preference-jumpsuit = Jumpsuit

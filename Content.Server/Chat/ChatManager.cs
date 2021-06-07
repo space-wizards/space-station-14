@@ -100,7 +100,9 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender))
+                              + "\n" +
+                              "{{0}}";
             _netManager.ServerSendToAll(msg);
         }
 

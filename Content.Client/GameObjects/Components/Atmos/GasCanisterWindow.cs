@@ -121,8 +121,8 @@ namespace Content.Client.GameObjects.Components.Atmos
         /// <param name="state">The state the UI should reflect</param>
         public void UpdateState(GasCanisterBoundUserInterfaceState state)
         {
-            _pressure.Text = Loc.GetString("gas-canister-window-pressure-format-text", state.Volume);
-            _releasePressure.Text = Loc.GetString("gas-canister-window-pressure-format-text", state.ReleasePressure);
+            _pressure.Text = Loc.GetString("gas-canister-window-pressure-format-text", ("pressure", state.Volume));
+            _releasePressure.Text = Loc.GetString("gas-canister-window-pressure-format-text", ("pressure", state.ReleasePressure));
 
             // Update the canister label
             OldLabel = LabelInput.Text;

@@ -241,7 +241,7 @@ namespace Content.Client.State
 
                 var userNameHBox = new HBoxContainer {SeparationOverride = 4};
                 vBox.AddChild(userNameHBox);
-                userNameHBox.AddChild(new Label {Text = "main-menu-username-label" });
+                userNameHBox.AddChild(new Label {Text = Loc.GetString("main-menu-username-label") });
 
                 var currentUserName = _configurationManager.GetCVar(CVars.PlayerName);
                 UserNameBox = new LineEdit

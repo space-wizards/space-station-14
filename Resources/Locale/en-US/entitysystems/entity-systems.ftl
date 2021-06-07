@@ -16,10 +16,10 @@ hands-system-empty-equipment-slot = There's nothing in your {$slotName} to take 
 
 # PointingSystem
 pointing-system-point-at-self = You point at yourself.
-pointing-system-point-at-other = You point at {$other:theName}.
-pointing-system-point-at-self-others = {$otherName} points at {$other:themself}}.
-pointing-system-point-at-other-others = {$otherName} points at {$other:theName}}.
-pointing-system-point-at-other-others = {$otherName} points at {$other:theName}}.
+pointing-system-point-at-other = You point at {$other}.
+pointing-system-point-at-self-others = {$otherName} points at {$other}}.
+pointing-system-point-at-other-others = {$otherName} points at {$other}}.
+pointing-system-point-at-other-others = {$otherName} points at {$other}}.
 pointing-system-point-at-you-other = {$otherName} points at you.
 pointing-system-other-point-at-tile = {$otherName} points at {$tileName}
 

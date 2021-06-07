@@ -7,15 +7,15 @@ plant-holder-component-no-weeds-message = This plot is devoid of weeds! It doesn
 plant-holder-component-remove-plant-message = You remove the plant from the {$name}.
 plant-holder-component-remove-plant-others-message = {$name} removes the plant.
 plant-holder-component-no-plant-message = There is no plant to remove.
-plant-holder-component-empty-message = {$owner:theName} is empty!
-plant-holder-component-spray-message = You spray {$owner:theName}.
-plant-holder-component-transfer-message = You transfer {$amount}u to {$owner:TheName}.
+plant-holder-component-empty-message = {$owner} is empty!
+plant-holder-component-spray-message = You spray {$owner}.
+plant-holder-component-transfer-message = You transfer {$amount}u to {$owner}.
 plant-holder-component-nothing-to-sample-message =There is nothing to take a sample of!.
 plant-holder-component-already-sampled-message = This plant has already been sampled.
 plant-holder-component-dead-plant-message = This plant is dead.
 plant-holder-component-take-sample-message = You take a sample from the {$seedName}.
-plant-holder-component-compost-message = You compost {$usingItem:theName} into {$owner:theName}.
-plant-holder-component-compost-others-message = {$user:TheName} composts {$usingItem:theName} into {$owner:theName}.
+plant-holder-component-compost-message = You compost {$usingItem} into {$owner}.
+plant-holder-component-compost-others-message = {$user} composts {$usingItem} into {$owner}.
 plant-holder-component-nothing-planted-message = It has nothing planted in it..
 plant-holder-component-something-already-growing-message = [color=green]{$seedName}[/color] {$toBeForm} growing here.
 plant-holder-component-something-already-growing-low-health-message = The plant looks [color=red]{$healthState}[/color].

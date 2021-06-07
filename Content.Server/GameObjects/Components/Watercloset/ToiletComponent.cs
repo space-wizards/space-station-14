@@ -146,20 +146,20 @@ namespace Content.Server.GameObjects.Components.Watercloset
             if (victim.TryGetComponent<IBody>(out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
-                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim),("owner", Owner));
+                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim.Name),("owner", Owner.Name));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Owner));
+                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Owner.Name));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Asphyxiation;
             }
             else
             {
-                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", victim),("owner", Owner));
+                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", victim.Name),("owner", Owner.Name));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Owner));
+                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Owner.Name));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Blunt;

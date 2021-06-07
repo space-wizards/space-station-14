@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("{0:theName}", Owner);
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", Owner.Name));
 
         public override void Initialize()
         {

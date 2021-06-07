@@ -448,8 +448,8 @@ namespace Content.Client.UserInterface.ParticleAccelerator
             }
 
             _drawLabel.Text = Loc.GetString("particle-accelerator-control-menu-draw",
-                                            ("watts",watts),
-                                            ("lastReceive", _lastReceive));
+                                            ("watts", $"{watts:##,##0}"),
+                                            ("lastReceive", $"{_lastReceive:##,##0}"));
         }
 
         private sealed class PASegmentControl : Control

@@ -230,17 +230,19 @@ namespace Content.Server.GameObjects.Components.GUI
                 }
 
                 if (!hands.HasHand(hand))
+                {
                     return false;
+                }
 
                 if (hands.TryGetItem(hand, out var _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied-message", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied-message", ("owner", Owner)));
                     return false;
                 }
 
                 if (!hands.CanPutInHand(item, hand, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("owner", Owner)));
                     return false;
                 }
 

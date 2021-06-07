@@ -75,7 +75,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     _ => Loc.GetString("generic-invalid")
                 };
                 _label.SetMarkup(Loc.GetString("injector-volume-label",
-                    _parent.CurrentVolume, _parent.TotalVolume, modeStringLocalized));
+                                               ("currentVolume", _parent.CurrentVolume),
+                                               ("totalVolume", _parent.TotalVolume),
+                                               ("modeString", modeStringLocalized)));
             }
         }
     }

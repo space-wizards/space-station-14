@@ -1,2 +1,2 @@
-crayon-drawing-label = Drawing: [color={0}]{1}[/color] ({2}/{3})
+crayon-drawing-label = Drawing: [color={$color}]{$state}[/color] ({$charges}/{$capacity})
 crayon-interact-not-enough-left-text = Not enough left.

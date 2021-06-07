@@ -6,4 +6,4 @@ gas-canister-window-release-pressure-label = Release pressure:
 gas-canister-window-valve-label = Valve:
 gas-canister-window-valve-closed-text = Closed
 gas-canister-window-valve-open-text = Open
-gas-canister-window-pressure-format-text = {0}kPa
+gas-canister-window-pressure-format-text = {$pressure}kPa

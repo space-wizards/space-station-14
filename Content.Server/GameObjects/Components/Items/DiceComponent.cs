@@ -84,8 +84,10 @@ namespace Content.Server.GameObjects.Components.Items
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             //No details check, since the sprite updates to show the side.
-            message.AddMarkup(Loc.GetString("dice-component-on-examine-message",
-                                            ("sidesAmount",_sides),
+            message.AddMarkup(Loc.GetString("dice-component-on-examine-message-part-1",
+                                            ("sidesAmount", _sides))
+                              + "\n" +
+                              Loc.GetString("dice-component-on-examine-message-part-2",
                                             ("currentSide", _currentSide)));
         }
     }

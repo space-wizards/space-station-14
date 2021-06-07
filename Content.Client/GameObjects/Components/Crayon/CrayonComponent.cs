@@ -61,10 +61,10 @@ namespace Content.Client.GameObjects.Components.Crayon
 
                 _parent._uiUpdateNeeded = false;
                 _label.SetMarkup(Loc.GetString("crayon-drawing-label",
-                    _parent.Color,
-                    _parent.SelectedState,
-                    _parent.Charges,
-                    _parent.Capacity));
+                    ("color",_parent.Color),
+                    ("state",_parent.SelectedState),
+                    ("charges", _parent.Charges),
+                    ("capacity",_parent.Capacity)));
             }
         }
     }

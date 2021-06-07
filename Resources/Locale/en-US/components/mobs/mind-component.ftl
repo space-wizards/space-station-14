@@ -1,3 +1,3 @@
-mind-component-no-mind-and-alive-text = {$owner:They} {$owner:are} totally catatonic. The stresses of life in deep-space must have been too much for {$owner:them}. Any recovery is unlikely.
-mind-component-no-mind-and-dead-text = {$owner:Their} soul has departed.
-mind-component-mind-and-no-session-text = {$owner:They} {$owner:have} a blank, absent-minded stare and appears completely unresponsive to anything. {$owner:They} may snap out of it soon.
+mind-component-no-mind-and-alive-text = {$owner} is totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.
+mind-component-no-mind-and-dead-text = {$owner}'s soul has departed.
+mind-component-mind-and-no-session-text = {$owner} has a blank, absent-minded stare and appears completely unresponsive to anything. {$owner} may snap out of it soon.

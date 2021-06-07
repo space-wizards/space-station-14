@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Observer
                         {
                             (new Label()
                             {
-                                Text = Loc.GetString("accept-cloning-window-prompt-text")
+                                Text = Loc.GetString("accept-cloning-window-prompt-text-part-1" + "\n" + "accept-cloning-window-prompt-text-part-2")
                             }),
                             new HBoxContainer
                             {

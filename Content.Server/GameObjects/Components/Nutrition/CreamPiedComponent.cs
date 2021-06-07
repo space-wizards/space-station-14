@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             CreamPied = true;
             Owner.PopupMessage(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", eventArgs.Thrown)));
-            Owner.PopupMessageOtherClients(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner",Owner),("thrower", eventArgs.Thrown)));
+            Owner.PopupMessageOtherClients(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", Owner),("thrower", eventArgs.Thrown)));
 
             if (Owner.TryGetComponent(out StunnableComponent? stun))
             {

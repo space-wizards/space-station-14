@@ -7,4 +7,6 @@ game-ticker-delay-start = Round start has been delayed for {$seconds} seconds.
 game-ticker-pause-start = Round start has been paused.
 game-ticker-pause-start-resumed = Round start countdown is now resumed.
 game-ticker-player-join-game-message = Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!
-game-ticker-get-info-text = Hi and welcome to [color=white]Space Station 14![/color]\nThe current game mode is: [color=white]{$gmTitle}[/color].\n[color=yellow]{$desc}[/color]
+game-ticker-get-info-text = Hi and welcome to [color=white]Space Station 14![/color]
+                            The current game mode is: [color=white]{$gmTitle}[/color].
+                            >[color=yellow]{$desc}[/color]

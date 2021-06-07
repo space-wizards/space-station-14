@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Construction
         {
             if (Prototype == null) return;
 
-            message.AddMarkup(Loc.GetString("construction-ghost-examine-message", Prototype.Name));
+            message.AddMarkup(Loc.GetString("construction-ghost-examine-message", ("name", Prototype.Name)));
 
             if (!_prototypeManager.TryIndex(Prototype.Graph, out ConstructionGraphPrototype? graph)) return;
             var startNode = graph.Nodes[Prototype.StartNode];

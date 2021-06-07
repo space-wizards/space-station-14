@@ -61,7 +61,8 @@ list-votes-command-help = Usage: listvotes
 
 # CancelVoteCommand
 cancel-vote-command-description = Cancels an active vote
-cancel-vote-command-help = Usage: cancelvote <id>\nYou can get the ID from the listvotes command.
+cancel-vote-command-help = Usage: cancelvote <id>
+                           You can get the ID from the listvotes command.
 cancel-vote-command-on-execute-error-invalid-vote-id = Invalid vote ID
 cancel-vote-command-on-execute-error-missing-vote-id = Missing ID
 

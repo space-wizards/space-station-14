@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             var resourceCache = IoCManager.Resolve<IResourceCache>();
 
             Owner = owner;
-            var rootContainer = new LayoutContainer {Name = "WireRoot"};
+            var rootContainer = new LayoutContainer { Name = "WireRoot" };
             AddChild(rootContainer);
 
             MouseFilter = MouseFilterMode.Stop;
@@ -115,7 +115,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             var middle = new PanelContainer
             {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202025") },
                 Children =
                 {
                     (_statusContainer = new VBoxContainer
@@ -129,13 +129,13 @@ namespace Content.Client.GameObjects.Components.Atmos
             _topContainer.AddChild(new PanelContainer
             {
                 MinSize = (0, 2),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
                 MinSize = (0, 2),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#525252ff") }
             });
             CloseButton.OnPressed += _ => Close();
             SetSize = (300, 200);
@@ -149,7 +149,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 _statusContainer.AddChild(new Label
                 {
-                    Text = Loc.GetString("gas-analyzer-window-error-text", state.Error),
+                    Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", state.Error)),
                     FontColorOverride = Color.Red
                 });
                 return;
@@ -157,12 +157,13 @@ namespace Content.Client.GameObjects.Components.Atmos
 
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("gas-analyzer-window-pressure-text", state.Pressure)
+                Text = Loc.GetString("gas-analyzer-window-pressure-text", ("pressure", $"{state.Pressure:0.##}"))
             });
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("gas-analyzer-window-temperature-text", state.Temperature,
-                    TemperatureHelpers.KelvinToCelsius(state.Temperature))
+                Text = Loc.GetString("gas-analyzer-window-temperature-text",
+                                     ("tempK", $"{state.Temperature:0.#}"),
+                                     ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.Temperature):0.#}"))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
             if (state.Gases == null || state.Gases.Length == 0)
@@ -222,7 +223,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 });
                 tableVal.AddChild(new Label
                 {
-                    Text = Loc.GetString("gas-analyzer-window-molality-text", gas.Amount)
+                    Text = Loc.GetString("gas-analyzer-window-molality-text", ("mol", $"{gas.Amount:0.##}"))
                 });
 
                 // Add to the gas bar //TODO: highlight the currently hover one
@@ -230,8 +231,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var right = (i == state.Gases.Length - 1) ? 0f : 2f;
                 gasBar.AddChild(new PanelContainer
                 {
-                    ToolTip = Loc.GetString("gas-analyzer-window-molality-percentage-text", gas.Name, gas.Amount,
-                        (gas.Amount / totalGasAmount) * 100),
+                    ToolTip = Loc.GetString("gas-analyzer-window-molality-percentage-text",
+                                            ("gasName", gas.Name),
+                                            ("amount", $"{gas.Amount:0.##}"),
+                                            ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
                     HorizontalExpand = true,
                     SizeFlagsStretchRatio = gas.Amount,
                     MouseFilter = MouseFilterMode.Pass,
