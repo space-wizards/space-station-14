@@ -21,7 +21,7 @@
     sprite: Clothing/Shoes/Specific/clown.rsi
   - type: LoopingSound
   - type: FootstepModifier
-    soundCollection: footstep_clown
+    footstepSoundCollection: footstep_clown
 
 - type: entity
   parent: ClothingShoesBase

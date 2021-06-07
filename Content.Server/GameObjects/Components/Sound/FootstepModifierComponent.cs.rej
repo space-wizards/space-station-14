@@ -1,0 +1,12 @@
+diff a/Content.Server/GameObjects/Components/Sound/FootstepModifierComponent.cs b/Content.Server/GameObjects/Components/Sound/FootstepModifierComponent.cs	(rejected hunks)
+@@ -10,10 +10,5 @@
+     {
+         /// <inheritdoc />
+         public override string Name => "FootstepModifier";
+-
+-        public void PlayFootstep()
+-        {
+-            PlayRandomSoundFromCollection();
+-        }
+     }
+ }

@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -21,39 +22,26 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>((eUI, comp, arg) => PlaySoundBasedOnMode(eUI, comp));
-            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>((eUI, comp, arg) => PlaySoundBasedOnMode(eUI, comp));
-            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>((eUI, comp, arg) => PlaySoundBasedOnMode(eUI, comp));
-            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>((eUI, comp, args) => PlaySoundBasedOnMode(eUI, comp));
+            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>((eUI, comp, arg) => PlaySound(comp));
+            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>((eUI, comp, arg) => PlaySound(comp));
+            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>((eUI, comp, arg) => PlaySound(comp));
+            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>((eUI, comp, args) => PlaySound(comp));
         }
 
-        private void PlaySoundBasedOnMode(EntityUid uid, BaseEmitSoundComponent component)
+        private void PlaySound(BaseEmitSoundComponent component)
         {
-            if (component == null)
+            if (!string.IsNullOrWhiteSpace(component._soundCollectionName))
             {
-                return;
+                PlayRandomSoundFromCollection(component);
             }
-#pragma warning disable CS8604 // Possible null reference argument.
-            switch (component._emitSoundMode)
+            else if(!string.IsNullOrWhiteSpace(component._soundName))
             {
-                case EmitSoundMode.Single:
-                    PlaySingleSound(component._soundName, component);
-                    break;
-                case EmitSoundMode.RandomFromCollection:
-                    PlayRandomSoundFromCollection(component);
-                    break;
-                case EmitSoundMode.Auto:
-                    if (!string.IsNullOrEmpty(component._soundCollectionName))
-                    {
-                        PlayRandomSoundFromCollection(component);
-                        break;
-                    }
-                    PlaySingleSound(component._soundName, component);
-                    break;
-                default:
-                    break;
+                PlaySingleSound(component._soundName, component);
             }
-#pragma warning restore CS8604 // Possible null reference argument.
+            else
+            {
+                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has neither {nameof(component._soundCollectionName)} nor {nameof(component._soundName)} to play.");
+            }
         }
 
         private void PlayRandomSoundFromCollection(BaseEmitSoundComponent component)
@@ -82,11 +70,6 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
                                  AudioHelpers.WithVariation(component._pitchVariation).WithVolume(-2f));
-            }
-            else if (component._semitoneVariation > 0)
-            {
-                SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                                 AudioHelpers.WithSemitoneVariation(component._semitoneVariation).WithVolume(-2f));
             }
             else
             {

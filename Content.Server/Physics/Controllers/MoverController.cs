@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using Content.Server.Actions;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Movement;
@@ -133,7 +134,16 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            PlayFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
+            if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+                && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
+                && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+            {
+                modifier.PlayFootstep();
+            }
+            else
+            {
+                PlayFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
+            }
         }
 
         private void PlayFootstepSound(IEntity mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
@@ -141,35 +151,20 @@ namespace Content.Server.Physics.Controllers
             var grid = _mapManager.GetGrid(gridId);
             var tile = grid.GetTileRef(coordinates);
 
-            if (tile.IsSpace(_tileDefinitionManager))
-            {
-                return;
-            }
+            if (tile.IsSpace(_tileDefinitionManager)) return;
 
+            // If the coordinates have a FootstepModifier component
+            // i.e. component that emit sound on footsteps emit that sound
             string? soundCollectionName = null;
-
-            // Check if mover's shoes have a footstep modifier component
-            if (mover.TryGetComponent<InventoryComponent>(out var inventory)
-                && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+            foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                soundCollectionName = modifier._soundCollectionName;
-            }
-
-            // Check if the floor has a footstep modifier component
-            if (soundCollectionName == null)
-            {
-                foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
+                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
-                    if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
-                    {
-                        soundCollectionName = footstep._soundCollectionName;
-                        break;
-                    }
+                    soundCollectionName = footstep._soundCollectionName;
+                    break;
                 }
             }
-
-            // if there is still no FootstepModifierComponent, determine sound based on tiles
+            // if there is no FootstepModifierComponent, determine sound based on tiles
             if (soundCollectionName == null)
             {
                 // Walking on a tile.
