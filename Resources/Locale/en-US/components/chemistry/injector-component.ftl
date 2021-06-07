@@ -1,6 +1,11 @@
+## UI
+
 injector-draw-text = Draw
 injector-inject-text = Inject
 injector-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color] | [color=white]{$modeString}[/color]
+
+## Entity
+
 injector-component-drawing-text = Now drawing
 injector-component-injecting-text = Now injecting
 injector-component-cannot-transfer-message = You aren't able to transfer to {$owner}!

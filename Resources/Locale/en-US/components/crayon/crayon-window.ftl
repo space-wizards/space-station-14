@@ -1,1 +1,0 @@
-crayon-window-title = Crayon

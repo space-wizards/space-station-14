@@ -1,28 +1,33 @@
-# generic, general words, which fit into multiple contexts
+### Generic, general words, which fit into multiple contexts
 
-# logic
+## Logic
+
 generic-on = On
 generic-off = Off
 generic-yes = Yes
 generic-no = No
 generic-not-available-shorthand = N/A
 
-# math
+## Math
+
 generic-increase = Increase
 generic-decrease = Decrease
 
-# state/status
+## State/status
+
 generic-ok = OK
 generic-invalid = Invalid
 generic-toggle = Toggle
 generic-opened = Opened
 
-# collections
+## Collections
+
 generic-all = All
 generic-add = Add
 generic-none = None
 
-# actions
+## Actions
+
 generic-edit = Edit
 generic-sync = Sync
 generic-lock = Lock
@@ -46,7 +51,8 @@ generic-click = Click
 generic-push = Push
 generic-pull = Pull
 
-# gender
+## Gender
+
 generic-male = Male
 generic-female = Female
 generic-male-pronouns = He / Him
@@ -54,18 +60,21 @@ generic-female-pronouns = She / Her
 generic-epicene-pronouns = They / Them
 generic-neuter-pronouns = It / It
 
-# setting value
+## Setting value
+
 generic-high = High
 generic-medium = Medium
 generic-low = Low
 generic-never = Never
 
-# size
+## Size
+
 generic-small-shorthand = S
 generic-medium-shorthand = M
 generic-large-shorthand = L
 
-# phrases
+## Phrases
+
 generic-no-hands = You have no hands.
 generic-nothing-in-hands = You have nothing in your hand!
 generic-entity-name-is-empty = {$entity} is empty!
@@ -78,11 +87,13 @@ generic-not-holding-anything = You aren't holding anything!
 generic-cannot-drop = You can't drop that!
 generic-will-not-work = That won't work!
 
-# time
+## Time
+
 generic-minutes-ago = {$minutes} minutes ago
 generic-seconds-ago = {$seconds} seconds ago
 
-# misc
+## Misc
+
 generic-article-a = a
 generic-article-an = an
 generic-random = Random
@@ -93,10 +104,11 @@ generic-admin = Admin
 generic-unknown = Unknown
 generic-open-configuration = Open Configuration
 
-# meta
+## Meta
 generic-insert-format = {$str}
 
-# clothing preferences # TODO this probably should be somewhere else
+## Clothing preferences # TODO this probably should be somewhere else
+
 preference-jumpsuit = Jumpsuit
 preference-jumpskirt = Jumpskirt
 preference-backpack = Backpack

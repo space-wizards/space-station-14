@@ -1,4 +1,5 @@
-# StunbatonComponent
+## StunbatonComponent
+
 stunbaton-component-no-cell = Cell missing...
 stunbaton-component-dead-cell = Dead cell...
 stunbaton-component-on-examine = The light is currently [color=darkgreen]on[/color].

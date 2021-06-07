@@ -1,4 +1,9 @@
+## UI
+
 hypospray-volume-text = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color]
+
+## Entity
+
 hypospray-component-inject-other-message = You inject {$other:TheName}.
 hypospray-component-inject-self-message = You inject yourself.
 hypospray-component-inject-self-clumsy-message = Oops! You injected yourself.

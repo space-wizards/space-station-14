@@ -1,1 +1,0 @@
-chem-master-bound-user-interface-title = ChemMaster 4000

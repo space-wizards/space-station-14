@@ -1,3 +1,5 @@
+## UI
+
 cloning-pod-window-title = Cloning Machine
 cloning-pod-clone-button = Clone
 cloning-pod-eject-body-button = Eject Body

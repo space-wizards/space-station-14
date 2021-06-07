@@ -9,7 +9,7 @@ connecting-disconnected = Disconnected from server:
 connecting-tip = Don't die!
 connecting-version = ver 0.1
 connecting-fail-reason = Failed to connect to server:
-    { $reason }
+                         { $reason }
 
 connecting-state-NotConnecting = You should not be seeing this
 connecting-state-ResolvingHost = Resolving server address...

@@ -1,4 +1,18 @@
+## Entity
+
 reagent-dispenser-component-has-container-already-message = This dispenser already has a container in it.
 reagent-dispenser-component-container-too-large-message = The {$container} is too large for the ChemMaster!
 reagent-dispenser-component-cannot-put-entity-message = You can't put {$entity} in the dispenser!
 reagent-dispenser-component-cannot-fit-message = That can't fit in the dispenser.
+
+## Bound UI
+
+reagent-dispenser-bound-user-interface-title = Reagent dispenser
+
+## UI
+
+reagent-dispenser-window-amount-to-dispense-label = Amount
+reagent-dispenser-window-container-label = Container: 
+reagent-dispenser-window-no-container-loaded-text = No container loaded.
+reagent-dispenser-window-reagent-name-not-found-text = Reagent name not found
+reagent-dispenser-window-unknown-reagent-text = Unknown reagent

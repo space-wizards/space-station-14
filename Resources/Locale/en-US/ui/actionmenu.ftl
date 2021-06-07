@@ -1,4 +1,4 @@
-# Action menu stuff (left panel, with hotbars etc)
+## Action menu stuff (left panel, with hotbars etc)
 
 ui-actionmenu-title = Actions
 ui-actionmenu-filter-label = Filters: {selectedLabels}

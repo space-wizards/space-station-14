@@ -1,6 +1,7 @@
-## Commands
+### Commands
 
-# AI
+## AI
+
 faction-command-description = Update / list factional relationships for NPCs.
 faction-command-help-text = faction <source> <friendly/hostile> target
                             faction <source> list: hostile factions
@@ -9,7 +10,8 @@ faction-command-invalid-target-faction-error = Invalid target faction
 faction-command-no-target-faction-error = Need to supply a target faction
 faction-command-unknown-faction-argument-error = Unknown faction argument
 
-# Chat
+## Chat
+
 suicide-command-description = Commits suicide
 suicide-command-help-text = The suicide command gives you a quick way out of a round while remaining in-character.
                             The method varies, first it will attempt to use the held item in your active hand.
@@ -18,11 +20,13 @@ suicide-command-help-text = The suicide command gives you a quick way out of a r
 suicide-command-default-text-others = {$name} is attempting to bite their own tongue!
 suicide-command-default-text-self = You attempt to bite your own tongue!
 
-# Disposal
+## Disposal
+
 tube-connections-command-description = Shows all the directions that a tube can connect in.
 tube-connections-command-help-text = Usage: {$command} <entityUid>
 
-# Station Event
+## Station Event
+
 station-event-command-description = Provides admin control to station events
 station-event-command-help-text = events <running/list/pause/resume/stop/run <eventName/random>>
                                   running: return the current running event

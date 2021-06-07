@@ -1,6 +1,7 @@
 ### for technical and/or system messages
 
-# general
+## General
+
 shell-server-cannot = Server cannot do this.
 shell-command-success = Command successful
 shell-invalid-command = Invalid command.
@@ -8,14 +9,16 @@ shell-invalid-command-specific = Invalid {commandName} command.
 shell-cannot-run-command-from-server = You cannot run this command from the server. 
 shell-only-players-can-run-this-command = Only players can run this command.
 
-# arguments
+## Arguments
+
 shell-need-exactly-one-argument = Need exactly one argument.
 shell-wrong-arguments-number-need-specific = Need {$properAmount} arguments, there were {$currentAmount}.
 shell-argument-must-be-number = Argument must be a number.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 
-# guards
+## Guards
+
 shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid

@@ -1,3 +1,10 @@
+## Entity
+
+medical-scanner-component-msg-no-soul = ERROR: Body is completely devoid of soul
+medical-scanner-component-msg-soul-broken = ERROR: Soul present, but defunct / departed
+
+## UI
+
 medical-scanner-window-save-button-text = Scan and Save DNA
 medical-scanner-window-no-patient-data-text = No patient data.
 medical-scanner-window-entity-health-text = {$entityName}'s health:

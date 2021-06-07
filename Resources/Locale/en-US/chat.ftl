@@ -1,4 +1,5 @@
-# chat manager
+## Chat manager
+
 chat-manager-ooc-chat-enabled-message = OOC chat has been enabled.
 chat-manager-ooc-chat-disabled-message = OOC chat has been disabled.
 chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
