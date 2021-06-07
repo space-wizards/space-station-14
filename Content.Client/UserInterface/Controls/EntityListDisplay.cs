@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.UserInterface.Stylesheets;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -191,7 +192,13 @@ namespace Content.Client.UserInterface.Controls
             if (_updateChildren)
             {
                 _updateChildren = false;
-                RemoveAllChildren();
+
+                foreach (var child in Children.ToArray())
+                {
+                    if (child == _vScrollBar)
+                        continue;
+                    RemoveChild(child);
+                }
 
                 if (_entityUids != null)
                 {
@@ -204,11 +211,10 @@ namespace Content.Client.UserInterface.Controls
 
                         GenerateItem?.Invoke(entity, button);
                         AddChild(button);
-                        //_entityList.AddChild(button);
                     }
                 }
 
-                AddChild(_vScrollBar);
+                _vScrollBar.SetPositionLast();
             }
 
             #endregion
@@ -262,11 +268,6 @@ namespace Content.Client.UserInterface.Controls
             // DockPanel when.
             //return Vector2.Zero;
             return availableSize;
-        }
-
-        protected override void ChildRemoved(Control child)
-        {
-            // Don't need to InvalidateMeasure when children removed because height is variable scroll
         }
 
         private void ScrollValueChanged(Robust.Client.UserInterface.Controls.Range _)
