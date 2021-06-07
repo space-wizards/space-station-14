@@ -817,7 +817,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-
             // In a container where the target entity is not the container's owner
             if (player.TryGetContainer(out var playerContainer) &&
                 (!EntityManager.TryGetEntity(targetUid, out var target) ||
@@ -832,8 +831,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var eventArgs = new AttackEvent(player, coordinates, wideAttack, targetUid);
-
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (player.TryGetComponent<IHandsComponent>(out var hands))
             {
@@ -841,35 +838,40 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
                 if (item != null)
                 {
-                    RaiseLocalEvent(item.Uid, eventArgs, false);
-                    foreach (var attackComponent in item.GetAllComponents<IAttack>())
+                    if (wideAttack)
                     {
-                        if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
+                        var ev = new WideAttackEvent(item, player, coordinates);
+                        RaiseLocalEvent(item.Uid, ev, false);
+
+                        if(ev.Handled)
+                            return;
+                    }
+                    else
+                    {
+                        var ev = new ClickAttackEvent(item, player, coordinates, targetUid);
+                        RaiseLocalEvent(item.Uid, ev, false);
+
+                        if(ev.Handled)
                             return;
                     }
                 }
                 else
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
-                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt))
+                    if (EntityManager.TryGetEntity(targetUid, out var targetEnt) && targetEnt.HasComponent<ItemComponent>())
                     {
-                        if (targetEnt.HasComponent<ItemComponent>())
-                        {
-                            Interaction(player, targetEnt);
-                            return;
-                        }
+                        Interaction(player, targetEnt);
+                        return;
                     }
                 }
             }
 
-            RaiseLocalEvent(player.Uid, eventArgs);
-            foreach (var attackComponent in player.GetAllComponents<IAttack>())
-            {
-                if (wideAttack)
-                    attackComponent.WideAttack(eventArgs);
-                else
-                    attackComponent.ClickAttack(eventArgs);
-            }
+            // TODO: Make this saner?
+            // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
+            if(wideAttack)
+                RaiseLocalEvent(player.Uid, new WideAttackEvent(player, player, coordinates), false);
+            else
+                RaiseLocalEvent(player.Uid, new ClickAttackEvent(player, player, coordinates, targetUid), false);
         }
     }
 }

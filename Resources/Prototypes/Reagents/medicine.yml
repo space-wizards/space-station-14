@@ -18,6 +18,10 @@
   desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
   physicalDesc: translucent
   color: "#3a1d8a"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -1
+      damageClass: Toxin
   plantMetabolism:
     - !type:AdjustToxins
       amount: -10
@@ -30,6 +34,13 @@
   desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
   physicalDesc: cloudy
   color: "#bd5902"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -1
+      damageClass: Toxin #I think you need multiple of these components for different types of damage so I'll maybe change it to work better in the future 
+    - !type:HealthChangeMetabolism 
+      healthChange: 0.5
+      damageClass: Brute
 
 - type: reagent
   id: Bicaridine
@@ -37,6 +48,10 @@
   desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
   physicalDesc: opaque
   color: "#ffaa00"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -2
+      damageClass: Brute
 
 - type: reagent
   id: Cryoxadone
@@ -75,6 +90,10 @@
   desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
   physicalDesc: translucent
   color: "#215263"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -3
+      damageClass: Burn
 
 - type: reagent
   id: Dexalin
@@ -82,13 +101,21 @@
   desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
   physicalDesc: opaque
   color: "#0041a8"
-
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -1
+      damageClass: Airloss #this may be asphyxiation
+      
 - type: reagent
   id: DexalinPlus
   name: dexalin plus
   desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
   physicalDesc: cloudy
   color: "#4da0bd"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -3
+      damageClass: Airloss
 
 - type: reagent
   id: Ethylredoxrazine
@@ -138,6 +165,10 @@
   desc: Treats burn damage and prevents infection.
   physicalDesc: strong-smelling
   color: "#bf3d19"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -1
+      damageClass: Burn
 
 - type: reagent
   id: Leporazine
@@ -170,7 +201,7 @@
 - type: reagent
   id: Paroxetine
   name: paroxetine
-  desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.
+  desc: Prevents hallucination, but has a 10% chance of causing intense hallucinations.  
   physicalDesc: acrid
   color: "#fffbad"
 
@@ -194,6 +225,11 @@
   desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. It is metabolized very slowly. One unit is enough to treat hallucinations; two units is deadly.
   physicalDesc: pungent
   color: "#d49a2f"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: 3 #you probably need something else for the "two units is deadly".
+      damageClass: Toxin
+      rate: 0.2 
 
 - type: reagent
   id: Tramadol
@@ -253,6 +289,10 @@
   plantMetabolism:
     - !type:AdjustToxins
       amount: 10
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: 1
+      damageClass: Airloss
 
 - type: reagent
   id: Impedrezene
@@ -267,6 +307,11 @@
   desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
   physicalDesc: pungent
   color: "#6b0007"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: 7
+      damageClass: Airloss
+
 
 - type: reagent
   id: Lipozine
