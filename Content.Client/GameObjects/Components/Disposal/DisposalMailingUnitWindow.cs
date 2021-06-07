@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

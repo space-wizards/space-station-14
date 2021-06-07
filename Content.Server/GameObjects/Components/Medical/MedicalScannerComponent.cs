@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
+using Content.Server.Interfaces;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
@@ -12,13 +13,17 @@ using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -29,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
+        [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
@@ -269,13 +276,32 @@ namespace Content.Server.GameObjects.Components.Medical
                 case UiButton.ScanDNA:
                     if (_bodyContainer.ContainedEntity != null)
                     {
-                        //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
 
-                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mind) || mind.Mind == null)
+                        if (!_bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mindComp) || mindComp.Mind == null)
+                        {
+                            obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
                             break;
+                        }
 
-                        cloningSystem.AddToDnaScans(mind.Mind);
+                        // Null suppression based on above check. Yes, it's explicitly needed
+                        var mind = mindComp.Mind!;
+
+                        // We need the HumanoidCharacterProfile
+                        // TODO: Move this further 'outwards' into a DNAComponent or somesuch.
+                        // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
+                        var mindUser = mind.UserId;
+
+                        if (mindUser == null)
+                        {
+                            // For now assume this means soul departed
+                            obj.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
+                            break;
+                        }
+
+                        // has to be explicit cast like this, IDK why, null suppression operators seem to not work
+                        var profile = GetPlayerProfileAsync((NetUserId) mindUser);
+                        cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
                     }
 
                     break;
@@ -293,6 +319,11 @@ namespace Content.Server.GameObjects.Components.Medical
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
             EjectBody();
+        }
+
+        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
+        {
+            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
         }
     }
 }
