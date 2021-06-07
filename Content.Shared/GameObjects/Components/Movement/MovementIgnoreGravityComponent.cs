@@ -1,6 +1,7 @@
 #nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Shared.GameObjects.Components.Movement
@@ -13,12 +14,41 @@ namespace Content.Shared.GameObjects.Components.Movement
 
     public static class GravityExtensions
     {
-        public static bool IsWeightless(this IEntity entity, IPhysicsManager? physicsManager = null)
+        public static bool IsWeightless(this IEntity entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null)
         {
-            physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
+            if (body == null)
+                entity.TryGetComponent(out body);
 
-            return !entity.HasComponent<MovementIgnoreGravityComponent>() &&
-                   physicsManager.IsWeightless(entity.Transform.Coordinates);
+            if (entity.HasComponent<MovementIgnoreGravityComponent>() ||
+                (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return false;
+
+            var transform = entity.Transform;
+            var gridId = transform.GridID;
+
+            if (!gridId.IsValid())
+            {
+                // Not on a grid = no gravity for now.
+                // In the future, may want to allow maps to override to always have gravity instead.
+                return true;
+            }
+
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+            var grid = mapManager.GetGrid(gridId);
+
+            if (!grid.HasGravity)
+            {
+                return true;
+            }
+
+            coords ??= transform.Coordinates;
+
+            if (!coords.Value.IsValid(entity.EntityManager))
+            {
+                return true;
+            }
+
+            var tile = grid.GetTileRef(coords.Value).Tile;
+            return tile.IsEmpty;
         }
     }
 }
