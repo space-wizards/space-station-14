@@ -12,7 +12,7 @@ namespace Content.Shared.Utility
     ///     Used to determine whether an entity fits a certain whitelist
     /// </summary>
     /// <code>
-    /// - whitelist:
+    /// whitelist:
     ///   prototypes:
     ///     - FireExtinguisher
     ///     - DisgustingSweptSoup
