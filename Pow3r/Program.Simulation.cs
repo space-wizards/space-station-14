@@ -42,10 +42,10 @@ namespace Pow3r
             foreach (var network in _networks.Values)
             {
                 // Clear some stuff.
-                network.MetDemand = 0;
+                network.LocalDemandMet = 0;
 
                 // Add up demands in network.
-                network.DemandTotal = network.Loads
+                network.LocalDemandTotal = network.Loads
                     .Select(l => _loads[l])
                     .Where(c => c.Enabled)
                     .Sum(c => c.DesiredPower);
@@ -125,14 +125,14 @@ namespace Pow3r
                     var rem = subNet.RemainingDemand;
                     var ratio = rem / totalDemand;
 
-                    subNet.MetDemand += ratio * power;
+                    subNet.LocalDemandMet += ratio * power;
                 }
             }
 
             // Distribute power across loads in networks.
             foreach (var network in _networks.Values)
             {
-                if (network.MetDemand == 0)
+                if (network.LocalDemandMet == 0)
                     continue;
 
                 foreach (var loadId in network.Loads)
@@ -141,8 +141,8 @@ namespace Pow3r
                     if (!load.Enabled)
                         continue;
 
-                    var ratio = load.DesiredPower / network.DemandTotal;
-                    load.ReceivingPower = ratio * network.MetDemand;
+                    var ratio = load.DesiredPower / network.LocalDemandTotal;
+                    load.ReceivingPower = ratio * network.LocalDemandMet;
                 }
             }
 
@@ -220,7 +220,7 @@ namespace Pow3r
             ref float totalDemand)
         {
             networks.Add(network);
-            totalDemand += network.DemandTotal - network.MetDemand;
+            totalDemand += network.LocalDemandTotal - network.LocalDemandMet;
 
             foreach (var batteryId in network.BatteriesLoading)
             {

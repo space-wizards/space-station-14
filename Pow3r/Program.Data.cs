@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -129,6 +130,7 @@ namespace Pow3r
             public bool Enabled;
             public float Capacity;
             public float MaxChargeRate;
+            public float MaxThroughput; // 0 = infinite cuz imgui
             public float MaxSupply;
             public float SupplyRampTolerance;
             public float SupplyRampRate;
@@ -152,6 +154,7 @@ namespace Pow3r
             }
         }
 
+        [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
         private sealed class Network
         {
             public readonly NodeId Id;
@@ -167,11 +170,16 @@ namespace Pow3r
             public List<NodeId> BatteriesSupplying = new();
 
             // Calculation parameters
-            public float DemandTotal;
-            public float MetDemand;
-            public float AvailableSupplyTotal;
-            public float TheoreticalSupplyTotal;
-            public float RemainingDemand => DemandTotal - MetDemand;
+            [JsonIgnore] public float LocalDemandTotal;
+            [JsonIgnore] public float LocalDemandMet;
+            [JsonIgnore] public float GroupDemandTotal;
+            [JsonIgnore] public float GroupDemandMet;
+
+            // Supply available this tick.
+            [JsonIgnore] public float AvailableSupplyTotal;
+            // Max theoretical supply assuming max ramp.
+            [JsonIgnore] public float TheoreticalSupplyTotal;
+            public float RemainingDemand => LocalDemandTotal - LocalDemandMet;
 
             [JsonIgnore] public Vector2 CurrentWindowPos;
 
