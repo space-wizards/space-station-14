@@ -1293,3 +1293,8 @@ Entries:
   - {message: Interaction outlines removed from full-tile objects like walls, type: Tweak}
   id: 228
   time: '2021-06-05T18:19:06.0000000+00:00'
+- author: SethLafuente
+  changes:
+  - {message: Synaptizine damage per unit nerfed from 15 to 6, type: Tweak}
+  id: 229
+  time: '2021-06-06T18:14:46.0000000+00:00'
