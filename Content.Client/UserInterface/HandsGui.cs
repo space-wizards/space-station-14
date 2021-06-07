@@ -39,9 +39,9 @@ namespace Content.Client.UserInterface
 
         private string? ActiveHand { get; set; }
 
-        public Action<HandClickEventArgs>? HandClick;
+        public Action<HandClickEventArgs>? HandClick; //TODO: Move to Eventbus
 
-        public Action<HandActivateEventArgs>? HandActivate;
+        public Action<HandActivateEventArgs>? HandActivate; //TODO: Move to Eventbus
 
         public HandsGui()
         {
