@@ -340,22 +340,19 @@ entities:
     parent: 853
     type: Transform
 - uid: 32
-  type: LowWall
+  type: WallReinforced
   components:
-  - pos: 14.5,-1.5
+  - pos: 13.5,2.5
     parent: 853
     type: Transform
 - uid: 33
-  type: DisposalTrunk
+  type: LargeBeaker
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,-2.5
+  - pos: 17.923235,1.6235776
     parent: 853
     type: Transform
-  - containers:
-      DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 34
   type: SuspicionGrenadesSpawner
   components:
@@ -611,6 +608,8 @@ entities:
 - uid: 68
   type: VendingMachineCoffee
   components:
+  - name: Hot drinks machine
+    type: MetaData
   - pos: -11.5,-17.5
     parent: 853
     type: Transform
@@ -1228,9 +1227,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 148
-  type: WallReinforced
+  type: TableReinforcedGlass
   components:
-  - pos: 15.5,-3.5
+  - pos: 14.5,-2.5
     parent: 853
     type: Transform
 - uid: 149
@@ -1301,50 +1300,45 @@ entities:
     parent: 853
     type: Transform
 - uid: 157
-  type: LargeBeaker
+  type: TableReinforcedGlass
   components:
-  - pos: 18.611881,1.2455455
+  - pos: 14.5,-1.5
     parent: 853
     type: Transform
 - uid: 158
-  type: Beaker
+  type: PottedPlantRandom
   components:
-  - pos: 18.361881,1.6674205
+  - pos: 12.5,1.485029
     parent: 853
     type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 159
-  type: DisposalBend
+  type: WallReinforced
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 17.5,-0.5
+  - pos: 13.5,1.5
     parent: 853
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 160
-  type: DisposalBend
+  type: LargeBeaker
   components:
-  - rot: 4.71238902409608 rad
-    pos: 17.5,-1.5
+  - pos: 17.454485,1.6235776
     parent: 853
     type: Transform
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 161
-  type: DisposalPipe
+  type: ApcExtensionCable
   components:
-  - rot: 1.5707963705062866 rad
+  - rot: -1.5707963267948966 rad
     pos: 16.5,-1.5
     parent: 853
     type: Transform
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 162
   type: TwoWayLever
   components:
@@ -1916,25 +1910,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 215
-  type: DisposalPipe
+  type: DisposalTrunk
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 14.5,-1.5
+  - pos: 14.5,1.5
     parent: 853
     type: Transform
   - containers:
-      DisposalTransit: !type:Container
+      DisposalEntry: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 216
-  type: DisposalPipe
+  type: DisposalUnit
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 15.5,-1.5
+  - pos: 14.5,1.5
     parent: 853
     type: Transform
   - containers:
-      DisposalTransit: !type:Container
+      DisposalUnit: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 217
@@ -2839,28 +2831,36 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 300
+  type: DisposalPipe
+  components:
+  - pos: 14.5,0.5
+    parent: 853
+    type: Transform
+  - containers:
+      DisposalTransit: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 301
+  type: DisposalJunctionFlipped
+  components:
+  - pos: 12.5,-0.5
+    parent: 853
+    type: Transform
+  - containers:
+      DisposalJunction: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 302
   type: DisposalBend
   components:
-  - rot: 3.141592653589793 rad
-    pos: 12.5,-0.5
+  - rot: -1.5707963267948966 rad
+    pos: 14.5,-0.5
     parent: 853
     type: Transform
   - containers:
       DisposalBend: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 301
-  type: LowWall
-  components:
-  - pos: 14.5,-0.5
-    parent: 853
-    type: Transform
-- uid: 302
-  type: LowWall
-  components:
-  - pos: 14.5,0.5
-    parent: 853
-    type: Transform
 - uid: 303
   type: Window
   components:
@@ -6896,13 +6896,14 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 746
-  type: DisposalBend
+  type: DisposalPipe
   components:
-  - pos: 13.5,-0.5
+  - rot: -1.5707963267948966 rad
+    pos: 13.5,-0.5
     parent: 853
     type: Transform
   - containers:
-      DisposalBend: !type:Container
+      DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 747
@@ -6990,17 +6991,21 @@ entities:
 - uid: 758
   type: VendingMachineCigs
   components:
+  - name: Cigarette machine
+    type: MetaData
   - pos: 12.5,7.5
     parent: 853
     type: Transform
 - uid: 759
-  type: PottedPlantRandom
+  type: DisposalPipe
   components:
-  - pos: 13.5,1.485029
+  - rot: 3.141592653589793 rad
+    pos: 12.5,-1.5
     parent: 853
     type: Transform
   - containers:
-      stash: !type:ContainerSlot {}
+      DisposalTransit: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 760
   type: LockerEmergencyFilledRandom
@@ -12245,6 +12250,8 @@ entities:
 - uid: 874
   type: VendingMachineCigs
   components:
+  - name: Cigarette machine
+    type: MetaData
   - pos: -7.5,1.5
     parent: 853
     type: Transform
@@ -13046,6 +13053,8 @@ entities:
 - uid: 985
   type: VendingMachineCoffee
   components:
+  - name: Hot drinks machine
+    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,23.5
     parent: 853
@@ -13105,6 +13114,8 @@ entities:
 - uid: 992
   type: VendingMachineDinnerware
   components:
+  - name: Dinnerware
+    type: MetaData
   - pos: -13.5,1.5
     parent: 853
     type: Transform
@@ -13282,15 +13293,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1013
-  type: ApcExtensionCable
+  type: DisposalPipe
   components:
-  - pos: 16.5,-1.5
+  - rot: 3.141592653589793 rad
+    pos: 12.5,-2.5
     parent: 853
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - containers:
+      DisposalTransit: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1014
   type: WallReinforced
   components:
@@ -14049,8 +14061,8 @@ entities:
 - uid: 1104
   type: DisposalTrunk
   components:
-  - rot: 4.71238902409608 rad
-    pos: 18.5,-0.5
+  - rot: 3.141592653589793 rad
+    pos: 12.5,-3.5
     parent: 853
     type: Transform
   - containers:
@@ -14060,8 +14072,8 @@ entities:
 - uid: 1105
   type: DisposalUnit
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 18.5,-0.5
+  - rot: 3.141592653589793 rad
+    pos: 12.5,-3.5
     parent: 853
     type: Transform
   - containers:
@@ -14588,15 +14600,16 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1168
-  type: WallSolid
+  type: WallReinforced
   components:
-  - pos: 13.5,2.5
+  - rot: 3.141592653589793 rad
+    pos: 13.5,-2.5
     parent: 853
     type: Transform
 - uid: 1169
-  type: ReinforcedWindow
+  type: LowWall
   components:
-  - pos: 14.5,-1.5
+  - pos: 13.5,0.5
     parent: 853
     type: Transform
 - uid: 1170
@@ -14620,16 +14633,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 1173
-  type: DisposalJunction
+  type: LowWall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,-1.5
+  - pos: 13.5,-0.5
     parent: 853
     type: Transform
-  - containers:
-      DisposalJunction: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1174
   type: WallReinforced
   components:
@@ -22171,16 +22179,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 2134
-  type: DisposalUnit
+  type: LowWall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,-2.5
+  - pos: 13.5,-1.5
     parent: 853
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 2135
   type: WallReinforced
   components:
@@ -22188,27 +22191,27 @@ entities:
     parent: 853
     type: Transform
 - uid: 2136
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
-  - pos: 14.5,-3.5
+  - pos: 13.5,0.5
     parent: 853
     type: Transform
 - uid: 2137
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
-  - pos: 14.5,-2.5
+  - pos: 13.5,-0.5
     parent: 853
     type: Transform
 - uid: 2138
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
-  - pos: 14.5,1.5
+  - pos: 13.5,-1.5
     parent: 853
     type: Transform
 - uid: 2139
-  type: ReinforcedWindow
+  type: TableReinforcedGlass
   components:
-  - pos: 14.5,-0.5
+  - pos: 17.5,1.5
     parent: 853
     type: Transform
 - uid: 2140
@@ -22247,9 +22250,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 2145
-  type: ReinforcedWindow
+  type: TableReinforcedGlass
   components:
-  - pos: 14.5,0.5
+  - pos: 14.5,-1.5
     parent: 853
     type: Transform
 - uid: 2146
@@ -23937,6 +23940,8 @@ entities:
 - uid: 2383
   type: VendingMachineCoffee
   components:
+  - name: Hot drinks machine
+    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-13.5
     parent: 853
@@ -47862,4 +47867,143 @@ entities:
   - pos: 50.5,-12.5
     parent: 853
     type: Transform
+- uid: 4904
+  type: TableReinforcedGlass
+  components:
+  - pos: 14.5,-0.5
+    parent: 853
+    type: Transform
+- uid: 4905
+  type: BoxSyringe
+  components:
+  - pos: 14.469343,-0.36327124
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4906
+  type: BoxSyringe
+  components:
+  - pos: 14.469343,-0.73827124
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4907
+  type: SheetPlasma1
+  components:
+  - pos: 14.484968,-1.2538962
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4908
+  type: BoxBeaker
+  components:
+  - pos: 18.53261,0.71732765
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4909
+  type: KitchenReagentGrinder
+  components:
+  - pos: 18.5,1.5
+    parent: 853
+    type: Transform
+  - containers:
+      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
+      ReagentGrinder-entityContainerContainer: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4910
+  type: TableReinforced
+  components:
+  - pos: 15.5,-3.5
+    parent: 853
+    type: Transform
+- uid: 4911
+  type: Poweredlight
+  components:
+  - pos: 15.496435,2.097836
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4912
+  type: ChairOfficeDark
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 17.5,0.5
+    parent: 853
+    type: Transform
+- uid: 4913
+  type: WallReinforced
+  components:
+  - pos: 14.5,-3.5
+    parent: 853
+    type: Transform
+- uid: 4914
+  type: ChairOfficeDark
+  components:
+  - pos: 15.5,-2.5
+    parent: 853
+    type: Transform
+- uid: 4915
+  type: SignChem
+  components:
+  - pos: 18.51248,-3.6306343
+    parent: 853
+    type: Transform
+- uid: 4916
+  type: Firelock
+  components:
+  - pos: 15.5,-3.5
+    parent: 853
+    type: Transform
+- uid: 4917
+  type: SheetPlasma1
+  components:
+  - pos: 14.531843,-1.5507712
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4918
+  type: SheetPlasma1
+  components:
+  - pos: 14.578718,-1.8476462
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4919
+  type: Dropper
+  components:
+  - pos: 14.531843,-2.2695212
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4920
+  type: Dropper
+  components:
+  - pos: 14.531843,-2.5351462
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
