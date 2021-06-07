@@ -83,7 +83,6 @@ namespace Content.Shared.Utility
             }
             if (_registrations != null)
             {
-                var compfact = IoCManager.Resolve<IComponentFactory>();
                 foreach (var reg in _registrations)
                 {
                     if (entity.TryGetComponent(reg.Type, out _))
