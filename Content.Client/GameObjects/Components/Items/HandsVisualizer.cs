@@ -59,7 +59,7 @@ namespace Content.Client.GameObjects.Components.Items
         }
     }
 
-    public enum HandsVisuals
+    public enum HandsVisuals : byte
     {
         VisualState
     }
