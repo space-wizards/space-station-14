@@ -276,11 +276,10 @@ namespace Content.Server.Mobs
             OwnedComponent?.InternalAssignMind(this);
 
             GhostComponent? ghostComponent = null;
-            VisitingEntity?.TryGetComponent(out ghostComponent);
 
-            if (ghostComponent == null || // visiting entity is not a Ghost
-                (ghostComponent != null && !ghostComponent.CanReturnToBody) || // it is a ghost, but cannot return to body anyway, so it's okay
-                ghostCheckOverride) // to force mind transfer, for example from ControlMobVerb
+            if (ghostCheckOverride || // to force mind transfer, for example from ControlMobVerb
+                (VisitingEntity?.TryGetComponent(out ghostComponent) ?? false) || // visiting entity is not a Ghost
+                (ghostComponent != null && !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay                 
             {
                 VisitingEntity = null;
             }
