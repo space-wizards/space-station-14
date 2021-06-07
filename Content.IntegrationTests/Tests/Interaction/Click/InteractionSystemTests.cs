@@ -22,14 +22,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         {
             public EntityEventHandler<ClickAttackEvent> ClickAttackEvent;
             public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
-            public EntityEventHandler<AttackHandEvent> InteractHandEvent;
+            public EntityEventHandler<InteractHandEvent> InteractHandEvent;
 
             public override void Initialize()
             {
                 base.Initialize();
                 SubscribeLocalEvent<ClickAttackEvent>((e) => ClickAttackEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
-                SubscribeLocalEvent<AttackHandEvent>((e) => InteractHandEvent?.Invoke(e));
+                SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
             }
         }
 

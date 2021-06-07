@@ -47862,4 +47862,395 @@ entities:
   - pos: 50.5,-12.5
     parent: 853
     type: Transform
+- uid: 4904
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -34.5,-2.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4905
+    type: ContainerContainer
+- uid: 4905
+  type: FireExtinguisher
+  components:
+  - parent: 4904
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4906
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -30.5,10.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4907
+    type: ContainerContainer
+- uid: 4907
+  type: FireExtinguisher
+  components:
+  - parent: 4906
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4908
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -18.5,8.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4909
+    type: ContainerContainer
+- uid: 4909
+  type: FireExtinguisher
+  components:
+  - parent: 4908
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4910
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -15.5,-0.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4911
+    type: ContainerContainer
+- uid: 4911
+  type: FireExtinguisher
+  components:
+  - parent: 4910
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4912
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 1.5,-3.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4913
+    type: ContainerContainer
+- uid: 4913
+  type: FireExtinguisher
+  components:
+  - parent: 4912
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4914
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 15.5,-3.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4915
+    type: ContainerContainer
+- uid: 4915
+  type: FireExtinguisher
+  components:
+  - parent: 4914
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4916
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 16.5,-14.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4917
+    type: ContainerContainer
+- uid: 4917
+  type: FireExtinguisher
+  components:
+  - parent: 4916
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4918
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 17.5,12.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4919
+    type: ContainerContainer
+- uid: 4919
+  type: FireExtinguisher
+  components:
+  - parent: 4918
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4920
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 37.5,8.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4921
+    type: ContainerContainer
+- uid: 4921
+  type: FireExtinguisher
+  components:
+  - parent: 4920
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4922
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 29.5,11.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4923
+    type: ContainerContainer
+- uid: 4923
+  type: FireExtinguisher
+  components:
+  - parent: 4922
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4924
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 36.5,0.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4925
+    type: ContainerContainer
+- uid: 4925
+  type: FireExtinguisher
+  components:
+  - parent: 4924
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4926
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 46.5,-11.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4927
+    type: ContainerContainer
+- uid: 4927
+  type: FireExtinguisher
+  components:
+  - parent: 4926
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4928
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 52.5,-11.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4929
+    type: ContainerContainer
+- uid: 4929
+  type: FireExtinguisher
+  components:
+  - parent: 4928
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4930
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -6.5,-18.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4931
+    type: ContainerContainer
+- uid: 4931
+  type: FireExtinguisher
+  components:
+  - parent: 4930
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4932
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -6.5,-13.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4933
+    type: ContainerContainer
+- uid: 4933
+  type: FireExtinguisher
+  components:
+  - parent: 4932
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4934
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -26.5,-1.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4935
+    type: ContainerContainer
+- uid: 4935
+  type: FireExtinguisher
+  components:
+  - parent: 4934
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4936
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -26.5,-4.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4937
+    type: ContainerContainer
+- uid: 4937
+  type: FireExtinguisher
+  components:
+  - parent: 4936
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4938
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -10.5,13.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4939
+    type: ContainerContainer
+- uid: 4939
+  type: FireExtinguisher
+  components:
+  - parent: 4938
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4940
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -6.5,18.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4941
+    type: ContainerContainer
+- uid: 4941
+  type: FireExtinguisher
+  components:
+  - parent: 4940
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4942
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,9.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4943
+    type: ContainerContainer
+- uid: 4943
+  type: FireExtinguisher
+  components:
+  - parent: 4942
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4944
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,18.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4945
+    type: ContainerContainer
+- uid: 4945
+  type: FireExtinguisher
+  components:
+  - parent: 4944
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4946
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 5.5,24.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4947
+    type: ContainerContainer
+- uid: 4947
+  type: FireExtinguisher
+  components:
+  - parent: 4946
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4948
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 1.5,26.5
+    parent: 853
+    type: Transform
+  - containers:
+      item_cabinet: !type:ContainerSlot
+        ent: 4949
+    type: ContainerContainer
+- uid: 4949
+  type: FireExtinguisher
+  components:
+  - parent: 4948
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...

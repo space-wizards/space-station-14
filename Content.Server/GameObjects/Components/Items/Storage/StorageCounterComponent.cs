@@ -25,6 +25,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     public class StorageCounterComponent : Component, ISerializationHooks
     {
+        // TODO Convert to EntityWhitelist
         [DataField("countTag")]
         private string? _countTag;
 

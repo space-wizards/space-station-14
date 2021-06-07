@@ -478,20 +478,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// </summary>
         public void Interaction(IEntity user, IEntity attacked)
         {
-            var message = new AttackHandEvent(user, attacked);
+            var message = new InteractHandEvent(user, attacked);
             RaiseLocalEvent(attacked.Uid, message);
             if (message.Handled)
                 return;
 
-            var attackHandEventArgs = new InteractHandEventArgs(user, attacked);
+            var interactHandEventArgs = new InteractHandEventArgs(user, attacked);
 
-            // all attackHands should only fire when in range / unobstructed
-            if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            // all interactHands should only fire when in range / unobstructed
+            if (interactHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
-                var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
-                foreach (var attackHand in attackHands)
+                var interactHands = attacked.GetAllComponents<IInteractHand>().ToList();
+                foreach (var interactHand in interactHands)
                 {
-                    if (attackHand.InteractHand(attackHandEventArgs))
+                    if (interactHand.InteractHand(interactHandEventArgs))
                     {
                         // If an InteractHand returns a status completion we finish our attack
                         return;
