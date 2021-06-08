@@ -1303,3 +1303,8 @@ Entries:
   - {message: Adds more starting equipment to Chemistry, type: Tweak}
   id: 230
   time: '2021-06-07T01:35:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Examining dead/catatonic people looks normal again, type: Fix}
+  id: 231
+  time: '2021-06-08T20:59:32.0000000+00:00'
