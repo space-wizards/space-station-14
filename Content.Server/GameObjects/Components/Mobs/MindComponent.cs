@@ -137,8 +137,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!HasMind)
             {
                 var aliveText =
-                    $"[color=red]{Loc.GetString("{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner)}[/color]";
-                var deadText = $"[color=purple]{Loc.GetString("{0:Their} soul has departed.", Owner)}[/color]";
+                    $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]";
+                var deadText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
 
                 message.AddMarkup(dead ? deadText : aliveText);
             }
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 if (dead) return;
 
                 var text =
-                    $"[color=yellow]{Loc.GetString("{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner)}[/color]";
+                    $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]";
 
                 message.AddMarkup(text);
             }
