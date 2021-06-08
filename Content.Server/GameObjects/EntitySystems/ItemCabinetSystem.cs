@@ -44,6 +44,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if(comp.SpawnPrototype != null)
                 comp.ItemContainer.Insert(EntityManager.SpawnEntity(comp.SpawnPrototype, owner.Transform.Coordinates));
+
+            UpdateVisuals(comp);
         }
 
         private void OnInteractUsing(EntityUid uid, ItemCabinetComponent comp, InteractUsingEvent args)
