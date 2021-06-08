@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -20,6 +17,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class HandsSystem : EntitySystem
     {
-
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
         /// <inheritdoc />
@@ -45,7 +44,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
-                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))   
+                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
                 .Register<HandsSystem>();
         }
 
@@ -54,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var inhand in component.GetAllHeldItems())
             {
                 args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
-            }   
+            }
         }
 
         /// <inheritdoc />
@@ -160,7 +159,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var playerEnt = ((IPlayerSession?)session)?.AttachedEntity;
+            var playerEnt = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (playerEnt == null || !playerEnt.IsValid())
                 return false;
@@ -186,7 +185,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                var splitStack = new StackSplitEvent() {Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates};
+                var splitStack = new StackSplitEvent() { Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates };
                 RaiseLocalEvent(throwEnt.Uid, splitStack);
 
                 if (splitStack.Result == null)
