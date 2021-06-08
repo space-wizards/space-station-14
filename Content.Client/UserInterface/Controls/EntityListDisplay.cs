@@ -172,21 +172,16 @@ namespace Content.Client.UserInterface.Controls
              *
              */
             var scroll = GetScrollValue();
-            var start = (int) ((scroll.Y + separation) / (_itemHeight + separation));
-            if (start != _topIndex)
-            {
-                _topIndex = start;
+            var oldTopIndex = _topIndex;
+            _topIndex = (int) ((scroll.Y + separation) / (_itemHeight + separation));
+            if (_topIndex != oldTopIndex)
                 _updateChildren = true;
-            }
 
-            var end = (int) Math.Ceiling((scroll.Y + Height) / (_itemHeight + separation));
-            if (end > _count)
-                end = _count;
-            if (end != _bottomIndex)
-            {
-                _bottomIndex = end;
+            var oldBottomIndex = _bottomIndex;
+            _bottomIndex = (int) Math.Ceiling((scroll.Y + Height) / (_itemHeight + separation));
+            _bottomIndex = Math.Min(_bottomIndex, _count);
+            if (_bottomIndex != oldBottomIndex)
                 _updateChildren = true;
-            }
 
             // When scrolling only rebuild visible list when a new item should be visible
             if (_updateChildren)
@@ -202,7 +197,7 @@ namespace Content.Client.UserInterface.Controls
 
                 if (_entityUids != null)
                 {
-                    for (var i = start; i < end; i++)
+                    for (var i = _topIndex; i < _bottomIndex; i++)
                     {
                         var entity = _entityUids[i];
 
