@@ -48,14 +48,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Register<HandsSystem>();
         }
 
-        private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
-        {
-            foreach (var inhand in component.GetAllHeldItems())
-            {
-                args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
-            }
-        }
-
         /// <inheritdoc />
         public override void Shutdown()
         {
@@ -69,6 +61,15 @@ namespace Content.Server.GameObjects.EntitySystems
             if (args.Container.Owner.TryGetComponent(out IHandsComponent? handsComponent))
             {
                 handsComponent.HandleSlotModifiedMaybe(args);
+            }
+        }
+
+        //TODO: Actually shows all items/clothing/etc.
+        private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
+        {
+            foreach (var inhand in component.GetAllHeldItems())
+            {
+                args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
             }
         }
 
