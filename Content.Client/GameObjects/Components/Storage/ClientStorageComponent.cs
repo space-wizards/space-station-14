@@ -15,6 +15,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -209,7 +210,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     new Label
                     {
                         Align = Label.AlignMode.Right,
-                        Text = item?.Size.ToString() ?? "None"
+                        Text = item?.Size.ToString() ?? Loc.GetString("no-item-size")
                     }
                 }
             });
@@ -232,7 +233,7 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 StorageEntity = storageEntity;
                 SetSize = (200, 320);
-                Title = "Storage Item";
+                Title = Loc.GetString("comp-storage-window-title");
                 RectClipContent = true;
 
                 var containerButton = new ContainerButton
@@ -265,7 +266,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 containerButton.AddChild(_vBox);
                 _information = new Label
                 {
-                    Text = "Items: 0 Volume: 0/0 Stuff",
+                    Text = Loc.GetString("comp-storage-window-volume", ("itemCount", 0), ("usedVolume", 0), ("maxVolume", 0)),
                     VerticalAlignment = VAlignment.Center
                 };
                 _vBox.AddChild(_information);
@@ -302,12 +303,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
-                    _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", entityUids.Count,
-                        StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
+                    _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", entityUids.Count),
+                        ("usedVolume", StorageEntity.StorageSizeUsed), ("maxVolume", StorageEntity.StorageCapacityMax));
                 }
                 else
                 {
-                    _information.Text = String.Format("Items: {0}", entityUids.Count);
+                    _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", entityUids.Count));
                 }
             }
         }
