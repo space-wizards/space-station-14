@@ -77,13 +77,31 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private bool _connectionsEnabled = true;
 
         /// <summary>
+        ///     Whether to ignore the pipenet and return the environment's air.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool EnvironmentalAir { get; set; } = false;
+
+        /// <summary>
         ///     The gases in this pipe.
         /// </summary>
         [ViewVariables]
         public GasMixture Air
         {
-            get => _pipeNet.Air;
+            get => !EnvironmentalAir ? _pipeNet.Air : Owner.Transform.Coordinates.GetTileAir() ?? GasMixture.SpaceGas;
             set => _pipeNet.Air = value;
+        }
+
+        public void AssumeAir(GasMixture giver)
+        {
+            if (EnvironmentalAir)
+            {
+                var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
+                tileAtmosphere?.AssumeAir(giver);
+                return;
+            }
+
+            _pipeNet.Air.Merge(giver);
         }
 
         [ViewVariables]

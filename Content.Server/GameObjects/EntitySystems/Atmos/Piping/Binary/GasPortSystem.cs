@@ -5,7 +5,7 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
+namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
 {
     [UsedImplicitly]
     public class GasPortSystem : EntitySystem
@@ -34,11 +34,11 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
             port.Buffer.Merge(connected.Air);
 
             pipe.Air.Clear();
-            pipe.Air.Merge(port.Buffer);
+            pipe.AssumeAir(port.Buffer);
             pipe.Air.Multiply(pipe.Air.Volume / port.Buffer.Volume);
 
             connected.Air.Clear();
-            connected.Air.Merge(port.Buffer);
+            connected.AssumeAir(port.Buffer);
             connected.Air.Multiply(connected.Air.Volume / port.Buffer.Volume);
         }
     }

@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
                 var transferMoles = pressureDelta * outlet.Air.Volume / (inlet.Air.Temperature * Atmospherics.R);
 
                 // Actually transfer the gas.
-                outlet.Air.Merge(inlet.Air.Remove(transferMoles));
+                outlet.AssumeAir(inlet.Air.Remove(transferMoles));
             }
         }
     }

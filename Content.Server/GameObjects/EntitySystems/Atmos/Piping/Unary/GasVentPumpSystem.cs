@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
                 if (molesDelta > 0)
                 {
                     var removed = environment.Air.Remove(molesDelta);
-                    pipe.Air.Merge(removed);
+                    pipe.AssumeAir(removed);
                     environment.Invalidate();
                 }
             }

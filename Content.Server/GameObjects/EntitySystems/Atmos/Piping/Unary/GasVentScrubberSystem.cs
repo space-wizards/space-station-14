@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
 
                 var removed = tile.Air.Remove(transferMoles);
 
-                outlet.Air.Merge(removed);
+                outlet.AssumeAir(removed);
                 tile.Invalidate();
             }
         }

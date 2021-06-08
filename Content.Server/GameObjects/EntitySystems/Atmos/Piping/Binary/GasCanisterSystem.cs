@@ -61,12 +61,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
 
             switch (msg.Message)
             {
-                case CanisterUiButtonPressedMessage pressed:
-                    break;
-                case CanisterLabelChangedMessage labelChange:
-                    break;
-                case CanisterReleasePressureButtonPressedMessage releasePressed:
-                    break;
+
             }
         }
 

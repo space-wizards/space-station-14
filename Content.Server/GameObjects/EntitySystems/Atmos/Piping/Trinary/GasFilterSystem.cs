@@ -50,11 +50,11 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Trinary
                 filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
 
-                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode.Air : inletNode.Air;
-                target.Merge(filteredOut);
+                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
+                target.AssumeAir(filteredOut);
             }
 
-            outletNode.Air.Merge(removed);
+            outletNode.AssumeAir(removed);
         }
     }
 }

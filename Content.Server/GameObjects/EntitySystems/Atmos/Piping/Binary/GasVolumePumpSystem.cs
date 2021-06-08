@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
                 }
             }
 
-            outlet.Air.Merge(removed);
+            outlet.AssumeAir(removed);
         }
     }
 }

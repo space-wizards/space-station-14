@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Unary
 
             // Create a pipenet if we don't have one already.
             tankNode.TryAssignGroupIfNeeded();
-            tankNode.Air.Merge(tank.InitialMixture);
+            tankNode.AssumeAir(tank.InitialMixture);
             tankNode.Air.Temperature = tank.InitialMixture.Temperature;
         }
     }

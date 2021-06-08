@@ -42,8 +42,6 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 return;
             }
-
-            _window?.UpdateState(cast);
         }
 
         protected override void Dispose(bool disposing)

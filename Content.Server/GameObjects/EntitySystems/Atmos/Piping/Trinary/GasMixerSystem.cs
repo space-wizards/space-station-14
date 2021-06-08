@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Trinary
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
         }
 
-                private void OnMixerUpdated(EntityUid uid, GasMixerComponent mixer, AtmosDeviceUpdateEvent args)
+        private void OnMixerUpdated(EntityUid uid, GasMixerComponent mixer, AtmosDeviceUpdateEvent args)
         {
             // TODO ATMOS: Cache total moles since it's expensive.
 
@@ -82,13 +82,13 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Trinary
             if (transferMolesOne > 0f)
             {
                 var removed = inletOne.Air.Remove(transferMolesOne);
-                outlet.Air.Merge(removed);
+                outlet.AssumeAir(removed);
             }
 
             if (transferMolesTwo > 0f)
             {
                 var removed = inletTwo.Air.Remove(transferMolesTwo);
-                outlet.Air.Merge(removed);
+                outlet.AssumeAir(removed);
             }
         }
     }
