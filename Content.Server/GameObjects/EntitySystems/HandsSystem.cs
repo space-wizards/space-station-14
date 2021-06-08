@@ -37,6 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands))
@@ -44,17 +45,22 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
-                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
+                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))   
                 .Register<HandsSystem>();
+        }
+
+        private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
+        {
+            foreach (var inhand in component.GetAllHeldItems())
+            {
+                args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
+            }   
         }
 
         /// <inheritdoc />
         public override void Shutdown()
         {
             base.Shutdown();
-
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
 
             CommandBinds.Unregister<HandsSystem>();
         }
