@@ -15,6 +15,30 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
 
+        private bool _ghostVisibility;
+
+        private bool GhostVisibility
+        {
+            get => _ghostVisibility;
+            set
+            {
+                if (_ghostVisibility == value)
+                {
+                    return;
+                }
+
+                _ghostVisibility = value;
+
+                foreach (var ghost in ComponentManager.GetAllComponents(typeof(GhostComponent), true))
+                {
+                    if (ghost.Owner.TryGetComponent(out SpriteComponent? sprite))
+                    {
+                        sprite.Visible = value;
+                    }
+                }
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,6 +48,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
+
+            SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
@@ -44,7 +70,7 @@ namespace Content.Client.GameObjects.EntitySystems
             // PlayerDetachedMsg might not fire due to deletion order so...
             if (component.IsAttached)
             {
-                SetGhostVisibility(false);
+                GhostVisibility = false;
             }
         }
 
@@ -61,25 +87,34 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _gameHud.HandsContainer.AddChild(component.Gui);
-            SetGhostVisibility(true);
+            GhostVisibility = true;
             component.IsAttached = true;
         }
 
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
         {
             component.Gui?.Parent?.RemoveChild(component.Gui);
-            SetGhostVisibility(false);
+            GhostVisibility = false;
             component.IsAttached = false;
         }
 
-        private void SetGhostVisibility(bool visibility)
+        private void OnGhostWarpsResponse(GhostWarpsResponseEvent msg)
         {
-            foreach (var ghost in ComponentManager.GetAllComponents(typeof(GhostComponent), true))
+            var entity = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (entity == null ||
+                !entity.TryGetComponent(out GhostComponent? ghost))
             {
-                if (ghost.Owner.TryGetComponent(out SpriteComponent? sprite))
-                {
-                    sprite.Visible = visibility;
-                }
+                return;
+            }
+
+            var window = ghost.Gui?.TargetWindow;
+
+            if (window != null)
+            {
+                window.Locations = msg.Locations;
+                window.Players = msg.Players;
+                window.Populate();
             }
         }
     }

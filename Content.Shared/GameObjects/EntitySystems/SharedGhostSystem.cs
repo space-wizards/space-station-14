@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -12,7 +13,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<SharedGhostComponent, GhostChangeCanReturnToBodyEvent>(OnGhostChangeCanReturnToBody);
-            SubscribeLocalEvent<SharedGhostComponent, GhostAddWarpNameEvent>(OnGhostAddWarpName);
         }
 
         private void OnGhostChangeCanReturnToBody(EntityUid uid, SharedGhostComponent component, GhostChangeCanReturnToBodyEvent args)
@@ -24,14 +24,6 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             component.CanReturnToBody = args.CanReturnToBody;
             component.Dirty();
-        }
-
-        private void OnGhostAddWarpName(EntityUid uid, SharedGhostComponent component, GhostAddWarpNameEvent args)
-        {
-            if (component.LocationWarps.Add(component.Name))
-            {
-                component.Dirty();
-            }
         }
     }
 
@@ -47,19 +39,22 @@ namespace Content.Shared.GameObjects.EntitySystems
     }
 
     [Serializable, NetSerializable]
-    public class GhostAddWarpNameEvent : EntityEventArgs
+    public class GhostWarpsRequestEvent : EntityEventArgs
     {
-        public GhostAddWarpNameEvent(string warpName)
-        {
-            WarpName = warpName;
-        }
-
-        public string WarpName { get; }
     }
 
     [Serializable, NetSerializable]
-    public class GhostWarpsRequestEvent : EntityEventArgs
+    public class GhostWarpsResponseEvent : EntityEventArgs
     {
+        public GhostWarpsResponseEvent(List<string> locations, Dictionary<EntityUid, string> players)
+        {
+            Locations = locations;
+            Players = players;
+        }
+
+        public List<string> Locations { get; }
+
+        public Dictionary<EntityUid, string> Players { get; }
     }
 
     [Serializable, NetSerializable]

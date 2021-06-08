@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Observer;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Console;
@@ -79,6 +80,10 @@ namespace Content.Client.UserInterface
 
         private readonly VBoxContainer _buttonContainer;
 
+        public List<string> Locations { get; set; } = new();
+
+        public Dictionary<EntityUid, string> Players { get; set; } = new();
+
         public GhostTargetWindow(GhostComponent owner, IEntityNetworkManager netManager)
         {
             MinSize = SetSize = (300, 450);
@@ -113,7 +118,7 @@ namespace Content.Client.UserInterface
 
         private void AddButtonPlayers()
         {
-            foreach (var (key, value) in _owner.PlayerWarps)
+            foreach (var (key, value) in Players)
             {
                 var currentButtonRef = new Button
                 {
@@ -138,7 +143,7 @@ namespace Content.Client.UserInterface
 
         private void AddButtonLocations()
         {
-            foreach (var name in _owner.LocationWarps)
+            foreach (var name in Locations)
             {
                 var currentButtonRef = new Button
                 {

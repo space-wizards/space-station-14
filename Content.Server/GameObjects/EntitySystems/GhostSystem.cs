@@ -26,7 +26,6 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GhostComponent, ComponentInit>(OnGhostInit);
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
 
@@ -39,13 +38,6 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToLocationRequestEvent>(OnGhostWarpToLocationRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
-        }
-
-        private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
-        {
-            component.LocationWarps = GetLocationNames().ToHashSet();
-            component.PlayerWarps = GetPlayerWarps(uid);
-            component.Dirty();
         }
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -108,15 +100,14 @@ namespace Content.Server.GameObjects.EntitySystems
             var entity = args.SenderSession.AttachedEntity;
 
             if (entity == null ||
-                !entity.TryGetComponent(out GhostComponent? ghost))
+                !entity.HasComponent<GhostComponent>())
             {
                 Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
-            ghost.LocationWarps = GetLocationNames().ToHashSet();
-            ghost.PlayerWarps = GetPlayerWarps(entity.Uid);
-            ghost.Dirty();
+            var response = new GhostWarpsResponseEvent(GetLocationNames().ToList(), GetPlayerWarps(entity.Uid));
+            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
         }
 
         private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
