@@ -13,7 +13,6 @@
   - type: Tag
     tags:
     - Sheet
-    - Grindable
 
 - type: entity
   parent: SheetOtherBase
@@ -110,6 +109,9 @@
       reagents:
       - ReagentId: Plasma
         Quantity: 10
+  - type: Tag
+    tags:
+    - Grindable
 
 - type: entity
   parent: SheetOtherBase
