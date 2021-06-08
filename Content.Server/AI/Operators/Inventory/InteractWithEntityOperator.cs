@@ -40,7 +40,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             // Click on da thing
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.UseItemInHand(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
+            interactionSystem.AiUseInteraction(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
 
             return Outcome.Success;
         }

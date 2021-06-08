@@ -58,7 +58,7 @@ namespace Content.Server.AI.Operators.Inventory
             }
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.Interaction(_owner, _target);
+            interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }
     }

@@ -188,19 +188,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = origin.Transform.MapPosition;
-            var otherPosition = other.Transform.MapPosition;
             predicate ??= e => e == origin || e == other;
-
-            var inRange = InRangeUnobstructed(originPosition, otherPosition, range, collisionMask, predicate, ignoreInsideBlocker);
-
-            if (!inRange && popup)
-            {
-                var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(message);
-            }
-
-            return inRange;
+            return InRangeUnobstructed(origin, other.Transform.MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -244,19 +233,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = origin.Transform.MapPosition;
-            var otherPosition = other.Owner.Transform.MapPosition;
-            predicate ??= e => e == origin || e == other.Owner;
-
-            var inRange = InRangeUnobstructed(originPosition, otherPosition, range, collisionMask, predicate, ignoreInsideBlocker);
-
-            if (!inRange && popup)
-            {
-                var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(message);
-            }
-
-            return inRange;
+            return InRangeUnobstructed(origin, other.Owner, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -300,19 +277,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = origin.Transform.MapPosition;
-            var otherPosition = other.ToMap(EntityManager);
-            predicate ??= e => e == origin;
-
-            var inRange = InRangeUnobstructed(originPosition, otherPosition, range, collisionMask, predicate, ignoreInsideBlocker);
-
-            if (!inRange && popup)
-            {
-                var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(message);
-            }
-
-            return inRange;
+            return InRangeUnobstructed(origin, other.ToMap(EntityManager), range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -368,236 +333,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             return inRange;
-        }
-
-        /// <summary>
-        ///     Checks that the user and target of a
-        ///     <see cref="ITargetedInteractEventArgs"/> are within a certain
-        ///     distance without any entity that matches the collision mask
-        ///     obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the entity and component.
-        /// </summary>
-        /// <param name="args">The event args to use.</param>
-        /// <param name="range">
-        ///     Maximum distance between the two entity and set of map coordinates.
-        /// </param>
-        /// <param name="collisionMask">The mask to check for collisions.</param>
-        /// <param name="predicate">
-        ///     A predicate to check whether to ignore an entity or not.
-        ///     If it returns true, it will be ignored.
-        /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and both the user and target are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
-        /// <param name="popup">
-        ///     Whether or not to popup a feedback message on the user entity for
-        ///     it to see.
-        /// </param>
-        /// <returns>
-        ///     True if the two points are within a given range without being obstructed.
-        /// </returns>
-        public bool InRangeUnobstructed(
-            ITargetedInteractEventArgs args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var origin = args.User;
-            var other = args.Target;
-
-            return InRangeUnobstructed(origin, other, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-        }
-
-        /// <summary>
-        ///     Checks that the user of a <see cref="DragDropEvent"/> is within a
-        ///     certain distance of the target and dropped entities without any entity
-        ///     that matches the collision mask obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the entity and component.
-        /// </summary>
-        /// <param name="args">The event args to use.</param>
-        /// <param name="range">
-        ///     Maximum distance between the two entity and set of map coordinates.
-        /// </param>
-        /// <param name="collisionMask">The mask to check for collisions.</param>
-        /// <param name="predicate">
-        ///     A predicate to check whether to ignore an entity or not.
-        ///     If it returns true, it will be ignored.
-        /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and both the user and target are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
-        /// <param name="popup">
-        ///     Whether or not to popup a feedback message on the user entity for
-        ///     it to see.
-        /// </param>
-        /// <returns>
-        ///     True if the two points are within a given range without being obstructed.
-        /// </returns>
-        public bool InRangeUnobstructed(
-            DragDropEvent args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var dropped = args.Dragged;
-            var target = args.Target;
-
-            if (!InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker))
-            {
-                if (popup)
-                {
-                    var message = Loc.GetString("You can't reach there!");
-                    target.PopupMessage(user, message);
-                }
-
-                return false;
-            }
-
-            if (!InRangeUnobstructed(user, dropped, range, collisionMask, predicate, ignoreInsideBlocker))
-            {
-                if (popup)
-                {
-                    var message = Loc.GetString("You can't reach there!");
-                    dropped.PopupMessage(user, message);
-                }
-
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        ///     Checks that the user and target of a
-        ///     <see cref="AfterInteractEventArgs"/> are within a  certain distance
-        ///     without any entity that matches the collision mask obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the entity and component.
-        /// </summary>
-        /// <param name="args">The event args to use.</param>
-        /// <param name="range">
-        ///     Maximum distance between the two entity and set of map coordinates.
-        /// </param>
-        /// <param name="collisionMask">The mask to check for collisions.</param>
-        /// <param name="predicate">
-        ///     A predicate to check whether to ignore an entity or not.
-        ///     If it returns true, it will be ignored.
-        /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and both the user and target are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
-        /// <param name="popup">
-        ///     Whether or not to popup a feedback message on the user entity for
-        ///     it to see.
-        /// </param>
-        /// <returns>
-        ///     True if the two points are within a given range without being obstructed.
-        /// </returns>
-        public bool InRangeUnobstructed(
-            AfterInteractEventArgs args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var target = args.Target;
-            predicate ??= e => e == user;
-
-            MapCoordinates otherPosition;
-
-            if (target == null)
-            {
-                otherPosition = args.ClickLocation.ToMap(EntityManager);
-            }
-            else
-            {
-                otherPosition = target.Transform.MapPosition;
-                predicate += e => e == target;
-            }
-
-            return InRangeUnobstructed(user, otherPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-        }
-
-        /// <summary>
-        ///     Checks that the user and target of a
-        ///     <see cref="AfterInteractEvent"/> are within a  certain distance
-        ///     without any entity that matches the collision mask obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the entity and component.
-        /// </summary>
-        /// <param name="args">The event args to use.</param>
-        /// <param name="range">
-        ///     Maximum distance between the two entity and set of map coordinates.
-        /// </param>
-        /// <param name="collisionMask">The mask to check for collisions.</param>
-        /// <param name="predicate">
-        ///     A predicate to check whether to ignore an entity or not.
-        ///     If it returns true, it will be ignored.
-        /// </param>
-        /// <param name="ignoreInsideBlocker">
-        ///     If true and both the user and target are inside
-        ///     the obstruction, ignores the obstruction and considers the interaction
-        ///     unobstructed.
-        ///     Therefore, setting this to true makes this check more permissive,
-        ///     such as allowing an interaction to occur inside something impassable
-        ///     (like a wall). The default, false, makes the check more restrictive.
-        /// </param>
-        /// <param name="popup">
-        ///     Whether or not to popup a feedback message on the user entity for
-        ///     it to see.
-        /// </param>
-        /// <returns>
-        ///     True if the two points are within a given range without being obstructed.
-        /// </returns>
-        public bool InRangeUnobstructed(
-            AfterInteractEvent args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var target = args.Target;
-            predicate ??= e => e == user;
-
-            MapCoordinates otherPosition;
-
-            if (target == null)
-            {
-                otherPosition = args.ClickLocation.ToMap(EntityManager);
-            }
-            else
-            {
-                otherPosition = target.Transform.MapPosition;
-                predicate += e => e == target;
-            }
-
-            return InRangeUnobstructed(user, otherPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
     }
 }
