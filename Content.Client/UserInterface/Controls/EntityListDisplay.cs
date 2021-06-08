@@ -211,7 +211,6 @@ namespace Content.Client.UserInterface.Controls
 
                 _vScrollBar.SetPositionLast();
             }
-
             #endregion
 
             #region Layout Children
@@ -257,10 +256,6 @@ namespace Content.Client.UserInterface.Controls
 
             _totalHeight = childSize.Y * _count + ActualSeparation * (_count - 1);
 
-            // Unlike WPF/Avalonia we report ZERO here instead of available size.
-            // This is to fix a bunch of jank with e.g. BoxContainer.
-            // Tbh this might be a mistake.
-            // DockPanel when.
             return new Vector2(childSize.X, 0f);
         }
 
