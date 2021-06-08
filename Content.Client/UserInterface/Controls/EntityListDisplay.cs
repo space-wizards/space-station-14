@@ -261,8 +261,7 @@ namespace Content.Client.UserInterface.Controls
             // This is to fix a bunch of jank with e.g. BoxContainer.
             // Tbh this might be a mistake.
             // DockPanel when.
-            //return Vector2.Zero;
-            return availableSize;
+            return new Vector2(childSize.X, 0f);
         }
 
         private void ScrollValueChanged(Robust.Client.UserInterface.Controls.Range _)
