@@ -29,27 +29,32 @@ namespace Content.Shared.Utility
         /// <summary>
         ///     Prototype IDs that are allowed in the whitelist.
         /// </summary>
-        [DataField("prototypes")] private readonly string[]? _prototypes = null;
+        [DataField("prototypes")] public string[]? Prototypes = null;
 
         /// <summary>
         ///     Component names that are allowed in the whitelist.
         /// </summary>
-        [DataField("components")] private readonly string[]? _components = null;
+        [DataField("components")] public string[]? Components = null;
 
         private List<IComponentRegistration>? _registrations = null;
 
         /// <summary>
         ///     Tags that are allowed in the whitelist.
         /// </summary>
-        [DataField("tags")] private readonly string[]? _tags = null;
+        [DataField("tags")] public string[]? Tags = null;
 
         void ISerializationHooks.AfterDeserialization()
         {
-            if (_components == null) return;
+            UpdateRegistrations();
+        }
+
+        public void UpdateRegistrations()
+        {
+            if (Components == null) return;
 
             var compfact = IoCManager.Resolve<IComponentFactory>();
             _registrations = new List<IComponentRegistration>();
-            foreach (var name in _components)
+            foreach (var name in Components)
             {
                 compfact.TryGetRegistration(name, out var registration);
                 if (registration == null)
@@ -67,15 +72,15 @@ namespace Content.Shared.Utility
         /// </summary>
         public bool IsValid(IEntity entity)
         {
-            if (_tags != null)
+            if (Tags != null)
             {
-                if (entity.HasAnyTag(_tags))
+                if (entity.HasAnyTag(Tags))
                         return true;
             }
 
-            if (_prototypes != null && entity.Prototype != null)
+            if (Prototypes != null && entity.Prototype != null)
             {
-                foreach (var id in _prototypes)
+                foreach (var id in Prototypes)
                 {
                     if (entity.Prototype.ID == id)
                         return true;

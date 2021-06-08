@@ -11,7 +11,7 @@
     - type: ItemCabinet
       whitelist:
         components:
-          - FireExtinguisher
+        - FireExtinguisher
     - type: Appearance
       visuals:
         - type: ItemCabinetVisualizer
