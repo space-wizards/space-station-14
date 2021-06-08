@@ -9,13 +9,12 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Utility
 {
     /// <summary>
-    ///     Used to determine whether an entity fits a certain whitelist
+    ///     Used to determine whether an entity fits a certain whitelist.
+    ///     Does not whitelist by prototypes, since that is undesirable; you're better off just adding a tag to all
+    ///     entity prototypes that need to be whitelisted, and checking for that.
     /// </summary>
     /// <code>
     /// whitelist:
-    ///   prototypes:
-    ///     - FireExtinguisher
-    ///     - DisgustingSweptSoup
     ///   tags:
     ///     - Cigarette
     ///     - FirelockElectronics
@@ -26,11 +25,6 @@ namespace Content.Shared.Utility
     [DataDefinition]
     public class EntityWhitelist : ISerializationHooks
     {
-        /// <summary>
-        ///     Prototype IDs that are allowed in the whitelist.
-        /// </summary>
-        [DataField("prototypes")] public string[]? Prototypes = null;
-
         /// <summary>
         ///     Component names that are allowed in the whitelist.
         /// </summary>
@@ -56,8 +50,7 @@ namespace Content.Shared.Utility
             _registrations = new List<IComponentRegistration>();
             foreach (var name in Components)
             {
-                compfact.TryGetRegistration(name, out var registration);
-                if (registration == null)
+                if (!compfact.TryGetRegistration(name, out var registration))
                 {
                     Logger.Warning($"Invalid component name {name} passed to EntityWhitelist!");
                     continue;
@@ -78,14 +71,6 @@ namespace Content.Shared.Utility
                         return true;
             }
 
-            if (Prototypes != null && entity.Prototype != null)
-            {
-                foreach (var id in Prototypes)
-                {
-                    if (entity.Prototype.ID == id)
-                        return true;
-                }
-            }
             if (_registrations != null)
             {
                 foreach (var reg in _registrations)

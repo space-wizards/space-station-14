@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 owner.EnsureContainer<ContainerSlot>("item_cabinet", out _);
 
             if(comp.SpawnPrototype != null)
-                comp.ItemContainer.Insert(owner.EntityManager.SpawnEntity(comp.SpawnPrototype, owner.Transform.Coordinates));
+                comp.ItemContainer.Insert(EntityManager.SpawnEntity(comp.SpawnPrototype, owner.Transform.Coordinates));
         }
 
         private void OnInteractUsing(EntityUid uid, ItemCabinetComponent comp, InteractUsingEvent args)
@@ -104,9 +104,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-            var handsComponent = args.User.GetComponent<HandsComponent>();
 
-            if (!handsComponent.Drop(args.Item, comp.ItemContainer))
+            if (!args.User.TryGetComponent<HandsComponent>(out var hands) || !hands.Drop(args.Item, comp.ItemContainer))
             {
                 return;
             }
@@ -123,9 +122,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             if (args.User.TryGetComponent(out HandsComponent? hands))
             {
-                comp.Owner.PopupMessage(args.User,
-                    Loc.GetString("comp-item-cabinet-successfully-taken", ("item", comp.ItemContainer.ContainedEntity) , ("cabinet", comp.Owner)));
-                hands.PutInHandOrDrop(comp.ItemContainer.ContainedEntity.GetComponent<ItemComponent>());
+
+                if (comp.ItemContainer.ContainedEntity.TryGetComponent<ItemComponent>(out var item))
+                {
+                    comp.Owner.PopupMessage(args.User,
+                        Loc.GetString("comp-item-cabinet-successfully-taken",
+                            ("item", comp.ItemContainer.ContainedEntity),
+                            ("cabinet", comp.Owner)));
+                    hands.PutInHandOrDrop(item);
+                }
             }
             else if (comp.ItemContainer.Remove(comp.ItemContainer.ContainedEntity))
             {
@@ -136,7 +141,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void UpdateVisuals(ItemCabinetComponent comp)
         {
-            if (comp.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (comp.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(ItemCabinetVisuals.IsOpen, comp.Opened);
                 appearance.SetData(ItemCabinetVisuals.ContainsItem, comp.ItemContainer.ContainedEntity != null);
@@ -145,7 +150,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void ClickLatchSound(ItemCabinetComponent comp)
         {
-            // Don't have original click, this sounds close
+            if (comp.DoorSound == null) return;
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DoorSound, comp.Owner, AudioHelpers.WithVariation(0.15f));
         }
     }

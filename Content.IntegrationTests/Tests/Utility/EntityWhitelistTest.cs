@@ -42,8 +42,6 @@ namespace Content.IntegrationTests.Tests.Utility
       - ValidTag
 
 - type: entity
-  id: InvalidPrototypeDummy
-- type: entity
   id: InvalidComponentDummy
   components:
   - type: {InvalidComponent}
@@ -54,8 +52,6 @@ namespace Content.IntegrationTests.Tests.Utility
     tags:
     - InvalidTag
 
-- type: entity
-  id: ValidPrototypeDummy
 - type: entity
   id: ValidComponentDummy
   components:
@@ -82,33 +78,27 @@ namespace Content.IntegrationTests.Tests.Utility
                 var mapId = new MapId(1);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-                var validPrototype = entityManager.SpawnEntity("ValidPrototypeDummy", mapCoordinates);
                 var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates);
                 var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates);
 
-                var invalidPrototype = entityManager.SpawnEntity("InvalidPrototypeDummy", mapCoordinates);
                 var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates);
                 var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
-                    Prototypes = new[] {"ValidPrototypeDummy"},
                     Components = new[] {$"{ValidComponent}"},
                     Tags = new[] {"ValidTag"}
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);
 
-                Assert.That(whitelistInst.Prototypes, Is.Not.Null);
                 Assert.That(whitelistInst.Components, Is.Not.Null);
                 Assert.That(whitelistInst.Tags, Is.Not.Null);
 
-                Assert.That(whitelistInst.IsValid(validPrototype), Is.True);
                 Assert.That(whitelistInst.IsValid(validComponent), Is.True);
                 Assert.That(whitelistInst.IsValid(validTag), Is.True);
 
-                Assert.That(whitelistInst.IsValid(invalidPrototype), Is.False);
                 Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
                 Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
 
@@ -117,22 +107,14 @@ namespace Content.IntegrationTests.Tests.Utility
                 var whitelistSer = dummy.GetComponent<ItemCabinetComponent>().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
-                Assert.That(whitelistSer.Prototypes, Is.Not.Null);
                 Assert.That(whitelistSer.Components, Is.Not.Null);
                 Assert.That(whitelistSer.Tags, Is.Not.Null);
 
-                Assert.That(whitelistSer.IsValid(validPrototype), Is.True);
                 Assert.That(whitelistSer.IsValid(validComponent), Is.True);
                 Assert.That(whitelistSer.IsValid(validTag), Is.True);
 
-                Assert.That(whitelistSer.IsValid(invalidPrototype), Is.False);
                 Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
                 Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
-
-                // Special cases
-                var noPrototype = entityManager.SpawnEntity(null, mapCoordinates);
-                Assert.That(whitelistInst.IsValid(noPrototype), Is.False);
-                Assert.That(whitelistSer.IsValid(noPrototype), Is.False);
             });
         }
     }

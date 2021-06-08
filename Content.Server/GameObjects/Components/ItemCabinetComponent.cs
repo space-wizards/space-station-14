@@ -26,10 +26,10 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("doorSound")]
-        public string DoorSound { get; set; } = "/Audio/Machines/machine_switch.ogg";
+        public string? DoorSound { get; set; }
 
         /// <summary>
-        ///     The prototype that should be spawned inside the cabinet when it is initialized.
+        ///     The prototype that should be spawned inside the cabinet when it is map initialized.
         /// </summary>
         [ViewVariables]
         [DataField("spawnPrototype")]
@@ -45,8 +45,12 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         public ContainerSlot ItemContainer = default!;
 
+        /// <summary>
+        ///     Whether the cabinet is currently open or not.
+        /// </summary>
         [ViewVariables]
-        public bool Opened = false;
+        [DataField("opened")]
+        public bool Opened { get; set; } = false;
 
         [Verb]
         public sealed class EjectItemFromCabinetVerb : Verb<ItemCabinetComponent>

@@ -23,9 +23,8 @@ namespace Content.Client.GameObjects.Components
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-
-            if (component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen))
+            if (component.Owner.TryGetComponent<SpriteComponent>(out var sprite)
+                && component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen))
             {
                 if (isOpen)
                 {

@@ -9,6 +9,7 @@
       sprite: Constructible/Misc/extinguisher_cabinet.rsi
       state: extinguisher_closed
     - type: ItemCabinet
+      doorSound: /Audio/Machines/machine_switch.ogg
       whitelist:
         components:
         - FireExtinguisher
@@ -22,9 +23,25 @@
     mode: SnapgridCenter
 
 - type: entity
+  id: ExtinguisherCabinetOpen
+  parent: ExtinguisherCabinet
+  suffix: Open
+  components:
+  - type: ItemCabinet
+    opened: true
+
+- type: entity
   id: ExtinguisherCabinetFilled
   parent: ExtinguisherCabinet
   suffix: Filled
   components:
     - type: ItemCabinet
       spawnPrototype: FireExtinguisher
+
+- type: entity
+  id: ExtinguisherCabinetFilledOpen
+  parent: ExtinguisherCabinetFilled
+  suffix: Filled, Open
+  components:
+  - type: ItemCabinet
+    opened: true
