@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using System;
+using ImGuiNET;
 using Robust.Shared.Maths;
 using static ImGuiNET.ImGui;
 using Color = System.Drawing.Color;
@@ -60,6 +61,14 @@ namespace Pow3r
                 0.1f, new Vector2(250, 150));
 
             End();
+            {
+                Begin("Memory");
+
+                var heap = GC.GetTotalMemory(false);
+                Text($"Managed heap: {heap>>20} MiB");
+
+                End();
+            }
 
             foreach (var network in _networks.Values)
             {

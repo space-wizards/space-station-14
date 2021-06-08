@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Text;
 using ImGuiNET;
-using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using ErrorCode = OpenTK.Windowing.GraphicsLibraryFramework.ErrorCode;
 using Vector2 = System.Numerics.Vector2;
-using Vector4 = System.Numerics.Vector4;
 
 // ReSharper disable PossibleNullReferenceException
 
@@ -21,31 +17,7 @@ namespace Pow3r
         public const float TicksPerSecond = 60;
         private static readonly TimeSpan TickSpan = TimeSpan.FromSeconds(1 / TicksPerSecond);
 
-        private const string FragmentShader = @"
-#version 460
-in vec2 Frag_UV;
-in vec4 Frag_Color;
-uniform sampler2D Texture;
-layout (location = 0) out vec4 Out_Color;
-void main()
-{
-    Out_Color = Frag_Color * texture(Texture, Frag_UV.st);
-}";
-
-        private const string VertexShader = @"
-#version 460
-layout (location = 0) in vec2 Position;
-layout (location = 1) in vec2 UV;
-layout (location = 2) in vec4 Color;
-uniform mat4 ProjMtx;
-out vec2 Frag_UV;
-out vec4 Frag_Color;
-void main()
-{
-    Frag_UV = UV;
-    Frag_Color = Color;
-    gl_Position = ProjMtx * vec4(Position.xy,0,1);
-};";
+        private Renderer _renderer = Renderer.Veldrid;
 
         [UnmanagedCallersOnly]
         private static byte* GetClipboardTextCallback(void* userData)
@@ -66,46 +38,58 @@ void main()
             Console.WriteLine($"{error}: {description}");
         }
 
-        private int _shaderProgram;
-        private int _fontTexture;
-        private int _vao;
-        private int _vbo;
-        private int _ebo;
-
-        private int _uniformTexture;
-        private int _uniformProjMatrix;
         private bool[] _mouseJustPressed = new bool[5];
 
         private GameWindow _window;
         private readonly Stopwatch _stopwatch = new();
         private readonly Cursor*[] _cursors = new Cursor*[9];
 
-        private void Run()
+        private void Run(string[] args)
         {
+            if (args.Length >= 2 && args[0] == "--renderer")
+            {
+                _renderer = Enum.Parse<Renderer>(args[1]);
+            }
+
             //NativeLibrary.Load("nvapi64.dll");
             GLFW.Init();
             GLFW.SetErrorCallback(ErrorCallback);
 
-            var sw = Stopwatch.StartNew();
+            // var sw = Stopwatch.StartNew();
             GLFW.WindowHint(WindowHintBool.SrgbCapable, true);
-            _window = new GameWindow(GameWindowSettings.Default, new NativeWindowSettings
+            var windowSettings = new NativeWindowSettings
             {
-                API = ContextAPI.OpenGL,
-                Profile = ContextProfile.Core,
-                APIVersion = new Version(4, 5),
-                Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible,
                 Size = (1280, 720),
                 WindowState = WindowState.Maximized,
                 StartVisible = false,
 
                 Title = "Pow3r",
-            });
+            };
 
-            GLFW.GetWindowContentScale(_window.WindowPtr, out var scaleX, out var scaleY);
+            Console.WriteLine($"Renderer is {_renderer}");
 
-            Console.WriteLine(sw.ElapsedMilliseconds);
+            switch (_renderer)
+            {
+                case Renderer.OpenGL:
+                    windowSettings.API = ContextAPI.OpenGL;
+                    windowSettings.Profile = ContextProfile.Core;
+                    windowSettings.APIVersion = new Version(4, 6);
+                    windowSettings.Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible;
+                    break;
 
-            _window.VSync = VSyncMode.On;
+                case Renderer.Veldrid:
+                    windowSettings.API = ContextAPI.NoAPI;
+                    break;
+            }
+
+            _window = new GameWindow(GameWindowSettings.Default, windowSettings);
+
+            // Console.WriteLine(sw.ElapsedMilliseconds);
+
+            if (_renderer == Renderer.OpenGL)
+            {
+                _window.VSync = VSyncMode.On;
+            }
 
             var context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
@@ -153,7 +137,7 @@ void main()
             _cursors[(int) ImGuiMouseCursor.ResizeNWSE] = GLFW.CreateStandardCursor(CursorShape.Arrow);
             _cursors[(int) ImGuiMouseCursor.NotAllowed] = GLFW.CreateStandardCursor(CursorShape.Arrow);
 
-            InitOpenGL();
+            InitRenderer();
 
             _window.MouseDown += OnMouseDown;
             _window.TextInput += WindowOnTextInput;
@@ -281,185 +265,45 @@ void main()
             }
         }
 
+        private void InitRenderer()
+        {
+            switch (_renderer)
+            {
+                case Renderer.OpenGL:
+                    InitOpenGL();
+                    break;
+
+                case Renderer.Veldrid:
+                    InitVeldrid();
+                    break;
+            }
+        }
+
         private void Render()
         {
             ImGui.Render();
 
-            GLFW.GetFramebufferSize(_window.WindowPtr, out var fbW, out var fbH);
-            GL.Viewport(0, 0, fbW, fbH);
-            GL.Disable(EnableCap.ScissorTest);
-            GL.ClearColor(0, 0, 0, 1);
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-            GL.Enable(EnableCap.ScissorTest);
-
-            var drawData = ImGui.GetDrawData();
-
-            var l = drawData.DisplayPos.X;
-            var r = drawData.DisplayPos.X + drawData.DisplaySize.X;
-            var t = drawData.DisplayPos.Y;
-            var b = drawData.DisplayPos.Y + drawData.DisplaySize.Y;
-
-            var matrix = Matrix4x4.CreateOrthographicOffCenter(l, r, b, t, -1, 1);
-
-            GL.ProgramUniformMatrix4(_shaderProgram, _uniformProjMatrix, 1, false, (float*) &matrix);
-            GL.ProgramUniform1(_shaderProgram, _uniformTexture, 0);
-            GL.BindVertexArray(_vao);
-            GL.UseProgram(_shaderProgram);
-
-            var clipOff = drawData.DisplayPos;
-            var clipScale = drawData.FramebufferScale;
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _ebo);
-
-            for (var n = 0; n < drawData.CmdListsCount; n++)
+            switch (_renderer)
             {
-                var drawList = drawData.CmdListsRange[n];
+                case Renderer.OpenGL:
+                    RenderOpenGL();
+                    break;
 
-                GL.BufferData(BufferTarget.ArrayBuffer, drawList.VtxBuffer.Size * sizeof(ImDrawVert),
-                    drawList.VtxBuffer.Data,
-                    BufferUsageHint.StreamDraw);
-                GL.BufferData(BufferTarget.ElementArrayBuffer, drawList.IdxBuffer.Size * sizeof(ushort),
-                    drawList.IdxBuffer.Data,
-                    BufferUsageHint.StreamDraw);
-
-
-                for (var cmdI = 0; cmdI < drawList.CmdBuffer.Size; cmdI++)
-                {
-                    var cmd = drawList.CmdBuffer[cmdI];
-
-                    GL.BindTextureUnit(0, (uint) cmd.TextureId);
-
-                    Vector4 clipRect = default;
-                    clipRect.X = (cmd.ClipRect.X - clipOff.X) * clipScale.X;
-                    clipRect.Y = (cmd.ClipRect.Y - clipOff.Y) * clipScale.Y;
-                    clipRect.Z = (cmd.ClipRect.Z - clipOff.X) * clipScale.X;
-                    clipRect.W = (cmd.ClipRect.W - clipOff.Y) * clipScale.Y;
-
-                    GL.Scissor((int) clipRect.X, (int) (fbH - clipRect.W), (int) (clipRect.Z - clipRect.X),
-                        (int) (clipRect.W - clipRect.Y));
-
-                    GL.DrawElementsBaseVertex(PrimitiveType.Triangles, (int) cmd.ElemCount,
-                        DrawElementsType.UnsignedShort,
-                        (nint) (cmd.IdxOffset * 2), (int) cmd.VtxOffset);
-                }
+                case Renderer.Veldrid:
+                    RenderVeldrid();
+                    break;
             }
-
-            _window.SwapBuffers();
         }
 
-        private void InitOpenGL()
+        private static void Main(string[] args)
         {
-            GL.Enable(EnableCap.DebugOutput);
-            GL.DebugMessageCallback(GLDebugCallbackDelegate, (nint) 0x3005);
-
-            GL.Enable(EnableCap.ScissorTest);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendEquation(BlendEquationMode.FuncAdd);
-            GL.BlendFuncSeparate(
-                BlendingFactorSrc.SrcAlpha,
-                BlendingFactorDest.OneMinusSrcAlpha,
-                BlendingFactorSrc.One,
-                BlendingFactorDest.OneMinusSrcAlpha);
-
-            var frag = GL.CreateShader(ShaderType.FragmentShader);
-            var vert = GL.CreateShader(ShaderType.VertexShader);
-
-            GL.ShaderSource(frag, FragmentShader);
-            GL.ShaderSource(vert, VertexShader);
-
-            GL.CompileShader(frag);
-            GL.CompileShader(vert);
-
-            GL.GetShader(frag, ShaderParameter.CompileStatus, out var status);
-            if (status != 1)
-            {
-                var log = GL.GetShaderInfoLog(frag);
-                throw new Exception($"Shader failed to compile: {log}");
-            }
-
-            GL.GetShader(vert, ShaderParameter.CompileStatus, out status);
-            if (status != 1)
-            {
-                var log = GL.GetShaderInfoLog(vert);
-                throw new Exception($"Shader failed to compile: {log}");
-            }
-
-            _shaderProgram = GL.CreateProgram();
-            GL.AttachShader(_shaderProgram, vert);
-            GL.AttachShader(_shaderProgram, frag);
-
-            GL.LinkProgram(_shaderProgram);
-
-            GL.GetProgram(_shaderProgram, GetProgramParameterName.LinkStatus, out status);
-            if (status != 1)
-            {
-                var log = GL.GetProgramInfoLog(_shaderProgram);
-                throw new Exception($"Shader failed to link: {log}");
-            }
-
-            GL.DeleteShader(frag);
-            GL.DeleteShader(vert);
-
-            _uniformProjMatrix = GL.GetUniformLocation(_shaderProgram, "ProjMtx");
-            _uniformTexture = GL.GetUniformLocation(_shaderProgram, "Texture");
-
-            var io = ImGui.GetIO();
-
-            io.Fonts.GetTexDataAsRGBA32(out byte* pixels, out var width, out var height, out _);
-
-            GL.CreateTextures(TextureTarget.Texture2D, 1, out _fontTexture);
-            GL.TextureStorage2D(_fontTexture, 1, SizedInternalFormat.Rgba8, width, height);
-            GL.TextureSubImage2D(_fontTexture, 0, 0, 0, width, height, PixelFormat.Bgra, PixelType.UnsignedByte,
-                (nint) pixels);
-            GL.TextureParameter(_fontTexture, TextureParameterName.TextureMaxLevel, 0);
-
-            /*
-            GL.TextureParameter(_fontTexture, TextureParameterName.TextureSwizzleR, 1);
-            GL.TextureParameter(_fontTexture, TextureParameterName.TextureSwizzleG, 1);
-            GL.TextureParameter(_fontTexture, TextureParameterName.TextureSwizzleB, 1);
-            GL.TextureParameter(_fontTexture, TextureParameterName.TextureSwizzleA, (int) All.Red);*/
-
-            io.Fonts.SetTexID((nint) _fontTexture);
-            io.Fonts.ClearTexData();
-
-            // Buffers.
-            GL.CreateBuffers(1, out _vbo);
-            GL.CreateBuffers(1, out _ebo);
-
-            GL.CreateVertexArrays(1, out _vao);
-            GL.VertexArrayVertexBuffer(_vao, 0, _vbo, (nint) 0, sizeof(ImDrawVert));
-            GL.VertexArrayElementBuffer(_vao, _ebo);
-
-            GL.EnableVertexArrayAttrib(_vao, 0);
-            GL.VertexArrayAttribBinding(_vao, 0, 0);
-            GL.VertexArrayAttribFormat(_vao, 0, 2, VertexAttribType.Float, false, 0);
-
-            GL.EnableVertexArrayAttrib(_vao, 1);
-            GL.VertexArrayAttribBinding(_vao, 1, 0);
-            GL.VertexArrayAttribFormat(_vao, 1, 2, VertexAttribType.Float, false, 8);
-
-            GL.EnableVertexArrayAttrib(_vao, 2);
-            GL.VertexArrayAttribBinding(_vao, 2, 0);
-            GL.VertexArrayAttribFormat(_vao, 2, 4, VertexAttribType.UnsignedByte, true, 16);
+            new Program().Run(args);
         }
 
-        private static readonly DebugProc GLDebugCallbackDelegate = GLDebugCallback;
-
-        private static void GLDebugCallback(DebugSource source, DebugType type, int id, DebugSeverity severity,
-            int length, IntPtr message, IntPtr userParam)
+        public enum Renderer
         {
-            var msg = Encoding.UTF8.GetString((byte*) message, length);
-
-            if (severity == DebugSeverity.DebugSeverityNotification)
-                return;
-
-            Console.WriteLine($"[{type}][{severity}] {source}: {msg}");
-        }
-
-        private static void Main()
-        {
-            new Program().Run();
+            OpenGL,
+            Veldrid
         }
     }
 }
