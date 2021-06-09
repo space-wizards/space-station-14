@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using System;
 using System.Collections.Generic;
 
 namespace Content.Client.GameObjects.Components.Items
@@ -13,7 +14,6 @@ namespace Content.Client.GameObjects.Components.Items
     [UsedImplicitly]
     public class HandsVisualizer : AppearanceVisualizer
     {
-        private List<string> _layerKeys = new();
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -22,27 +22,24 @@ namespace Content.Client.GameObjects.Components.Items
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             if (!component.TryGetData(HandsVisuals.VisualState, out HandsVisualState visualState)) return;
 
-            foreach (var layerKey in _layerKeys)
+            foreach (HandLocation location in Enum.GetValues(typeof(HandLocation)))
             {
+                var layerKey = LocationToLayerKey(location);
                 if (sprite.LayerMapTryGet(layerKey, out var layer))
                 {
                     sprite.RemoveLayer(layer);
                     sprite.LayerMapRemove(layer);
                 }
             }
-            _layerKeys.Clear();
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             var hands = visualState.Hands;
 
-            for (var i = 0; i < hands.Count; i++)
+            foreach (var hand in hands)
             {
-                var hand = hands[i];
-
                 var rsi = resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / hand.RsiPath).RSI;
 
-                var layerKey = "item" + i.ToString();
-                _layerKeys.Add(layerKey);
+                var layerKey = LocationToLayerKey(hand.Location);
                 sprite.LayerMapReserveBlank(layerKey);
 
                 var layer = sprite.LayerMapGet(layerKey);
@@ -56,6 +53,11 @@ namespace Content.Client.GameObjects.Components.Items
 
                 sprite.LayerSetState(layer, state);
             }
+        }
+
+        private string LocationToLayerKey(HandLocation location)
+        {
+            return location.ToString();
         }
     }
 
