@@ -80,6 +80,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Whether to ignore the pipenet and return the environment's air.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("environmentalAir")]
         public bool EnvironmentalAir { get; set; } = false;
 
         /// <summary>

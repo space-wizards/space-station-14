@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {

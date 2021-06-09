@@ -77,6 +77,7 @@
         pipeDirection: None
         needAnchored: false
         connectToContainedEntities: true
+        environmentalAir: true
         volume: 1
   - type: GasPortable
   - type: GasCanister

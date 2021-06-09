@@ -1,0 +1,8 @@
+<BaseWindow xmlns="https://spacestation14.io">
+    <VBoxContainer>
+        <Label Text="{Loc comp-gas-canister-ui-canister-status}"/>
+        <VBoxContainer Margin="15 15 15 15">
+
+        </VBoxContainer>
+    </VBoxContainer>
+</BaseWindow>

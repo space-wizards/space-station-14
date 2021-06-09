@@ -11,7 +11,6 @@ using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -154,6 +153,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
             if (!container.Insert(args.Used))
                 return;
 
+            tankNode.EnvironmentalAir = false;
             canisterNode.NodeGroup.AddNode(tankNode);
 
             args.Handled = true;
