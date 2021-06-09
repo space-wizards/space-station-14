@@ -1314,3 +1314,9 @@ Entries:
     type: Add}
   id: 232
   time: '2021-06-09T02:10:29.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: claymore as a melee weapon, type: Add}
+  - {message: 'fixed the combat knife, laser gun and machete sprites', type: Fix}
+  id: 233
+  time: '2021-06-09T05:21:09.0000000+00:00'
