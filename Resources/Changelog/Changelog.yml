@@ -1308,3 +1308,9 @@ Entries:
   - {message: Examining dead/catatonic people looks normal again, type: Fix}
   id: 231
   time: '2021-06-08T20:59:32.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fire extinguisher cabinets have been mapped in around the station.,
+    type: Add}
+  id: 232
+  time: '2021-06-09T02:10:29.0000000+00:00'
