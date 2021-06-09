@@ -48,7 +48,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when clicking on another object and no attack event was handled.
+    ///     Raised directed on the used object when clicking on another object and no attack event was handled.
     /// </summary>
     [PublicAPI]
     public class AfterInteractEvent : HandledEntityEventArgs

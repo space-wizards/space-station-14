@@ -539,7 +539,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     {
                         if (activeHand != null)
                         {
-                            await interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                            await interactionSystem.InteractUsing(Owner, activeHand.Owner, itemContainedInSlot.Owner,
                                 new EntityCoordinates());
                         }
                         else if (Unequip(msg.Inventoryslot))

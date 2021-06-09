@@ -21,7 +21,6 @@ namespace Content.Shared.Physics.Controllers
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
@@ -51,7 +50,7 @@ namespace Content.Shared.Physics.Controllers
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _physicsManager)) continue;
+                    SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _mapManager)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
                 var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;
@@ -125,13 +124,20 @@ namespace Content.Shared.Physics.Controllers
         }
 
         [Pure]
-        private float GetTileFriction(IPhysBody body)
+        private float GetTileFriction(PhysicsComponent body)
         {
+            var transform = body.Owner.Transform;
+            var coords = transform.Coordinates;
+
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (body.BodyStatus == BodyStatus.InAir || body.Owner.IsWeightless(_physicsManager) || !_mapManager.TryGetGrid(body.Owner.Transform.GridID, out var grid))
+            if (body.BodyStatus == BodyStatus.InAir ||
+                body.Owner.IsWeightless(body, coords, _mapManager) ||
+                !_mapManager.TryGetGrid(transform.GridID, out var grid))
                 return 0.0f;
 
-            var tile = grid.GetTileRef(body.Owner.Transform.Coordinates);
+            if (!coords.IsValid(EntityManager)) return 0.0f;
+
+            var tile = grid.GetTileRef(coords);
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction;
         }

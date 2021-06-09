@@ -664,13 +664,13 @@ namespace Content.Server.GameObjects.Components.GUI
                         var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                         if (used != null)
                         {
-                                await interactionSystem.Interaction(Owner, used, hand.Entity,
+                                await interactionSystem.InteractUsing(Owner, used, hand.Entity,
                                     EntityCoordinates.Invalid);
                         }
                         else
                         {
                             var entity = hand.Entity;
-                            interactionSystem.Interaction(Owner, entity);
+                            interactionSystem.InteractHand(Owner, entity);
                         }
                     }
 
