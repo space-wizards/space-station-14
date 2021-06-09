@@ -29,7 +29,6 @@ namespace Content.Server.Power.Components
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<BatteryComponent>();
             Owner.EnsureComponentWarn<PowerSupplierComponent>();
             UpdateSupplyRate();
         }

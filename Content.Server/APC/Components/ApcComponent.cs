@@ -56,7 +56,6 @@ namespace Content.Server.APC.Components
         {
             base.Initialize();
 
-            Owner.EnsureComponent<BatteryComponent>();
             Owner.EnsureComponent<PowerConsumerComponent>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
             Owner.EnsureComponentWarn<AccessReader>();

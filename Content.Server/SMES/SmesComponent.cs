@@ -38,7 +38,6 @@ namespace Content.Server.SMES
         {
             base.Initialize();
 
-            Owner.EnsureComponent<BatteryComponent>();
             Owner.EnsureComponentWarn<AppearanceComponent>();
         }
 
