@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using System.Threading.Tasks;
+using Content.Server.Destructible;
 
 namespace Content.Server.Construction.Completions
 {

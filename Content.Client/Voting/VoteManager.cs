@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.Voting;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -31,7 +31,7 @@ namespace Content.Client.Voting
         [Dependency] private readonly IBaseClient _client = default!;
 
         private readonly Dictionary<int, ActiveVote> _votes = new();
-        private readonly Dictionary<int, VotePopup> _votePopups = new();
+        private readonly Dictionary<int, UI.VotePopup> _votePopups = new();
         private Control? _popupContainer;
 
         public bool CanCallVote { get; private set; }
@@ -83,7 +83,7 @@ namespace Content.Client.Voting
 
             foreach (var (vId, vote) in _votes)
             {
-                var popup = new VotePopup(vote);
+                var popup = new UI.VotePopup(vote);
 
                 _votePopups.Add(vId, popup);
                 _popupContainer.AddChild(popup);
@@ -148,7 +148,7 @@ namespace Content.Client.Voting
 
             if (@new && _popupContainer != null)
             {
-                var popup = new VotePopup(existingVote);
+                var popup = new UI.VotePopup(existingVote);
 
                 _votePopups.Add(voteId, popup);
                 _popupContainer.AddChild(popup);

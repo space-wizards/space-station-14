@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Prototypes;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.Utility;

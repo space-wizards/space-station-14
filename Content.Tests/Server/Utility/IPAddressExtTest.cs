@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Content.Server.Utility;
+using Content.Server.IP;
 using NUnit.Framework;
 
 namespace Content.Tests.Server.Utility

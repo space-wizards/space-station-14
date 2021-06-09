@@ -1,7 +1,5 @@
 using System;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared;
 using Robust.Shared.Configuration;

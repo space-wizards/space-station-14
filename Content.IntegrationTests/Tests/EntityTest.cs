@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.Utility;
+using Content.Server.Battery.Components;
+using Content.Server.PowerCell.Components;
+using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -259,6 +261,10 @@ namespace Content.IntegrationTests.Tests
             // Split components into groups, ensuring that their references don't conflict
             foreach (var type in componentFactory.AllRegisteredTypes)
             {
+                if (type == typeof(PowerCellComponent) || type == typeof(BatteryComponent))
+                {
+
+                }
                 var registration = componentFactory.GetRegistration(type);
 
                 for (var i = 0; i < distinctComponents.Count; i++)
@@ -316,6 +322,10 @@ namespace Content.IntegrationTests.Tests
 
                             Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
 
+                            // Note for the future coder: if an exception occurs where a component reference
+                            // was already occupied it might be because some component is ensuring another // initialize.
+                            // If so, search for cases of EnsureComponent<FailingType>, EnsureComponentWarn<FailingType>
+                            // and all others variations (out parameter)
                             Assert.DoesNotThrow(() =>
                                 {
                                     entityManager.ComponentManager.AddComponent(entity, component);

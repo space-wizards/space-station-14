@@ -1,0 +1,15 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc Kick}" MinSize="425 272">
+    <VBoxContainer>
+        <HBoxContainer>
+            <Label Text="{Loc Reason}" MinWidth="100" />
+            <Control MinWidth="50" />
+            <LineEdit Name="ReasonLine" MinWidth="100" HorizontalExpand="True" />
+        </HBoxContainer>
+        <customControls:PlayerListControl Name="PlayerList" />
+        <Button Name="SubmitButton" Text="{Loc Kick}" />
+    </VBoxContainer>
+</SS14Window>

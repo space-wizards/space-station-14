@@ -1,7 +1,7 @@
 ﻿<changelog:ChangelogWindow xmlns="https://spacestation14.io"
                            xmlns:cui="clr-namespace:Content.Client.UserInterface"
-                           xmlns:cuic="clr-namespace:Content.Client.UserInterface.Controls"
                            xmlns:changelog="clr-namespace:Content.Client.Changelog"
+                           xmlns:ui="clr-namespace:Content.Client.HUD.UI"
                            MinSize="500 400" MouseFilter="Stop">
     <PanelContainer StyleClasses="AngleRect" />
     <VBoxContainer>
@@ -11,7 +11,7 @@
             <TextureButton Margin="0 0 8 0" Name="CloseButton" StyleClasses="windowCloseButton"
                            VerticalAlignment="Center" />
         </HBoxContainer>
-        <cuic:HighDivider />
+        <ui:HighDivider />
 
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <VBoxContainer Name="ChangelogBody" />
