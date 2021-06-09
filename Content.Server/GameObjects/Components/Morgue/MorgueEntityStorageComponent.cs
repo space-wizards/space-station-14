@@ -64,7 +64,9 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<IBody>() && !StandingStateSystem.IsDown(entity)) return false;
+            var isDown = new IsDownEvent(entity.Uid);
+            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, isDown);
+            if (entity.HasComponent<IBody>() && isDown.Cancelled) return false;
             return base.AddToContents(entity);
         }
 

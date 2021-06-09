@@ -10,17 +10,22 @@ namespace Content.Shared.GameObjects.EntitySystems
 {
     public class StandingStateSystem : EntitySystem
     {
-        public static bool IsDown(IEntity entity)
-        {
-            return entity.TryGetComponent(out StandingStateComponent? component) &&
-                   component.Standing;
-        }
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<StandingStateComponent, AttemptStandEvent>(HandleStandAttempt);
             SubscribeLocalEvent<StandingStateComponent, AttemptDownEvent>(HandleDownAttempt);
+            // Need broadcast because it can be raised on whatever
+            SubscribeLocalEvent<IsDownEvent>(HandleIsDown);
+        }
+
+        private void HandleIsDown(IsDownEvent ev)
+        {
+            if (EntityManager.TryGetEntity(ev.Uid, out var entity) &&
+                entity.TryGetComponent(out StandingStateComponent? standingState) &&
+                standingState.Standing) return;
+
+            ev.Cancel();
         }
 
         private void HandleDownAttempt(EntityUid uid, StandingStateComponent component, AttemptDownEvent args)
@@ -68,6 +73,16 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 appearance.SetData(RotationVisuals.RotationState, RotationState.Vertical);
             }
+        }
+    }
+
+    public sealed class IsDownEvent : CancellableEntityEventArgs
+    {
+        public EntityUid Uid { get; }
+
+        public IsDownEvent(EntityUid uid)
+        {
+            Uid = uid;
         }
     }
 
