@@ -68,3 +68,10 @@ cancel-vote-command-on-execute-error-missing-vote-id = Missing ID
 
 # VoteOptions
 vote-options-server-initiator-text = The server
+
+# Game modes
+
+mode-traitor = Traitor
+mode-extended = Extended
+mode-sandbox = Sandbox
+mode-suspicion = Suspicion

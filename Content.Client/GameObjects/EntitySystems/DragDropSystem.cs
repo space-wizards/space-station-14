@@ -343,7 +343,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (outOfRange)
             {
-                _playerManager.LocalPlayer?.ControlledEntity?.PopupMessage(Loc.GetString("drag-and-drop-system-out-of-range-text"));
+                _playerManager.LocalPlayer?.ControlledEntity?.PopupMessage(Loc.GetString("drag-drop-system-out-of-range-text"));
             }
 
             _dragDropHelper.EndDrag();

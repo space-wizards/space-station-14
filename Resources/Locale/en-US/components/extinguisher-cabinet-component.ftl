@@ -1,1 +1,0 @@
-extinquisher-cabinet-component-interact-hand-success-message = You take {$extinguisher} from the {$cabinet}
