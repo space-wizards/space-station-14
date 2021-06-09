@@ -1,10 +1,10 @@
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Mobs.State;
-using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
+using Content.Server.Interaction.Components;
+using Content.Server.MobState.States;
+using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -14,7 +14,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     public sealed class HyposprayComponent : SharedHyposprayComponent, ISolutionChange

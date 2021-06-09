@@ -1,10 +1,10 @@
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Damage
+namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
     public class DamageOtherOnHitComponent : Component, IThrowCollide

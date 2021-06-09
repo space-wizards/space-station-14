@@ -1,12 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.DoAfter;
+using Content.Shared.Coordinates;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Content.Shared.Utility;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -19,7 +20,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items.RCD
+namespace Content.Server.RCD.Components
 {
     [RegisterComponent]
     public class RCDComponent : Component, IAfterInteract, IUse, IExamine
@@ -127,13 +128,13 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(eventArgs.ClickLocation, new Tile(_tileDefinitionManager["floor_steel"].TileId));
+                    mapGrid.SetTile(eventArgs.ClickLocation, new Robust.Shared.Map.Tile(_tileDefinitionManager["floor_steel"].TileId));
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
                     if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
-                        mapGrid.SetTile(snapPos, Tile.Empty);
+                        mapGrid.SetTile(snapPos, Robust.Shared.Map.Tile.Empty);
                     }
                     else //Delete what the user targeted
                     {

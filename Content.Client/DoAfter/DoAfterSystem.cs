@@ -1,6 +1,5 @@
 ﻿using System.Linq;
-using Content.Client.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -8,7 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems.DoAfter
+namespace Content.Client.DoAfter
 {
     /// <summary>
     /// Handles events that need to happen after a certain amount of time where the event could be cancelled by factors

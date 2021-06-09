@@ -1,5 +1,4 @@
-using Content.Client.GameObjects.Components.Research;
-using Content.Shared.Research;
+using Content.Shared.Research.Prototypes;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -7,7 +6,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.Research
+namespace Content.Client.Lathe.UI
 {
     public class LatheQueueMenu : SS14Window
     {

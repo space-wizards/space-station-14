@@ -1,9 +1,8 @@
-﻿using Content.Server.Interfaces;
+﻿using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Connections
 {
     public abstract class BaseNetworkConnection : IDeviceNetworkConnection
     {

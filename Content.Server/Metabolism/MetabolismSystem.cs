@@ -1,8 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Metabolism;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Metabolism
 {
     [UsedImplicitly]
     public class MetabolismSystem : EntitySystem

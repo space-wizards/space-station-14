@@ -1,5 +1,6 @@
 // ReSharper disable once RedundantUsingDirective
 // Used to warn the player in big red letters in debug mode
+
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -7,11 +8,10 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Commands.GameTicking
+namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     class MappingCommand : IConsoleCommand

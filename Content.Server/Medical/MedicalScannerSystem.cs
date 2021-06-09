@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Medical;
+using Content.Server.Medical.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Medical
 {
     [UsedImplicitly]
     internal sealed class MedicalScannerSystem : EntitySystem

@@ -1,16 +1,17 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Body.Networks;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.Components;
+using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body.Behavior
+namespace Content.Server.Body.Behavior
 {
     /// <summary>
     /// Where reagents go when ingested. Tracks ingested reagents over time, and

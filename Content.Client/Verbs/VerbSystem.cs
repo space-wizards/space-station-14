@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.Verbs;
+using Content.Client.ContextMenu.UI;
+using Content.Client.Resources;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -25,7 +25,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Verbs
 {
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem

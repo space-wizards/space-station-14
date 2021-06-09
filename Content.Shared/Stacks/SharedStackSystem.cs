@@ -1,9 +1,8 @@
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Stacks
 {
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
@@ -67,7 +66,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             args.Message.AddText("\n");
             args.Message.AddMarkup(
-                Loc.GetString("comp-stack-examine-detail-count",
+                Robust.Shared.Localization.Loc.GetString("comp-stack-examine-detail-count",
                     ("count", component.Count),
                     ("markupCountColor", "lightgray")
                 )

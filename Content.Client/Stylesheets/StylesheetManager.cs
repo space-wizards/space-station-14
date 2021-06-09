@@ -2,7 +2,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 
-namespace Content.Client.UserInterface.Stylesheets
+namespace Content.Client.Stylesheets
 {
     public sealed class StylesheetManager : IStylesheetManager
     {

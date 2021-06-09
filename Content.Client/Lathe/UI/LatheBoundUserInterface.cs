@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using Content.Client.Research;
-using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Research;
+using Content.Client.Lathe.Components;
+using Content.Shared.Lathe;
+using Content.Shared.Research.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Research.SharedLatheComponent;
+using static Content.Shared.Lathe.SharedLatheComponent;
 
-namespace Content.Client.GameObjects.Components.Research
+namespace Content.Client.Lathe.UI
 {
     public class LatheBoundUserInterface : BoundUserInterface
     {

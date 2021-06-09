@@ -1,15 +1,13 @@
 using System.Linq;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Notification;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Interaction
 {
     /// <summary>
     /// Governs interactions during clicking on entities
@@ -328,7 +326,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!inRange && popup)
             {
-                var message = Loc.GetString("You can't reach there!");
+                var message = Robust.Shared.Localization.Loc.GetString("You can't reach there!");
                 origin.PopupMessage(message);
             }
 

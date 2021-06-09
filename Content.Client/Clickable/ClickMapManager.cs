@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace Content.Client
+namespace Content.Client.Clickable
 {
     internal class ClickMapManager : IClickMapManager, IPostInjectInit
     {

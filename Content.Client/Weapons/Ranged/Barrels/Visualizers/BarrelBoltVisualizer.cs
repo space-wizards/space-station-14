@@ -1,9 +1,9 @@
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
+namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
 {
     [UsedImplicitly]
     public sealed class BarrelBoltVisualizer : AppearanceVisualizer

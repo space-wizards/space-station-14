@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameObjects.Components.Singularity
+namespace Content.Server.Singularity.Components
 {
     public class ContainmentFieldConnection : IDisposable
     {

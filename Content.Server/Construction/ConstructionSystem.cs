@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Construction;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Construction.Components;
+using Content.Server.DoAfter;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.Stack;
+using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Utility;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
+using Content.Shared.Coordinates;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -25,7 +29,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Construction
 {
     /// <summary>
     /// The server-side implementation of the construction system, which is used for constructing entities in game.

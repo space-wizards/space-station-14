@@ -2,7 +2,7 @@
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Eui
 {
     /// <summary>
     ///     Sent server -> client to signal that the client should open an EUI.

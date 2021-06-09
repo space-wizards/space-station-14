@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Medical
+namespace Content.Shared.Cloning
 {
     public class SharedCloningPodComponent : Component
     {

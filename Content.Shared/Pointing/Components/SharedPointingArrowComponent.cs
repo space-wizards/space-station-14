@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Pointing
+namespace Content.Shared.Pointing.Components
 {
     public class SharedPointingArrowComponent : Component
     {

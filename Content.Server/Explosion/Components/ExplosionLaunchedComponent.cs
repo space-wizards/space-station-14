@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Throwing;
+using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Explosion
+namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
     public class ExplosionLaunchedComponent : Component, IExAct

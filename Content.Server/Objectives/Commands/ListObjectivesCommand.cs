@@ -7,7 +7,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Objectives
+namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
     public class ListObjectivesCommand : IConsoleCommand

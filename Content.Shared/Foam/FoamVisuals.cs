@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.Foam
 {
     [Serializable, NetSerializable]
     public enum FoamVisuals : byte

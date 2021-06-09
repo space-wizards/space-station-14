@@ -2,7 +2,7 @@
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Voting
+namespace Content.Client.Voting.UI
 {
     /// <summary>
     ///     LITERALLY just a button that opens the vote call menu.

@@ -1,4 +1,4 @@
-namespace Content.Server.GameObjects.EntitySystems.JobQueues
+namespace Content.Server.CPUJob.JobQueues
 {
     public interface IJob
     {

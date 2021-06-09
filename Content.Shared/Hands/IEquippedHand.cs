@@ -1,11 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Hands
 {
     /// <summary>
     ///     This interface gives components behavior when their entity is put in a hand inventory slot,

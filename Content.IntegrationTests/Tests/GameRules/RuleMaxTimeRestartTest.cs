@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.GameTicking.Rules;
 using NUnit.Framework;
 using Robust.Shared.Timing;
 

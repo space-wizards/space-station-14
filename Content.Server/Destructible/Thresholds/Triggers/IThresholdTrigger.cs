@@ -1,8 +1,7 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
+namespace Content.Server.Destructible.Thresholds.Triggers
 {
     public interface IThresholdTrigger
     {

@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.ActionBlocking;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Cuffs.Components;
+using Content.Server.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
     public class CuffableSystem : EntitySystem

@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.DoAfter;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Placeable;
+using Content.Shared.Acts;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Item;
+using Content.Shared.Notification;
+using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -28,7 +30,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Storage.Components
 {
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities

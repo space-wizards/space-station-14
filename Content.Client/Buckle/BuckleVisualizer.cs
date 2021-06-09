@@ -1,13 +1,12 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.Buckle.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Buckle
+namespace Content.Client.Buckle
 {
     [UsedImplicitly]
     public class BuckleVisualizer : AppearanceVisualizer

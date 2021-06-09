@@ -1,4 +1,4 @@
-﻿using Content.Client.Interfaces.Parallax;
+﻿using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Parallax
 {
     /// <summary>
     ///     Renders the parallax background as a UI control.

@@ -1,8 +1,8 @@
-﻿using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Morgue
+namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

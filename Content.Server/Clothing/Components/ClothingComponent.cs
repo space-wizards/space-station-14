@@ -1,17 +1,18 @@
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Shared.Clothing;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
+using Content.Shared.NetIDs;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.Components.Items.Clothing
+namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]

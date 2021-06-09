@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects;
+using Content.Shared.Doors;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Doors
 {
     /// <summary>
     /// Used by the client to "predict" when doors will change how collideable they are as part of their opening / closing.

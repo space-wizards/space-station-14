@@ -1,11 +1,11 @@
-using Content.Server.GameObjects.Components.Pointing;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
+using Content.Server.Pointing.Components;
+using Content.Server.Pointing.EntitySystems;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GlobalVerbs
+namespace Content.Server.Pointing
 {
     /// <summary>
     ///     Global verb that points at an entity.

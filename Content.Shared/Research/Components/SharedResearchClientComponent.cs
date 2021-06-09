@@ -3,7 +3,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Research
+namespace Content.Shared.Research.Components
 {
     public class SharedResearchClientComponent : Component
     {

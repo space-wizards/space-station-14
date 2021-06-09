@@ -1,7 +1,7 @@
 #nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Items
+namespace Content.Shared.Throwing
 {
     [RegisterComponent]
     public class ThrownItemComponent : Component

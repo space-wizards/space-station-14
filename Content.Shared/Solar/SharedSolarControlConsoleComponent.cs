@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Power
+namespace Content.Shared.Solar
 {
     public class SharedSolarControlConsoleComponent : Component
     {

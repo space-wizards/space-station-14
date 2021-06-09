@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Botany
+namespace Content.Shared.Botany
 {
     [Serializable, NetSerializable]
     public enum PlantHolderVisuals

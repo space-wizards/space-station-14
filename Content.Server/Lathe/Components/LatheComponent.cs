@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Materials;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Research;
+using Content.Server.Materials;
+using Content.Server.Power.Components;
+using Content.Server.Research.Components;
+using Content.Server.Stack;
+using Content.Server.UserInterface;
+using Content.Shared.Interaction;
+using Content.Shared.Lathe;
+using Content.Shared.Power;
+using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Research
+namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

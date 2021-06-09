@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Mobs.Speech
+namespace Content.Shared.Emoting
 {
     [RegisterComponent]
     public class SharedEmotingComponent : Component, IActionBlocker

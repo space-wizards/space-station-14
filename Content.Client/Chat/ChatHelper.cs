@@ -1,7 +1,7 @@
 using Content.Shared.Chat;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Utility
+namespace Content.Client.Chat
 {
     public class ChatHelper
     {

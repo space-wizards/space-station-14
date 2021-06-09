@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.Construction;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.Stack;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Construction
+namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
     public class MachineComponent : Component, IMapInit

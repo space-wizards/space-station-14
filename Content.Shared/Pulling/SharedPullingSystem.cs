@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Pulling;
-using Content.Shared.GameObjects.Components.Rotatable;
-using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Rotatable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -15,10 +14,9 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Players;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
     public abstract class SharedPullingSystem : EntitySystem, IResettingEntitySystem

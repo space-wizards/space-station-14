@@ -1,6 +1,8 @@
-﻿using Content.Client.GameObjects.Components.Storage;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Items;
+﻿using Content.Client.Examine;
+using Content.Client.Items.UI;
+using Content.Client.Storage;
+using Content.Client.Verbs;
+using Content.Shared.Cooldown;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -14,7 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Items.Managers
 {
     public class ItemSlotManager : IItemSlotManager
     {

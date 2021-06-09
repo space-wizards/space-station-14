@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Wall
 {
     [UsedImplicitly]
     public class ReinforcedWallVisualizer : AppearanceVisualizer

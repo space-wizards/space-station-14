@@ -1,17 +1,17 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Pulling;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Coordinates.Helpers;
+using Content.Server.Pulling;
+using Content.Server.Tools.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Anchor
 {
     // TODO: Move this component's logic to an EntitySystem.
     [RegisterComponent]

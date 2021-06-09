@@ -3,12 +3,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Markers
+namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
     public class RandomSpawnerComponent : ConditionalSpawnerComponent

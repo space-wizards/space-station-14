@@ -1,10 +1,10 @@
 #nullable enable
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
-namespace Content.Server.StationEvents
+namespace Content.Server.StationEvents.Events
 {
     public abstract class StationEvent
     {

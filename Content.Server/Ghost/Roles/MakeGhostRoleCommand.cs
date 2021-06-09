@@ -1,13 +1,13 @@
 ﻿#nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer.GhostRoles;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Mind.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.GhostRoles
+namespace Content.Server.Ghost.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
     public class MakeGhostRoleCommand : IConsoleCommand

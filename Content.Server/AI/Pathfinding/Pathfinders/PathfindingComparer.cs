@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
+namespace Content.Server.AI.Pathfinding.Pathfinders
 {
     public class PathfindingComparer : IComparer<ValueTuple<float, PathfindingNode>>
     {

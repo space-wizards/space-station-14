@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.Chemistry
+namespace Content.Shared.Chemistry.Metabolizable
 {
     /// <summary>
     /// Metabolism behavior for a reagent.

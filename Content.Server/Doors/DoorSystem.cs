@@ -1,9 +1,7 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+using Content.Shared.Doors;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Doors
 {
     /// <summary>
     /// Used on the server side to manage global access level overrides.

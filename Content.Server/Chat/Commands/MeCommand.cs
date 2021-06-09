@@ -1,13 +1,13 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Chat
+namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
     internal class MeCommand : IConsoleCommand

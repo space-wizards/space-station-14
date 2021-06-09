@@ -1,7 +1,7 @@
 #nullable enable
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.NodeGroups;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.Power.Components
 {
     public abstract class BasePowerNetComponent : BaseNetConnectorComponent<IPowerNet>
     {

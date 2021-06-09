@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
 
-namespace Content.Shared.GameObjects.Components.Body.Part
+namespace Content.Shared.Body.Part
 {
     /// <summary>
     ///     This interface gives components behavior when a body part

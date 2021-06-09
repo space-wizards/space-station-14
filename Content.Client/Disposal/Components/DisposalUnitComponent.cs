@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]

@@ -2,7 +2,7 @@
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Utility
+namespace Content.Server.UserInterface
 {
     public static class UserInterfaceHelpers
     {

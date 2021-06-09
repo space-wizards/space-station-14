@@ -1,14 +1,14 @@
 #nullable enable
 using System;
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Commands;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Actions
+namespace Content.Server.Actions.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
     public sealed class RevokeAction : IConsoleCommand

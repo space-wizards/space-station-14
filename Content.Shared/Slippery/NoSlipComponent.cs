@@ -1,7 +1,7 @@
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Content.Shared.EffectBlocker;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Slippery
 {
     [RegisterComponent]
     public class NoSlipComponent : Component, IEffectBlocker

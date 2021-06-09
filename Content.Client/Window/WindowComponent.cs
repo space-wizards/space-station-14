@@ -1,15 +1,14 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components;
+using Content.Client.Wall.Components;
+using Content.Shared.Window;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
-using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
+using static Content.Client.IconSmoothing.IconSmoothComponent;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Window
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]

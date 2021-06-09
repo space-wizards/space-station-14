@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Rotation
+namespace Content.Shared.Rotation
 {
     [Serializable, NetSerializable]
     public enum RotationVisuals

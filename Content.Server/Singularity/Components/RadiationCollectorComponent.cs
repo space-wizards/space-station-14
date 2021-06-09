@@ -1,19 +1,19 @@
 #nullable enable
 using System;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Singularity;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Radiation;
+using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     public class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct

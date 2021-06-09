@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("constructionGraph")]
     public class ConstructionGraphPrototype : IPrototype, ISerializationHooks

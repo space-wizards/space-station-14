@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.Components;
+using Content.Server.Cooldown;
+using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Hands;
+using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,7 +20,7 @@ using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
+namespace Content.Server.Weapon.Melee
 {
     public sealed class MeleeWeaponSystem : EntitySystem
     {

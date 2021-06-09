@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Singularity;
+﻿using Content.Server.Singularity.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Singularity.EntitySystems
 {
     public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {

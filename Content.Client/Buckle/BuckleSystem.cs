@@ -1,6 +1,6 @@
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Buckle;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Buckle
 {
     internal sealed class BuckleSystem : SharedBuckleSystem
     {

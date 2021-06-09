@@ -1,20 +1,21 @@
 #nullable enable
-using Content.Client.Interfaces;
+using Content.Client.GameTicking.Managers;
+using Content.Client.Lobby;
+using Content.Client.Viewport;
+using Content.Shared;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
-using Content.Shared;
+using Robust.Client;
+using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Client;
-using Robust.Client.State;
-using Content.Client.State;
-using Robust.Shared.Player;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Audio
 {
     [UsedImplicitly]
     public class BackgroundAudioSystem : EntitySystem

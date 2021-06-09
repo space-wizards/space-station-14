@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Content.Client.GameObjects.Components.HUD.Inventory;
-using Content.Client.GameObjects.Components.Items;
-using Content.Client.GameObjects.Components.Mobs.Actions;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Controls;
-using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Client.Actions.Assignments;
+using Content.Client.Actions.UI;
+using Content.Client.Hands;
+using Content.Client.Inventory;
+using Content.Client.Items.UI;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -15,7 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.Actions
 {
     /// <inheritdoc/>
     [RegisterComponent]

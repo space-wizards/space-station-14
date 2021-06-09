@@ -1,6 +1,6 @@
 using Robust.Client.UserInterface.CustomControls;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Ghost.Roles.UI
 {
     public class GhostRoleWindow : SS14Window
     {

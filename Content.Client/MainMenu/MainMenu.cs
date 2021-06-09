@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Content.Client.Changelog;
-using Content.Client.UserInterface;
+using Content.Client.EscapeMenu.UI;
+using Content.Client.Parallax;
 using Robust.Client;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -15,7 +16,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
 
-namespace Content.Client.State
+namespace Content.Client.MainMenu
 {
     /// <summary>
     ///     Main menu screen that is the first screen to be displayed when the game starts.

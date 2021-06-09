@@ -1,11 +1,11 @@
-using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.PDA;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 
-namespace Content.Client.GameObjects.Components.PDA
+namespace Content.Client.PDA
 {
     [RegisterComponent]
     public class PDAComponent : SharedPDAComponent

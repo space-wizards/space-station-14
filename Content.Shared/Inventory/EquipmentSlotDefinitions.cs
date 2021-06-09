@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Inventory
+namespace Content.Shared.Inventory
 {
     public static class EquipmentSlotDefines
     {

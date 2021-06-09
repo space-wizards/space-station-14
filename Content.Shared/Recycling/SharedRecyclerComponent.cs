@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Recycling
+namespace Content.Shared.Recycling
 {
     [NetSerializable, Serializable]
     public enum RecyclerVisuals

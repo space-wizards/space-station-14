@@ -1,11 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Morgue;
+﻿using Content.Shared.Morgue;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Morgue
+namespace Content.Client.Morgue.Visualizers
 {
     [UsedImplicitly]
     public sealed class CrematoriumVisualizer : AppearanceVisualizer

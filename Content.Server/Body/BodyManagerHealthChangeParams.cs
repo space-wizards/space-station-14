@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Damage;
+﻿using Content.Shared.Body.Part;
+using Content.Shared.Damage;
 
-namespace Content.Server.GameObjects.Components.Body
+namespace Content.Server.Body
 {
     public interface IBodyHealthChangeParams
     {

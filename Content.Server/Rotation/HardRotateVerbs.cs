@@ -1,9 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Verbs;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-
-namespace Content.Server
+﻿namespace Content.Server.Rotation
 {
     // Mapping tools
     // Uncomment if you need them, I guess.

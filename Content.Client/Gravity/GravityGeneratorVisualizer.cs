@@ -1,16 +1,14 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Gravity;
-using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using Content.Shared.Gravity;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Gravity
+namespace Content.Client.Gravity
 {
     [UsedImplicitly]
     public class GravityGeneratorVisualizer : AppearanceVisualizer, ISerializationHooks

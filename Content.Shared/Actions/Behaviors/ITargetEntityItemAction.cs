@@ -1,7 +1,8 @@
 ﻿#nullable enable
+using Content.Shared.Actions.Behaviors.Item;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Behaviors
 {
     /// <summary>
     /// Item action which is used on a targeted entity.

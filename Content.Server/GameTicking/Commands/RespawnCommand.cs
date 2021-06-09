@@ -1,11 +1,10 @@
-using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Server.Commands.GameTicking
+namespace Content.Server.GameTicking.Commands
 {
     class RespawnCommand : IConsoleCommand
     {

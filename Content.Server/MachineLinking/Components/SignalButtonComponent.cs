@@ -1,10 +1,10 @@
-﻿using Content.Server.GameObjects.Components.MachineLinking.Signals;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Server.MachineLinking.Signals;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameObjects.Components.MachineLinking
+namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
     public class SignalButtonComponent : Component, IActivate, IInteractHand

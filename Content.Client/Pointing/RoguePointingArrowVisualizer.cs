@@ -1,12 +1,12 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Pointing;
+using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Pointing
+namespace Content.Client.Pointing
 {
     [UsedImplicitly]
     public class RoguePointingArrowVisualizer : AppearanceVisualizer

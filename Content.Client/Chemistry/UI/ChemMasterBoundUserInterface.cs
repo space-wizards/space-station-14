@@ -1,11 +1,11 @@
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using Content.Shared.Chemistry.Dispenser;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Chemistry.ChemMaster.SharedChemMasterComponent;
+using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
+namespace Content.Client.Chemistry.UI
 {
     /// <summary>
     /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.

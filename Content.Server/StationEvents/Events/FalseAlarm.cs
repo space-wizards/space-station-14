@@ -1,9 +1,8 @@
 ﻿#nullable enable
 using JetBrains.Annotations;
-using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.StationEvents
+namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
     public sealed class FalseAlarm : StationEvent

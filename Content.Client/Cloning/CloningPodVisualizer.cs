@@ -1,10 +1,10 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent.CloningPodStatus;
+using static Content.Shared.Cloning.SharedCloningPodComponent;
+using static Content.Shared.Cloning.SharedCloningPodComponent.CloningPodStatus;
 
-namespace Content.Client.GameObjects.Components.CloningPod
+namespace Content.Client.Cloning
 {
     [UsedImplicitly]
     public class CloningPodVisualizer : AppearanceVisualizer
@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             //TODO: Find a use for GORE POD
             switch (status)
             {
-                case Cloning: return "pod_1";
+                case CloningPodStatus.Cloning: return "pod_1";
                 case NoMind: return "pod_e";
                 case Gore: return "pod_g";
                 case Idle: return "pod_0";

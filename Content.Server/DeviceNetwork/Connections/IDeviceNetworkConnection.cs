@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.DeviceNetwork.Connections
 {
     public interface IDeviceNetworkConnection
     {

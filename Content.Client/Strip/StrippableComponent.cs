@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.DragDrop;
+using Content.Shared.Strip.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.GUI
+namespace Content.Client.Strip
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrippableComponent))]

@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Nutrition;
+﻿using Content.Shared.Nutrition.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Nutrition
+namespace Content.Client.Nutrition.Visualizers
 {
     [UsedImplicitly]
     public class CreamPiedVisualizer : AppearanceVisualizer

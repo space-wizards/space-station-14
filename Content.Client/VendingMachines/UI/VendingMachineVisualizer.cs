@@ -6,9 +6,9 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
+using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
-namespace Content.Client.GameObjects.Components.VendingMachines
+namespace Content.Client.VendingMachines.UI
 {
     [UsedImplicitly]
     public sealed class VendingMachineVisualizer : AppearanceVisualizer, ISerializationHooks

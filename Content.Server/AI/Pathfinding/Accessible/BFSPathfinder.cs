@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
+using Content.Server.AI.Pathfinding.Pathfinders;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
+namespace Content.Server.AI.Pathfinding.Accessible
 {
     /// <summary>
     /// The simplest pathfinder

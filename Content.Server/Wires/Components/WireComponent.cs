@@ -1,17 +1,15 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Stack;
+using Content.Server.Tools.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Stacks;
+using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.Wires.Components
 {
     /// <summary>
     ///     Allows the attached entity to be destroyed by a cutting tool, dropping a piece of wire.

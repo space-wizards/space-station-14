@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using Content.Shared.Chemistry.Dispenser;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
+using static Content.Shared.Chemistry.Dispenser.SharedReagentDispenserComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
+namespace Content.Client.Chemistry.UI
 {
     /// <summary>
     /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.

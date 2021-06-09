@@ -2,7 +2,7 @@
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.GameWindow
 {
     public sealed class MsgRequestWindowAttention : NetMessage
     {

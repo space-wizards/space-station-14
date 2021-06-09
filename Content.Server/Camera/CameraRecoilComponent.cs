@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Camera;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Camera
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCameraRecoilComponent))]

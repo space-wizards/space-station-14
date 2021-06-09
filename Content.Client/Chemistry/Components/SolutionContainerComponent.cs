@@ -1,7 +1,7 @@
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSolutionContainerComponent))]

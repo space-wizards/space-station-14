@@ -2,7 +2,7 @@
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Voting
 {
     /// <summary>
     ///     Used to tell clients whether they are able to currently call votes.

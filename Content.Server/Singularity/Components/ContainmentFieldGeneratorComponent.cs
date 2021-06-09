@@ -2,19 +2,19 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
+using Content.Shared.Tag;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.ViewVariables;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Singularity
+namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, IStartCollide

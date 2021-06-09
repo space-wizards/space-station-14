@@ -1,10 +1,10 @@
-﻿using Content.Shared.Chemistry;
+﻿using System;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using System;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Weapon.Melee
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     public class MeleeChemicalInjectorComponent : Component

@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Access.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.PDA
+namespace Content.Server.PDA
 {
     public static class PdaExtensions
     {

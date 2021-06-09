@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Suspicion;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.GameMode;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs.Roles.Suspicion;
+using Content.Server.Chat.Managers;
+using Content.Server.Doors;
 using Content.Server.Players;
+using Content.Server.Suspicion;
+using Content.Server.Suspicion.EntitySystems;
+using Content.Server.Suspicion.Roles;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.MobState;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -19,7 +18,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameTicking.GameRules
+namespace Content.Server.GameTicking.Rules
 {
     /// <summary>
     ///     Simple GameRule that will do a TTT-like gamemode with traitors.

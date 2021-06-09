@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Pulling;
+﻿using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Pulling
+namespace Content.Client.Pulling
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedPullableComponent))]

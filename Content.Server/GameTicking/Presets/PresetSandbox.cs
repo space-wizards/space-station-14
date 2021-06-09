@@ -3,7 +3,7 @@ using Content.Server.Sandbox;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameTicking.GamePresets
+namespace Content.Server.GameTicking.Presets
 {
     [GamePreset("sandbox")]
     public sealed class PresetSandbox : GamePreset

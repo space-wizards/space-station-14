@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.Verbs
 {
     public interface IShowContextMenu : IComponent
     {

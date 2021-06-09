@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems.GameMode;
-using Content.Server.Mobs;
-using Content.Server.Mobs.Roles;
-using Content.Server.Mobs.Roles.Suspicion;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Suspicion;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Mind.Components;
+using Content.Server.Roles;
+using Content.Server.Suspicion.EntitySystems;
+using Content.Server.Suspicion.Roles;
+using Content.Shared.Examine;
+using Content.Shared.MobState;
+using Content.Shared.Suspicion;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -17,7 +16,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Suspicion
+namespace Content.Server.Suspicion
 {
     [RegisterComponent]
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine

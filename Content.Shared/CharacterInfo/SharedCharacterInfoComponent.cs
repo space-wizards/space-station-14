@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.NetIDs;
 using Content.Shared.Objectives;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Actor
+namespace Content.Shared.CharacterInfo
 {
     public class SharedCharacterInfoComponent : Component
     {

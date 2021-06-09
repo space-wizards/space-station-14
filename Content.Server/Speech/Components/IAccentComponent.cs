@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace Content.Server.GameObjects.Components.Mobs.Speech
+namespace Content.Server.Speech.Components
 {
     internal interface IAccentComponent
     {

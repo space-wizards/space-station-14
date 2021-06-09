@@ -1,13 +1,14 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.Components.Pointing;
+using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Server.Pointing.Components;
+using Content.Server.Visibility;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
-using Content.Shared.Interfaces;
-using Content.Shared.Utility;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -21,7 +22,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class PointingSystem : EntitySystem

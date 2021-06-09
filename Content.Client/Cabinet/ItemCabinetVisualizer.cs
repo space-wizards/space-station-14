@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Cabinet;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Cabinet
 {
     [UsedImplicitly]
     public class ItemCabinetVisualizer : AppearanceVisualizer

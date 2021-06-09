@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Transform
 {
     public static class TransformExtensions
     {

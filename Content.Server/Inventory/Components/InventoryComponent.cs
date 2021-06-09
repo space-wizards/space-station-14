@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Commands;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
+using Content.Server.Clothing.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction;
+using Content.Server.Items;
+using Content.Server.Pressure;
+using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
+using Content.Shared.EffectBlocker;
+using Content.Shared.Inventory;
+using Content.Shared.Movement.Components;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -26,10 +28,10 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]

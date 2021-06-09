@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Destructible.Thresholds;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Server.Destructible.Thresholds;
+using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Destructible
+namespace Content.Server.Destructible
 {
     /// <summary>
     ///     When attached to an <see cref="IEntity"/>, allows it to take damage

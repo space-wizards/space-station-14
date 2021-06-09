@@ -1,17 +1,16 @@
 using Content.Shared.Audio;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Content.Shared.Interaction;
+using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.Toys
 {
     [RegisterComponent]
     public class ToysComponent : Component, IActivate, IUse, ILand

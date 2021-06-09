@@ -10,7 +10,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Client.UserInterface.AdminMenu.Tabs.AtmosTab
+namespace Content.Client.Administration.UI.Tabs.AtmosTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]

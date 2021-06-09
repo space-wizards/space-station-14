@@ -1,15 +1,15 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Clothing.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Smoking;
+using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     /// <summary>
     /// This item acts as a representation for smokable consumables.

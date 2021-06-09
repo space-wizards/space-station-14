@@ -1,14 +1,14 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Server.Stack;
+using Content.Shared.Prototypes;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]

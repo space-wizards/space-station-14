@@ -1,19 +1,18 @@
 #nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Mobs.State;
-using Content.Server.GameObjects.Components.Pulling;
-using Content.Server.GameObjects.Components.Strap;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Alert;
+using Content.Server.Hands.Components;
+using Content.Server.MobState.States;
+using Content.Server.Pulling;
+using Content.Server.Standing;
+using Content.Server.Stunnable.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Utility;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -27,7 +26,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Buckle
+namespace Content.Server.Buckle.Components
 {
     /// <summary>
     ///     Component that handles sitting entities into <see cref="StrapComponent"/>s.

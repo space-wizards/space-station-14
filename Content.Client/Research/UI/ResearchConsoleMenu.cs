@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components.Research;
-using Content.Shared.Research;
+using Content.Shared.Research.Prototypes;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -9,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Research
+namespace Content.Client.Research.UI
 {
     public class ResearchConsoleMenu : SS14Window
     {

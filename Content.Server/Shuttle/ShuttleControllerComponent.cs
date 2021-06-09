@@ -1,23 +1,17 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Buckle;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Alert;
+using Content.Server.Buckle.Components;
+using Content.Server.Mind.Components;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.Physics;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Movement
+namespace Content.Server.Shuttle
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]

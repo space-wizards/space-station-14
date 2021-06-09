@@ -2,9 +2,9 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
+using static Content.Shared.Cloning.SharedCloningPodComponent;
 
-namespace Content.Client.GameObjects.Components.CloningPod
+namespace Content.Client.Cloning.UI
 {
     [UsedImplicitly]
     public class CloningPodBoundUserInterface : BoundUserInterface

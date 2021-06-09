@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Observer
+namespace Content.Shared.Ghost
 {
     public class SharedGhostComponent : Component, IActionBlocker
     {

@@ -1,12 +1,13 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Damage
 {
     [UsedImplicitly]
     public class GodmodeSystem : EntitySystem, IResettingEntitySystem

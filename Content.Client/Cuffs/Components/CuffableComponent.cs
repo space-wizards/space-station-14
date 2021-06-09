@@ -1,12 +1,12 @@
-﻿using Content.Shared.GameObjects.Components.ActionBlocking;
-using Content.Shared.Preferences.Appearance;
+﻿using Content.Shared.CharacterAppearance;
+using Content.Shared.Cuffs.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.ActionBlocking
+namespace Content.Client.Cuffs.Components
 {
     [RegisterComponent]
     public class CuffableComponent : SharedCuffableComponent

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components.Cargo;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.Prototypes.Cargo;
+using Content.Client.Stylesheets;
+using Content.Shared.Cargo;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -12,7 +11,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.UserInterface.Cargo
+namespace Content.Client.Cargo.UI
 {
     public class CargoConsoleMenu : SS14Window
     {

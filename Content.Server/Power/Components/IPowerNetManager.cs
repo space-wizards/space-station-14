@@ -1,8 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.NodeGroups;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.Power.Components
 {
     /// <summary>
     ///     Maintains a set of <see cref="IPowerNet"/>s that need to be updated with <see cref="IPowerNet.UpdateConsumerReceivedPower"/>.

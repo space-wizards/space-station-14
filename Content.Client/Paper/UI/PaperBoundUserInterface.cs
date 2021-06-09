@@ -2,9 +2,9 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.SharedPaperComponent;
+using static Content.Shared.Paper.SharedPaperComponent;
 
-namespace Content.Client.GameObjects.Components.Paper
+namespace Content.Client.Paper.UI
 {
     [UsedImplicitly]
     public class PaperBoundUserInterface : BoundUserInterface

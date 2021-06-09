@@ -2,7 +2,7 @@
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.StationEvents
 {
     public class MsgRequestStationEvents : NetMessage
     {

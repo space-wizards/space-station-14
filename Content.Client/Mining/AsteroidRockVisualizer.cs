@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Mining;
+﻿using Content.Shared.Mining;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Mining
+namespace Content.Client.Mining
 {
     [UsedImplicitly]
     public class AsteroidRockVisualizer : AppearanceVisualizer

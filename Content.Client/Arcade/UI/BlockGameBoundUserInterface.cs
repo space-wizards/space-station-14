@@ -1,9 +1,8 @@
-﻿using Content.Client.Arcade;
-using Content.Shared.Arcade;
+﻿using Content.Shared.Arcade;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Arcade
+namespace Content.Client.Arcade.UI
 {
     public class BlockGameBoundUserInterface : BoundUserInterface
     {

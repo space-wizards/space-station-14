@@ -1,8 +1,7 @@
-using Content.Shared.GameObjects.Components.Doors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Doors
 {
     public abstract class SharedDoorSystem : EntitySystem
     {

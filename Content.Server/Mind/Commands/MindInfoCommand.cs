@@ -6,7 +6,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Mobs
+namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
     public class MindInfoCommand : IConsoleCommand

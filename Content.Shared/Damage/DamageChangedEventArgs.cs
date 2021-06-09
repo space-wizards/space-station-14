@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.Damage
 {
     public class DamageChangedEventArgs : EventArgs
     {

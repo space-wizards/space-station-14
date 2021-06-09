@@ -1,22 +1,20 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Threading;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Movement.Components;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.Stunnable
 {
     public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand
     {

@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
-namespace Content.Server.Voting
+namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager
     {

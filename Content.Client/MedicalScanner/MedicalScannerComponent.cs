@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Medical;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.DragDrop;
+using Content.Shared.MedicalScanner;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.MedicalScanner
+namespace Content.Client.MedicalScanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]

@@ -1,12 +1,13 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Arcade;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Server.VendingMachines;
+using Content.Server.Wires.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Arcade;
+using Content.Shared.Interaction;
+using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -14,13 +15,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Arcade
+namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

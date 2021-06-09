@@ -1,20 +1,18 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Portal;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.Portal.Components;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Portal
+namespace Content.Server.Portal.Components
 {
     [RegisterComponent]
     public class PortalComponent : SharedPortalComponent, IStartCollide

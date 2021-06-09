@@ -1,8 +1,13 @@
 using System;
 using System.Linq;
-using Content.Client.Interfaces;
-using Content.Client.Interfaces.Chat;
-using Content.Client.UserInterface;
+using Content.Client.Chat.Managers;
+using Content.Client.EscapeMenu.UI;
+using Content.Client.GameTicking.Managers;
+using Content.Client.LateJoin;
+using Content.Client.Lobby.UI;
+using Content.Client.Preferences;
+using Content.Client.Preferences.UI;
+using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Chat;
 using Content.Shared.Input;
@@ -22,7 +27,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameTicking.SharedGameTicker;
 
-namespace Content.Client.State
+namespace Content.Client.Lobby
 {
     public class LobbyState : Robust.Client.State.State
     {

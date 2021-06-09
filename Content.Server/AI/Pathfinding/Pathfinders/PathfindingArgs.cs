@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
+namespace Content.Server.AI.Pathfinding.Pathfinders
 {
     public struct PathfindingArgs
     {

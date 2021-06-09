@@ -1,7 +1,7 @@
 using Robust.Client.ResourceManagement;
 using Robust.Shared.IoC;
 
-namespace Content.Client
+namespace Content.Client.IoC
 {
     public static class StaticIoC
     {

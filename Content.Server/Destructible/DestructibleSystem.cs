@@ -1,11 +1,11 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Acts;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Destructible
 {
     [UsedImplicitly]
     public class DestructibleSystem : EntitySystem

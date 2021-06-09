@@ -1,16 +1,17 @@
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Metabolism;
+using Content.Server.Chemistry.Components;
 using Content.Server.Interfaces;
+using Content.Server.Metabolism;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Body.Networks;
+using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body.Circulatory
+namespace Content.Server.Body.Circulatory
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBloodstreamComponent))]

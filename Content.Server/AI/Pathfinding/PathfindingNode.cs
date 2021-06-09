@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.Doors;
+using Content.Server.Access.Components;
+using Content.Server.Doors.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
+namespace Content.Server.AI.Pathfinding
 {
     public class PathfindingNode
     {

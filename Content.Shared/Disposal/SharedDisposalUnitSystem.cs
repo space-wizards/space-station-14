@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Disposal
 {
     [UsedImplicitly]
     public sealed class SharedDisposalUnitSystem : EntitySystem

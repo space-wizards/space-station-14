@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
+using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -9,7 +9,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Tools.Components
 {
     /// <summary>
     ///     Not to be confused with Multitool (power)

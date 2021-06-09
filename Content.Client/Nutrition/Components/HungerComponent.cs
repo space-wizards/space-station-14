@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Nutrition;
+using Content.Shared.Movement.Components;
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Nutrition
+namespace Content.Client.Nutrition.Components
 {
     [RegisterComponent]
     public class HungerComponent : SharedHungerComponent

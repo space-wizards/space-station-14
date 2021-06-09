@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Disposal.Unit.Components;
+using Content.Server.Hands.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -19,9 +20,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

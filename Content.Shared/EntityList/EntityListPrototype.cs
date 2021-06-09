@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Prototypes.EntityList
+namespace Content.Shared.EntityList
 {
     [Prototype("entityList")]
     public class EntityListPrototype : IPrototype

@@ -3,12 +3,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Wires
 {
     public class SharedWiresComponent : Component
     {
@@ -185,7 +184,7 @@ namespace Content.Shared.GameObjects.Components
     {
         public static string Name(this WireColor color)
         {
-            return Loc.GetString(color switch
+            return Robust.Shared.Localization.Loc.GetString(color switch
             {
                 WireColor.Red => "Red",
                 WireColor.Blue => "Blue",
@@ -225,7 +224,7 @@ namespace Content.Shared.GameObjects.Components
 
         public static string Name(this WireLetter letter)
         {
-            return Loc.GetString(letter switch
+            return Robust.Shared.Localization.Loc.GetString(letter switch
             {
                 WireLetter.α => "Alpha",
                 WireLetter.β => "Beta",

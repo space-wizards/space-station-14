@@ -1,15 +1,16 @@
 #nullable enable
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Utility;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Server.Coordinates.Helpers;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.Components.Fluids
+namespace Content.Server.Fluids.Components
 {
     public static class SpillExtensions
     {

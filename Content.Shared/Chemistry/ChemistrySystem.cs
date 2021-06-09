@@ -1,15 +1,14 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Chemistry
 {
     /// <summary>
     /// This interface gives components behavior on whether entities solution (implying SolutionComponent is in place) is changed
@@ -49,13 +48,13 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
         }
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution? source)
+        public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution.Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
             ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent, ReagentUnit reactVolume, Solution? source)
+        public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent, ReagentUnit reactVolume, Solution.Solution? source)
         {
             if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
                 return;

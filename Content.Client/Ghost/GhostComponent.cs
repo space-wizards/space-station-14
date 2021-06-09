@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Content.Client.Interfaces.Chat;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Observer;
+using Content.Client.Chat.Managers;
+using Content.Client.HUD;
+using Content.Shared.Ghost;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
@@ -10,7 +10,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Observer
+namespace Content.Client.Ghost
 {
     [RegisterComponent]
     public class GhostComponent : SharedGhostComponent

@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Body.Components;
+using Content.Shared.Damage.Components;
 
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.Damage
 {
     /// <summary>
     ///     Data class with information on how to damage a

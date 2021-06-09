@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
-using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Cooldown;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Timing
+namespace Content.Server.Timing
 {
     /// <summary>
     /// Timer that creates a cooldown each time an object is activated/used

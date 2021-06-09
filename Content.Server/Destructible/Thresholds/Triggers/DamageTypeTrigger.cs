@@ -1,11 +1,10 @@
 ﻿#nullable enable
 using System;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
+namespace Content.Server.Destructible.Thresholds.Triggers
 {
     /// <summary>
     ///     A trigger that will activate when the amount of damage received

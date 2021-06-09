@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Mobs.Speech;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Content.Shared.EffectBlocker;
+using Content.Shared.Emoting;
+using Content.Shared.Speech;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
+namespace Content.Shared.ActionBlocker
 {
     /// <summary>
     /// Utility methods to check if a specific entity is allowed to perform an action.

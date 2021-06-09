@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Movement.Components
 {
     [RegisterComponent]
     public class StressTestMovementComponent : Component

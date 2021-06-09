@@ -1,9 +1,9 @@
-using Content.Shared.GameObjects.Components.Explosion;
+using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Explosion
+namespace Content.Client.Explosion
 {
     [UsedImplicitly]
     // ReSharper disable once InconsistentNaming

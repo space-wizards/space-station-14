@@ -1,12 +1,14 @@
 ﻿#nullable enable
-using Content.Shared.Interfaces;
+using Content.Shared.Actions.Behaviors;
+using Content.Shared.Actions.Behaviors.Item;
+using Content.Shared.Module;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Prototypes
 {
     /// <summary>
     /// An action which is granted to an entity via an item (such as toggling a flashlight).

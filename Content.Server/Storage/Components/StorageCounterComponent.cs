@@ -1,8 +1,8 @@
 #nullable enable
 
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.Stacks;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -10,7 +10,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Storage.Components
 {
     /// <summary>
     /// Storage that spawns and counts a single item.

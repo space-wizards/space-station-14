@@ -1,11 +1,11 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Markers
+namespace Content.Server.Warps
 {
     [RegisterComponent]
     public sealed class WarpPointComponent : Component, IExamine

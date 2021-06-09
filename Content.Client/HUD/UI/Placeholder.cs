@@ -1,6 +1,6 @@
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.HUD.UI
 {
     public sealed class Placeholder : PanelContainer
     {

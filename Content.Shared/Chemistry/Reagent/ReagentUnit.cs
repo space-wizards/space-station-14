@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry.Reagent
 {
     /// <summary>
     ///     Represents a quantity of reagent, to a precision of 0.01.

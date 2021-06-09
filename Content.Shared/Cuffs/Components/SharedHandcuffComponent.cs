@@ -1,9 +1,10 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.ActionBlocking
+namespace Content.Shared.Cuffs.Components
 {
     public abstract class SharedHandcuffComponent : Component
     {

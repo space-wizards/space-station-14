@@ -3,17 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Server.Hands.Components;
+using Content.Server.Tools.Components;
+using Content.Server.UserInterface;
+using Content.Server.VendingMachines;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
+using Content.Shared.Tool;
+using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -22,14 +21,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Wires.Components
 {
     [RegisterComponent]
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit

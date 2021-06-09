@@ -1,11 +1,10 @@
 ﻿using System;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Strip
 {
     public class StrippingMenu : SS14Window
     {

@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Graphics.Overlays
+namespace Content.Client.MobState.Overlays
 {
     public class CircleMaskOverlay : Overlay
     {

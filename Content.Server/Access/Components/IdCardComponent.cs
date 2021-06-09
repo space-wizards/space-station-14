@@ -3,7 +3,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Access
+namespace Content.Server.Access.Components
 {
     [RegisterComponent]
     public class IdCardComponent : Component

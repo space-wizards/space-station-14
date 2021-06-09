@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
+namespace Content.Shared.Chemistry.Dispenser
 {
     /// <summary>
     /// Is simply a list of reagents defined in yaml. This can then be set as a

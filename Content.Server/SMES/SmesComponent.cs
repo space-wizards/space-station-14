@@ -1,13 +1,16 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Utility;
+using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Power;
+using Content.Shared.Rounding;
+using Content.Shared.SMES;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.SMES
 {
     /// <summary>
     ///     Handles the "user-facing" side of the actual SMES object.

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
-using Content.Client.State;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
+using Content.Client.Alerts.UI;
+using Content.Client.Chat.Managers;
+using Content.Client.Lobby;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
@@ -20,7 +20,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Chat
+namespace Content.Client.Chat.UI
 {
     public class ChatBox : Control
     {

@@ -1,12 +1,13 @@
 using System.Linq;
-using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Research;
+using Content.Server.Research.Components;
+using Content.Shared.Lathe;
+using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameObjects.Components.Research
+namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]

@@ -1,13 +1,13 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Body.Surgery;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Surgery;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -15,7 +15,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body
+namespace Content.Server.Body.Mechanism
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMechanismComponent))]

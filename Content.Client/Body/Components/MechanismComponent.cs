@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
+﻿using Content.Shared.Body.Mechanism;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Body.Mechanism
+namespace Content.Client.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMechanismComponent))]

@@ -1,12 +1,12 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Behavior;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Body.Behavior
+namespace Content.Server.Body.Behavior
 {
     public abstract class MechanismBehavior : IMechanismBehavior
     {

@@ -1,6 +1,6 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Storage.Components
 {
     public interface IStorageComponent
     {

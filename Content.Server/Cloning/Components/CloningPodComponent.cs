@@ -1,26 +1,22 @@
 using System;
-using Content.Server.Eui;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Mobs;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Medical;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.Interfaces;
-using Content.Shared.Preferences;
+using Content.Server.CharacterAppearance.Components;
+using Content.Server.EUI;
+using Content.Server.Mind.Components;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Cloning;
+using Content.Shared.MobState;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Network;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Medical
+namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
     public class CloningPodComponent : SharedCloningPodComponent
@@ -36,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Medical
             Owner.GetUIOrNull(CloningPodUIKey.Key);
 
         [ViewVariables] public ContainerSlot BodyContainer = default!;
-        [ViewVariables] public Mind? CapturedMind;
+        [ViewVariables] public Mind.Mind? CapturedMind;
         [ViewVariables] public float CloningProgress = 0;
         [DataField("cloningTime")]
         [ViewVariables] public float CloningTime = 30f;

@@ -1,8 +1,9 @@
 ﻿using System;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Cooldown;
+using Content.Client.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -16,7 +17,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface.Controls
+namespace Content.Client.Actions.UI
 {
     /// <summary>
     /// A slot in the action hotbar. Not extending BaseButton because

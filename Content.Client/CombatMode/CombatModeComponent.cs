@@ -1,11 +1,12 @@
-﻿using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Mobs;
+﻿using Content.Client.HUD;
+using Content.Shared.CombatMode;
+using Content.Shared.Targeting;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.CombatMode
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCombatModeComponent))]

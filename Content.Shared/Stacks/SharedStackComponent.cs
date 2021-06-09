@@ -1,6 +1,5 @@
 using System;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Stacks;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -8,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Stacks
 {
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {

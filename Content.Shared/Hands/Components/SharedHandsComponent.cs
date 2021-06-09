@@ -1,10 +1,11 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Items
+namespace Content.Shared.Hands.Components
 {
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {

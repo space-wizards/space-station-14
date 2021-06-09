@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Hands.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Placeable
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]

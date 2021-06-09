@@ -1,12 +1,12 @@
 #nullable enable
 using System;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Access.Components;
+using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.APC;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -16,7 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
+namespace Content.Server.APC.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

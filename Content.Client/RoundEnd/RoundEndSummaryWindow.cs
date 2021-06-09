@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Utility;
+using Content.Client.Message;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using static Content.Shared.GameTicking.SharedGameTicker;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.RoundEnd
 {
     public sealed class RoundEndSummaryWindow : SS14Window
     {

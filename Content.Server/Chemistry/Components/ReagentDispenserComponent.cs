@@ -3,18 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -24,11 +24,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     /// <summary>
     /// Contains all the server-side logic for reagent dispensers. See also <see cref="SharedReagentDispenserComponent"/>.

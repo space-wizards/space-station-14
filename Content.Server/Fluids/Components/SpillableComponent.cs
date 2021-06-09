@@ -1,13 +1,13 @@
-﻿using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameObjects.Components.Fluids
+namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
     public class SpillableComponent : Component, IDropped

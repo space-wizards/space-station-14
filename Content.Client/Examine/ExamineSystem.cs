@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Examine;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -17,7 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Examine
 {
     [UsedImplicitly]
     internal sealed class ExamineSystem : ExamineSystemShared

@@ -1,28 +1,28 @@
 ﻿#nullable enable
 using System.Threading;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Act;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
+using Content.Server.Notification;
 using Content.Server.Players;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Morgue;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Morgue;
+using Content.Shared.Notification;
+using Content.Shared.Standing;
+using Content.Shared.Verbs;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.Components.Morgue
+namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(MorgueEntityStorageComponent))]

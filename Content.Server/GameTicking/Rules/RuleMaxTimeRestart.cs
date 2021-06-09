@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Chat.Managers;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameTicking.GameRules
+namespace Content.Server.GameTicking.Rules
 {
     public sealed class RuleMaxTimeRestart : GameRule
     {

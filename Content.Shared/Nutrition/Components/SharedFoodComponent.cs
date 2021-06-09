@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Nutrition
+namespace Content.Shared.Nutrition.Components
 {
     public class SharedFoodComponent
     {

@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+﻿using Content.Shared.Climbing;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Movement
+namespace Content.Client.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IClimbable))]

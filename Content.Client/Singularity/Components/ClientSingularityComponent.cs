@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components.Singularity;
+using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Singularity
+namespace Content.Client.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IClientSingularityInstance))]

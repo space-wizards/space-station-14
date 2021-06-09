@@ -1,12 +1,10 @@
 #nullable enable
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     public class PowerSupplierComponent : BasePowerNetComponent

@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.Projectiles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem

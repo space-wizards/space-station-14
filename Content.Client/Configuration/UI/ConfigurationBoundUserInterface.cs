@@ -2,9 +2,9 @@
 using System.Text.RegularExpressions;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.SharedConfigurationComponent;
+using static Content.Shared.Configuration.SharedConfigurationComponent;
 
-namespace Content.Client.GameObjects.Components.Configuration
+namespace Content.Client.Configuration.UI
 {
     public class ConfigurationBoundUserInterface : BoundUserInterface
     {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Whitelist
 {
     /// <summary>
     ///     Used to determine whether an entity fits a certain whitelist.

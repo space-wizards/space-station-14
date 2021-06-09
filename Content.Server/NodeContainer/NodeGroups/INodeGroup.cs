@@ -1,13 +1,12 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.NodeContainer.NodeGroups
 {
     /// <summary>
     ///     Maintains a collection of <see cref="Node"/>s, and performs operations requiring a list of

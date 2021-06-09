@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Robust.Server.Player;
 
-namespace Content.Server.GameTicking.GamePresets
+namespace Content.Server.GameTicking.Presets
 {
     [GamePreset("extended")]
     public class PresetExtended : GamePreset

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Interfaces;
+using Content.Server.Radio.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Radio.EntitySystems
 {
     [UsedImplicitly]
     public class RadioSystem : EntitySystem

@@ -1,7 +1,7 @@
-﻿using Content.Shared.Prototypes;
+﻿using Content.Shared.Dataset;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Random.Helpers
 {
     public static class SharedRandomExtensions
     {

@@ -1,14 +1,12 @@
 #nullable enable
-using Content.Client.GameObjects.Components.Observer;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
-using Vector2 = Robust.Shared.Maths.Vector2;
 using Robust.Shared.Localization;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Ghost
 {
     public class GhostGui : Control
     {

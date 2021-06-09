@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.ParticleAccelerator
 {
     [UsedImplicitly]
     [DataDefinition]

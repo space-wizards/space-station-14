@@ -1,12 +1,10 @@
-using Content.Server.GameObjects.Components.Weapon;
+using Content.Server.Projectiles.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Projectiles
+namespace Content.Server.Flash.Components
 {
     /// <summary>
     /// Upon colliding with an object this will flash in an area around it

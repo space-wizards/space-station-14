@@ -1,17 +1,16 @@
 #nullable enable
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using System.Collections.Generic;
-using Robust.Client.Graphics;
 using System.Linq;
-using System;
+using Content.Client.Singularity.Components;
+using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Content.Client.GameObjects.Components.Singularity;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
-namespace Content.Client.Graphics.Overlays
+namespace Content.Client.Singularity
 {
     public class SingularityOverlay : Overlay
     {

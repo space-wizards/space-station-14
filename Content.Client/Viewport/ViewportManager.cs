@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Content.Client.HUD.UI;
 using Content.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Viewport
 {
     /// <summary>
     ///     Event proxy for <see cref="MainViewport"/> to listen to config events.

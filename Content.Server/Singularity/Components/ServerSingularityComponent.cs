@@ -1,14 +1,13 @@
 #nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.GameObjects.Components.Singularity;
+using Content.Server.Radiation;
+using Content.Shared.Singularity;
+using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -17,7 +16,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Singularity
+namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
@@ -150,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             {
                 foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourFixture.Body.GetWorldAABB()))
                 {
-                    mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
+                    mapGridComponent.Grid.SetTile(tile.GridIndices, Robust.Shared.Map.Tile.Empty);
                     Energy++;
                 }
                 return;

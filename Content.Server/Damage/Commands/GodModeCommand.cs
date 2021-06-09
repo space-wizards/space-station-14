@@ -1,13 +1,12 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Damage
+namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
     public class GodModeCommand : IConsoleCommand

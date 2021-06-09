@@ -1,5 +1,4 @@
-﻿using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -7,7 +6,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.Click
+namespace Content.Server.Examine
 {
     [UsedImplicitly]
     public class ExamineSystem : ExamineSystemShared

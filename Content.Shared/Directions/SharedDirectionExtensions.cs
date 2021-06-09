@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Directions
 {
     public static class SharedDirectionExtensions
     {

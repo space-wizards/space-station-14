@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Movement
+namespace Content.Client.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedClimbingComponent))]

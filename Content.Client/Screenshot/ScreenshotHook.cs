@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Content.Client.State;
+using Content.Client.Viewport;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace Content.Client
+namespace Content.Client.Screenshot
 {
     internal class ScreenshotHook : IScreenshotHook
     {

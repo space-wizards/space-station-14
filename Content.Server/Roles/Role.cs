@@ -1,7 +1,7 @@
 ﻿// Hey look,
 // Antag Datums.
 
-namespace Content.Server.Mobs
+namespace Content.Server.Roles
 {
     /// <summary>
     ///     The Role is a basic building block for,
@@ -13,7 +13,7 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     The mind owning this role instance.
         /// </summary>
-        public Mind Mind { get; }
+        public Mind.Mind Mind { get; }
 
         /// <summary>
         ///     A friendly name for this role type.
@@ -25,7 +25,7 @@ namespace Content.Server.Mobs
         /// </summary>
         public abstract bool Antagonist { get; }
 
-        protected Role(Mind mind)
+        protected Role(Mind.Mind mind)
         {
             Mind = mind;
         }

@@ -1,12 +1,13 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.Alert;
+using Content.Server.Standing;
+using Content.Server.Stunnable.Components;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.MobState;
+using Content.Shared.MobState.State;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 
-namespace Content.Server.GameObjects.Components.Mobs.State
+namespace Content.Server.MobState.States
 {
     public class DeadMobState : SharedDeadMobState
     {

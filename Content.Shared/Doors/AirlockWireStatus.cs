@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Doors
+namespace Content.Shared.Doors
 {
     [Serializable, NetSerializable]
     public enum AirlockWireStatus

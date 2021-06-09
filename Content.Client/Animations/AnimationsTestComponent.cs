@@ -5,7 +5,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Animations
 {
     [RegisterComponent]
     public sealed class AnimationsTestComponent : Component

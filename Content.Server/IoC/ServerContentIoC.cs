@@ -1,35 +1,36 @@
 using Content.Server.Administration;
+using Content.Server.Administration.Managers;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
-using Content.Server.Chat;
+using Content.Server.Chat.Managers;
+using Content.Server.Connection;
 using Content.Server.Database;
-using Content.Server.Eui;
-using Content.Server.GameObjects.Components.Mobs.Speech;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
+using Content.Server.DeviceNetwork;
+using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.Holiday;
 using Content.Server.Holiday.Interfaces;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Interfaces.PDA;
+using Content.Server.Module;
+using Content.Server.MoMMI;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Notification.Managers;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.PDA;
-using Content.Server.Preferences;
+using Content.Server.PDA.Managers;
+using Content.Server.Power.Components;
+using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
-using Content.Server.Utility;
-using Content.Server.Voting;
+using Content.Server.Speech;
+using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
-using Content.Shared.Interfaces;
-using Content.Shared.Kitchen;
 using Content.Shared.Alert;
+using Content.Shared.Kitchen;
+using Content.Shared.Module;
+using Content.Shared.Notification;
 using Robust.Shared.IoC;
 
-namespace Content.Server
+namespace Content.Server.IoC
 {
     internal static class ServerContentIoC
     {
@@ -56,7 +57,7 @@ namespace Content.Server
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
-            IoCManager.Register<IDeviceNetwork, DeviceNetwork>();
+            IoCManager.Register<IDeviceNetwork, DeviceNetwork.DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IHolidayManager, HolidayManager>();
             IoCManager.Register<IVoteManager, VoteManager>();

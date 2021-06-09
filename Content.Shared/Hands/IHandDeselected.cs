@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Hands
 {
     /// <summary>
     ///     This interface gives components behavior when they're held on a deselected hand.

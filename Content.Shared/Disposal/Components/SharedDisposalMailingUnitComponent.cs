@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.Components.Disposal
+namespace Content.Shared.Disposal.Components
 {
     public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent
     {

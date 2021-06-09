@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Construction;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Construction;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Stack;
+using Content.Shared.Construction;
+using Content.Shared.Interaction;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Construction
+namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
     public class MachineFrameComponent : Component, IInteractUsing

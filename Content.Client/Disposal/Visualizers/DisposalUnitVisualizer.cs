@@ -5,9 +5,9 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.Visualizers
 {
     [UsedImplicitly]
     public class DisposalUnitVisualizer : AppearanceVisualizer, ISerializationHooks

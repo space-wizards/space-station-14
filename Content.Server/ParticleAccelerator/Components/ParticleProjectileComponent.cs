@@ -1,17 +1,15 @@
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.Components.Singularity;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Physics;
+using Content.Server.Projectiles.Components;
+using Content.Server.Singularity.Components;
+using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.Components.PA
+namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
     public class ParticleProjectileComponent : Component, IStartCollide

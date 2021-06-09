@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.GameObjects.Components.Nutrition;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.Interaction;
+using Content.Shared.Nutrition.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     /// <summary>
     /// This container acts as a master object for things like Pizza, which holds slices.

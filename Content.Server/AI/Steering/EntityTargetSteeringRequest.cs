@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Steering
+namespace Content.Server.AI.Steering
 {
     public sealed class EntityTargetSteeringRequest : IAiSteeringRequest
     {

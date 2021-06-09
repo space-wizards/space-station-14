@@ -1,10 +1,11 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Body.Behavior
+namespace Content.Shared.Body.Behavior
 {
     /// <summary>
     ///     Gives functionality to a <see cref="IMechanism"/> when added to it.

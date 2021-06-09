@@ -1,18 +1,18 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Paper;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Paper
+namespace Content.Server.Paper
 {
     [RegisterComponent]
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse

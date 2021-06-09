@@ -1,16 +1,13 @@
 #nullable enable
-using System;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameTicking;
-using Content.Shared.GameObjects.Components.Movement;
-using Robust.Server.Console;
-using Robust.Shared.Console;
+using Content.Server.GameTicking;
+using Content.Server.Mind.Components;
+using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IGhostOnMove))]

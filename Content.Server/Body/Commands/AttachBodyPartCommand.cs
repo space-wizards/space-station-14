@@ -1,15 +1,15 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using static Content.Server.GameObjects.Components.Body.Part.BodyPartComponent;
+using static Content.Server.Body.Part.BodyPartComponent;
 
-namespace Content.Server.Commands
+namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public class AttachBodyPartCommand : IConsoleCommand

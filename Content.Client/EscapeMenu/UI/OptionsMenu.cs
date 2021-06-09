@@ -4,10 +4,9 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.EscapeMenu.UI
 {
     public sealed partial class OptionsMenu : SS14Window
     {

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Explosion
 {
     /// <summary>
     /// This interface gives components behavior when being "triggered" by timer or other conditions

@@ -1,13 +1,13 @@
-﻿using Content.Client.GameObjects.Components.Sound;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.Components.Sound;
-using Content.Shared.Kitchen;
+﻿using Content.Client.Sound;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Power;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Log;
 
-namespace Content.Client.GameObjects.Components.Kitchen
+namespace Content.Client.Kitchen.Visualizers
 {
     [UsedImplicitly]
     public sealed class MicrowaveVisualizer : AppearanceVisualizer

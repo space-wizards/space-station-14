@@ -1,4 +1,4 @@
-using Content.Client.State;
+using Content.Client.Viewport;
 using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.Enums;
@@ -6,10 +6,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace Content.Client.Graphics.Overlays
+namespace Content.Client.Flash
 {
     public class FlashOverlay : Overlay
     {
@@ -36,7 +35,7 @@ namespace Content.Client.Graphics.Overlays
             {
                 state.Viewport.Viewport.Screenshot(image =>
                 {
-                    var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
+                    var rgba32Image = image.CloneAs<Rgba32>(SixLabors.ImageSharp.Configuration.Default);
                     _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
                 });
             }

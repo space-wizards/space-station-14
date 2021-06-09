@@ -1,13 +1,14 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Research;
+using Content.Shared.NetIDs;
+using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Research
+namespace Content.Shared.Lathe
 {
     public class SharedLatheComponent : Component
     {

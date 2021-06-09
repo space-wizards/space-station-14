@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Damage.DamageContainer
+namespace Content.Shared.Damage.Container
 {
     /// <summary>
     ///     Prototype for the DamageContainer class.

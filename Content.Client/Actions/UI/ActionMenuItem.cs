@@ -1,11 +1,11 @@
 ﻿using System;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.Actions;
+using Content.Client.Stylesheets;
+using Content.Shared.Actions.Prototypes;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Actions.UI
 {
     /// <summary>
     /// An individual action visible in the action menu.

@@ -1,16 +1,16 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Conveyor;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Act;
+using Content.Server.Chat.Managers;
+using Content.Server.Conveyor;
+using Content.Server.GameTicking;
+using Content.Server.Items;
+using Content.Server.Notification;
 using Content.Server.Players;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Recycling;
-using Content.Shared.Interfaces;
+using Content.Server.Power.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Notification;
+using Content.Shared.Recycling;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -23,7 +23,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Recycling
+namespace Content.Server.Recycling.Components
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]

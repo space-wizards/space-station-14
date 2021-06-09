@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.MachineLinking;
+﻿using Content.Shared.MachineLinking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.MachineLinking
+namespace Content.Client.MachineLinking
 {
     [UsedImplicitly]
     public class SignalSwitchVisualizer : AppearanceVisualizer

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems.JobQueues.Queues
+namespace Content.Server.CPUJob.JobQueues.Queues
 {
     public class JobQueue
     {
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues.Queues
         /// How long the job's allowed to run for before suspending
         /// </summary>
         public virtual double MaxTime => 0.002;
-        
+
         private readonly Queue<IJob> _pendingQueue = new();
         private readonly List<IJob> _waitingJobs = new();
 

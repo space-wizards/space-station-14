@@ -1,12 +1,12 @@
 using Content.Shared.Audio;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Sound
+namespace Content.Server.Interaction.Components
 {
     /// <summary>
     /// Simple sound emitter that emits sound on use in hand

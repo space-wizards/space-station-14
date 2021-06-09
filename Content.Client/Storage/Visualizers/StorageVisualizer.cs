@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Storage;
+﻿using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.Storage.Visualizers
 {
     [UsedImplicitly]
     public sealed class StorageVisualizer : AppearanceVisualizer

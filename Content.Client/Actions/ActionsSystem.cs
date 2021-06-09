@@ -1,4 +1,5 @@
-﻿using Content.Client.GameObjects.Components.Mobs;
+﻿using Content.Client.Construction;
+using Content.Client.DragDrop;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Player;
@@ -7,7 +8,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Actions
 {
     [UsedImplicitly]
     public class ActionsSystem : EntitySystem

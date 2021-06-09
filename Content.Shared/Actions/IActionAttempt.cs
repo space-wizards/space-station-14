@@ -1,10 +1,13 @@
 ﻿#nullable enable
-using Content.Shared.Actions;
+using Content.Shared.Actions.Behaviors;
+using Content.Shared.Actions.Behaviors.Item;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.Actions
 {
     /// <summary>
     /// An attempt to perform a specific action. Main purpose of this interface is to

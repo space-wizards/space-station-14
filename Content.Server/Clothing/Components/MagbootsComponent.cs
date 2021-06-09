@@ -1,15 +1,17 @@
 ﻿#nullable enable
+using Content.Server.Alert;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Behaviors.Item;
+using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Clothing;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -18,9 +20,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

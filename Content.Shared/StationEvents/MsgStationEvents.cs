@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.StationEvents
 {
         public class MsgStationEvents : NetMessage
         {

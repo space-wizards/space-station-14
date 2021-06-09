@@ -1,8 +1,8 @@
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Mobs.Roles
+namespace Content.Server.Roles
 {
     public class Job : Role
     {
@@ -13,7 +13,7 @@ namespace Content.Server.Mobs.Roles
 
         public string? StartingGear => Prototype.StartingGear;
 
-        public Job(Mind mind, JobPrototype jobPrototype) : base(mind)
+        public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
         {
             Prototype = jobPrototype;
             Name = jobPrototype.Name;

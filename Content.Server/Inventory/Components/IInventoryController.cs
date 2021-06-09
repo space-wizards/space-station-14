@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.Inventory.Components
 {
     /// <summary>
     ///     Allows for overriding inventory-related behavior on an entity.

@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Light
 {
     [UsedImplicitly]
     public class LanternVisualizer : AppearanceVisualizer

@@ -1,15 +1,14 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.GameObjects.Components.ActionBlocking;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects;
+using Content.Server.DoAfter;
+using Content.Server.Hands.Components;
+using Content.Server.Stunnable.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Cuffs.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -19,7 +18,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.ActionBlocking
+namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandcuffComponent))]

@@ -1,11 +1,9 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Physics;
+using Content.Shared.Movement.Components;
+using Content.Shared.NetIDs;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +14,7 @@ using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Pulling
+namespace Content.Shared.Pulling.Components
 {
     public abstract class SharedPullableComponent : Component, IRelayMoveInput
     {

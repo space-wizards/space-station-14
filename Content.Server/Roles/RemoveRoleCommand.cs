@@ -1,5 +1,4 @@
 ﻿using Content.Server.Administration;
-using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
@@ -8,7 +7,7 @@ using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Commands.Mobs
+namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
     public class RemoveRoleCommand : IConsoleCommand

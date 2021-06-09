@@ -1,15 +1,13 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Rotatable
+namespace Content.Server.Rotation.Components
 {
     [RegisterComponent]
     public class FlippableComponent : Component

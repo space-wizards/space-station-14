@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Client.GameObjects.Components.Clothing;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
-using Content.Shared.Preferences.Appearance;
+using Content.Client.Clothing;
+using Content.Shared.CharacterAppearance;
+using Content.Shared.EffectBlocker;
+using Content.Shared.Inventory;
+using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Client.GameObjects.Components.HUD.Inventory
+namespace Content.Client.Inventory
 {
     /// <summary>
     /// A character UI which shows items the user has equipped within his inventory

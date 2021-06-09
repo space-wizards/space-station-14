@@ -3,16 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Mobs.State
+namespace Content.Shared.MobState.State
 {
     /// <summary>
     ///     When attached to an <see cref="IDamageableComponent"/>,

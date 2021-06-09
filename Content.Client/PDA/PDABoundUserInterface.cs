@@ -1,7 +1,7 @@
 ﻿using System;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.PDA;
+using Content.Client.Examine;
+using Content.Client.Message;
+using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -15,7 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.PDA
+namespace Content.Client.PDA
 {
     [UsedImplicitly]
     public class PDABoundUserInterface : BoundUserInterface

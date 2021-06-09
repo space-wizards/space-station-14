@@ -1,8 +1,8 @@
-using Content.Shared.Interfaces;
+using Content.Shared.Notification;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Interfaces
+namespace Content.Client.Notifications.Managers
 {
     public interface IClientNotifyManager : ISharedNotifyManager
     {

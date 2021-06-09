@@ -1,18 +1,22 @@
-﻿using Content.Server.Administration;
+﻿using Content.Server.Administration.Managers;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
+using Content.Server.Chat.Managers;
+using Content.Server.Connection;
 using Content.Server.Database;
-using Content.Server.Eui;
-using Content.Server.GameObjects.Components.Mobs.Speech;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.EUI;
+using Content.Server.GameTicking;
 using Content.Server.Holiday.Interfaces;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Interfaces.PDA;
+using Content.Server.IoC;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Notification.Managers;
+using Content.Server.PDA.Managers;
+using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
-using Content.Server.Voting;
+using Content.Server.Shell;
+using Content.Server.Speech;
+using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Kitchen;
@@ -23,7 +27,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
-namespace Content.Server
+namespace Content.Server.EntryPoint
 {
     public class EntryPoint : GameServer
     {

@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.Mobs.Roles
+namespace Content.Server.Roles
 {
     public class RoleMessage : ComponentMessage
     {

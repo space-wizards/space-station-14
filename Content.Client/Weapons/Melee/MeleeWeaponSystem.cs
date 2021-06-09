@@ -1,7 +1,6 @@
 using System;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.GameObjects.Components.Weapons.Melee;
-using Content.Shared.GameObjects.Components.Weapons.Melee;
+using Content.Client.Weapons.Melee.Components;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -10,9 +9,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using static Content.Shared.GameObjects.EntitySystemMessages.MeleeWeaponSystemMessages;
+using static Content.Shared.Weapons.Melee.MeleeWeaponSystemMessages;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Weapons.Melee
 {
     [UsedImplicitly]
     public sealed class MeleeWeaponSystem : EntitySystem

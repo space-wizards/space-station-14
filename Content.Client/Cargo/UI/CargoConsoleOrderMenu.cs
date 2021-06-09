@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Client.UserInterface.Cargo
+namespace Content.Client.Cargo.UI
 {
     class CargoConsoleOrderMenu : SS14Window
     {

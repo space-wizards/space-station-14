@@ -1,17 +1,18 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.Clothing.Components;
+using Content.Server.Items;
+using Content.Server.PowerCell.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Actions.Behaviors.Item;
+using Content.Shared.Actions.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Light.Component;
+using Content.Shared.Notification;
+using Content.Shared.Rounding;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -20,12 +21,11 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Light.Components
 {
     /// <summary>
     ///     Component that represents a powered handheld light source which can be toggled on and off.

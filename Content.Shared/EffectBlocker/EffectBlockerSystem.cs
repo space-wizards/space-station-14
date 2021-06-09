@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
+namespace Content.Shared.EffectBlocker
 {
     /// <summary>
     /// Utility methods to check if an effect is allowed to affect a specific entity.

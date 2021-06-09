@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Pointing;
+﻿using Content.Shared.Pointing.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Client.GameObjects.Components.Pointing
+namespace Content.Client.Pointing.Components
 {
     [RegisterComponent]
     public class PointingArrowComponent : SharedPointingArrowComponent

@@ -1,8 +1,7 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Context
+namespace Content.Shared.Verbs
 {
     [RegisterComponent]
     public class HideContextMenuComponent : Component, IShowContextMenu

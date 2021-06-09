@@ -1,13 +1,13 @@
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
+using static Content.Shared.AME.SharedAMEControllerComponent;
 
-namespace Content.Client.GameObjects.Components.Power.AME
+namespace Content.Client.AME.UI
 {
     public class AMEWindow : SS14Window
     {

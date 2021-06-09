@@ -3,23 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
+using Content.Server.Act;
+using Content.Server.Chat.Managers;
+using Content.Server.Chemistry.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Notification;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
-using Content.Shared.Prototypes.Kitchen;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Notification;
+using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -30,7 +32,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Kitchen
+namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

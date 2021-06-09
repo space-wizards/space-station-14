@@ -1,13 +1,16 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Instruments;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Standing;
+using Content.Server.Stunnable.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
+using Content.Shared.Hands;
+using Content.Shared.Instruments;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -18,7 +21,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Instruments
+namespace Content.Server.Instruments
 {
 
     [RegisterComponent]

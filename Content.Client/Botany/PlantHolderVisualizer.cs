@@ -1,10 +1,10 @@
-using Content.Shared.GameObjects.Components.Botany;
+using Content.Shared.Botany;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.Components.Botany
+namespace Content.Client.Botany
 {
     [UsedImplicitly]
     public class PlantHolderVisualizer : AppearanceVisualizer

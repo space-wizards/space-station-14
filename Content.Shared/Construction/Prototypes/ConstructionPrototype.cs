@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Shared.Construction.Conditions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Prototypes
 {
     [Prototype("construction")]
     public class ConstructionPrototype : IPrototype

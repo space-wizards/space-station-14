@@ -1,18 +1,19 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.MachineLinking;
-using Content.Server.GameObjects.Components.MachineLinking.Signals;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Shared.Actions;
+using Content.Server.Ghost;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.Signals;
+using Content.Server.Power.Components;
+using Content.Server.Temperature.Components;
+using Content.Shared.Actions.Behaviors;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Light;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -24,7 +25,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.Light.Components
 {
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.

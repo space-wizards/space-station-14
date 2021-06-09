@@ -1,11 +1,11 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.Chemistry;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Server.Chemistry.Components;
+using Content.Server.DoAfter;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -13,7 +13,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Fluids
+namespace Content.Server.Fluids.Components
 {
     /// <summary>
     /// For cleaning up puddles

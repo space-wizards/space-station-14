@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Singularity;
+using Content.Server.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
     public class SingularitySystem : EntitySystem

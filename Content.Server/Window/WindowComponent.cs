@@ -1,28 +1,27 @@
 #nullable enable
 using System;
-using Content.Server.Utility;
+using Content.Server.Destructible;
+using Content.Server.Destructible.Thresholds.Triggers;
+using Content.Server.Notification;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Server.GameObjects.Components.Destructible;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
-using Content.Shared.Utility;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Rounding;
+using Content.Shared.Window;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Window
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]

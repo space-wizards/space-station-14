@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interaction;
+using Content.Server.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Storage
 {
     [UsedImplicitly]
     internal sealed class StorageSystem : EntitySystem

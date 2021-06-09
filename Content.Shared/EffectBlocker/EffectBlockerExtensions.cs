@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
+namespace Content.Shared.EffectBlocker
 {
     public static class EffectBlockerExtensions
     {

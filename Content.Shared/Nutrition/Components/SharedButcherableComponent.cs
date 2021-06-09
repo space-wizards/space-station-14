@@ -1,12 +1,10 @@
 #nullable enable
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Nutrition
+namespace Content.Shared.Nutrition.Components
 {
     /// <summary>
     /// Indicates that the entity can be thrown on a kitchen spike for butchering.

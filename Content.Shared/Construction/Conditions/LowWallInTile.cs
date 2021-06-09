@@ -1,13 +1,13 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
+using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Construction.ConstructionConditions
+namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]

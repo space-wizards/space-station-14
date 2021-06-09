@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Interfaces;
-using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
-namespace Content.Client
+namespace Content.Client.Preferences
 {
     /// <summary>
     ///     Receives <see cref="PlayerPreferences" /> and <see cref="GameSettings" /> from the server during the initial

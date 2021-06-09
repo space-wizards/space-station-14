@@ -1,9 +1,8 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +11,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Culinary
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     public class UtensilComponent : Component, IAfterInteract

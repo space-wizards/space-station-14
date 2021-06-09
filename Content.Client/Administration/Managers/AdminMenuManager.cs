@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Client.Administration;
-using Content.Shared.Administration.AdminMenu;
+using Content.Client.Administration.UI;
+using Content.Client.HUD;
+using Content.Shared.Administration.Menu;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -9,7 +10,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Client.UserInterface.AdminMenu
+namespace Content.Client.Administration.Managers
 {
     internal class AdminMenuManager : IAdminMenuManager
     {

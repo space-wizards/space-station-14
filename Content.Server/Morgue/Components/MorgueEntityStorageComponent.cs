@@ -1,13 +1,14 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Morgue;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Standing;
+using Content.Server.Storage.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Directions;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Morgue;
+using Content.Shared.Notification;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -15,13 +16,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Morgue
+namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(EntityStorageComponent))]

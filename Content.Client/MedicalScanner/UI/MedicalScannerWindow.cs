@@ -5,10 +5,9 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
+using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
-namespace Content.Client.GameObjects.Components.MedicalScanner
+namespace Content.Client.MedicalScanner.UI
 {
     public class MedicalScannerWindow : SS14Window
     {

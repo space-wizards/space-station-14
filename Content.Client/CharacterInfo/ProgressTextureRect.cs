@@ -1,10 +1,10 @@
 ﻿using System;
-using Content.Client.GameObjects.EntitySystems.DoAfter;
+using Content.Client.DoAfter.UI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Actor
+namespace Content.Client.CharacterInfo
 {
     public class ProgressTextureRect : TextureRect
     {

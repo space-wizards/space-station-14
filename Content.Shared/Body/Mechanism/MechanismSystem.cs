@@ -1,9 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Body.Mechanism
 {
     [UsedImplicitly]
     public class MechanismSystem : EntitySystem

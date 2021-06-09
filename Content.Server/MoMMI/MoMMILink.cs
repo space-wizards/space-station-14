@@ -3,8 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared;
 using Newtonsoft.Json;
 using Robust.Server.ServerStatus;
@@ -13,7 +12,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
-namespace Content.Server
+namespace Content.Server.MoMMI
 {
     internal sealed class MoMMILink : IMoMMILink, IPostInjectInit
     {

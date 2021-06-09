@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
+using Content.Server.Access;
+using Content.Server.Access.Components;
+using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Server.CPUJob.JobQueues;
+using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -14,7 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
+namespace Content.Server.AI.Pathfinding
 {
     /*
     // TODO: IMO use rectangular symmetry reduction on the nodes with collision at all. (currently planned to be implemented via AiReachableSystem and expanded later).

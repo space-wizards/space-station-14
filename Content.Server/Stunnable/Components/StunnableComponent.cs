@@ -1,22 +1,19 @@
 #nullable enable
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
+using Content.Server.Act;
+using Content.Server.Notification;
+using Content.Server.Standing;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.Interfaces;
-using Robust.Server.GameObjects;
+using Content.Shared.MobState;
+using Content.Shared.Notification;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Stunnable.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStunnableComponent))]

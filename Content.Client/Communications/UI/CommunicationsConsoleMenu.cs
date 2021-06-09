@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using Content.Client.GameObjects.Components.Command;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -8,7 +7,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Client.Command
+namespace Content.Client.Communications.UI
 {
     public class CommunicationsConsoleMenu : SS14Window
     {

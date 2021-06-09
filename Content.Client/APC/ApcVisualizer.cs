@@ -1,9 +1,9 @@
-using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Power
+namespace Content.Client.APC
 {
     public class ApcVisualizer : AppearanceVisualizer
     {

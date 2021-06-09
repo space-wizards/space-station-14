@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Markers;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Mobs;
 using Content.Server.Players;
-using Content.Shared.GameObjects.Components.Observer;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Visibility;
+using Content.Server.Warps;
+using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -20,7 +19,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 #nullable enable
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
     public class GhostComponent : SharedGhostComponent, IExamine

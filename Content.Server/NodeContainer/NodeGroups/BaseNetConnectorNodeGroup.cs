@@ -1,10 +1,10 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.NodeContainer.NodeGroups
 {
     public abstract class BaseNetConnectorNodeGroup<TNetConnector, TNetType> : BaseNodeGroup where TNetConnector : BaseNetConnectorComponent<TNetType>
     {

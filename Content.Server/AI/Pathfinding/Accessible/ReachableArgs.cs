@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Access.Components;
+using Content.Server.AI.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
+namespace Content.Server.AI.Pathfinding.Accessible
 {
     public sealed class ReachableArgs
     {

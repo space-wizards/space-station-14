@@ -1,7 +1,7 @@
-using Content.Shared.GameObjects.Components.Watercloset;
+using Content.Shared.Toilet;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Watercloset
+namespace Content.Client.Toilet
 {
     public class ToiletVisualizer : AppearanceVisualizer
     {

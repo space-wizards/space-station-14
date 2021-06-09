@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Examine;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
-namespace Content.Client.GameObjects.Components.Suspicion
+namespace Content.Client.Suspicion
 {
     public class TraitorOverlay : Overlay
     {

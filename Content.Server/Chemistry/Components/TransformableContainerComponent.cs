@@ -1,13 +1,14 @@
 #nullable enable
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     public class TransformableContainerComponent : Component, ISolutionChange

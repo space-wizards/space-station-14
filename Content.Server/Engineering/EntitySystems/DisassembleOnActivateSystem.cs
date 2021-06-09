@@ -1,15 +1,13 @@
-using Content.Server.GameObjects.Components.Engineering;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Server.DoAfter;
+using Content.Server.Engineering.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using System.Threading;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
     public class DisassembleOnActivateSystem : EntitySystem

@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry.Metabolizable
 {
     /// <summary>
     ///     Default metabolism for reagents. Metabolizes the reagent with no effects

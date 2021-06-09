@@ -3,40 +3,33 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Access;
+using Content.Server.Access;
+using Content.Server.Access.Components;
+using Content.Server.Construction.Components;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Doors;
+using Content.Server.Hands.Components;
+using Content.Server.Stunnable.Components;
+using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Content.Shared.Damage.Components;
+using Content.Shared.Doors;
+using Content.Shared.Interaction;
+using Content.Shared.Tool;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Players;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Collision;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
+using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
-using Content.Server.GameObjects.Components.Construction;
-using Robust.Shared.Containers;
-using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Server.GameObjects.Components.Doors
+namespace Content.Server.Doors.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

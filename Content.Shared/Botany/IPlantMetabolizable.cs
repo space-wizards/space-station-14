@@ -1,7 +1,7 @@
 #nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.Chemistry
+namespace Content.Shared.Botany
 {
     public interface IPlantMetabolizable
     {

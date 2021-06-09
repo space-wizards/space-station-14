@@ -1,12 +1,12 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.Disposal.Components;
+using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.Visualizers
 {
     [UsedImplicitly]
     public class DisposalVisualizer : AppearanceVisualizer

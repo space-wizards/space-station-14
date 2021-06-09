@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Observer.GhostRoles
+namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
     public partial class MakeGhostRoleWindow : SS14Window

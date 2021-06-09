@@ -1,13 +1,12 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Commands.StationEvents
+namespace Content.Server.StationEvents
 {
     [AdminCommand(AdminFlags.Server)]
     public sealed class StationEventCommand : IConsoleCommand

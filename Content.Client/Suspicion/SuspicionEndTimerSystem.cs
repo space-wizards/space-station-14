@@ -1,8 +1,8 @@
 ﻿using System;
-using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.Suspicion;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Suspicion
 {
     public sealed class SuspicionEndTimerSystem : EntitySystem
     {

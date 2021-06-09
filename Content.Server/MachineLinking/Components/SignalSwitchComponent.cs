@@ -1,14 +1,14 @@
-﻿using Content.Shared.GameObjects.Components.MachineLinking;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.MachineLinking;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.MachineLinking
+namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
     public class SignalSwitchComponent : Component, IInteractHand, IActivate

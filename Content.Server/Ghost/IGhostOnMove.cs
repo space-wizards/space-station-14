@@ -1,4 +1,4 @@
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.Ghost
 {
     public interface IGhostOnMove
     {

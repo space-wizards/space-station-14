@@ -7,9 +7,9 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.SharedIdCardConsoleComponent;
 
-namespace Content.Client.GameObjects.Components.Access
+namespace Content.Client.Access.UI
 {
     public class IdCardConsoleWindow : SS14Window
     {

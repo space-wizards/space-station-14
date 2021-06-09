@@ -1,12 +1,12 @@
 using System;
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
     public class FlashLightVisualizer : AppearanceVisualizer

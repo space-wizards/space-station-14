@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.PA;
+using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.ParticleAccelerator
 {
     [UsedImplicitly]
     public class ParticleAcceleratorPartSystem : EntitySystem

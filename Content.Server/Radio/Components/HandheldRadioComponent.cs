@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Chat.Managers;
+using Content.Server.Radio.EntitySystems;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Radio
+namespace Content.Server.Radio.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]

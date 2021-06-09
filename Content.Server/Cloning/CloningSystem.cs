@@ -1,30 +1,29 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Medical;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Mobs;
+using Content.Server.Cloning.Components;
+using Content.Server.Mind.Components;
+using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
-using Robust.Shared.IoC;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
+using static Content.Shared.Cloning.SharedCloningPodComponent;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Cloning
 {
     internal sealed class CloningSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
-        public readonly Dictionary<Mind, int> MindToId = new();
+        public readonly Dictionary<Mind.Mind, int> MindToId = new();
         public readonly Dictionary<int, ClonerDNAEntry> IdToDNA = new();
         private int _nextAllocatedMindId = 0;
         private float _quickAndDirtyUserUpdatePreventerTimer = 0.0f;
-        public readonly Dictionary<Mind, EntityUid> ClonesWaitingForMind = new();
+        public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
         {
@@ -42,7 +41,7 @@ namespace Content.Server.GameObjects.EntitySystems
             UnsubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
-        internal void TransferMindToClone(Mind mind)
+        internal void TransferMindToClone(Mind.Mind mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
                 !EntityManager.TryGetEntity(entityUid, out var entity) ||
@@ -141,7 +140,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 UpdateUserInterface(cloning);
         }
 
-        public bool HasDnaScan(Mind mind)
+        public bool HasDnaScan(Mind.Mind mind)
         {
             return MindToId.ContainsKey(mind);
         }
@@ -166,9 +165,9 @@ namespace Content.Server.GameObjects.EntitySystems
     // It should carry a reference or copy of itself with the mobs that it affects.
     // See TODO in MedicalScannerComponent.
     struct ClonerDNAEntry {
-        public Mind Mind;
+        public Mind.Mind Mind;
         public HumanoidCharacterProfile Profile;
-        public ClonerDNAEntry(Mind m, HumanoidCharacterProfile hcp)
+        public ClonerDNAEntry(Mind.Mind m, HumanoidCharacterProfile hcp)
         {
             Mind = m;
             Profile = hcp;

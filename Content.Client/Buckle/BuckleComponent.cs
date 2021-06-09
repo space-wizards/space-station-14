@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Buckle
+namespace Content.Client.Buckle
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBuckleComponent))]

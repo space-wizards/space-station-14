@@ -1,11 +1,12 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Sound
+namespace Content.Shared.Sound
 {
     public class SharedLoopingSoundComponent : Component
     {

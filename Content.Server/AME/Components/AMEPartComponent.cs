@@ -1,11 +1,11 @@
 #nullable enable
-using System.Threading.Tasks;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using System.Threading.Tasks;
+using Content.Server.Hands.Components;
+using Content.Server.Tools.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -14,7 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.Components.Power.AME
+namespace Content.Server.AME.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IInteractUsing))]

@@ -1,10 +1,8 @@
-﻿using Content.Client.GameObjects.Components.Pulling;
-using Content.Shared.GameObjects.EntitySystemMessages.Pulling;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Pulling;
 using JetBrains.Annotations;
 using Robust.Client.Physics;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Pulling
 {
     [UsedImplicitly]
     public class PullingSystem : SharedPullingSystem

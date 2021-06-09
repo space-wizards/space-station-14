@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+﻿using Content.Shared.Chemistry.Dispenser;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
+using static Content.Shared.AME.SharedAMEControllerComponent;
 
-namespace Content.Client.GameObjects.Components.Power.AME
+namespace Content.Client.AME.UI
 {
     [UsedImplicitly]
     public class AMEControllerBoundUserInterface : BoundUserInterface

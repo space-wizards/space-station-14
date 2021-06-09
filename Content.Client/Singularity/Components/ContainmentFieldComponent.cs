@@ -2,7 +2,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
-namespace Content.Client.GameObjects.Components.Singularity
+namespace Content.Client.Singularity.Components
 {
     public class ContainmentFieldComponent : Component
     {

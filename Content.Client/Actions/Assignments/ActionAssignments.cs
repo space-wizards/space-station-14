@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Mobs.Actions
+namespace Content.Client.Actions.Assignments
 {
     /// <summary>
     /// Tracks and manages the hotbar assignments for actions.

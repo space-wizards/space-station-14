@@ -1,12 +1,13 @@
 ﻿using System;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Cooldown;
+using Content.Client.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Items.UI
 {
     public class ItemSlotButton : Control
     {

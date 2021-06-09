@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Behaviors
 {
     /// <summary>
     /// Action which requires the user to select a target point, which

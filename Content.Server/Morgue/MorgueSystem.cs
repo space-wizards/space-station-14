@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Morgue;
+﻿using Content.Server.Morgue.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Morgue
 {
     [UsedImplicitly]
     public class MorgueSystem : EntitySystem

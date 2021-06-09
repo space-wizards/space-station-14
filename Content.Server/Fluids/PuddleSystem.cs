@@ -1,11 +1,10 @@
-using Content.Server.GameObjects.Components.Fluids;
+using Content.Server.Fluids.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Fluids
 {
     [UsedImplicitly]
     internal sealed class PuddleSystem : EntitySystem

@@ -1,9 +1,8 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     // Does nothing except ensure uniqueness between mover components.
     // There can only be one.

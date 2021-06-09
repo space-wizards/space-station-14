@@ -1,12 +1,10 @@
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Computer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Computer
 {
     [UsedImplicitly]
     public sealed class ComputerVisualizer : AppearanceVisualizer

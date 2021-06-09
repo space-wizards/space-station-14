@@ -1,13 +1,12 @@
 #nullable enable
-using System;
 using Content.Server.Administration;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.GameTicking;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Observer
+namespace Content.Server.Ghost
 {
     [AnyCommand]
     public class Ghost : IConsoleCommand

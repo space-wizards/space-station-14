@@ -1,8 +1,9 @@
 #nullable enable
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.GameObjects;
@@ -13,7 +14,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Actions
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedActionsComponent))]

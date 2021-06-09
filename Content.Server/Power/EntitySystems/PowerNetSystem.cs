@@ -1,10 +1,10 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     public class PowerNetSystem : EntitySystem

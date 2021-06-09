@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Interaction
 {
     /// <summary>
     ///     This interface gives components behavior when being activated (by default,

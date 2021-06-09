@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.Radio.Components
 {
     /// <summary>
     ///     Interface for objects such as radios meant to have an effect when speech is

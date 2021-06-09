@@ -1,18 +1,13 @@
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Input;
+using Content.Client.HUD;
+using Content.Shared.CombatMode;
+using Content.Shared.Targeting;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
-using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.CombatMode
 {
     [UsedImplicitly]
     public sealed class CombatModeSystem : SharedCombatModeSystem

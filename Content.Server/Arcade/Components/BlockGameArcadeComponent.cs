@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -16,7 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.Components.Arcade
+namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

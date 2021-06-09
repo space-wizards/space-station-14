@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.PA
+namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]

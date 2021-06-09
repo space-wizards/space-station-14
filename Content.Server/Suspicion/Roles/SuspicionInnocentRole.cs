@@ -1,14 +1,14 @@
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Mobs.Roles.Suspicion
+namespace Content.Server.Suspicion.Roles
 {
     public class SuspicionInnocentRole : SuspicionRole
     {
         public AntagPrototype Prototype { get; }
 
-        public SuspicionInnocentRole(Mind mind, AntagPrototype antagPrototype) : base(mind)
+        public SuspicionInnocentRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
             Prototype = antagPrototype;
             Name = antagPrototype.Name;

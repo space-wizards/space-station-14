@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -11,9 +11,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
-using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
+using static Content.Shared.Interaction.SharedInteractionSystem;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Examine
 {
     [Obsolete("Use ExaminedEvent instead.")]
     public interface IExamine

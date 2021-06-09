@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.MachineLinking;
-using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interaction;
+using Content.Server.MachineLinking.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.MachineLinking
 {
     public class SignalLinkerSystem : EntitySystem
     {

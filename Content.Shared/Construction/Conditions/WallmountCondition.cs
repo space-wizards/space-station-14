@@ -1,17 +1,17 @@
 #nullable enable
 using System.Linq;
-using Content.Shared.GameObjects.Components.Tag;
 using Content.Shared.Physics;
+using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Construction.ConstructionConditions
+namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]

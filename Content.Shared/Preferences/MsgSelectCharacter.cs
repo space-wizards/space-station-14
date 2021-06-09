@@ -2,7 +2,7 @@
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Preferences
 {
     /// <summary>
     /// The client sends this to select a character slot.

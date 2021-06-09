@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Singularity
+namespace Content.Client.Singularity.Components
 {
 
     [RegisterComponent]

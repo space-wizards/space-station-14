@@ -1,10 +1,8 @@
-using Content.Client.GameObjects.Components;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Stack
 {
     [UsedImplicitly]
     public class StackSystem : SharedStackSystem

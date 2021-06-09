@@ -1,17 +1,17 @@
 #nullable enable
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Client.IoC;
+using Content.Client.Resources;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
+namespace Content.Client.HealthOverlay.UI
 {
     public class HealthOverlayGui : VBoxContainer
     {

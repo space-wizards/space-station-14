@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Explosion;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Camera;
+using Content.Server.Explosion.Components;
+using Content.Shared.Acts;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -21,7 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Explosions
+namespace Content.Server.Explosion
 {
     public static class ExplosionHelper
     {
@@ -193,8 +193,8 @@ namespace Content.Server.Explosions
                     continue;
                 }
 
-                var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
-                var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
+                var zeroTile = new Robust.Shared.Map.Tile(tileDefinitionManager[baseTurfs[0]].TileId);
+                var previousTile = new Robust.Shared.Map.Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
 
                 var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
 

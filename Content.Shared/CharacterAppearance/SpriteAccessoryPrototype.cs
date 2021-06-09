@@ -1,10 +1,9 @@
-﻿using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Preferences.Appearance
+namespace Content.Shared.CharacterAppearance
 {
     /// <summary>
     ///     Contains data for a single hair style
@@ -27,7 +26,7 @@ namespace Content.Shared.Preferences.Appearance
 
         void ISerializationHooks.AfterDeserialization()
         {
-            Name = Loc.GetString($"accessory-{ID}");
+            Name = Robust.Shared.Localization.Loc.GetString($"accessory-{ID}");
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Interactable;
-using Robust.Shared.Localization;
+using Content.Shared.Tool;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public class ToolConstructionGraphStep : ConstructionGraphStep
@@ -19,11 +18,11 @@ namespace Content.Shared.Construction
         {
             if (!string.IsNullOrEmpty(ExamineOverride))
             {
-                message.AddMarkup(Loc.GetString(ExamineOverride));
+                message.AddMarkup(Robust.Shared.Localization.Loc.GetString(ExamineOverride));
                 return;
             }
 
-            message.AddMarkup(Loc.GetString($"Next, use a [color=cyan]{Tool.GetToolName()}[/color]."));
+            message.AddMarkup(Robust.Shared.Localization.Loc.GetString($"Next, use a [color=cyan]{Tool.GetToolName()}[/color]."));
         }
     }
 }

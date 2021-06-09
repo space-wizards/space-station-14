@@ -1,13 +1,13 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.AI;
+using Content.Server.AI.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameObjects.EntitySystems.AI
+namespace Content.Server.AI.EntitySystems
 {
     /// <summary>
     ///     Outlines faction relationships with each other for AI.

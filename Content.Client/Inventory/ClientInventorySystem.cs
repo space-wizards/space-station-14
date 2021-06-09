@@ -1,14 +1,12 @@
-using Content.Client.GameObjects.Components.HUD.Inventory;
-using Content.Client.UserInterface;
+using Content.Client.HUD;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Inventory
 {
     [UsedImplicitly]
     public sealed class ClientInventorySystem : EntitySystem

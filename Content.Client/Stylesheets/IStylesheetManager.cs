@@ -1,6 +1,6 @@
 using Robust.Client.UserInterface;
 
-namespace Content.Client.UserInterface.Stylesheets
+namespace Content.Client.Stylesheets
 {
     public interface IStylesheetManager
     {

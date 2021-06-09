@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
+using Content.Server.Camera;
+using Content.Server.Projectiles.Components;
+using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Weapons.Ranged;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -27,7 +27,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
+namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     /// <summary>
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.

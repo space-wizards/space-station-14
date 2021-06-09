@@ -3,7 +3,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Ghost.Roles
 {
     public abstract class SharedGhostRoleSystem : EntitySystem
     {

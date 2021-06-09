@@ -1,10 +1,9 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Paper;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.Components.Paper
+namespace Content.Client.Paper.UI
 {
     public class PaperWindow : SS14Window
     {

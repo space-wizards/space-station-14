@@ -1,11 +1,11 @@
-﻿using Content.Shared.Chemistry;
+﻿using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 #nullable enable
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     public class ReagentTankComponent : Component

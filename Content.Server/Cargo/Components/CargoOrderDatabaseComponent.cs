@@ -1,10 +1,8 @@
-using Content.Server.Cargo;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Cargo;
+using Content.Shared.Cargo.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 
-namespace Content.Server.GameObjects.Components.Cargo
+namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
     public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent

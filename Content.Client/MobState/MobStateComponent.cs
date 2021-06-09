@@ -1,7 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Shared.MobState;
+using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Mobs.State
+namespace Content.Client.MobState
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMobStateComponent))]

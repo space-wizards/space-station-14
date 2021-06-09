@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Alert;
+using Content.Server.DoAfter;
+using Content.Server.Hands.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.ActionBlocking;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Utility;
+using Content.Shared.Cuffs.Components;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -22,7 +22,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.ActionBlocking
+namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     public class CuffableComponent : SharedCuffableComponent

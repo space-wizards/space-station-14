@@ -1,9 +1,9 @@
-using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Research;
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 
-namespace Content.Server.GameObjects.Components.Research
+namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent

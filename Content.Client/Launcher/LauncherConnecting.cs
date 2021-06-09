@@ -1,11 +1,10 @@
 using System;
-using Content.Client.UserInterface;
 using Robust.Client;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Client.State
+namespace Content.Client.Launcher
 {
     public class LauncherConnecting : Robust.Client.State.State
     {

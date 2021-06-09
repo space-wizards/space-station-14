@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Nutrition;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
+using Content.Shared.Movement.Components;
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -15,7 +15,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     public sealed class HungerComponent : SharedHungerComponent

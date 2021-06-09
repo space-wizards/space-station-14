@@ -1,7 +1,7 @@
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Interfaces.Chat
+namespace Content.Server.Chat.Managers
 {
     public interface IChatManager
     {

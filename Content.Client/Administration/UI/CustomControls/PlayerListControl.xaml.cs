@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
-namespace Content.Client.UserInterface.AdminMenu.CustomControls
+namespace Content.Client.Administration.UI.CustomControls
 {
     [GenerateTypedNameReferences]
     public partial class PlayerListControl : VBoxContainer

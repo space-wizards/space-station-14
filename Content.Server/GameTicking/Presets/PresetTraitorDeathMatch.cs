@@ -1,23 +1,22 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Markers;
-using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameObjects.Components.TraitorDeathMatch;
-using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs;
-using Content.Server.Mobs.Roles.Traitor;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Server.Players;
+using Content.Server.Spawners.Components;
+using Content.Server.Traitor;
+using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.Damage.Components;
+using Content.Shared.Inventory;
+using Content.Shared.MobState;
+using Content.Shared.PDA;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -27,7 +26,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameTicking.GamePresets
+namespace Content.Server.GameTicking.Presets
 {
     [GamePreset("traitordm", "traitordeathmatch")]
     public sealed class PresetTraitorDeathMatch : GamePreset
@@ -128,7 +127,7 @@ namespace Content.Server.GameTicking.GamePresets
         }
 
         // It would be nice if this function were moved to some generic helpers class.
-        private bool FindAnyIsolatedSpawnLocation(Mind ignoreMe, out EntityCoordinates bestTarget)
+        private bool FindAnyIsolatedSpawnLocation(Mind.Mind ignoreMe, out EntityCoordinates bestTarget)
         {
             // Collate people to avoid...
             var existingPlayerPoints = new List<EntityCoordinates>();
@@ -182,7 +181,7 @@ namespace Content.Server.GameTicking.GamePresets
             return foundATarget;
         }
 
-        public override bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
+        public override bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var entity = mind.OwnedEntity;
             if ((entity != null) && (entity.TryGetComponent(out IMobStateComponent? mobState)))

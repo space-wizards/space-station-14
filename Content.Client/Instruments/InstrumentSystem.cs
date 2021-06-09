@@ -1,4 +1,3 @@
-using Content.Client.GameObjects.Components.Instruments;
 using Content.Shared;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
@@ -6,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Instruments
 {
     [UsedImplicitly]
     public class InstrumentSystem : EntitySystem

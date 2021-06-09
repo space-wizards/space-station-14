@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Text;
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs.Speech;
+using Content.Server.Speech.Components;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Speech
+namespace Content.Server.Speech
 {
     [AdminCommand(AdminFlags.Fun)]
     public class AddAccent : IConsoleCommand

@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Preferences.Appearance
+namespace Content.Shared.CharacterAppearance
 {
     [Serializable, NetSerializable]
     public enum HumanoidVisualLayers

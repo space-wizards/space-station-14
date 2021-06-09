@@ -1,14 +1,11 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Kitchen
+namespace Content.Shared.Kitchen.Components
 {
     public abstract class SharedKitchenSpikeComponent : Component, IDragDropOn
     {

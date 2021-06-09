@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Construction
 {
     [RegisterComponent]
     public class SharedCanBuildWindowOnTopComponent : Component

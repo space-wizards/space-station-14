@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.MobState
 {
     public static class DamageStateHelpers
     {

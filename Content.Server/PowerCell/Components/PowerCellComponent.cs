@@ -1,20 +1,20 @@
 #nullable enable
 using System;
-using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Server.Battery.Components;
+using Content.Server.Chemistry.Components;
+using Content.Server.Explosion;
+using Content.Shared.Chemistry;
+using Content.Shared.Examine;
+using Content.Shared.PowerCell;
+using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.PowerCell.Components
 {
     /// <summary>
     /// Batteries that can update an <see cref="AppearanceComponent"/> based on their charge percent

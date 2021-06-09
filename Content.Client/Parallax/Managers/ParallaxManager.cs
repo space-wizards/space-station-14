@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Content.Client.Interfaces.Parallax;
 using Content.Shared;
 using Nett;
 using Robust.Client.Graphics;
@@ -15,7 +14,7 @@ using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace Content.Client.Parallax
+namespace Content.Client.Parallax.Managers
 {
     internal sealed class ParallaxManager : IParallaxManager
     {

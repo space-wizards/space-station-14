@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
-using Content.Shared.Interfaces;
+using Content.Shared.EffectBlocker;
+using Content.Shared.Module;
+using Content.Shared.NetIDs;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -20,7 +21,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Slippery
 {
     [RegisterComponent]
     public class SlipperyComponent : Component, IStartCollide

@@ -4,7 +4,7 @@ using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
-namespace Content.Server.Commands.Damage
+namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public class RemoveDamageFlagCommand : DamageFlagCommand

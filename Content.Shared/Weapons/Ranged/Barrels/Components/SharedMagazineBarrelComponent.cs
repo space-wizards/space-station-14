@@ -1,9 +1,11 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels
+namespace Content.Shared.Weapons.Ranged.Barrels.Components
 {
     [Serializable, NetSerializable]
     public enum AmmoVisuals

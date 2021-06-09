@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Body.Surgery;
-using Content.Shared.Interfaces;
+using Content.Server.DoAfter;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Surgery;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Body.Surgery.ISurgeryData;
+using static Content.Shared.Body.Surgery.ISurgeryData;
 
-namespace Content.Server.GameObjects.Components.Body.Surgery
+namespace Content.Server.Body.Surgery
 {
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.

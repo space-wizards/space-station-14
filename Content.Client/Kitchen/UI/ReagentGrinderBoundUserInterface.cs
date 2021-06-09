@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.Chemistry;
-using Content.Shared.Kitchen;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Kitchen.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -10,9 +10,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Chemistry.Solution;
+using static Content.Shared.Chemistry.Solution.Solution;
 
-namespace Content.Client.GameObjects.Components.Kitchen
+namespace Content.Client.Kitchen.UI
 {
     public class ReagentGrinderBoundUserInterface : BoundUserInterface
     {

@@ -1,12 +1,11 @@
 ﻿#nullable enable
 using System.IO;
-using Content.Shared.Preferences;
 using Lidgren.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Preferences
 {
     /// <summary>
     /// The client sends this to update a character profile.

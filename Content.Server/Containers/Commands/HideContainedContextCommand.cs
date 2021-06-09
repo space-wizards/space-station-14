@@ -1,12 +1,12 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Verbs;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Commands
+namespace Content.Server.Containers.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
     public class HideContainedContextCommand : IConsoleCommand

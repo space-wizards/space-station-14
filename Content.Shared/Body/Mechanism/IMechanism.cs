@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Behavior;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body.Mechanism
+namespace Content.Shared.Body.Mechanism
 {
     public interface IMechanism : IComponent
     {

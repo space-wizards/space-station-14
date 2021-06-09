@@ -1,8 +1,9 @@
 ﻿using System;
+using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Disposal.Tube.Components
 {
     // TODO: Different types of tubes eject in random direction with no exit point
     [RegisterComponent]

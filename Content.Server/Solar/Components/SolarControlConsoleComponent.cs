@@ -1,15 +1,15 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Power.Components;
+using Content.Server.Solar.EntitySystems;
+using Content.Server.UserInterface;
+using Content.Shared.Interaction;
+using Content.Shared.Solar;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.Solar.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

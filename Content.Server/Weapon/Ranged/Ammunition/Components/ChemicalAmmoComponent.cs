@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
+using Content.Server.Chemistry.Components;
+using Content.Server.Weapon.Ranged.Barrels.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
+namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
     public class ChemicalAmmoComponent : Component

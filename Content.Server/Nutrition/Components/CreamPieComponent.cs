@@ -1,14 +1,14 @@
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Fluids;
+using Content.Server.Chemistry.Components;
+using Content.Server.Fluids.Components;
 using Content.Shared.Audio;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     public class CreamPieComponent : Component, ILand, IThrowCollide

@@ -1,15 +1,13 @@
 #nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Body.Networks;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Server.Body.Circulatory;
+using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry.Metabolizable;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body.Behavior
+namespace Content.Server.Body.Behavior
 {
     /// <summary>
     /// Metabolizes reagents in <see cref="SharedBloodstreamComponent"/> after they are digested.

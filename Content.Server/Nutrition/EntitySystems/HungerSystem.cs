@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.Nutrition.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Nutrition.EntitySystems
 {
     [UsedImplicitly]
     public class HungerSystem : EntitySystem

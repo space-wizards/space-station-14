@@ -3,19 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Pulling;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
+using Content.Server.Act;
+using Content.Server.Interaction;
+using Content.Server.Items;
+using Content.Server.Notification;
+using Content.Server.Pulling;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Pulling;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
+using Content.Shared.Body.Part;
+using Content.Shared.Hands.Components;
+using Content.Shared.Notification;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Pulling.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -27,11 +26,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.Hands.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]

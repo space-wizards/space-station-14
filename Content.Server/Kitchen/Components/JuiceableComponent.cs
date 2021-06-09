@@ -1,11 +1,9 @@
-﻿using Content.Shared.Chemistry;
+﻿using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Kitchen
+namespace Content.Server.Kitchen.Components
 {
     /// <summary>
     /// Tag component that denotes an entity as Juiceable

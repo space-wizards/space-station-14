@@ -1,8 +1,8 @@
 using System.Threading;
-using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
+using Content.Server.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
+namespace Content.Server.AI.LoadBalancer
 {
     /// <summary>
     /// This will queue up an AI's request for an action and give it one when possible

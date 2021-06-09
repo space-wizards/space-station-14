@@ -1,11 +1,10 @@
-using Content.Client.Research;
-using Content.Shared.Research;
+using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Research.SharedResearchConsoleComponent;
+using static Content.Shared.Research.Components.SharedResearchConsoleComponent;
 
-namespace Content.Client.GameObjects.Components.Research
+namespace Content.Client.Research.UI
 {
     [UsedImplicitly]
     public class ResearchConsoleBoundUserInterface : BoundUserInterface

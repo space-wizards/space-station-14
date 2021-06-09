@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
 
-namespace Content.Client.GameObjects.Components.IconSmoothing
+namespace Content.Client.IconSmoothing
 {
     // TODO: Potential improvements:
     //  Defer updating of these.

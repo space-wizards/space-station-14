@@ -1,8 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Items;
+﻿using Content.Client.Items.UI;
+using Content.Shared.Hands.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Hands
 {
     public class HandButton : ItemSlotButton
     {

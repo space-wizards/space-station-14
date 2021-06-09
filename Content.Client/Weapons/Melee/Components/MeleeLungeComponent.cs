@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.Weapons.Melee.Components
 {
     [RegisterComponent]
     public sealed class MeleeLungeComponent : Component

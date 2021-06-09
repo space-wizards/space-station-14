@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.DragDrop
 {
     /// <summary>
     ///     This interface gives components behavior when they're dropped by a mob.

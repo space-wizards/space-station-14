@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body.Part.Property
+namespace Content.Shared.Body.Part.Property
 {
     /// <summary>
     ///     Defines a property for a <see cref="IBodyPart"/>.

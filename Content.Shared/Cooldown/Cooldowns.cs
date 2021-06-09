@@ -3,7 +3,7 @@ using System;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Cooldown
 {
     /// <summary>
     /// Utilities for working with cooldowns.

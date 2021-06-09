@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.Network;
 using static Content.Shared.GameTicking.SharedGameTicker;
 
-namespace Content.Client.Interfaces
+namespace Content.Client.GameTicking.Managers
 {
     public interface IClientGameTicker
     {

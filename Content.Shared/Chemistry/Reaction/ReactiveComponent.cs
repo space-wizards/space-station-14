@@ -1,9 +1,9 @@
 using System;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.Chemistry.Reaction
 {
     [RegisterComponent]
     public class ReactiveComponent : Component

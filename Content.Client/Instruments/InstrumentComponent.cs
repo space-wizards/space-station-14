@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Instruments;
+using Content.Shared.Instruments;
 using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
@@ -10,11 +9,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Instruments
+namespace Content.Client.Instruments
 {
 
     [RegisterComponent]

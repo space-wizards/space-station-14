@@ -1,8 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Server.Chemistry.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems
 {
     public class HypospraySystem : EntitySystem
     {

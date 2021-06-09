@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Research;
+using Content.Server.Research.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Research
 {
     [UsedImplicitly]
     public class ResearchSystem : EntitySystem

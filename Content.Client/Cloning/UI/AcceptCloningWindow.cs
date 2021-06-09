@@ -3,7 +3,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 
-namespace Content.Client.GameObjects.Components.Observer
+namespace Content.Client.Cloning.UI
 {
     public sealed class AcceptCloningWindow : SS14Window
     {

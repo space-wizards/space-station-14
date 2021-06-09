@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Singularity
+namespace Content.Shared.Singularity.Components
 {
     [NetSerializable, Serializable]
     public enum RadiationCollectorVisuals

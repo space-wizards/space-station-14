@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Administration;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Headset;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Administration.Managers;
+using Content.Server.Ghost.Components;
+using Content.Server.Headset;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.MoMMI;
+using Content.Server.Preferences.Managers;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
+using Content.Shared.Inventory;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -23,9 +23,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using static Content.Server.Interfaces.Chat.IChatManager;
+using static Content.Server.Chat.Managers.IChatManager;
 
-namespace Content.Server.Chat
+namespace Content.Server.Chat.Managers
 {
     /// <summary>
     ///     Dispatches chat messages to clients.

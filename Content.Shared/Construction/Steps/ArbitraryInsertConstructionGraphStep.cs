@@ -1,9 +1,8 @@
 ﻿#nullable enable
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     public abstract class ArbitraryInsertConstructionGraphStep : EntityInsertConstructionGraphStep
     {
@@ -14,7 +13,7 @@ namespace Content.Shared.Construction
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
             if (string.IsNullOrEmpty(Name)) return;
-            message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
+            message.AddMarkup(Robust.Shared.Localization.Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
     }
 }

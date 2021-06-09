@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Access;
-using Content.Shared.GameObjects.Components.Access;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -20,9 +20,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
-namespace Content.Server.GameObjects.Components.Access
+namespace Content.Server.Access.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameTicking.GamePresets
+namespace Content.Server.GameTicking.Presets
 {
     [GamePreset("deathmatch")]
     public sealed class PresetDeathMatch : GamePreset

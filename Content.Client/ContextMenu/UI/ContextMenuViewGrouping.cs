@@ -5,7 +5,7 @@ using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.UserInterface.ContextMenu
+namespace Content.Client.ContextMenu.UI
 {
     public partial class ContextMenuView
     {

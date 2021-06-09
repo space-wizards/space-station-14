@@ -1,8 +1,9 @@
 ﻿using System.Linq;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.Interfaces;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
+using Content.Client.CharacterAppearance;
+using Content.Client.Lobby.UI;
+using Content.Client.Parallax;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
@@ -17,7 +18,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Preferences.UI
 {
     public class CharacterSetupGui : Control
     {

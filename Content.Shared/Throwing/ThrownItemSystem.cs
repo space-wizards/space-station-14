@@ -1,16 +1,14 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.Physics.Pull;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
+using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Throwing
 {
     /// <summary>
     ///     Handles throwing landing and collisions.

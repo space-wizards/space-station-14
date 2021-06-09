@@ -1,11 +1,12 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Examine;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -15,7 +16,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.Chemistry.Solution.Components
 {
     /// <summary>
     ///     Holds a <see cref="Solution"/> with a limited volume.
@@ -194,7 +195,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
             if (ReagentList.Count == 0)
             {
-                message.AddText(Loc.GetString("Contains no chemicals."));
+                message.AddText(Robust.Shared.Localization.Loc.GetString("Contains no chemicals."));
                 return;
             }
 
@@ -208,7 +209,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             var colorHex = Color.ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
             var messageString = "It contains a [color={0}]{1}[/color] " + (ReagentList.Count == 1 ? "chemical." : "mixture of chemicals.");
 
-            message.AddMarkup(Loc.GetString(messageString, colorHex, Loc.GetString(proto.PhysicalDescription)));
+            message.AddMarkup(Robust.Shared.Localization.Loc.GetString(messageString, colorHex, Robust.Shared.Localization.Loc.GetString(proto.PhysicalDescription)));
         }
 
         ReagentUnit ISolutionInteractionsComponent.RefillSpaceAvailable => EmptyVolume;

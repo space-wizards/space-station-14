@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Mobs.State
+namespace Content.Shared.MobState.State
 {
     /// <summary>
     ///     A state in which an entity is disabled from acting due to sufficient damage (considered unconscious).

@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 
 #nullable enable
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Interaction.Components
 {
     /// <summary>
     /// A simple clumsy tag-component.

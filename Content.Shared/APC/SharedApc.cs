@@ -3,7 +3,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Power
+namespace Content.Shared.APC
 {
     [Serializable, NetSerializable]
     public enum ApcVisuals

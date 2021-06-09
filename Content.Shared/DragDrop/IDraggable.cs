@@ -1,10 +1,9 @@
 #nullable enable
-using System;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.DragDrop
 {
     /// <summary>
     ///     This interface allows a local client to initiate dragging of the component's

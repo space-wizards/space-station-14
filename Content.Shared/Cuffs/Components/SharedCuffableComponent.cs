@@ -1,13 +1,14 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Pulling;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
+using Content.Shared.NetIDs;
+using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.ActionBlocking
+namespace Content.Shared.Cuffs.Components
 {
     public class SharedCuffableComponent : Component, IActionBlocker
     {

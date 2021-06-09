@@ -1,11 +1,11 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Interfaces;
+using Content.Shared.Notification;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Notify
+namespace Content.Server.Notification
 {
     [AdminCommand(AdminFlags.Debug)]
     public class PopupMsgCommand : IConsoleCommand

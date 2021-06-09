@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Body.Surgery;
+﻿using Content.Shared.Body.Surgery;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Body.Surgery
+namespace Content.Client.Body.UI
 {
     // TODO BODY Make window close if target or surgery tool gets too far away from user.
 

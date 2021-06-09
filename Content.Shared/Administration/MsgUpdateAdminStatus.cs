@@ -1,10 +1,9 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.Administration;
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Administration
 {
     public sealed class MsgUpdateAdminStatus : NetMessage
     {

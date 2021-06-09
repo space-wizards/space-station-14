@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.DoAfter
+namespace Content.Server.DoAfter
 {
     [UsedImplicitly]
     public sealed class DoAfterSystem : EntitySystem

@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Client.Actions.UI;
+using Content.Client.Cooldown;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -6,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.UserInterface.Controls
+namespace Content.Client.Alerts.UI
 {
     public class AlertControl : BaseButton
     {

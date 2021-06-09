@@ -1,12 +1,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
+using Content.Client.HUD.UI;
+using Content.Client.Info;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Client.Targeting;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.HUD;
 using Content.Shared.Input;
-using Content.Shared.Prototypes.HUD;
+using Content.Shared.Targeting;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -24,7 +27,7 @@ using static Robust.Client.Input.Keyboard.Key;
 using Control = Robust.Client.UserInterface.Control;
 using LC = Robust.Client.UserInterface.Controls.LayoutContainer;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.HUD
 {
     /// <summary>
     ///     Responsible for laying out the default game HUD.

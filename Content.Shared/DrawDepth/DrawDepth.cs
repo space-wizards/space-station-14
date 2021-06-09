@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.DrawDepth
 {
     [ConstantsFor(typeof(DrawDepthTag))]
     public enum DrawDepth

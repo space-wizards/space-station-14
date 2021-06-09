@@ -1,19 +1,16 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Gravity;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Acts;
+using Content.Shared.Gravity;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Gravity
+namespace Content.Server.Gravity
 {
     [RegisterComponent]
     public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IBreakAct, IInteractHand

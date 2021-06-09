@@ -3,7 +3,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Recycling
+namespace Content.Server.Recycling.Components
 {
     [RegisterComponent]
     public class RecyclableComponent : Component

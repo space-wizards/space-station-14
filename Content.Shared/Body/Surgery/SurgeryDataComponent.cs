@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body.Surgery
+namespace Content.Shared.Body.Surgery
 {
     /// <summary>
     ///     Represents the current surgery state of a <see cref="IBodyPart"/>.

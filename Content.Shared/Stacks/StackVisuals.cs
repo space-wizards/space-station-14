@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Stacks
 {
     [Serializable, NetSerializable]
     public enum StackVisuals : byte
@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components
         Actual,
         /// <summary>
         /// The total amount of elements in the stack. If unspecified, the visualizer assumes
-        /// its 
+        /// its
         /// </summary>
         MaxCount,
         Hide

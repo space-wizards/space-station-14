@@ -1,14 +1,13 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Server.Destructible.Thresholds.Behaviors;
+using Content.Server.Destructible.Thresholds.Triggers;
+using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds
+namespace Content.Server.Destructible.Thresholds
 {
     [DataDefinition]
     public class Threshold

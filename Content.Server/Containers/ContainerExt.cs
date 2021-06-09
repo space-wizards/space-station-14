@@ -1,6 +1,6 @@
 using Robust.Shared.Containers;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.Containers
 {
     public static class ContainerExt
     {

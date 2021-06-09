@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Controls;
+using Content.Client.Alerts.UI;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -15,7 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.Alerts
 {
     /// <inheritdoc/>
     [RegisterComponent]

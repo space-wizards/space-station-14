@@ -1,9 +1,8 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Access;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.Access.Components
 {
     /// <summary>
     ///     Contains access levels that can be checked to see if somebody has access with an <see cref="AccessReader"/>.

@@ -5,20 +5,24 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Anchor;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Connections;
+using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Unit.Components;
+using Content.Server.DoAfter;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Components;
+using Content.Shared.Configuration;
+using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -27,15 +31,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Disposal.Mailing
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalMailingUnitComponent))]

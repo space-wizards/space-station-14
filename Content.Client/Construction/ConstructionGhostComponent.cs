@@ -1,5 +1,5 @@
-﻿using Content.Shared.Construction;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Construction.Prototypes;
+using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Construction
+namespace Content.Client.Construction
 {
     [RegisterComponent]
     public class ConstructionGhostComponent : Component, IExamine

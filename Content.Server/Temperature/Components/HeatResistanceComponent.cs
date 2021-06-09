@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Shared.GameObjects.Components.Inventory;
+﻿using Content.Server.Clothing.Components;
+using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Temperature.Components
 {
     [RegisterComponent]
     public class HeatResistanceComponent : Component

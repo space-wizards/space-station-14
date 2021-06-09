@@ -1,11 +1,9 @@
 using System;
-using Content.Client.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Portal;
+using Content.Shared.Portal.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Movement
+namespace Content.Client.Movement.Visualizers
 {
     [UsedImplicitly]
     public class HandTeleporterVisualizer : AppearanceVisualizer

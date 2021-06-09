@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Body.Part.Property
+namespace Content.Shared.Body.Part.Property
 {
     /// <summary>
     ///     Property attachable to a <see cref="IBodyPart"/>.

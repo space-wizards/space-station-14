@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Directions;
+using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
+using Content.Shared.Slippery;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -24,7 +25,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Fluids
+namespace Content.Server.Fluids.Components
 {
     /// <summary>
     /// Puddle on a floor

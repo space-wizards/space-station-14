@@ -1,11 +1,11 @@
 using System;
-using Content.Shared.GameObjects.Components.Nutrition;
-using Content.Shared.Utility;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Rounding;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Nutrition
+namespace Content.Client.Nutrition.Visualizers
 {
     [UsedImplicitly]
     public sealed class FoodContainerVisualizer : AppearanceVisualizer

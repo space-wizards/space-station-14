@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
+using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class BaseChargerSystem : EntitySystem

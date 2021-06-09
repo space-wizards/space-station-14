@@ -1,23 +1,16 @@
-﻿using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items;
-using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.Hands.Components;
+using Content.Server.Items;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Microsoft.EntityFrameworkCore;
-using Robust.Server.GameObjects;
+using Content.Shared.Cabinet;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Cabinet
 {
     public class ItemCabinetSystem : EntitySystem
     {

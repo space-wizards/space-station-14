@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+﻿using Content.Server.NodeContainer.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.NodeContainer.EntitySystems
 {
     [UsedImplicitly]
     public class NodeContainerSystem : EntitySystem

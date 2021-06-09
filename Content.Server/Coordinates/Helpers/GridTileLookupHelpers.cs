@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Utility
+namespace Content.Server.Coordinates.Helpers
 {
     public static class GridTileLookupHelpers
     {

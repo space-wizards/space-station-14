@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Content.Client.State;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Client.Viewport;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -21,9 +20,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.DragDrop
 {
     /// <summary>
     /// Handles clientside drag and drop logic

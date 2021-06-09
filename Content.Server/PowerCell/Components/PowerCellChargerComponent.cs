@@ -1,8 +1,10 @@
 #nullable enable
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.PowerCell.Components
 {
     /// <summary>
     /// Recharges an entity with a <see cref="BatteryComponent"/>.

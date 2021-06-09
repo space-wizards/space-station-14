@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.Prototypes;
+using Content.Shared.Dataset;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Preferences
+namespace Content.Shared.CharacterAppearance
 {
     public enum Sex
     {

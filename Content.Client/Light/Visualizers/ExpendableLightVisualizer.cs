@@ -1,9 +1,9 @@
-﻿
-using Content.Shared.GameObjects.Components;
+﻿using Content.Client.Light.Components;
+using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
     public class ExpendableLightVisualizer : AppearanceVisualizer

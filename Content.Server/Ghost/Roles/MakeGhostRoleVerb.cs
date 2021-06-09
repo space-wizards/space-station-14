@@ -1,14 +1,13 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
+using Content.Server.Mind.Components;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GlobalVerbs
+namespace Content.Server.Ghost.Roles
 {
     [GlobalVerb]
     public class MakeGhostRoleVerb : GlobalVerb

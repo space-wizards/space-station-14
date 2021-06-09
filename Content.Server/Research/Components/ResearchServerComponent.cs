@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.Research;
+using Content.Server.Power.Components;
+using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Research
+namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     public class ResearchServerComponent : Component

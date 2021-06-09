@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -17,7 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
+namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
     public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit, IExamine

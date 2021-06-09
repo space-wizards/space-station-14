@@ -1,6 +1,6 @@
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
 
-namespace Content.Client.GameObjects.EntitySystems.NewFolder
+namespace Content.Client.Chemistry
 {
     public class ChemicalReactionSystem : SharedChemicalReactionSystem
     {

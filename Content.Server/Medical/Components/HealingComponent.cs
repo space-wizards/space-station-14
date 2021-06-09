@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Stack;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Damage.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Medical
+namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
     public class HealingComponent : Component, IAfterInteract

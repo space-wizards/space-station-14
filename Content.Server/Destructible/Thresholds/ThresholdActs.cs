@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds
+namespace Content.Server.Destructible.Thresholds
 {
     [Flags, FlagsFor(typeof(ActsFlags))]
     [Serializable]

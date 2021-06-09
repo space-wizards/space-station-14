@@ -1,13 +1,13 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Medical
+namespace Content.Shared.MedicalScanner
 {
     public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {

@@ -1,10 +1,9 @@
 #nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Server.GameObjects.Components.Singularity
+namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     public class ContainmentFieldComponent : Component, IStartCollide

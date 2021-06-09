@@ -1,10 +1,9 @@
-﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.Player;
+﻿using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Observer.GhostRoles
+namespace Content.Server.Ghost.Roles.Components
 {
     public abstract class GhostRoleComponent : Component
     {

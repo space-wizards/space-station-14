@@ -1,17 +1,17 @@
 #nullable enable
-using System.Threading;
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.AI.Components;
+using Content.Server.Mind.Components;
 using Content.Shared.Administration;
-using Content.Shared.GameObjects.Components.Mobs.Speech;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Emoting;
+using Content.Shared.Movement.Components;
+using Content.Shared.Speech;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Commands
+namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public class MakeSentientCommand : IConsoleCommand

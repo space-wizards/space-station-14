@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Window
 {
     [UsedImplicitly]
     public sealed class WindowSystem : EntitySystem

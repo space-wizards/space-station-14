@@ -2,7 +2,7 @@
 
 
 
-namespace Content.Client.GameObjects.Components.Singularity
+namespace Content.Client.Singularity.Components
 {
     interface IClientSingularityInstance
     {

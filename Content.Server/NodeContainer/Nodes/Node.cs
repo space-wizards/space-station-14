@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
+namespace Content.Server.NodeContainer.Nodes
 {
     /// <summary>
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s

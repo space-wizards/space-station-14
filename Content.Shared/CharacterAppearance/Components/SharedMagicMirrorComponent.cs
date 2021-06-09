@@ -1,11 +1,10 @@
 #nullable enable
 using System;
-using Content.Shared.Preferences.Appearance;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.CharacterAppearance.Components
 {
     public class SharedMagicMirrorComponent : Component
     {

@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Actions
 {
     /// <summary>
     /// Evicts action states with expired cooldowns.

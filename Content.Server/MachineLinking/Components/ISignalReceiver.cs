@@ -1,4 +1,4 @@
-﻿namespace Content.Server.GameObjects.Components.MachineLinking
+﻿namespace Content.Server.MachineLinking.Components
 {
     public interface ISignalReceiver<in T>
     {

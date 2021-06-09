@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.NodeGroups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.NodeContainer.EntitySystems
 {
     [UsedImplicitly]
     public class NodeGroupSystem : EntitySystem

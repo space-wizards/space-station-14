@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Gravity;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Gravity;
-using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
+using Content.Server.Camera;
+using Content.Shared.Gravity;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -15,7 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class GravitySystem : EntitySystem

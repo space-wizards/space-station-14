@@ -1,4 +1,6 @@
-﻿namespace Content.Server.GameObjects.Components.Body.Surgery.Messages
+﻿using Content.Server.Body.Surgery.Components;
+
+namespace Content.Server.Body.Surgery.Messages
 {
     public class SurgeryWindowCloseMessage
     {

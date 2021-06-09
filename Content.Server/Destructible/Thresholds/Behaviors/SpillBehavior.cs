@@ -1,12 +1,11 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Fluids;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Chemistry.Components;
+using Content.Server.Fluids.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
     [DataDefinition]

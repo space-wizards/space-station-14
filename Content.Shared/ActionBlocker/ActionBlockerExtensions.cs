@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems.ActionBlocker
+namespace Content.Shared.ActionBlocker
 {
     public static class ActionBlockerExtensions
     {

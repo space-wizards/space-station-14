@@ -1,15 +1,13 @@
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Weapon;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
+using Content.Server.Flash.Components;
+using Content.Server.Storage.Components;
+using Content.Shared.Acts;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Explosion
+namespace Content.Server.Explosion.Components
 {
     /// <summary>
     /// When triggered will flash in an area around the object and destroy itself

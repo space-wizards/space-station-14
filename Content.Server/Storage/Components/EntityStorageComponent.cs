@@ -2,17 +2,19 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Placeable;
+using Content.Server.Tools.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
+using Content.Shared.Body.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
+using Content.Shared.Notification;
 using Content.Shared.Physics;
+using Content.Shared.Storage;
+using Content.Shared.Tool;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -20,14 +22,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

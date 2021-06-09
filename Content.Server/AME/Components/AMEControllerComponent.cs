@@ -1,18 +1,15 @@
 #nullable enable
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Power.AME;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.NodeContainer;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.AME;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -21,7 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.AME
+namespace Content.Server.AME.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

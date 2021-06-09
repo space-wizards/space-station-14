@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.GameObjects.Components.Inventory
+namespace Content.Shared.Inventory
 {
     public abstract class Inventory
     {

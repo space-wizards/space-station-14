@@ -1,6 +1,6 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Examine;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
+namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     /// <summary>
     /// Allows this entity to be loaded into a ranged weapon (if the caliber matches)

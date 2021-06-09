@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using Content.Shared.Damage;
-
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.Damage
 {
     /// <summary>
     ///     Data class with information on how the value of a

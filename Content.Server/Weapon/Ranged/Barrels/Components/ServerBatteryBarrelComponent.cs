@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.Battery.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Projectiles.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
+using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -22,7 +22,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
+namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent

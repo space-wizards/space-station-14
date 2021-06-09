@@ -1,11 +1,11 @@
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.Utility;
+using Content.Shared.Rounding;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
+namespace Content.Client.Weapons.Ranged.Barrels.Visualizers
 {
     [UsedImplicitly]
     public sealed class MagVisualizer : AppearanceVisualizer

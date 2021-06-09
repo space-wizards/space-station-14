@@ -1,11 +1,13 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
+using Content.Shared.Targeting;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.CombatMode
 {
     public abstract class SharedCombatModeComponent : Component
     {

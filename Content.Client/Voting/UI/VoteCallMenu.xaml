@@ -1,6 +1,7 @@
-﻿<v:VoteCallMenu xmlns="https://spacestation14.io"
-                xmlns:cuic="clr-namespace:Content.Client.UserInterface.Controls"
+﻿<ui:VoteCallMenu xmlns="https://spacestation14.io"
                 xmlns:v="clr-namespace:Content.Client.Voting"
+                xmlns:ui="clr-namespace:Content.Client.Voting.UI"
+                xmlns:ui1="clr-namespace:Content.Client.HUD.UI"
                 MouseFilter="Stop" MinSize="350 150">
     <PanelContainer StyleClasses="AngleRect" />
     <VBoxContainer>
@@ -13,7 +14,7 @@
                                SizeFlagsVertical="ShrinkCenter" />
             </MarginContainer>
         </HBoxContainer>
-        <cuic:HighDivider />
+        <ui1:HighDivider />
 
         <MarginContainer SizeFlagsHorizontal="Fill" SizeFlagsVertical="Expand"
                          MarginLeftOverride="8" MarginRightOverride="8" MarginTopOverride="2">
@@ -36,4 +37,4 @@
         </MarginContainer>
 
     </VBoxContainer>
-</v:VoteCallMenu>
+</ui:VoteCallMenu>

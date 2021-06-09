@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -7,7 +8,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     public class SharedTileFrictionModifier : Component

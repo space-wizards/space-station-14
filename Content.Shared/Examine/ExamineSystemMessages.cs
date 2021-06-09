@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages
+namespace Content.Shared.Examine
 {
     public static class ExamineSystemMessages
     {

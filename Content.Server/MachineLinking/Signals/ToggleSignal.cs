@@ -1,4 +1,4 @@
-﻿namespace Content.Server.GameObjects.Components.MachineLinking.Signals
+﻿namespace Content.Server.MachineLinking.Signals
 {
     public struct ToggleSignal {}
 }

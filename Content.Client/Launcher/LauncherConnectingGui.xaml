@@ -1,9 +1,10 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:cui="clr-namespace:Content.Client.UserInterface.Controls"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         xmlns:cuic="clr-namespace:Content.Client.UserInterface">
-    <cuic:ParallaxControl />
+         xmlns:cuic="clr-namespace:Content.Client.UserInterface"
+         xmlns:parallax="clr-namespace:Content.Client.Parallax"
+         xmlns:ui="clr-namespace:Content.Client.HUD.UI">
+    <parallax:ParallaxControl />
     <Control HorizontalAlignment="Center" VerticalAlignment="Center">
         <PanelContainer StyleClasses="AngleRect" />
         <VBoxContainer MinSize="300 200">
@@ -13,7 +14,7 @@
                 <Button Name="ExitButton" Text="{Loc 'connecting-exit'}"
                         HorizontalAlignment="Right" HorizontalExpand="True" />
             </HBoxContainer>
-            <cui:HighDivider />
+            <ui:HighDivider />
             <VBoxContainer VerticalExpand="True" Margin="4 4 4 0">
                 <Control VerticalExpand="True" Margin="0 0 0 8">
                     <VBoxContainer Name="ConnectingStatus">

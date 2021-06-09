@@ -1,17 +1,16 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.DoAfter;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Robust.Server.GameObjects;
+using Content.Shared.Tool;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Tools.Components
 {
     public interface IToolComponent
     {

@@ -1,6 +1,6 @@
 ﻿using System;
-using Content.Server.Commands;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Mind.Commands;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Observer.GhostRoles
+namespace Content.Server.Ghost.Roles.Components
 {
     /// <summary>
     ///     Allows a ghost to take this role, spawning a new entity.

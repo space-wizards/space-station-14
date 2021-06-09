@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.Chemistry;
-using Content.Shared.Kitchen;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -15,7 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Kitchen
+namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
     public class MicrowaveBoundUserInterface : BoundUserInterface

@@ -1,9 +1,9 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEShieldComponent;
+using static Content.Shared.AME.SharedAMEShieldComponent;
 
-namespace Content.Client.GameObjects.Components.Power.AME
+namespace Content.Client.AME.Visualizers
 {
     [UsedImplicitly]
     public class AMEVisualizer : AppearanceVisualizer

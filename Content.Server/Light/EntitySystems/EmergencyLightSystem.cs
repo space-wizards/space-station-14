@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
+using Content.Server.Light.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class EmergencyLightSystem : EntitySystem

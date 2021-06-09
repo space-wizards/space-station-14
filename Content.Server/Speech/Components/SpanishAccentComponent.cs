@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Mobs.Speech
+namespace Content.Server.Speech.Components
 {
     [RegisterComponent]
     public class SpanishAccentComponent : Component, IAccentComponent

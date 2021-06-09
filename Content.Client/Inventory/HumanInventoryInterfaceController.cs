@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Client.UserInterface;
-using Content.Client.Utility;
+using Content.Client.HUD;
+using Content.Client.Items.Managers;
+using Content.Client.Items.UI;
 using Content.Shared;
-using Content.Shared.Prototypes.HUD;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -14,12 +13,11 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Client.GameObjects.Components.HUD.Inventory
+namespace Content.Client.Inventory
 {
     // Dynamically instantiated by ClientInventoryComponent.
     [UsedImplicitly]

@@ -1,8 +1,6 @@
 using System;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -11,7 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Stack
 {
     /// <summary>
     ///     Entity system that handles everything relating to stacks.

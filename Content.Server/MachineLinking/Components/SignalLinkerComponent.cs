@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.MachineLinking
+namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
     public class SignalLinkerComponent : Component

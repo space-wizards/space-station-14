@@ -1,10 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Shared.Prototypes.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.GameObjects.Components.Tag
+namespace Content.Shared.Tag
 {
     public static class TagComponentExtensions
     {

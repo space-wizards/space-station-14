@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Portal;
+﻿using Content.Shared.Portal.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Portal
+namespace Content.Client.Portal
 {
     [RegisterComponent]
     public class PortalComponent : SharedPortalComponent

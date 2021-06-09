@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
 using Content.Shared.Access;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -16,7 +15,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Access
+namespace Content.Server.Access.Components
 {
     /// <summary>
     ///     Stores access levels necessary to "use" an entity

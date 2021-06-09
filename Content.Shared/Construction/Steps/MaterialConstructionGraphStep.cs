@@ -1,15 +1,13 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
@@ -25,7 +23,7 @@ namespace Content.Shared.Construction
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, MaterialPrototype.Name));
+            message.AddMarkup(Robust.Shared.Localization.Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, MaterialPrototype.Name));
         }
 
         public override bool EntityValid(IEntity entity)

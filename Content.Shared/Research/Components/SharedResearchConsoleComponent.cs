@@ -1,9 +1,10 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Research
+namespace Content.Shared.Research.Components
 {
     public class SharedResearchConsoleComponent : Component
     {

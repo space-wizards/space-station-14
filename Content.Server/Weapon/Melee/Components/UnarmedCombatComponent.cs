@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Weapon.Melee
+namespace Content.Server.Weapon.Melee.Components
 {
     // TODO: Remove this, just use MeleeWeapon...
     [RegisterComponent]

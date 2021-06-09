@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Body.Surgery
+namespace Content.Client.Body.UI
 {
     public class SurgeryWindow : SS14Window
     {

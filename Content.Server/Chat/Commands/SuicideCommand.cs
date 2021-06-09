@@ -1,18 +1,16 @@
 #nullable enable
-using System;
 using System.Linq;
+using Content.Server.Act;
 using Content.Server.Administration;
-using Content.Server.Commands.Observer;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Notification;
 using Content.Server.Players;
-using Content.Server.Utility;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.Interfaces;
+using Content.Shared.Damage.Components;
+using Content.Shared.Notification;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -20,7 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Commands.Chat
+namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
     internal class SuicideCommand : IConsoleCommand

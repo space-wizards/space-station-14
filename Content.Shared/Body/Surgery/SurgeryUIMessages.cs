@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Body.Surgery
+namespace Content.Shared.Body.Surgery
 {
     [Serializable, NetSerializable]
     public class RequestBodyPartSurgeryUIMessage : BoundUserInterfaceMessage

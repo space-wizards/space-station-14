@@ -1,6 +1,6 @@
-using Content.Server.Commands;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Verbs;
+using Content.Server.Mind.Commands;
+using Content.Server.Mind.Components;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GlobalVerbs
+namespace Content.Server.Mind.Verbs
 {
     [GlobalVerb]
     public class MakeSentientVerb : GlobalVerb

@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.PDA;
+﻿using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.PDA
+namespace Content.Client.PDA
 {
     [UsedImplicitly]
     // ReSharper disable once InconsistentNaming

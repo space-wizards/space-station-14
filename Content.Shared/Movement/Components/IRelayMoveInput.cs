@@ -1,7 +1,7 @@
 #nullable enable
 using Robust.Shared.Players;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     public interface IRelayMoveInput
     {

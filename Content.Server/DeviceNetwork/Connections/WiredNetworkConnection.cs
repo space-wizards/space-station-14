@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Connections
 {
     public class WiredNetworkConnection : BaseNetworkConnection
     {

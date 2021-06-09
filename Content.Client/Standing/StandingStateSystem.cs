@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Rotation;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Rotation;
+using Content.Shared.Standing;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Standing
 {
     public class StandingStateSystem : SharedStandingStateSystem
     {

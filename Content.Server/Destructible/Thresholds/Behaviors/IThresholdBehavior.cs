@@ -1,7 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     public interface IThresholdBehavior
     {

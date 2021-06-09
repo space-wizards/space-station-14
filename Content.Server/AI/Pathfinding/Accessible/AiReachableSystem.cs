@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
+using Content.Server.Access.Components;
+using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Shared.AI;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +14,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
+namespace Content.Server.AI.Pathfinding.Accessible
 {
     /// <summary>
     /// Determines whether an AI has access to a specific pathfinding node.

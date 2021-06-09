@@ -2,13 +2,14 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Content.Client.State;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.ContextMenu;
-using Content.Client.Utility;
+using Content.Client.Examine;
+using Content.Client.Interactable;
+using Content.Client.Items.Managers;
+using Content.Client.Verbs;
+using Content.Client.Viewport;
 using Content.Shared;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
+using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -23,8 +24,9 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 using Timer = Robust.Shared.Timing.Timer;
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.ContextMenu.UI
 {
     public class ContextMenuPresenter : IDisposable
     {
@@ -183,7 +185,7 @@ namespace Content.Client.GameObjects.EntitySystems
             e.OutlineComponent?.OnMouseEnter(localPlayer.InRangeUnobstructed(entity, ignoreInsideBlocker: true), renderScale);
             if (e.SpriteComp != null)
             {
-                e.SpriteComp.DrawDepth = (int) Shared.GameObjects.DrawDepth.HighlightedItems;
+                e.SpriteComp.DrawDepth = (int) DrawDepth.HighlightedItems;
             }
             e.DrawOutline = true;
         }

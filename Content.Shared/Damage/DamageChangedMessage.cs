@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.Damage
 {
     public class DamageChangedMessage : ComponentMessage
     {

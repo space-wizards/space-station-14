@@ -1,8 +1,8 @@
 ﻿using Content.Client.Eui;
-using Content.Shared.GameObjects.Components.Observer;
+using Content.Shared.Cloning;
 using JetBrains.Annotations;
 
-namespace Content.Client.GameObjects.Components.Observer
+namespace Content.Client.Cloning.UI
 {
     [UsedImplicitly]
     public class AcceptCloningEui : BaseEui

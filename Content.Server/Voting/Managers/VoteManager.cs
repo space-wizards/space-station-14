@@ -5,11 +5,12 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Administration.Managers;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Shared.Administration;
-using Content.Shared.Network.NetMessages;
-using Content.Shared.Utility;
+using Content.Shared.Collections;
+using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -21,7 +22,7 @@ using Robust.Shared.Utility;
 
 #nullable enable
 
-namespace Content.Server.Voting
+namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager : IVoteManager
     {

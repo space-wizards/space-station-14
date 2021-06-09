@@ -5,7 +5,7 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Throwing
 {
     /// <summary>
     ///     This interface gives components behavior when landing after being thrown.

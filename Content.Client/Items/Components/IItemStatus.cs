@@ -1,6 +1,6 @@
 using Robust.Client.UserInterface;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Items.Components
 {
     /// <summary>
     ///     Allows a component to provide status tooltips next to the hands interface.

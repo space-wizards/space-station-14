@@ -1,10 +1,10 @@
-using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GlobalVerbs
+namespace Content.Client.ViewVariables
 {
     /// <summary>
     /// Global verb that opens a view variables window for the entity in question.

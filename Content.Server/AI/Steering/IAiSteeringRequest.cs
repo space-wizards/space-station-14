@@ -1,6 +1,6 @@
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Steering
+namespace Content.Server.AI.Steering
 {
     public interface IAiSteeringRequest
     {

@@ -1,11 +1,11 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Climbing
 {
     public interface IClimbable { }
 

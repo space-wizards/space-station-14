@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems.AI
+namespace Content.Client.AI
 {
 #if DEBUG
     public class ClientPathfindingDebugSystem : EntitySystem

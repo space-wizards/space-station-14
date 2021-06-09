@@ -1,13 +1,13 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Pulling;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 
-namespace Content.Server.GameObjects.Components.Pulling
+namespace Content.Server.Pulling
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedPullableComponent))]

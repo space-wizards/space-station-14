@@ -1,10 +1,10 @@
-using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Research;
+using Content.Shared.Lathe;
+using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.GameObjects.Components.Research
+namespace Content.Client.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]

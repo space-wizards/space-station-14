@@ -1,13 +1,14 @@
 ﻿using System.Linq;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Server.Items;
+using Content.Server.PowerCell.Components;
+using Content.Server.Stunnable.Components;
+using Content.Server.Weapon.Melee;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -16,7 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
+namespace Content.Server.Stunnable
 {
     public class StunbatonSystem : EntitySystem
     {

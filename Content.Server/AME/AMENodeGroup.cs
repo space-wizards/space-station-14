@@ -2,16 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Server.GameObjects.Components.Power.AME;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Random;
+using Content.Server.AME.Components;
+using Content.Server.Explosion;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.AME
 {
     /// <summary>
     /// Node group class for handling the Antimatter Engine's console and parts.

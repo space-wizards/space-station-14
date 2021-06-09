@@ -1,12 +1,12 @@
 using System;
-using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.Lathe;
+using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Power
+namespace Content.Client.Lathe.Visualizers
 {
     [UsedImplicitly]
     public class AutolatheVisualizer : AppearanceVisualizer

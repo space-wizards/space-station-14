@@ -1,7 +1,7 @@
 ﻿using Robust.Client.GameObjects;
-using static Content.Shared.Kitchen.SharedReagentGrinderComponent;
+using static Content.Shared.Kitchen.Components.SharedReagentGrinderComponent;
 
-namespace Content.Client.GameObjects.Components.Kitchen
+namespace Content.Client.Kitchen.Visualizers
 {
     public class ReagentGrinderVisualizer : AppearanceVisualizer
     {

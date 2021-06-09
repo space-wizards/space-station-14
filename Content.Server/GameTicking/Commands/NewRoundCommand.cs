@@ -1,11 +1,10 @@
 ﻿using System;
 using Content.Server.Administration;
-using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.GameTicking
+namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Server)]
     public class NewRoundCommand : IConsoleCommand

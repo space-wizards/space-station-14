@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Shared.GameObjects.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.SubFloor
 {
     /// <summary>
     ///     Entity system backing <see cref="SubFloorHideComponent"/>.

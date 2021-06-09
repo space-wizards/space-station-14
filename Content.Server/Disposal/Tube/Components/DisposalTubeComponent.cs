@@ -1,11 +1,12 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
+using Content.Server.Anchor;
+using Content.Server.Disposal.Unit.Components;
+using Content.Shared.Acts;
+using Content.Shared.Disposal.Components;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -15,15 +16,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {

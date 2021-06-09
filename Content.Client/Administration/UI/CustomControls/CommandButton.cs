@@ -3,7 +3,7 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 
-namespace Content.Client.UserInterface.AdminMenu.CustomControls
+namespace Content.Client.Administration.UI.CustomControls
 {
     public class CommandButton : Button
     {

@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Clothing;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Cloning
 {
     [RegisterComponent]
     public sealed class MagbootsComponent : SharedMagbootsComponent

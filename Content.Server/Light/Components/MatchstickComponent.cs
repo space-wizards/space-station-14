@@ -1,8 +1,9 @@
 #nullable enable
 using System.Threading.Tasks;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Smoking;
+using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -10,7 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Light.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHotItem))]

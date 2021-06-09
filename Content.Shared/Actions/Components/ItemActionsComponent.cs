@@ -1,16 +1,15 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.Actions.Components
 {
     /// <summary>
     /// This should be used on items which provide actions. Defines which actions the item provides

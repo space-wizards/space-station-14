@@ -1,8 +1,9 @@
-﻿﻿using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.Hands;
+using Content.Shared.Inventory;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.Inventory.Components
 {
     /// <summary>
     /// Pops up a message when equipped / unequipped (including hands).

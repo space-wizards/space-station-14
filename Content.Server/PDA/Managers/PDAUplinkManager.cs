@@ -1,16 +1,14 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.PDA;
-using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Prototypes.PDA;
+using Content.Server.Mind.Components;
+using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.PDA
+namespace Content.Server.PDA.Managers
 {
     public class PDAUplinkManager : IPDAUplinkManager
     {

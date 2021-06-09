@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Coordinates
 {
     public static class EntityCoordinatesExtensions
     {

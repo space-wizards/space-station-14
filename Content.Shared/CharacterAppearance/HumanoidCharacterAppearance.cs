@@ -1,12 +1,11 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.Preferences.Appearance;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Preferences
+namespace Content.Shared.CharacterAppearance
 {
     [Serializable, NetSerializable]
     public class HumanoidCharacterAppearance : ICharacterAppearance

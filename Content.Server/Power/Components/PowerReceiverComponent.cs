@@ -1,8 +1,8 @@
 #nullable enable
 using System;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.APC;
+using Content.Shared.Examine;
+using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
+namespace Content.Server.Power.Components
 {
     /// <summary>
     ///     Attempts to link with a nearby <see cref="IPowerProvider"/>s so that it can receive power from a <see cref="IApcNet"/>.

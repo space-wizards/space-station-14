@@ -1,12 +1,13 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Server.Ghost;
+using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Body.Behavior
+namespace Content.Server.Body.Behavior
 {
     public class BrainBehavior : MechanismBehavior
     {

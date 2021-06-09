@@ -1,7 +1,7 @@
 using System;
-using Content.Client.GameObjects.Components.Wires;
+using Content.Client.Wires;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Doors
+namespace Content.Client.Doors
 {
     [UsedImplicitly]
     public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks

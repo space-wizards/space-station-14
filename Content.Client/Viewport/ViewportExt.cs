@@ -1,6 +1,6 @@
 ﻿using Robust.Client.UserInterface.CustomControls;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Viewport
 {
     public static class ViewportExt
     {

@@ -1,11 +1,10 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages
+namespace Content.Shared.Verbs
 {
     public static class VerbSystemMessages
     {

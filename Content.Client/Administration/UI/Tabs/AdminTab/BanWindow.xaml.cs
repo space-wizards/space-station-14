@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface.AdminMenu.Tabs.AdminTab
+namespace Content.Client.Administration.UI.Tabs.AdminTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]

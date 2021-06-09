@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     public sealed class MovementIgnoreGravityComponent : Component

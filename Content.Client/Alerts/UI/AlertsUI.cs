@@ -1,12 +1,11 @@
-﻿using Content.Client.Chat;
-using Content.Client.Interfaces.Chat;
-using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.Chat.Managers;
+using Content.Client.Chat.UI;
+using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Alerts.UI
 {
     /// <summary>
     ///     The status effects display on the right side of the screen.

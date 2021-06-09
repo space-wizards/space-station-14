@@ -1,12 +1,11 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.DoAfter
 {
     [RegisterComponent]
     public sealed class DoAfterComponent : SharedDoAfterComponent

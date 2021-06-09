@@ -1,13 +1,13 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
+using static Content.Shared.Interaction.SharedInteractionSystem;
 
-namespace Content.Client.Utility
+namespace Content.Client.Interactable
 {
     public static class UnobstructedExtensions
     {

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Botany;
-using Content.Server.GameObjects.Components.Botany;
+using Content.Server.Botany.Components;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Plants
 {
     [UsedImplicitly]
     public class PlantSystem : EntitySystem, IResettingEntitySystem

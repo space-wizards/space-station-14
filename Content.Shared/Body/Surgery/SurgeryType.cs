@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Body.Surgery
+namespace Content.Shared.Body.Surgery
 {
     /// <summary>
     ///     Types of surgery operations that can be performed.

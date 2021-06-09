@@ -1,8 +1,7 @@
 using System;
-using Content.Shared.GameObjects.Components.Weapons;
+using Content.Shared.Flash;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -10,7 +9,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.Components.Weapon
+namespace Content.Server.Flash.Components
 {
     [RegisterComponent]
     public sealed class FlashableComponent : SharedFlashableComponent

@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace Content.Shared.GameObjects.Components.PDA
+namespace Content.Shared.PDA
 {
     public enum UplinkCategory
     {

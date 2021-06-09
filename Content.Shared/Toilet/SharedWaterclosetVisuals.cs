@@ -1,8 +1,8 @@
 #nullable enable
-using Robust.Shared.Serialization;
 using System;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Watercloset
+namespace Content.Shared.Toilet
 {
     [Serializable, NetSerializable]
     public enum ToiletVisuals

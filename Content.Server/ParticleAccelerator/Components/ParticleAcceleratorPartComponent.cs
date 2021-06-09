@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.PA
+namespace Content.Server.ParticleAccelerator.Components
 {
     public abstract class ParticleAcceleratorPartComponent : Component
     {

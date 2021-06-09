@@ -1,13 +1,13 @@
 ﻿#nullable enable
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Scanner;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Scanner;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body
+namespace Content.Server.Body.Scanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

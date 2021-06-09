@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Portal
+namespace Content.Shared.Portal.Components
 {
     public enum ItemTeleporterState
     {

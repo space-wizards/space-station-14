@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Alert;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.EntitySystemMessages.Gravity;
 using Content.Shared.GameTicking;
+using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
     public class WeightlessSystem : EntitySystem, IResettingEntitySystem

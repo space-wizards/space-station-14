@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Utility;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Cabinet
 {
     /// <summary>
     ///     Used for entities that can hold one item that fits the whitelist, which can be extracted by interacting with

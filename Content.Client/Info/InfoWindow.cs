@@ -2,22 +2,18 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared;
-using Robust.Client.Credits;
+using Content.Client.EscapeMenu.UI;
+using Content.Client.Stylesheets;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Info
 {
     public sealed class InfoWindow : SS14Window
     {

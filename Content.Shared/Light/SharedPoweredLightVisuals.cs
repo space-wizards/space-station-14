@@ -1,8 +1,8 @@
 #nullable enable
-using Robust.Shared.Serialization;
 using System;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Shared.Light
 {
     [Serializable, NetSerializable]
     public enum PoweredLightVisuals : byte

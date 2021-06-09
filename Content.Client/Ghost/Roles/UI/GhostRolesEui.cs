@@ -1,10 +1,9 @@
 using Content.Client.Eui;
 using Content.Shared.Eui;
-using Content.Shared.GameObjects.Components.Observer;
-using Content.Shared.GameObjects.Components.Observer.GhostRoles;
+using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 
-namespace Content.Client.GameObjects.Components.Observer.GhostRoles
+namespace Content.Client.Ghost.Roles.UI
 {
     [UsedImplicitly]
     public class GhostRolesEui : BaseEui

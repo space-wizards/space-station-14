@@ -1,11 +1,9 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.PA
+namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]

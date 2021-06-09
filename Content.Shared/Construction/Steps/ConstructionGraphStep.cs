@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     [Serializable]
     [ImplicitDataDefinitionForInheritors]

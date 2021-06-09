@@ -1,10 +1,9 @@
 using Content.Server.Administration;
-using Content.Server.Interfaces.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.GameTicking
+namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
     class ToggleReadyCommand : IConsoleCommand

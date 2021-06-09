@@ -1,12 +1,10 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Content.Server.Chemistry.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +14,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Culinary
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     class SliceableFoodComponent : Component, IInteractUsing, IExamine

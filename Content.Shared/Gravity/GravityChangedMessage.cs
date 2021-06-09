@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages.Gravity
+namespace Content.Shared.Gravity
 {
     public class GravityChangedMessage : EntityEventArgs
     {

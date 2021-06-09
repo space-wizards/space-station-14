@@ -1,9 +1,8 @@
 #nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]

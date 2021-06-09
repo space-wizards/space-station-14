@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking;
-using Content.Server.Mobs;
+using Content.Server.GameTicking.Rules;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
@@ -10,7 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Interfaces.GameTicking
+namespace Content.Server.GameTicking
 {
     /// <summary>
     ///     The game ticker is responsible for managing the round-by-round system of the game.
@@ -46,7 +45,7 @@ namespace Content.Server.Interfaces.GameTicking
         void ToggleDisallowLateJoin(bool disallowLateJoin);
 
         /// <summary>proxy to GamePreset (actual handler)</summary>
-        bool OnGhostAttempt(Mind mind, bool canReturnGlobal);
+        bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal);
 
         EntityCoordinates GetLateJoinSpawnPoint();
         EntityCoordinates GetJobSpawnPoint(string jobId);

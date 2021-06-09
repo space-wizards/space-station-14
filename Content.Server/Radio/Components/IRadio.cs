@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.Radio.Components
 {
     public interface IRadio
     {

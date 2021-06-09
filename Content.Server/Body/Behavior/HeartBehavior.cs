@@ -1,6 +1,6 @@
-﻿using Content.Shared.GameObjects.Components.Body.Networks;
+﻿using Content.Shared.Body.Networks;
 
-namespace Content.Server.GameObjects.Components.Body.Behavior
+namespace Content.Server.Body.Behavior
 {
     public class HeartBehavior : MechanismBehavior
     {

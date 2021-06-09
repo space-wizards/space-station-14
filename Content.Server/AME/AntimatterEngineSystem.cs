@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Power.AME;
+﻿using Content.Server.AME.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.AME
 {
     [UsedImplicitly]
     public class AntimatterEngineSystem : EntitySystem

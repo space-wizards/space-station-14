@@ -1,11 +1,10 @@
-using System.Linq;
-using Content.Client.Administration;
-using Content.Client.Chat;
-using Content.Client.Construction;
-using Content.Client.Interfaces.Chat;
-using Content.Client.UserInterface;
+using Content.Client.Administration.Managers;
+using Content.Client.Chat.Managers;
+using Content.Client.Chat.UI;
+using Content.Client.Construction.UI;
+using Content.Client.HUD;
+using Content.Client.HUD.UI;
 using Content.Client.Voting;
-using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
@@ -15,12 +14,11 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.State
+namespace Content.Client.Viewport
 {
     public class GameScreen : GameScreenBase, IMainViewportState
     {

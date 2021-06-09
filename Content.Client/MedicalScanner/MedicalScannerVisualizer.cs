@@ -1,10 +1,10 @@
 using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
-using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent.MedicalScannerStatus;
+using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent.MedicalScannerStatus;
 
-namespace Content.Client.GameObjects.Components.MedicalScanner
+namespace Content.Client.MedicalScanner
 {
     [UsedImplicitly]
     public class MedicalScannerVisualizer : AppearanceVisualizer

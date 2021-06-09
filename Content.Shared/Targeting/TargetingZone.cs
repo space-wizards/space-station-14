@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.Targeting
 {
     /// <summary>
     ///     Zones the player can target for attacks.

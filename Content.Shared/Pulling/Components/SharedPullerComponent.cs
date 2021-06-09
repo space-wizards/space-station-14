@@ -1,13 +1,11 @@
 ﻿#nullable enable
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
 using Component = Robust.Shared.GameObjects.Component;
 
-namespace Content.Shared.GameObjects.Components.Pulling
+namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
     public class SharedPullerComponent : Component, IMoveSpeedModifier

@@ -1,12 +1,13 @@
 #nullable enable
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Utility;
+using Content.Server.UserInterface;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Crayon;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -20,7 +21,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Crayon
 {
     [RegisterComponent]
     public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse, IDropped, ISerializationHooks

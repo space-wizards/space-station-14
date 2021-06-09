@@ -1,10 +1,8 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Ghost.Components;
+using Content.Shared.Examine;
+using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -14,10 +12,10 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Mind.Components
 {
     /// <summary>
-    ///     Stores a <see cref="Server.Mobs.Mind"/> on a mob.
+    ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
     [RegisterComponent]
     public class MindComponent : Component, IExamine

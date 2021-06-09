@@ -1,16 +1,16 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     /// <summary>
     ///     Gives click behavior for transferring to/from other reagent containers.

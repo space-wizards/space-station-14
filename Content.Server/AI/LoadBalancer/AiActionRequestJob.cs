@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.AI.Components;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.ExpandableActions;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Utility;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Server.CPUJob.JobQueues;
 using Content.Shared.AI;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
+namespace Content.Server.AI.LoadBalancer
 {
     public class AiActionRequestJob : Job<UtilityAction>
     {

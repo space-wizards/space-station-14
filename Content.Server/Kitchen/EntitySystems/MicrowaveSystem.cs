@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Kitchen;
+using Content.Server.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Kitchen.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class MicrowaveSystem : EntitySystem

@@ -1,22 +1,20 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Stack;
 using Content.Shared.Audio;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.Tile
 {
     [RegisterComponent]
     public class FloorTileItemComponent : Component, IAfterInteract
@@ -48,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
-            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
+            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Robust.Shared.Map.Tile(tileId));
             SoundSystem.Play(Filter.Pvs(location), "/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
         }
 

@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.Verbs
 {
     public static class VerbUtility
     {

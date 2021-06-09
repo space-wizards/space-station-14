@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Prototypes.Cargo;
+using Content.Shared.Cargo;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Cargo

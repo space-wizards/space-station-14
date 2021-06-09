@@ -1,13 +1,12 @@
 using System;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Newtonsoft.Json.Linq;
 using Robust.Server;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
 using Robust.Shared.IoC;
 
-namespace Content.Server
+namespace Content.Server.Shell
 {
     /// <summary>
     ///     Tiny helper class to handle status messages. Nothing too complicated.

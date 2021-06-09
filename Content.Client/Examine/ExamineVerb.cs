@@ -1,9 +1,8 @@
-using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Client.GlobalVerbs
+namespace Content.Client.Examine
 {
     [GlobalVerb]
     public class ExamineVerb : GlobalVerb

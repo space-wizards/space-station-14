@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.Items;
+using Content.Client.Items.Components;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.Hands.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,9 +11,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Client.StaticIoC;
+using static Content.Client.IoC.StaticIoC;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Items.UI
 {
     public class ItemStatusPanel : Control
     {

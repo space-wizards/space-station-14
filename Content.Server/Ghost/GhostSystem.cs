@@ -1,9 +1,9 @@
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Ghost
 {
     [UsedImplicitly]
     public class GhostSystem : EntitySystem

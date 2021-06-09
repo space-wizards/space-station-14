@@ -1,14 +1,12 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Pointing;
+using Content.Shared.Pointing.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Server.GameObjects.Components.Pointing
+namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
     public class PointingArrowComponent : SharedPointingArrowComponent

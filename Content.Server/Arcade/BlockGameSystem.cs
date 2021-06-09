@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Arcade;
+using Content.Server.Arcade.Components;
 using Content.Shared.Arcade;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Arcade
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class BlockGameSystem : EntitySystem

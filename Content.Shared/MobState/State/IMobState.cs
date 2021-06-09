@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Mobs.State
+namespace Content.Shared.MobState.State
 {
     /// <summary>
     ///     Defines the blocking effects of an associated <see cref="DamageState"/>

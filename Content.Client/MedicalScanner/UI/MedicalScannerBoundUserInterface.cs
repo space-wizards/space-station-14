@@ -1,9 +1,9 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
+using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 
-namespace Content.Client.GameObjects.Components.MedicalScanner
+namespace Content.Client.MedicalScanner.UI
 {
     [UsedImplicitly]
     public class MedicalScannerBoundUserInterface : BoundUserInterface

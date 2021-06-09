@@ -1,10 +1,10 @@
-﻿using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.Inventory.Components;
+using Content.Server.Items;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.Utility
+namespace Content.Server.Inventory
 {
     public static class InventoryHelpers
     {

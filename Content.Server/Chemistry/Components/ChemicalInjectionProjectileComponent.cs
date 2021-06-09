@@ -1,15 +1,13 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
+using Content.Server.Body.Circulatory;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Projectiles
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     public class ChemicalInjectionProjectileComponent : Component, IStartCollide

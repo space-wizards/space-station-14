@@ -1,9 +1,9 @@
 using System;
-using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Doors
+namespace Content.Client.Doors
 {
     /// <summary>
     /// Bare-bones client-side door component; used to stop door-based mispredicts.

@@ -1,5 +1,5 @@
 #nullable enable
-using Content.Shared.Interfaces;
+using Content.Shared.Notification;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

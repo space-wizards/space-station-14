@@ -1,17 +1,11 @@
 #nullable enable
-using System;
+using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.Battery.Components
 {
     [RegisterComponent]
     public class ExaminableBatteryComponent : Component, IExamine

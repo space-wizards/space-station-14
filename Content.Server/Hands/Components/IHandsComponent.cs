@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Robust.Server.GameObjects;
+using Content.Server.Items;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Items
+namespace Content.Server.Hands.Components
 {
     public interface IHandsComponent : ISharedHandsComponent
     {
@@ -166,7 +165,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="slot">The slot of which to drop the entity.</param>
         /// <param name="targetContainer">The container to drop into.</param>
-        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop(IEntity)"/> for the mob or not.</param>
+        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop"/> for the mob or not.</param>
         /// <param name="doDropInteraction">Whether to perform Dropped interactions.</param>
         /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
         /// <exception cref="InvalidOperationException">

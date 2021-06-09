@@ -1,10 +1,9 @@
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
     [DataDefinition]

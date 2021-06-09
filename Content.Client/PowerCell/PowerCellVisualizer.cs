@@ -1,10 +1,10 @@
-using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.PowerCell;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Power
+namespace Content.Client.PowerCell
 {
     [UsedImplicitly]
     public class PowerCellVisualizer : AppearanceVisualizer

@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace Content.Shared.GameObjects.Components.Mobs.State
+namespace Content.Shared.MobState.State
 {
     /// <summary>
     ///     The standard state an entity is in; no negative effects.

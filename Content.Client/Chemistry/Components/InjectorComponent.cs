@@ -1,7 +1,8 @@
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Client.Items.Components;
+using Content.Client.Message;
+using Content.Client.Stylesheets;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -9,7 +10,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.Chemistry.Components
 {
     /// <summary>
     /// Client behavior for injectors & syringes. Used for item status on injectors

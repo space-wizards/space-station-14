@@ -1,9 +1,10 @@
 #nullable enable
-using Robust.Shared.GameObjects;
 using System;
+using Content.Shared.NetIDs;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Tag
+namespace Content.Shared.Tag
 {
     [Serializable, NetSerializable]
     public class TagComponentState : ComponentState

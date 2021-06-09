@@ -1,24 +1,23 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Battery.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Power;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.Power.Components
 {
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]

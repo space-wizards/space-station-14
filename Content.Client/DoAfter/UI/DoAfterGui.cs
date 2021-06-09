@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components;
+using Content.Client.IoC;
+using Content.Client.Resources;
+using Content.Shared.DoAfter;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,7 +13,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.EntitySystems.DoAfter
+namespace Content.Client.DoAfter.UI
 {
     public sealed class DoAfterGui : VBoxContainer
     {

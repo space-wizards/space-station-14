@@ -1,15 +1,15 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Item;
+using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Disposal
+namespace Content.Shared.Disposal.Components
 {
     public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
     {

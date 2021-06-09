@@ -1,12 +1,12 @@
-using Content.Server.Administration;
-using Content.Server.Eui;
+using Content.Server.Administration.Managers;
+using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
-namespace Content.Server
+namespace Content.Server.Administration.UI
 {
     [UsedImplicitly]
     public sealed class SetOutfitEui : BaseEui

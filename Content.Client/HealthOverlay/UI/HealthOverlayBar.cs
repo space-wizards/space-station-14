@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
+namespace Content.Client.HealthOverlay.UI
 {
     public class HealthOverlayBar : Control
     {

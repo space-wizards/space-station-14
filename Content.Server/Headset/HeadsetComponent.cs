@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
+using Content.Server.Radio.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Headset
+namespace Content.Server.Headset
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]

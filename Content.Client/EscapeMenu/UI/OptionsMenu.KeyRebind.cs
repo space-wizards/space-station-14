@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.HUD.UI;
+using Content.Client.Stylesheets;
 using Content.Shared.Input;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -12,7 +13,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.EscapeMenu.UI
 {
     public sealed partial class OptionsMenu
     {

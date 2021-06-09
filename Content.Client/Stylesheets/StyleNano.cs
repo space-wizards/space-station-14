@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.Client.Chat;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.UserInterface.Controls;
-using Content.Client.Utility;
+using Content.Client.Actions.UI;
+using Content.Client.Examine;
+using Content.Client.HUD;
+using Content.Client.HUD.UI;
+using Content.Client.Resources;
+using Content.Client.Targeting;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -12,7 +14,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
-namespace Content.Client.UserInterface.Stylesheets
+namespace Content.Client.Stylesheets
 {
     public sealed class StyleNano : StyleBase
     {

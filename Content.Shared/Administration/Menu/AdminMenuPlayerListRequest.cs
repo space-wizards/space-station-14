@@ -2,7 +2,7 @@
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Administration.AdminMenu
+namespace Content.Shared.Administration.Menu
 {
     public class AdminMenuPlayerListRequest : NetMessage
     {

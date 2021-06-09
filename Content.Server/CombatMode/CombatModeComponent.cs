@@ -1,7 +1,7 @@
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.CombatMode;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.CombatMode
 {
     /// <summary>
     ///     Stores whether an entity is in "combat mode"

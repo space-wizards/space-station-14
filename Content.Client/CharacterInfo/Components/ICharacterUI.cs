@@ -1,7 +1,7 @@
-﻿using Content.Client.GameObjects.Components.Actor;
+﻿using Content.Client.CharacterInterface;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.CharacterInfo.Components
 {
     /// <summary>
     /// An interface which is gathered to assemble the character window from multiple components

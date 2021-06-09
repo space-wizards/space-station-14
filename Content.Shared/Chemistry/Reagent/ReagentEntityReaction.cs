@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry.Reagent
 {
     public enum ReactionMethod
     {
@@ -27,7 +27,7 @@ namespace Content.Shared.Chemistry
         [DataField("ingestion")]
         public bool Ingestion { get; } = false;
 
-        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution? source)
+        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution.Solution? source)
         {
             switch (method)
             {
@@ -50,6 +50,6 @@ namespace Content.Shared.Chemistry
             React(entity, reagent, volume, source);
         }
 
-        protected abstract void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution? source);
+        protected abstract void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution.Solution? source);
     }
 }

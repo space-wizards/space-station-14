@@ -1,10 +1,11 @@
+using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using System;
 
-namespace Content.Shared.GameObjects.Components.Singularity
+namespace Content.Shared.Singularity.Components
 {
-    
+
     public abstract class SharedSingularityComponent : Component
     {
         public override string Name => "Singularity";

@@ -1,14 +1,14 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Server.DoAfter;
+using Content.Server.Notification;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Climbing;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -16,7 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Movement
+namespace Content.Server.Climbing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IClimbable))]

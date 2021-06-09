@@ -1,13 +1,12 @@
 #nullable enable
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using System.Collections.Generic;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using System.Collections.Generic;
-using Content.Shared.GameTicking;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.APC
 {
     [UsedImplicitly]
     internal sealed class ApcNetSystem : EntitySystem, IResettingEntitySystem

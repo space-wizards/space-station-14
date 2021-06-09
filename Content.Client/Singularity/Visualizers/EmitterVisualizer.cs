@@ -1,9 +1,9 @@
 using System;
-using Content.Shared.GameObjects.Components.Singularity;
+using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Singularity
+namespace Content.Client.Singularity.Visualizers
 {
     [UsedImplicitly]
     public class EmitterVisualizer : AppearanceVisualizer

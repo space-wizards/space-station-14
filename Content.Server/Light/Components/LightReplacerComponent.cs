@@ -1,10 +1,10 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Storage.Components;
+using Content.Shared.NetIDs;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -15,12 +15,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Content.Server.GameObjects.Components.Janitorial
+namespace Content.Server.Light.Components
 {
     /// <summary>
     ///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>

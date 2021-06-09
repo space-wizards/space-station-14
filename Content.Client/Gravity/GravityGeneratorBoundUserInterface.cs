@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Gravity;
+using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Gravity
+namespace Content.Client.Gravity
 {
     [UsedImplicitly]
     public class GravityGeneratorBoundUserInterface : BoundUserInterface

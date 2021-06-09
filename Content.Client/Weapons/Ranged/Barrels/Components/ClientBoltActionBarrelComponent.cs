@@ -1,8 +1,10 @@
 ﻿using System;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Client.IoC;
+using Content.Client.Items.Components;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.NetIDs;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -10,7 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
+namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     public class ClientBoltActionBarrelComponent : Component, IItemStatus

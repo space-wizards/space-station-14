@@ -4,7 +4,7 @@ using Content.Shared.Preferences;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.Preferences.Managers
 {
     public interface IServerPreferencesManager
     {

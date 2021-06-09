@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Mobs.Roles
+﻿namespace Content.Server.Roles
 {
     public class RoleAddedMessage : RoleMessage
     {

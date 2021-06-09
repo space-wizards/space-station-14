@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Managers;
 using Content.Server.Database;
-using Content.Server.Eui;
+using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using Robust.Server.Player;
@@ -15,7 +16,7 @@ using static Content.Shared.Administration.PermissionsEuiMsg;
 
 #nullable enable
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.UI
 {
     public sealed class PermissionsEui : BaseEui
     {

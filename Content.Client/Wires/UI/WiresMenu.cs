@@ -1,8 +1,8 @@
 using System;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components;
+using Content.Client.Examine;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.Wires;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -14,9 +14,9 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Client.GameObjects.Components.Wires
+namespace Content.Client.Wires.UI
 {
     public class WiresMenu : BaseWindow
     {

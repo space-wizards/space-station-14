@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Utility;
+using Content.Server.Access.Components;
+using Content.Server.AI.Components;
+using Content.Server.AI.Pathfinding;
+using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Server.CPUJob.JobQueues;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -19,7 +19,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Steering
+namespace Content.Server.AI.Steering
 {
     public sealed class AiSteeringSystem : EntitySystem
     {
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <summary>
         /// Pathfinding request jobs we're waiting on
         /// </summary>
-        private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, Job<Queue<TileRef>> Job)> _pathfindingRequests =
+        private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, CPUJob.JobQueues.Job<Queue<TileRef>> Job)> _pathfindingRequests =
             new();
 
         /// <summary>

@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.EscapeMenu.UI
 {
     [GenerateTypedNameReferences]
     internal partial class EscapeMenu : SS14Window

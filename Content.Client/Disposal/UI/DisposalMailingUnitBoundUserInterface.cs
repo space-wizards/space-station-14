@@ -2,9 +2,9 @@
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalMailingUnitComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalMailingUnitComponent;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.UI
 {
     /// <summary>
     /// Initializes a <see cref="DisposalMailingUnitWindow"/> and updates it when new server messages are received.

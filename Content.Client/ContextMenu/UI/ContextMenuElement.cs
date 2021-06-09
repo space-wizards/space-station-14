@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
+using Content.Client.Interactable.Components;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -16,7 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
-namespace Content.Client.UserInterface.ContextMenu
+namespace Content.Client.ContextMenu.UI
 {
     public abstract class ContextMenuElement : Control
     {

@@ -4,7 +4,7 @@ using Robust.Server.Player;
 
 #nullable enable
 
-namespace Content.Server.Voting
+namespace Content.Server.Voting.Managers
 {
     public interface IVoteManager
     {

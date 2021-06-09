@@ -1,18 +1,17 @@
-
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Clothing.Components;
+using Content.Server.Items;
+using Content.Server.Sound;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Light.Component;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Light.Components
 {
     /// <summary>
     ///     Component that represents a handheld expendable light which can be activated and eventually dies over time.

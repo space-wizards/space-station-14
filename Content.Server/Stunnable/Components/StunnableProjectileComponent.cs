@@ -1,11 +1,10 @@
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Projectiles.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Projectiles
+namespace Content.Server.Stunnable.Components
 {
     /// <summary>
     /// Adds stun when it collides with an entity

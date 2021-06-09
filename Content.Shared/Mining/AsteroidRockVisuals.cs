@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Mining
+namespace Content.Shared.Mining
 {
     [Serializable, NetSerializable]
     public enum AsteroidRockVisuals

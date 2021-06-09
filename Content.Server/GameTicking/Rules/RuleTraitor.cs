@@ -1,13 +1,13 @@
-using Content.Server.Interfaces.Chat;
-using Content.Server.Mobs.Roles.Traitor;
+using Content.Server.Chat.Managers;
 using Content.Server.Players;
+using Content.Server.Traitor;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-namespace Content.Server.GameTicking.GameRules
+namespace Content.Server.GameTicking.Rules
 {
     public class RuleTraitor : GameRule
     {

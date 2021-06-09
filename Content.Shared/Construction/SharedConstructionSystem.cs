@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Construction
 {
     public class SharedConstructionSystem : EntitySystem
     {

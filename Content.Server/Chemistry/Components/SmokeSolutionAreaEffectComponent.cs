@@ -1,15 +1,14 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Body.Respiratory;
+using Content.Server.Body.Circulatory;
+using Content.Server.Body.Respiratory;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Smoking;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]

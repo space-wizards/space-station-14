@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Text;
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.AI;
-using Content.Server.GameObjects.EntitySystems.AI;
+using Content.Server.AI.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Commands.AI
+namespace Content.Server.AI.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public sealed class FactionCommand : IConsoleCommand

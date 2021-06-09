@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -10,7 +10,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Sound
+namespace Content.Client.Sound
 {
     [RegisterComponent]
     public class LoopingSoundComponent : SharedLoopingSoundComponent

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Advertisements;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Advertise
 {
     [RegisterComponent]
     public class AdvertiseComponent : Component

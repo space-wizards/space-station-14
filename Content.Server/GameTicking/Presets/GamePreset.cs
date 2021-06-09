@@ -1,18 +1,16 @@
 #nullable enable annotations
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs;
+using Content.Server.Ghost.Components;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
 using Content.Shared.Preferences;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Server.GameTicking
+namespace Content.Server.GameTicking.Presets
 {
     /// <summary>
     ///     A round-start setup preset, such as which antagonists to spawn.
@@ -35,7 +33,7 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Called when a player attempts to ghost.
         /// </summary>
-        public virtual bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
+        public virtual bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             var playerEntity = mind.OwnedEntity;
 

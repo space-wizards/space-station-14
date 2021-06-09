@@ -1,16 +1,15 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Storage.Components;
 using Content.Shared.Audio;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Plants.Components
 {
     [RegisterComponent]
     public class PottedPlantHideComponent : Component, IInteractUsing, IInteractHand

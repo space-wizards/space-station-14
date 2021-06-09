@@ -1,12 +1,12 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Movement
 {
     public sealed class SharedMobMoverSystem : EntitySystem
     {

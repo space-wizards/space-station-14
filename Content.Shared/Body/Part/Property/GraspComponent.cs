@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body.Part.Property
+namespace Content.Shared.Body.Part.Property
 {
     /// <summary>
     ///     Defines a <see cref="IBodyPart"/> as being able to grasp around an entity,

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
+namespace Content.Server.AI.Pathfinding.Accessible
 {
     /// <summary>
     /// A group of homogenous PathfindingNodes inside a single chunk

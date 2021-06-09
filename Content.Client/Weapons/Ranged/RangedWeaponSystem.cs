@@ -1,7 +1,7 @@
 ﻿using System;
-using Content.Client.GameObjects.Components.Items;
-using Content.Client.GameObjects.Components.Weapons.Ranged;
-using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Client.CombatMode;
+using Content.Client.Hands;
+using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -13,7 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Weapons.Ranged
 {
     [UsedImplicitly]
     public class RangedWeaponSystem : EntitySystem

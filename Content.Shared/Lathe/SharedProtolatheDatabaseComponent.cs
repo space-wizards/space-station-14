@@ -1,14 +1,15 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Research;
+using Content.Shared.NetIDs;
+using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Research
+namespace Content.Shared.Lathe
 {
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks

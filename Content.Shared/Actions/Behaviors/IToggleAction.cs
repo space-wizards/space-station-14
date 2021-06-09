@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Behaviors
 {
     /// <summary>
     /// Action which can be toggled on and off

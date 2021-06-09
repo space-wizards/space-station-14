@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.Chemistry.Solution.Components
 {
     /// <summary>
     ///     High-level solution transferring operations like "what happens when a syringe tries to inject this entity."

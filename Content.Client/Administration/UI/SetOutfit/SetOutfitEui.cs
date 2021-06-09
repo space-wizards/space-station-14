@@ -1,9 +1,9 @@
 using Content.Client.Eui;
+using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Content.Shared.Administration;
 
-namespace Content.Client.UserInterface.AdminMenu.SetOutfit
+namespace Content.Client.Administration.UI.SetOutfit
 {
     [UsedImplicitly]
     public sealed class SetOutfitEui : BaseEui

@@ -1,7 +1,7 @@
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.GameObjects.Components.Actor;
+using Content.Client.CharacterInterface;
+using Content.Client.HUD.UI;
+using Content.Client.Stylesheets;
+using Content.Shared.CharacterInfo;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -14,7 +14,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Client.GameObjects.Components.Actor
+namespace Content.Client.CharacterInfo.Components
 {
     [RegisterComponent]
     public sealed class CharacterInfoComponent : SharedCharacterInfoComponent, ICharacterUI

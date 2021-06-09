@@ -1,10 +1,11 @@
-﻿using Content.Server.Utility;
-using Content.Shared.Actions;
-using Content.Shared.Utility;
+﻿using Content.Server.Notification;
+using Content.Shared.Actions.Behaviors;
+using Content.Shared.Actions.Behaviors.Item;
+using Content.Shared.Cooldown;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Actions
+namespace Content.Server.Actions.Actions
 {
     /// <summary>
     /// Just shows a popup message.asd

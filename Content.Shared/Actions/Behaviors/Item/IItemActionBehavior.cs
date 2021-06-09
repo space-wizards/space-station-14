@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Behaviors.Item
 {
     /// <summary>
     /// Currently just a marker interface delineating the different possible

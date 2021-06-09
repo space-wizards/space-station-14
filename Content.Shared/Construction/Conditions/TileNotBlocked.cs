@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Construction.ConstructionConditions
+namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]

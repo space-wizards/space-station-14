@@ -4,12 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.GameObjects.Components.Mobs.Actions;
-using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
+using Content.Client.Actions.Assignments;
+using Content.Client.DragDrop;
+using Content.Client.HUD;
+using Content.Client.Stylesheets;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Prototypes;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
@@ -20,7 +20,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Actions.UI
 {
     /// <summary>
     /// Action selection menu, allows filtering and searching over all possible

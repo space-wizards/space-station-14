@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using Content.Server.Chat.Managers;
 using Content.Server.Database;
-using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Administration;
-using Content.Shared.Administration.AdminMenu;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.Administration.Menu;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -26,7 +24,7 @@ using YamlDotNet.RepresentationModel;
 
 #nullable enable
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Managers
 {
     public sealed class AdminManager : IAdminManager, IPostInjectInit, IConGroupControllerImplementation
     {
@@ -416,7 +414,7 @@ namespace Content.Server.Administration
                 addr = addr.MapToIPv4();
             }
 
-            return Equals(addr, IPAddress.Loopback) || Equals(addr, IPAddress.IPv6Loopback);
+            return Equals(addr, System.Net.IPAddress.Loopback) || Equals(addr, System.Net.IPAddress.IPv6Loopback);
         }
 
         public bool CanCommand(IPlayerSession session, string cmdName)

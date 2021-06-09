@@ -1,4 +1,3 @@
-using Content.Server.Interfaces;
 using Content.Shared;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -7,7 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
-namespace Content.Server
+namespace Content.Server.Notification.Managers
 {
     public class ServerNotifyManager : SharedNotifyManager, IServerNotifyManager
     {

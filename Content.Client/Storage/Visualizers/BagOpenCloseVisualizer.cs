@@ -1,17 +1,16 @@
 ﻿#nullable enable
 
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 using static Robust.Shared.Utility.SpriteSpecifier;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.Storage.Visualizers
 {
     [UsedImplicitly]
     public class BagOpenCloseVisualizer : AppearanceVisualizer, ISerializationHooks

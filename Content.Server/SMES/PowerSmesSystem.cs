@@ -1,9 +1,8 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.SMES
 {
     [UsedImplicitly]
     internal class PowerSmesSystem : EntitySystem

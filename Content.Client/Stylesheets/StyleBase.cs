@@ -1,4 +1,4 @@
-using Content.Client.Utility;
+using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface.Stylesheets
+namespace Content.Client.Stylesheets
 {
     public abstract class StyleBase
     {

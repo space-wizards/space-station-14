@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.Preferences.Appearance;
+using Content.Client.Stylesheets;
+using Content.Shared.CharacterAppearance;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -12,9 +12,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.SharedMagicMirrorComponent;
+using static Content.Shared.CharacterAppearance.Components.SharedMagicMirrorComponent;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.CharacterAppearance
 {
     [UsedImplicitly]
     public class MagicMirrorBoundUserInterface : BoundUserInterface

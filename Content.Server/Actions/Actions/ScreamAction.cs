@@ -1,13 +1,13 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.Actions;
+using Content.Server.CharacterAppearance.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Actions.Behaviors;
+using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Preferences;
-using Content.Shared.Utility;
+using Content.Shared.CharacterAppearance;
+using Content.Shared.Cooldown;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Actions
+namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]

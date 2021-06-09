@@ -1,24 +1,25 @@
 #nullable enable
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Disposal.Unit.Components;
+using Content.Server.Hands.Components;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Player;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalTaggerComponent;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
+using Robust.Shared.ViewVariables;
+using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

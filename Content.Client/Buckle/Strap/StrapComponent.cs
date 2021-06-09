@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.Buckle.Components;
+using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Strap
+namespace Content.Client.Buckle.Strap
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]

@@ -1,17 +1,14 @@
 #nullable enable
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Utility;
+using Content.Server.Hands.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Item;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Physics;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]

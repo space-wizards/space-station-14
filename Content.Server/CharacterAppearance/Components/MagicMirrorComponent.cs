@@ -1,10 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Preferences.Appearance;
+using Content.Server.UserInterface;
+using Content.Shared.CharacterAppearance;
+using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +11,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.CharacterAppearance.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

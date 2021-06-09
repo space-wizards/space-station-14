@@ -1,15 +1,21 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         xmlns:style="clr-namespace:Content.Client.UserInterface.Stylesheets"
          xmlns:cui="clr-namespace:Content.Client.UserInterface"
          xmlns:chat="clr-namespace:Content.Client.Chat"
          xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
-         xmlns:voting="clr-namespace:Content.Client.Voting">
+         xmlns:voting="clr-namespace:Content.Client.Voting"
+         xmlns:parallax="clr-namespace:Content.Client.Parallax"
+         xmlns:ui="clr-namespace:Content.Client.Voting.UI"
+         xmlns:style="clr-namespace:Content.Client.Stylesheets"
+         xmlns:ui1="clr-namespace:Content.Client.HUD.UI"
+         xmlns:ui2="clr-namespace:Content.Client.Chat.UI"
+         xmlns:ui3="clr-namespace:Content.Client.Lobby.UI"
+         xmlns:info="clr-namespace:Content.Client.Info">
 
     <Control>
         <!-- Parallax background -->
-        <cui:ParallaxControl />
+        <parallax:ParallaxControl />
 
         <!-- One day I'll code a Margin property for controls. -->
         <MarginContainer MarginBottomOverride="20" MarginLeftOverride="20" MarginRightOverride="20"
@@ -22,7 +28,7 @@
                         <Label StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
                     </MarginContainer>
                     <Label Name="CServerName" StyleClasses="LabelHeadingBigger" VAlign="Center" />
-                    <voting:VoteCallMenuButton Name="CCallVoteButton" StyleClasses="ButtonBig" />
+                    <ui:VoteCallMenuButton Name="CCallVoteButton" StyleClasses="ButtonBig" />
                     <Button Name="COptionsButton" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
                     <Button Name="CLeaveButton" StyleClasses="ButtonBig" Text="{Loc 'Leave'}" />
                 </HBoxContainer>
@@ -37,7 +43,7 @@
                 <HBoxContainer VerticalExpand="True">
                     <!-- Left panel -->
                     <VBoxContainer Name="CLeftPanelContainer" HorizontalExpand="True">
-                        <cui:StripeBack>
+                        <ui1:StripeBack>
                             <MarginContainer MarginLeftOverride="3" MarginRightOverride="3" MarginBottomOverride="3"
                                              MarginTopOverride="3">
                                 <HBoxContainer SeparationOverride="6">
@@ -49,11 +55,11 @@
                                             StyleClasses="ButtonBig" />
                                 </HBoxContainer>
                             </MarginContainer>
-                        </cui:StripeBack>
+                        </ui1:StripeBack>
                         <MarginContainer VerticalExpand="True" MarginLeftOverride="3" MarginRightOverride="3"
                                          MarginBottomOverride="3"
                                          MarginTopOverride="3">
-                            <chat:ChatBox Name="CChat" />
+                            <ui2:ChatBox Name="CChat" />
                         </MarginContainer>
                     </VBoxContainer>
                     <!-- Gold line -->
@@ -66,20 +72,20 @@
                     <Control HorizontalExpand="True">
                         <VBoxContainer>
                             <!-- Player list -->
-                            <cui:NanoHeading Text="{Loc 'Online Players'}" />
+                            <ui1:NanoHeading Text="{Loc 'Online Players'}" />
                             <MarginContainer VerticalExpand="True"
                                              MarginRightOverride="3" MarginLeftOverride="3"
                                              MarginBottomOverride="3" MarginTopOverride="3">
-                                <cui:LobbyPlayerList Name="COnlinePlayerList"
+                                <ui3:LobbyPlayerList Name="COnlinePlayerList"
                                                      HorizontalExpand="True"
                                                      VerticalExpand="True" />
                             </MarginContainer>
                             <!-- Server info -->
-                            <cui:NanoHeading Text="{Loc 'Server Info'}" />
+                            <ui1:NanoHeading Text="{Loc 'Server Info'}" />
                             <MarginContainer VerticalExpand="True"
                                              MarginRightOverride="3" MarginLeftOverride="3"
                                              MarginBottomOverride="2" MarginTopOverride="3">
-                                <cui:ServerInfo Name="CServerInfo" />
+                                <info:ServerInfo Name="CServerInfo" />
                             </MarginContainer>
                         </VBoxContainer>
                         <MarginContainer SizeFlagsHorizontal="ShrinkEnd" MarginTopOverride="8" MarginRightOverride="8">

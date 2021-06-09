@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Server.GameTicking;
-using Content.Server.StationEvents;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.StationEvents.Events;
 using Content.Shared;
 using Content.Shared.GameTicking;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.StationEvents;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Player;
@@ -21,7 +20,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems.StationEvents
+namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
     // Somewhat based off of TG's implementation of events

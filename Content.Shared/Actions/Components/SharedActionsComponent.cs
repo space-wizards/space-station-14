@@ -3,17 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Actions;
+using Content.Shared.Actions.Prototypes;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.Actions.Components
 {
     /// <summary>
     /// Manages the actions available to an entity.
@@ -118,7 +119,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return false;
         }
 
-        /// <seealso cref="TryGetItemActionStates(Robust.Shared.GameObjects.EntityUid,out System.Collections.Generic.IReadOnlyDictionary{Content.Shared.Actions.ItemActionType,Content.Shared.GameObjects.Components.Mobs.ActionState}?)"/>
+        /// <seealso cref="TryGetItemActionStates(Robust.Shared.GameObjects.EntityUid,out System.Collections.Generic.IReadOnlyDictionary{Content.Shared.Actions.ItemActionType,Content.Shared.Actions.Components.ActionState}?)"/>
         public bool TryGetItemActionStates(IEntity item,
             [NotNullWhen((true))] out IReadOnlyDictionary<ItemActionType, ActionState>? itemActionStates)
         {
@@ -169,7 +170,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 .Any(state => state.Key == actionType && state.Value.Enabled);
         }
 
-        /// <seealso cref="TryGetItemActionState(Content.Shared.Actions.ItemActionType,Robust.Shared.GameObjects.EntityUid,out Content.Shared.GameObjects.Components.Mobs.ActionState)"/>
+        /// <seealso cref="TryGetItemActionState(Content.Shared.Actions.ItemActionType,Robust.Shared.GameObjects.EntityUid,out Content.Shared.Actions.Components.ActionState)"/>
         public bool TryGetItemActionState(ItemActionType actionType, IEntity item, out ActionState actionState)
         {
             return TryGetItemActionState(actionType, item.Uid, out actionState);

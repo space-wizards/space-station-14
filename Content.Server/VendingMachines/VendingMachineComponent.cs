@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.VendingMachines;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Access.Components;
+using Content.Server.Advertise;
+using Content.Server.Notification;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Server.Wires.Components;
+using Content.Shared.Acts;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -20,9 +23,9 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Server.GameObjects.Components.VendingMachines
+namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

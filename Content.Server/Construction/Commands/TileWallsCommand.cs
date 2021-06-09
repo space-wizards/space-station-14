@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Commands.GameTicking
+namespace Content.Server.Construction.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
     class TileWallsCommand : IConsoleCommand
@@ -65,7 +65,7 @@ namespace Content.Server.Commands.GameTicking
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var underplating = tileDefinitionManager["underplating"];
-            var underplatingTile = new Tile(underplating.TileId);
+            var underplatingTile = new Robust.Shared.Map.Tile(underplating.TileId);
             var changed = 0;
             foreach (var childUid in gridEntity.Transform.ChildEntityUids)
             {

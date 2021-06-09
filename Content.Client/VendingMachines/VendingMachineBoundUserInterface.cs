@@ -1,11 +1,11 @@
-﻿using Content.Client.VendingMachines;
-using Content.Shared.GameObjects.Components.VendingMachines;
+﻿using Content.Client.VendingMachines.UI;
+using Content.Shared.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.VendingMachines.SharedVendingMachineComponent;
+using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
-namespace Content.Client.GameObjects.Components.VendingMachines
+namespace Content.Client.VendingMachines
 {
     class VendingMachineBoundUserInterface : BoundUserInterface
     {

@@ -1,8 +1,7 @@
-using Content.Client.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Camera
 {
     [UsedImplicitly]
     public sealed class CameraRecoilSystem : EntitySystem

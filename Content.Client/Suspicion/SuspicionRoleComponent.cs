@@ -1,8 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Suspicion;
-using Content.Shared.GameObjects.Components.Suspicion;
+using Content.Client.HUD;
+using Content.Shared.Suspicion;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -10,7 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Suspicion
+namespace Content.Client.Suspicion
 {
     [RegisterComponent]
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent

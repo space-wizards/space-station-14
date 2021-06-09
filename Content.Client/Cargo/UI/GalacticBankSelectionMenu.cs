@@ -1,10 +1,9 @@
-﻿using Content.Client.GameObjects.Components.Cargo;
-using Robust.Client.UserInterface.Controls;
+﻿using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Client.UserInterface.Cargo
+namespace Content.Client.Cargo.UI
 {
     public class GalacticBankSelectionMenu : SS14Window
     {

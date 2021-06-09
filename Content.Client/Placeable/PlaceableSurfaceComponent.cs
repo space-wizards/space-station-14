@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Placeable
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]

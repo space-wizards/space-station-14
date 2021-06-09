@@ -1,12 +1,12 @@
 #nullable enable
 using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.Interfaces.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Power.Components;
+using Content.Server.VendingMachines;
+using Content.Server.Wires.Components;
+using Content.Shared.Doors;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -14,10 +14,10 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
+using static Content.Shared.Wires.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 
-namespace Content.Server.GameObjects.Components.Doors
+namespace Content.Server.Doors.Components
 {
     /// <summary>
     /// Companion component to ServerDoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.

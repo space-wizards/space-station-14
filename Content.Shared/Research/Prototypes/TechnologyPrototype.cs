@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Research
+namespace Content.Shared.Research.Prototypes
 {
     [NetSerializable, Serializable, Prototype("technology")]
     public class TechnologyPrototype : IPrototype

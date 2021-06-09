@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Disposal;
+﻿using Content.Server.Disposal.Tube.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.Disposal
+namespace Content.Server.Disposal.Tube
 {
     public sealed class DisposalTubeSystem : EntitySystem
     {

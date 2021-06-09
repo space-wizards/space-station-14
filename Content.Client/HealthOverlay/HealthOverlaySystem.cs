@@ -1,15 +1,16 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Client.HealthOverlay.UI;
+using Content.Shared.Damage.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.EntitySystems.HealthOverlay
+namespace Content.Client.HealthOverlay
 {
     [UsedImplicitly]
     public class HealthOverlaySystem : EntitySystem, IResettingEntitySystem

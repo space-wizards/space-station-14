@@ -2,7 +2,7 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Mobs.Actions
+namespace Content.Client.Actions.Assignments
 {
     public struct ActionAssignment : IEquatable<ActionAssignment>
     {

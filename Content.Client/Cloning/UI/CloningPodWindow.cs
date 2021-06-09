@@ -1,16 +1,16 @@
 using System;
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
+using static Content.Shared.Cloning.SharedCloningPodComponent;
 
-namespace Content.Client.GameObjects.Components.CloningPod
+namespace Content.Client.Cloning.UI
 {
     public sealed class CloningPodWindow : SS14Window
     {

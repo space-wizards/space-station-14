@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Rounding
 {
     public static class ContentHelpers
     {
@@ -104,7 +104,7 @@ namespace Content.Shared.Utility
         /// percentage does actual/max takes.
         /// Example:
         /// We have a stack of 30 <paramref name="max"/> elements.
-        /// When <paramref name="actual"/> is: 
+        /// When <paramref name="actual"/> is:
         /// - 0..9 we return 0.
         /// - 10..19 we return 1.
         /// - 20..30 we return 2.

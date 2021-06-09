@@ -1,8 +1,8 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Research.SharedResearchClientComponent;
+using static Content.Shared.Research.Components.SharedResearchClientComponent;
 
-namespace Content.Client.GameObjects.Components.Research
+namespace Content.Client.Research.UI
 {
     public class ResearchClientBoundUserInterface : BoundUserInterface
     {

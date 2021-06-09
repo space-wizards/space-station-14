@@ -1,12 +1,13 @@
-﻿using Content.Server.Interfaces.Chat;
+﻿using Content.Server.Chat.Managers;
+using Content.Server.Roles;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Mobs.Roles.Traitor
+namespace Content.Server.Traitor
 {
     public class TraitorRole : Role
     {
-        public TraitorRole(Mind mind) : base(mind)
+        public TraitorRole(Mind.Mind mind) : base(mind)
         {
         }
 

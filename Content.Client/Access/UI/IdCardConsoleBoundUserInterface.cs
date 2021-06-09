@@ -3,9 +3,9 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.SharedIdCardConsoleComponent;
 
-namespace Content.Client.GameObjects.Components.Access
+namespace Content.Client.Access.UI
 {
     public class IdCardConsoleBoundUserInterface : BoundUserInterface
     {

@@ -1,8 +1,8 @@
-using Content.Server.GameObjects.Components.Research;
+using Content.Server.Lathe.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Lathe
 {
     [UsedImplicitly]
     internal sealed class LatheSystem : EntitySystem

@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Morgue;
+﻿using Content.Shared.Morgue;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Morgue
+namespace Content.Client.Morgue.Visualizers
 {
     [UsedImplicitly]
     public sealed class BodyBagVisualizer : AppearanceVisualizer

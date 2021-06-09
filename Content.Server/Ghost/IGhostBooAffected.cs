@@ -1,7 +1,7 @@
 #nullable enable
-using Content.Shared.Actions;
+using Content.Shared.Actions.Behaviors;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.Ghost
 {
     /// <summary>
     ///     Allow ghost to interact with object by boo action

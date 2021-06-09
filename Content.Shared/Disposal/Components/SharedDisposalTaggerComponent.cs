@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Disposal
+namespace Content.Shared.Disposal.Components
 {
     public class SharedDisposalTaggerComponent : Component
     {

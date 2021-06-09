@@ -1,10 +1,9 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
@@ -25,10 +24,10 @@ namespace Content.Shared.Construction
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(string.IsNullOrEmpty(Name)
-                ? Loc.GetString(
+                ? Robust.Shared.Localization.Loc.GetString(
                     "construction-insert-entity-with-component",
                     ("componentName", Component))// Terrible.
-                : Loc.GetString(
+                : Robust.Shared.Localization.Loc.GetString(
                     "construction-insert-exact-entity",
                     ("entityName", Name)));
         }

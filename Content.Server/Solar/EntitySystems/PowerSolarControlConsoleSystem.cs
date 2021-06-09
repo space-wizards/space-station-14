@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.Solar.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Solar.EntitySystems
 {
     /// <summary>
     /// Responsible for updating solar control consoles.

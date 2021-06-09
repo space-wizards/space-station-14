@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.ActionBlocking;
+﻿using Content.Shared.Cuffs.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.ActionBlocking
+namespace Content.Client.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandcuffComponent))]

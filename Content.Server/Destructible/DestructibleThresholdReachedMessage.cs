@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Destructible.Thresholds;
+﻿using Content.Server.Destructible.Thresholds;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Destructible
+namespace Content.Server.Destructible
 {
     public class DestructibleThresholdReachedMessage : ComponentMessage
     {

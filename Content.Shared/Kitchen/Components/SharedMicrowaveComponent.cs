@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Kitchen
+namespace Content.Shared.Kitchen.Components
 {
 
     public class SharedMicrowaveComponent : Component

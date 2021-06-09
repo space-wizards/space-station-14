@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.StationEvents;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Client.StationEvents
+namespace Content.Client.StationEvents.Managers
 {
     internal sealed class StationEventManager : IStationEventManager
     {

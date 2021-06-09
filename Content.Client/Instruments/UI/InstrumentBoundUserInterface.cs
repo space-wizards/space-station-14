@@ -1,8 +1,7 @@
-using Content.Client.Instruments;
 using Robust.Client.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Instruments
+namespace Content.Client.Instruments.UI
 {
     public class InstrumentBoundUserInterface : BoundUserInterface
     {

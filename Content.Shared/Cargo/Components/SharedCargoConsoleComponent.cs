@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Cargo
+namespace Content.Shared.Cargo.Components
 {
     public class SharedCargoConsoleComponent : Component
     {

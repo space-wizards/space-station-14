@@ -1,16 +1,15 @@
 ﻿#nullable enable
 using Content.Server.Administration;
+using Content.Server.AI.Components;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.AiLogic;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Shared.Administration;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.AI
+namespace Content.Server.AI.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public class AddAiCommand : IConsoleCommand

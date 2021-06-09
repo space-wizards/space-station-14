@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Mobs.Roles.Suspicion
+namespace Content.Server.Suspicion.Roles
 {
     public sealed class SuspicionTraitorRole : SuspicionRole
     {
         public AntagPrototype Prototype { get; }
 
-        public SuspicionTraitorRole(Mind mind, AntagPrototype antagPrototype) : base(mind)
+        public SuspicionTraitorRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
             Prototype = antagPrototype;
             Name = antagPrototype.Name;

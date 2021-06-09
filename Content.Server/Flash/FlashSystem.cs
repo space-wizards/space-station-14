@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Weapon;
-using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Server.Flash.Components;
+using Content.Server.Stunnable.Components;
+using Content.Server.Weapon.Melee;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.EntitySystems.Weapon.Melee
+namespace Content.Server.Flash
 {
     public class FlashSystem : EntitySystem
     {

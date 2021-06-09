@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.EntitySystems.AI;
+using Content.Server.AI.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.AI
+namespace Content.Server.AI.Components
 {
     [RegisterComponent]
     public sealed class AiFactionTagComponent : Component

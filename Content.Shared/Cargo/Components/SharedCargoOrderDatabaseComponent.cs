@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Prototypes.Cargo;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Cargo
+namespace Content.Shared.Cargo.Components
 {
     public class SharedCargoOrderDatabaseComponent : Component
     {

@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Body.Part;
+﻿using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Body.Part
+namespace Content.Client.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]

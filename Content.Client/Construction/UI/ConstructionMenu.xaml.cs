@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 
 #nullable enable
 
-namespace Content.Client.Construction
+namespace Content.Client.Construction.UI
 {
     /// <summary>
     /// This is the interface for a UI View of the construction window. The point of it is to abstract away the actual

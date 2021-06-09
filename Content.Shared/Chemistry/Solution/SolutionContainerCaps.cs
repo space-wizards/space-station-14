@@ -1,9 +1,9 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry.Solution
 {
     /// <summary>
     ///     Define common interaction behaviors for <see cref="SharedSolutionContainerComponent"/>

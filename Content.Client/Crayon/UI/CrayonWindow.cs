@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.GameObjects.Components;
+using Content.Client.Stylesheets;
+using Content.Shared.Crayon;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Crayon
+namespace Content.Client.Crayon.UI
 {
     public class CrayonWindow : SS14Window
     {

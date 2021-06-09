@@ -37,7 +37,7 @@ using Robust.Shared.Timing;
 
 #nullable enable
 
-namespace Content.Server.Commands.Physics
+namespace Content.Server.Physics
 {
     /*
      * I didn't use blueprints because this is way easier to iterate upon as I can shit out testbed upon testbed on new maps

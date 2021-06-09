@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.RoundEnd
 {
     public class RoundEndSystem : EntitySystem, IResettingEntitySystem
     {

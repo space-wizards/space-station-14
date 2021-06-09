@@ -1,11 +1,9 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Smoking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Nutrition
+namespace Content.Client.Smoking
 {
     [UsedImplicitly]
     public class BurnStateVisualizer : AppearanceVisualizer

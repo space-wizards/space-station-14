@@ -1,8 +1,7 @@
-using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Stunnable
 {
     [UsedImplicitly]
     internal sealed class StunSystem : EntitySystem

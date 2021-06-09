@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Wall
 {
     [Serializable, NetSerializable]
     public enum ReinforcedWallVisuals

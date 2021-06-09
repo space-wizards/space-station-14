@@ -1,17 +1,20 @@
 #nullable enable
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Server.GameObjects.Components.Fluids;
+using Content.Server.Body.Behavior;
+using Content.Server.Fluids.Components;
 using Content.Shared.Audio;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -25,7 +28,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange, IExamine, ILand

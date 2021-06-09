@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Interfaces.GameObjects
+﻿namespace Content.Server.Pressure
 {
     public interface IPressureProtection
     {

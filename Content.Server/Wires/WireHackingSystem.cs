@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Wires
 {
     public class WireHackingSystem : EntitySystem, IResettingEntitySystem
     {

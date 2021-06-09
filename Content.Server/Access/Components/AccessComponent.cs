@@ -1,11 +1,10 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Access
+namespace Content.Server.Access.Components
 {
     /// <summary>
     ///     Simple mutable access provider found on ID cards and such.

@@ -1,15 +1,14 @@
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Utility;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Nutrition;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Notification;
+using Content.Server.Stunnable.Components;
+using Content.Shared.Notification;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     public class CreamPiedComponent : SharedCreamPiedComponent, IThrowCollide

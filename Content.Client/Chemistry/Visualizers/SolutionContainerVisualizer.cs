@@ -1,12 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
     public class SolutionContainerVisualizer : AppearanceVisualizer

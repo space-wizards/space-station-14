@@ -1,8 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     public interface IMobMoverComponent : IComponent
     {

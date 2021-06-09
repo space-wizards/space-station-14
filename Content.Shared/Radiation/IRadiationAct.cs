@@ -1,9 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Radiation
 {
     [RequiresExplicitImplementation]
     public interface IRadiationAct : IComponent

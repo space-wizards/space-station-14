@@ -1,8 +1,7 @@
-using Content.Server.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Medical
+namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
     public class BeingClonedComponent : Component
@@ -10,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Medical
         public override string Name => "BeingCloned";
 
         [ViewVariables]
-        public Mind? Mind = default;
+        public Mind.Mind? Mind = default;
 
         [ViewVariables]
         public EntityUid Parent;

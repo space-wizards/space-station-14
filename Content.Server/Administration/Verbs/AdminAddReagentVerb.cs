@@ -1,13 +1,12 @@
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.Administration;
-using Content.Server.Eui;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Administration.Managers;
+using Content.Server.Chemistry.Components;
+using Content.Server.EUI;
 using Content.Shared.Administration;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Eui;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -16,7 +15,7 @@ using Robust.Shared.Localization;
 
 #nullable enable
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Administration.Verbs
 {
     [GlobalVerb]
     internal sealed class AdminAddReagentVerb : GlobalVerb

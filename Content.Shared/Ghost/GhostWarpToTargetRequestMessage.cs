@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Observer
+namespace Content.Shared.Ghost
 {
     [Serializable, NetSerializable]
     public class GhostWarpToTargetRequestMessage : ComponentMessage

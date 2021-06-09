@@ -1,10 +1,10 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Targeting;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages
+namespace Content.Shared.CombatMode
 {
     public static class CombatModeSystemMessages
     {

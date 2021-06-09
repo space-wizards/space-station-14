@@ -1,9 +1,10 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Storage;
+using Content.Client.Hands;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Items
+namespace Content.Client.Items.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]

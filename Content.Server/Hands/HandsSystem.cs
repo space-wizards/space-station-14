@@ -1,13 +1,18 @@
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.Stack;
+using Content.Server.Storage.Components;
+using Content.Server.Throwing;
+using Content.Shared.Examine;
 using Content.Shared.Input;
-using Content.Shared.Interfaces;
+using Content.Shared.Interaction;
+using Content.Shared.Movement.Components;
+using Content.Shared.Notification;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -17,12 +22,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Hands
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : EntitySystem

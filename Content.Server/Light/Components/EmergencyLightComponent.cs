@@ -1,17 +1,17 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.Light.Components
 {
     /// <summary>
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.

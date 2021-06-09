@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace Content.Shared.GameObjects.Components.Body.Part
+namespace Content.Shared.Body.Part
 {
     /// <summary>
     ///     Defines a component as being capable of containing parts.

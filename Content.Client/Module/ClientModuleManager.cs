@@ -1,6 +1,6 @@
-﻿using Content.Shared.Interfaces;
+﻿using Content.Shared.Module;
 
-namespace Content.Client.Utility
+namespace Content.Client.Module
 {
     /// <summary>
     /// Client implementation of IModuleManager.

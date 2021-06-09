@@ -1,11 +1,11 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Body.Scanner;
+using Content.Shared.Body.Scanner;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Body.Scanner
+namespace Content.Client.Body.UI
 {
     [UsedImplicitly]
     public class BodyScannerBoundUserInterface : BoundUserInterface

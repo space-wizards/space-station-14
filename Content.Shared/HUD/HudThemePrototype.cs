@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Prototypes.HUD
+namespace Content.Shared.HUD
 {
     [Prototype("hudTheme")]
     public class HudThemePrototype : IPrototype

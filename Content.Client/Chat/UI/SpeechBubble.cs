@@ -1,5 +1,5 @@
 using System;
-using Content.Client.Interfaces.Chat;
+using Content.Client.Chat.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Chat
+namespace Content.Client.Chat.UI
 {
     public abstract class SpeechBubble : Control
     {

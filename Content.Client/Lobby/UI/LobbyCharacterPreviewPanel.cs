@@ -1,7 +1,8 @@
 ﻿using System.Linq;
-using Content.Client.GameObjects.Components.HUD.Inventory;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.Interfaces;
+using Content.Client.CharacterAppearance;
+using Content.Client.HUD.UI;
+using Content.Client.Inventory;
+using Content.Client.Preferences;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -14,9 +15,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Lobby.UI
 {
     public class LobbyCharacterPreviewPanel : Control
     {

@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Singularity.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.UserInterface.ParticleAccelerator
+namespace Content.Client.ParticleAccelerator.UI
 {
     public class ParticleAcceleratorBoundUserInterface : BoundUserInterface
     {

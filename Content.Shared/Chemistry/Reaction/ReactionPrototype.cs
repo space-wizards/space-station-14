@@ -1,11 +1,11 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry.Reaction
 {
     /// <summary>
     /// Prototype for chemical reaction definitions

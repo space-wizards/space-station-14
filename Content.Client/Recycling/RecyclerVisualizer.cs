@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Recycling;
+﻿using Content.Shared.Recycling;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Recycling
+namespace Content.Client.Recycling
 {
     [UsedImplicitly]
     public class RecyclerVisualizer : AppearanceVisualizer

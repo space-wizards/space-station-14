@@ -3,20 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Culinary;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
-using Robust.Server.GameObjects;
+using Content.Server.Body.Behavior;
+using Content.Server.Chemistry.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -24,7 +21,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Nutrition
+namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAfterInteract))]

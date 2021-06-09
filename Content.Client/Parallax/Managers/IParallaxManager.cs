@@ -1,7 +1,7 @@
 using System;
 using Robust.Client.Graphics;
 
-namespace Content.Client.Interfaces.Parallax
+namespace Content.Client.Parallax.Managers
 {
     public interface IParallaxManager
     {

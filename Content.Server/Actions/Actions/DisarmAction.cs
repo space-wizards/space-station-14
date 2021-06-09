@@ -1,17 +1,18 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
+using Content.Server.Act;
+using Content.Server.Interaction;
+using Content.Server.Notification;
+using Content.Server.Weapon.Melee;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Behaviors;
+using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Utility;
+using Content.Shared.Cooldown;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -23,7 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Actions
+namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]

@@ -1,11 +1,11 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Conveyor;
+using Content.Shared.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Conveyor
+namespace Content.Client.Conveyor.Visualizers
 {
     [UsedImplicitly]
     public class ConveyorVisualizer : AppearanceVisualizer

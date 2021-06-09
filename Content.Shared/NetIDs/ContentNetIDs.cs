@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.NetIDs
 {
     // Starting from 1000 to avoid crossover with engine.
     public static class ContentNetIDs

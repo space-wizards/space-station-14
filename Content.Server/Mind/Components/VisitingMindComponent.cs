@@ -1,9 +1,8 @@
 #nullable enable
-using Content.Server.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.Mind.Components
 {
     [RegisterComponent]
     public sealed class VisitingMindComponent : Component

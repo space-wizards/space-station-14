@@ -1,9 +1,9 @@
-﻿using Content.Shared.Interfaces;
+﻿using Content.Shared.Notification;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Utility
+namespace Content.Server.Notification
 {
     public static class NotifyExtensions
     {

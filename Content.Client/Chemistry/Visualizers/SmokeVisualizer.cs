@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Chemistry;
+﻿using Content.Shared.Smoking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
     public class SmokeVisualizer : AppearanceVisualizer

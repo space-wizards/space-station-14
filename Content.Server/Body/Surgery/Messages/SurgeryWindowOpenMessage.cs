@@ -1,6 +1,7 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Server.Body.Surgery.Components;
+using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Body.Surgery.Messages
+namespace Content.Server.Body.Surgery.Messages
 {
     public class SurgeryWindowOpenMessage : ComponentMessage
     {

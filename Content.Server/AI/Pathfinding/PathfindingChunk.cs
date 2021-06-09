@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
+namespace Content.Server.AI.Pathfinding
 {
     public class PathfindingChunkUpdateMessage : EntityEventArgs
     {

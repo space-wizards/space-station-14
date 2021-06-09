@@ -1,16 +1,17 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.APC.Components;
+using Content.Server.Battery.Components;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.APC
 {
     public interface IApcNet
     {

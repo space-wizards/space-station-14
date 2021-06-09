@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.Solar.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -12,7 +12,7 @@ using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Solar.EntitySystems
 {
     /// <summary>
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.

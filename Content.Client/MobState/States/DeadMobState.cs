@@ -1,10 +1,10 @@
-﻿using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Client.Standing;
+using Content.Shared.MobState;
+using Content.Shared.MobState.State;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Mobs.State
+namespace Content.Client.MobState.States
 {
     public class DeadMobState : SharedDeadMobState
     {

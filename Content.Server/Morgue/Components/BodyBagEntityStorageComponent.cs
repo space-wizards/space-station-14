@@ -1,25 +1,25 @@
 #nullable enable
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Paper;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Morgue;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using System.Threading.Tasks;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Paper;
+using Content.Server.Standing;
+using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Morgue;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System.Threading.Tasks;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Robust.Shared.Containers;
 
-namespace Content.Server.GameObjects.Components.Morgue
+namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(EntityStorageComponent))]

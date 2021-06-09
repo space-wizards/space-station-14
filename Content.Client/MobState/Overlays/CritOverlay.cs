@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.MobState;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Graphics.Overlays
+namespace Content.Client.MobState.Overlays
 {
     public class CritOverlay : Overlay
     {

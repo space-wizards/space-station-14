@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.EntitySystems.DoAfter
+namespace Content.Client.DoAfter.UI
 {
     public sealed class DoAfterBar : Control
     {

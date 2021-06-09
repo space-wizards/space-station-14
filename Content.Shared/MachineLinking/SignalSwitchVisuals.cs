@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.MachineLinking
+namespace Content.Shared.MachineLinking
 {
     [Serializable, NetSerializable]
     public enum SignalSwitchVisuals

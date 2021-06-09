@@ -1,9 +1,10 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Interactable
+namespace Content.Shared.Tool
 {
     [Flags]
     public enum ToolQuality : byte

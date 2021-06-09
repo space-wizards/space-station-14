@@ -1,15 +1,15 @@
 #nullable enable
 
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Rounding;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Stack
 {
     /// <summary>
     /// Visualizer for items that come in stacks and have different appearance

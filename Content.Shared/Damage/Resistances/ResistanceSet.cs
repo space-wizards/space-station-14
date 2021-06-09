@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Damage.ResistanceSet
+namespace Content.Shared.Damage.Resistances
 {
     /// <summary>
     ///     Set of resistances used by damageable objects.

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Server.CPUJob.JobQueues;
 using Content.Shared.AI;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
+namespace Content.Server.AI.Pathfinding.Pathfinders
 {
     public class JpsPathfindingJob : Job<Queue<TileRef>>
     {

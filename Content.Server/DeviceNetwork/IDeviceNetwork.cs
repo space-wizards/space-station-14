@@ -1,6 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
+﻿using Content.Server.DeviceNetwork.Connections;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.DeviceNetwork
 {
     /// <summary>
     /// Package based device network allowing devices to communicate with eachother

@@ -1,13 +1,8 @@
-using Content.Shared.GameObjects.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Singularity
+namespace Content.Server.Singularity.Components
 {
     /// <summary>
     /// Overrides exactly how much energy this object gives to a singularity.

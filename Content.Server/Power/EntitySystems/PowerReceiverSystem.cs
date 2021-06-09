@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+﻿using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
     {

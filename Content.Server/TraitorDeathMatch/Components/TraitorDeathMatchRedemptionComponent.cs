@@ -1,15 +1,15 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.PDA;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Mind.Components;
+using Content.Server.PDA;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameObjects.Components.TraitorDeathMatch
+namespace Content.Server.TraitorDeathMatch.Components
 {
     [RegisterComponent]
     public class TraitorDeathMatchRedemptionComponent : Component, IInteractUsing

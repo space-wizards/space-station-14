@@ -1,12 +1,11 @@
 ﻿#nullable enable
-using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Commands
+namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
     public class RemoveExtraComponents : IConsoleCommand

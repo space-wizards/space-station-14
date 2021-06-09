@@ -1,4 +1,5 @@
-using Content.Shared.GameObjects.Components;
+using Content.Client.Items.Components;
+using Content.Shared.Light.Component;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +8,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Light.Components
 {
     [RegisterComponent]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus

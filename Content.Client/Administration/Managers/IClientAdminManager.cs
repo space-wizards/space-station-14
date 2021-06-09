@@ -1,7 +1,7 @@
 ﻿using System;
 using Content.Shared.Administration;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Managers
 {
     /// <summary>
     ///     Manages server admin permissions for the local player.

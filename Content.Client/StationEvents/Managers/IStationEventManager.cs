@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Content.Client.StationEvents
+namespace Content.Client.StationEvents.Managers
 {
     public interface IStationEventManager
     {

@@ -1,7 +1,8 @@
 ﻿using System;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components;
+using Content.Client.HUD.UI;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.Singularity.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -15,7 +16,7 @@ using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.UserInterface.ParticleAccelerator
+namespace Content.Client.ParticleAccelerator.UI
 {
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {

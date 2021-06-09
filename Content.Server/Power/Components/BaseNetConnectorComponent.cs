@@ -1,13 +1,13 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.Power.Components
 {
     public abstract class BaseNetConnectorComponent<TNetType> : Component
     {

@@ -1,9 +1,9 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.UI
 {
     /// <summary>
     /// Initializes a <see cref="DisposalRouterWindow"/> and updates it when new server messages are received.

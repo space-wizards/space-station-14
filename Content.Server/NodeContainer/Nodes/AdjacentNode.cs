@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
+namespace Content.Server.NodeContainer.Nodes
 {
     /// <summary>
     ///     A <see cref="Node"/> that can reach other <see cref="AdjacentNode"/>s that are directly adjacent to it.

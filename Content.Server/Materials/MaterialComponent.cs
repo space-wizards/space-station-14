@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Materials
+namespace Content.Server.Materials
 {
     /// <summary>
     ///     Component to store data such as "this object is made out of steel".

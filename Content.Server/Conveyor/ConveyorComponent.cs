@@ -1,22 +1,18 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.MachineLinking;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.MachineLinking;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Physics;
+using Content.Server.Items;
+using Content.Server.MachineLinking.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Conveyor;
+using Content.Shared.MachineLinking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Conveyor
+namespace Content.Server.Conveyor
 {
     [RegisterComponent]
     public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>

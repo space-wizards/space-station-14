@@ -2,9 +2,8 @@
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Research
+namespace Content.Client.Research.UI
 {
     public class ResearchClientServerSelectionMenu : SS14Window
     {

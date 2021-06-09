@@ -1,14 +1,14 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Server.Interaction;
+using Content.Server.Items;
+using Content.Shared.MobState;
+using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.Throwing
 {
     internal static class ThrowHelper
     {

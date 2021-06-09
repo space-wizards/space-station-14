@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Items.RCD
+namespace Content.Server.RCD.Components
 {
     [RegisterComponent]
     public class RCDDeconstructWhitelist : Component

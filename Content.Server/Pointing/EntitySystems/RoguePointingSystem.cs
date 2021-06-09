@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Pointing;
+﻿using Content.Server.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class RoguePointingSystem : EntitySystem

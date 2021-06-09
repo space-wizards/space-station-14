@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.Smoking
 {
     [Serializable, NetSerializable]
     public enum SmokeVisuals : byte

@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.Verbs
 {
     /// <summary>
     /// Possible states of visibility for the verb in the right click menu.

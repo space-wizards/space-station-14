@@ -1,20 +1,20 @@
 ﻿#nullable enable
 using System;
 using Content.Server.Atmos;
+using Content.Server.Body.Circulatory;
+using Content.Server.Body.Respiratory;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Body.Respiratory;
-using Content.Server.Utility;
+using Content.Server.Notification;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Body.Components;
+using Content.Shared.MobState;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body.Behavior
+namespace Content.Server.Body.Behavior
 {
     [DataDefinition]
     public class LungBehavior : MechanismBehavior

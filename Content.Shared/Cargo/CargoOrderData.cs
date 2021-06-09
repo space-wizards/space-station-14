@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Prototypes.Cargo
+namespace Content.Shared.Cargo
 {
     [NetSerializable, Serializable]
     public class CargoOrderData

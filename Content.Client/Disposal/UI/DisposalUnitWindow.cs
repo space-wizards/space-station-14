@@ -1,5 +1,5 @@
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.GameObjects.Components.Disposal;
+using Content.Client.Stylesheets;
+using Content.Shared.Disposal.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,9 +7,9 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.UI
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>

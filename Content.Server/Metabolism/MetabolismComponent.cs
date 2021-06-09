@@ -2,27 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Alert;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Temperature;
+using Content.Server.Body.Behavior;
+using Content.Server.Body.Circulatory;
+using Content.Server.Temperature.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Metabolism
+namespace Content.Server.Metabolism
 {
     [RegisterComponent]
     public class MetabolismComponent : Component

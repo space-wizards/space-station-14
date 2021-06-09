@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body.Surgery.Messages;
-using Content.Server.Utility;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Body.Surgery;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Body.Mechanism;
+using Content.Server.Body.Surgery.Messages;
+using Content.Server.UserInterface;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Surgery;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
+using Content.Shared.Notification;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -19,7 +20,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body.Surgery
+namespace Content.Server.Body.Surgery.Components
 {
     /// <summary>
     ///     Server-side component representing a generic tool capable of performing surgery.

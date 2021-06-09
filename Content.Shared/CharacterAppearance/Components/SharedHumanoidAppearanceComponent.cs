@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Content.Shared.Preferences;
-using Content.Shared.Preferences.Appearance;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.CharacterAppearance.Components
 {
     public abstract class SharedHumanoidAppearanceComponent : Component
     {

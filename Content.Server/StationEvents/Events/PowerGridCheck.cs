@@ -1,7 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Threading;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.StationEvents
+namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
     public sealed class PowerGridCheck : StationEvent

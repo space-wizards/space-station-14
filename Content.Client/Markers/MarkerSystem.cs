@@ -1,7 +1,6 @@
-using Content.Client.GameObjects.Components.Markers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Markers
 {
     public sealed class MarkerSystem : EntitySystem
     {

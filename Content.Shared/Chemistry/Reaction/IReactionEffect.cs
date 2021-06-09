@@ -1,7 +1,7 @@
 #nullable enable
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Interfaces.Chemistry
+namespace Content.Shared.Chemistry.Reaction
 {
     /// <summary>
     /// Chemical reaction effect on the world such as an explosion, EMP, or fire.

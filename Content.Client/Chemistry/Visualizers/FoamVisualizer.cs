@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.Foam;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -7,7 +7,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
     public class FoamVisualizer : AppearanceVisualizer, ISerializationHooks

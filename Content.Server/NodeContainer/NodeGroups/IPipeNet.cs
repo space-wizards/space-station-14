@@ -1,13 +1,13 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.NodeContainer.NodeGroups
 {
     public interface IPipeNet : IGasMixtureHolder
     {

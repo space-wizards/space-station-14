@@ -2,7 +2,7 @@
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Client.Utility
+namespace Content.Client.DragDrop
 {
     /// <summary>
     /// Helper for implementing drag and drop interactions.

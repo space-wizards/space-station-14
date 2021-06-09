@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Client.Utility;
+using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
-namespace Content.Client.UserInterface.Stylesheets
+namespace Content.Client.Stylesheets
 {
     public class StyleSpace : StyleBase
     {

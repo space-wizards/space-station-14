@@ -1,7 +1,7 @@
 #nullable enable
 using Robust.Shared.Analyzers;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.DragDrop
 {
     /// <summary>
     ///     This interface allows the component's entity to be dragged and dropped

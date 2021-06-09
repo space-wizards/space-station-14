@@ -1,11 +1,11 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Cargo;
-using Content.Shared.Prototypes.Cargo;
+using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.GameObjects.Components.Cargo
+namespace Content.Client.Cargo.Components
 {
     [RegisterComponent]
     public class GalacticMarketComponent : SharedGalacticMarketComponent

@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.Battery.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Battery.EntitySystems
 {
     [UsedImplicitly]
     public class BatterySystem : EntitySystem

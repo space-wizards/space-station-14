@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Prototypes.Cargo
+namespace Content.Shared.Cargo
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Spawners
 {
     /// <summary>
     ///     Spawns a set of entities on the client only, and removes them when this component is removed.

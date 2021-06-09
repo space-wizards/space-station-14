@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Maths;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Connections
 {
     public class WirelessNetworkConnection : BaseNetworkConnection
     {

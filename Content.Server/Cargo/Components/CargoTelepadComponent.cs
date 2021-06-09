@@ -1,13 +1,13 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Prototypes.Cargo;
+using System.Collections.Generic;
+using Content.Server.Power.Components;
+using Content.Shared.Cargo;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using System.Collections.Generic;
 using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.Components.Cargo
+namespace Content.Server.Cargo.Components
 {
 
     //This entire class is a PLACEHOLDER for the cargo shuttle.

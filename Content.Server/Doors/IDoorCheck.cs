@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.Interfaces.GameObjects.Components;
 using System;
+using Content.Shared.Doors;
+using Content.Shared.Interaction;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Doors
+namespace Content.Server.Doors
 {
     public interface IDoorCheck
     {

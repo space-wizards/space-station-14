@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Clickable
 {
     [RegisterComponent]
     public sealed class ClickableComponent : Component

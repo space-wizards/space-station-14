@@ -1,14 +1,14 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Mobs.Roles;
-using Content.Shared.GameObjects.Components.Actor;
+using Content.Server.Mind.Components;
+using Content.Server.Roles;
+using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Server.GameObjects.Components.Actor
+namespace Content.Server.CharacterInfo
 {
     [RegisterComponent]
     public class CharacterInfoComponent : SharedCharacterInfoComponent

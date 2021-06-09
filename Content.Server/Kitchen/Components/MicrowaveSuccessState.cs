@@ -1,4 +1,4 @@
-namespace Content.Server.GameObjects.Components.Kitchen
+namespace Content.Server.Kitchen.Components
 {
     public enum MicrowaveSuccessState
     {

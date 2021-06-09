@@ -1,9 +1,7 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.CombatMode
 {
     public abstract class SharedCombatModeSystem : EntitySystem
     {

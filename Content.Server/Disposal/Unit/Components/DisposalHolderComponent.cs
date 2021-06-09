@@ -3,22 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Disposal.Tube.Components;
 using Content.Server.Interfaces;
+using Content.Server.Items;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Body;
-using Robust.Shared.Asynchronous;
+using Content.Shared.Body.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Disposal
+namespace Content.Server.Disposal.Unit.Components
 {
     // TODO: Add gas
     [RegisterComponent]

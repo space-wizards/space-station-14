@@ -1,6 +1,6 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
+using Content.Shared.Light;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -11,7 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
     public class PoweredLightVisualizer : AppearanceVisualizer

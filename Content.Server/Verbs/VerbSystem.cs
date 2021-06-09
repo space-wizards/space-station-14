@@ -1,17 +1,16 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Reflection;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameTicking;
+using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
+using static Content.Shared.Verbs.VerbSystemMessages;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Verbs
 {
     public class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {

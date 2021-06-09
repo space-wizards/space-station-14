@@ -4,7 +4,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Shared
+namespace Content.Shared.Loc
 {
     public static class Localization
     {
@@ -47,7 +47,7 @@ namespace Content.Shared
                 places += 1;
             }
 
-            return new LocValueString(Loc.GetString("zzzz-fmt-pressure", ("divided", pressure), ("places", places)));
+            return new LocValueString(Robust.Shared.Localization.Loc.GetString("zzzz-fmt-pressure", ("divided", pressure), ("places", places)));
         }
     }
 }

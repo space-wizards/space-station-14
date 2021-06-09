@@ -1,7 +1,7 @@
 using System;
 using Content.Shared;
 
-namespace Content.Server
+namespace Content.Server.IoC
 {
     public sealed class ServerModuleTestingCallbacks : SharedModuleTestingCallbacks
     {

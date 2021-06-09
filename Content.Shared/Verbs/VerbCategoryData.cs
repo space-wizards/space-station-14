@@ -1,7 +1,7 @@
 #nullable enable
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.Verbs
 {
     /// <summary>
     /// Contains combined name and icon information for a verb category.

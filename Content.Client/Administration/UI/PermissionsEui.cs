@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Administration;
+using Content.Client.Administration.Managers;
 using Content.Client.Eui;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Stylesheets;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
@@ -15,7 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Content.Shared.Administration.PermissionsEuiMsg;
 
-namespace Content.Client.UserInterface.Permissions
+namespace Content.Client.Administration.UI
 {
     [UsedImplicitly]
     public sealed class PermissionsEui : BaseEui

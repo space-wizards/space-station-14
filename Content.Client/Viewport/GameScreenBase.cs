@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Content.Client.GameObjects.Components;
-using Content.Client.UserInterface;
-using Content.Client.Utility;
+using Content.Client.Clickable;
+using Content.Client.Interactable;
+using Content.Client.Interactable.Components;
+using Content.Client.State;
 using Content.Shared;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
@@ -19,7 +20,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.State
+namespace Content.Client.Viewport
 {
     // OH GOD.
     // Ok actually it's fine.

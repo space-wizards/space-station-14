@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Animations;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Storage;
+using Content.Client.HUD;
+using Content.Shared.Hands.Components;
+using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
@@ -13,7 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Items
+namespace Content.Client.Hands
 {
     [RegisterComponent]
     [ComponentReference(typeof(ISharedHandsComponent))]
@@ -185,7 +185,7 @@ namespace Content.Client.GameObjects.Components.Items
 
                 _sprite.LayerSetColor($"hand-{name}", color);
                 _sprite.LayerSetVisible($"hand-{name}", true);
-                _sprite.LayerSetState($"hand-{name}", state, rsi);  
+                _sprite.LayerSetState($"hand-{name}", state, rsi);
             }
         }
 

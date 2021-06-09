@@ -1,6 +1,6 @@
-﻿using Content.Client.UserInterface;
+﻿using Content.Client.HUD.UI;
 
-namespace Content.Client.State
+namespace Content.Client.Viewport
 {
     /// <summary>
     ///     Client state that has a main viewport.

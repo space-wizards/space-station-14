@@ -2,21 +2,24 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Pulling;
-using Content.Server.GameObjects.Components.Buckle;
-using Content.Server.GameObjects.Components.Timing;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Rotatable;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Server.Buckle.Components;
+using Content.Server.CombatMode;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Pulling;
+using Content.Server.Timing;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Inventory;
+using Content.Shared.Notification;
+using Content.Shared.Rotatable;
+using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -25,15 +28,14 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Localization;
-using Content.Shared.Interfaces;
 
-namespace Content.Server.GameObjects.EntitySystems.Click
+namespace Content.Server.Interaction
 {
     /// <summary>
     /// Governs interactions during clicking on entities

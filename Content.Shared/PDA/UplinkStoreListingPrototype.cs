@@ -1,10 +1,9 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.PDA;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Prototypes.PDA
+namespace Content.Shared.PDA
 {
     [Prototype("uplinkListing")]
     public class UplinkStoreListingPrototype : IPrototype

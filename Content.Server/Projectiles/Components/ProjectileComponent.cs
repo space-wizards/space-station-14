@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Camera;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Projectiles;
+using Content.Shared.Damage.Components;
+using Content.Shared.Projectiles;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision;
@@ -12,7 +12,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Projectiles
+namespace Content.Server.Projectiles.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedProjectileComponent))]

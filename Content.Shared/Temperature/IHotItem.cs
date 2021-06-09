@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.Analyzers;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Temperature
 {
     /// <summary>
     /// This interface gives components hot quality when they are used.

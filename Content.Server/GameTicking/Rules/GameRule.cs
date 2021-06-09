@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Content.Server.GameTicking
+namespace Content.Server.GameTicking.Rules
 {
     [PublicAPI]
     public abstract class GameRule

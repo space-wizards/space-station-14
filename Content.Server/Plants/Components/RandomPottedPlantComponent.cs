@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Plants.Components
 {
     [RegisterComponent]
     public class RandomPottedPlantComponent : Component, IMapInit

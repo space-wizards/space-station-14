@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Part;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Body.Slot
+namespace Content.Shared.Body.Slot
 {
     public class BodyPartSlot
     {

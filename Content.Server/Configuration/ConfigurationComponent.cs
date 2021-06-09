@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Tools.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Configuration;
+using Content.Shared.Interaction;
+using Content.Shared.Tool;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -18,7 +18,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Configuration
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]

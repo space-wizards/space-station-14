@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Strap
+namespace Content.Shared.Buckle.Components
 {
     public enum StrapPosition
     {

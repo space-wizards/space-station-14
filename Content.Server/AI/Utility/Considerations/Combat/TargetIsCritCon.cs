@@ -1,6 +1,6 @@
 ﻿using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.MobState;
 
 namespace Content.Server.AI.Utility.Considerations.Combat
 {

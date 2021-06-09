@@ -1,10 +1,11 @@
-﻿using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Server.Standing;
+using Content.Server.Stunnable.Components;
+using Content.Shared.MobState;
+using Content.Shared.MobState.State;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Mobs.State
+namespace Content.Server.MobState.States
 {
     public class CriticalMobState : SharedCriticalMobState
     {

@@ -1,5 +1,5 @@
 using System;
-using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.Solar;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.Components.Power
+namespace Content.Client.Solar
 {
     [UsedImplicitly]
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface

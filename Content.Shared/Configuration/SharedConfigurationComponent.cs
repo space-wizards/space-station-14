@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Configuration
 {
     public class SharedConfigurationComponent : Component
     {

@@ -1,11 +1,10 @@
 ﻿#nullable enable
 using System;
-using Content.Server.GameObjects.Components.Construction;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Construction.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]

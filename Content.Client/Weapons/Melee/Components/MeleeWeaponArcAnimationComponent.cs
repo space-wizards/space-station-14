@@ -1,10 +1,10 @@
-using Content.Shared.GameObjects.Components.Weapons.Melee;
+using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Weapons.Melee
+namespace Content.Client.Weapons.Melee.Components
 {
     [RegisterComponent]
     public sealed class MeleeWeaponArcAnimationComponent : Component

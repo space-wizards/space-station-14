@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
+using Content.Shared.NetIDs;
+using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Storage
+namespace Content.Shared.Storage
 {
     public abstract class SharedStorageComponent : Component, IDraggable
     {

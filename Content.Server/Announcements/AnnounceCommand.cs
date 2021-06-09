@@ -1,12 +1,11 @@
 using System;
-using System.Text;
 using Content.Server.Administration;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands
+namespace Content.Server.Announcements
 {
     [AdminCommand(AdminFlags.Fun)]
     public class AnnounceCommand : IConsoleCommand

@@ -1,11 +1,11 @@
-using Content.Client.GameObjects.Components.IconSmoothing;
+using Content.Client.IconSmoothing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Map;
 using static Robust.Client.GameObjects.SpriteComponent;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Wall.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IconSmoothComponent))]

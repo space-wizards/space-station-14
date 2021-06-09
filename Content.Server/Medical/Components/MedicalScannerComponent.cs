@@ -1,21 +1,22 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Content.Server.Interfaces;
+using Content.Server.Cloning;
+using Content.Server.Mind.Components;
+using Content.Server.Power.Components;
+using Content.Server.Preferences.Managers;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Medical;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.MedicalScanner;
+using Content.Shared.MobState;
+using Content.Shared.Notification;
 using Content.Shared.Preferences;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -27,7 +28,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Medical
+namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

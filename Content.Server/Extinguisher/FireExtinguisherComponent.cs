@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
+using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -12,7 +11,7 @@ using Robust.Shared.Player;
 
 #nullable enable
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.Extinguisher
 {
     [RegisterComponent]
     public class FireExtinguisherComponent : Component, IAfterInteract

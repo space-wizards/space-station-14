@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Links;
+using Content.Client.Stylesheets;
 using Content.Shared;
 using Robust.Client.Credits;
 using Robust.Client.ResourceManagement;
@@ -15,7 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Credits
 {
     public sealed class CreditsWindow : SS14Window
     {

@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Random.Helpers
 {
     public static class SharedEntityExtensions
     {

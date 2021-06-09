@@ -1,10 +1,11 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Movement.Components;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Clothing
 {
     public abstract class SharedMagbootsComponent : Component, IMoveSpeedModifier
     {

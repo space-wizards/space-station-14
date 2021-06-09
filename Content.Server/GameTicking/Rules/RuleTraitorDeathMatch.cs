@@ -1,4 +1,4 @@
-﻿namespace Content.Server.GameTicking.GameRules
+﻿namespace Content.Server.GameTicking.Rules
 {
     public class RuleTraitorDeathMatch : GameRule
     {

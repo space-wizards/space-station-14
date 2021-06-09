@@ -1,14 +1,14 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Rotatable;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Notification;
+using Content.Shared.Rotatable;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
-namespace Content.Server.GameObjects.Components.Rotatable
+namespace Content.Server.Rotation.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedRotatableComponent))]

@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameObjects.Components.Construction
+namespace Content.Server.Construction.Components
 {
     public partial class ConstructionComponent
     {

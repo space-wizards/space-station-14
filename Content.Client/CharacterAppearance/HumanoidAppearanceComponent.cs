@@ -1,16 +1,15 @@
-﻿using Content.Client.GameObjects.Components.ActionBlocking;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Preferences;
-using Content.Shared.Preferences.Appearance;
+﻿using Content.Client.Cuffs.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.CharacterAppearance;
+using Content.Shared.CharacterAppearance.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.CharacterAppearance
 {
     [RegisterComponent]
     public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded, IBodyPartRemoved

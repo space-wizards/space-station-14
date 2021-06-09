@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Mobs.Roles;
+using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
+using Content.Server.Roles;
+using Content.Shared.MobState;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -17,7 +17,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Mobs
+namespace Content.Server.Mind
 {
     /// <summary>
     ///     A mind represents the IC "mind" of a player. Stores roles currently.

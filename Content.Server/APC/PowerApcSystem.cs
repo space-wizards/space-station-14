@@ -1,9 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.APC.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.APC
 {
     [UsedImplicitly]
     internal sealed class PowerApcSystem : EntitySystem

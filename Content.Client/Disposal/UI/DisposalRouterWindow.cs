@@ -1,12 +1,11 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+﻿using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.Disposal.UI
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedDisposalRouterComponent"/>

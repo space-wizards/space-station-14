@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Movement.Components;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
@@ -8,9 +9,9 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.GameObjects.Components.Inventory
+namespace Content.Shared.Inventory
 {
     public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
     {

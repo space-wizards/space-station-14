@@ -1,22 +1,23 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Nutrition;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Kitchen;
+using Content.Server.Act;
+using Content.Server.Chat.Managers;
+using Content.Server.DoAfter;
+using Content.Server.Notification;
+using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.MobState;
+using Content.Shared.Notification;
+using Content.Shared.Nutrition.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-namespace Content.Server.GameObjects.Components.Kitchen
+namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

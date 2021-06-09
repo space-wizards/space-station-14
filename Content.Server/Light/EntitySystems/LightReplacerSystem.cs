@@ -1,14 +1,12 @@
 #nullable enable
-using System;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Janitorial;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Light.Components;
+using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.Janitorial
+namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
     public class LightReplacerSystem : EntitySystem

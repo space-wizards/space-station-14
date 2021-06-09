@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Power
+namespace Content.Client.Power
 {
     [UsedImplicitly]
     public class PowerDeviceVisualizer : AppearanceVisualizer

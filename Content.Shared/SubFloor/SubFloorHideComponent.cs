@@ -1,8 +1,7 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.SubFloor
 {
     /// <summary>
     /// Simple component that automatically hides the sibling

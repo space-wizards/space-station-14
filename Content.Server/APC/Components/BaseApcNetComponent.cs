@@ -1,7 +1,7 @@
 #nullable enable
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.Power.Components;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
+namespace Content.Server.APC.Components
 {
     public abstract class BaseApcNetComponent : BaseNetConnectorComponent<IApcNet>
     {

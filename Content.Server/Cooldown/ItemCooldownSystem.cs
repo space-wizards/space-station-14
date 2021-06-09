@@ -1,8 +1,8 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Cooldown;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Cooldown
 {
     public class ItemCooldownSystem : EntitySystem
     {

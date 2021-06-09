@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Cargo;
-using Content.Server.GameObjects.Components.Cargo;
+using Content.Server.Cargo.Components;
+using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
-using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Cargo
 {
     public class CargoConsoleSystem : EntitySystem, IResettingEntitySystem
     {

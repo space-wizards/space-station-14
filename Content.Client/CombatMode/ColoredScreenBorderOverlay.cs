@@ -4,9 +4,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using System;
 
-namespace Content.Client.Graphics.Overlays
+namespace Content.Client.CombatMode
 {
     public class ColoredScreenBorderOverlay : Overlay
     {

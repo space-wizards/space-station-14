@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using Content.Client.GameObjects.Components.IconSmoothing;
+using Content.Client.IconSmoothing;
+using Content.Client.Window;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Wall.Components
 {
     // TODO: Over layers should be placed ABOVE the window itself too.
     // This is gonna require a client entity & parenting,

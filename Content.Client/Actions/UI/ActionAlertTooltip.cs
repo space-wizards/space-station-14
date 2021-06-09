@@ -1,11 +1,11 @@
 ﻿using System;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Actions.UI
 {
     /// <summary>
     /// Tooltip for actions or alerts because they are very similar.

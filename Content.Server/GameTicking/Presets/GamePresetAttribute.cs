@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using JetBrains.Annotations;
 
-namespace Content.Server.GameTicking.GamePresets
+namespace Content.Server.GameTicking.Presets
 {
     /// <summary>
     ///     Attribute that marks a game preset.

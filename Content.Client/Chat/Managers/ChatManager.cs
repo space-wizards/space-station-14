@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.Administration;
-using Content.Client.GameObjects.Components.Observer;
-using Content.Client.Interfaces.Chat;
-using Content.Client.Utility;
+using Content.Client.Administration.Managers;
+using Content.Client.Chat.UI;
+using Content.Client.Ghost;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -20,7 +19,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Chat
+namespace Content.Client.Chat.Managers
 {
     internal sealed class ChatManager : IChatManager, IPostInjectInit
     {

@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Utility
+namespace Content.Server.Coordinates.Helpers
 {
     public static class SnapgridHelper
     {

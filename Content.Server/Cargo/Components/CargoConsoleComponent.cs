@@ -1,12 +1,11 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.Cargo;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Cargo;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Prototypes.Cargo;
+using Content.Server.Coordinates.Helpers;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -17,7 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Cargo
+namespace Content.Server.Cargo.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

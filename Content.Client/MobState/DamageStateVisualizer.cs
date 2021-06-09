@@ -1,15 +1,13 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.DrawDepth;
+using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.MobState
 {
     [UsedImplicitly]
     public sealed class DamageStateVisualizer : AppearanceVisualizer, ISerializationHooks

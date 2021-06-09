@@ -1,19 +1,19 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Strap;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
+using Content.Server.Act;
+using Content.Server.Buckle.Components;
+using Content.Server.Chat.Managers;
+using Content.Server.Notification;
+using Content.Server.Storage.Components;
+using Content.Server.Tools.Components;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Components.Watercloset;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Toilet;
+using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -24,7 +24,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Watercloset
+namespace Content.Server.Toilet
 {
     [RegisterComponent]
     public class ToiletComponent : Component, IInteractUsing,

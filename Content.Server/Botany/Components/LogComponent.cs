@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Botany
+namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
     public class LogComponent : Component, IInteractUsing

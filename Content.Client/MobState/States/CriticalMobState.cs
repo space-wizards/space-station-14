@@ -1,6 +1,6 @@
-﻿using Content.Shared.GameObjects.Components.Mobs.State;
+﻿using Content.Shared.MobState.State;
 
-namespace Content.Client.GameObjects.Components.Mobs.State
+namespace Content.Client.MobState.States
 {
     public class CriticalMobState : SharedCriticalMobState
     {

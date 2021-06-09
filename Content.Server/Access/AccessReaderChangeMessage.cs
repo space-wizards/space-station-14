@@ -1,6 +1,6 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Access
+namespace Content.Server.Access
 {
     public sealed class AccessReaderChangeMessage : EntityEventArgs
     {

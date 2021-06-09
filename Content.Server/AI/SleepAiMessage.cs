@@ -1,7 +1,7 @@
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.AI.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.AI
+namespace Content.Server.AI
 {
     /// <summary>
     ///     Indicates whether an AI should be updated by the AiSystem or not.

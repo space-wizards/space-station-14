@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Content.Server.Administration;
-using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -8,7 +7,7 @@ using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Commands.Objectives
+namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
     public class AddObjectiveCommand : IConsoleCommand

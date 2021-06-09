@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 
 #nullable enable
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Interaction
 {
     /// <summary>
     /// This interface gives components a behavior when their entity is in the active hand, when

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Interfaces;
+using Content.Client.GameTicking.Managers;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
@@ -16,7 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.LateJoin
 {
     public sealed class LateJoinGui : SS14Window
     {

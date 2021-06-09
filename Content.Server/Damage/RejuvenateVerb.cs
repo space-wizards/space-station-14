@@ -1,16 +1,16 @@
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Verbs;
+using Content.Server.Nutrition.Components;
+using Content.Server.Stunnable.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
+using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GlobalVerbs
+namespace Content.Server.Damage
 {
     /// <summary>
     ///     Completely removes all damage from the DamageableComponent (heals the mob).

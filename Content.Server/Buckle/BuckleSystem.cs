@@ -1,15 +1,14 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Buckle;
-using Content.Server.GameObjects.Components.Strap;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Buckle.Components;
+using Content.Server.Interaction;
+using Content.Shared.Buckle;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Buckle
 {
     [UsedImplicitly]
     internal sealed class BuckleSystem : SharedBuckleSystem

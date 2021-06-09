@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands
+namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
     public class FindEntitiesWithComponents : IConsoleCommand

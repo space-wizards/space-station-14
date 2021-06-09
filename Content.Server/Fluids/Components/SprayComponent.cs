@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.Chemistry.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Fluids;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Cooldown;
+using Content.Shared.DragDrop;
+using Content.Shared.Fluids;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -16,12 +17,12 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Fluids
+namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
     class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped

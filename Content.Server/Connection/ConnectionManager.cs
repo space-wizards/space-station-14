@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Content.Server.Preferences;
+using Content.Server.Preferences.Managers;
 using Content.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -10,7 +10,7 @@ using Robust.Shared.Network;
 
 #nullable enable
 
-namespace Content.Server
+namespace Content.Server.Connection
 {
     public interface IConnectionManager
     {

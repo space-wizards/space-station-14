@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.Buckle.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Buckle
 {
     public abstract class SharedBuckleSystem : EntitySystem
     {

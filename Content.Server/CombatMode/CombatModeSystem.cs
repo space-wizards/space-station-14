@@ -1,7 +1,7 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.CombatMode;
 using JetBrains.Annotations;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.CombatMode
 {
     [UsedImplicitly]
     public sealed class CombatModeSystem : SharedCombatModeSystem

@@ -1,6 +1,6 @@
 ﻿using Content.Client.Eui;
 using Content.Shared.Administration;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Administration.UI
 {
     [UsedImplicitly]
     public sealed class AdminAddReagentEui : BaseEui

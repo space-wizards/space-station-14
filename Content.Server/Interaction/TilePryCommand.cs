@@ -1,6 +1,6 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Tools.Components;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Server.Player;
@@ -8,7 +8,7 @@ using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Commands.Interactable
+namespace Content.Server.Interaction
 {
     /// <summary>
     /// <see cref="TilePryingComponent.TryPryTile"/>
@@ -63,7 +63,7 @@ namespace Content.Server.Commands.Interactable
                     if (!tileDef.CanCrowbar) continue;
 
                     var underplating = tileDefinitionManager["underplating"];
-                    mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
+                    mapGrid.SetTile(coordinates, new Robust.Shared.Map.Tile(underplating.TileId));
                 }
             }
         }

@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Items
+namespace Content.Shared.Cooldown
 {
     /// <summary>
     ///     Stores a visual "cooldown" for items, that gets displayed in the hands GUI.

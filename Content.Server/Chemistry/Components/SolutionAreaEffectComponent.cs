@@ -1,10 +1,11 @@
 #nullable enable
 using System;
 using System.Linq;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -12,7 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     /// <summary>
     /// Used to clone its owner repeatedly and group up them all so they behave like one unit, that way you can have

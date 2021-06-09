@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Weapon.Melee
+namespace Content.Server.Flash.Components
 {
     [RegisterComponent]
     public class FlashComponent : Component

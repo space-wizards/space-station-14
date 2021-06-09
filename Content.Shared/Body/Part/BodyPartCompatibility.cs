@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Body.Part
+namespace Content.Shared.Body.Part
 {
     /// <summary>
     ///     Determines whether two <see cref="IBodyPart"/>s can connect.

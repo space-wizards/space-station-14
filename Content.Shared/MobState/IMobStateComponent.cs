@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Mobs.State
+namespace Content.Shared.MobState
 {
     public interface IMobStateComponent : IComponent
     {

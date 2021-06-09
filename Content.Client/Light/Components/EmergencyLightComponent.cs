@@ -5,7 +5,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Light.Components
 {
     [RegisterComponent]
     public class EmergencyLightComponent : Component

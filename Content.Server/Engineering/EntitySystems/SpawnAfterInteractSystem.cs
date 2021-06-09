@@ -1,16 +1,16 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Engineering;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Utility;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Server.Coordinates.Helpers;
+using Content.Server.DoAfter;
+using Content.Server.Engineering.Components;
+using Content.Server.Stack;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
     public class SpawnAfterInteractSystem : EntitySystem

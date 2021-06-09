@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.DoAfter;
+using Content.Server.Stack;
+using Content.Server.Tools.Components;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Tool;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -23,7 +24,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Construction
+namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
     public partial class ConstructionComponent : Component, IExamine, IInteractUsing

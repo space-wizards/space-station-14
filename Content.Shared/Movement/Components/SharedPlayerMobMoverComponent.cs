@@ -1,17 +1,15 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Movement.Components
 {
     /// <summary>
     ///     The basic player mover with footsteps and grabbing

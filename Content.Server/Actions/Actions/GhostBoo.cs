@@ -1,16 +1,15 @@
 #nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Utility;
+using Content.Server.Ghost;
+using Content.Shared.Actions.Behaviors;
+using Content.Shared.Actions.Components;
+using Content.Shared.Cooldown;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Actions
+namespace Content.Server.Actions.Actions
 {
     /// <summary>
     ///     Blink lights and scare livings

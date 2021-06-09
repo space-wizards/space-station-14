@@ -1,6 +1,6 @@
 using System;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.Visibility
 {
     [Flags]
     public enum VisibilityFlags : uint

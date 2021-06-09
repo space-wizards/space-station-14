@@ -1,5 +1,6 @@
+using Content.Client.HUD.UI;
 using Content.Shared;
-using Content.Shared.Prototypes.HUD;
+using Content.Shared.HUD;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,7 +10,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.EscapeMenu.UI
 {
     public sealed partial class OptionsMenu
     {

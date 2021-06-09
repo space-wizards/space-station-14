@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -15,7 +15,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Light.Components
 {
     #region LIGHT_BEHAVIOURS
     /// <summary>

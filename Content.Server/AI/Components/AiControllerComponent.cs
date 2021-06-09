@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Content.Server.Interfaces.GameTicking;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Server.GameTicking;
+using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Movement
+namespace Content.Server.AI.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]

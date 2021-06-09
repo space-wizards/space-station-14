@@ -1,7 +1,8 @@
-﻿using Robust.Client.UserInterface;
+﻿using Content.Client.Items.UI;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Items.Managers
 {
     public interface IItemSlotManager
     {

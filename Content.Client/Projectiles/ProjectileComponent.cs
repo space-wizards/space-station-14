@@ -1,7 +1,7 @@
-using Content.Shared.GameObjects.Components.Projectiles;
+using Content.Shared.Projectiles;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Projectiles
+namespace Content.Client.Projectiles
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedProjectileComponent))]

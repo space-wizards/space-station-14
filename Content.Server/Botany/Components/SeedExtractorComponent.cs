@@ -1,14 +1,14 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.Components.Botany
+namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
     public class SeedExtractorComponent : Component, IInteractUsing

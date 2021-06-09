@@ -1,16 +1,16 @@
 #nullable enable
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.Acts;
+using Content.Shared.Item;
+using Content.Shared.Notification;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Storage.Components
 {
     /// <summary>
     /// Logic for secret single slot stash, like plant pot or toilet cistern

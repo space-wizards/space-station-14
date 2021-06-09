@@ -2,13 +2,13 @@
 using System;
 using System.Globalization;
 using System.Threading;
-using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Command;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Chat.Managers;
+using Content.Server.PDA;
+using Content.Server.Power.Components;
+using Content.Server.RoundEnd;
+using Content.Server.UserInterface;
+using Content.Shared.Communications;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -17,7 +17,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.GameObjects.Components.Command
+namespace Content.Server.Communications
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

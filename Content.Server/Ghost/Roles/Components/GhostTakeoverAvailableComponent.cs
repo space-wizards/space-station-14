@@ -1,12 +1,11 @@
 using System;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Observer.GhostRoles
+namespace Content.Server.Ghost.Roles.Components
 {
     /// <summary>
     ///     Allows a ghost to take over the Owner entity.

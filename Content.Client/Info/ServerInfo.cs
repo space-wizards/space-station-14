@@ -1,11 +1,13 @@
 ﻿using Content.Client.Changelog;
+using Content.Client.Credits;
+using Content.Client.Links;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Info
 {
     public class ServerInfo : VBoxContainer
     {

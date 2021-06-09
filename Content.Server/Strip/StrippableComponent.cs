@@ -1,23 +1,25 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Threading;
-using Content.Server.GameObjects.Components.ActionBlocking;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Cuffs.Components;
+using Content.Server.DoAfter;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
+using Content.Shared.Notification;
+using Content.Shared.Strip.Components;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.Strip
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrippableComponent))]

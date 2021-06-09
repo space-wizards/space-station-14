@@ -3,7 +3,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Utility
+namespace Content.Client.Resources
 {
     [PublicAPI]
     public static class ResourceCacheExtensions

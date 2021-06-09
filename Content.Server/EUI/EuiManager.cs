@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 #nullable enable
 
-namespace Content.Server.Eui
+namespace Content.Server.EUI
 {
     public sealed class EuiManager : IPostInjectInit
     {

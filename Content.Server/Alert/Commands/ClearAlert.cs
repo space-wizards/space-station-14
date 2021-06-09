@@ -1,14 +1,14 @@
 #nullable enable
 using System;
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands.Alerts
+namespace Content.Server.Alert.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
     public sealed class ClearAlert : IConsoleCommand

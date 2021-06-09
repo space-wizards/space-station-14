@@ -5,7 +5,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.JobQueues
+namespace Content.Server.CPUJob.JobQueues
 {
     /// <summary>
     ///     CPU-intensive job that can be suspended and resumed on the main thread

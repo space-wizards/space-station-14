@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Stack
+namespace Content.Server.Stack
 {
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]

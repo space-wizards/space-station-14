@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
+using Content.Shared.Damage.Components;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
-namespace Content.Client.GameObjects.Components.Body.Scanner
+namespace Content.Client.Body.UI
 {
     public sealed class BodyScannerDisplay : SS14Window
     {

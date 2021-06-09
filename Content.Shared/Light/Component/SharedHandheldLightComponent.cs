@@ -1,11 +1,12 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Light.Component
 {
-    public abstract class SharedHandheldLightComponent : Component
+    public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
         public sealed override string Name => "HandheldLight";
         public sealed override uint? NetID => ContentNetIDs.HANDHELD_LIGHT;

@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using System;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Trigger;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Trigger;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
+namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse

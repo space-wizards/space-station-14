@@ -1,16 +1,14 @@
-﻿using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces.GameObjects.Components;
+﻿using System.Threading.Tasks;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Content.Shared.Utility;
+using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
-using System.Threading.Tasks;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Tools.Components
 {
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract

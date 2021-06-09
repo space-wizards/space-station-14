@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.GUI;
+using Content.Client.Strip;
+using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Client.GameObjects.Components.HUD.Inventory
+namespace Content.Client.Inventory
 {
     [UsedImplicitly]
     public class StrippableBoundUserInterface : BoundUserInterface

@@ -1,8 +1,8 @@
 #nullable enable
+using Content.Server.GameTicking;
+using Content.Server.Radiation;
+using Content.Shared.Coordinates;
 using JetBrains.Annotations;
-using Content.Server.GameObjects.Components.StationEvents;
-using Content.Server.Interfaces.GameTicking;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -10,7 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.StationEvents
+namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
     public sealed class RadiationStorm : StationEvent

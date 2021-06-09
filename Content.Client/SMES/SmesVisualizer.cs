@@ -1,9 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.Power;
+using Content.Shared.SMES;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Power
+namespace Content.Client.SMES
 {
     [UsedImplicitly]
     public class SmesVisualizer : AppearanceVisualizer

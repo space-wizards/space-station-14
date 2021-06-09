@@ -1,15 +1,15 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Temperature
+namespace Content.Server.Temperature.Components
 {
     /// <summary>
     /// Handles changing temperature,

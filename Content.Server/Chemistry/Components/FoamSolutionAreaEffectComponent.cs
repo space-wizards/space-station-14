@@ -1,15 +1,15 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.Body.Circulatory;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Foam;
+using Content.Shared.Inventory;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SolutionAreaEffectComponent))]

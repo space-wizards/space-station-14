@@ -1,6 +1,7 @@
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -13,7 +14,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.Dice
 {
     [RegisterComponent]
     public class DiceComponent : Component, IActivate, IUse, ILand, IExamine

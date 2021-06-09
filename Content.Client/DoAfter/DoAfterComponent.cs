@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.EntitySystems.DoAfter;
-using Content.Shared.GameObjects.Components;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
+using Content.Client.DoAfter.UI;
+using Content.Shared.DoAfter;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.DoAfter
 {
     [RegisterComponent]
     public sealed class DoAfterComponent : SharedDoAfterComponent

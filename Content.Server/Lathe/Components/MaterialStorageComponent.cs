@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Research;
+using Content.Shared.Lathe;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Research
+namespace Content.Server.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMaterialStorageComponent))]

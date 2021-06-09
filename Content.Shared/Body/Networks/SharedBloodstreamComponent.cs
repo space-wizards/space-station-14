@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body.Networks
+namespace Content.Shared.Body.Networks
 {
     public abstract class SharedBloodstreamComponent : Component
     {

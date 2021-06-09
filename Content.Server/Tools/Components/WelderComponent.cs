@@ -1,21 +1,22 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
+using Content.Server.Act;
 using Content.Server.Atmos;
-using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
+using Content.Server.Chat.Managers;
+using Content.Server.Chemistry.Components;
+using Content.Server.Explosion;
+using Content.Server.Items;
+using Content.Server.Notification;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
+using Content.Shared.Notification;
+using Content.Shared.Temperature;
+using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -27,7 +28,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.Tools.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]

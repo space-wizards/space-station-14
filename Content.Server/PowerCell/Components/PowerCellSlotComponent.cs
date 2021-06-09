@@ -1,24 +1,21 @@
 #nullable enable
 using System;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Robust.Server.GameObjects;
+using Content.Shared.Examine;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.PowerCell.Components
 {
     /// <summary>
     /// Provides a "battery compartment" that can contain a <see cref="PowerCellComponent"/> of the matching

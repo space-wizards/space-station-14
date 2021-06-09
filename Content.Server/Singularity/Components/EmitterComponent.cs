@@ -2,15 +2,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.Interfaces;
+using Content.Server.Access.Components;
+using Content.Server.Power.Components;
+using Content.Server.Projectiles.Components;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Singularity;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -19,9 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -29,7 +25,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 #nullable enable
 
-namespace Content.Server.GameObjects.Components.Singularity
+namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

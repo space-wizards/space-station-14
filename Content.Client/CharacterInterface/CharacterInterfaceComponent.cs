@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.UserInterface;
+using Content.Client.CharacterInfo.Components;
+using Content.Client.HUD;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
@@ -10,7 +10,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.Components.Actor
+namespace Content.Client.CharacterInterface
 {
     /// <summary>
     /// A semi-abstract component which gets added to entities upon attachment and collects all character

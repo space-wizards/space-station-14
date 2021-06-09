@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Weapons.Ranged
+namespace Content.Shared.Weapons.Ranged.Components
 {
     public abstract class SharedRangedWeaponComponent : Component
     {

@@ -1,10 +1,8 @@
-using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Server.GameObjects.Components.Projectiles
+namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
     public class ExplosiveProjectileComponent : Component, IStartCollide

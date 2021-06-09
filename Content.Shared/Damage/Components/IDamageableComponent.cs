@@ -1,10 +1,9 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.Damage.Components
 {
     public interface IDamageableComponent : IComponent, IExAct
     {

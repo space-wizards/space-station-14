@@ -1,9 +1,8 @@
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.Components.Arcade
+namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     public class RandomArcadeGameComponent : Component, IMapInit

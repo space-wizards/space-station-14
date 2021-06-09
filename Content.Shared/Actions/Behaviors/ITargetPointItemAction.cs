@@ -1,8 +1,9 @@
 ﻿#nullable enable
+using Content.Shared.Actions.Behaviors.Item;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Behaviors
 {
     /// <summary>
     /// Item action which requires the user to select a target point, which

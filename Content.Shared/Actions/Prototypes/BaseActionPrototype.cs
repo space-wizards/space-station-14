@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Actions
+namespace Content.Shared.Actions.Prototypes
 {
     /// <summary>
     /// Base class for action prototypes.

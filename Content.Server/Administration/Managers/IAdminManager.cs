@@ -5,7 +5,7 @@ using Robust.Server.Player;
 
 #nullable enable
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Managers
 {
     /// <summary>
     ///     Manages server administrators and their permission flags.

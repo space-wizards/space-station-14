@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Body.Part.Property;
-using Content.Shared.GameObjects.Components.Body.Preset;
-using Content.Shared.GameObjects.Components.Body.Slot;
-using Content.Shared.GameObjects.Components.Body.Template;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Part.Property;
+using Content.Shared.Body.Preset;
+using Content.Shared.Body.Slot;
+using Content.Shared.Body.Template;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body
+namespace Content.Shared.Body.Components
 {
     /// <summary>
     ///     Component representing a collection of <see cref="IBodyPart"/>s

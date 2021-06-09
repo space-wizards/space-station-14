@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Content.Shared.Maths;
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Temperature
 {
     public static class TemperatureHelpers
     {

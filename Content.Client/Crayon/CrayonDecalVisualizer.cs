@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.Crayon;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Crayon
+namespace Content.Client.Crayon
 {
     [UsedImplicitly]
     public class CrayonDecalVisualizer : AppearanceVisualizer

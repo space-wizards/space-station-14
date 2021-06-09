@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages.Pulling
+namespace Content.Shared.Pulling
 {
     public class PullableStopMovingMessage : EntityEventArgs
     {

@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.Battery.Components;
 using Content.Shared.Administration;
-using Content.Shared.GameObjects.Components;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands
+namespace Content.Server.Battery
 {
     [AdminCommand(AdminFlags.Admin)]
     public class DrainAllBatteriesCommand : IConsoleCommand

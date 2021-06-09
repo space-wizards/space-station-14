@@ -1,10 +1,10 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     public class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {

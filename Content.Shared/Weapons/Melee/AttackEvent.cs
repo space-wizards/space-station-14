@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Interfaces.GameObjects.Components
+namespace Content.Shared.Weapons.Melee
 {
     /// <summary>
     ///     Raised directed on the used entity when a target entity is click attacked by a user.

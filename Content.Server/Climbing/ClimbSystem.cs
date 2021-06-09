@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Server.Climbing.Components;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Climbing
 {
     [UsedImplicitly]
     internal sealed class ClimbSystem : EntitySystem, IResettingEntitySystem

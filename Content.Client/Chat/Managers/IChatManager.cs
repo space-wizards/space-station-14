@@ -1,9 +1,9 @@
 using System;
-using Content.Client.Chat;
+using Content.Client.Chat.UI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Interfaces.Chat
+namespace Content.Client.Chat.Managers
 {
     public interface IChatManager
     {

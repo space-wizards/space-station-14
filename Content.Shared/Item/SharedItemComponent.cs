@@ -1,8 +1,10 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using System;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Inventory;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -10,9 +12,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
 
-namespace Content.Shared.GameObjects.Components.Storage
+namespace Content.Shared.Item
 {
     /// <summary>
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.

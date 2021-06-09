@@ -1,10 +1,10 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Utility;
+using Content.Server.Power.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Research;
+using Content.Shared.Interaction;
+using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -15,7 +15,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Research
+namespace Content.Server.Research.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

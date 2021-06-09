@@ -1,10 +1,11 @@
+using Content.Shared.CharacterAppearance;
+using Content.Shared.Dataset;
 using Content.Shared.Preferences;
-using Content.Shared.Prototypes;
-using Content.Shared.Utility;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Preferences.UI
 {
     public partial class HumanoidProfileEditor
     {

@@ -1,14 +1,14 @@
-﻿using System;
-using Content.Client.UserInterface.Cargo;
-using Content.Shared.GameObjects.Components.Cargo;
-using Content.Shared.Prototypes.Cargo;
+﻿using Content.Client.Cargo.Components;
+using Content.Client.Cargo.UI;
+using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Cargo.SharedCargoConsoleComponent;
+using static Content.Shared.Cargo.Components.SharedCargoConsoleComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Cargo
+namespace Content.Client.Cargo
 {
     public class CargoConsoleBoundUserInterface : BoundUserInterface
     {

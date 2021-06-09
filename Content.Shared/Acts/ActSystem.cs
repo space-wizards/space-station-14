@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Acts
 {
     /// <summary>
     /// This interface gives components behavior on getting destroyed.

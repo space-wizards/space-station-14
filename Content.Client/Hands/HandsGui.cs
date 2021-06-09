@@ -1,10 +1,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Client.GameObjects.Components.Items;
-using Content.Client.Utility;
+using Content.Client.HUD;
+using Content.Client.Items.Managers;
+using Content.Client.Items.UI;
+using Content.Client.Resources;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -16,7 +18,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Hands
 {
     public class HandsGui : Control
     {

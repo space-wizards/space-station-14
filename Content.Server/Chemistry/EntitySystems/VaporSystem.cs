@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+﻿using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
     public class VaporSystem : EntitySystem

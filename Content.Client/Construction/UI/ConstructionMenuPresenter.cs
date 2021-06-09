@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.UserInterface;
-using Content.Client.Utility;
-using Content.Shared.Construction;
-using Content.Shared.GameObjects.Components.Interactable;
+using Content.Client.HUD;
+using Content.Client.Resources;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
+using Content.Shared.Tool;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
@@ -18,7 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Construction
+namespace Content.Client.Construction.UI
 {
     /// <summary>
     /// This class presents the Construction/Crafting UI to the client, linking the <see cref="ConstructionSystem" /> with the

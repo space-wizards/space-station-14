@@ -1,13 +1,16 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
+using Content.Server.Atmos;
+using Content.Server.CombatMode;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction.Components;
+using Content.Server.Stunnable.Components;
+using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Weapons.Ranged;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Hands;
+using Content.Shared.Notification;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,9 +24,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Content.Server.Atmos;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged
+namespace Content.Server.Weapon.Ranged
 {
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected

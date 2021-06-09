@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace Content.Shared.Utility
+namespace Content.Shared.Collections
 {
     // It's a Remie Queue now.
 

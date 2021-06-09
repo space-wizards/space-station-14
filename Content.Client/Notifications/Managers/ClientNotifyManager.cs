@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.Interfaces;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Stylesheets;
 using Content.Shared;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -16,7 +15,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client
+namespace Content.Client.Notifications.Managers
 {
     public class ClientNotifyManager : SharedNotifyManager, IClientNotifyManager
     {

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Body.Surgery;
-using Content.Server.GameObjects.Components.Body.Surgery.Messages;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Server.Body.Surgery.Messages;
+using Content.Shared.ActionBlocker;
 using Content.Shared.GameTicking;
-using Content.Shared.Utility;
+using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.Body.Surgery
+namespace Content.Server.Body.Surgery.Components
 {
     [UsedImplicitly]
     public class SurgeryToolSystem : EntitySystem, IResettingEntitySystem

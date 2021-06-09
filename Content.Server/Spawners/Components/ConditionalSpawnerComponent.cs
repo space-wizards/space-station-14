@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Random;
-using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Markers
+namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
     public class ConditionalSpawnerComponent : Component, IMapInit

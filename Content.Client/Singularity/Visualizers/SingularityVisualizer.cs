@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Singularity;
+﻿using Content.Shared.Singularity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Singularity
+namespace Content.Client.Singularity.Visualizers
 {
     [UsedImplicitly]
     public class SingularityVisualizer : AppearanceVisualizer

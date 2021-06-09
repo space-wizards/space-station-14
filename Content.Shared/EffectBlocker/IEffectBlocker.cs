@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
 
-namespace Content.Shared.GameObjects.EntitySystems.EffectBlocker
+namespace Content.Shared.EffectBlocker
 {
     /// <summary>
     /// This interface gives components the ability to block certain effects

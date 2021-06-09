@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Disposal;
+﻿using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems.Disposal
+namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposalUnitSystem : EntitySystem
     {

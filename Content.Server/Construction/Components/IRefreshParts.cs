@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Construction;
 using Robust.Shared.Analyzers;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.Construction.Components
 {
     [RequiresExplicitImplementation]
     public interface IRefreshParts

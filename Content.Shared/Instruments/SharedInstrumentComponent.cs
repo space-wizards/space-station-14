@@ -1,11 +1,12 @@
 #nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Instruments
+namespace Content.Shared.Instruments
 {
     public class SharedInstrumentComponent : Component
     {

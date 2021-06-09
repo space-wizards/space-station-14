@@ -1,12 +1,9 @@
 ﻿#nullable enable
-using System.Runtime.CompilerServices;
-using Content.Shared.GameObjects.Components.Morgue;
+using Content.Shared.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.Morgue.Visualizers
 {
     public sealed class MorgueVisualizer : AppearanceVisualizer
     {

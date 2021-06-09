@@ -1,8 +1,8 @@
-﻿using Content.Server.Interfaces.Chat;
+﻿using Content.Server.Chat.Managers;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.Act
 {
     [RequiresExplicitImplementation]
     public interface ISuicideAct

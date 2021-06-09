@@ -4,7 +4,7 @@ using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Server.Chemistry.Components
 {
     /// <summary>
     /// The "mastermind" of a SolutionAreaEffect group. It gets updated by the SolutionAreaEffectSystem and tells the

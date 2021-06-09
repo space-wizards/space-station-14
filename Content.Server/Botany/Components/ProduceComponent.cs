@@ -1,7 +1,6 @@
 #nullable enable
-using Content.Server.Botany;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
+using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,7 +10,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Botany
+namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
     public class ProduceComponent : Component, ISerializationHooks

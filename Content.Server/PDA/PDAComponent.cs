@@ -4,20 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Paper;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Interfaces.PDA;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Access.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.PDA.Managers;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.PDA;
+using Content.Shared.Tag;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -25,12 +22,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.PDA
+namespace Content.Server.PDA
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

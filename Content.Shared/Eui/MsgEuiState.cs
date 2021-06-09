@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.IO;
-using Content.Shared.Eui;
 using Lidgren.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Eui
 {
     public sealed class MsgEuiState : NetMessage
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Preferences.Appearance
+namespace Content.Shared.CharacterAppearance
 {
     public sealed class SpriteAccessoryManager
     {

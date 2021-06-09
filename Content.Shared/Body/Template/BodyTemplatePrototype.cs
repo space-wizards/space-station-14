@@ -1,13 +1,14 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Body.Template
+namespace Content.Shared.Body.Template
 {
     /// <summary>
     ///     Defines the layout of a <see cref="IBody"/>.

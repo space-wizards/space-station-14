@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using System.Net;
 using System.Net.Sockets;
 
-namespace Content.Server.Utility
+namespace Content.Server.IPAddress
 {
     public static class IPAddressExt
     {
         // Taken from https://stackoverflow.com/a/56461160/4678631
-        public static bool IsInSubnet(this IPAddress address, string subnetMask)
+        public static bool IsInSubnet(this System.Net.IPAddress address, string subnetMask)
         {
             var slashIdx = subnetMask.IndexOf("/", StringComparison.Ordinal);
             if (slashIdx == -1)
@@ -19,7 +18,7 @@ namespace Content.Server.Utility
             }
 
             // First parse the address of the netmask before the prefix length.
-            var maskAddress = IPAddress.Parse(subnetMask.Substring(0, slashIdx));
+            var maskAddress = System.Net.IPAddress.Parse(subnetMask.Substring(0, slashIdx));
 
             if (maskAddress.AddressFamily != address.AddressFamily)
             {

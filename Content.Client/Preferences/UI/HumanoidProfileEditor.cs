@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.Interfaces;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.CharacterAppearance;
+using Content.Client.Lobby.UI;
+using Content.Client.Stylesheets;
+using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
-using Content.Shared.Preferences.Appearance;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -24,7 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Preferences.UI
 {
     public partial class HumanoidProfileEditor : Control
     {

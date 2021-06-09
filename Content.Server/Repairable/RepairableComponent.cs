@@ -1,17 +1,16 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Shared.Interfaces;
-using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Tools.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.Repairable
 {
     [RegisterComponent]
     public class RepairableComponent : Component, IInteractUsing

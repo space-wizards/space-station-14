@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Construction
+namespace Content.Shared.Construction
 {
     [NetSerializable]
     public enum MachineFrameVisuals

@@ -1,8 +1,8 @@
 #nullable enable
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.GUI
+namespace Content.Shared.Strip.Components
 {
     /// <summary>
     ///     Give to an entity to say they can strip another entity.

@@ -1,13 +1,13 @@
 ﻿#nullable enable
 using System;
 using System.Threading;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 
 // ReSharper disable UnassignedReadonlyField
 
-namespace Content.Server.GameObjects.EntitySystems.DoAfter
+namespace Content.Server.DoAfter
 {
     public sealed class DoAfterEventArgs
     {

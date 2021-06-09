@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects.Components.Construction;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Input;
-using Content.Shared.Utility;
+using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -17,7 +16,7 @@ using Robust.Shared.Maths;
 
 #nullable enable
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Construction
 {
     /// <summary>
     /// The client-side implementation of the construction system, which is used for constructing entities in game.

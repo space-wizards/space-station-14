@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Stylesheets;
 using Content.Shared.AI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.EntitySystems.AI
+namespace Content.Client.AI
 {
 #if DEBUG
     public class ClientAiDebugSystem : EntitySystem

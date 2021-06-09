@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Construction
+namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
     public class ComputerBoardComponent : Component

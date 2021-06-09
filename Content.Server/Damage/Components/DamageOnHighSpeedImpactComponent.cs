@@ -1,13 +1,11 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.GameObjects;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -15,7 +13,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
-namespace Content.Server.GameObjects.Components.Damage
+namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
     public class DamageOnHighSpeedImpactComponent : Component, IStartCollide

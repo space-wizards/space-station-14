@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Trigger;
+using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Trigger
+namespace Content.Client.Trigger
 {
     [UsedImplicitly]
     public class TimerTriggerVisualizer : AppearanceVisualizer, ISerializationHooks

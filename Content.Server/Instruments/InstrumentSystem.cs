@@ -1,11 +1,10 @@
-using Content.Server.GameObjects.Components.Instruments;
 using Content.Shared;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Instruments
 {
     [UsedImplicitly]
     internal sealed class InstrumentSystem : EntitySystem

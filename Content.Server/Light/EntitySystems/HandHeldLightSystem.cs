@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Light.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class HandHeldLightSystem : EntitySystem

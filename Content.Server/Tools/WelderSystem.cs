@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Tools.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Tools
 {
     /// <summary>
     ///     Despite the name, it's only really used for the welder logic in tools. Go figure.

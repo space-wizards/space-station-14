@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Content.Shared.GameObjects.Components;
+using Content.Shared.Crayon;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.GameObjects.Components.Crayon
+namespace Content.Client.Crayon.UI
 {
     public class CrayonBoundUserInterface : BoundUserInterface
     {

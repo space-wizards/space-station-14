@@ -1,8 +1,8 @@
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Movement.Components;
+using Content.Shared.Stunnable;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.Stunnable
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStunnableComponent))]

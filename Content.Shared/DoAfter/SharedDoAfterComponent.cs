@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.DoAfter
 {
     public abstract class SharedDoAfterComponent : Component
     {

@@ -1,13 +1,13 @@
 #nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Body.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.Server.Commands.Body
+namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     class DestroyMechanismCommand : IConsoleCommand

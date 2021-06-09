@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Fluids;
+﻿using Content.Shared.Fluids;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Fluids
+namespace Content.Client.Fluids
 {
     [UsedImplicitly]
     public class SprayVisualizer : AppearanceVisualizer

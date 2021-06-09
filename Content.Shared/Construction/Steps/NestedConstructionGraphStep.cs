@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public class NestedConstructionGraphStep : ConstructionGraphStep, ISerializationHooks

@@ -1,8 +1,8 @@
 #nullable enable
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
+using Content.Shared.EffectBlocker;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Standing
 {
     public abstract class SharedStandingStateSystem : EntitySystem
     {

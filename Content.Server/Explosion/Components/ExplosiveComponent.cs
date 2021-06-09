@@ -1,12 +1,8 @@
-using Content.Server.Explosions;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Explosion
+namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
     public class ExplosiveComponent : Component, ITimerTrigger, IDestroyAct

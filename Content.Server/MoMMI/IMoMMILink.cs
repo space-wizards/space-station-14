@@ -1,4 +1,4 @@
-namespace Content.Server.Interfaces
+namespace Content.Server.MoMMI
 {
     public interface IMoMMILink
     {

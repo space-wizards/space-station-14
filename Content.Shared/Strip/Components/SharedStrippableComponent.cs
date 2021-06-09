@@ -1,14 +1,14 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.GameObjects.Components.GUI
+namespace Content.Shared.Strip.Components
 {
     public abstract class SharedStrippableComponent : Component, IDraggable
     {

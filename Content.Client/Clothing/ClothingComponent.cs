@@ -1,10 +1,10 @@
 #nullable enable
-using Content.Client.GameObjects.Components.HUD.Inventory;
-using Content.Client.GameObjects.Components.Items;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Storage;
+using Content.Client.Inventory;
+using Content.Client.Items.Components;
+using Content.Shared.Clothing;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
+using Content.Shared.NetIDs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
@@ -13,7 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Clothing
+namespace Content.Client.Clothing
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]

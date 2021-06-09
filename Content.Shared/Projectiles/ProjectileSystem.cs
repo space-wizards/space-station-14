@@ -1,8 +1,7 @@
-using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Projectiles
 {
     public sealed class ProjectileSystem : EntitySystem
     {

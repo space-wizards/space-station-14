@@ -1,14 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
-using Content.Client.GameObjects.Components.IconSmoothing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.IconSmoothing
 {
     /// <summary>
     ///     Entity system implementing the logic for <see cref="IconSmoothComponent"/>

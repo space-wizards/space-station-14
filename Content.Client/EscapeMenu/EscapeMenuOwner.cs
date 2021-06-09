@@ -1,5 +1,5 @@
-using Content.Client.State;
-using Content.Client.UserInterface;
+using Content.Client.HUD;
+using Content.Client.Viewport;
 using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.State;
@@ -7,7 +7,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
-namespace Content.Client
+namespace Content.Client.EscapeMenu
 {
     internal sealed class EscapeMenuOwner : IEscapeMenuOwner
     {
@@ -16,7 +16,7 @@ namespace Content.Client
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
 
-        private EscapeMenu? _escapeMenu;
+        private UI.EscapeMenu? _escapeMenu;
 
         public void Initialize()
         {
@@ -30,7 +30,7 @@ namespace Content.Client
             if (obj.NewState is GameScreenBase)
             {
                 // Switched TO GameScreen.
-                _escapeMenu = new EscapeMenu(_consoleHost);
+                _escapeMenu = new UI.EscapeMenu(_consoleHost);
 
                 _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
 

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Content.Server.Administration;
-using Content.Server.Eui;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.Components.Observer.GhostRoles;
-using Content.Shared.GameObjects.Components.Observer.GhostRoles;
+using Content.Server.EUI;
+using Content.Server.Ghost.Components;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.UI;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -13,7 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Ghost.Roles
 {
     [UsedImplicitly]
     public class GhostRoleSystem : EntitySystem, IResettingEntitySystem

@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
+using Content.Client.Stylesheets;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,10 +12,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Chemistry.ChemMaster.SharedChemMasterComponent;
+using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
+namespace Content.Client.Chemistry.UI
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedChemMasterComponent"/>

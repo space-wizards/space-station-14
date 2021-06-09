@@ -1,17 +1,16 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Strap;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.EntitySystems.EffectBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
+using Content.Shared.EffectBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Buckle
+namespace Content.Shared.Buckle.Components
 {
     public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
     {

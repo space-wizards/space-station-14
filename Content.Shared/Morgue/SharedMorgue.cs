@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Morgue
+namespace Content.Shared.Morgue
 {
     [Serializable, NetSerializable]
     public enum MorgueVisuals

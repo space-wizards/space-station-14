@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Power.AME;
+using Content.Shared.AME;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.AME
+namespace Content.Server.AME.Components
 {
     [RegisterComponent]
     public class AMEShieldComponent : SharedAMEShieldComponent

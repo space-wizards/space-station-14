@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages
+namespace Content.Shared.Weapons.Melee
 {
     public static class MeleeWeaponSystemMessages
     {

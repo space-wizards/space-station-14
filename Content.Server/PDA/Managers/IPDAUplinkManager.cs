@@ -1,11 +1,11 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.PDA
+namespace Content.Server.PDA.Managers
 {
     public interface IPDAUplinkManager
     {

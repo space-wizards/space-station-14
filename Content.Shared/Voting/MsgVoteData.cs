@@ -3,7 +3,7 @@ using System;
 using Lidgren.Network;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Network.NetMessages
+namespace Content.Shared.Voting
 {
     public sealed class MsgVoteData : NetMessage
     {

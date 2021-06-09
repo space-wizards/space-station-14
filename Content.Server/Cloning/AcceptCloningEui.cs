@@ -1,17 +1,15 @@
-using Content.Server.Eui;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Mobs;
+using Content.Server.EUI;
+using Content.Shared.Cloning;
 using Content.Shared.Eui;
-using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Observer
+namespace Content.Server.Cloning
 {
     public class AcceptCloningEui : BaseEui
     {
-        private readonly Mind _mind;
+        private readonly Mind.Mind _mind;
 
-        public AcceptCloningEui(Mind mind)
+        public AcceptCloningEui(Mind.Mind mind)
         {
             _mind = mind;
         }

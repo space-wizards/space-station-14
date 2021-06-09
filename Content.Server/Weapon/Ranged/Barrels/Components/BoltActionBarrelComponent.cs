@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Weapon.Ranged.Ammunition.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.NetIDs;
+using Content.Shared.Notification;
+using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -20,7 +20,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
+namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     /// <summary>
     /// Shotguns mostly
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     return;
                 }
-                
+
                 if (value)
                 {
                     TryEjectChamber();

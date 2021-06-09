@@ -1,7 +1,7 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Body.Part;
 
-namespace Content.Shared.Preferences.Appearance
+namespace Content.Shared.CharacterAppearance
 {
     public static class HumanoidVisualLayersExtension
     {

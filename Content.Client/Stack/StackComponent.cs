@@ -1,6 +1,7 @@
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components;
+using Content.Client.Items.Components;
+using Content.Client.Message;
+using Content.Client.Stylesheets;
+using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -8,7 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Stack
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStackComponent))]

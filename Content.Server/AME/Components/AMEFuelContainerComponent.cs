@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.AME
+namespace Content.Server.AME.Components
 {
     [RegisterComponent]
     public class AMEFuelContainerComponent : Component

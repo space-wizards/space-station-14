@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.GameObjects.Components.Storage;
+using Content.Server.Items;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.Inventory.Components
 {
     // Handles the special behavior of pockets/ID card slot and their relation to uniforms.
     [RegisterComponent]

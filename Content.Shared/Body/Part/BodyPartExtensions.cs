@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Body.Part.Property;
+using Content.Shared.Body.Part.Property;
 
-namespace Content.Shared.GameObjects.Components.Body.Part
+namespace Content.Shared.Body.Part
 {
     public static class BodyPartExtensions
     {

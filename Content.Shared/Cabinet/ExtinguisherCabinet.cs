@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Cabinet
 {
     [Serializable, NetSerializable]
     public enum ItemCabinetVisuals : byte

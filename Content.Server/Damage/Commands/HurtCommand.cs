@@ -5,13 +5,13 @@ using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Commands
+namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     class HurtCommand : IConsoleCommand

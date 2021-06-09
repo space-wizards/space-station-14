@@ -1,8 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Construction;
+﻿using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Construction
+namespace Content.Client.Construction
 {
     [UsedImplicitly]
     public class MachineFrameVisualizer : AppearanceVisualizer

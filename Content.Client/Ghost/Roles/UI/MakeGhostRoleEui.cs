@@ -1,6 +1,6 @@
 ﻿using Content.Client.Eui;
 using Content.Shared.Eui;
-using Content.Shared.GameObjects.Components.Observer.GhostRoles;
+using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Player;
@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.Components.Observer.GhostRoles
+namespace Content.Client.Ghost.Roles.UI
 {
     [UsedImplicitly]
     public class MakeGhostRoleEui : BaseEui

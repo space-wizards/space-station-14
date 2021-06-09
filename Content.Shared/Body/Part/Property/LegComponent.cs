@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Body.Part.Property
+namespace Content.Shared.Body.Part.Property
 {
     /// <summary>
     ///     Defines the speed at which a <see cref="IBodyPart"/> can move.

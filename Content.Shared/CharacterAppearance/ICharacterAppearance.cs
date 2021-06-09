@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace Content.Shared.Preferences
+namespace Content.Shared.CharacterAppearance
 {
     public interface ICharacterAppearance
     {

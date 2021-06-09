@@ -1,9 +1,12 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
+using Content.Server.PowerCell.Components;
+using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.Weapon
 {
     /// <summary>
     /// Recharges the battery in a <see cref="ServerBatteryBarrelComponent"/>.

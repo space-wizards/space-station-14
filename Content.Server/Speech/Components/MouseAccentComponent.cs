@@ -1,10 +1,9 @@
-using System;
-using Robust.Shared.GameObjects;
 using System.Collections.Generic;
-using Robust.Shared.Random;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.Components.Mobs.Speech
+namespace Content.Server.Speech.Components
 {
     [RegisterComponent]
     public class MouseAccentComponent : Component, IAccentComponent

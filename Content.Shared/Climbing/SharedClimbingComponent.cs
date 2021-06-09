@@ -1,13 +1,14 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
+using Content.Shared.NetIDs;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Movement
+namespace Content.Shared.Climbing
 {
     public abstract class SharedClimbingComponent : Component, IActionBlocker
     {

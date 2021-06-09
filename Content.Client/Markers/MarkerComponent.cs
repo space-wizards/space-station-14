@@ -1,8 +1,7 @@
-using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Markers
+namespace Content.Client.Markers
 {
     [RegisterComponent]
     public sealed class MarkerComponent : Component

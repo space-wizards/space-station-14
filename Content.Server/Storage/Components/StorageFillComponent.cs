@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
     public sealed class StorageFillComponent : Component, IMapInit
@@ -79,11 +79,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             /// need to add it to the entities you want to choose between and
             /// add a prob field. In this example there is a 50% chance the storage
             /// spawns with Y or Z.
-            /// 
+            ///
             /// </para>
             /// <code>
             /// - type: StorageFill
-            ///   contents: 
+            ///   contents:
             ///     - name: X
             ///     - name: Y
             ///       prob: 0.50
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             ///     - name: Z
             ///       orGroup: YOrZ
             /// </code>
-            /// </example> 
+            /// </example>
             /// </summary>
             [DataField("amount")]
             public int Amount;

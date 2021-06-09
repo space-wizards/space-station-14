@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
-using Content.Client.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Client.Hands;
+using Content.Shared.DragDrop;
+using Content.Shared.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -18,7 +17,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.Storage
 {
     /// <summary>
     /// Client version of item storage containers, contains a UI which displays stored entities and their size

@@ -1,11 +1,10 @@
 ﻿#nullable enable
 using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Light.Component
 {
     [Serializable, NetSerializable]
     public enum ExpendableLightVisuals
@@ -22,7 +21,7 @@ namespace Content.Shared.GameObjects.Components
         Dead
     }
 
-    public abstract class SharedExpendableLightComponent: Component
+    public abstract class SharedExpendableLightComponent: Robust.Shared.GameObjects.Component
     {
         public sealed override string Name => "ExpendableLight";
 

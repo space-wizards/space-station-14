@@ -2,7 +2,7 @@
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Shared.Construction
+namespace Content.Shared.Construction.Conditions
 {
     public interface IConstructionCondition
     {

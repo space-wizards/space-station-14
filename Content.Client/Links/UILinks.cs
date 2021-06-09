@@ -1,4 +1,4 @@
-﻿namespace Content.Client
+﻿namespace Content.Client.Links
 {
     public static class UILinks
     {

@@ -1,7 +1,7 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Utility
+namespace Content.Client.Message
 {
     public static class RichTextLabelExt
     {

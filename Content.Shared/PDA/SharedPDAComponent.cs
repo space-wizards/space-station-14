@@ -1,10 +1,11 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.PDA
+namespace Content.Shared.PDA
 {
     public class SharedPDAComponent : Component
     {

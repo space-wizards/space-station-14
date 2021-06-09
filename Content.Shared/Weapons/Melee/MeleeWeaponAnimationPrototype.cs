@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Weapons.Melee
+namespace Content.Shared.Weapons.Melee
 {
     [Prototype("MeleeWeaponAnimation")]
     public sealed class MeleeWeaponAnimationPrototype : IPrototype

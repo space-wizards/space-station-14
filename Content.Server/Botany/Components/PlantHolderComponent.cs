@@ -3,22 +3,21 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
-using Content.Server.Botany;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Fluids;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
+using Content.Server.Chemistry.Components;
+using Content.Server.Fluids.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Notification;
+using Content.Server.Plants;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Botany;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Content.Shared.Botany;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -33,7 +32,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Botany
+namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
     public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine

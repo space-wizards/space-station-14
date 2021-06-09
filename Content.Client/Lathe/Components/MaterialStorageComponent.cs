@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Research;
+using Content.Shared.Lathe;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Research
+namespace Content.Client.Lathe.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMaterialStorageComponent))]

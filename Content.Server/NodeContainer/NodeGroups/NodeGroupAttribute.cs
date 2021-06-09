@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
+namespace Content.Server.NodeContainer.NodeGroups
 {
     /// <summary>
     ///     Associates a <see cref="INodeGroup"/> implementation with a <see cref="NodeGroupID"/>.

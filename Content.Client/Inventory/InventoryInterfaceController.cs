@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Client.HUD;
+using Content.Client.Items.UI;
 using Content.Shared.Input;
+using Content.Shared.Inventory;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.Components.HUD.Inventory
+namespace Content.Client.Inventory
 {
     public abstract class InventoryInterfaceController : IDisposable
     {

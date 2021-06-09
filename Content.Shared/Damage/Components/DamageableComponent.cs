@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Damage;
-using Content.Shared.Damage.DamageContainer;
-using Content.Shared.Damage.ResistanceSet;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Acts;
+using Content.Shared.Damage.Container;
+using Content.Shared.Damage.Resistances;
+using Content.Shared.NetIDs;
+using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
@@ -15,7 +15,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Damage
+namespace Content.Shared.Damage.Components
 {
     /// <summary>
     ///     Component that allows attached entities to take damage.

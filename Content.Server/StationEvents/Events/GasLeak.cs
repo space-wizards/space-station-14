@@ -1,7 +1,6 @@
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.GameTicking;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 #nullable enable
-namespace Content.Server.StationEvents
+namespace Content.Server.StationEvents.Events
 {
     internal sealed class GasLeak : StationEvent
     {

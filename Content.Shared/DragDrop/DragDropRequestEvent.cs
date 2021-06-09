@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystemMessages
+namespace Content.Shared.DragDrop
 {
     /// <summary>
     /// Requests a drag / drop interaction to be performed

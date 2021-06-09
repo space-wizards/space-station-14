@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.GameObjects.Components.Mobs.State
+namespace Content.Shared.MobState.State
 {
     [ImplicitDataDefinitionForInheritors]
     public abstract class BaseMobState : IMobState

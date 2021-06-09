@@ -1,10 +1,10 @@
 using System;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Client.Resources;
+using Content.Shared.Targeting;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Targeting
 {
     public sealed class TargetingDoll : VBoxContainer
     {
