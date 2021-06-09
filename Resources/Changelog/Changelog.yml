@@ -1320,3 +1320,9 @@ Entries:
   - {message: 'fixed the combat knife, laser gun and machete sprites', type: Fix}
   id: 233
   time: '2021-06-09T05:21:09.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: You can now see what players have on their hands with shift-click(examine),
+    type: Add}
+  id: 234
+  time: '2021-06-09T08:39:31.0000000+00:00'
