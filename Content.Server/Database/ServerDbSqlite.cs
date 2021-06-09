@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.IPAddress;
+using Content.Server.IP;
 using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
 using Content.Shared;

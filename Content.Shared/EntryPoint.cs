@@ -5,7 +5,7 @@ using Content.Shared.CharacterAppearance;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Loc;
+using Content.Shared.Localizations;
 using Content.Shared.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;

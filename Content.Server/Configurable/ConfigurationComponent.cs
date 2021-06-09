@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Configuration;
+using Content.Shared.Configurable;
 using Content.Shared.Interaction;
 using Content.Shared.Tool;
 using Content.Shared.Verbs;
@@ -18,7 +18,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Configuration
+namespace Content.Server.Configurable
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedConfigurationComponent))]

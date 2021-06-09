@@ -4,10 +4,10 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.Configuration.SharedConfigurationComponent;
+using static Content.Shared.Configurable.SharedConfigurationComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Configuration.UI
+namespace Content.Client.Configurable.UI
 {
     public class ConfigurationMenu : SS14Window
     {

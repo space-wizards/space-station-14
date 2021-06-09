@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Players;
-using Content.Server.Visibility;
+using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;

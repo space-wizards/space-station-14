@@ -17,7 +17,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
-using Content.Shared.Configuration;
+using Content.Shared.Configurable;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;

@@ -1,6 +1,6 @@
 using System;
 
-namespace Content.Server.Visibility
+namespace Content.Server.Visible
 {
     [Flags]
     public enum VisibilityFlags : uint

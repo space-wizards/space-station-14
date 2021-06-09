@@ -14,7 +14,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.Tile
+namespace Content.Server.Tiles
 {
     [RegisterComponent]
     public class FloorTileItemComponent : Component, IAfterInteract

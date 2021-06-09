@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Net.Sockets;
 
-namespace Content.Server.IPAddress
+namespace Content.Server.IP
 {
     public static class IPAddressExt
     {

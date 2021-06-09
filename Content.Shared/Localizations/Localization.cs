@@ -4,7 +4,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Shared.Loc
+namespace Content.Shared.Localizations
 {
     public static class Localization
     {
