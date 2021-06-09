@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -20,6 +17,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class HandsSystem : EntitySystem
     {
-
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
         /// <inheritdoc />
@@ -37,6 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands))
@@ -53,9 +53,6 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
-
             CommandBinds.Unregister<HandsSystem>();
         }
 
@@ -64,6 +61,15 @@ namespace Content.Server.GameObjects.EntitySystems
             if (args.Container.Owner.TryGetComponent(out IHandsComponent? handsComponent))
             {
                 handsComponent.HandleSlotModifiedMaybe(args);
+            }
+        }
+
+        //TODO: Actually shows all items/clothing/etc.
+        private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
+        {
+            foreach (var inhand in component.GetAllHeldItems())
+            {
+                args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
             }
         }
 
@@ -154,7 +160,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var playerEnt = ((IPlayerSession?)session)?.AttachedEntity;
+            var playerEnt = ((IPlayerSession?) session)?.AttachedEntity;
 
             if (playerEnt == null || !playerEnt.IsValid())
                 return false;
@@ -180,7 +186,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                var splitStack = new StackSplitEvent() {Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates};
+                var splitStack = new StackSplitEvent() { Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates };
                 RaiseLocalEvent(throwEnt.Uid, splitStack);
 
                 if (splitStack.Result == null)
