@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;

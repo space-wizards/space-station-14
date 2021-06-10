@@ -28,7 +28,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameObjects\Components\Trigger\" />
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />

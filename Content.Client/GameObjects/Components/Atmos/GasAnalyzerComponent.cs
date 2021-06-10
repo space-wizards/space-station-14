@@ -1,5 +1,6 @@
-using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
+using Content.Client.Items.Components;
+using Content.Client.Message;
+using Content.Client.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

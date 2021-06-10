@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.Nutrition.Components;
+using Content.Server.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
