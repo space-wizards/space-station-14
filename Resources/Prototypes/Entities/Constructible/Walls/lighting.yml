@@ -24,8 +24,9 @@
       map: ["enum.PoweredLightLayers.Base"]
     state: on
   - type: PointLight
-    radius: 8
-    energy: 1.2
+    radius: 10
+    energy: 1.4
+    softness: 1.1
     offset: "0, -0.5"
   - type: SignalReceiver
   - type: Damageable
@@ -59,8 +60,6 @@
     sprite: Constructible/Lighting/light_tube.rsi
     state: off
   - type: PointLight
-    energy: 1.4
-    radius: 10
     enabled: false
   - type: PoweredLight
     bulb: Tube
@@ -94,6 +93,7 @@
     - type: PointLight
       energy: 1.0
       radius: 6
+      softness: 1.1
       enabled: true
     - type: Damageable
     - type: Destructible
@@ -125,8 +125,6 @@
     sprite: Constructible/Lighting/light_small.rsi
     state: off
   - type: PointLight
-    energy: 1.0
-    softness: 2
     enabled: false
     offset: "0, -0.5"
   - type: Physics
