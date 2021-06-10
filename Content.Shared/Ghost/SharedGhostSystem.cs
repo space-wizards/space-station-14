@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Observer;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Ghost
 {
     public abstract class SharedGhostSystem : EntitySystem
     {
@@ -27,6 +26,9 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
     }
 
+    /// <summary>
+    ///     Raised to change the value of <see cref="SharedGhostComponent.CanReturnToBody"/>
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostChangeCanReturnToBodyEvent : EntityEventArgs
     {

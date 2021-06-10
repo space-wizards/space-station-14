@@ -7,6 +7,7 @@ using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -48,6 +49,7 @@ namespace Content.Server.Ghost
             if (component.Owner.TryGetComponent(out VisibilityComponent? visibility))
             {
                 visibility.Layer |= (int) VisibilityFlags.Ghost;
+                visibility.Layer &= ~(int) VisibilityFlags.Normal;
             }
 
             if (component.Owner.TryGetComponent(out EyeComponent? eye))
@@ -67,6 +69,7 @@ namespace Content.Server.Ghost
                 if (component.Owner.TryGetComponent(out VisibilityComponent? visibility))
                 {
                     visibility.Layer &= ~(int) VisibilityFlags.Ghost;
+                    visibility.Layer |= (int) VisibilityFlags.Normal;
                 }
 
                 // Entity can't see ghosts anymore.

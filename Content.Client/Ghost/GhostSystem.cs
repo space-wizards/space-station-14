@@ -1,13 +1,12 @@
-﻿using Content.Client.GameObjects.Components.Observer;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Client.HUD;
+using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Ghost
 {
     [UsedImplicitly]
     public class GhostSystem : SharedGhostSystem
@@ -56,10 +55,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (component.Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                sprite.Visible = _playerManager
-                    .LocalPlayer?
-                    .ControlledEntity?
-                    .HasComponent<GhostComponent>() ?? false;
+                sprite.Visible = GhostVisibility;
             }
         }
 
