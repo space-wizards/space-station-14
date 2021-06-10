@@ -1,7 +1,9 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Fluids;
+using Content.Server.Fluids.Components;
 using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

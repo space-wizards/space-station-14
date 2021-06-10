@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Doors;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -7,6 +6,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using System.Threading.Tasks;
+using Content.Server.Doors.Components;
 
 namespace Content.Server.Construction.Conditions
 {

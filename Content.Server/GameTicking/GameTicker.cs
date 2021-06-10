@@ -6,29 +6,30 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Markers;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Mobs.Speech;
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameTicking.GamePresets;
+using Content.Server.Access.Components;
+using Content.Server.CharacterAppearance.Components;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Presets;
+using Content.Server.GameTicking.Rules;
+using Content.Server.Ghost.Components;
+using Content.Server.Hands.Components;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs;
-using Content.Server.Mobs.Roles;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Server.Players;
+using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
+using Content.Server.Spawners.Components;
+using Content.Server.Speech.Components;
 using Content.Shared;
 using Content.Shared.Audio;
 using Content.Shared.Chat;
+using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Utility;
 using Prometheus;
 using Robust.Server;
 using Robust.Server.Maps;
@@ -48,7 +49,7 @@ using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking
@@ -467,7 +468,7 @@ namespace Content.Server.GameTicking
             UpdateJobsAvailable();
         }
 
-        public bool OnGhostAttempt(Mind mind, bool canReturnGlobal)
+        public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
         {
             return Preset?.OnGhostAttempt(mind, canReturnGlobal) ?? false;
         }
@@ -922,7 +923,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            data.Mind = new Mind(session.UserId)
+            data.Mind = new Mind.Mind(session.UserId)
             {
                 CharacterName = character.Name
             };
@@ -1002,7 +1003,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            data.Mind = new Mind(session.UserId);
+            data.Mind = new Mind.Mind(session.UserId);
 
             var mob = _spawnObserverMob();
             mob.Name = name;
