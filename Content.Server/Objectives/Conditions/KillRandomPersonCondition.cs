@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Mobs;
+using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +14,7 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public class KillRandomPersonCondition : KillPersonCondition
     {
-        public override IObjectiveCondition GetAssigned(Mind mind)
+        public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             var allHumans = entityMgr.ComponentManager.EntityQuery<MindComponent>(true).Where(mc =>

@@ -1,6 +1,5 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Mobs;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -69,7 +68,7 @@ namespace Content.Server.Administration.Commands
             var mind = playerCData.Mind;
             if (mind == null)
             {
-                mind = new Mind(session.UserId)
+                mind = new Mind.Mind(session.UserId)
                 {
                     CharacterName = target.Name
                 };

@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Temperature;
+using Content.Server.Temperature.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 

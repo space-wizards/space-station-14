@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Storage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 

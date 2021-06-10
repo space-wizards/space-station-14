@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 using Content.Server.Atmos;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

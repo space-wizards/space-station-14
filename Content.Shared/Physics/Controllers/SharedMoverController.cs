@@ -1,8 +1,8 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Pulling;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
+using Content.Shared.MobState;
+using Content.Shared.Movement.Components;
+using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

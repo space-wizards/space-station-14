@@ -1,12 +1,12 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Doors;
-using Content.Server.Interfaces.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Doors;
-using Content.Shared.Interfaces;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Content.Server.Atmos;
+using Content.Server.Doors;
+using Content.Server.Doors.Components;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Doors;
+using Content.Shared.Interaction;
+using Content.Shared.Notification;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Atmos

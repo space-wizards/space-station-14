@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
-using Content.Client.Utility;
+using Content.Client.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

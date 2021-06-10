@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.Eui;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Reflection;

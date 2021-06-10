@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.Utility;
+using Content.Shared.Rounding;
 using NUnit.Framework;
 
 namespace Content.Tests.Shared.Utility
