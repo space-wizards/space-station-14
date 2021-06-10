@@ -36,24 +36,26 @@
 
 - type: entity
   parent: BaseLightbulb
-  name: light bulb
+  name: incandescent light bulb
   id: LightBulb
   description: That's a light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
+    color: "#FFC78F"
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
 
 - type: entity
   parent: BaseLightbulb
-  name: light tube
+  name: fluorescent light tube
   id: LightTube
   description: That's a light fixture.
   components:
   - type: LightBulb
     bulb: Tube
+    color: "#FFEBDC"
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal

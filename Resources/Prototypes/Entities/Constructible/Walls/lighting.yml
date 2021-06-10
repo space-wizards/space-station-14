@@ -1,7 +1,8 @@
 - type: entity
   id: WallLight
-  name: unpowered light
+  name: light
   description: "An unpowered light."
+  suffix: Unpowered
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -26,7 +27,6 @@
     radius: 8
     energy: 1.2
     offset: "0, -0.5"
-    color: "#DCDCC6"
   - type: SignalReceiver
   - type: Damageable
     resistances: metallicResistances
@@ -52,12 +52,15 @@
   name: light
   description: "A powered wall light emitting... light."
   id: Poweredlight
+  suffix: Powered
   parent: WallLight
   components:
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
     state: off
   - type: PointLight
+    energy: 1.4
+    radius: 10
     enabled: false
   - type: PoweredLight
     bulb: Tube
@@ -70,7 +73,7 @@
 - type: entity
   id: PoweredlightEmpty
   description: "A wall light. It's empty."
-  suffix: Empty
+  suffix: Empty, Powered
   parent: Poweredlight
   components:
   - type: Sprite
@@ -79,9 +82,10 @@
     hasLampOnSpawn: False
 
 - type: entity
-  name: unpowered small light
+  name: small light
   description: "An unpowered light."
   id: SmallLight
+  suffix: Unpowered
   parent: WallLight
   components:
     - type: Sprite
@@ -89,8 +93,8 @@
       state: on
     - type: PointLight
       energy: 1.0
+      radius: 6
       enabled: true
-      offset: "0, -0.5"
     - type: Damageable
     - type: Destructible
       thresholds:
@@ -114,6 +118,7 @@
   name: small light
   description: "A powered wall light emitting... light."
   id: PoweredSmallLight
+  suffix: Powered
   parent: SmallLight
   components:
   - type: Sprite
@@ -121,6 +126,7 @@
     state: off
   - type: PointLight
     energy: 1.0
+    softness: 2
     enabled: false
     offset: "0, -0.5"
   - type: Physics
@@ -138,7 +144,7 @@
 
 - type: entity
   id: PoweredSmallLightEmpty
-  suffix: Empty
+  suffix: Empty, Powered
   parent: PoweredSmallLight
   components:
   - type: Sprite
