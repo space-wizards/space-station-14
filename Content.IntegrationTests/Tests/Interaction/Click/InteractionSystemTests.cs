@@ -1,8 +1,3 @@
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.Interfaces.GameObjects.Components;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -11,6 +6,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
 using System.Threading.Tasks;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction;
+using Content.Server.Items;
+using Content.Shared.Interaction;
+using Content.Shared.Weapons.Melee;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {

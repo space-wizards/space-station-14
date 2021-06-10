@@ -1,0 +1,13 @@
+﻿<Control
+    xmlns="https://spacestation14.io"
+    xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Margin="4"
+    MinSize="50 50">
+    <GridContainer
+        Columns="4">
+        <customControls:CommandButton Command="startround" Text="{Loc Start Round}" />
+        <customControls:CommandButton Command="endround" Text="{Loc End Round}" />
+        <customControls:CommandButton Command="restartround" Text="{Loc Restart Round}" />
+    </GridContainer>
+</Control>

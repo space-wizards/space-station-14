@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

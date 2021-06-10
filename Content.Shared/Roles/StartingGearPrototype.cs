@@ -4,7 +4,7 @@ using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles
 {
