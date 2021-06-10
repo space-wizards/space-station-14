@@ -53,7 +53,7 @@ namespace Pow3r
 
             End();
 
-            Begin("Timing");
+            Begin("Simulating timing");
 
             PlotLines("Tick time (ms)", ref _simTickTimes[0], MaxTickData, _tickDataIdx + 1,
                 $"{_simTickTimes[_tickDataIdx]:N2}",
@@ -61,6 +61,16 @@ namespace Pow3r
                 0.1f, new Vector2(250, 150));
 
             End();
+
+            Begin("Frame timings");
+
+            PlotLines("Frame (ms)", ref _frameTimings[0], _frameTimings.Length, _frameTimeIdx + 1,
+                $"{_frameTimings[_frameTimeIdx]:N2}",
+                0,
+                33.333f, new Vector2(250, 150));
+
+            End();
+
             {
                 Begin("Memory");
 

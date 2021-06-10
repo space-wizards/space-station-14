@@ -40,16 +40,62 @@ namespace Pow3r
 
         private bool[] _mouseJustPressed = new bool[5];
 
+        private bool _fullscreen;
+        private int _monitorIdx;
+        private bool _vsync = true;
         private GameWindow _window;
         private readonly Stopwatch _stopwatch = new();
         private readonly Cursor*[] _cursors = new Cursor*[9];
+        private readonly float[] _frameTimings = new float[180];
+        private int _frameTimeIdx = 0;
 
         private void Run(string[] args)
         {
-            if (args.Length >= 2 && args[0] == "--renderer")
+            for (var i = 0; i < args.Length; i++)
             {
-                _renderer = Enum.Parse<Renderer>(args[1]);
+                if (args[i] == "--renderer")
+                {
+                    _renderer = Enum.Parse<Renderer>(args[++i]);
+                }
+                else if (args[i] == "--veldrid")
+                {
+                    _vdRenderer = Enum.Parse<VeldridRenderer>(args[++i]);
+                }
+                else if (args[i] == "--fullscreen")
+                {
+                    _fullscreen = true;
+                }
+                else if (args[i] == "--monitor-idx")
+                {
+                    _monitorIdx = int.Parse(args[++i]);
+                }
+                else if (args[i] == "--no-vsync")
+                {
+                    _vsync = false;
+                }
+                else if (args[i] == "--help")
+                {
+                    Console.WriteLine("--renderer <Veldrid|OpenGL>");
+                    Console.WriteLine("--veldrid <Vulkan|OpenGL|D3D11>");
+                    Console.WriteLine("--no-vsync");
+                    Console.WriteLine("--fullscreen");
+                    Console.WriteLine("--monitor-idx");
+                    Console.WriteLine("--help");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine($"unknown arg \"{args[i]}\"");
+                    return;
+                }
             }
+
+            Console.WriteLine($"Renderer: {_renderer}");
+            if (_renderer == Renderer.Veldrid)
+                Console.WriteLine($"Veldrid API: {_vdRenderer}");
+
+            Console.WriteLine($"Fullscreen: {_fullscreen}");
+            Console.WriteLine($"VSync: {_vsync}");
 
             //NativeLibrary.Load("nvapi64.dll");
             GLFW.Init();
@@ -63,32 +109,50 @@ namespace Pow3r
                 WindowState = WindowState.Maximized,
                 StartVisible = false,
 
-                Title = "Pow3r",
+                Title = "Pow3r"
             };
 
-            Console.WriteLine($"Renderer is {_renderer}");
 
-            switch (_renderer)
+            var openGLBased = _renderer == Renderer.OpenGL ||
+                              (_renderer == Renderer.Veldrid && _vdRenderer == VeldridRenderer.OpenGL);
+
+            if (openGLBased)
             {
-                case Renderer.OpenGL:
-                    windowSettings.API = ContextAPI.OpenGL;
-                    windowSettings.Profile = ContextProfile.Core;
-                    windowSettings.APIVersion = new Version(4, 6);
-                    windowSettings.Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible;
-                    break;
-
-                case Renderer.Veldrid:
-                    windowSettings.API = ContextAPI.NoAPI;
-                    break;
+                windowSettings.API = ContextAPI.OpenGL;
+                windowSettings.Profile = ContextProfile.Core;
+                windowSettings.APIVersion = new Version(4, 6);
+                windowSettings.Flags = ContextFlags.ForwardCompatible;
+#if DEBUG
+                windowSettings.Flags |= ContextFlags.Debug;
+#endif
+            }
+            else
+            {
+                windowSettings.API = ContextAPI.NoAPI;
             }
 
             _window = new GameWindow(GameWindowSettings.Default, windowSettings);
 
             // Console.WriteLine(sw.ElapsedMilliseconds);
 
-            if (_renderer == Renderer.OpenGL)
+            if (_fullscreen)
             {
-                _window.VSync = VSyncMode.On;
+                var monitors = GLFW.GetMonitors();
+                var monitor = monitors[_monitorIdx];
+                var monitorMode = GLFW.GetVideoMode(monitor);
+
+                GLFW.SetWindowMonitor(
+                    _window.WindowPtr,
+                    monitor,
+                    0, 0,
+                    monitorMode->Width,
+                    monitorMode->Height,
+                    monitorMode->RefreshRate);
+            }
+
+            if (openGLBased)
+            {
+                _window.VSync = _vsync ? VSyncMode.On : VSyncMode.Off;
             }
 
             var context = ImGui.CreateContext();
@@ -147,18 +211,18 @@ namespace Pow3r
 
             _stopwatch.Start();
 
-            var lastTick = TimeSpan.Zero;
-            var lastFrame = TimeSpan.Zero;
-
             LoadFromDisk();
 
             _window.IsVisible = true;
+
+            var lastTick = TimeSpan.Zero;
+            var lastFrame = TimeSpan.Zero;
+            var curTime = TimeSpan.Zero;
 
             while (!GLFW.WindowShouldClose(_window.WindowPtr))
             {
                 _window.ProcessEvents();
 
-                var curTime = _stopwatch.Elapsed;
                 while (curTime - lastTick > TickSpan)
                 {
                     lastTick += TickSpan;
@@ -166,11 +230,15 @@ namespace Pow3r
                     Tick((float) TickSpan.TotalSeconds);
                 }
 
+                _frameTimeIdx = (_frameTimeIdx + 1) % _frameTimings.Length;
+
                 var dt = curTime - lastFrame;
                 lastFrame = curTime;
+                _frameTimings[_frameTimeIdx] = (float) dt.TotalMilliseconds;
 
                 FrameUpdate((float) dt.TotalSeconds);
                 Render();
+                curTime = _stopwatch.Elapsed;
             }
 
             SaveToDisk();
@@ -209,6 +277,7 @@ namespace Pow3r
 
         private void FrameUpdate(float dt)
         {
+            //var sw = Stopwatch.StartNew();
             var io = ImGui.GetIO();
             GLFW.GetFramebufferSize(_window.WindowPtr, out var fbW, out var fbH);
             GLFW.GetWindowSize(_window.WindowPtr, out var wW, out var wH);
@@ -218,6 +287,8 @@ namespace Pow3r
 
             UpdateMouseState(io);
             UpdateCursorState(io);
+
+            //Console.WriteLine($"INPUT: {sw.Elapsed.TotalMilliseconds}");
 
             ImGui.NewFrame();
 
