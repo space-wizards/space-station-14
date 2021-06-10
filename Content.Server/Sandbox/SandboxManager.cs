@@ -1,10 +1,10 @@
 using System.Linq;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.PDA;
+using Content.Server.Access.Components;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Shared.Access;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
@@ -17,7 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Sandbox
 {

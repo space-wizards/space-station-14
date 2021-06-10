@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

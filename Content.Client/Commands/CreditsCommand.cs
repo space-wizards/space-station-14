@@ -1,3 +1,4 @@
+using Content.Client.Credits;
 using Content.Client.UserInterface;
 using JetBrains.Annotations;
 using Robust.Shared.Console;

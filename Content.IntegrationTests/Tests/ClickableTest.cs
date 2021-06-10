@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Content.Client.Clickable;
 using Content.Client.GameObjects.Components;
 using NUnit.Framework;
 using Robust.Server.GameObjects;

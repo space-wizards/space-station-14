@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Rotation;
+using Content.Server.Body;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Rotation;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;

@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;

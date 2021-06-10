@@ -1,6 +1,6 @@
-﻿using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.Utility;
+﻿using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.Temperature;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;

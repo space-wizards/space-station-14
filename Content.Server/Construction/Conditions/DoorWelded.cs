@@ -1,13 +1,13 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Doors;
+using Content.Server.Doors.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using static Content.Shared.GameObjects.Components.Doors.SharedDoorComponent;
+using static Content.Shared.Doors.SharedDoorComponent;
 
 namespace Content.Server.Construction.Conditions
 {
