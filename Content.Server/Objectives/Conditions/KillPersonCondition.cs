@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -9,8 +7,8 @@ namespace Content.Server.Objectives.Conditions
 {
     public abstract class KillPersonCondition : IObjectiveCondition
     {
-        protected Mind? Target;
-        public abstract IObjectiveCondition GetAssigned(Mind mind);
+        protected Mind.Mind? Target;
+        public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
         public string Title => Loc.GetString("Kill {0}", Target?.OwnedEntity?.Name ?? "");
 

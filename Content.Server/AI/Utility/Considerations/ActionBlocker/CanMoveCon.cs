@@ -1,6 +1,6 @@
 ﻿using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.AI.Utility.Considerations.ActionBlocker
 {

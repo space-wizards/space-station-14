@@ -161,6 +161,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (Owner.Transform.Anchored)
             {
+                if (!Owner.Transform.GridID.IsValid())
+                    return;
                 var grid = _mapManager.GetGrid(Owner.Transform.GridID);
                 UpdatePosition(Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
             }

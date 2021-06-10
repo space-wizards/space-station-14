@@ -9,7 +9,6 @@
     - Window
   components:
   - type: RCDDeconstructWhitelist
-  - type: InteractionOutline
   - type: Sprite
     color: "#DDDDDD"
     netsync: false

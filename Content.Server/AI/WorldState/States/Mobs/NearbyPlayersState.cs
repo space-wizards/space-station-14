@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Server.AI.Components;
+using Content.Shared.Damage.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;

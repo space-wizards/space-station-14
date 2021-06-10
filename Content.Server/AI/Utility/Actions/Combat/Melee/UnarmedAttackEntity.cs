@@ -11,7 +11,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.AI.WorldState.States.Movement;
-using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Server.Weapon.Melee.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
