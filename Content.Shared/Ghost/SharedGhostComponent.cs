@@ -15,6 +15,9 @@ namespace Content.Shared.Ghost
         public override string Name => "Ghost";
         public override uint? NetID => ContentNetIDs.GHOST;
 
+        /// <summary>
+        ///     Changed by <see cref="GhostChangeCanReturnToBodyEvent"/>
+        /// </summary>
         [DataField("canReturnToBody")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReturnToBody { get; set; }
