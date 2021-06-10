@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.Alert;
+using Content.Server.Pressure;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos

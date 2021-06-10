@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Content.Client;
+using Content.Client.EntryPoint;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -14,7 +15,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
 {
     [TestFixture]
     [TestOf(typeof(IgnoredComponents))]
-    [TestOf(typeof(Server.IgnoredComponents))]
+    [TestOf(typeof(Server.EntryPoint.IgnoredComponents))]
     public class EntityPrototypeComponentsTest : ContentIntegrationTest
     {
         [Test]

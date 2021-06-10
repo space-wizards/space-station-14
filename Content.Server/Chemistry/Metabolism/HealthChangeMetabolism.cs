@@ -1,10 +1,10 @@
-using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Metabolizable;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.Metabolism
     {
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
-        /// </summary> 
+        /// </summary>
         [DataField("rate")]
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.Metabolism
 
         /// <summary>
         /// Class of damage changed, Brute, Burn, Toxin, Airloss.
-        /// </summary> 
+        /// </summary>
         [DataField("damageClass")]
         public DamageClass DamageType { get; set; } =  DamageClass.Brute;
 
@@ -55,7 +55,7 @@ namespace Content.Server.Chemistry.Metabolism
                     health.ChangeDamage(DamageType, 1, true);
                     _accumulatedHealth -= 1;
                 }
-                
+
                 else if(_accumulatedHealth <= -1)
                 {
                     health.ChangeDamage(DamageType, -1, true);

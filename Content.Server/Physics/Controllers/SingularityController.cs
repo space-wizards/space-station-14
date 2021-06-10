@@ -1,6 +1,6 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.Components.Singularity;
+using Content.Server.Ghost.Components;
+using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

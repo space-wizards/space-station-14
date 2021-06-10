@@ -1,7 +1,6 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Body.Respiratory;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Body.Respiratory;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

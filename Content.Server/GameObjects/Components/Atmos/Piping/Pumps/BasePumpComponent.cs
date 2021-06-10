@@ -1,10 +1,10 @@
 #nullable enable
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;

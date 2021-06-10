@@ -233,6 +233,10 @@
     safe: false
   - type: Speech
   - type: Emoting
+  - type: Grammar
+    attributes:
+      proper: true
+
 
 - type: entity
   save: false

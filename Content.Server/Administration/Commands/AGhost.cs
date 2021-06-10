@@ -1,5 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Interfaces.GameTicking;
+﻿using Content.Server.GameTicking;
+using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;

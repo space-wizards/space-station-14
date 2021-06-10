@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Alert;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

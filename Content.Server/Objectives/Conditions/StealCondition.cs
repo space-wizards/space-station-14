@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
+using Content.Server.Containers;
 using Content.Server.GameObjects;
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -19,11 +19,11 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public class StealCondition : IObjectiveCondition, ISerializationHooks
     {
-        private Mind? _mind;
+        private Mind.Mind? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;
         [DataField("amount")] private int _amount = 1;
 
-        public IObjectiveCondition GetAssigned(Mind mind)
+        public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             return new StealCondition
             {

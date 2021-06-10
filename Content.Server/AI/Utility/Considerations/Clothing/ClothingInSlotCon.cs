@@ -1,6 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Clothing;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Inventory;
 
 namespace Content.Server.AI.Utility.Considerations.Clothing
 {
@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
             context.GetState<ClothingSlotConState>().SetValue(slot);
             return this;
         }
-        
+
         protected override float GetScore(Blackboard context)
         {
             var slot = context.GetState<ClothingSlotConState>().GetValue();
