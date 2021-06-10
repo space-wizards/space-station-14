@@ -1,5 +1,4 @@
 ﻿<changelog:ChangelogWindow xmlns="https://spacestation14.io"
-                           xmlns:cui="clr-namespace:Content.Client.UserInterface"
                            xmlns:changelog="clr-namespace:Content.Client.Changelog"
                            xmlns:ui="clr-namespace:Content.Client.HUD.UI"
                            MinSize="500 400" MouseFilter="Stop">
