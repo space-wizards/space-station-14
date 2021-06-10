@@ -196,3 +196,20 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  name: External Airlock
+  id: AirlockExternal
+  graph: RedAirlock
+  startNode: start
+  targetNode: RedAirlock
+  category: Structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Constructible/Structures/Doors/Standard/external.rsi
+    state: locked
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}

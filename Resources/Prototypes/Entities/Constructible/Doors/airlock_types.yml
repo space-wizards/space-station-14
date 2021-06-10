@@ -17,6 +17,17 @@
       close_sound: /Audio/Machines/airlock_ext_close.ogg
       deny_sound: /Audio/Machines/airlock_deny.ogg
     - type: WiresVisualizer
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: RedAirlock
+    node: RedAirlock
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  placement:
+    mode: SnapgridCenter
 
 - type: entity
   parent: Airlock
