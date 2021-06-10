@@ -275,14 +275,15 @@ namespace Content.Server.Mind
             OwnedComponent = component;
             OwnedComponent?.InternalAssignMind(this);
 
-            GhostComponent? ghostComponent = null;
-
-            if (ghostCheckOverride || // to force mind transfer, for example from ControlMobVerb
-                (VisitingEntity?.TryGetComponent(out ghostComponent) ?? false) || // visiting entity is not a Ghost
-                (ghostComponent != null && !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay                 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            if (IsVisitingEntity
+                && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
+                || !VisitingEntity.TryGetComponent(out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay                
             {
                 VisitingEntity = null;
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             // Player is CURRENTLY connected.
             if (Session != null && !alreadyAttached && VisitingEntity == null)
