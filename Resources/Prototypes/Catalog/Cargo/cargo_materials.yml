@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "crate of glass sheets"
-  id: materialglass
+  id: materialGlass
   description: "90 sheets of glass, packed with care."
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "crate of steel sheets"
-  id: materialsteel
+  id: materialSteel
   description: "90 sheets of steel."
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "crate of plastic sheets"
-  id: materialplastic
+  id: materialPlastic
   description: "90 sheets of plastic."
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
@@ -36,7 +36,7 @@
 
 - type: cargoProduct
   name: "crate of plasteel sheets"
-  id: materialplasteel
+  id: materialPlasteel
   description: "90 sheets of plasteel."
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi

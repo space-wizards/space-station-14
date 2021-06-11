@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "LV cables crate"
-  id: engineeringcablelv
+  id: engineeringCableLv
   description: "3 coils of LV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "MV cables crate"
-  id: engineeringcablemv
+  id: engineeringCableMv
   description: "3 coils of MV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "HV cables crate"
-  id: engineeringcablehv
+  id: engineeringCableHv
   description: "3 coils of HV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
@@ -36,7 +36,7 @@
 
 - type: cargoProduct
   name: "bulk cables crate"
-  id: engineeringcablebulk
+  id: engineeringCableBulk
   description: "2 coils each for every cable type."
   icon:
     sprite: Objects/Tools/cable-coils.rsi

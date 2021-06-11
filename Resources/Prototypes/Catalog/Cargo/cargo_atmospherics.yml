@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "air canister"
-  id: atmosphericsair
+  id: atmosphericsAir
   description: "Air canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "oxygen canister"
-  id: atmosphericsoxygen
+  id: atmosphericsOxygen
   description: "Oxygen canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "nitrogen canister"
-  id: atmosphericsnitrogen
+  id: atmosphericsNitrogen
   description: "Nitrogen canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -36,7 +36,7 @@
 
 - type: cargoProduct
   name: "carbon dioxide canister"
-  id: atmosphericscarbondioxide
+  id: atmosphericsCarbonDioxide
   description: "Carbon dioxide canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -48,7 +48,7 @@
 
 - type: cargoProduct
   name: "water vapor canister"
-  id: atmosphericswatervapor
+  id: atmosphericsWaterVapor
   description: "Water vapor canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -60,7 +60,7 @@
 
 - type: cargoProduct
   name: "plasma canister"
-  id: atmosphericsplasma
+  id: atmosphericsPlasma
   description: "Plasma canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi
@@ -72,7 +72,7 @@
 
 - type: cargoProduct
   name: "tritium canister"
-  id: atmosphericstritium
+  id: atmosphericsTritium
   description: "Tritium canister"
   icon:
     sprite: Constructible/Atmos/canister.rsi

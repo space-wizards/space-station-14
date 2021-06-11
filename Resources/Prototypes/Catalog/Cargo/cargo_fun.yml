@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "big band instrument collection"
-  id: funinstruments
+  id: funInstruments
   description: "Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments"
   icon:
     sprite: Objects/Fun/Instruments/accordion.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "art supplies"
-  id: funartsupplies
+  id: funArtSupplies
   description: "Make some happy little accidents with lots of crayons!"
   icon:
     sprite: Objects/Fun/crayons.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "plushie crate"
-  id: funplushies
+  id: funPlushies
   description: "A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT"
   icon:
     sprite: Objects/Fun/toys.rsi
