@@ -151,8 +151,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool AddOrder(int id, string requester, string reason, string productId, int amount, int payingAccountId)
         {
-            if (amount < 1 || !TryGetOrderDatabase(id, out var database))
+            if (amount < 1 || !TryGetOrderDatabase(id, out var database) || amount > database.MaxOrderSize)
+            {
                 return false;
+            }
+
             database.AddOrder(requester, reason, productId, amount, payingAccountId);
             SyncComponentsWithId(id);
             return true;

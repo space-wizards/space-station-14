@@ -4,6 +4,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -65,6 +66,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
             set
             {
                 _gender = value;
+
+                if (Owner.TryGetComponent(out GrammarComponent? g))
+                {
+                    g.Gender = value;
+                }
+
                 Dirty();
             }
         }

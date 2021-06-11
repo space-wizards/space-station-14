@@ -35,7 +35,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     ///     Raised when a target entity is interacted with by a user with an empty hand.
     /// </summary>
     [PublicAPI]
-    public class AttackHandEvent : HandledEntityEventArgs
+    public class InteractHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.
@@ -47,7 +47,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public IEntity Target { get; }
 
-        public AttackHandEvent(IEntity user, IEntity target)
+        public InteractHandEvent(IEntity user, IEntity target)
         {
             User = user;
             Target = target;

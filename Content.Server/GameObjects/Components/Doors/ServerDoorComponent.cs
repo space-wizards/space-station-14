@@ -155,9 +155,9 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private bool _beingWelded;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("canCrush")]
-        private bool _canCrush = true;
+        //[ViewVariables(VVAccess.ReadWrite)]
+        //[DataField("canCrush")]
+        //private bool _canCrush = true; // TODO implement door crushing
 
         protected override void Startup()
         {

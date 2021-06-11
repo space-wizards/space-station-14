@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.GameObjects.EntitySystems.Weapon.Melee;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Actions;
@@ -46,7 +47,7 @@ namespace Content.Server.Actions
                     var player = actor.PlayerSession;
                     var coordinates = args.Target.Transform.Coordinates;
                     var target = args.Target.Uid;
-                    EntitySystem.Get<InteractionSystem>().HandleClientUseItemInHand(player, coordinates, target);
+                    EntitySystem.Get<InteractionSystem>().HandleUseInteraction(player, coordinates, target);
                     return;
                 }
 

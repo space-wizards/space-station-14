@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
@@ -18,7 +19,7 @@ namespace Content.Shared.Physics.Controllers
     /// </summary>
     public abstract class SharedMoverController : VirtualController
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private SharedBroadPhaseSystem _broadPhaseSystem = default!;
 
@@ -56,7 +57,7 @@ namespace Content.Shared.Physics.Controllers
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent, IMobMoverComponent mobMover)
         {
             // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
-            if (!UseMobMovement(_broadPhaseSystem, physicsComponent, _physicsManager))
+            if (!UseMobMovement(_broadPhaseSystem, physicsComponent, _mapManager))
             {
                 return;
             }
@@ -64,7 +65,7 @@ namespace Content.Shared.Physics.Controllers
             var transform = mover.Owner.Transform;
             var (walkDir, sprintDir) = mover.VelocityDir;
 
-            var weightless = transform.Owner.IsWeightless(_physicsManager);
+            var weightless = transform.Owner.IsWeightless(physicsComponent, mapManager: _mapManager);
 
             // Handle wall-pushes.
             if (weightless)
@@ -100,12 +101,12 @@ namespace Content.Shared.Physics.Controllers
             physicsComponent.LinearVelocity = total;
         }
 
-        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body, IPhysicsManager? physicsManager = null)
+        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body, IMapManager mapManager)
         {
             return (body.BodyStatus == BodyStatus.OnGround) &
                    body.Owner.HasComponent<IMobStateComponent>() &&
                    ActionBlockerSystem.CanMove(body.Owner) &&
-                   (!body.Owner.IsWeightless(physicsManager) ||
+                   (!body.Owner.IsWeightless(body, mapManager: mapManager) ||
                     body.Owner.TryGetComponent(out SharedPlayerMobMoverComponent? mover) &&
                     IsAroundCollider(broadPhaseSystem, body.Owner.Transform, mover, body));
         }

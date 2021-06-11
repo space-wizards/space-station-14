@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -11,9 +11,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     public class ChemicalAmmoComponent : Component
     {
         public override string Name => "ChemicalAmmo";
-
-        [DataField("fractionTransfered")]
-        private float _fractionTransfered = 1;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {

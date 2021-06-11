@@ -1,3 +1,4 @@
+using System;
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Robust.Client.UserInterface;
@@ -5,6 +6,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 
 namespace Content.Client.GameObjects.Components.CloningPod
@@ -59,7 +62,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
                     {
                         MinSize = (200, 20),
                         MinValue = 0,
-                        MaxValue = 120, // todo make this actually derive from cloning time
+                        MaxValue = 120,
                         Page = 0,
                         Value = 0.5f,
                         Children =
@@ -100,15 +103,35 @@ namespace Content.Client.GameObjects.Components.CloningPod
             {
                 _scanManager = state.MindIdName;
                 BuildCloneList();
-                _lastUpdate = state;
             }
+            _lastUpdate = state;
 
-            var percentage = state.Progress / _cloningProgressBar.MaxValue * 100;
-            _progressLabel.Text = $"{percentage:0}%";
-
-            _cloningProgressBar.Value = state.Progress;
+            _cloningProgressBar.MaxValue = state.Maximum;
+            UpdateProgress();
             _mindState.Text = Loc.GetString(state.MindPresent ? "Consciousness Detected" : "No Activity");
             _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            UpdateProgress();
+        }
+
+        private void UpdateProgress()
+        {
+            if (_lastUpdate == null)
+                return;
+            float simulatedProgress = _lastUpdate.Progress;
+            if (_lastUpdate.Progressing)
+            {
+                TimeSpan sinceReference = IoCManager.Resolve<IGameTiming>().CurTime - _lastUpdate.ReferenceTime;
+                simulatedProgress += (float) sinceReference.TotalSeconds;
+                simulatedProgress = MathHelper.Clamp(simulatedProgress, 0f, _lastUpdate.Maximum);
+            }
+            var percentage = simulatedProgress / _cloningProgressBar.MaxValue * 100;
+            _progressLabel.Text = $"{percentage:0}%";
+            _cloningProgressBar.Value = simulatedProgress;
         }
 
         private void BuildCloneList()

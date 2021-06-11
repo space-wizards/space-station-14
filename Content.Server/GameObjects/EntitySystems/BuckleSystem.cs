@@ -31,10 +31,10 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<BuckleComponent, EntRemovedFromContainerMessage>(ContainerModifiedBuckle);
             SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
 
-            SubscribeLocalEvent<BuckleComponent, AttackHandEvent>(HandleAttackHand);
+            SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleAttackHand);
         }
 
-        private void HandleAttackHand(EntityUid uid, BuckleComponent component, AttackHandEvent args)
+        private void HandleAttackHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
         {
             args.Handled = component.TryUnbuckle(args.User);
         }
