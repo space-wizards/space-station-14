@@ -109,7 +109,7 @@
 - type: resistanceSet
   id: glassResistances
   coefficients:
-    Blunt: 0
+    Blunt: 0.5
     Slash: 0
     Piercing: 0
     Heat: 0
