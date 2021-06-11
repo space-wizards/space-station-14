@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             // Required for airtight components.
             SubscribeLocalEvent<RotateEvent>(RotateEvent);
-            SubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
+            SubscribeLocalEvent<AirtightComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
 
             _cfg.OnValueChanged(CCVars.SpaceWind, OnSpaceWindChanged, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, OnMonstermosEqualizationChanged, true);
@@ -73,9 +73,9 @@ namespace Content.Server.GameObjects.EntitySystems
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, OnExcitedGroupsSpaceIsAllConsumingChanged, true);
         }
 
-        private static void HandleSnapGridMove(EntityUid uid, AirtightComponent component, SnapGridPositionChangedEvent args)
+        private static void HandleAnchorChanged(EntityUid uid, AirtightComponent component, AnchorStateChangedEvent args)
         {
-            component.OnTransformMove();
+            component.AnchorStateChanged();
         }
 
         public bool SpaceWind { get; private set; }

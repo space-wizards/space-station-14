@@ -72,7 +72,7 @@ namespace Content.Server.NodeContainer.Nodes
             }
         }
 
-        public virtual void OnSnapGridMove()
+        public virtual void AnchorStateChanged()
         {
         }
 

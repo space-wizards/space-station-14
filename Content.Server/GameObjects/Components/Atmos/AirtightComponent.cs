@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public void OnTransformMove()
+        public void AnchorStateChanged()
         {
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();

@@ -263,7 +263,7 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        public void SnapGridOnPositionChanged()
+        public void AnchorStateChanged()
         {
             if (Owner.Transform.Anchored)
             {

@@ -14,14 +14,14 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<NodeContainerComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
+            SubscribeLocalEvent<NodeContainerComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
         }
 
-        private void OnSnapGridPositionChanged(EntityUid uid, NodeContainerComponent component, SnapGridPositionChangedEvent args)
+        private static void HandleAnchorChanged(EntityUid uid, NodeContainerComponent component, AnchorStateChangedEvent args)
         {
             foreach (var node in component.Nodes.Values)
             {
-                node.OnSnapGridMove();
+                node.AnchorStateChanged();
             }
         }
 
