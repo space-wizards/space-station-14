@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.GUI
         protected override async void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity)
         {
             await _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .Interaction(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
+                .InteractUsingRanged(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
         }
 
         protected override void DoActivate(IEntity heldEntity)
