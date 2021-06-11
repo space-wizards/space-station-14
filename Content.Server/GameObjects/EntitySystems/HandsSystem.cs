@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -21,6 +18,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -31,6 +31,8 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
@@ -45,6 +47,15 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
 
             CommandBinds.Unregister<HandsSystem>();
+        }
+
+        //TODO: Actually shows all items/clothing/etc.
+        private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
+        {
+            foreach (var inhand in component.GetAllHeldItems())
+            {
+                args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
+            }
         }
 
         protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
@@ -94,7 +105,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = new StackSplitEvent() {Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates};
+                var splitStack = new StackSplitEvent() { Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates };
                 RaiseLocalEvent(throwEnt.Uid, splitStack);
 
                 if (splitStack.Result == null)

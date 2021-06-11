@@ -15,7 +15,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Called when a player directly interacts with an empty hand when user is in range of the target entity.
         /// </summary>
-        [Obsolete("Use AttackHandMessage instead")]
+        [Obsolete("Use InteractHandEvent instead")]
         bool InteractHand(InteractHandEventArgs eventArgs);
     }
 
@@ -32,7 +32,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     }
 
     /// <summary>
-    ///     Raised when a target entity is interacted with by a user with an empty hand.
+    ///     Raised directed on a target entity when it is interacted with by a user with an empty hand.
     /// </summary>
     [PublicAPI]
     public class InteractHandEvent : HandledEntityEventArgs
