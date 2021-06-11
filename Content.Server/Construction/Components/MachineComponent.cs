@@ -86,16 +86,12 @@ namespace Content.Server.Construction.Components
 
             foreach (var (stackType, amount) in machineBoard.MaterialRequirements)
             {
-                var stackSpawn = new StackTypeSpawnEvent()
-                    {Amount = amount, StackType = stackType, SpawnPosition = Owner.Transform.Coordinates};
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, stackSpawn);
+                var stack = EntitySystem.Get<StackSystem>().Spawn(amount, stackType, Owner.Transform.Coordinates);
 
-                var s = stackSpawn.Result;
-
-                if (s == null)
+                if (stack == null)
                     throw new Exception($"Couldn't spawn stack of type {stackType}!");
 
-                if (!partContainer.Insert(s))
+                if (!partContainer.Insert(stack))
                     throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {Owner.Prototype?.ID ?? "N/A"}");
             }
 

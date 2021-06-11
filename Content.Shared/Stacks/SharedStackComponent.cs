@@ -57,7 +57,7 @@ namespace Content.Shared.Stacks
                 return;
 
             // This will change the count and call events.
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new StackChangeCountEvent(cast.Count));
+            EntitySystem.Get<SharedStackSystem>().SetCount(Owner.Uid, this, cast.Count);
             MaxCount = cast.MaxCount;
         }
 
