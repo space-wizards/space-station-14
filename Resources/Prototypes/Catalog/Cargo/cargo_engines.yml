@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "packaged antimatter reactor crate"
-  id: cargo.engineameshielding
+  id: engineameshielding
   description: "9 parts for the main body of an antimatter reactor, or for expanding an existing one."
   icon:
     sprite: Objects/Power/AME/ame_part.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "antimatter containment jar crate"
-  id: cargo.engineamejar
+  id: engineamejar
   description: "3 antimatter jars, for fuelling an antimatter reactor."
   icon:
     sprite: Objects/Power/AME/ame_jar.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "antimatter control unit crate"
-  id: cargo.engineamecontrol
+  id: engineamecontrol
   description: "The control unit of an antimatter reactor."
   icon:
     sprite: Constructible/Power/ame_controller.rsi
@@ -36,7 +36,7 @@
 
 - type: cargoProduct
   name: "singularity generator crate"
-  id: cargo.enginesingularitygenerator
+  id: enginesingularitygenerator
   description: "Contains a singularity generator. The mother of the beast."
   icon:
     sprite: Constructible/Power/Singularity/generator.rsi
@@ -48,7 +48,7 @@
 
 - type: cargoProduct
   name: "singularity containment crate"
-  id: cargo.enginesingularitycontainment
+  id: enginesingularitycontainment
   description: "Contains a singularity containment field generator."
   icon:
     sprite: Constructible/Power/Singularity/containment.rsi
@@ -60,7 +60,7 @@
 
 - type: cargoProduct
   name: "emitter crate"
-  id: cargo.enginesingularityemitter
+  id: enginesingularityemitter
   description: "Contains an emitter. Used only for dangerous applications."
   icon:
     sprite: Constructible/Power/Singularity/emitter.rsi
@@ -72,7 +72,7 @@
 
 - type: cargoProduct
   name: "radiation collector crate"
-  id: cargo.enginesingularitycollector
+  id: enginesingularitycollector
   description: "Contains a radiation collector. Safety first!"
   icon:
     sprite: Constructible/Power/Singularity/collector.rsi
@@ -84,7 +84,7 @@
 
 - type: cargoProduct
   name: "particle accelerator crate"
-  id: cargo.engineparticleaccelerator
+  id: engineparticleaccelerator
   description: "Contains all the boards needed to construct a Particle Accelerator."
   icon:
     sprite: Constructible/Specific/Engines/PA/control_box.rsi
@@ -96,7 +96,7 @@
   
 - type: cargoProduct
   name: "solar assembly parts"
-  id: cargo.enginessolar
+  id: enginessolar
   description: "Parts for constructing solar panels and trackers."
   icon:
     sprite: Objects/Power/solar_parts.rsi

@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "armor crate"
-  id: cargo.securityarmor
+  id: securityarmor
   description: "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
   icon:
     sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "helmet crate"
-  id: cargo.securityhelmet
+  id: securityhelmet
   description: "Contains three standard-issue brain buckets. Requires Security access to open."
   icon:
     sprite: Clothing/Head/Helmets/security.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "non-lethals crate"
-  id: cargo.securitynonlethal
+  id: securitynonlethal
   description: "Stamina-draining disabler weapons. Requires Security access to open."
   icon:
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
@@ -36,7 +36,7 @@
 
 - type: cargoProduct
   name: "Lasers Crate"
-  id: cargo.securitylaser
+  id: securitylaser
   description: "Contains three lethal, high-energy laser guns. Requires Security access to open."
   icon:
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -48,7 +48,7 @@
 
 - type: cargoProduct
   name: "riot crate"
-  id: cargo.securityriot
+  id: securityriot
   description: "Contains two sets of heavy body armor and helmets and 2 shotguns with 6 rounds of beanbag shells each. Requires Armory access to open."
   icon:
     sprite: Clothing/OuterClothing/Armor/riot.rsi
@@ -60,7 +60,7 @@
 
 - type: cargoProduct
   name: "security supplies crate"
-  id: cargo.securitysupplies
+  id: securitysupplies
   description: "Contains various supplies for the station's Security team. Requires Security access to open."
   icon:
     sprite: Objects/Storage/boxes.rsi
