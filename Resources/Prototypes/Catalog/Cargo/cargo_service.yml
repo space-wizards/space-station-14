@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "janitorial supplies crate"
-  id: serviceJanitorial
+  id: ServiceJanitorial
   description: "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, a single mop and bucket, spray cleaner, and soap."
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "replacement lights crate"
-  id: serviceLightsReplacement
+  id: ServiceLightsReplacement
   description: "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
   icon:
     sprite: Objects/Power/light_bulb.rsi
@@ -24,7 +24,7 @@
 
 - type: cargoProduct
   name: "lung cancer crate"
-  id: serviceSmokeables
+  id: ServiceSmokeables
   description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi

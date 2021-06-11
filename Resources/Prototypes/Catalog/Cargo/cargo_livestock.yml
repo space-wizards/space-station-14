@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "bee crate"
-  id: livestockBee
+  id: LivestockBee
   description: "A crate containing a swarm of eight bees"
   icon:
     sprite: Mobs/Animals/bee.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "butterfly crate"
-  id: livestockButterfly
+  id: LivestockButterfly
   description: "A crate containing five butterflies"
   icon:
     sprite: Mobs/Animals/butterfly.rsi
@@ -24,7 +24,7 @@
   
 - type: cargoProduct
   name: "cat crate"
-  id: livestockCat
+  id: LivestockCat
   description: "A crate containing a single cat"
   icon:
     sprite: Mobs/Pets/cat.rsi
@@ -36,7 +36,7 @@
 
 - type: cargoProduct
   name: "chicken crate"
-  id: livestockChicken
+  id: LivestockChicken
   description: "A crate containing a four fully grown chickens"
   icon:
     sprite: Mobs/Animals/chicken.rsi
@@ -48,7 +48,7 @@
   
 - type: cargoProduct
   name: "corgi crate"
-  id: livestockCorgi
+  id: LivestockCorgi
   description: "A crate containing a single corgi"
   icon:
     sprite: Mobs/Pets/corgi.rsi
@@ -60,7 +60,7 @@
   
 - type: cargoProduct
   name: "cow crate"
-  id: livestockCow
+  id: LivestockCow
   description: "A crate containing a single cow"
   icon:
     sprite: Mobs/Animals/cow.rsi
@@ -72,7 +72,7 @@
 
 - type: cargoProduct
   name: "goat crate"
-  id: livestockGoat
+  id: LivestockGoat
   description: "A crate containing a single goat"
   icon:
     sprite: Mobs/Animals/goat.rsi
@@ -84,7 +84,7 @@
 
 - type: cargoProduct
   name: "goose crate"
-  id: livestockGoose
+  id: LivestockGoose
   description: "A crate containing two geese"
   icon:
     sprite: Mobs/Animals/goose.rsi
@@ -96,7 +96,7 @@
   
 - type: cargoProduct
   name: "gorilla crate"
-  id: livestockGorilla
+  id: LivestockGorilla
   description: "A crate containing a single gorilla"
   icon:
     sprite: Mobs/Animals/gorilla.rsi
@@ -108,7 +108,7 @@
 
 - type: cargoProduct
   name: "monkey cube crate"
-  id: livestockMonkeyCube
+  id: LivestockMonkeyCube
   description: "A crate containing three boxes of monkey cubes "
   icon:
     sprite: Mobs/Animals/monkey.rsi
@@ -120,7 +120,7 @@
   
 - type: cargoProduct
   name: "parrot crate"
-  id: livestockParrot
+  id: LivestockParrot
   description: "A crate containing three parrots"
   icon:
     sprite: Mobs/Animals/parrot.rsi
@@ -132,7 +132,7 @@
 
 - type: cargoProduct
   name: "penguin crate"
-  id: livestockPenguin
+  id: LivestockPenguin
   description: "A crate containing two penguins"
   icon:
     sprite: Mobs/Animals/penguin.rsi
@@ -144,7 +144,7 @@
 
 - type: cargoProduct
   name: "snake crate"
-  id: livestockSnake
+  id: LivestockSnake
   description: "A crate containing three snakes"
   icon:
     sprite: Mobs/Animals/snake.rsi

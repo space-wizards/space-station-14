@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "smg crate"
-  id: armorySmg
+  id: ArmorySmg
   description: "Contains three WT-550 SMGs with six mags. Requires Armory access to open."
   icon:
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "shotgun crate"
-  id: armoryShotgun
+  id: ArmoryShotgun
   description: "For when the enemy absolutely needs to be replaced with lead. Contains three Gladstone Combat Shotguns, and some standard shotgun shells. Requires Armory access to open."
   icon:
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
