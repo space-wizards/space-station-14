@@ -30,7 +30,7 @@
       mask:
       - VaultImpassable
   - type: Damageable
-    resistances: metallicResistances
+    resistances: glassResistances
   - type: Repairable
   - type: Destructible
     thresholds:
@@ -74,7 +74,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 150
       behaviors:
       - !type:PlaySoundCollectionBehavior
         soundCollection: GlassBreak
@@ -107,7 +107,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 200
       behaviors:
       - !type:PlaySoundCollectionBehavior
         soundCollection: GlassBreak
