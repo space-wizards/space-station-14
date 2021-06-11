@@ -1,10 +1,10 @@
 #nullable enable
 using System.Threading.Tasks;
+using Content.Server.APC.Components;
+using Content.Server.Battery.Components;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Shared.Utility;
+using Content.Server.Power.Components;
+using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

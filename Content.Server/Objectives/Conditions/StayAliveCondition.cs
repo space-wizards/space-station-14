@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,9 +11,9 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public class StayAliveCondition : IObjectiveCondition
     {
-        private Mind? _mind;
+        private Mind.Mind? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind mind)
+        public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             return new StayAliveCondition {_mind = mind};
         }

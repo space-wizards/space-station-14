@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Conveyor;
-using Content.Server.GameObjects.Components.Recycling;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Server.Conveyor;
+using Content.Server.Recycling.Components;
+using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;

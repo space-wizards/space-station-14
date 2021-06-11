@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Wires;
 using NUnit.Framework;
 using Robust.UnitTesting;
-using static Content.Shared.GameObjects.Components.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Tests.Shared
 {

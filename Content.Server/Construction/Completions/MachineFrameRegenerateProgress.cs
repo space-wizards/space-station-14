@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Construction;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

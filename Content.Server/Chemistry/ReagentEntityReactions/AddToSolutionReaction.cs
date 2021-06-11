@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

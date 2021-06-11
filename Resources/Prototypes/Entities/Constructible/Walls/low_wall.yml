@@ -6,7 +6,6 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: CanBuildWindowOnTop
-  - type: InteractionOutline
   - type: Sprite
     netsync: false
     color: "#889192"

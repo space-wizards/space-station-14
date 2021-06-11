@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Server.Weapon.Melee.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

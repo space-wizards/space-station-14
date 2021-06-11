@@ -1,5 +1,4 @@
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
