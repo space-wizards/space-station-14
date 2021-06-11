@@ -110,8 +110,8 @@
   id: glassResistances
   coefficients:
     Blunt: 0.5
-    Slash: 0
-    Piercing: 0
+    Slash: 0.5
+    Piercing: 0.5
     Heat: 0
     Shock: 0
     Cold: 0
