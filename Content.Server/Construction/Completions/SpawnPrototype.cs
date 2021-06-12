@@ -1,10 +1,11 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Shared.Prototypes;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -28,8 +29,9 @@ namespace Content.Server.Construction.Completions
 
             if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
             {
-                var stack = entityManager.SpawnEntity(Prototype, coordinates);
-                stack.EntityManager.EventBus.RaiseLocalEvent(stack.Uid, new StackChangeCountEvent(Amount), false);
+                var stackEnt = entityManager.SpawnEntity(Prototype, coordinates);
+                var stack = stackEnt.GetComponent<StackComponent>();
+                EntitySystem.Get<StackSystem>().SetCount(stackEnt.Uid, stack, Amount);
             }
             else
             {

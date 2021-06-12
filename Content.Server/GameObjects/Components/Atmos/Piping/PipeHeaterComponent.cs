@@ -1,7 +1,7 @@
 #nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;

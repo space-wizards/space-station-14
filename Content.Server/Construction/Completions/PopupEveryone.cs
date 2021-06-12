@@ -1,6 +1,6 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.Utility;
+using Content.Server.Notification;
 using Content.Shared.Construction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

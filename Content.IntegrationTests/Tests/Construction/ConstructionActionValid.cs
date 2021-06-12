@@ -2,6 +2,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Construction.Completions;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Prototypes;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 

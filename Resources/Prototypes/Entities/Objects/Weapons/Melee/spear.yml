@@ -24,6 +24,7 @@
   - type: ItemCooldown
   - type: MeleeChemicalInjector
   - type: SolutionContainer
+    caps: Refillable
     maxVol: 5
   - type: SolutionTransfer
 

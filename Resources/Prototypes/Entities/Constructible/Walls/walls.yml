@@ -13,7 +13,6 @@
   - type: Tag
     tags:
     - Wall
-  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Walls

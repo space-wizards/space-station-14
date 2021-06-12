@@ -19,7 +19,7 @@ namespace Content.Server.DeviceNetwork
         /// <summary>
         /// Handles responding to pings.
         /// </summary>
-        public static void PingResponse<T>(T connection, string sender, IReadOnlyDictionary<string, string> payload, string message = "") where T : IDeviceNetworkConnection
+        /*public static void PingResponse<T>(T connection, string sender, IReadOnlyDictionary<string, string> payload, string message = "") where T : IDeviceNetworkConnection
         {
             if (payload.TryGetValue(COMMAND, out var command) && command == PING)
             {
@@ -31,6 +31,6 @@ namespace Content.Server.DeviceNetwork
 
                 connection.Send(connection.Frequency, sender, response);
             }
-        }
+        }*/
     }
 }

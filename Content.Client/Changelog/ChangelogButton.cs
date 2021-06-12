@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
