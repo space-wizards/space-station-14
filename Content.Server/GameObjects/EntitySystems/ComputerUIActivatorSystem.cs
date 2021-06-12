@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Interaction;
 using Content.Server.GameObjects.Components;
 using Content.Shared.GameTicking;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;

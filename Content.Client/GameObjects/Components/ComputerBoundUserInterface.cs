@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;

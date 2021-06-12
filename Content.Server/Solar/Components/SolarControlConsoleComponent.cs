@@ -1,9 +1,8 @@
 #nullable enable
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Solar;
+using Content.Server.Solar.EntitySystems;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
-using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
