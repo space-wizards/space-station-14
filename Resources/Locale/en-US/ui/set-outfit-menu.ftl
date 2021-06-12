@@ -1,1 +1,0 @@
-set-outfit-menu-title = Set Outfit
