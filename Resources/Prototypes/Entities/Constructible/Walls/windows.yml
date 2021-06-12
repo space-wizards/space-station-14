@@ -30,7 +30,7 @@
       mask:
       - VaultImpassable
   - type: Damageable
-    resistances: metallicResistances
+    resistances: glassResistances
   - type: Repairable
   - type: Destructible
     thresholds:
@@ -74,7 +74,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 150
       behaviors:
       - !type:PlaySoundCollectionBehavior
         soundCollection: GlassBreak
@@ -102,12 +102,12 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/plasma_window.rsi
   - type: Damageable
-    resistances: metallicResistances
+    resistances: glassResistances
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 200
       behaviors:
       - !type:PlaySoundCollectionBehavior
         soundCollection: GlassBreak
@@ -118,7 +118,7 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    resistances: metallicResistances
+    resistances: glassResistances
   - type: Window
     base: pwindow
   - type: Construction

@@ -33,7 +33,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
                     var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
-                    owner.EntityManager.EventBus.RaiseLocalEvent(spawned.Uid, new StackChangeCountEvent(count), false);
+                    var stack = spawned.GetComponent<StackComponent>();
+                    EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, stack, count);
                     spawned.RandomOffset(0.5f);
                 }
                 else

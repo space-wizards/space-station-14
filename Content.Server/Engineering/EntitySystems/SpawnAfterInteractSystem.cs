@@ -5,6 +5,7 @@ using Content.Server.Engineering.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -65,20 +66,15 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || component.Owner.Deleted)
                 return;
 
-            var hasStack = component.Owner.HasComponent<StackComponent>();
-
-            if (hasStack && component.RemoveOnInteract)
+            if (component.Owner.TryGetComponent<SharedStackComponent>(out var stackComp)
+                && component.RemoveOnInteract && !Get<StackSystem>().Use(uid, stackComp, 1))
             {
-                var stackUse = new StackUseEvent() {Amount = 1};
-                RaiseLocalEvent(component.Owner.Uid, stackUse);
-
-                if (!stackUse.Result)
-                    return;
+                return;
             }
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
-            if (component.RemoveOnInteract && !hasStack && !component.Owner.Deleted)
+            if (component.RemoveOnInteract && stackComp == null && !component.Owner.Deleted)
                 component.Owner.Delete();
         }
     }

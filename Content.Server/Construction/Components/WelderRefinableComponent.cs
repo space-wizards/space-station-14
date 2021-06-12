@@ -52,15 +52,15 @@ namespace Content.Server.Construction.Components
             var resultPosition = Owner.Transform.Coordinates;
             Owner.Delete();
 
-            // spawn each result afrer refine
+            // spawn each result after refine
             foreach (var result in _refineResult!)
             {
                 var droppedEnt = Owner.EntityManager.SpawnEntity(result, resultPosition);
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
-                if (droppedEnt.HasComponent<StackComponent>())
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(droppedEnt.Uid, new StackChangeCountEvent(1), false);
+                if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
+                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, stack, 1);
             }
 
             return true;
