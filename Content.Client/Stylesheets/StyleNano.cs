@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Client.Actions.UI;
 using Content.Client.Examine;
@@ -6,6 +5,7 @@ using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
