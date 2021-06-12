@@ -5,6 +5,7 @@
   name: admin observer
   abstract: true
   components:
+  - type: Hands
   - type: PlayerInputMover
   - type: Physics
     bodyType: Kinematic

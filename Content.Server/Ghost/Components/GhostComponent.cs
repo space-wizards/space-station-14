@@ -8,12 +8,14 @@ using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -22,8 +24,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent, IExamine
+    public class GhostComponent : SharedGhostComponent, IExamine, IActionBlocker
     {
+        [DataField("canInteract")]
+        private bool _canGhostInteract = false;
+
         private bool _canReturnToBody = true;
         private TimeSpan _timeOfDeath = TimeSpan.Zero;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -35,6 +40,15 @@ namespace Content.Server.Ghost.Components
             set
             {
                 _canReturnToBody = value;
+                Dirty();
+            }
+        }
+        public bool CanGhostInteract
+        {
+            get => _canGhostInteract;
+            set
+            {
+                _canGhostInteract = value;
                 Dirty();
             }
         }

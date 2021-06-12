@@ -12,7 +12,8 @@ namespace Content.Shared.Ghost
         public override string Name => "Ghost";
         public override uint? NetID => ContentNetIDs.GHOST;
 
-        public bool CanInteract() => false;
+        public bool CanGhostInteract { get; set; }
+        public bool CanInteract() => CanGhostInteract;
         public bool CanUse() => false;
         public bool CanThrow() => false;
         public bool CanDrop() => false;
