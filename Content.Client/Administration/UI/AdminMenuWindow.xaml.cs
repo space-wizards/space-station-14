@@ -33,7 +33,7 @@ namespace Content.Client.Administration.UI
             MasterTabContainer.SetTabTitle(2, Loc.GetString("admin-menu-atmos-tab"));
             MasterTabContainer.SetTabTitle(3, Loc.GetString("admin-menu-round-tab"));
             MasterTabContainer.SetTabTitle(4, Loc.GetString("admin-menu-server-tab"));
-            MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-tab-tab"));
+            MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-players-tab"));
         }
 
         protected override void EnteredTree()

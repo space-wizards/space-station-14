@@ -1,9 +1,6 @@
 using System;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Client.HUD;
 using Content.Client.Markers;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Content.Shared.SubFloor;
@@ -48,7 +45,7 @@ namespace Content.Client.Sandbox
             Resizable = false;
             _gameHud = IoCManager.Resolve<IGameHud>();
 
-            Title = "sandbox-window-title";
+            Title = Loc.GetString("sandbox-window-title");
 
             var vBox = new VBoxContainer { SeparationOverride = 4 };
             Contents.AddChild(vBox);
