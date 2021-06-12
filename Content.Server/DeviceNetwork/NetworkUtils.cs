@@ -1,7 +1,7 @@
-﻿using Content.Server.Interfaces;
+using Content.Server.Interfaces;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
     /// <summary>
     /// A collection of utilities to help with using device networks
