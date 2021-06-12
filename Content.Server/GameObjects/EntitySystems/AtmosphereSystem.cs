@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;

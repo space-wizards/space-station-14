@@ -1,9 +1,10 @@
 ﻿#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Unit.Components;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Disposal;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Power.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

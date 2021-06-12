@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

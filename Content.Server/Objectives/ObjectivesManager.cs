@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -14,12 +13,12 @@ namespace Content.Server.Objectives
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
-        public IEnumerable<ObjectivePrototype> GetAllPossibleObjectives(Mind mind)
+        public IEnumerable<ObjectivePrototype> GetAllPossibleObjectives(Mind.Mind mind)
         {
             return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind));
         }
 
-        public ObjectivePrototype? GetRandomObjective(Mind mind)
+        public ObjectivePrototype? GetRandomObjective(Mind.Mind mind)
         {
             var objectives = GetAllPossibleObjectives(mind).ToList();
             _random.Shuffle(objectives);

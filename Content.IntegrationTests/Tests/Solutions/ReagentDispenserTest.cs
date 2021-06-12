@@ -1,7 +1,8 @@
 #nullable enable
 using System.Threading.Tasks;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Chemistry.Reagent;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 

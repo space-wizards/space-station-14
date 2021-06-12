@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences.Appearance;
+﻿using Content.Shared.CharacterAppearance;
 using Robust.Shared.IoC;
 
 namespace Content.Shared
