@@ -27,7 +27,6 @@
     DoRangeCheck: false
   - type: IgnorePause
   - type: Ghost
-    canInteract: true
   - type: Sprite
     netsync: false
     noRot: true
