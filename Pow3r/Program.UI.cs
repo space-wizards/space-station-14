@@ -5,11 +5,14 @@ using static ImGuiNET.ImGui;
 using Color = System.Drawing.Color;
 using Vector2 = System.Numerics.Vector2;
 using RobustVec2 = Robust.Shared.Maths.Vector2;
+using static Pow3r.PowerState;
 
 namespace Pow3r
 {
     internal sealed partial class Program
     {
+        private bool _showDemo;
+
         private void DoDraw(float frameTime)
         {
             if (BeginMainMenuBar())
@@ -18,7 +21,7 @@ namespace Pow3r
                 EndMainMenuBar();
             }
 
-            SetNextWindowSize(new Vector2(100, 150));
+            SetNextWindowSize(new Vector2(150, 150));
 
             Begin("CreateButtons",
                 ImGuiWindowFlags.NoTitleBar |
@@ -28,28 +31,29 @@ namespace Pow3r
             if (Button("Generator"))
             {
                 var id = AllocId();
-                _supplies.Add(id, new Supply(id));
+                _state.Supplies.Add(id, new Supply(id));
             }
 
             if (Button("Load"))
             {
                 var id = AllocId();
-                _loads.Add(id, new Load(id));
+                _state.Loads.Add(id, new Load(id));
             }
 
             if (Button("Network"))
             {
                 var id = AllocId();
-                _networks.Add(id, new Network(id));
+                _state.Networks.Add(id, new Network(id));
             }
 
             if (Button("Battery"))
             {
                 var id = AllocId();
-                _batteries.Add(id, new Battery(id));
+                _state.Batteries.Add(id, new Battery(id));
             }
 
             Checkbox("Paused", ref _paused);
+            Combo("", ref _currentSolver, _solverNames, _solverNames.Length);
 
             End();
 
@@ -80,7 +84,7 @@ namespace Pow3r
                 End();
             }
 
-            foreach (var network in _networks.Values)
+            foreach (var network in _state.Networks.Values)
             {
                 Begin($"Network##Gen{network.Id}");
 
@@ -116,7 +120,7 @@ namespace Pow3r
                 End();
             }
 
-            foreach (var load in _loads.Values)
+            foreach (var load in _state.Loads.Values)
             {
                 Begin($"Load##Load{load.Id}");
 
@@ -149,7 +153,7 @@ namespace Pow3r
                 {
                     if (load.LinkedNetwork != default && Button("Unlink"))
                     {
-                        var net = _networks[load.LinkedNetwork];
+                        var net = _state.Networks[load.LinkedNetwork];
                         net.Loads.Remove(load.Id);
                         load.LinkedNetwork = default;
                     }
@@ -158,7 +162,7 @@ namespace Pow3r
                 End();
             }
 
-            foreach (var supply in _supplies.Values)
+            foreach (var supply in _state.Supplies.Values)
             {
                 Begin($"Generator##Gen{supply.Id}");
 
@@ -194,7 +198,7 @@ namespace Pow3r
                 {
                     if (supply.LinkedNetwork != default && Button("Unlink"))
                     {
-                        var net = _networks[supply.LinkedNetwork];
+                        var net = _state.Networks[supply.LinkedNetwork];
                         net.Supplies.Remove(supply.Id);
                         supply.LinkedNetwork = default;
                     }
@@ -203,7 +207,7 @@ namespace Pow3r
                 End();
             }
 
-            foreach (var battery in _batteries.Values)
+            foreach (var battery in _state.Batteries.Values)
             {
                 Begin($"Battery##Bat{battery.Id}");
 
@@ -254,7 +258,7 @@ namespace Pow3r
                 {
                     if (battery.LinkedNetworkLoading != default && Button("Unlink loading"))
                     {
-                        var net = _networks[battery.LinkedNetworkLoading];
+                        var net = _state.Networks[battery.LinkedNetworkLoading];
                         net.BatteriesLoading.Remove(battery.Id);
                         battery.LinkedNetworkLoading = default;
                     }
@@ -263,7 +267,7 @@ namespace Pow3r
                         SameLine();
                         if (battery.LinkedNetworkSupplying != default && Button("Unlink supplying"))
                         {
-                            var net = _networks[battery.LinkedNetworkSupplying];
+                            var net = _state.Networks[battery.LinkedNetworkSupplying];
                             net.BatteriesSupplying.Remove(battery.Id);
                             battery.LinkedNetworkSupplying = default;
                         }
@@ -275,29 +279,29 @@ namespace Pow3r
 
             var bgDrawList = GetBackgroundDrawList();
 
-            foreach (var network in _networks.Values)
+            foreach (var network in _state.Networks.Values)
             {
                 foreach (var supplyId in network.Supplies)
                 {
-                    var supply = _supplies[supplyId];
+                    var supply = _state.Supplies[supplyId];
                     DrawArrowLine(bgDrawList, network.CurrentWindowPos, supply.CurrentWindowPos, Color.LawnGreen);
                 }
 
                 foreach (var loadId in network.Loads)
                 {
-                    var load = _loads[loadId];
+                    var load = _state.Loads[loadId];
                     DrawArrowLine(bgDrawList, load.CurrentWindowPos, network.CurrentWindowPos, Color.Red);
                 }
 
                 foreach (var batteryId in network.BatteriesLoading)
                 {
-                    var battery = _batteries[batteryId];
+                    var battery = _state.Batteries[batteryId];
                     DrawArrowLine(bgDrawList, battery.CurrentWindowPos, network.CurrentWindowPos, Color.Purple);
                 }
 
                 foreach (var batteryId in network.BatteriesSupplying)
                 {
-                    var battery = _batteries[batteryId];
+                    var battery = _state.Batteries[batteryId];
                     DrawArrowLine(bgDrawList, network.CurrentWindowPos, battery.CurrentWindowPos, Color.Cyan);
                 }
             }
@@ -312,23 +316,23 @@ namespace Pow3r
                 switch (item)
                 {
                     case Network n:
-                        _networks.Remove(n.Id);
+                        _state.Networks.Remove(n.Id);
                         break;
 
                     case Supply s:
-                        _supplies.Remove(s.Id);
-                        _networks.Values.ForEach(n => n.Supplies.Remove(s.Id));
+                        _state.Supplies.Remove(s.Id);
+                        _state.Networks.Values.ForEach(n => n.Supplies.Remove(s.Id));
                         break;
 
                     case Load l:
-                        _loads.Remove(l.Id);
-                        _networks.Values.ForEach(n => n.Loads.Remove(l.Id));
+                        _state.Loads.Remove(l.Id);
+                        _state.Networks.Values.ForEach(n => n.Loads.Remove(l.Id));
                         break;
 
                     case Battery b:
-                        _batteries.Remove(b.Id);
-                        _networks.Values.ForEach(n => n.BatteriesLoading.Remove(b.Id));
-                        _networks.Values.ForEach(n => n.BatteriesSupplying.Remove(b.Id));
+                        _state.Batteries.Remove(b.Id);
+                        _state.Networks.Values.ForEach(n => n.BatteriesLoading.Remove(b.Id));
+                        _state.Networks.Values.ForEach(n => n.BatteriesSupplying.Remove(b.Id));
                         break;
                 }
             }

@@ -2,17 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using static Pow3r.PowerState;
 
 namespace Pow3r
 {
     internal sealed partial class Program
     {
-        private static readonly JsonSerializerOptions SerializerOptions = new()
-        {
-            IncludeFields = true,
-            Converters = {new NodeIdJsonConverter()}
-        };
-
         private void LoadFromDisk()
         {
             if (!File.Exists("data.json"))
@@ -25,11 +20,15 @@ namespace Pow3r
 
             _paused = dat.Paused;
             _nextId = dat.NextId;
+            _currentSolver = dat.Solver;
 
-            _networks = dat.Networks.ToDictionary(n => n.Id, n => n);
-            _supplies = dat.Supplies.ToDictionary(s => s.Id, s => s);
-            _loads = dat.Loads.ToDictionary(l => l.Id, l => l);
-            _batteries = dat.Batteries.ToDictionary(b => b.Id, b => b);
+            _state = new PowerState
+            {
+                Networks = dat.Networks.ToDictionary(n => n.Id, n => n),
+                Supplies = dat.Supplies.ToDictionary(s => s.Id, s => s),
+                Loads = dat.Loads.ToDictionary(l => l.Id, l => l),
+                Batteries = dat.Batteries.ToDictionary(b => b.Id, b => b)
+            };
 
             RefreshLinks();
         }
@@ -40,11 +39,12 @@ namespace Pow3r
             {
                 Paused = _paused,
                 NextId = _nextId,
+                Solver = _currentSolver,
 
-                Loads = _loads.Values.ToList(),
-                Batteries = _batteries.Values.ToList(),
-                Networks = _networks.Values.ToList(),
-                Supplies = _supplies.Values.ToList()
+                Loads = _state.Loads.Values.ToList(),
+                Batteries = _state.Batteries.Values.ToList(),
+                Networks = _state.Networks.Values.ToList(),
+                Supplies = _state.Supplies.Values.ToList()
             };
 
             File.WriteAllBytes("data.json", JsonSerializer.SerializeToUtf8Bytes(data, SerializerOptions));
@@ -54,6 +54,7 @@ namespace Pow3r
         {
             public bool Paused;
             public int NextId;
+            public int Solver;
 
             public List<Load> Loads;
             public List<Network> Networks;
