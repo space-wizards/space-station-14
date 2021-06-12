@@ -33,7 +33,7 @@ namespace Content.Server.Stack
         public bool Use(EntityUid uid, SharedStackComponent stack, int amount)
         {
             // Check if we have enough things in the stack for this...
-            if (stack.Count <= amount)
+            if (stack.Count < amount)
             {
                 // Not enough things in the stack, return false.
                 return false;
