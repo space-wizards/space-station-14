@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Shared.Chemistry;
-using Content.Shared.Prototypes.Kitchen;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Kitchen;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;

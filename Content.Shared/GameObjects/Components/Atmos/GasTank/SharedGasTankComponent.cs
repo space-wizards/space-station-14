@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Atmos.GasTank

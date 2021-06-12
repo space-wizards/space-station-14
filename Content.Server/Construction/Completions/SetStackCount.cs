@@ -1,9 +1,10 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -15,14 +16,14 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class SetStackCount : IGraphAction
     {
-        [DataField("amount")] public int Amount { get; private set; } = 1;
+        [DataField("amount")] public int Amount { get; } = 1;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted) return;
-            if(!entity.HasComponent<StackComponent>()) return;
+            if(!entity.TryGetComponent<StackComponent>(out var stack)) return;
 
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new StackChangeCountEvent(Amount), false);
+            EntitySystem.Get<StackSystem>().SetCount(entity.Uid, stack, Amount);
         }
     }
 }

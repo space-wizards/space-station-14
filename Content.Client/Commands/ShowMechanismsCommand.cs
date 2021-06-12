@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Body.Mechanism;
+﻿using Content.Shared.Body.Mechanism;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;

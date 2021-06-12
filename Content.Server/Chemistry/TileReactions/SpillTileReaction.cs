@@ -1,8 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Fluids;
-using Content.Server.GameObjects.Components.Movement;
+﻿using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
+using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
