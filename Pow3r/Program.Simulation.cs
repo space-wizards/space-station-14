@@ -17,11 +17,15 @@ namespace Pow3r
 
         private readonly string[] _solverNames =
         {
-            nameof(GraphWalkSolver)
+            nameof(GraphWalkSolver),
+            nameof(BatteryRampPegSolver),
+            nameof(NoOpSolver)
         };
 
         private readonly IPowerSolver[] _solvers = {
-            new GraphWalkSolver()
+            new GraphWalkSolver(),
+            new BatteryRampPegSolver(),
+            new NoOpSolver()
         };
 
         private int _currentSolver;
@@ -40,8 +44,18 @@ namespace Pow3r
             _simStopwatch.Restart();
             _tickDataIdx = (_tickDataIdx + 1) % MaxTickData;
 
-            _solvers[_currentSolver].Tick(frameTime, _state, _tickDataIdx);
+            _solvers[_currentSolver].Tick(frameTime, _state);
 
+            // Update tick history.
+            foreach (var load in _state.Loads.Values)
+            {
+                load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
+            }
+
+            foreach (var supply in _state.Supplies.Values)
+            {
+                supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
+            }
             _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;
         }
 

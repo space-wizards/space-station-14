@@ -2,6 +2,6 @@
 {
     public interface IPowerSolver
     {
-        void Tick(float frameTime, PowerState state, int tickDataIdx);
+        void Tick(float frameTime, PowerState state);
     }
 }

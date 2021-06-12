@@ -5,9 +5,13 @@ using static Pow3r.PowerState;
 
 namespace Pow3r
 {
+    /// <summary>
+    ///     Partial implementation of full-graph-walking power solving under pow3r.
+    ///     Concept described at https://hackmd.io/@ss14/lowpower
+    /// </summary>
     public class GraphWalkSolver : IPowerSolver
     {
-        public void Tick(float frameTime, PowerState state, int tickDataIdx)
+        public void Tick(float frameTime, PowerState state)
         {
             state.Loads.Values.ForEach(l => l.ReceivingPower = 0);
             state.Supplies.Values.ForEach(g => g.CurrentSupply = 0);
@@ -156,16 +160,7 @@ namespace Pow3r
                 }
             }
 
-            // Update tick history.
-            foreach (var load in state.Loads.Values)
-            {
-                load.ReceivedPowerData[tickDataIdx] = load.ReceivingPower;
-            }
 
-            foreach (var supply in state.Supplies.Values)
-            {
-                supply.SuppliedPowerData[tickDataIdx] = supply.CurrentSupply;
-            }
         }
 
         private int TotalSubLoadCount(PowerState state, Network network)

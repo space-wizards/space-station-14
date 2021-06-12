@@ -53,6 +53,7 @@ namespace Pow3r
             }
 
             Checkbox("Paused", ref _paused);
+            SetNextItemWidth(-1);
             Combo("", ref _currentSolver, _solverNames, _solverNames.Length);
 
             End();
