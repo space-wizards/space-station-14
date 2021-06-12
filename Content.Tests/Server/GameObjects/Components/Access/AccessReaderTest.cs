@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Access;
+using Content.Server.Access.Components;
 using NUnit.Framework;
 
 namespace Content.Tests.Server.GameObjects.Components.Access

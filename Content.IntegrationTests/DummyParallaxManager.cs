@@ -1,5 +1,5 @@
 using System;
-using Content.Client.Interfaces.Parallax;
+using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 
 namespace Content.IntegrationTests

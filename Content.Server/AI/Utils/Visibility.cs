@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.AI.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

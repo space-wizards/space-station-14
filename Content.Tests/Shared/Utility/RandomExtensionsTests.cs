@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Content.Shared.Prototypes;
-using Content.Shared.Utility;
+using Content.Shared.Dataset;
+using Content.Shared.Random.Helpers;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

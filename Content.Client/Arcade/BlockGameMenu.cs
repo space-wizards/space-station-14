@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Content.Client.GameObjects.Components.Arcade;
-using Content.Client.Utility;
+using Content.Client.Arcade.UI;
+using Content.Client.Resources;
 using Content.Shared.Arcade;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
