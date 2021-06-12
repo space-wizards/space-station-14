@@ -12,7 +12,6 @@ namespace Content.Shared.Stacks
             base.Initialize();
 
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
-            SubscribeLocalEvent<SharedStackComponent, StackChangeCountEvent>(OnStackCountChange);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
         }
 
@@ -26,26 +25,27 @@ namespace Content.Shared.Stacks
             appearance.SetData(StackVisuals.Hide, false);
         }
 
-        protected void OnStackCountChange(EntityUid uid, SharedStackComponent component, StackChangeCountEvent args)
+        public void SetCount(EntityUid uid, SharedStackComponent component, int amount)
         {
-            if (args.Amount == component.Count)
+            // Do nothing if amount is already the same.
+            if (amount == component.Count)
                 return;
 
+            // Store old value for event-raising purposes...
             var old = component.Count;
 
-            if (args.Amount > component.MaxCount)
+            // Clamp the value.
+            if (amount > component.MaxCount)
             {
-                args.Amount = component.MaxCount;
-                args.Clamped = true;
+                amount = component.MaxCount;
             }
 
-            if (args.Amount < 0)
+            if (amount < 0)
             {
-                args.Amount = 0;
-                args.Clamped = true;
+                amount = 0;
             }
 
-            component.Count = args.Amount;
+            component.Count = amount;
             component.Dirty();
 
             // Queue delete stack if count reaches zero.
@@ -71,32 +71,6 @@ namespace Content.Shared.Stacks
                     ("markupCountColor", "lightgray")
                 )
             );
-        }
-    }
-
-    /// <summary>
-    ///     Attempts to change the amount of things in a stack to a specific number.
-    ///     If the amount had to be clamped to zero or the max amount, <see cref="Clamped"/> will be true
-    ///     and the amount will be changed to match the value set.
-    ///     Does nothing if the amount is the same as the stack count already.
-    /// </summary>
-    public class StackChangeCountEvent : EntityEventArgs
-    {
-        /// <summary>
-        ///     Amount to set the stack to.
-        ///     Input/Output parameter.
-        /// </summary>
-        public int Amount { get; set; }
-
-        /// <summary>
-        ///     Whether the <see cref="Amount"/> had to be clamped.
-        ///     Output parameter.
-        /// </summary>
-        public bool Clamped { get; set; }
-
-        public StackChangeCountEvent(int amount)
-        {
-            Amount = amount;
         }
     }
 
