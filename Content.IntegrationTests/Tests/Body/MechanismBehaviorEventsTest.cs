@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Server.Body.Behavior;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

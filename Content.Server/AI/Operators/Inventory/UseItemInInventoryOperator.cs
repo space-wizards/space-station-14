@@ -1,6 +1,6 @@
 #nullable enable
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory

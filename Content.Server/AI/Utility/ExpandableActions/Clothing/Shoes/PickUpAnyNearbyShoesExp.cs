@@ -7,8 +7,8 @@ using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Clothing;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.Clothing.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes

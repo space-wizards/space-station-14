@@ -2,19 +2,22 @@
 #nullable disable warnings
 using System;
 using Content.Server.Atmos;
-using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.Body.Respiratory;
+using Content.Server.Body.Respiratory;
+using Content.Server.Explosion;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Behaviors.Item;
+using Content.Shared.Actions.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.DragDrop;
+using Content.Shared.Examine;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -35,9 +38,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
-
-        [DataField("pressureResistance")]
-        private float _pressureResistance = Atmospherics.OneAtmosphere * 5f;
 
         private int _integrity = 3;
 
@@ -269,7 +269,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.Delete();
+                Owner.QueueDelete();
                 return;
             }
 
@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
 
-                    Owner.Delete();
+                    Owner.QueueDelete();
                     return;
                 }
 

@@ -47,6 +47,7 @@
   - listplayers
   - tp
   - tpto
+  - respawn
 
 - Flags: SERVER
   Commands:

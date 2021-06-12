@@ -1,7 +1,7 @@
 using System;
-using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Server.Chemistry.Components;
+using Content.Server.Explosion;
+using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

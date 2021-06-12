@@ -8,9 +8,10 @@
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     state: stunbaton_off
   - type: Stunbaton
-    damage: 1
-    range: 0.75
-    arcwidth: 0
+  - type: MeleeWeapon
+    damage: 10
+    range: 1.5
+    arcwidth: 60
     arc: default
   - type: PowerCellSlot
     slotSize: Medium
@@ -34,10 +35,11 @@
       sprite: Objects/Weapons/Melee/flash.rsi
       state: flash
     - type: Flash
+    - type: MeleeWeapon
       damage: 0
-      cooldownTime: 1
-      arc: smash
-      hitSound: /Audio/Weapons/flash.ogg
+      range: 1
+      arcWidth: 10
+      arc: default
     - type: Item
       size: 2
       sprite: Objects/Weapons/Melee/flash.rsi

@@ -125,7 +125,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
-      name: "slips"
+      id: "slips"
       hard: false
       layer:
         - SmallImpassable
