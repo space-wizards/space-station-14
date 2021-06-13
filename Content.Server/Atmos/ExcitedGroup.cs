@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.Atmos.Components;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.ViewVariables;

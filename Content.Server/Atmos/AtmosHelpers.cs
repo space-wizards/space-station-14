@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;

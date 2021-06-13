@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Alert;
+using Content.Server.Atmos.Components;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;

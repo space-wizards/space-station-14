@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Body.Circulatory;
 using Content.Server.Body.Respiratory;
 using Content.Server.GameObjects.Components.Atmos;

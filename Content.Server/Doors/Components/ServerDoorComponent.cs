@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Access;
 using Content.Server.Access.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Construction.Components;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Hands.Components;

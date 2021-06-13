@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameTicking;
 using Content.Shared.Atmos;
