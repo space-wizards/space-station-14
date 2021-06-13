@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using System;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Shared.Hands
 {
     public abstract class SharedHandsSystem : EntitySystem
     {
