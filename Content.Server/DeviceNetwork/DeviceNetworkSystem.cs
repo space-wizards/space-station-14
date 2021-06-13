@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -6,10 +6,10 @@ using Robust.Shared.Random;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
     [UsedImplicitly]
-    public class ConnectionNetworkSystem : EntitySystem
+    public class DeviceNetworkSystem : EntitySystem
     {
 
         [Dependency] private readonly IRobustRandom _random = default!;

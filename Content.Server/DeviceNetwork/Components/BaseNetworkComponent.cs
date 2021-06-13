@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Components
 {
     public abstract class BaseNetworkComponent : Component
     {

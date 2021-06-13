@@ -1,10 +1,7 @@
-
-
-using Content.Server.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
     public class DummyNetworkComponent : BaseNetworkComponent

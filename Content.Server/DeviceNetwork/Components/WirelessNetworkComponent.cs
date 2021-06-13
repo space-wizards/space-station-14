@@ -1,8 +1,7 @@
 using Robust.Shared.GameObjects;
-using Content.Server.DeviceNetwork;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Components
 {
     /// <summary>
     /// Sends and receives device network messages wirelessly. Devices sending and receiving need to be in range and on the same frequency.
