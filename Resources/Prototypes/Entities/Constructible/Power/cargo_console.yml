@@ -44,6 +44,7 @@
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic
+      - Materialplasmaglass
       - MaterialPlasteel
       - EngineSingularityEmitter
       - EngineSingularityCollector

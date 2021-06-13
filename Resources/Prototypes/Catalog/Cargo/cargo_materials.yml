@@ -45,3 +45,15 @@
   cost: 6000
   category: Materials
   group: market
+
+- type: cargoProduct
+  name: "crate of plasma glass sheets"
+  id: Materialplasmaglass
+  description: "90 sheets of plasma glass."
+  icon:
+    sprite: Objects/Materials/Sheets/glass.rsi
+    state: pglass_3
+  product: CrateMaterialSheetPGlass
+  cost: 6000
+  category: Materials
+  group: market
