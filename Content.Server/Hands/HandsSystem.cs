@@ -108,7 +108,7 @@ namespace Content.Server.Hands
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stackComp, 1, playerEnt.Transform.Coordinates);
+                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
 
                 if (splitStack == null)
                     return false;
