@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components
+namespace Content.Shared.Atmos.Components
 {
     public class SharedGasAnalyzerComponent : Component
     {
@@ -82,5 +82,20 @@ namespace Content.Shared.GameObjects.Components
                 Danger = danger;
             }
         }
+    }
+
+    [NetSerializable]
+    [Serializable]
+    public enum GasAnalyzerVisuals
+    {
+        VisualState,
+    }
+
+    [NetSerializable]
+    [Serializable]
+    public enum GasAnalyzerVisualState
+    {
+        Off,
+        Working,
     }
 }

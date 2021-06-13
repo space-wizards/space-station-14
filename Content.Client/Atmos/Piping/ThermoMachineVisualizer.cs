@@ -1,5 +1,5 @@
 using System;
-using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 
 namespace Content.Client.Atmos.Piping

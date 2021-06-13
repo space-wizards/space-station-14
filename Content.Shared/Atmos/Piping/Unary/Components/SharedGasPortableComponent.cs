@@ -1,7 +1,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Atmos
+namespace Content.Shared.Atmos.Piping.Unary.Components
 {
         /// <summary>
         /// Used in <see cref="GasPortableVisualizer"/> to determine which visuals to update.

@@ -1,11 +1,12 @@
 #nullable enable
 using System.Collections.Generic;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.EntitySystems.Atmos
+namespace Content.Shared.Atmos
 {
     public sealed class GasOverlayChunk
     {

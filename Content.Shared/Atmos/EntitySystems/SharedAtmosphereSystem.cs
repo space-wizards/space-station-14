@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Shared.Atmos;
+using Content.Shared.Atmos.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.EntitySystems.Atmos
+namespace Content.Shared.Atmos.EntitySystems
 {
     public class SharedAtmosphereSystem : EntitySystem
     {

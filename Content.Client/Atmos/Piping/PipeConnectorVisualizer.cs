@@ -1,6 +1,6 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

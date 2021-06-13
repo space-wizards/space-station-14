@@ -3,7 +3,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Atmos
+namespace Content.Shared.Atmos.Piping.Binary.Components
 {
     /// <summary>
     /// Key representing which <see cref="BoundUserInterface"/> is currently open.

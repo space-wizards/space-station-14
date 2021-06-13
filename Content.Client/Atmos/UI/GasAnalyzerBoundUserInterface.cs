@@ -1,7 +1,7 @@
 ﻿using Content.Client.GameObjects.Components.Atmos;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.SharedGasAnalyzerComponent;
+using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Client.Atmos.UI
 {

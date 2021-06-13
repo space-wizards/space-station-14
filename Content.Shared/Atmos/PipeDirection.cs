@@ -1,10 +1,10 @@
 #nullable enable
+using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using System;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Atmos
+namespace Content.Shared.Atmos
 {
     [Serializable, NetSerializable]
     public enum PipeVisuals

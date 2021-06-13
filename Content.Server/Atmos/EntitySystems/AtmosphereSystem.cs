@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Components;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

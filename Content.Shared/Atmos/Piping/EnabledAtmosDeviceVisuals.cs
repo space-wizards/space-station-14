@@ -1,7 +1,7 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Atmos
+namespace Content.Shared.Atmos.Piping
 {
     [Serializable, NetSerializable]
     public enum OutletInjectorVisuals

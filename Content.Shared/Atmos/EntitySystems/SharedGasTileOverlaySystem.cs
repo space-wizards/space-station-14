@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.EntitySystems.Atmos
+namespace Content.Shared.Atmos.EntitySystems
 {
     public abstract class SharedGasTileOverlaySystem : EntitySystem
     {

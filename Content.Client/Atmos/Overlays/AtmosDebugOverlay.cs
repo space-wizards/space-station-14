@@ -1,6 +1,6 @@
 ﻿using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;

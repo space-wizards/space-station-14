@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;

@@ -1,5 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Atmos;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

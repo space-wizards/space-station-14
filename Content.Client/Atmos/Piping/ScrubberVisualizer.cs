@@ -1,4 +1,5 @@
-using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Atmos.Piping.Unary.Visuals;
+using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 

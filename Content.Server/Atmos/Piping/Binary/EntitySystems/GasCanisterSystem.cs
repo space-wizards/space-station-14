@@ -8,7 +8,7 @@ using Content.Server.NodeContainer;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;

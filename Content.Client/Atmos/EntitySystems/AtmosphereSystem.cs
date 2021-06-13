@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.EntitySystems.Atmos;
+﻿using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
 
 namespace Content.Client.Atmos.EntitySystems

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;

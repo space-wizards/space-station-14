@@ -5,7 +5,7 @@ using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

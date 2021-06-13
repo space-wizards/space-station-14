@@ -1,20 +1,21 @@
 using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Atmos
+namespace Content.Shared.Atmos.Piping.Unary.Visuals
 {
     [Serializable, NetSerializable]
-    public enum VentPumpVisuals : byte
+    public enum ScrubberVisuals : byte
     {
         State,
     }
 
     [Serializable, NetSerializable]
-    public enum VentPumpState : byte
+    public enum ScrubberState : byte
     {
         Off,
-        In,
-        Out,
+        Scrub,
+        Siphon,
+        WideScrub,
         Welded,
     }
 }

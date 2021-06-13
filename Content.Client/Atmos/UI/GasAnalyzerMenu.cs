@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.GameObjects.Components.SharedGasAnalyzerComponent;
+using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Client.Atmos.UI
 {
