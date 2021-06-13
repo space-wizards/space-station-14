@@ -156,7 +156,7 @@ namespace Content.Server.Hands
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
                 !equipmentItem.Owner.TryGetComponent(out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("You have no {0} to take something out of!", SlotNames[equipmentSlot].ToLower()));
+                plyEnt.PopupMessage(Loc.GetString("comp-hands-smart-equip-invalid", ("equipment", SlotNames[equipmentSlot].ToLower())));
                 return;
             }
 
@@ -168,7 +168,7 @@ namespace Content.Server.Hands
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("There's nothing in your {0} to take out!", SlotNames[equipmentSlot].ToLower()));
+                    plyEnt.PopupMessage(Loc.GetString("comp-hands-smart-equip-empty", ("equipment", SlotNames[equipmentSlot].ToLower())));
                 }
                 else
                 {
