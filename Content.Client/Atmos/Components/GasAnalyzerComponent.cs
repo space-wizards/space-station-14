@@ -2,7 +2,6 @@ using Content.Client.Items.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos.Components;
-using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;

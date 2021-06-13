@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.GameObjects;
 using Content.Shared.NetIDs;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
