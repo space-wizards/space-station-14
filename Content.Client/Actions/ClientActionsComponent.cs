@@ -241,7 +241,7 @@ namespace Content.Client.Actions
             StopHighlightingItemSlots();
 
             // figure out if it's in hand or inventory and highlight it
-            foreach (var hand in _handsComponent!.Gui.Hands)
+            foreach (var hand in _handsComponent!.Gui!.Hands)
             {
                 if (hand.HeldItem != item || hand.HandButton == null) continue;
                 _highlightingItemSlots.Add(hand.HandButton);
