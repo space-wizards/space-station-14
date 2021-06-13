@@ -29,7 +29,7 @@ namespace Content.Client.Hands
 
         public override void OnRemove()
         {
-            Gui?.Dispose();
+            ClearGui();
             base.OnRemove();
         }
 
@@ -59,12 +59,30 @@ namespace Content.Client.Hands
             switch (message)
             {
                 case PlayerAttachedMsg:
-                    HandlePlayerAttachedMsg();
+                    SettupGui();
                     break;
                 case PlayerDetachedMsg:
-                    HandlePlayerDetachedMsg();
+                    ClearGui();
                     break;
             }
+        }
+
+        private void SettupGui()
+        {
+            if (Gui == null)
+            {
+                Gui = new HandsGui();
+                _gameHud.HandsContainer.AddChild(Gui);
+                Gui.HandClick += args => OnHandClick(args.HandClicked);
+                Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
+                UpdateHandsGuiState();
+            }
+        }
+
+        private void ClearGui()
+        {
+            Gui?.Dispose();
+            Gui = null;
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
@@ -153,25 +171,6 @@ namespace Content.Client.Hands
         public void UpdateHandsGuiState()
         {
             Gui?.SetState(GetHandsGuiState());
-        }
-
-        private void HandlePlayerAttachedMsg()
-        {
-            if (Gui == null)
-            {
-                Gui = new HandsGui();
-                _gameHud.HandsContainer.AddChild(Gui);
-                Gui.HandClick += args => OnHandClick(args.HandClicked);
-                Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
-                UpdateHandsGuiState();
-            }
-            Gui.Visible = true;
-        }
-
-        private void HandlePlayerDetachedMsg()
-        {
-            if (Gui != null)
-                Gui.Visible = false;
         }
 
         private HandsGuiState GetHandsGuiState()
