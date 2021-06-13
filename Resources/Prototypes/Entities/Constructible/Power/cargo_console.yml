@@ -45,6 +45,7 @@
       - cargo.materialglass
       - cargo.materialplastic
       - cargo.materialplasteel
+      - cargo.materialplasmaglass
       - cargo.enginesingularityemitter
       - cargo.enginesingularitycollector
       - cargo.enginesingularitygenerator

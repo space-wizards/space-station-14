@@ -8,10 +8,9 @@
           steps:
             - material: Steel
               amount: 2
-              doAfter: 2
             - material: Glass
               amount: 2
-            - material: Plasma
+            - material: PlasmaGlass
               amount: 2
               doAfter: 3
 
