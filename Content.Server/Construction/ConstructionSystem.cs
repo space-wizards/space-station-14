@@ -170,19 +170,17 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = new StackSplitEvent()
-                                {Amount = materialStep.Amount, SpawnPosition = user.ToCoordinates()};
-                            RaiseLocalEvent(entity.Uid, splitStack);
+                            var splitStack = Get<StackSystem>().Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
 
-                            if (splitStack.Result == null)
+                            if (splitStack == null)
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack.Result))
+                                if (!container.Insert(splitStack))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Result))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack))
                                     continue;
 
                             handled = true;

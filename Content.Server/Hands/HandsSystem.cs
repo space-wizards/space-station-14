@@ -108,13 +108,12 @@ namespace Content.Server.Hands
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = new StackSplitEvent() { Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates };
-                RaiseLocalEvent(throwEnt.Uid, splitStack);
+                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stackComp, 1, playerEnt.Transform.Coordinates);
 
-                if (splitStack.Result == null)
+                if (splitStack == null)
                     return false;
 
-                throwEnt = splitStack.Result;
+                throwEnt = splitStack;
             }
             else if (!hands.TryDropEntityToFloor(throwEnt))
                 return false;
