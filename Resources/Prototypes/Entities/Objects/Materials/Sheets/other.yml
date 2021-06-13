@@ -92,15 +92,6 @@
       - plasma
       - plasma_2
       - plasma_3
-  - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Plasma
-        Quantity: 10
-  - type: Tag
-    tags:
-    - Grindable
 
 - type: entity
   parent: SheetPlasma
