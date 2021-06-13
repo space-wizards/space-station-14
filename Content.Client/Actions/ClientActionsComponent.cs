@@ -194,33 +194,33 @@ namespace Content.Client.Actions
             switch (_ui.SelectingTargetFor.Action.BehaviorType)
             {
                 case BehaviorType.TargetPoint:
+                {
+                    // send our action to the server, we chose our target
+                    SendNetworkMessage(attempt.PerformTargetPointActionMessage(args));
+                    if (!attempt.Action.Repeat)
                     {
-                        // send our action to the server, we chose our target
-                        SendNetworkMessage(attempt.PerformTargetPointActionMessage(args));
-                        if (!attempt.Action.Repeat)
-                        {
-                            _ui.StopTargeting();
-                        }
-                        return true;
+                        _ui.StopTargeting();
                     }
+                    return true;
+                }
                 // target the currently hovered entity, if there is one
                 case BehaviorType.TargetEntity when args.EntityUid != EntityUid.Invalid:
+                {
+                    // send our action to the server, we chose our target
+                    SendNetworkMessage(attempt.PerformTargetEntityActionMessage(args));
+                    if (!attempt.Action.Repeat)
                     {
-                        // send our action to the server, we chose our target
-                        SendNetworkMessage(attempt.PerformTargetEntityActionMessage(args));
-                        if (!attempt.Action.Repeat)
-                        {
-                            _ui.StopTargeting();
-                        }
-                        return true;
+                        _ui.StopTargeting();
                     }
+                    return true;
+                }
                 // we are supposed to target an entity but we didn't click it
                 case BehaviorType.TargetEntity when args.EntityUid == EntityUid.Invalid:
-                    {
-                        if (attempt.Action.DeselectWhenEntityNotClicked)
-                            _ui.StopTargeting();
-                        return false;
-                    }
+                {
+                    if (attempt.Action.DeselectWhenEntityNotClicked)
+                        _ui.StopTargeting();
+                    return false;
+                }
                 default:
                     _ui.StopTargeting();
                     return false;
@@ -240,19 +240,12 @@ namespace Content.Client.Actions
         {
             StopHighlightingItemSlots();
 
-            if (_handsComponent?.Gui == null)
-                return;
-
             // figure out if it's in hand or inventory and highlight it
-            foreach (var hand in _handsComponent.Gui.Hands)
+            foreach (var hand in _handsComponent!.Gui.Hands)
             {
-                var handButton = hand.HandButton;
-                if (hand.HeldItem != item || handButton == null)
-                    continue;
-
-                _highlightingItemSlots.Add(handButton);
-                handButton.Highlight(true);
-
+                if (hand.HeldItem != item || hand.HandButton == null) continue;
+                _highlightingItemSlots.Add(hand.HandButton);
+                hand.HandButton.Highlight(true);
                 return;
             }
 
