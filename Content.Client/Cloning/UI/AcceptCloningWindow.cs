@@ -34,7 +34,7 @@ namespace Content.Client.Cloning.UI
                                 {
                                     (AcceptButton = new Button
                                     {
-                                        Text = Loc.GetString("generic-yes"),
+                                        Text = Loc.GetString("accept-cloning-window-accept-button"),
                                     }),
 
                                     (new Control()
@@ -44,7 +44,7 @@ namespace Content.Client.Cloning.UI
 
                                     (DenyButton = new Button
                                     {
-                                        Text = Loc.GetString("generic-no"),
+                                        Text = Loc.GetString("accept-cloning-window-deny-button"),
                                     })
                                 }
                             },

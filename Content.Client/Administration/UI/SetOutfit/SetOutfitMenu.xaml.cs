@@ -28,7 +28,7 @@ namespace Content.Client.Administration.UI.SetOutfit
 
             Title = Loc.GetString("set-outfit-menu-title");
 
-            ConfirmButton.Text = Loc.GetString("generic-confirm");
+            ConfirmButton.Text = Loc.GetString("set-outfit-menu-confirm-button");
             ConfirmButton.OnPressed += ConfirmButtonOnOnPressed;
             SearchBar.OnTextChanged += SearchBarOnOnTextChanged;
             OutfitList.OnItemSelected += OutfitListOnOnItemSelected;

@@ -79,7 +79,7 @@ namespace Content.Client.Gravity
             };
             Status = new Label
             {
-                Text = $"{Loc.GetString("gravity-generator-window-status-label")} {Loc.GetString(Owner.IsOn ? "generic-on" : "generic-off")}",
+                Text = $"{Loc.GetString("gravity-generator-window-status-label")} {Loc.GetString(Owner.IsOn ? "gravity-generator-window-is-on" : "gravity-generator-window-is-off")}",
                 FontColorOverride = Owner.IsOn ? Color.ForestGreen : Color.Red
             };
             Switch = new Button
@@ -97,7 +97,7 @@ namespace Content.Client.Gravity
 
         public void UpdateButton()
         {
-            Status.Text = $"{Loc.GetString("gravity-generator-window-status-label")} {Loc.GetString(Owner.IsOn ? "generic-on" : "generic-off")}";
+            Status.Text = $"{Loc.GetString("gravity-generator-window-status-label")} {Loc.GetString(Owner.IsOn ? "gravity-generator-window-is-on" : "gravity-generator-window-is-off")}";
             Status.FontColorOverride = Owner.IsOn ? Color.ForestGreen : Color.Red;
             Switch.Text = Loc.GetString(Owner.IsOn ? "gravity-generator-window-turn-off-button" : "gravity-generator-window-turn-on-button");
         }

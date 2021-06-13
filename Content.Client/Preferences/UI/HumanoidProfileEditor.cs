@@ -170,7 +170,7 @@ namespace Content.Client.Preferences.UI
 
             _sexMaleButton = new Button
             {
-                Text = Loc.GetString("generic-male"),
+                Text = Loc.GetString("humanoid-profile-editor-sex-male-button"),
                 Group = sexButtonGroup
             };
             _sexMaleButton.OnPressed += args =>
@@ -185,7 +185,7 @@ namespace Content.Client.Preferences.UI
 
             _sexFemaleButton = new Button
             {
-                Text = Loc.GetString("generic-female"),
+                Text = Loc.GetString("humanoid-profile-editor-sex-female-button"),
                 Group = sexButtonGroup
             };
             _sexFemaleButton.OnPressed += _ =>

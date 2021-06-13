@@ -109,7 +109,7 @@ namespace Content.Client.ParticleAccelerator.UI
             _offButton = new Button
             {
                 ToggleMode = false,
-                Text = Loc.GetString("generic-off"),
+                Text = Loc.GetString("particle-accelerator-control-menu-off-button"),
                 StyleClasses = {StyleBase.ButtonOpenRight},
             };
             _offButton.OnPressed += args => owner.SendEnableMessage(false);
@@ -117,7 +117,7 @@ namespace Content.Client.ParticleAccelerator.UI
             _onButton = new Button
             {
                 ToggleMode = false,
-                Text = Loc.GetString("generic-on"),
+                Text = Loc.GetString("particle-accelerator-control-menu-on-button"),
                 StyleClasses = {StyleBase.ButtonOpenLeft},
             };
             _onButton.OnPressed += args => owner.SendEnableMessage(true);

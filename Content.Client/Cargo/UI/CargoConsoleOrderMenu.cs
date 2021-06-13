@@ -49,7 +49,7 @@ namespace Content.Client.Cargo.UI
 
             SubmitButton = new Button()
             {
-                Text = Loc.GetString("generic-ok"),
+                Text = Loc.GetString("cargo-console-order-menu-submit-button"),
                 TextAlign = Label.AlignMode.Center,
             };
             vBox.AddChild(SubmitButton);

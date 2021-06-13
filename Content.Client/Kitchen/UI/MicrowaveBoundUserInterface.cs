@@ -233,7 +233,7 @@ namespace Content.Client.Kitchen.UI
 
                 StartButton = new Button
                 {
-                    Text = Loc.GetString("generic-start"),
+                    Text = Loc.GetString("microwave-menu-start-button"),
                     TextAlign = Label.AlignMode.Center,
                 };
 

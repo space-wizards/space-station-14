@@ -21,7 +21,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         protected override void EnteredTree()
         {
             _data = IoCManager.Resolve<IStationEventManager>().StationEvents.ToList();
-            _data.Add(_data.Any() ? Loc.GetString("station-events-window-not-loaded-text") : Loc.GetString("generic-random"));
+            _data.Add(_data.Any() ? Loc.GetString("station-events-window-not-loaded-text") : Loc.GetString("station-events-window-random-text"));
             foreach (var stationEvent in _data)
             {
                 EventsOptions.AddItem(stationEvent);

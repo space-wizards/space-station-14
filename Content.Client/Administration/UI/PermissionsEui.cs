@@ -207,7 +207,7 @@ namespace Content.Client.Administration.UI
 
                 al.AddChild(new Label {Text = name});
 
-                var titleControl = new Label {Text = admin.Title ?? Loc.GetString("generic-none").ToLowerInvariant()};
+                var titleControl = new Label {Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant()};
                 if (admin.Title == null) // none
                 {
                     titleControl.StyleClasses.Add(StyleBase.StyleClassItalic);
@@ -228,7 +228,7 @@ namespace Content.Client.Administration.UI
                 else
                 {
                     italic = true;
-                    rank = Loc.GetString("generic-none").ToLowerInvariant();
+                    rank = Loc.GetString("permissions-eui-edit-no-rank-text").ToLowerInvariant();
                 }
 
                 var rankControl = new Label {Text = rank};
@@ -248,7 +248,7 @@ namespace Content.Client.Administration.UI
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
 
-                var editButton = new Button {Text = Loc.GetString("generic-edit") };
+                var editButton = new Button {Text = Loc.GetString("permissions-eui-edit-title-button") };
                 editButton.OnPressed += _ => OnEditPressed(admin);
                 al.AddChild(editButton);
 
@@ -271,7 +271,7 @@ namespace Content.Client.Administration.UI
                     HorizontalExpand = true,
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
-                var editButton = new Button {Text = Loc.GetString("generic-edig")};
+                var editButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-rank-button") };
                 editButton.OnPressed += _ => OnEditRankPressed(kv);
                 _menu.AdminRanksList.AddChild(editButton);
 
@@ -374,7 +374,7 @@ namespace Content.Client.Administration.UI
 
                 TitleEdit = new LineEdit {PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-title-edit-placeholder") };
                 RankButton = new OptionButton();
-                SaveButton = new Button {Text = Loc.GetString("generic-save"), HorizontalAlignment = HAlignment.Right};
+                SaveButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-window-save-button"), HorizontalAlignment = HAlignment.Right};
 
                 RankButton.AddItem(Loc.GetString("permissions-eui-edit-admin-window-no-rank-button"), NoRank);
                 foreach (var (rId, rank) in ui._ranks)
@@ -455,7 +455,7 @@ namespace Content.Client.Administration.UI
                 if (data != null)
                 {
                     // show remove button.
-                    RemoveButton = new Button {Text = Loc.GetString("generic-remove")};
+                    RemoveButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-window-remove-flag-button") };
                     bottomButtons.AddChild(RemoveButton);
                 }
 
@@ -537,7 +537,7 @@ namespace Content.Client.Administration.UI
                 }
 
                 SaveButton = new Button {
-                    Text = Loc.GetString("generic-save"),
+                    Text = Loc.GetString("permissions-eui-menu-save-admin-rank-button"),
                     HorizontalAlignment = HAlignment.Right,
                     HorizontalExpand = true
                 };
@@ -569,7 +569,7 @@ namespace Content.Client.Administration.UI
                 if (data != null)
                 {
                     // show remove button.
-                    RemoveButton = new Button {Text = Loc.GetString("generic-remove")};
+                    RemoveButton = new Button {Text = Loc.GetString("permissions-eui-menu-remove-admin-rank-button") };
                     bottomButtons.AddChild(RemoveButton);
                 }
 

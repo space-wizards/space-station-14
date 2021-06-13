@@ -146,7 +146,7 @@ namespace Content.Client.Kitchen.UI
             //Looks like we have a beaker attached.
             if (reagents.Count <= 0)
             {
-                _menu.BeakerContentBox.BoxContents.AddItem(Loc.GetString("generic-empty"));
+                _menu.BeakerContentBox.BoxContents.AddItem(Loc.GetString("grinder-menu-beaker-content-box-is-empty"));
             }
             else
             {

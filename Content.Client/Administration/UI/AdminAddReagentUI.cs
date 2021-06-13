@@ -98,7 +98,7 @@ namespace Content.Client.Administration.UI
                                     ClipText = true
                                 }),
 
-                                (_addButton = new Button {Text = Loc.GetString("generic-add")}),
+                                (_addButton = new Button {Text = Loc.GetString("admin-add-reagent-eui-add-button")}),
                                 (_addCloseButton = new Button {Text = Loc.GetString("admin-add-reagent-eui-add-close-button")})
                             }
                         }

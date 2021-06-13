@@ -82,12 +82,12 @@ namespace Content.Client.Preferences.UI
                     {
                         HorizontalExpand = true,
                         HorizontalAlignment = HAlignment.Right,
-                        Text = Loc.GetString("generic-save"),
+                        Text = Loc.GetString("character-setup-gui-character-setup-save-button"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
                     }),
                     (CloseButton = new Button
                     {
-                        Text = Loc.GetString("generic-close"),
+                        Text = Loc.GetString("character-setup-gui-character-setup-close-button"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
                     })
                 }
@@ -262,7 +262,7 @@ namespace Content.Client.Preferences.UI
                 };
                 var deleteButton = new Button
                 {
-                    Text = Loc.GetString("generic-delete"),
+                    Text = Loc.GetString("character-setup-gui-character-picker-button-delete-button"),
                     Visible = !isSelectedCharacter,
                 };
                 deleteButton.OnPressed += _ =>

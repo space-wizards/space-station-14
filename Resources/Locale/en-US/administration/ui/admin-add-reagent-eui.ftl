@@ -5,6 +5,7 @@ admin-add-reagent-eui-reagent-id-edit = Reagent ID...
 admin-add-reagent-eui-amount-label = Amount:
 admin-add-reagent-eui-amount-edit = A number...
 admin-add-reagent-eui-add-close-button = Add & Close
+admin-add-reagent-eui-add-button = Add
 admin-add-reagent-eui-no-reagent-id-error = Must specify reagent ID
 admin-add-reagent-eui-reagent-does-not-exist-error = '{$reagent}' does not exist.
 admin-add-reagent-eui-no-reagent-amount-specified-error = Must specify reagent amount

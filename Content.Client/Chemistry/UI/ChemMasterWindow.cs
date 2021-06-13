@@ -357,7 +357,7 @@ namespace Content.Client.Chemistry.UI
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
                             MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
                             MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
-                            MakeChemButton(Loc.GetString("generic-all"), ReagentUnit.New(-1), reagent.ReagentId, false, StyleBase.ButtonOpenLeft),
+                            MakeChemButton(Loc.GetString("chem-master-window-buffer-all-amount"), ReagentUnit.New(-1), reagent.ReagentId, false, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }
@@ -413,7 +413,7 @@ namespace Content.Client.Chemistry.UI
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
                             MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
                             MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeChemButton(Loc.GetString("generic-all"), ReagentUnit.New(-1), reagent.ReagentId, true, StyleBase.ButtonOpenLeft),
+                            MakeChemButton(Loc.GetString("chem-master-window-buffer-all-amount"), ReagentUnit.New(-1), reagent.ReagentId, true, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }

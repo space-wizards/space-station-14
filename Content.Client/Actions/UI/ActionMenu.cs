@@ -83,17 +83,17 @@ namespace Content.Client.Actions.UI
                             {
                                 StyleClasses = { StyleNano.StyleClassActionSearchBox },
                                 HorizontalExpand = true,
-                                PlaceHolder = Loc.GetString("generic-search")
+                                PlaceHolder = Loc.GetString("ui-actionmenu-search-bar-placeholder-text")
                             }),
                             (_filterButton = new MultiselectOptionButton<string>()
                             {
-                                Label = Loc.GetString("generic-filter")
+                                Label = Loc.GetString("ui-actionmenu-filter-buttonr")
                             })
                         }
                     },
                     (_clearButton = new Button
                     {
-                        Text = Loc.GetString("generic-clear"),
+                        Text = Loc.GetString("ui-actionmenu-clear-button"),
                     }),
                     (_filterLabel = new Label()),
                     new ScrollContainer

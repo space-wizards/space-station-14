@@ -105,7 +105,7 @@ namespace Content.Client.Body.UI
                     (DisplayText = new Label
                     {
                         VerticalAlignment = VAlignment.Center,
-                        Text = Loc.GetString("generic-not-available-shorthand"),
+                        Text = Loc.GetString("surgery-window-not-available-button-text"),
                     }),
                     (new Control
                     {

@@ -57,7 +57,7 @@ namespace Content.Client.Cargo.UI
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _accountNameLabel = new Label {
-                Text = "generic-none" //Owner.Bank.Account.Name
+                Text = Loc.GetString("cargo-console-menu-account-name-none-text") //Owner.Bank.Account.Name
             };
             accountName.AddChild(accountNameLabel);
             accountName.AddChild(_accountNameLabel);
@@ -99,7 +99,7 @@ namespace Content.Client.Cargo.UI
             };
             _shuttleCapacityLabel = new Label
             {
-                Text = "0/20"
+                Text = $"{0}/{20}"
             };
             shuttleCapacity.AddChild(shuttleCapacityLabel);
             shuttleCapacity.AddChild(_shuttleCapacityLabel);
@@ -131,7 +131,7 @@ namespace Content.Client.Cargo.UI
             };
             _searchBar = new LineEdit
             {
-                PlaceHolder = Loc.GetString("generic-search"),
+                PlaceHolder = Loc.GetString("cargo-console-menu-search-bar-placeholder"),
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
@@ -270,7 +270,7 @@ namespace Content.Client.Cargo.UI
                 return;
             }
 
-            _categoryStrings.Add(Loc.GetString("generic-all"));
+            _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
@@ -305,11 +305,14 @@ namespace Content.Client.Cargo.UI
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = {Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0()},
+                    Icon = { Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0() },
                     ProductName =
                     {
-                        Text =
-                            $"{Owner.Market.GetProduct(order.ProductId)?.Name} (x{order.Amount}) by {order.Requester}"
+                        Text = Loc.GetString(
+                            "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                            ("productName", Owner.Market.GetProduct(order.ProductId)?.Name),
+                            ("orderAmount", order.Amount),
+                            ("orderRequester", order.Requester))
                     },
                     Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
                                                         ("reason", order.Reason))}
@@ -464,14 +467,14 @@ namespace Content.Client.Cargo.UI
 
             Approve = new Button
             {
-                Text = "Approve",
+                Text = Loc.GetString("cargo-console-menu-cargo-order-row-approve-button"),
                 StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Approve);
 
             Cancel = new Button
             {
-                Text = "Cancel",
+                Text = Loc.GetString("cargo-console-menu-cargo-order-row-cancel-button"),
                 StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Cancel);

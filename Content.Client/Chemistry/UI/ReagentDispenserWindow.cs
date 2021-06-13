@@ -108,9 +108,9 @@ namespace Content.Client.Chemistry.UI
                     {
                         Children =
                         {
-                            new Label {Text = $"{Loc.GetString("reagent-dispenser-window-container-label")} "},
-                            (ClearButton = new Button {Text = Loc.GetString("generic-clear"), StyleClasses = {StyleBase.ButtonOpenRight}}),
-                            (EjectButton = new Button {Text = Loc.GetString("generic-eject"), StyleClasses = {StyleBase.ButtonOpenLeft}})
+                            new Label {Text = Loc.GetString("reagent-dispenser-window-container-label") + " "},
+                            (ClearButton = new Button {Text = Loc.GetString("reagent-dispenser-window-clear-button"), StyleClasses = {StyleBase.ButtonOpenRight}}),
+                            (EjectButton = new Button {Text = Loc.GetString("reagent-dispenser-window-eject-button"), StyleClasses = {StyleBase.ButtonOpenLeft}})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
@@ -304,7 +304,7 @@ namespace Content.Client.Chemistry.UI
                             },
                             new Label
                             {
-                                Text = $"{reagent.Quantity}u",
+                                Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
                                 StyleClasses = {StyleNano.StyleClassPowerStateGood}
                             }
                         }
@@ -319,7 +319,7 @@ namespace Content.Client.Chemistry.UI
                             new Label {Text = $"{name}: "},
                             new Label
                             {
-                                Text = $"{reagent.Quantity}u",
+                                Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
                                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             }
                         }

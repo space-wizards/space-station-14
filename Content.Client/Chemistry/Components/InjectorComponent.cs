@@ -71,9 +71,9 @@ namespace Content.Client.Chemistry.Components
                 //Update current volume and injector state
                 var modeStringLocalized = _parent.CurrentMode switch
                 {
-                    InjectorToggleMode.Draw => Loc.GetString("injector-draw-textaw"),
+                    InjectorToggleMode.Draw => Loc.GetString("injector-draw-text"),
                     InjectorToggleMode.Inject => Loc.GetString("injector-inject-text"),
-                    _ => Loc.GetString("generic-invalid")
+                    _ => Loc.GetString("injector-invalid-injector-toggle-mode")
                 };
                 _label.SetMarkup(Loc.GetString("injector-volume-label",
                                                ("currentVolume", _parent.CurrentVolume),
