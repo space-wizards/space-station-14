@@ -121,6 +121,7 @@ namespace Content.Server.Hands.Components
         {
             await _entitySystemManager.GetEntitySystem<InteractionSystem>()
                 .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
+        }
 
         protected override void DoActivate(IEntity heldEntity)
         {
