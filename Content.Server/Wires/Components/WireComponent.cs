@@ -44,8 +44,8 @@ namespace Content.Server.Wires.Components
             var droppedEnt = Owner.EntityManager.SpawnEntity(_wireDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
-            if (droppedEnt.HasComponent<StackComponent>())
-                Owner.EntityManager.EventBus.RaiseLocalEvent(droppedEnt.Uid, new StackChangeCountEvent(1), false);
+            if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
+                EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, stack, 1);
 
             return true;
         }

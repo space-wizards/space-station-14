@@ -49,7 +49,7 @@ namespace Content.Server.Cloning
                 mindComp.Mind != null)
                 return;
 
-            mind.TransferTo(entity);
+            mind.TransferTo(entity, ghostCheckOverride: true);
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
         }

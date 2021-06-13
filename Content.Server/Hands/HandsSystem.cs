@@ -188,13 +188,12 @@ namespace Content.Server.Hands
             }
             else
             {
-                var splitStack = new StackSplitEvent() { Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates };
-                RaiseLocalEvent(throwEnt.Uid, splitStack);
+                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stackComp, 1, playerEnt.Transform.Coordinates);
 
-                if (splitStack.Result == null)
+                if (splitStack == null)
                     return false;
 
-                throwEnt = splitStack.Result;
+                throwEnt = splitStack;
             }
 
             var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;
