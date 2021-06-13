@@ -8,7 +8,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Hands
 {
     internal sealed class HandsSystem : SharedHandsSystem
     {
