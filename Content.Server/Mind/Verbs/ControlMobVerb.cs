@@ -56,7 +56,7 @@ namespace Content.Server.Mind.Verbs
             var targetMind = target.GetComponent<MindComponent>();
 
             targetMind.Mind?.TransferTo(null);
-            userMind?.TransferTo(target);
+            userMind?.TransferTo(target, ghostCheckOverride: true);
         }
     }
 }
