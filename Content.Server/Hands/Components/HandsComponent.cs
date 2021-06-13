@@ -120,8 +120,7 @@ namespace Content.Server.Hands.Components
         protected override async void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity)
         {
             await _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InteractUsingRanged(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
-        }
+                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
 
         protected override void DoActivate(IEntity heldEntity)
         {
