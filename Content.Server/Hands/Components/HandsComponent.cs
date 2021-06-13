@@ -140,7 +140,7 @@ namespace Content.Server.Hands.Components
             var pickupDirection = Owner.Transform.WorldPosition;
 
             var outermostEntity = entity;
-            while (outermostEntity.TryGetContainer(out var container))
+            while (outermostEntity.TryGetContainer(out var container)) //TODO: Use WorldPosition instead of this loop
                 outermostEntity = container.Owner;
 
             var initialPosition = outermostEntity.Transform.Coordinates;
