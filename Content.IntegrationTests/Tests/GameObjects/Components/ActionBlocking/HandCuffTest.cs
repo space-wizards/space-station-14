@@ -1,16 +1,16 @@
 #nullable enable
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Client.GameObjects.Components.Items;
-using Content.Server.GameObjects.Components.ActionBlocking;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Server.Cuffs.Components;
+using Content.Server.Hands.Components;
+using Content.Shared.Body.Components;
 using NUnit.Framework;
 using Robust.Server.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using HandsComponent = Content.Client.Hands.HandsComponent;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 {

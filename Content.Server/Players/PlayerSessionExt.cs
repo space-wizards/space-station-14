@@ -1,4 +1,4 @@
-﻿using Content.Shared.Network.NetMessages;
+﻿using Content.Shared.GameWindow;
 using Robust.Server.Player;
 
 namespace Content.Server.Players

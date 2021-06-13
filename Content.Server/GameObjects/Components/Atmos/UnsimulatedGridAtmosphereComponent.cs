@@ -2,7 +2,7 @@
 using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;

@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Text;
 using Content.Server.Administration;
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
+using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;

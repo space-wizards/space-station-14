@@ -1,4 +1,4 @@
-using Content.Server.Interfaces.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
             var chat = IoCManager.Resolve<IChatManager>();
 
             chat.SendAdminDeadChat(player, message);
-            
+
         }
     }
 }

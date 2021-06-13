@@ -2,11 +2,11 @@
 using System;
 using Content.Server.Atmos;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
-using Content.Shared.GameObjects.EntitySystems.ActionBlocker;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
