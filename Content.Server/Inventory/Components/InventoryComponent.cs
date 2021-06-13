@@ -515,61 +515,59 @@ namespace Content.Server.Inventory.Components
             switch (msg.Updatetype)
             {
                 case ClientInventoryUpdate.Equip:
+                {
+                    var hands = Owner.GetComponent<HandsComponent>();
+                    var activeHand = hands.ActiveHand;
+                    var activeItem = hands.GetActiveHand;
+                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? clothing))
                     {
-                        if (!Owner.TryGetComponent(out HandsComponent? hands))
-                            return;
-
-                        if (!hands.TryGetActiveHeldEntity(out var heldEntity))
-                            return;
-
-                        if (!heldEntity.TryGetComponent(out ItemComponent? item))
-                            return;
-
-                        if (!hands.TryDropNoInteraction())
-                            return;
-
-                        if (!Equip(msg.Inventoryslot, item, true, out _))
-                            hands.PutInHand(item);
-
-                        break;
+                        hands.TryDropNoInteraction();
+                        if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
+                        {
+                            hands.PutInHand(clothing);
+                            Owner.PopupMessageCursor(reason);
+                        }
                     }
+
+                    break;
+                }
                 case ClientInventoryUpdate.Use:
+                {
+                    var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                    var hands = Owner.GetComponent<HandsComponent>();
+                    var activeHand = hands.GetActiveHand;
+                    var itemContainedInSlot = GetSlotItem(msg.Inventoryslot);
+                    if (itemContainedInSlot != null)
                     {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        var hands = Owner.GetComponent<HandsComponent>();
-                        var activeHand = hands.GetActiveHand;
-                        var itemContainedInSlot = GetSlotItem(msg.Inventoryslot);
-                        if (itemContainedInSlot != null)
+                        if (activeHand != null)
                         {
-                            if (activeHand != null)
-                            {
-                                await interactionSystem.InteractUsing(Owner, activeHand.Owner, itemContainedInSlot.Owner,
-                                    new EntityCoordinates());
-                            }
-                            else if (Unequip(msg.Inventoryslot))
-                            {
-                                hands.PutInHand(itemContainedInSlot);
-                            }
+                            await interactionSystem.InteractUsing(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                                new EntityCoordinates());
                         }
-
-                        break;
+                        else if (Unequip(msg.Inventoryslot))
+                        {
+                            hands.PutInHand(itemContainedInSlot);
+                        }
                     }
+
+                    break;
+                }
                 case ClientInventoryUpdate.Hover:
+                {
+                    var hands = Owner.GetComponent<HandsComponent>();
+                    var activeHand = hands.GetActiveHand;
+                    if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
-                        var hands = Owner.GetComponent<HandsComponent>();
-                        var activeHand = hands.GetActiveHand;
-                        if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
-                        {
-                            var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
-                            _hoverEntity =
-                                new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
-                                    (activeHand.Owner.Uid, canEquip));
+                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
+                        _hoverEntity =
+                            new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
+                                (activeHand.Owner.Uid, canEquip));
 
-                            Dirty();
-                        }
-
-                        break;
+                        Dirty();
                     }
+
+                    break;
+                }
             }
         }
 
@@ -701,7 +699,7 @@ namespace Content.Server.Inventory.Components
 
                 var command = new SetOutfitCommand();
                 var host = IoCManager.Resolve<IServerConsoleHost>();
-                var args = new string[] { entityId };
+                var args = new string[] {entityId};
                 var session = user.PlayerSession();
                 command.Execute(new ConsoleShell(host, session), $"{command.Command} {entityId}", args);
             }
