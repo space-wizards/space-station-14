@@ -51,7 +51,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.EntryPoint
+namespace Content.Client.Entry
 {
     public class EntryPoint : GameClient
     {

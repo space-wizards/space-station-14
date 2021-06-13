@@ -1,11 +1,10 @@
 #nullable enable
-using Content.Shared.Notification;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 
-namespace Content.Shared
+namespace Content.Shared.Notification.Managers
 {
     public abstract class SharedNotifyManager : ISharedNotifyManager
     {

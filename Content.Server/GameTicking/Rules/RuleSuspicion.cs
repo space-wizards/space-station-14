@@ -7,6 +7,7 @@ using Content.Server.Suspicion;
 using Content.Server.Suspicion.EntitySystems;
 using Content.Server.Suspicion.Roles;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using Robust.Server.Player;
 using Robust.Shared.Audio;

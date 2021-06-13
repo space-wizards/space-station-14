@@ -2,7 +2,7 @@
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Notification
+namespace Content.Shared.Notification.Managers
 {
     /// <summary>
     /// Allows the ability to create floating text messages at locations in the world.

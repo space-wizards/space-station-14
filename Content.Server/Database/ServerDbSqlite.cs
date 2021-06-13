@@ -10,6 +10,7 @@ using Content.Server.IP;
 using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
