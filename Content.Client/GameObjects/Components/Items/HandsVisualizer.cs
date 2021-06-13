@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;

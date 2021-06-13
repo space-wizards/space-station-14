@@ -1,5 +1,5 @@
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;

@@ -1,6 +1,7 @@
 using System;
 using Content.Client.CombatMode;
 using Content.Client.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
