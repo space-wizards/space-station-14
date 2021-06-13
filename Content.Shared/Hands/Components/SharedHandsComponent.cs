@@ -635,19 +635,22 @@ namespace Content.Shared.Hands.Components
         #region Hand Interactions
 
         /// <summary>
-        ///     Moves the active hand to the next hand.
+        ///     Get the name of the hand that a swap hands would result in.
         /// </summary>
-        public void SwapHands()
+        public bool TryGetSwapHandsResult([NotNullWhen(true)] out string? nextHand)
         {
-            if (!TryGetActiveHand(out var activeHand))
-                return;
+            nextHand = null;
+
+            if (!TryGetActiveHand(out var activeHand) || Hands.Count == 1)
+                return false;
 
             var newActiveIndex = Hands.IndexOf(activeHand) + 1;
             var finalHandIndex = Hands.Count - 1;
             if (newActiveIndex > finalHandIndex)
                 newActiveIndex = 0;
 
-            ActiveHand = ReadOnlyHands[newActiveIndex].Name;
+            nextHand = ReadOnlyHands[newActiveIndex].Name;
+            return true;
         }
 
         /// <summary>

@@ -16,21 +16,21 @@ namespace Content.Shared.Hands
             SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
-            SubscribeLocalEvent<RequestSwapHandsevent>(HandleSwapHands);
-            SubscribeNetworkEvent<RequestSwapHandsevent>(HandleSwapHands);
+            SubscribeLocalEvent<RequestSetHandEvent>(HandleSetHand);
+            SubscribeNetworkEvent<RequestSetHandEvent>(HandleSetHand);
 
             SubscribeLocalEvent<RequestDropHeldEntityEvent>(HandleDrop);
             SubscribeNetworkEvent<RequestDropHeldEntityEvent>(HandleDrop);
         }
 
-        private void HandleSwapHands(RequestSwapHandsevent msg, EntitySessionEventArgs eventArgs)
+        private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
 
             if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
                 return;
 
-            hands.SwapHands();
+            hands.ActiveHand = msg.HandName;
         }
 
         private void HandleDrop(RequestDropHeldEntityEvent msg, EntitySessionEventArgs eventArgs)
@@ -40,24 +40,39 @@ namespace Content.Shared.Hands
             if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
                 return;
 
-            hands.TryDropActiveHand(msg.DropTarget);
+            hands.TryDropHand(msg.HandName, msg.DropTarget);
         }
 
         protected abstract void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args);
     }
 
     [Serializable, NetSerializable]
-    public class RequestSwapHandsevent : EntityEventArgs
+    public class RequestSetHandEvent : EntityEventArgs
     {
+        /// <summary>
+        ///     The hand to be swapped to.
+        /// </summary>
+        public string HandName { get; }
+
+        public RequestSetHandEvent(string handName)
+        {
+            HandName = handName;
+        }
     }
 
     [Serializable, NetSerializable]
     public class RequestDropHeldEntityEvent : EntityEventArgs
     {
+        /// <summary>
+        ///     The hand to drop from.
+        /// </summary>
+        public string HandName { get; }
+
         public EntityCoordinates DropTarget { get; }
 
-        public RequestDropHeldEntityEvent(EntityCoordinates dropTarget)
+        public RequestDropHeldEntityEvent(string handName, EntityCoordinates dropTarget)
         {
+            HandName = handName;
             DropTarget = dropTarget;
         }
     }

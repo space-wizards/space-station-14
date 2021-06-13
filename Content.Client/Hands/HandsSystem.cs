@@ -31,12 +31,42 @@ namespace Content.Client.Hands
 
         private void SwapHandsPressed(ICommonSession? session)
         {
-            EntityManager.RaisePredictiveEvent(new RequestSwapHandsevent());
+            if (session == null)
+                return;
+
+            var player = session.AttachedEntity;
+
+            if (player == null)
+                return;
+
+            if (!player.TryGetComponent(out SharedHandsComponent? hands))
+                return;
+
+            if (!hands.TryGetSwapHandsResult(out var nextHand))
+                return;
+
+            EntityManager.RaisePredictiveEvent(new RequestSetHandEvent(nextHand));
         }
 
         private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            EntityManager.RaisePredictiveEvent(new RequestDropHeldEntityEvent(coords));
+            if (session == null)
+                return false;
+
+            var player = session.AttachedEntity;
+
+            if (player == null)
+                return false;
+
+            if (!player.TryGetComponent(out SharedHandsComponent? hands))
+                return false;
+
+            var activeHand = hands.ActiveHand;
+
+            if (activeHand == null)
+                return false;
+
+            EntityManager.RaisePredictiveEvent(new RequestDropHeldEntityEvent(activeHand, coords));
             return true;
         }
 
