@@ -188,13 +188,13 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, target.Name));
-                        source.PopupMessageCursor(Loc.GetString("You disarm {0}!", target.Name));
+                        source.PopupMessageOtherClients(Loc.GetString("comp-hands-player-witnessed-disarming", ("disarmer", source.Name), ("disarmed", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("comp-hands-player-disarmed-target", ("disarmed", target.Name)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, target.Name));
-                        source.PopupMessageCursor(Loc.GetString("You shove {0}!", target.Name));
+                        source.PopupMessageOtherClients(Loc.GetString("comp-hands-player-witnessed-shoving", ("shover", source.Name), ("shoved", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("comp-hands-player-shoved-target", ("shoved", target.Name)));
                     }
                 }
             }
