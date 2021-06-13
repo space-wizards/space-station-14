@@ -1,4 +1,5 @@
 using Content.Shared;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;

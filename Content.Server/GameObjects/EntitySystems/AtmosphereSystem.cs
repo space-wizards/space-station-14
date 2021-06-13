@@ -7,6 +7,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Maps;
 using JetBrains.Annotations;

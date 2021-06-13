@@ -6,6 +6,7 @@ using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Client.Resources;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.Graphics;

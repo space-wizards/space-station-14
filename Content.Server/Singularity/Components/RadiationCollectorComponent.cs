@@ -4,6 +4,7 @@ using Content.Server.Battery.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
