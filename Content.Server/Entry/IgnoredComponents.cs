@@ -1,5 +1,5 @@
 // ReSharper disable ArrangeTrailingCommaInMultilineLists
-namespace Content.Server.EntryPoint
+namespace Content.Server.Entry
 {
     public static class IgnoredComponents
     {

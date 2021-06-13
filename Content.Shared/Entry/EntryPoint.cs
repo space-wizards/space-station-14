@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.IoC;
 using Content.Shared.Localizations;
 using Content.Shared.Maps;
 using Robust.Shared.ContentPack;
@@ -13,7 +13,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared
+namespace Content.Shared.Entry
 {
     public class EntryPoint : GameShared
     {

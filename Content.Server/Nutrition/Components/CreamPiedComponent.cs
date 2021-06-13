@@ -1,6 +1,7 @@
 using Content.Server.Notification;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;

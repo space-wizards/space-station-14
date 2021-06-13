@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;

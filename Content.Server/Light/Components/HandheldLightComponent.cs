@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Component;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;

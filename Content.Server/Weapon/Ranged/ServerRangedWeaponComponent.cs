@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

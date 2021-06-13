@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.Links;
 using Content.Client.Stylesheets;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Client.Credits;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;

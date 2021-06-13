@@ -7,6 +7,7 @@ using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Targeting;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.HUD;
 using Content.Shared.Input;
 using Content.Shared.Targeting;

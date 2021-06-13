@@ -4,6 +4,7 @@ using Content.Client.HUD;
 using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Shared;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;

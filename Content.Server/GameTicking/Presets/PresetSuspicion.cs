@@ -8,6 +8,7 @@ using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Roles;

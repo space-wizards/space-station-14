@@ -2,7 +2,7 @@
 using System;
 using Robust.Shared.ContentPack;
 
-namespace Content.Shared
+namespace Content.Shared.Module
 {
     public abstract class SharedModuleTestingCallbacks : ModuleTestingCallbacks
     {

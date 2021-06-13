@@ -7,6 +7,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Atmos

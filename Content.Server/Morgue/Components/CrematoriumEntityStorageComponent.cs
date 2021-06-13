@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
