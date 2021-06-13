@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Animations;
-using Content.Client.GameObjects.Components.Items;
 using Content.Client.HUD;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;

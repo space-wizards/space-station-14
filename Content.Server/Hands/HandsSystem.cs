@@ -10,6 +10,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Throwing;
 using Content.Shared.Examine;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
