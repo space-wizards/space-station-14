@@ -11,6 +11,7 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Hands.Components;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {
