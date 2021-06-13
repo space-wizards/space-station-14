@@ -5,11 +5,10 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 
-namespace Content.Client.GameObjects.Components.Items
+namespace Content.Client.Hands
 {
     [UsedImplicitly]
     public class HandsVisualizer : AppearanceVisualizer
