@@ -1,15 +1,14 @@
-﻿using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
+﻿using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Robust.Client.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Enums;
-using System;
 
-namespace Content.Client.Atmos
+namespace Content.Client.Atmos.Overlays
 {
     public class AtmosDebugOverlay : Overlay
     {

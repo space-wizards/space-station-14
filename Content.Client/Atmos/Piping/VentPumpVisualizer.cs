@@ -2,7 +2,7 @@ using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Atmos.Piping
+namespace Content.Client.Atmos.Piping
 {
     [UsedImplicitly]
     public class VentPumpVisualizer : AppearanceVisualizer

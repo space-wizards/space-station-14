@@ -11,7 +11,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.SharedGasAnalyzerComponent;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.Atmos.UI
 {
     public class GasAnalyzerWindow : BaseWindow
     {

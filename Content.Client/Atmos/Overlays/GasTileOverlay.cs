@@ -1,12 +1,12 @@
-using Content.Client.GameObjects.EntitySystems;
-using Robust.Shared.Enums;
+using Content.Client.Atmos.EntitySystems;
 using Robust.Client.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Atmos
+namespace Content.Client.Atmos.Overlays
 {
     public class GasTileOverlay : Overlay
     {

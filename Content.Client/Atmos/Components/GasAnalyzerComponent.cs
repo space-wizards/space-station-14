@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.Atmos.Components
 {
     [RegisterComponent]
     internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus

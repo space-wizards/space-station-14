@@ -10,9 +10,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Atmos.Piping
+namespace Content.Client.Atmos.Piping
 {
     [UsedImplicitly]
     public class PipeConnectorVisualizer : AppearanceVisualizer, ISerializationHooks

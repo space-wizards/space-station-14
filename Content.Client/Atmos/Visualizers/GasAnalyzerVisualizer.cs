@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
     public class GasAnalyzerVisualizer : AppearanceVisualizer

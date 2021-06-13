@@ -2,13 +2,13 @@ using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 
-namespace Content.Client.GameObjects.Components.Atmos.Piping
+namespace Content.Client.Atmos.Piping
 {
     [UsedImplicitly]
-    public class ThermoMachineVisualizer : EnabledAtmosDeviceVisualizer
+    public class PressurePumpVisualizer : EnabledAtmosDeviceVisualizer
     {
         protected override object LayerMap => Layers.Enabled;
-        protected override Enum DataKey => ThermoMachineVisuals.Enabled;
+        protected override Enum DataKey => PressurePumpVisuals.Enabled;
 
         enum Layers
         {

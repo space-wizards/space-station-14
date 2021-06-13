@@ -2,7 +2,7 @@ using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 
-namespace Content.Client.GameObjects.Components.Atmos.Piping
+namespace Content.Client.Atmos.Piping
 {
     [UsedImplicitly]
     public class OutletInjectorVisualizer : EnabledAtmosDeviceVisualizer

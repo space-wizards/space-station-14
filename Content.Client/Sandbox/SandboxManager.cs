@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Client.HUD;
 using Content.Client.Markers;
 using Content.Client.UserInterface;

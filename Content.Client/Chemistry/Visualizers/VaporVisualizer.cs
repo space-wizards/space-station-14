@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -8,7 +7,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.Chemistry.Visualizers
 {
     [UsedImplicitly]
     public class VaporVisualizer : AppearanceVisualizer, ISerializationHooks

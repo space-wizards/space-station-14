@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
     public class AtmosphereSystem : SharedAtmosphereSystem

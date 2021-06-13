@@ -1,9 +1,8 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
-using Content.Client.Atmos;
-using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -11,7 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.EntitySystems
+namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem, IResettingEntitySystem

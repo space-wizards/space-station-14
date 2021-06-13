@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Atmos
+namespace Content.Client.Atmos.UI
 {
     /// <summary>
     /// Initializes a <see cref="GasCanisterWindow"/> and updates it when new server messages are received.

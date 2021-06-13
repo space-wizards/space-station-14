@@ -2,7 +2,6 @@
 // Used to warn the player in big red letters in debug mode
 using System;
 using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Markers;
 using Content.Client.Notifications.Managers;
 using Content.Shared.GameObjects.Components;
