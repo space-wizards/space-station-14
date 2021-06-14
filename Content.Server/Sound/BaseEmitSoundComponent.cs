@@ -11,8 +11,7 @@ namespace Content.Server.Sound
     /// </summary>
     public abstract class BaseEmitSoundComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("sound")] public string? _soundName;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("variation")] public float _pitchVariation;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("soundCollection")] public string? _soundCollectionName;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("variation")] public float PitchVariation { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("soundCollection")] public string? SoundCollectionName { get; set; }
     }
 }
