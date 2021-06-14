@@ -82,7 +82,8 @@ namespace Content.Client.Atmos.UI
 
         public void SetReleasePressure(float pressure)
         {
-            ReleasePressureSlider.SetValueWithoutEvent(pressure);
+            if(!ReleasePressureSlider.Grabbed)
+                ReleasePressureSlider.SetValueWithoutEvent(pressure);
             ReleasePressureLabel.Text = Loc.GetString("comp-gas-canister-ui-pressure", ("pressure", Math.Round(pressure)));
         }
 
