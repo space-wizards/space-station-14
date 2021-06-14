@@ -21,6 +21,7 @@
         pipeDirection: None
         connectionsEnabled: false
         needAnchored: false
+        rotationsEnabled: false
   - type: GasTank
   - type: ItemActions
     actions:

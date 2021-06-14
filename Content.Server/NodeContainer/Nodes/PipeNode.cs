@@ -1,9 +1,9 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("connectToContainedEntities")]
-        public bool ConnectToContainedEntities { get; private set; } = false;
+        public bool ConnectToContainedEntities { get; set; } = false;
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
@@ -62,10 +62,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             set
             {
                 _connectionsEnabled = value;
-
                 RefreshNodeGroup();
             }
         }
+
+        [DataField("rotationsEnabled")]
+        public bool RotationsEnabled { get; set; } = true;
 
         /// <summary>
         ///     The <see cref="IPipeNet"/> this pipe is a part of. Set to <see cref="PipeNet.NullNet"/> when not in an <see cref="IPipeNet"/>.
@@ -145,6 +147,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         void IRotatableNode.RotateEvent(RotateEvent ev)
         {
+            if (!RotationsEnabled) return;
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
             RefreshNodeGroup();
@@ -167,7 +170,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 }
             }
 
-            if (!ConnectToContainedEntities || !Owner.TryGetComponent(out ContainerManagerComponent? containerManager))
+            if (!ConnectionsEnabled || !ConnectToContainedEntities || !Owner.TryGetComponent(out ContainerManagerComponent? containerManager))
                 yield break;
 
             // TODO ATMOS Kill it with fire.

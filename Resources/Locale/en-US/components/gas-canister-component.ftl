@@ -1,5 +1,4 @@
 comp-gas-canister-ui-canister-status = Canister Status
-comp-gas-canister-ui-canister-label = Canister Label:
 comp-gas-canister-ui-canister-relabel = Relabel
 comp-gas-canister-ui-canister-pressure = Canister Pressure:
 
@@ -18,3 +17,5 @@ comp-gas-canister-ui-release-pressure = Release Pressure:
 comp-gas-canister-ui-release-valve = Release Valve:
 comp-gas-canister-ui-release-valve-open = Open
 comp-gas-canister-ui-release-valve-close = Close
+
+comp-gas-canister-ui-pressure = {$pressure} kPa

@@ -35,13 +35,56 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     [Serializable, NetSerializable]
     public class GasCanisterBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public GasCanisterBoundUserInterfaceState(string newLabel, float volume, float releasePressure, bool valveOpened)
+        public string CanisterLabel { get; }
+        public float CanisterPressure { get; }
+        public bool PortStatus { get; }
+        public string? TankLabel { get; }
+        public float TankPressure { get; }
+        public float ReleasePressure { get; }
+        public bool ReleaseValve { get; }
+        public float ReleasePressureMin { get; }
+        public float ReleasePressureMax { get; }
+
+        public GasCanisterBoundUserInterfaceState(string canisterLabel, float canisterPressure, bool portStatus, string? tankLabel, float tankPressure, float releasePressure, bool releaseValve, float releaseValveMin, float releaseValveMax)
+        {
+            CanisterLabel = canisterLabel;
+            CanisterPressure = canisterPressure;
+            PortStatus = portStatus;
+            TankLabel = tankLabel;
+            TankPressure = tankPressure;
+            ReleasePressure = releasePressure;
+            ReleaseValve = releaseValve;
+            ReleasePressureMin = releaseValveMin;
+            ReleasePressureMax = releaseValveMax;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class GasCanisterHoldingTankEjectMessage : BoundUserInterfaceMessage
+    {
+        public GasCanisterHoldingTankEjectMessage()
         {}
     }
 
-    #region NetMessages
+    [Serializable, NetSerializable]
+    public class GasCanisterChangeReleasePressureMessage : BoundUserInterfaceMessage
+    {
+        public float Pressure { get; }
 
+        public GasCanisterChangeReleasePressureMessage(float pressure)
+        {
+            Pressure = pressure;
+        }
+    }
 
+    [Serializable, NetSerializable]
+    public class GasCanisterChangeReleaseValveMessage : BoundUserInterfaceMessage
+    {
+        public bool Valve { get; }
 
-    #endregion
+        public GasCanisterChangeReleaseValveMessage(bool valve)
+        {
+            Valve = valve;
+        }
+    }
 }

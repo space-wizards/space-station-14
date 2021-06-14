@@ -10,6 +10,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
     {
         public override string Name => "GasPassiveGate";
 
+        [DataField("enabled")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 

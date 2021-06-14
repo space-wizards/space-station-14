@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -33,5 +34,19 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         /// </summary>
         [ViewVariables]
         public float LastPressure { get; set; } = 0f;
+
+        /// <summary>
+        ///     Minimum release pressure possible for the release valve.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("minReleasePressure")]
+        public float MinReleasePressure { get; set; } = Atmospherics.OneAtmosphere / 10;
+
+        /// <summary>
+        ///     Maximum release pressure possible for the release valve.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("maxReleasePressure")]
+        public float MaxReleasePressure { get; set; } = Atmospherics.OneAtmosphere * 10;
     }
 }

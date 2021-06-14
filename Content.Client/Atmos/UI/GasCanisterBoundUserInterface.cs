@@ -16,7 +16,6 @@ namespace Content.Client.Atmos.UI
 
         public GasCanisterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-
         }
 
         protected override void Open()
@@ -25,8 +24,36 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasCanisterWindow();
 
+            if(State != null)
+                UpdateState(State);
+
             _window.OpenCentered();
+
             _window.OnClose += Close;
+            _window.ReleaseValveCloseButtonPressed += OnReleaseValveClosePressed;
+            _window.ReleaseValveOpenButtonPressed += OnReleaseValveOpenPressed;
+            _window.ReleasePressureSliderChanged += OnReleasePressurePressed;
+            _window.TankEjectButtonPressed += OnTankEjectPressed;
+        }
+
+        private void OnTankEjectPressed()
+        {
+            SendMessage(new GasCanisterHoldingTankEjectMessage());
+        }
+
+        private void OnReleasePressurePressed(float value)
+        {
+            SendMessage(new GasCanisterChangeReleasePressureMessage(value));
+        }
+
+        private void OnReleaseValveOpenPressed()
+        {
+            SendMessage(new GasCanisterChangeReleaseValveMessage(true));
+        }
+
+        private void OnReleaseValveClosePressed()
+        {
+            SendMessage(new GasCanisterChangeReleaseValveMessage(false));
         }
 
         /// <summary>
@@ -36,11 +63,17 @@ namespace Content.Client.Atmos.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-
-            if (state is not GasCanisterBoundUserInterfaceState cast)
-            {
+            if (_window == null || state is not GasCanisterBoundUserInterfaceState cast)
                 return;
-            }
+
+            _window.SetCanisterLabel(cast.CanisterLabel);
+            _window.SetCanisterPressure(cast.CanisterPressure);
+            _window.SetPortStatus(cast.PortStatus);
+            _window.SetTankLabel(cast.TankLabel);
+            _window.SetTankPressure(cast.TankPressure);
+            _window.SetReleasePressureRange(cast.ReleasePressureMin, cast.ReleasePressureMax);
+            _window.SetReleasePressure(cast.ReleasePressure);
+            _window.SetReleaseValve(cast.ReleaseValve);
         }
 
         protected override void Dispose(bool disposing)

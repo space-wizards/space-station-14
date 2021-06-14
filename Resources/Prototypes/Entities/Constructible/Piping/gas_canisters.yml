@@ -70,18 +70,21 @@
         pipeDirection: Down
         connectionsEnabled: false
         needAnchored: false
-        volume: 100
+        rotationsEnabled: false
+        volume: 1000
       tank:
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: None
         needAnchored: false
-        connectToContainedEntities: true
+        connectToContainedEntities: false
         environmentalAir: true
+        rotationsEnabled: false
         volume: 1
   - type: GasPortable
   - type: GasCanister
   - type: GasPassiveGate
+    enabled: false
     inlet: port
     outlet: tank
 

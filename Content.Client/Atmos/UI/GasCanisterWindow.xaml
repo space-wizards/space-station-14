@@ -6,11 +6,6 @@
         <VBoxContainer VerticalExpand="True">
             <Label Text="{Loc comp-gas-canister-ui-canister-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
             <HBoxContainer>
-                <Label Text="{Loc comp-gas-canister-ui-canister-label}"/>
-                <Label Name="CanisterLabelLabel" Align="Center" HorizontalExpand="True" />
-                <Button Text="{Loc comp-gas-canister-ui-canister-relabel}"/>
-            </HBoxContainer>
-            <HBoxContainer>
                 <Label Text="{Loc comp-gas-canister-ui-canister-pressure}"/>
                 <Label Name="CanisterPressureLabel" Align="Center" HorizontalExpand="True"/>
             </HBoxContainer>
@@ -25,7 +20,7 @@
             <HBoxContainer>
                 <Label Text="{Loc comp-gas-canister-ui-holding-tank-label}"/>
                 <Label Name="TankLabelLabel" Text="{Loc comp-gas-canister-ui-holding-tank-label-empty}" Align="Center" HorizontalExpand="True"/>
-                <Button Text="{Loc comp-gas-canister-ui-holding-tank-eject}"/>
+                <Button Name="TankEjectButton" Text="{Loc comp-gas-canister-ui-holding-tank-eject}"/>
             </HBoxContainer>
             <HBoxContainer>
                 <Label Text="{Loc comp-gas-canister-ui-holding-tank-pressure}"/>
