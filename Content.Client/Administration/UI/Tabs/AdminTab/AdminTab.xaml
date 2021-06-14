@@ -1,19 +1,17 @@
 ﻿<Control
     xmlns="https://spacestation14.io"
-    xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:at="clr-namespace:Content.Client.UserInterface.AdminMenu.Tabs.AdminTab"
-    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:at="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
     Margin="4"
     MinSize="50 50">
     <VBoxContainer>
         <GridContainer Columns="4">
-            <customControls:UICommandButton Command="kick" Text="{Loc Kick}" WindowType="{x:Type adminTab:KickWindow}" />
-            <customControls:UICommandButton Command="ban" Text="{Loc Ban}" WindowType="{x:Type adminTab:BanWindow}" />
-            <customControls:CommandButton Command="aghost" Text="{Loc Admin Ghost}" />
-            <customControls:UICommandButton Command="tpto" Text="{Loc Teleport}" WindowType="{x:Type adminTab:TeleportWindow}" />
-            <customControls:CommandButton Command="permissions" Text="{Loc Permissions Panel}" />
+            <cc:UICommandButton Command="kick" Text="{Loc Kick}" WindowType="{x:Type at:KickWindow}" />
+            <cc:UICommandButton Command="ban" Text="{Loc Ban}" WindowType="{x:Type at:BanWindow}" />
+            <cc:CommandButton Command="aghost" Text="{Loc Admin Ghost}" />
+            <cc:UICommandButton Command="tpto" Text="{Loc Teleport}" WindowType="{x:Type at:TeleportWindow}" />
+            <cc:CommandButton Command="permissions" Text="{Loc Permissions Panel}" />
         </GridContainer>
     </VBoxContainer>
 </Control>

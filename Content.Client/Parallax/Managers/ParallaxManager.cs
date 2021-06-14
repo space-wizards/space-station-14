@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Nett;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;

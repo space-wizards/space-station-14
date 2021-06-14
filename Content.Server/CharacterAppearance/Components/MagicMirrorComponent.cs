@@ -4,6 +4,7 @@ using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
