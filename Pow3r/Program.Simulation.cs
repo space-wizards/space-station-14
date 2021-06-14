@@ -44,6 +44,11 @@ namespace Pow3r
             if (_paused)
                 return;
 
+            RunSingleStep(frameTime);
+        }
+
+        private void RunSingleStep(float frameTime)
+        {
             _simStopwatch.Restart();
             _tickDataIdx = (_tickDataIdx + 1) % MaxTickData;
 
@@ -70,11 +75,32 @@ namespace Pow3r
             _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;
         }
 
+        private void RunSingleStep()
+        {
+            RunSingleStep(1f/_tps);
+        }
+
         // Link data is stored authoritatively on networks,
         // but for easy access it is replicated into the linked components.
         // This is updated here.
         private void RefreshLinks()
         {
+            foreach (var battery in _state.Batteries.Values)
+            {
+                battery.LinkedNetworkLoading = default;
+                battery.LinkedNetworkSupplying = default;
+            }
+
+            foreach (var load in _state.Loads.Values)
+            {
+                load.LinkedNetwork = default;
+            }
+
+            foreach (var supply in _state.Supplies.Values)
+            {
+                supply.LinkedNetwork = default;
+            }
+
             foreach (var network in _state.Networks.Values)
             {
                 foreach (var loadId in network.Loads)

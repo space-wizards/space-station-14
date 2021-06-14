@@ -293,7 +293,7 @@ namespace Pow3r
 
             ImGui.NewFrame();
 
-            DoDraw(dt);
+            DoUI(dt);
         }
 
         private void UpdateCursorState(ImGuiIOPtr io)

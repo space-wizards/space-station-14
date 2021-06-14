@@ -13,7 +13,7 @@ namespace Pow3r
     {
         private bool _showDemo;
 
-        private void DoDraw(float frameTime)
+        private void DoUI(float frameTime)
         {
             if (BeginMainMenuBar())
             {
@@ -56,6 +56,9 @@ namespace Pow3r
             SliderInt("TPS", ref _tps, 1, 120);
             SetNextItemWidth(-1);
             Combo("", ref _currentSolver, _solverNames, _solverNames.Length);
+
+            if (Button("Single step"))
+                RunSingleStep();
 
             End();
 
@@ -221,18 +224,21 @@ namespace Pow3r
                 SliderFloat("Max supply", ref battery.MaxSupply, 0, 1000, "%.0f W");
                 SliderFloat("Ramp", ref battery.SupplyRampRate, 0, 100, "%.0f W/s");
                 SliderFloat("Tolerance", ref battery.SupplyRampTolerance, 0, 100, "%.0f W");
+                var percent = 100 * battery.Efficiency;
+                SliderFloat("Efficiency", ref percent, 0, 100, "%.0f %%");
+                battery.Efficiency = percent / 100;
 
                 battery.CurrentWindowPos = CalcWindowCenter();
 
                 SliderFloat("Ramp position", ref battery.SupplyRampPosition, 0, battery.MaxSupply, "%.0f W");
 
                 PlotLines("", ref battery.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
-                    $"Supply: {battery.CurrentSupply:N1} W",
-                    0, 1000, new Vector2(250, 75));
+                    $"OUT: {battery.CurrentSupply:N1} W",
+                    0, battery.MaxSupply + 1000, new Vector2(250, 75));
 
                 PlotLines("", ref battery.ReceivingPowerData[0], MaxTickData, _tickDataIdx + 1,
-                    $"Load: {battery.CurrentReceiving:N1} W",
-                    0, 1000, new Vector2(250, 75));
+                    $"IN: {battery.CurrentReceiving:N1} W",
+                    0, battery.MaxChargeRate + 1000, new Vector2(250, 75));
 
                 PlotLines("", ref battery.StoredPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Charge: {battery.CurrentStorage:N1} J",
@@ -326,12 +332,14 @@ namespace Pow3r
                 ShowDemoWindow();
             }
 
+            var reLink = false;
             while (_remQueue.TryDequeue(out var item))
             {
                 switch (item)
                 {
                     case Network n:
                         _state.Networks.Remove(n.Id);
+                        reLink = true;
                         break;
 
                     case Supply s:
@@ -351,6 +359,9 @@ namespace Pow3r
                         break;
                 }
             }
+
+            if (reLink)
+                RefreshLinks();
         }
 
 

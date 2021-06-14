@@ -9,6 +9,11 @@ namespace Pow3r
     ///     Partial implementation of full-graph-walking power solving under pow3r.
     ///     Concept described at https://hackmd.io/@ss14/lowpower
     /// </summary>
+    /// <remarks>
+    ///     Many features like batteries, cycle detection, join handling, etc... are not implemented at all.
+    ///     Seriously, this implementation barely works. Ah well.
+    ///     <see cref="BatteryRampPegSolver"/> is better.
+    /// </remarks>
     public class GraphWalkSolver : IPowerSolver
     {
         public void Tick(float frameTime, PowerState state)
@@ -123,7 +128,7 @@ namespace Pow3r
                 }
             }
 
-            PowerSolverShared.UpdateSupplyRampPositions(frameTime, state);
+            PowerSolverShared.UpdateRampPositions(frameTime, state);
         }
 
         private int TotalSubLoadCount(PowerState state, Network network)

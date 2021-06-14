@@ -55,7 +55,7 @@ namespace Pow3r
                 _sortBuffer[i++] = network;
             }
 
-            Array.Sort(_sortBuffer, HeightComparer.Instance);
+            //Array.Sort(_sortBuffer, HeightComparer.Instance);
 
             // Go over every network.
             foreach (var network in _sortBuffer)
@@ -72,6 +72,10 @@ namespace Pow3r
                     demand += load.DesiredPower;
                 }
 
+                // TODO: Consider having battery charge loads be processed "after" pass-through loads.
+                // This would mean that charge rate would have no impact on throughput rate like it does currently.
+                // Would require a second pass over the network, or something. Not sure.
+
                 // Loading batteries.
                 foreach (var batteryId in network.BatteriesLoading)
                 {
@@ -79,7 +83,7 @@ namespace Pow3r
                     if (!battery.Enabled)
                         continue;
 
-                    var batterySpace = battery.Capacity - battery.CurrentStorage;
+                    var batterySpace = (battery.Capacity - battery.CurrentStorage) * (1 / battery.Efficiency);
                     var scaledSpace = batterySpace / frameTime;
 
                     var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand;
@@ -125,11 +129,13 @@ namespace Pow3r
                         battery.SupplyRampPosition + battery.SupplyRampTolerance);
                     var supplyAndPassthrough = supplyCap + battery.CurrentReceiving;
                     var tempSupply = Math.Min(scaledSpace, supplyAndPassthrough);
+                    // Clamp final supply to the unmet demand, so that batteries refrain from taking power away from supplies.
+                    var clampedSupply = Math.Min(unmet, tempSupply);
 
-                    battery.TempMaxSupply = tempSupply;
-                    availableSupplySum += tempSupply;
+                    battery.TempMaxSupply = clampedSupply;
+                    availableSupplySum += clampedSupply;
                     // TODO: Calculate this properly.
-                    maxSupplySum += tempSupply;
+                    maxSupplySum += clampedSupply;
                     battery.LoadingNetworkDemand = unmet;
                     battery.LoadingDemandMarked = true;
                 }
@@ -159,7 +165,11 @@ namespace Pow3r
 
                         var ratio = battery.DesiredPower / demand;
                         battery.CurrentReceiving = ratio * met;
-                        battery.CurrentStorage += frameTime * battery.CurrentReceiving;
+                        var receivedPower = frameTime * battery.CurrentReceiving;
+                        receivedPower *= battery.Efficiency;
+                        battery.CurrentStorage = Math.Min(
+                            battery.Capacity,
+                            battery.CurrentStorage + receivedPower);
                         battery.LoadingMarked = true;
                     }
 
@@ -194,7 +204,10 @@ namespace Pow3r
 
                         var ratio = battery.TempMaxSupply / availableSupplySum;
                         battery.CurrentSupply = ratio * met;
-                        battery.CurrentStorage -= frameTime * battery.CurrentSupply;
+
+                        battery.CurrentStorage = Math.Max(
+                            0,
+                            battery.CurrentStorage - frameTime * battery.CurrentSupply);
 
                         battery.SupplyRampTarget = battery.CurrentSupply - battery.CurrentReceiving;
 
@@ -224,7 +237,7 @@ namespace Pow3r
                 battery.LoadingDemandMarked = false;
             }
 
-            PowerSolverShared.UpdateSupplyRampPositions(frameTime, state);
+            PowerSolverShared.UpdateRampPositions(frameTime, state);
         }
 
         private static void EstimateNetworkDepth(PowerState state, Network network)

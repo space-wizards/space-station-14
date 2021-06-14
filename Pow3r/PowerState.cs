@@ -147,6 +147,7 @@ namespace Pow3r
             public float MaxSupply;
             public float SupplyRampTolerance;
             public float SupplyRampRate;
+            public float Efficiency = 1;
 
             // == Runtime parameters ==
             public float SupplyRampPosition;

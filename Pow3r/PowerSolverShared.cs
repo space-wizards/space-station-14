@@ -4,7 +4,7 @@ namespace Pow3r
 {
     public static class PowerSolverShared
     {
-        public static void UpdateSupplyRampPositions(float frameTime, PowerState state)
+        public static void UpdateRampPositions(float frameTime, PowerState state)
         {
             // Update supplies to move their ramp position towards target, if necessary.
             foreach (var supply in state.Supplies.Values)
