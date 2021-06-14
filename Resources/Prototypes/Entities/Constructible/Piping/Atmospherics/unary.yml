@@ -88,6 +88,12 @@
     mode: SnapgridCenter
   components:
     - type: GasOutletInjector
+    # TODO ATMOS: Actual sprite for this.
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+
 
 - type: entity
   parent: GasUnaryBase
