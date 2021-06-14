@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
