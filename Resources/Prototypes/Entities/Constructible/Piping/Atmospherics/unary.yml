@@ -38,6 +38,8 @@
 - type: entity
   parent: GasUnaryBase
   id: GasPassiveVent
+  name: passive vent
+  description: It is an open vent.
   placement:
     mode: SnapgridCenter
   components:
@@ -80,6 +82,8 @@
 - type: entity
   parent: GasUnaryBase
   id: GasOutletInjector
+  name: air injector
+  description: Has a valve and pump attached to it.
   placement:
     mode: SnapgridCenter
   components:
@@ -88,6 +92,8 @@
 - type: entity
   parent: GasUnaryBase
   id: GasThermoMachineBase
+  name: thermomachine
+  description: Heats or cools gas in connected pipes.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -103,6 +109,7 @@
 - type: entity
   parent: GasThermoMachineBase
   id: GasThermoMachineFreezer
+  name: freezer
   placement:
     mode: SnapgridCenter
   components:
@@ -121,6 +128,7 @@
 - type: entity
   parent: GasThermoMachineBase
   id: GasThermoMachineHeater
+  name: heater
   placement:
     mode: SnapgridCenter
   components:
