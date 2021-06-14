@@ -21,7 +21,7 @@ namespace Pow3r
                 EndMainMenuBar();
             }
 
-            SetNextWindowSize(new Vector2(150, 150));
+            SetNextWindowSize(new Vector2(150, 200));
 
             Begin("CreateButtons",
                 ImGuiWindowFlags.NoTitleBar |
@@ -53,6 +53,7 @@ namespace Pow3r
             }
 
             Checkbox("Paused", ref _paused);
+            SliderInt("TPS", ref _tps, 1, 120);
             SetNextItemWidth(-1);
             Combo("", ref _currentSolver, _solverNames, _solverNames.Length);
 
@@ -87,7 +88,9 @@ namespace Pow3r
 
             foreach (var network in _state.Networks.Values)
             {
-                Begin($"Network##Gen{network.Id}");
+                Begin($"Network {network.Id}##Gen{network.Id}");
+
+                Text($"Height: {network.Height}");
 
                 network.CurrentWindowPos = CalcWindowCenter();
 
@@ -123,7 +126,7 @@ namespace Pow3r
 
             foreach (var load in _state.Loads.Values)
             {
-                Begin($"Load##Load{load.Id}");
+                Begin($"Load {load.Id}##Load{load.Id}");
 
                 Checkbox("Enabled", ref load.Enabled);
                 SliderFloat("Desired", ref load.DesiredPower, 0, 1000, "%.0f W");
@@ -133,7 +136,7 @@ namespace Pow3r
                 PlotLines("", ref load.ReceivedPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Receiving: {load.ReceivingPower:N1} W",
                     0,
-                    1000, new Vector2(250, 150));
+                    load.DesiredPower, new Vector2(250, 150));
 
                 if (Button("Delete"))
                 {
@@ -165,11 +168,11 @@ namespace Pow3r
 
             foreach (var supply in _state.Supplies.Values)
             {
-                Begin($"Generator##Gen{supply.Id}");
+                Begin($"Generator {supply.Id}##Gen{supply.Id}");
 
                 Checkbox("Enabled", ref supply.Enabled);
                 SliderFloat("Available", ref supply.MaxSupply, 0, 1000, "%.0f W");
-                SliderFloat("Ramp", ref supply.SupplyRampRate, 0, 100, "%.0f W");
+                SliderFloat("Ramp", ref supply.SupplyRampRate, 0, 100, "%.0f W/s");
                 SliderFloat("Tolerance", ref supply.SupplyRampTolerance, 0, 100, "%.0f W");
 
                 supply.CurrentWindowPos = CalcWindowCenter();
@@ -178,7 +181,7 @@ namespace Pow3r
 
                 PlotLines("", ref supply.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Supply: {supply.CurrentSupply:N1} W",
-                    0, 1000, new Vector2(250, 150));
+                    0, supply.MaxSupply, new Vector2(250, 150));
 
                 if (Button("Delete"))
                 {
@@ -210,25 +213,30 @@ namespace Pow3r
 
             foreach (var battery in _state.Batteries.Values)
             {
-                Begin($"Battery##Bat{battery.Id}");
+                Begin($"Battery {battery.Id}##Bat{battery.Id}");
 
                 Checkbox("Enabled", ref battery.Enabled);
                 SliderFloat("Capacity", ref battery.Capacity, 0, 100000, "%.0f J");
+                SliderFloat("Max charge rate", ref battery.MaxChargeRate, 0, 1000, "%.0f W");
                 SliderFloat("Max supply", ref battery.MaxSupply, 0, 1000, "%.0f W");
-                SliderFloat("Ramp", ref battery.SupplyRampRate, 0, 100, "%.0f W");
+                SliderFloat("Ramp", ref battery.SupplyRampRate, 0, 100, "%.0f W/s");
                 SliderFloat("Tolerance", ref battery.SupplyRampTolerance, 0, 100, "%.0f W");
 
                 battery.CurrentWindowPos = CalcWindowCenter();
 
-                Text($"Ramp Position: {battery.SupplyRampPosition:N1}");
+                SliderFloat("Ramp position", ref battery.SupplyRampPosition, 0, battery.MaxSupply, "%.0f W");
 
                 PlotLines("", ref battery.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Supply: {battery.CurrentSupply:N1} W",
                     0, 1000, new Vector2(250, 75));
 
+                PlotLines("", ref battery.ReceivingPowerData[0], MaxTickData, _tickDataIdx + 1,
+                    $"Load: {battery.CurrentReceiving:N1} W",
+                    0, 1000, new Vector2(250, 75));
+
                 PlotLines("", ref battery.StoredPowerData[0], MaxTickData, _tickDataIdx + 1,
-                    $"Charge: {battery.CurrentStorage:N1} W",
-                    0, 100000, new Vector2(250, 75));
+                    $"Charge: {battery.CurrentStorage:N1} J",
+                    0, battery.Capacity, new Vector2(250, 75));
 
                 if (Button("Delete"))
                 {
@@ -274,6 +282,12 @@ namespace Pow3r
                         }
                     }
                 }
+
+                if (Button("Empty"))
+                    battery.CurrentStorage = 0;
+                SameLine();
+                if (Button("Fill"))
+                    battery.CurrentStorage = battery.Capacity;
 
                 End();
             }

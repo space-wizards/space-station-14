@@ -41,6 +41,9 @@ namespace Pow3r
 
         private void Tick(float frameTime)
         {
+            if (_paused)
+                return;
+
             _simStopwatch.Restart();
             _tickDataIdx = (_tickDataIdx + 1) % MaxTickData;
 
@@ -56,6 +59,14 @@ namespace Pow3r
             {
                 supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
             }
+
+            foreach (var battery in _state.Batteries.Values)
+            {
+                battery.StoredPowerData[_tickDataIdx] = battery.CurrentStorage;
+                battery.ReceivingPowerData[_tickDataIdx] = battery.CurrentReceiving;
+                battery.SuppliedPowerData[_tickDataIdx] = battery.CurrentSupply;
+            }
+
             _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;
         }
 

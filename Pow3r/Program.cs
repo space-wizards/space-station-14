@@ -14,9 +14,6 @@ namespace Pow3r
 {
     internal sealed unsafe partial class Program
     {
-        public const float TicksPerSecond = 60;
-        private static readonly TimeSpan TickSpan = TimeSpan.FromSeconds(1 / TicksPerSecond);
-
         private Renderer _renderer = Renderer.Veldrid;
 
         [UnmanagedCallersOnly]
@@ -48,6 +45,7 @@ namespace Pow3r
         private readonly Cursor*[] _cursors = new Cursor*[9];
         private readonly float[] _frameTimings = new float[180];
         private int _frameTimeIdx = 0;
+        private int _tps = 60;
 
         private void Run(string[] args)
         {
@@ -223,11 +221,12 @@ namespace Pow3r
             {
                 _window.ProcessEvents();
 
-                while (curTime - lastTick > TickSpan)
+                var tickSpan = TimeSpan.FromSeconds(1f / _tps);
+                while (curTime - lastTick > tickSpan)
                 {
-                    lastTick += TickSpan;
+                    lastTick += tickSpan;
 
-                    Tick((float) TickSpan.TotalSeconds);
+                    Tick((float) tickSpan.TotalSeconds);
                 }
 
                 _frameTimeIdx = (_frameTimeIdx + 1) % _frameTimings.Length;
@@ -247,6 +246,8 @@ namespace Pow3r
         private static void KeyCallback(KeyboardKeyEventArgs obj, bool down)
         {
             var io = ImGui.GetIO();
+            if (obj.Key ==Keys.Unknown)
+                return;
 
             var keyInt = (int) obj.Key;
             io.KeysDown[keyInt] = down;

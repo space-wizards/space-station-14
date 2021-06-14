@@ -3,5 +3,6 @@
     public interface IPowerSolver
     {
         void Tick(float frameTime, PowerState state);
+        void UI() {}
     }
 }

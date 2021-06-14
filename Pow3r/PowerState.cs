@@ -92,7 +92,7 @@ namespace Pow3r
             public float CurrentSupply;
 
             // The amount of power we WANT to be supplying to match grid load.
-            public float SupplyRampTarget;
+            [JsonIgnore] public float SupplyRampTarget;
 
             // Position of the supply ramp.
             public float SupplyRampPosition;
@@ -152,12 +152,20 @@ namespace Pow3r
             public float SupplyRampPosition;
             public float CurrentSupply;
             public float CurrentStorage;
+            public float CurrentReceiving;
+
+            [JsonIgnore] public bool SupplyingMarked;
+            [JsonIgnore] public bool LoadingMarked;
+            [JsonIgnore] public float TempMaxSupply;
+            [JsonIgnore] public float DesiredPower;
+            [JsonIgnore] public float SupplyRampTarget;
 
             [JsonIgnore] public NodeId LinkedNetworkLoading;
             [JsonIgnore] public NodeId LinkedNetworkSupplying;
 
             // == Display ==
             [JsonIgnore] public Vector2 CurrentWindowPos;
+            [JsonIgnore] public readonly float[] ReceivingPowerData = new float[MaxTickData];
             [JsonIgnore] public readonly float[] SuppliedPowerData = new float[MaxTickData];
             [JsonIgnore] public readonly float[] StoredPowerData = new float[MaxTickData];
 
@@ -188,6 +196,9 @@ namespace Pow3r
             [JsonIgnore] public float LocalDemandMet;
             [JsonIgnore] public float GroupDemandTotal;
             [JsonIgnore] public float GroupDemandMet;
+
+            [JsonIgnore] public int Height;
+            [JsonIgnore] public bool HeightTouched;
 
             // Supply available this tick.
             [JsonIgnore] public float AvailableSupplyTotal;
