@@ -7,6 +7,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Player;
