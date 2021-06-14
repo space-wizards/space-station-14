@@ -153,9 +153,11 @@ namespace Pow3r
             public float CurrentSupply;
             public float CurrentStorage;
             public float CurrentReceiving;
+            public float LoadingNetworkDemand;
 
             [JsonIgnore] public bool SupplyingMarked;
             [JsonIgnore] public bool LoadingMarked;
+            [JsonIgnore] public bool LoadingDemandMarked;
             [JsonIgnore] public float TempMaxSupply;
             [JsonIgnore] public float DesiredPower;
             [JsonIgnore] public float SupplyRampTarget;

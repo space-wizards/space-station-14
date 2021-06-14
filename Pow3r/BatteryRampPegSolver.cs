@@ -82,10 +82,8 @@ namespace Pow3r
                     var batterySpace = battery.Capacity - battery.CurrentStorage;
                     var scaledSpace = batterySpace / frameTime;
 
-                    var chargeRate = battery.MaxChargeRate + battery.CurrentSupply;
+                    var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand;
 
-                    // TODO: Consider max charge rate.
-                    // Should be pegged to sending power.
                     var batDemand = Math.Min(chargeRate, scaledSpace);
                     battery.DesiredPower = batDemand;
                     demand += batDemand;
@@ -107,15 +105,21 @@ namespace Pow3r
                     maxSupplySum += supply.MaxSupply;
                 }
 
+                var unmet = demand - availableSupplySum;
+
                 // Supplying batteries.
-                // TODO: batteries should go after local suppliers on network.
+                // Batteries need to go after local supplies so that local supplies are prioritized.
+                // Also, it makes demand-pulling of batteries
+                // Because all batteries will will desire the unmet demand of their loading network,
+                // there will be a "rush" of input current when a network powers on,
+                // before power stabilizes in the network.
+                // This is fine.
                 foreach (var batteryId in network.BatteriesSupplying)
                 {
                     var battery = state.Batteries[batteryId];
                     if (!battery.Enabled)
                         continue;
 
-                    // TODO: Consider max supply rate.
                     var scaledSpace = battery.CurrentStorage / frameTime;
                     var supplyCap = Math.Min(battery.MaxSupply,
                         battery.SupplyRampPosition + battery.SupplyRampTolerance);
@@ -126,6 +130,8 @@ namespace Pow3r
                     availableSupplySum += tempSupply;
                     // TODO: Calculate this properly.
                     maxSupplySum += tempSupply;
+                    battery.LoadingNetworkDemand = unmet;
+                    battery.LoadingDemandMarked = true;
                 }
 
                 var met = Math.Min(demand, availableSupplySum);
@@ -210,8 +216,12 @@ namespace Pow3r
                 if (!battery.LoadingMarked)
                     battery.CurrentReceiving = 0;
 
+                if (!battery.LoadingDemandMarked)
+                    battery.LoadingNetworkDemand = 0;
+
                 battery.SupplyingMarked = false;
                 battery.LoadingMarked = false;
+                battery.LoadingDemandMarked = false;
             }
 
             PowerSolverShared.UpdateSupplyRampPositions(frameTime, state);
