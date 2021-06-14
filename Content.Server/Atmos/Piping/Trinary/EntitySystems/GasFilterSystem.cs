@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.GameObjects.Components.Atmos.Piping;
-using Content.Server.GameObjects.Components.Atmos.Piping.Trinary;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
 using Content.Shared.Atmos;

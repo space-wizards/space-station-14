@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping.Trinary
+namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
     public class GasFilterComponent : Component
