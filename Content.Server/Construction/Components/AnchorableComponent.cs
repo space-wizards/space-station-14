@@ -11,15 +11,13 @@ using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Anchor
+namespace Content.Server.Construction.Components
 {
     // TODO: Move this component's logic to an EntitySystem.
     [RegisterComponent]
     public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
-
-        [ComponentDependency] private PhysicsComponent? _physicsComponent = default!;
 
         [ViewVariables]
         [DataField("tool")]
@@ -74,9 +72,6 @@ namespace Content.Server.Anchor
                 return false;
             }
 
-            if (_physicsComponent == null)
-                return false;
-
             // Snap rotation to cardinal (multiple of 90)
             var rot = Owner.Transform.LocalRotation;
             Owner.Transform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
@@ -94,7 +89,7 @@ namespace Content.Server.Anchor
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BeforeAnchoredEvent(user, utilizing), false);
 
-            _physicsComponent.BodyType = BodyType.Static;
+            Owner.Transform.Anchored = true;
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AnchoredEvent(user, utilizing), false);
 
@@ -115,12 +110,9 @@ namespace Content.Server.Anchor
                 return false;
             }
 
-            if (_physicsComponent == null)
-                return false;
-
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BeforeUnanchoredEvent(user, utilizing), false);
 
-            _physicsComponent.BodyType = BodyType.Dynamic;
+            Owner.Transform.Anchored = false;
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnanchoredEvent(user, utilizing), false);
 
@@ -135,10 +127,7 @@ namespace Content.Server.Anchor
         /// <returns>true if toggled, false otherwise</returns>
         public async Task<bool> TryToggleAnchor(IEntity user, IEntity utilizing)
         {
-            if (_physicsComponent == null)
-                return false;
-
-            return _physicsComponent.BodyType == BodyType.Static ?
+            return Owner.Transform.Anchored ?
                 await TryUnAnchor(user, utilizing) :
                 await TryAnchor(user, utilizing);
         }
