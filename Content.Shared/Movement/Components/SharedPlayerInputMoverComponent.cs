@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.CCVar;
 using Content.Shared.NetIDs;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;

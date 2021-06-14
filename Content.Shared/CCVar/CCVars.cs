@@ -2,7 +2,7 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
-namespace Content.Shared
+namespace Content.Shared.CCVar
 {
     // ReSharper disable once InconsistentNaming
     [CVarDefs]

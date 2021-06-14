@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Client.HUD.UI;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 

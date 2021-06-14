@@ -10,6 +10,7 @@ using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Traitor;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;

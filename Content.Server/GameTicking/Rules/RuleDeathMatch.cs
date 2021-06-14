@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Robust.Server.Player;

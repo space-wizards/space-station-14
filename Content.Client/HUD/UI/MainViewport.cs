@@ -1,5 +1,6 @@
 ﻿using Content.Client.Viewport;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;

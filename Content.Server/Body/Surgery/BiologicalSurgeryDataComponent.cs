@@ -9,6 +9,7 @@ using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.Body.Surgery.ISurgeryData;

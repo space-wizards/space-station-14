@@ -12,6 +12,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
