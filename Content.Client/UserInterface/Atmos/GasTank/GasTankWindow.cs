@@ -138,7 +138,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             //internals
             _lblInternals = new RichTextLabel
                 {MinSize = (200, 0), VerticalAlignment = VAlignment.Center};
-            _btnInternals = new Button {Text = Loc.GetString("generic-toggle") };
+            _btnInternals = new Button {Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
 
             _contentContainer.AddChild(
                 new HBoxContainer

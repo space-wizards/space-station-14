@@ -119,7 +119,7 @@ namespace Content.Server.AME.Components
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
                 return;
             }
 
@@ -330,13 +330,13 @@ namespace Content.Server.AME.Components
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-no-hands-text"));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-nothing-in-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 

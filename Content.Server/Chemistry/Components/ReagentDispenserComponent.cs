@@ -295,7 +295,7 @@ namespace Content.Server.Chemistry.Components
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-activate-no-hands"));
                 return;
             }
 
@@ -317,13 +317,13 @@ namespace Content.Server.Chemistry.Components
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-interact-using-no-hands"));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-nothing-in-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-interact-using-nothing-in-hands"));
                 return false;
             }
 

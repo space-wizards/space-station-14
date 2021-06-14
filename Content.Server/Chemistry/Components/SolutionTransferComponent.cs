@@ -104,13 +104,13 @@ namespace Content.Server.Chemistry.Components
         {
             if (source.DrainAvailable == 0)
             {
-                source.Owner.PopupMessage(user, Loc.GetString("generic-entity-name-is-empty", ("entity",source.Owner)));
+                source.Owner.PopupMessage(user, Loc.GetString("solution-transfer-component-do-transfer-component-is-empty", ("entity",source.Owner)));
                 return ReagentUnit.Zero;
             }
 
             if (target.RefillSpaceAvailable == 0)
             {
-                target.Owner.PopupMessage(user, Loc.GetString("generic-entity-name-is-full", ("entity", target.Owner)));
+                target.Owner.PopupMessage(user, Loc.GetString("solution-transfer-component-do-transfer-component-is-full", ("entity", target.Owner)));
                 return ReagentUnit.Zero;
             }
 

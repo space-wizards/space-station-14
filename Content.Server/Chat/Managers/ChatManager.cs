@@ -8,13 +8,11 @@ using Content.Server.Items;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
-using Content.Shared;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Inventory;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -282,7 +280,7 @@ namespace Content.Server.Chat.Managers
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
-                                            ("deadChannelName", Loc.GetString("generic-dead").ToUpperInvariant()),
+                                            ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                                             ("playerName", player.AttachedEntity?.Name ?? "???"));
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
@@ -305,7 +303,7 @@ namespace Content.Server.Chat.Managers
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
-                                            ("adminChannelName", Loc.GetString("generic-admin").ToUpperInvariant()),
+                                            ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("userName", player.ConnectedClient.UserName));
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -336,7 +334,7 @@ namespace Content.Server.Chat.Managers
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
-                                            ("adminChannelName", Loc.GetString("generic-admin").ToUpperInvariant()),
+                                            ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("playerName", player.Name));
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -352,7 +350,7 @@ namespace Content.Server.Chat.Managers
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
-                                            ("adminChannelName", Loc.GetString("generic-admin").ToUpperInvariant()));
+                                            ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
 
             _netManager.ServerSendToMany(msg, clients.ToList());
         }

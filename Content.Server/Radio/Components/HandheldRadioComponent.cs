@@ -66,7 +66,7 @@ namespace Content.Server.Radio.Components
             RadioOn = !RadioOn;
 
             var message = Loc.GetString("handheld-radio-component-on-use",
-                                        ("radioState", Loc.GetString(RadioOn ? "generic-on" : "generic-off").ToLowerInvariant()));
+                                        ("radioState", Loc.GetString(RadioOn ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state")));
             Owner.PopupMessage(user, message);
 
             return true;

@@ -175,7 +175,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             var directions = string.Join(", ", ConnectableDirections());
 
-            Owner.PopupMessage(entity, Loc.GetString("generic-insert-format", ("str",directions)));
+            Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }
 
         private void UpdateVisualState()

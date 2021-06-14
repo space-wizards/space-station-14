@@ -31,7 +31,7 @@ namespace Content.Server.AME.Components
         {
             if (!args.User.TryGetComponent<IHandsComponent>(out var hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return true;
             }
 

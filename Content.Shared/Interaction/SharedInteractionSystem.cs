@@ -328,7 +328,7 @@ namespace Content.Shared.Interaction
 
             if (!inRange && popup)
             {
-                var message = Loc.GetString("generic-cannot-reach");
+                var message = Loc.GetString("shared-interaction-system-in-range-unobstructed-cannot-reach");
                 origin.PopupMessage(message);
             }
 

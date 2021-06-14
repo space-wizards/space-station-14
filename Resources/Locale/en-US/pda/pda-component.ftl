@@ -1,6 +1,9 @@
 
 ### UI
 
+comp-pda-ui-try-insert-id-card-no-hands = You have no hands.
+comp-pda-ui-try-insert-pen-no-hands = You have no hands.
+
 # For the PDA screen
 comp-pda-ui = ID: [color=white]{$Owner}[/color], [color=yellow]{$JobTitle}[/color]
 

@@ -185,7 +185,7 @@ namespace Content.Server.PDA
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-id-card-no-hands"));
                 return true;
             }
 
@@ -220,7 +220,7 @@ namespace Content.Server.PDA
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-pen-no-hands"));
                 return true;
             }
 

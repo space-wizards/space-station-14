@@ -352,7 +352,7 @@ namespace Content.Server.Administration.Managers
             {
                 var data = new AdminData
                 {
-                    Title = Loc.GetString("generic-host"),
+                    Title = Loc.GetString("admin-manager-admin-data-host-title"),
                     Flags = AdminFlagsHelper.Everything,
                 };
 

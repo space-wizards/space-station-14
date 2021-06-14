@@ -9,3 +9,7 @@ food-you-need-to-hold-utensil = You need to be holding a {$utensil} to eat that!
 
 food-you-cannot-eat-any-more = You can't eat any more!
 food-nom = Nom
+
+## Entity
+
+food-component-try-use-food-is-empty = {$entity} is empty!

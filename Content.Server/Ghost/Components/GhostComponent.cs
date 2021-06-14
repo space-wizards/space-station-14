@@ -179,8 +179,8 @@ namespace Content.Server.Ghost.Components
         {
             var timeSinceDeath = _gameTimer.RealTime.Subtract(_timeOfDeath);
             //If we've been dead for longer than 1 minute use minutes, otherwise use seconds. Ignore the improper plurals.
-            var deathTimeInfo = timeSinceDeath.Minutes > 0 ? Loc.GetString($"generic-minutes-ago", ("minutes", timeSinceDeath.Minutes)) :
-                                                             Loc.GetString($"generic-seconds-ago", ("seconds", timeSinceDeath.Seconds));
+            var deathTimeInfo = timeSinceDeath.Minutes > 0 ? Loc.GetString($"ghost-component-on-examine-death-time-info-minutes", ("minutes", timeSinceDeath.Minutes)) :
+                                                             Loc.GetString($"ghost-component-on-examine-death-time-info-seconds", ("seconds", timeSinceDeath.Seconds));
 
             message.AddMarkup(Loc.GetString("ghost-component-on-examine-message",("timeOfDeath", deathTimeInfo)));
         }

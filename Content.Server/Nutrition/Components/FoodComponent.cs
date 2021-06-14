@@ -97,7 +97,7 @@ namespace Content.Server.Nutrition.Components
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(Loc.GetString("generic-entity-name-is-empty",("entity", Owner)));
+                user.PopupMessage(Loc.GetString("food-component-try-use-food-is-empty", ("entity", Owner)));
                 return false;
             }
 

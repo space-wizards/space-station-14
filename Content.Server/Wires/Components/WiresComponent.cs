@@ -397,13 +397,13 @@ namespace Content.Server.Wires.Components
 
                     if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        Owner.PopupMessage(player, Loc.GetString("generic-no-hands"));
+                        Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
                         return;
                     }
 
                     if (!player.InRangeUnobstructed(Owner))
                     {
-                        Owner.PopupMessage(player, Loc.GetString("generic-cannot-reach"));
+                        Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"));
                         return;
                     }
 

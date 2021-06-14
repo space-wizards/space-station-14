@@ -157,13 +157,13 @@ namespace Content.Server.Strip
 
                 if (item == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("generic-not-holding-anything"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
                     return false;
                 }
 
                 if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
-                    user.PopupMessageCursor(Loc.GetString("generic-cannot-drop"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
                 }
 
@@ -222,13 +222,13 @@ namespace Content.Server.Strip
 
                 if (item == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("generic-not-holding-anything"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
                     return false;
                 }
 
                 if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
-                    user.PopupMessageCursor(Loc.GetString("generic-cannot-drop"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
                 }
 

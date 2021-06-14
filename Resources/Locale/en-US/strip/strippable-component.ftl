@@ -1,3 +1,5 @@
+strippable-component-not-holding-anything = You aren't holding anything!
+strippable-component-cannot-drop = You can't drop that!
 strippable-component-item-slot-occupied-message = {$owner} already has something there!
 strippable-component-cannot-equip-message = {$owner} cannot equip that there!
 strippable-component-cannot-put-message = {$owner} cannot put that there!

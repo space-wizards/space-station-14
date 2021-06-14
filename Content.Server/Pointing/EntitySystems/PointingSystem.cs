@@ -109,7 +109,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (!InRange(player, coords))
             {
-                player.PopupMessage(Loc.GetString("generic-cannot-reach"));
+                player.PopupMessage(Loc.GetString("pointing-system-try-point-cannot-reach"));
                 return false;
             }
 

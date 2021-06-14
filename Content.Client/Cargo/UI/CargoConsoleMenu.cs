@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
@@ -310,7 +311,7 @@ namespace Content.Client.Cargo.UI
                     {
                         Text = Loc.GetString(
                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                            ("productName", Owner.Market.GetProduct(order.ProductId)?.Name),
+                            ("productName", Owner.Market.GetProduct(order.ProductId)?.Name!),
                             ("orderAmount", order.Amount),
                             ("orderRequester", order.Requester))
                     },

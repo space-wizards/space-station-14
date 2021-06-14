@@ -215,7 +215,7 @@ namespace Content.Server.Medical.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("generic-enter");
+                data.Text = Loc.GetString("enter-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -236,7 +236,7 @@ namespace Content.Server.Medical.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("generic-eject");
+                data.Text = Loc.GetString("eject-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

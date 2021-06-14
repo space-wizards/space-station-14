@@ -473,12 +473,12 @@ namespace Content.Server.Storage.Components
             if (IsWeldedShut)
             {
                 data.Visibility = VerbVisibility.Disabled;
-                var verb = Loc.GetString(component.Open ? "generic-close" : "generic-open");
+                var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
                 data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
                 return;
             }
 
-            data.Text = Loc.GetString(component.Open ? "generic-close" : "generic-open");
+            data.Text = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
             data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 

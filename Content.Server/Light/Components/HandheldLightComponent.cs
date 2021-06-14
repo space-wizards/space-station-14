@@ -177,12 +177,12 @@ namespace Content.Server.Light.Components
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "generic-on" : "generic-of").ToLowerInvariant();
+                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
             {
-                item.EquippedPrefix = Loc.GetString(on ? "generic-on" : "generic-off").ToLowerInvariant();
+                item.EquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
             }
         }
 

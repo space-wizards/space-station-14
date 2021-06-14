@@ -245,7 +245,7 @@ namespace Content.Server.Kitchen.Components
             if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
             {
 
-                Owner.PopupMessage(eventArgs.User, "generic-will-not-work");
+                Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
                 return false;
             }
 

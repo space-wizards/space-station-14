@@ -136,7 +136,7 @@ namespace Content.Server.Storage.Components
                     return;
                 }
 
-                data.Text = Loc.GetString(component.Locked ? "generic-unlock" : "generic-lock");
+                data.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
             }
 
             protected override void Activate(IEntity user, SecureEntityStorageComponent component)

@@ -660,20 +660,20 @@ namespace Content.Server.Disposal.Mailing
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-cannot-do-that"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("disposal-mailing-unit-is-valid-interaction-cannot-interact"));
                 return false;
             }
 
             if (eventArgs.User.IsInContainer())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-cannot-reach"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("disposal-mailing-unit-is-valid-interaction-cannot-reach"));
                 return false;
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("disposal-mailing-unit-is-valid-interaction-no-hands"));
                 return false;
             }
 

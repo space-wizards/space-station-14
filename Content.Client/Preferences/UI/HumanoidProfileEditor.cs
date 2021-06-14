@@ -234,10 +234,10 @@ namespace Content.Client.Preferences.UI
 
             _genderButton = new OptionButton();
 
-            _genderButton.AddItem(Loc.GetString("generic-male-pronouns"), (int) Gender.Male);
-            _genderButton.AddItem(Loc.GetString("generic-female-pronouns"), (int) Gender.Female);
-            _genderButton.AddItem(Loc.GetString("generic-epicene-pronouns"), (int) Gender.Epicene);
-            _genderButton.AddItem(Loc.GetString("generic-neuter-pronouns"), (int) Gender.Neuter);
+            _genderButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-male-text"), (int) Gender.Male);
+            _genderButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-female-text"), (int) Gender.Female);
+            _genderButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-epicene-text"), (int) Gender.Epicene);
+            _genderButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-neuter-text"), (int) Gender.Neuter);
 
             _genderButton.OnItemSelected += args =>
             {
@@ -318,8 +318,8 @@ namespace Content.Client.Preferences.UI
 
             _clothingButton = new OptionButton();
 
-            _clothingButton.AddItem(Loc.GetString("preference-jumpsuit"), (int) ClothingPreference.Jumpsuit);
-            _clothingButton.AddItem(Loc.GetString("preference-jumpskirt"), (int) ClothingPreference.Jumpskirt);
+            _clothingButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-jumpsuit"), (int) ClothingPreference.Jumpsuit);
+            _clothingButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-jumpskirt"), (int) ClothingPreference.Jumpskirt);
 
             _clothingButton.OnItemSelected += args =>
             {
@@ -342,9 +342,9 @@ namespace Content.Client.Preferences.UI
 
             _backpackButton = new OptionButton();
 
-            _backpackButton.AddItem(Loc.GetString("preference-backpack"), (int) BackpackPreference.Backpack);
-            _backpackButton.AddItem(Loc.GetString("preference-satchel"), (int) BackpackPreference.Satchel);
-            _backpackButton.AddItem(Loc.GetString("preference-duffelbag"), (int) BackpackPreference.Duffelbag);
+            _backpackButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-backpack"), (int) BackpackPreference.Backpack);
+            _backpackButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-satchel"), (int) BackpackPreference.Satchel);
+            _backpackButton.AddItem(Loc.GetString("humanoid-profile-editor-preference-duffelbag"), (int) BackpackPreference.Duffelbag);
 
             _backpackButton.OnItemSelected += args =>
             {
@@ -559,13 +559,13 @@ namespace Content.Client.Preferences.UI
             var importExportHBox = new HBoxContainer();
             var importButton = new Button
             {
-                Text = Loc.GetString("generic-import"),
+                Text = Loc.GetString("humanoid-profile-editor-import-button"),
                 Disabled = true,
                 ToolTip = Loc.GetString("generic-not-yet-implemented")
             };
             var exportButton = new Button
             {
-                Text = Loc.GetString("generic-export"),
+                Text = Loc.GetString("humanoid-profile-editor-export-button"),
                 Disabled = true,
                 ToolTip = Loc.GetString("generic-not-yet-implemented")
             };
@@ -582,7 +582,7 @@ namespace Content.Client.Preferences.UI
                 var panel = HighlightedContainer();
                 _saveButton = new Button
                 {
-                    Text = Loc.GetString("generic-save"),
+                    Text = Loc.GetString("humanoid-profile-editor-save-button"),
                     HorizontalAlignment = HAlignment.Center
                 };
                 _saveButton.OnPressed += args => { Save(); };
@@ -887,10 +887,10 @@ namespace Content.Client.Preferences.UI
                 };
 
                 // Text, Value
-                _optionButton.AddItem(Loc.GetString("generic-high"), (int) JobPriority.High);
-                _optionButton.AddItem(Loc.GetString("generic-medium"), (int) JobPriority.Medium);
-                _optionButton.AddItem(Loc.GetString("generic-low"), (int) JobPriority.Low);
-                _optionButton.AddItem(Loc.GetString("generic-never"), (int) JobPriority.Never);
+                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-high-button"), (int) JobPriority.High);
+                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-medium-button"), (int) JobPriority.Medium);
+                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-low-button"), (int) JobPriority.Low);
+                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-never-button"), (int) JobPriority.Never);
 
                 _optionButton.OnItemSelected += args =>
                 {

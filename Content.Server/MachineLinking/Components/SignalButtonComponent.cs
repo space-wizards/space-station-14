@@ -33,7 +33,7 @@ namespace Content.Server.MachineLinking.Components
             if (transmitter.TransmitSignal(new ToggleSignal()))
             {
                 // Since the button doesn't have an animation, I'm going to use a popup message
-                Owner.PopupMessage(user, Loc.GetString("generic-click"));
+                Owner.PopupMessage(user, Loc.GetString("signal-button-component-transmit-signal-success-message"));
             }
             else
             {

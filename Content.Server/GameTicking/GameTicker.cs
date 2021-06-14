@@ -405,7 +405,7 @@ namespace Content.Server.GameTicking
                         PlayerICName = mind.CurrentEntity?.Name,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
-                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("generic-unknown"),
+                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
                         Antag = antag,
                         Observer = status == PlayerStatus.Observer,
                     };

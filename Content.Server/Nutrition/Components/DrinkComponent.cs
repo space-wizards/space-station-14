@@ -163,7 +163,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             }
             var color = Empty ? "gray" : "yellow";
-            var openedText = Loc.GetString(Empty ? "generic-empty" : "generic-opened");
+            var openedText = Loc.GetString(Empty ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
             message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text",("colorName", color),("text", openedText)));
         }
 
@@ -181,7 +181,7 @@ namespace Content.Server.Nutrition.Components
             {
                 if (!forced)
                 {
-                    target.PopupMessage(Loc.GetString("generic-entity-name-is-empty", ("entity",Owner)));
+                    target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity",Owner)));
                 }
 
                 return false;

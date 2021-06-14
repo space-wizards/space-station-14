@@ -165,7 +165,7 @@ namespace Content.Server.Disposal.Tube.Components
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("generic-no-hands"));
+                Owner.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;
             }
 
@@ -201,7 +201,7 @@ namespace Content.Server.Disposal.Tube.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("generic-open-configuration");
+                data.Text = Loc.GetString("configure-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 

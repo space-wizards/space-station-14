@@ -19,3 +19,6 @@ chat-manager-send-admin-dead-chat-wrap-message = {$adminChannelName}:({$userName
 chat-manager-send-admin-chat-wrap-message = {$adminChannelName}: {$playerName}: {"{0}"}
 chat-manager-send-admin-announcement-wrap-message = {$adminChannelName}: {"{0}"}
 chat-manager-send-hook-ooc-wrap-message = OOC: (D){$senderName}: {"{0}"}
+
+chat-manager-dead-channel-name = DEAD
+chat-manager-admin-channel-name = ADMIN
