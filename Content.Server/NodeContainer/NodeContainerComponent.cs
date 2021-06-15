@@ -62,6 +62,7 @@ namespace Content.Server.NodeContainer
             foreach (var node in Nodes.Values)
             {
                 node.AnchorUpdate();
+                node.AnchorStateChanged();
             }
         }
 
