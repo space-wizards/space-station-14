@@ -14,9 +14,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "ChemicalMovementSpeedChangeStatus";
 
         [ViewVariables]
-        private float _walkSpeedModifier;
         public float WalkSpeedModifier { get; set; }
-        private float _sprintSpeedModifier;
+
         public float SprintSpeedModifier { get; set; }
 
         public int EffectTime { get; set; }
