@@ -231,14 +231,14 @@
 - type: reagent
   id: Meth
   name: meth
-  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with danagerous side-effects if too much is consumed.
+  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with dangerous side-effects if too much is consumed.
   physicalDesc: translucent
   color: "#c0e0ff20"
   boilingPoint: 212.0 #Meth vape when? 
   meltingPoint: 170.0
   metabolism:
     - !type:OverdoseMetabolism
-      healtChange: 60
+      healthChange: 60
       damageClass: Toxin
       overdoseReagent: Meth
       OverdoseAmount: 45
