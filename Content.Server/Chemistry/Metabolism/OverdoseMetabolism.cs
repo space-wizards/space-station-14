@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// How much damage is changed when the overdose happenes, allowing for possible positive overdose?
         /// </summary>
         [DataField("healthChange")]
-        public float HealthChange { get; set; } = 500.0f;
+        public int HealthChange { get; set; }
 
         /// <summary>
         /// Class of damage changed, Brute, Burn, Toxin, Airloss.

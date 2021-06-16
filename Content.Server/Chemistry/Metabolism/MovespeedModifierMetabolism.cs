@@ -9,8 +9,8 @@ using Content.Shared.Movement.Components;
 namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
-    /// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifier on the target,
-    /// adding one if not there and to change the movespeed
+    /// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifierComponent on the target,
+    /// adding one if not there, and changing the speed modifier values so they are picked up on by IMoveSpeedModifier.
     /// </summary>
     [DataDefinition]
     public class MovespeedModifierMetabolism : IMetabolizable
@@ -34,7 +34,8 @@ namespace Content.Server.Chemistry.Metabolism
         [DataField("sprintSpeedModifier")]
         public float SprintSpeedModifier { get; set; } = 10;
 
-        private const int StatusLifetime = 1200;
+        [DataField("statusLifetime")]
+        public int StatusLifetime { get; set; } = 1200;
         /// <summary>
         /// Remove reagent at set rate, changes damage if a DamageableComponent can be found.
         /// </summary>
@@ -46,11 +47,12 @@ namespace Content.Server.Chemistry.Metabolism
         {
             if (solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
-                solutionEntity.EnsureComponent(out MovespeedStatusComponent status);
+                solutionEntity.EnsureComponent<GameObjects.Components.Chemistry.MovespeedModifierMetabolism>(out var status);
 
-                status.SprintSpeedModifier = WalkSpeedModifier;
+                status.WalkSpeedModifier = WalkSpeedModifier;
                 status.SprintSpeedModifier = SprintSpeedModifier;
-                status.EffectTime = StatusLifetime;
+                status.EffectTime = StatusLifetime * MetabolismRate.Int();
+                status.ResetTimer();
                 movement.RefreshMovementSpeedModifiers();
             }
 
