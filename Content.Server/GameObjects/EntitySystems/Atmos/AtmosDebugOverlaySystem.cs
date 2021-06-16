@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Atmos;
 using Content.Shared;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.Player;

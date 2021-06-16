@@ -1,5 +1,4 @@
 ﻿<SS14Window xmlns="https://spacestation14.io"
-            xmlns:voting="clr-namespace:Content.Client.Voting"
             xmlns:changelog="clr-namespace:Content.Client.Changelog"
             xmlns:ui="clr-namespace:Content.Client.Voting.UI"
             Title="{Loc 'ui-escape-title'}"

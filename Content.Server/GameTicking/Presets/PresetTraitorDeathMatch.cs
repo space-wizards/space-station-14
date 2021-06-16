@@ -12,6 +12,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Inventory;
