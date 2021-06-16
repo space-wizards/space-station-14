@@ -125,7 +125,7 @@ namespace Content.Server.Chat.Commands
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.
-            IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind!, false);
+            EntitySystem.Get<GameTicker>().OnGhostAttempt(mind!, false);
         }
     }
 }

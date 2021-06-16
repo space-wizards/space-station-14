@@ -18,6 +18,9 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
+        private readonly List<ManifestEntry> _manifest = new();
+
+        [ViewVariables]
         private readonly Dictionary<string, int> _spawnedPositions = new();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
@@ -187,7 +190,7 @@ namespace Content.Server.GameTicking
         }
 
         [Conditional("DEBUG")]
-        private void JobControllerInit()
+        private void InitializeJobController()
         {
             // Verify that the overflow role exists and has the correct name.
             var role = _prototypeManager.Index<JobPrototype>(OverflowJob);
@@ -200,6 +203,22 @@ namespace Content.Server.GameTicking
         private void AddSpawnedPosition(string jobId)
         {
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
+        }
+
+        private MsgTickerJobsAvailable GetJobsAvailable()
+        {
+            var message = _netManager.CreateNetMessage<MsgTickerJobsAvailable>();
+
+            // If late join is disallowed, return no available jobs.
+            if (DisallowLateJoin)
+                return message;
+
+            message.JobsAvailable = GetAvailablePositions()
+                .Where(e => e.Value > 0)
+                .Select(e => e.Key)
+                .ToArray();
+
+            return message;
         }
 
         private void UpdateJobsAvailable()

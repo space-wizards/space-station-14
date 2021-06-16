@@ -27,6 +27,9 @@ namespace Content.Shared.CCVar
             EventsEnabled = CVarDef.Create("events.enabled", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<bool>
+            GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool>
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
         public static readonly CVarDef<int>

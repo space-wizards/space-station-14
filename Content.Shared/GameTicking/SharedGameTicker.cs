@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Lidgren.Network;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameTicking
 {
-    public abstract class SharedGameTicker
+    public abstract class SharedGameTicker : EntitySystem
     {
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.

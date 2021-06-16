@@ -5,10 +5,12 @@ using Content.Client.Parallax.Managers;
 using Content.Server.GameTicking;
 using Content.Server.IoC;
 using Content.Shared.CCVar;
+using Moq;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -112,16 +114,9 @@ namespace Content.IntegrationTests
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
             options ??= new ServerIntegrationOptions();
-            options.BeforeStart += () =>
-            {
-                IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks
-                {
-                    ServerBeforeIoC = () =>
-                    {
-                        IoCManager.Register<IGameTicker, DummyGameTicker>(true);
-                    }
-                });
-            };
+
+            // Dummy game ticker.
+            options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
 
             return StartServer(options);
         }
