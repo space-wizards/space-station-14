@@ -15,12 +15,24 @@ namespace Content.Shared.Singularity.Components
         public override uint? NetID => ContentNetIDs.SINGULARITY_DISTORTION;
 
         [DataField("intensity")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float Intensity { get; set; } = 2;
+        private float _intensity = 2;
 
         [DataField("falloff")]
+        private float _falloff = 7;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Falloff { get; set; } = 7;
+        public float Intensity
+        {
+            get => _intensity;
+            set => this.SetAndDirtyIfChanged(ref _intensity, value);
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Falloff
+        {
+            get => _falloff;
+            set => this.SetAndDirtyIfChanged(ref _falloff, value);
+        }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -44,7 +56,7 @@ namespace Content.Shared.Singularity.Components
     [Serializable, NetSerializable]
     public class SingularityDistortionComponentState : ComponentState
     {
-        public SingularityDistortionComponentState(float intensity, float falloff) : base(ContentNetIDs.TAG)
+        public SingularityDistortionComponentState(float intensity, float falloff) : base(ContentNetIDs.SINGULARITY_DISTORTION)
         {
             Intensity = intensity;
             Falloff = falloff;
