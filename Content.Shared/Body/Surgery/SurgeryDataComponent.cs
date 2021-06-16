@@ -6,21 +6,21 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.Body.Surgery
 {
     /// <summary>
-    ///     Represents the current surgery state of a <see cref="IBodyPart"/>.
+    ///     Represents the current surgery state of a <see cref="SharedBodyPartComponent"/>.
     /// </summary>
     public interface ISurgeryData : IComponent
     {
         public delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
         /// <summary>
-        ///     The <see cref="IBodyPart"/> this
+        ///     The <see cref="SharedBodyPartComponent"/> this
         ///     <see cref="ISurgeryData"/> is attached to.
         /// </summary>
-        public IBodyPart? Parent { get; }
+        public SharedBodyPartComponent? Parent { get; }
 
         /// <summary>
         ///     The <see cref="BodyPartType"/> of the parent
-        ///     <see cref="IBodyPart"/>.
+        ///     <see cref="SharedBodyPartComponent"/>.
         /// </summary>
         public BodyPartType? ParentType { get; }
 
@@ -31,18 +31,18 @@ namespace Content.Shared.Body.Surgery
         public string GetDescription();
 
         /// <summary>
-        ///     Returns whether a <see cref="IMechanism"/> can be added into the
-        ///     <see cref="IBodyPart"/> this <see cref="ISurgeryData"/>
+        ///     Returns whether a <see cref="SharedMechanismComponent"/> can be added into the
+        ///     <see cref="SharedBodyPartComponent"/> this <see cref="ISurgeryData"/>
         ///     represents.
         /// </summary>
-        public bool CanAddMechanism(IMechanism mechanism);
+        public bool CanAddMechanism(SharedMechanismComponent mechanism);
 
         /// <summary>
-        ///     Returns whether the given <see cref="IBodyPart"/> can be connected
-        ///     to the <see cref="IBodyPart"/> this <see cref="ISurgeryData"/>
+        ///     Returns whether the given <see cref="SharedBodyPartComponent"/> can be connected
+        ///     to the <see cref="SharedBodyPartComponent"/> this <see cref="ISurgeryData"/>
         ///     represents.
         /// </summary>
-        public bool CanAttachBodyPart(IBodyPart part);
+        public bool CanAttachBodyPart(SharedBodyPartComponent part);
 
         /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given
@@ -56,7 +56,7 @@ namespace Content.Shared.Body.Surgery
 
         /// <summary>
         ///     Returns whether the given <see cref="SurgeryType"/> can be used to
-        ///     perform a surgery on the <see cref="IBodyPart"/> this
+        ///     perform a surgery on the <see cref="SharedBodyPartComponent"/> this
         ///     <see cref="ISurgeryData"/> represents.
         /// </summary>
         public bool CheckSurgery(SurgeryType toolType)

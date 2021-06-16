@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Body.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IBody))]
+    [ComponentReference(typeof(SharedBodyComponent))]
     public class BodyComponent : SharedBodyComponent, IDraggable
     {
         bool IDraggable.CanStartDrag(StartDragDropEvent args)

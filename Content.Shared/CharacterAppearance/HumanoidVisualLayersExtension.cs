@@ -5,7 +5,7 @@ namespace Content.Shared.CharacterAppearance
 {
     public static class HumanoidVisualLayersExtension
     {
-        public static HumanoidVisualLayers? ToHumanoidLayer(this IBodyPart part)
+        public static HumanoidVisualLayers? ToHumanoidLayer(this SharedBodyPartComponent part)
         {
             return part.PartType switch
             {

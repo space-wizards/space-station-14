@@ -470,7 +470,7 @@ namespace Content.Server.Kitchen.Components
         {
             var headCount = 0;
 
-            if (victim.TryGetComponent<IBody>(out var body))
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
             {
                 var headSlots = body.GetSlotsOfType(BodyPartType.Head);
 

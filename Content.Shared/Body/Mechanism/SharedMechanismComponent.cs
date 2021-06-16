@@ -14,23 +14,23 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Mechanism
 {
-    public abstract class SharedMechanismComponent : Component, IMechanism, ISerializationHooks
+    public abstract class SharedMechanismComponent : Component, ISerializationHooks
     {
         public override string Name => "Mechanism";
 
         protected readonly Dictionary<int, object> OptionsCache = new();
-        protected IBody? BodyCache;
+        protected SharedBodyComponent? BodyCache;
         protected int IdHash;
         protected IEntity? PerformerCache;
-        private IBodyPart? _part;
+        private SharedBodyPartComponent? _part;
 
-        [DataField("behaviors", serverOnly: true)] private HashSet<IMechanismBehavior> _behaviorTypes = new();
+        [DataField("behaviors", serverOnly: true)] private HashSet<SharedMechanismBehavior> _behaviorTypes = new();
 
-        private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new();
+        private readonly Dictionary<Type, SharedMechanismBehavior> _behaviors = new();
 
-        public IBody? Body => Part?.Body;
+        public SharedBodyComponent? Body => Part?.Body;
 
-        public IBodyPart? Part
+        public SharedBodyPartComponent? Part
         {
             get => _part;
             set
@@ -69,7 +69,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors => _behaviors;
+        public IReadOnlyDictionary<Type, SharedMechanismBehavior> Behaviors => _behaviors;
 
         [DataField("maxDurability")] public int MaxDurability { get; set; } = 10;
 
@@ -82,8 +82,16 @@ namespace Content.Shared.Body.Mechanism
         [DataField("resistance")] public int Resistance { get; set; } = 0;
 
         // TODO BODY OnSizeChanged
+        /// <summary>
+        ///     Determines whether this
+        ///     <see cref="SharedMechanismComponent"/> can fit into a <see cref="SharedBodyPartComponent"/>.
+        /// </summary>
         [DataField("size")] public int Size { get; set; } = 1;
 
+        /// <summary>
+        ///     What kind of <see cref="SharedBodyPartComponent"/> this
+        ///     <see cref="SharedMechanismComponent"/> can be easily installed into.
+        /// </summary>
         [DataField("compatibility")]
         public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;
 
@@ -128,7 +136,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public bool EnsureBehavior<T>(out T behavior) where T : IMechanismBehavior, new()
+        public bool EnsureBehavior<T>(out T behavior) where T : SharedMechanismBehavior, new()
         {
             if (_behaviors.TryGetValue(typeof(T), out var rawBehavior))
             {
@@ -144,12 +152,12 @@ namespace Content.Shared.Body.Mechanism
             return false;
         }
 
-        public bool HasBehavior<T>() where T : IMechanismBehavior
+        public bool HasBehavior<T>() where T : SharedMechanismBehavior
         {
             return _behaviors.ContainsKey(typeof(T));
         }
 
-        public bool TryRemoveBehavior<T>() where T : IMechanismBehavior
+        public bool TryRemoveBehavior<T>() where T : SharedMechanismBehavior
         {
             return _behaviors.Remove(typeof(T));
         }
@@ -162,7 +170,8 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public void AddedToBody(IBody body)
+        // TODO BODY Turn these into event listeners so they dont need to be exposed
+        public void AddedToBody(SharedBodyComponent body)
         {
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
@@ -173,7 +182,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public void AddedToPart(IBodyPart part)
+        public void AddedToPart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(Part);
             DebugTools.AssertNotNull(part);
@@ -186,7 +195,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public void AddedToPartInBody(IBody body, IBodyPart part)
+        public void AddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
@@ -201,7 +210,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public void RemovedFromBody(IBody old)
+        public void RemovedFromBody(SharedBodyComponent old)
         {
             DebugTools.AssertNull(Body);
             DebugTools.AssertNotNull(old);
@@ -212,7 +221,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public void RemovedFromPart(IBodyPart old)
+        public void RemovedFromPart(SharedBodyPartComponent old)
         {
             DebugTools.AssertNull(Part);
             DebugTools.AssertNotNull(old);
@@ -225,7 +234,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public void RemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
+        public void RemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
         {
             DebugTools.AssertNull(Body);
             DebugTools.AssertNotNull(oldBody);

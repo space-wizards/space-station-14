@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Body.Part.Property
 {
     /// <summary>
-    ///     Defines the length of a <see cref="IBodyPart"/>.
+    ///     Defines the length of a <see cref="SharedBodyPartComponent"/>.
     /// </summary>
     [RegisterComponent]
     public class ExtensionComponent : BodyPartPropertyComponent
