@@ -54,7 +54,7 @@ namespace Content.Server.Chemistry.Metabolism
 
                 if (chemicalAmount >= OverdoseAmount)
                 {
-                    health.ChangeDamage(DamageClass, (int) HealthChange, true);
+                    health.ChangeDamage(DamageClass, HealthChange, true);
                 }
             }
             return MetabolismRate;
