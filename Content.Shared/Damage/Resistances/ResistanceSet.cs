@@ -11,29 +11,28 @@ namespace Content.Shared.Damage.Resistances
     ///     Each <see cref="DamageType"/> has a multiplier and flat damage
     ///     reduction value.
     /// </summary>
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class ResistanceSet
     {
-        [ViewVariables]
-        private Dictionary<DamageType, ResistanceSetSettings> _resistances =
-            new();
-
         public ResistanceSet()
         {
             foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {
-                _resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
+                Resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
             }
         }
 
         public ResistanceSet(ResistanceSetPrototype data)
         {
             ID = data.ID;
-            _resistances = data.Resistances;
+            Resistances = data.Resistances;
         }
 
+        [ViewVariables]
         public string ID { get; } = string.Empty;
+
+        [ViewVariables]
+        public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; } = new();
 
         /// <summary>
         ///     Adjusts input damage with the resistance set values.
@@ -46,7 +45,7 @@ namespace Content.Shared.Damage.Resistances
         {
             if (amount > 0) // Only apply reduction if it's healing, not damage.
             {
-                amount -= _resistances[damageType].FlatReduction;
+                amount -= Resistances[damageType].FlatReduction;
 
                 if (amount <= 0)
                 {
@@ -54,7 +53,7 @@ namespace Content.Shared.Damage.Resistances
                 }
             }
 
-            amount = (int) Math.Ceiling(amount * _resistances[damageType].Coefficient);
+            amount = (int) Math.Ceiling(amount * Resistances[damageType].Coefficient);
 
             return amount;
         }
@@ -64,11 +63,10 @@ namespace Content.Shared.Damage.Resistances
     ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
     /// </summary>
     [Serializable, NetSerializable]
-    public struct ResistanceSetSettings
+    public readonly struct ResistanceSetSettings
     {
-        [ViewVariables] public float Coefficient { get; private set; }
-
-        [ViewVariables] public int FlatReduction { get; private set; }
+        [ViewVariables] public readonly float Coefficient;
+        [ViewVariables] public readonly int FlatReduction;
 
         public ResistanceSetSettings(float coefficient, int flatReduction)
         {

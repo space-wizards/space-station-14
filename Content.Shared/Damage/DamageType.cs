@@ -42,7 +42,7 @@ namespace Content.Shared.Damage
             return ToNewDictionary<int>();
         }
 
-        public static Dictionary<DamageClass, int> ToClassDictionary(IReadOnlyDictionary<DamageType, int> types)
+        public static Dictionary<DamageClass, int> ToClassDictionary(this IReadOnlyDictionary<DamageType, int> types)
         {
             var classes = DamageClassExtensions.ToNewDictionary();
 
