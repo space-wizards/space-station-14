@@ -8,30 +8,30 @@ namespace Content.Server.GameObjects.Components.Chemistry
 {
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
-    class MovespeedStatusComponent : Component, IMoveSpeedModifier
+    class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
         
         public override string Name => "ChemicalMovementSpeedChangeStatus";
 
         [ViewVariables]
-        private float walkSpeedModifier;
+        private float _walkSpeedModifier;
         public float WalkSpeedModifier
         {
-            get => walkSpeedModifier;
+            get => _walkSpeedModifier;
             set
             {
-                walkSpeedModifier = value;
+                _walkSpeedModifier = value;
                 ResetTimer();
             }
         }
         [ViewVariables]
-        private float sprintSpeedModifier;
+        private float _sprintSpeedModifier;
         public float SprintSpeedModifier
         {
-            get => sprintSpeedModifier;
+            get => _sprintSpeedModifier;
             set
             {
-                sprintSpeedModifier = value;
+                _sprintSpeedModifier = value;
                 ResetTimer();
             }
         }

@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.Metabolism
 
         private const int StatusLifetime = 1200;
         /// <summary>
-        /// Remove reagent at set rate, changes damage if a DamageableComponent can be found.
+        /// Remove reagent at set rate, changes the movespeed modifiers and adds a Movespeed
         /// </summary>
         /// <param name="solutionEntity"></param>
         /// <param name="reagentId"></param>
@@ -46,7 +46,7 @@ namespace Content.Server.Chemistry.Metabolism
         {
             if (solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
-                solutionEntity.EnsureComponent(out MovespeedStatusComponent status);
+                solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
                 status.SprintSpeedModifier = WalkSpeedModifier;
                 status.SprintSpeedModifier = SprintSpeedModifier;
