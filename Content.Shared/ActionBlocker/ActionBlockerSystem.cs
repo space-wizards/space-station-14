@@ -25,23 +25,23 @@ namespace Content.Shared.ActionBlocker
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MovementAttemptEvent>(CanMove);
-            SubscribeLocalEvent<InteractionAttemptEvent>(CanInteract);
-            SubscribeLocalEvent<UseAttemptEvent>(CanUse);
-            SubscribeLocalEvent<ThrowAttemptEvent>(CanThrow);
-            SubscribeLocalEvent<SpeakAttemptEvent>(CanSpeak);
-            SubscribeLocalEvent<DropAttemptEvent>(CanDrop);
-            SubscribeLocalEvent<PickupAttemptEvent>(CanPickup);
-            SubscribeLocalEvent<EmoteAttemptEvent>(CanEmote);
-            SubscribeLocalEvent<AttackAttemptEvent>(CanAttack);
-            SubscribeLocalEvent<EquipAttemptEvent>(CanEquip);
-            SubscribeLocalEvent<UnequipAttemptEvent>(CanUnequip);
-            SubscribeLocalEvent<ChangeDirectionAttemptEvent>(CanChangeDirection);
-            SubscribeLocalEvent<ShiverAttemptEvent>(CanShiver);
-            SubscribeLocalEvent<SweatAttemptEvent>(CanSweat);
+            SubscribeLocalEvent<MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<InteractionAttemptEvent>(OnInteractAttempt);
+            SubscribeLocalEvent<UseAttemptEvent>(OnUseAttempt);
+            SubscribeLocalEvent<ThrowAttemptEvent>(OnThrwoAttempt);
+            SubscribeLocalEvent<SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<DropAttemptEvent>(OnDropAttempt);
+            SubscribeLocalEvent<PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<AttackAttemptEvent>(OnAttackAttempt);
+            SubscribeLocalEvent<EquipAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<UnequipAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
+            SubscribeLocalEvent<ShiverAttemptEvent>(OnShiverAttempt);
+            SubscribeLocalEvent<SweatAttemptEvent>(OnSweatAttempt);
         }
 
-        private void CanMove(MovementAttemptEvent ev)
+        private void OnMoveAttempt(MovementAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -53,7 +53,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanInteract(InteractionAttemptEvent ev)
+        private void OnInteractAttempt(InteractionAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -65,7 +65,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanUse(UseAttemptEvent ev)
+        private void OnUseAttempt(UseAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -77,7 +77,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanThrow(ThrowAttemptEvent ev)
+        private void OnThrwoAttempt(ThrowAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -89,7 +89,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanSpeak(SpeakAttemptEvent ev)
+        private void OnSpeakAttempt(SpeakAttemptEvent ev)
         {
             if (!ev.Entity.HasComponent<SharedSpeechComponent>())
             {
@@ -107,7 +107,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanDrop(DropAttemptEvent ev)
+        private void OnDropAttempt(DropAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -119,7 +119,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanPickup(PickupAttemptEvent ev)
+        private void OnPickupAttempt(PickupAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -131,7 +131,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanEmote(EmoteAttemptEvent ev)
+        private void OnEmoteAttempt(EmoteAttemptEvent ev)
         {
             if (!ev.Entity.HasComponent<SharedEmotingComponent>())
             {
@@ -149,7 +149,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanAttack(AttackAttemptEvent ev)
+        private void OnAttackAttempt(AttackAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -161,7 +161,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanEquip(EquipAttemptEvent ev)
+        private void OnEquipAttempt(EquipAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -173,7 +173,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanUnequip(UnequipAttemptEvent ev)
+        private void OnUnequipAttempt(UnequipAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -185,7 +185,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanChangeDirection(ChangeDirectionAttemptEvent ev)
+        private void OnChangeDirectionAttempt(ChangeDirectionAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -197,7 +197,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanShiver(ShiverAttemptEvent ev)
+        private void OnShiverAttempt(ShiverAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -209,7 +209,7 @@ namespace Content.Shared.ActionBlocker
             }
         }
 
-        private void CanSweat(SweatAttemptEvent ev)
+        private void OnSweatAttempt(SweatAttemptEvent ev)
         {
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
