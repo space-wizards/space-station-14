@@ -34,6 +34,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+# Lighting color values gathered from
+# https://andi-siess.de/rgb-to-color-temperature/
 - type: entity
   parent: BaseLightbulb
   name: incandescent light bulb
@@ -42,7 +44,7 @@
   components:
   - type: LightBulb
     bulb: Bulb
-    color: "#FFC78F"
+    color: "#FFD1A3" # 4000K color temp
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
@@ -55,7 +57,7 @@
   components:
   - type: LightBulb
     bulb: Tube
-    color: "#FFEBDC"
+    color: "#FFEBDC" # 5400K color temp
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
