@@ -26,6 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedCuffableComponent))]
     public class CuffableComponent : SharedCuffableComponent
     {
         /// <summary>
@@ -207,7 +208,8 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            if (!ActionBlockerSystem.CanInteract(user))
+            // TODO: Make into an event and instead have a system check for owner.
+            if (!isOwner && !ActionBlockerSystem.CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("You can't do that!"));
                 return;
@@ -219,6 +221,7 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
+            // TODO: Why are we even doing this check?
             if (!cuffsToRemove.InRangeUnobstructed(Owner))
             {
                 Logger.Warning("Handcuffs being removed from player are obstructed or too far away! This should not happen!");
@@ -227,7 +230,6 @@ namespace Content.Server.Cuffs.Components
 
             user.PopupMessage(Loc.GetString("You start removing the cuffs."));
 
-            var audio = EntitySystem.Get<AudioSystem>();
             if (isOwner)
             {
                 if (cuff.StartBreakoutSound != null)
