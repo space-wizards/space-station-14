@@ -25,11 +25,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ResetModifiers()
         {
-            WalkSpeedModifier = 0;
-            SprintSpeedModifier = 0;
+            _cancellation?.Cancel();
+            WalkSpeedModifier = 1;
+            SprintSpeedModifier = 1;
         }
 
-        private void ResetTimer()
+        public void ResetTimer()
         {
             _cancellation?.Cancel();
             _cancellation = new CancellationTokenSource();

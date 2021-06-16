@@ -52,6 +52,7 @@ namespace Content.Server.Chemistry.Metabolism
                 status.WalkSpeedModifier = WalkSpeedModifier;
                 status.SprintSpeedModifier = SprintSpeedModifier;
                 status.EffectTime = StatusLifetime * MetabolismRate.Int();
+                status.ResetTimer();
                 movement.RefreshMovementSpeedModifiers();
             }
 
