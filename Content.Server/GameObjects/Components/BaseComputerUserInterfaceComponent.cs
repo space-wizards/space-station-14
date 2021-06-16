@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
