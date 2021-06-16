@@ -229,6 +229,27 @@
       amount: 1
 
 - type: reagent
+  id: Meth
+  name: meth
+  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with danagerous side-effects if too much is consumed.
+  physicalDesc: translucent
+  color: "#c0e0ff20"
+  boilingPoint: 212.0 #Meth vape when? 
+  meltingPoint: 170.0
+  metabolism:
+    - !type:OverdoseMetabolism
+      healtChange: 60
+      damageClass: Toxin
+      overdoseReagent: Meth
+      OverdoseAmount: 45
+    - !type:HealthChangeMetabolism
+      healthChange: 0.5
+      damageClass: Toxin
+    - !type:MovementSpeedModifierMetabolism
+    walkSpeedModifier: 2.5
+    sprintSpeedModifier: 2.5
+      
+- type: reagent
   id: Oil
   name: oil
   desc: Used by chefs to cook.
