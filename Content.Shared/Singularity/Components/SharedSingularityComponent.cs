@@ -5,7 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Singularity.Components
 {
-
     public abstract class SharedSingularityComponent : Component
     {
         public override string Name => "Singularity";

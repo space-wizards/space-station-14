@@ -5,8 +5,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Singularity.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IClientSingularityInstance))]
-    class ClientSingularityComponent : SharedSingularityComponent, IClientSingularityInstance
+    [ComponentReference(typeof(SharedSingularityComponent))]
+    class ClientSingularityComponent : SharedSingularityComponent
     {
         [ViewVariables]
         public int Level { get; set; }
