@@ -17,7 +17,12 @@ namespace Content.Client.Ghost
         {
             base.HandleComponentState(curState, nextState);
 
-            if (Owner == _playerManager.LocalPlayer!.ControlledEntity)
+            if (curState is not GhostComponentState)
+            {
+                return;
+            }
+
+            if (Owner == _playerManager.LocalPlayer?.ControlledEntity)
             {
                 Gui?.Update();
             }
