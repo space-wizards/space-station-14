@@ -34,7 +34,8 @@ namespace Content.Server.Chemistry.Metabolism
         [DataField("sprintSpeedModifier")]
         public float SprintSpeedModifier { get; set; } = 10;
 
-        private const int StatusLifetime = 1200;
+        [DataField("statusLifetime")]
+        public int StatusLifetime = 1200;
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a Movespeed
         /// </summary>
@@ -48,9 +49,9 @@ namespace Content.Server.Chemistry.Metabolism
             {
                 solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
-                status.SprintSpeedModifier = WalkSpeedModifier;
+                status.WalkSpeedModifier = WalkSpeedModifier;
                 status.SprintSpeedModifier = SprintSpeedModifier;
-                status.EffectTime = StatusLifetime;
+                status.EffectTime = StatusLifetime * MetabolismRate.Int();
                 movement.RefreshMovementSpeedModifiers();
             }
 

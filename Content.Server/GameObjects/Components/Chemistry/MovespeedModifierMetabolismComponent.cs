@@ -15,36 +15,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables]
         private float _walkSpeedModifier;
-        public float WalkSpeedModifier
-        {
-            get => _walkSpeedModifier;
-            set
-            {
-                _walkSpeedModifier = value;
-                ResetTimer();
-            }
-        }
-        [ViewVariables]
+        public float WalkSpeedModifier { get; set; }
         private float _sprintSpeedModifier;
-        public float SprintSpeedModifier
-        {
-            get => _sprintSpeedModifier;
-            set
-            {
-                _sprintSpeedModifier = value;
-                ResetTimer();
-            }
-        }
+        public float SprintSpeedModifier { get; set; }
 
         public int EffectTime { get; set; }
 
-        private readonly CancellationTokenSource _cancellation = new CancellationTokenSource();
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
-        }
+        private CancellationTokenSource? _cancellation;
 
         private void ResetModifiers()
         {
@@ -54,7 +31,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ResetTimer()
         {
-            _cancellation.Cancel();
+            _cancellation?.Cancel();
+            _cancellation = new CancellationTokenSource();
             Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
         }
     }
