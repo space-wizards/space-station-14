@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
@@ -31,7 +31,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!eventArgs.User.CanInteract())
             {
                 return true;
             }

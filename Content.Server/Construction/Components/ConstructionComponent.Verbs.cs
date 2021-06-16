@@ -1,5 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
-using Content.Shared.Notification;
+﻿using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
@@ -14,7 +13,7 @@ namespace Content.Server.Construction.Components
         {
             protected override void GetData(IEntity user, ConstructionComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

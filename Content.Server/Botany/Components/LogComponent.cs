@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
@@ -14,7 +14,7 @@ namespace Content.Server.Botany.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!eventArgs.User.CanInteract())
                 return false;
 
             if (eventArgs.Using.HasTag("BotanySharp"))

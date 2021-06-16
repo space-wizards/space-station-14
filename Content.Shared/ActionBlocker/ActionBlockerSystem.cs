@@ -1,8 +1,14 @@
 ﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DragDrop;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Emoting;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
+using Content.Shared.Metabolism.Events;
+using Content.Shared.Movement;
 using Content.Shared.Speech;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -15,184 +21,204 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public class ActionBlockerSystem : EntitySystem
     {
-        public static bool CanMove(IEntity entity)
+        public override void Initialize()
         {
-            var canMove = true;
+            base.Initialize();
 
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
-            {
-                canMove &= blocker.CanMove(); // Sets var to false if false
-            }
-
-            return canMove;
+            SubscribeLocalEvent<MovementAttemptEvent>(CanMove);
+            SubscribeLocalEvent<InteractionAttemptEvent>(CanInteract);
+            SubscribeLocalEvent<UseAttemptEvent>(CanUse);
+            SubscribeLocalEvent<ThrowAttemptEvent>(CanThrow);
+            SubscribeLocalEvent<SpeakAttemptEvent>(CanSpeak);
+            SubscribeLocalEvent<DropAttemptEvent>(CanDrop);
+            SubscribeLocalEvent<PickupAttemptEvent>(CanPickup);
+            SubscribeLocalEvent<EmoteAttemptEvent>(CanEmote);
+            SubscribeLocalEvent<AttackAttemptEvent>(CanAttack);
+            SubscribeLocalEvent<EquipAttemptEvent>(CanEquip);
+            SubscribeLocalEvent<UnequipAttemptEvent>(CanUnequip);
+            SubscribeLocalEvent<ChangeDirectionAttemptEvent>(CanChangeDirection);
+            SubscribeLocalEvent<ShiverAttemptEvent>(CanShiver);
+            SubscribeLocalEvent<SweatAttemptEvent>(CanSweat);
         }
 
-        public static bool CanInteract([NotNullWhen(true)] IEntity? entity)
+        private void CanMove(MovementAttemptEvent ev)
         {
-            if (entity == null)
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                return false;
+                if (!blocker.CanMove())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            var canInteract = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
-            {
-                canInteract &= blocker.CanInteract();
-            }
-
-            return canInteract;
         }
 
-        public static bool CanUse([NotNullWhen(true)] IEntity? entity)
+        private void CanInteract(InteractionAttemptEvent ev)
         {
-            if (entity == null)
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                return false;
+                if (!blocker.CanInteract())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            var canUse = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
-            {
-                canUse &= blocker.CanUse();
-            }
-
-            return canUse;
         }
 
-        public static bool CanThrow(IEntity entity)
+        private void CanUse(UseAttemptEvent ev)
         {
-            var canThrow = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canThrow &= blocker.CanThrow();
+                if (!blocker.CanUse())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canThrow;
         }
 
-        public static bool CanSpeak(IEntity entity)
+        private void CanThrow(ThrowAttemptEvent ev)
         {
-            if (!entity.HasComponent<SharedSpeechComponent>())
-                return false;
-
-            var canSpeak = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canSpeak &= blocker.CanSpeak();
+                if (!blocker.CanThrow())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canSpeak;
         }
 
-        public static bool CanDrop(IEntity entity)
+        private void CanSpeak(SpeakAttemptEvent ev)
         {
-            var canDrop = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            if (!ev.Entity.HasComponent<SharedSpeechComponent>())
             {
-                canDrop &= blocker.CanDrop();
+                ev.Cancel();
+                return;
             }
 
-            return canDrop;
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
+            {
+                if (!blocker.CanSpeak())
+                {
+                    ev.Cancel();
+                    break;
+                }
+            }
         }
 
-        public static bool CanPickup(IEntity entity)
+        private void CanDrop(DropAttemptEvent ev)
         {
-            var canPickup = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canPickup &= blocker.CanPickup();
+                if (!blocker.CanDrop())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canPickup;
         }
 
-        public static bool CanEmote(IEntity entity)
+        private void CanPickup(PickupAttemptEvent ev)
         {
-            if (!entity.HasComponent<SharedEmotingComponent>())
-                return false;
-
-            var canEmote = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canEmote &= blocker.CanEmote();
+                if (!blocker.CanPickup())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canEmote;
         }
 
-        public static bool CanAttack(IEntity entity)
+        private void CanEmote(EmoteAttemptEvent ev)
         {
-            var canAttack = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            if (!ev.Entity.HasComponent<SharedEmotingComponent>())
             {
-                canAttack &= blocker.CanAttack();
+                ev.Cancel();
+                return;
             }
 
-            return canAttack;
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
+            {
+                if (!blocker.CanEmote())
+                {
+                    ev.Cancel();
+                    break;
+                }
+            }
         }
 
-        public static bool CanEquip(IEntity entity)
+        private void CanAttack(AttackAttemptEvent ev)
         {
-            var canEquip = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canEquip &= blocker.CanEquip();
+                if (!blocker.CanAttack())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canEquip;
         }
 
-        public static bool CanUnequip(IEntity entity)
+        private void CanEquip(EquipAttemptEvent ev)
         {
-            var canUnequip = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canUnequip &= blocker.CanUnequip();
+                if (!blocker.CanEquip())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canUnequip;
         }
 
-        public static bool CanChangeDirection(IEntity entity)
+        private void CanUnequip(UnequipAttemptEvent ev)
         {
-            var canChangeDirection = true;
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canChangeDirection &= blocker.CanChangeDirection();
+                if (!blocker.CanUnequip())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-
-            return canChangeDirection;
         }
 
-        public static bool CanShiver(IEntity entity)
+        private void CanChangeDirection(ChangeDirectionAttemptEvent ev)
         {
-            var canShiver = true;
-            foreach (var component in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canShiver &= component.CanShiver();
+                if (!blocker.CanChangeDirection())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-            return canShiver;
         }
 
-        public static bool CanSweat(IEntity entity)
+        private void CanShiver(ShiverAttemptEvent ev)
         {
-            var canSweat = true;
-            foreach (var component in entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
-                canSweat &= component.CanSweat();
+                if (!blocker.CanShiver())
+                {
+                    ev.Cancel();
+                    break;
+                }
             }
-            return canSweat;
+        }
+
+        private void CanSweat(SweatAttemptEvent ev)
+        {
+            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
+            {
+                if (!blocker.CanSweat())
+                {
+                    ev.Cancel();
+                    break;
+                }
+            }
         }
     }
 }

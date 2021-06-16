@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using Content.Server.Buckle.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.EffectBlocker;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Movement;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -79,8 +80,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.NotNull(buckle);
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
-                Assert.True(ActionBlockerSystem.CanMove(human));
-                Assert.True(ActionBlockerSystem.CanChangeDirection(human));
+                Assert.True(human.CanMove());
+                Assert.True(human.CanChangeDirection());
                 Assert.True(EffectBlockerSystem.CanFall(human));
 
                 // Default state, no buckled entities, strap
@@ -96,8 +97,8 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 var player = IoCManager.Resolve<IPlayerManager>().GetAllPlayers().Single();
                 Assert.True(((BuckleComponentState) buckle.GetComponentState(player)).Buckled);
-                Assert.False(ActionBlockerSystem.CanMove(human));
-                Assert.False(ActionBlockerSystem.CanChangeDirection(human));
+                Assert.False(human.CanMove());
+                Assert.False(human.CanChangeDirection());
                 Assert.False(EffectBlockerSystem.CanFall(human));
                 Assert.That(human.Transform.WorldPosition, Is.EqualTo(chair.Transform.WorldPosition));
 
@@ -127,8 +128,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.TryUnbuckle(human));
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
-                Assert.True(ActionBlockerSystem.CanMove(human));
-                Assert.True(ActionBlockerSystem.CanChangeDirection(human));
+                Assert.True(human.CanMove());
+                Assert.True(human.CanChangeDirection());
                 Assert.True(EffectBlockerSystem.CanFall(human));
 
                 // Unbuckle, strap
@@ -182,8 +183,8 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Force unbuckle
                 Assert.True(buckle.TryUnbuckle(human, true));
                 Assert.False(buckle.Buckled);
-                Assert.True(ActionBlockerSystem.CanMove(human));
-                Assert.True(ActionBlockerSystem.CanChangeDirection(human));
+                Assert.True(human.CanMove());
+                Assert.True(human.CanChangeDirection());
                 Assert.True(EffectBlockerSystem.CanFall(human));
 
                 // Re-buckle

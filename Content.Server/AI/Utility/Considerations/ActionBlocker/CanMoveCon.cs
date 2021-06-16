@@ -1,6 +1,6 @@
 ﻿using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Movement;
 
 namespace Content.Server.AI.Utility.Considerations.ActionBlocker
 {
@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.Considerations.ActionBlocker
         {
             var self = context.GetState<SelfState>().GetValue();
 
-            if (self == null || !ActionBlockerSystem.CanMove(self))
+            if (self == null || !self.CanMove())
             {
                 return 0.0f;
             }

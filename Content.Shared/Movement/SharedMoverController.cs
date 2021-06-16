@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Shared.ActionBlocker;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
@@ -11,7 +10,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 
-namespace Content.Shared.Physics.Controllers
+namespace Content.Shared.Movement
 {
     /// <summary>
     ///     Handles player and NPC mob movement.
@@ -105,7 +104,7 @@ namespace Content.Shared.Physics.Controllers
         {
             return (body.BodyStatus == BodyStatus.OnGround) &
                    body.Owner.HasComponent<IMobStateComponent>() &&
-                   ActionBlockerSystem.CanMove(body.Owner) &&
+                   body.Owner.CanMove() &&
                    (!body.Owner.IsWeightless(body, mapManager: mapManager) ||
                     body.Owner.TryGetComponent(out SharedPlayerMobMoverComponent? mover) &&
                     IsAroundCollider(broadPhaseSystem, body.Owner.Transform, mover, body));

@@ -1,6 +1,6 @@
 #nullable enable
 using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -52,7 +52,7 @@ namespace Content.Server.Items
         {
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!user.CanInteract() ||
                     component.Owner.IsInContainer() ||
                     !component.CanPickup(user))
                 {

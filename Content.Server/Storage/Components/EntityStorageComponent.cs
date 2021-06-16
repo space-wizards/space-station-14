@@ -9,8 +9,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using Content.Shared.Storage;
@@ -446,7 +446,7 @@ namespace Content.Server.Storage.Components
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -464,7 +464,7 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!user.CanInteract())
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;

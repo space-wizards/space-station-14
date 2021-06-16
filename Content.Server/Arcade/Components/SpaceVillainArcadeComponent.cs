@@ -4,9 +4,9 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Server.Wires.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -66,7 +66,7 @@ namespace Content.Server.Arcade.Components
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
+            if(!actor.PlayerSession.AttachedEntity?.CanInteract() ?? true) return;
 
             _game ??= new SpaceVillainGame(this);
 

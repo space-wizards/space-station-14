@@ -1,20 +1,19 @@
 using System;
 using Content.Shared.CCVar;
+using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 
 #nullable enable
 
-namespace Content.Shared.Physics.Controllers
+namespace Content.Shared.Friction
 {
     public sealed class SharedTileFrictionController : VirtualController
     {

@@ -8,8 +8,8 @@ using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -249,7 +249,7 @@ namespace Content.Server.AI.Steering
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (entity.Deleted ||
                 !entity.TryGetComponent(out AiControllerComponent? controller) ||
-                !ActionBlockerSystem.CanMove(entity) ||
+                !entity.CanMove() ||
                 !entity.Transform.GridID.IsValid())
             {
                 return SteeringStatus.NoPath;

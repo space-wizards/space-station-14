@@ -1,12 +1,12 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -179,7 +179,7 @@ namespace Content.Server.Buckle.Components
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(component.Owner) ||
+                if (!component.Owner.CanInteract() ||
                     !user.TryGetComponent<BuckleComponent>(out var buckle) ||
                     buckle.BuckledTo != null && buckle.BuckledTo != component ||
                     user == component.Owner)

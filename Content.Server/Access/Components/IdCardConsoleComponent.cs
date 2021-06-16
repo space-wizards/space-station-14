@@ -7,10 +7,9 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -259,7 +258,7 @@ namespace Content.Server.Access.Components
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -284,7 +283,7 @@ namespace Content.Server.Access.Components
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

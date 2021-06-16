@@ -6,15 +6,14 @@ using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.Preferences.Managers;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MedicalScanner;
 using Content.Shared.MobState;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
@@ -80,7 +79,7 @@ namespace Content.Server.Medical.Components
             {
                 case RelayMovementEntityMessage msg:
                 {
-                    if (ActionBlockerSystem.CanInteract(msg.Entity))
+                    if (msg.Entity.CanInteract())
                     {
                         if (_gameTiming.CurTime <
                             _lastInternalOpenAttempt + InternalOpenAttemptDelay)
@@ -209,7 +208,7 @@ namespace Content.Server.Medical.Components
         {
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -230,7 +229,7 @@ namespace Content.Server.Medical.Components
         {
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

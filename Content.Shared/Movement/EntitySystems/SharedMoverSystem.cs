@@ -9,7 +9,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
-namespace Content.Shared.Movement
+namespace Content.Shared.Movement.EntitySystems
 {
     /// <summary>
     ///     Handles converting inputs into movement.

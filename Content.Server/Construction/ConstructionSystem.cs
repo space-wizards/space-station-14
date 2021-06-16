@@ -10,13 +10,12 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -305,7 +304,7 @@ namespace Content.Server.Construction
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
+            if (user == null || !user.CanInteract()) return;
 
             if (!user.TryGetComponent(out HandsComponent? hands)) return;
 
@@ -399,7 +398,7 @@ namespace Content.Server.Construction
             }
 
             if (user == null
-                || !ActionBlockerSystem.CanInteract(user)
+                || !user.CanInteract()
                 || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {

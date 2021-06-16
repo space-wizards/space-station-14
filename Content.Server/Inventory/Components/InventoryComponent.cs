@@ -9,12 +9,11 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Pressure;
 using Content.Server.Storage.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -291,7 +290,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !ActionBlockerSystem.CanEquip(Owner))
+            if (mobCheck && !Owner.CanEquip())
             {
                 reason = Loc.GetString("You can't equip this!");
                 return false;
@@ -417,7 +416,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanUnequip(Owner))
+            if (mobCheck && !Owner.CanUnequip())
                 return false;
 
             var inventorySlot = _slotContainers[slot];

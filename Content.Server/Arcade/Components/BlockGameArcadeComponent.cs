@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -57,7 +57,7 @@ namespace Content.Server.Arcade.Components
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
+            if(!actor.PlayerSession.AttachedEntity?.CanInteract() ?? true) return;
 
             UserInterface?.Toggle(actor.PlayerSession);
             RegisterPlayerSession(actor.PlayerSession);
@@ -134,7 +134,7 @@ namespace Content.Server.Arcade.Components
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 
-                    if (!ActionBlockerSystem.CanInteract(Owner))
+                    if (!Owner.CanInteract())
                     {
                         DeactivePlayer(obj.Session);
                         break;

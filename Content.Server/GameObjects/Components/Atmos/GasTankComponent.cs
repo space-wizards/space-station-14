@@ -6,7 +6,6 @@ using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
 using Content.Server.Interfaces;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
@@ -15,8 +14,8 @@ using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -218,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         internal void ToggleInternals()
         {
-            if (!ActionBlockerSystem.CanUse(GetInternalsComponent()?.Owner)) return;
+            if (!GetInternalsComponent()?.Owner.CanUse() ?? true) return;
             if (IsConnected)
             {
                 DisconnectFromInternals();

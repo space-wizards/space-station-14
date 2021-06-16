@@ -15,13 +15,12 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Configurable;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -396,8 +395,8 @@ namespace Content.Server.Disposal.Mailing
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(player) ||
-                !ActionBlockerSystem.CanUse(player))
+            if (!player.CanInteract() ||
+                !player.CanUse())
             {
                 return false;
             }
@@ -658,7 +657,7 @@ namespace Content.Server.Disposal.Mailing
 
         private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!eventArgs.User.CanInteract())
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
                 return false;
@@ -745,7 +744,7 @@ namespace Content.Server.Disposal.Mailing
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!user.CanInteract() ||
                     component.ContainedEntities.Contains(user))
                 {
                     return;
@@ -768,7 +767,7 @@ namespace Content.Server.Disposal.Mailing
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!user.CanInteract() ||
                     component.ContainedEntities.Contains(user))
                 {
                     return;

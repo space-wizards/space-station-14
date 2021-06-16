@@ -4,12 +4,11 @@ using System.Linq;
 using Content.Server.Standing;
 using Content.Server.Stunnable.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
@@ -334,7 +333,7 @@ namespace Content.Server.Instruments
             var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
             var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchesDropped;
 
-            if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
+            if (_instrumentPlayer != null && (!_instrumentPlayer.AttachedEntity?.CanInteract() ?? true))
             {
                 InstrumentPlayer = null;
                 Clean();

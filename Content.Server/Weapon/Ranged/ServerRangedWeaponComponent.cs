@@ -5,11 +5,10 @@ using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
@@ -78,7 +77,7 @@ namespace Content.Server.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && ActionBlockerSystem.CanAttack(user);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && user.CanAttack();
         }
 
         /// <inheritdoc />

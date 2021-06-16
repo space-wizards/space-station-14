@@ -5,9 +5,8 @@ using Content.Server.Battery.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
@@ -121,7 +120,7 @@ namespace Content.Server.Power.Components
         {
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -166,7 +165,7 @@ namespace Content.Server.Power.Components
         {
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

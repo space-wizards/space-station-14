@@ -8,14 +8,13 @@ using Content.Server.Items;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
-using Content.Shared;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Emoting;
 using Content.Shared.Inventory;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Speech;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -122,7 +121,7 @@ namespace Content.Server.Chat.Managers
 
         public void EntitySay(IEntity source, string message)
         {
-            if (!ActionBlockerSystem.CanSpeak(source))
+            if (!source.CanSpeak())
             {
                 return;
             }
@@ -195,7 +194,7 @@ namespace Content.Server.Chat.Managers
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!ActionBlockerSystem.CanEmote(source))
+            if (!source.CanEmote())
             {
                 return;
             }

@@ -2,9 +2,9 @@
 using System;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -180,7 +180,7 @@ namespace Content.Server.PowerCell.Components
         {
             protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
             {
-                if (!component.ShowVerb || !ActionBlockerSystem.CanInteract(user))
+                if (!component.ShowVerb || !user.CanInteract())
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

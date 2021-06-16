@@ -6,10 +6,9 @@ using Content.Server.Items;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -158,7 +157,7 @@ namespace Content.Server.AME.Components
             if (playerEntity == null)
                 return false;
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!playerEntity.CanInteract() || !playerEntity.CanUse())
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)

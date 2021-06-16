@@ -8,11 +8,11 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Notification;
 using Content.Server.Pulling;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
+using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Notification;
+using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
@@ -224,7 +224,7 @@ namespace Content.Server.Hands.Components
 
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+            if (mobCheck && !Owner.CanPickup())
                 return false;
 
             foreach (var handName in ActivePriorityEnumerable())
@@ -241,7 +241,7 @@ namespace Content.Server.Hands.Components
 
         public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+            if (mobCheck && !Owner.CanPickup())
                 return false;
 
             var hand = GetHand(index);
@@ -445,7 +445,7 @@ namespace Content.Server.Hands.Components
         {
             var hand = GetHand(name);
 
-            if (mobCheck && !ActionBlockerSystem.CanDrop(Owner))
+            if (mobCheck && !Owner.CanDrop())
                 return false;
 
             if (hand?.Entity == null)

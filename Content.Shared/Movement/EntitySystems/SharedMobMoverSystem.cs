@@ -6,7 +6,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.Movement
+namespace Content.Shared.Movement.EntitySystems
 {
     public sealed class SharedMobMoverSystem : EntitySystem
     {
