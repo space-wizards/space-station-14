@@ -36,13 +36,6 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<PlayerAttachedEvent>();
-        }
-
         private uint GetNextRoleIdentifier()
         {
             return unchecked(_nextRoleIdentifier++);

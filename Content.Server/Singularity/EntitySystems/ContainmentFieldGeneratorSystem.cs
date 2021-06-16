@@ -12,13 +12,6 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<ContainmentFieldGeneratorComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<ContainmentFieldGeneratorComponent, PhysicsBodyTypeChangedEvent>();
-        }
-
         private static void BodyTypeChanged(
             EntityUid uid,
             ContainmentFieldGeneratorComponent component,

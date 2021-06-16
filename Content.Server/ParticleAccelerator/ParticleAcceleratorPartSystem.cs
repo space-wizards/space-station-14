@@ -16,13 +16,6 @@ namespace Content.Server.ParticleAccelerator
             SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>();
-        }
-
         private static void BodyTypeChanged(
             EntityUid uid,
             ParticleAcceleratorPartComponent component,

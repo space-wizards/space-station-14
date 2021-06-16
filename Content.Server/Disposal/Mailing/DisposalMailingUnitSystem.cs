@@ -11,13 +11,6 @@ namespace Content.Server.Disposal.Mailing
             SubscribeLocalEvent<DisposalMailingUnitComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<DisposalMailingUnitComponent, PhysicsBodyTypeChangedEvent>();
-        }
-
         private static void BodyTypeChanged(
             EntityUid uid,
             DisposalMailingUnitComponent component,
