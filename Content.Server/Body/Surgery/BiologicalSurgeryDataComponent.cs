@@ -25,7 +25,7 @@ namespace Content.Server.Body.Surgery
     {
         public override string Name => "BiologicalSurgeryData";
 
-        private readonly HashSet<IMechanism> _disconnectedOrgans = new();
+        private readonly HashSet<SharedMechanismComponent> _disconnectedOrgans = new();
 
         private bool SkinOpened { get; set; }
 
@@ -33,11 +33,11 @@ namespace Content.Server.Body.Surgery
 
         private bool VesselsClamped { get; set; }
 
-        public IBodyPart? Parent => Owner.GetComponentOrNull<IBodyPart>();
+        public SharedBodyPartComponent? Parent => Owner.GetComponentOrNull<SharedBodyPartComponent>();
 
         public BodyPartType? ParentType => Parent?.PartType;
 
-        private void AddDisconnectedOrgan(IMechanism mechanism)
+        private void AddDisconnectedOrgan(SharedMechanismComponent mechanism)
         {
             if (_disconnectedOrgans.Add(mechanism))
             {
@@ -45,7 +45,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void RemoveDisconnectedOrgan(IMechanism mechanism)
+        private void RemoveDisconnectedOrgan(SharedMechanismComponent mechanism)
         {
             if (_disconnectedOrgans.Remove(mechanism))
             {
@@ -117,7 +117,7 @@ namespace Content.Server.Body.Surgery
             return toReturn.ToString();
         }
 
-        public bool CanAddMechanism(IMechanism mechanism)
+        public bool CanAddMechanism(SharedMechanismComponent mechanism)
         {
             return Parent != null &&
                    SkinOpened &&
@@ -125,7 +125,7 @@ namespace Content.Server.Body.Surgery
                    SkinRetracted;
         }
 
-        public bool CanAttachBodyPart(IBodyPart part)
+        public bool CanAttachBodyPart(SharedBodyPartComponent part)
         {
             return Parent != null;
             // TODO BODY if a part is disconnected, you should have to do some surgery to allow another body part to be attached.
@@ -276,7 +276,7 @@ namespace Content.Server.Body.Surgery
             if (Parent == null) return;
             if (Parent.Mechanisms.Count <= 0) return;
 
-            var toSend = new List<IMechanism>();
+            var toSend = new List<SharedMechanismComponent>();
             foreach (var mechanism in Parent.Mechanisms)
             {
                 if (!_disconnectedOrgans.Contains(mechanism))
@@ -291,7 +291,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void LoosenOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
+        private async void LoosenOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
@@ -332,7 +332,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void RemoveOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
+        private async void RemoveOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
@@ -359,7 +359,7 @@ namespace Content.Server.Body.Surgery
         private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
-            if (container is not IBody body) return;
+            if (container is not SharedBodyComponent body) return;
 
             performer.PopupMessage(Loc.GetString("Sawing off the limb!"));
 

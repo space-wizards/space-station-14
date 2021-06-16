@@ -63,9 +63,6 @@ namespace Content.Client.Verbs
         {
             base.Shutdown();
 
-            UnsubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>();
-            UnsubscribeNetworkEvent<PlayerContainerVisibilityMessage>();
-            UnsubscribeLocalEvent<MoveEvent>();
             _contextMenuPresenter?.Dispose();
 
             CommandBinds.Unregister<VerbSystem>();

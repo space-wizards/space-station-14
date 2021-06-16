@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Body.Behavior;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Preset;
@@ -25,7 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    public abstract class SharedBodyComponent : Component, IBody, ISerializationHooks
+    public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -55,13 +56,13 @@ namespace Content.Shared.Body.Components
         private Dictionary<string, BodyPartSlot> SlotIds { get; } = new();
 
         [ViewVariables]
-        private Dictionary<IBodyPart, BodyPartSlot> SlotParts { get; } = new();
+        private Dictionary<SharedBodyPartComponent, BodyPartSlot> SlotParts { get; } = new();
 
         [ViewVariables]
         public IEnumerable<BodyPartSlot> Slots => SlotIds.Values;
 
         [ViewVariables]
-        public IEnumerable<KeyValuePair<IBodyPart, BodyPartSlot>> Parts => SlotParts;
+        public IEnumerable<KeyValuePair<SharedBodyPartComponent, BodyPartSlot>> Parts => SlotParts;
 
         [ViewVariables]
         public IEnumerable<BodyPartSlot> EmptySlots => Slots.Where(slot => slot.Part == null);
@@ -71,7 +72,7 @@ namespace Content.Shared.Body.Components
                 ? SlotIds.GetValueOrDefault(centerSlot)
                 : null;
 
-        public IBodyPart? CenterPart => CenterSlot?.Part;
+        public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
         public override void Initialize()
         {
@@ -119,9 +120,9 @@ namespace Content.Shared.Body.Components
             return slot;
         }
 
-        private Dictionary<BodyPartSlot, IBodyPart> GetHangingParts(BodyPartSlot from)
+        private Dictionary<BodyPartSlot, SharedBodyPartComponent> GetHangingParts(BodyPartSlot from)
         {
-            var hanging = new Dictionary<BodyPartSlot, IBodyPart>();
+            var hanging = new Dictionary<BodyPartSlot, SharedBodyPartComponent>();
 
             foreach (var connection in from.Connections)
             {
@@ -135,7 +136,7 @@ namespace Content.Shared.Body.Components
             return hanging;
         }
 
-        protected virtual bool CanAddPart(string slotId, IBodyPart part)
+        protected virtual bool CanAddPart(string slotId, SharedBodyPartComponent part)
         {
             if (!SlotIds.TryGetValue(slotId, out var slot) ||
                 slot.CanAddPart(part))
@@ -146,7 +147,7 @@ namespace Content.Shared.Body.Components
             return true;
         }
 
-        protected virtual void OnAddPart(BodyPartSlot slot, IBodyPart part)
+        protected virtual void OnAddPart(BodyPartSlot slot, SharedBodyPartComponent part)
         {
             SlotParts[part] = slot;
             part.Body = this;
@@ -162,7 +163,7 @@ namespace Content.Shared.Body.Components
             OnBodyChanged();
         }
 
-        protected virtual void OnRemovePart(BodyPartSlot slot, IBodyPart part)
+        protected virtual void OnRemovePart(BodyPartSlot slot, SharedBodyPartComponent part)
         {
             SlotParts.Remove(part);
 
@@ -203,7 +204,8 @@ namespace Content.Shared.Body.Components
             OnBodyChanged();
         }
 
-        public bool TryAddPart(string slotId, IBodyPart part)
+        // TODO BODY Sensible templates
+        public bool TryAddPart(string slotId, SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
             DebugTools.AssertNotNull(slotId);
@@ -217,7 +219,7 @@ namespace Content.Shared.Body.Components
                    slot.TryAddPart(part);
         }
 
-        public void SetPart(string slotId, IBodyPart part)
+        public void SetPart(string slotId, SharedBodyPartComponent part)
         {
             if (!SlotIds.TryGetValue(slotId, out var slot))
             {
@@ -236,14 +238,14 @@ namespace Content.Shared.Body.Components
                    slot.Part != null;
         }
 
-        public bool HasPart(IBodyPart part)
+        public bool HasPart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
 
             return SlotParts.ContainsKey(part);
         }
 
-        public bool RemovePart(IBodyPart part)
+        public bool RemovePart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
 
@@ -259,7 +261,7 @@ namespace Content.Shared.Body.Components
                    slot.RemovePart();
         }
 
-        public bool RemovePart(IBodyPart part, [NotNullWhen(true)] out BodyPartSlot? slotId)
+        public bool RemovePart(SharedBodyPartComponent part, [NotNullWhen(true)] out BodyPartSlot? slotId)
         {
             DebugTools.AssertNotNull(part);
 
@@ -279,7 +281,7 @@ namespace Content.Shared.Body.Components
             return true;
         }
 
-        public bool TryDropPart(BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, IBodyPart>? dropped)
+        public bool TryDropPart(BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped)
         {
             DebugTools.AssertNotNull(slot);
 
@@ -304,7 +306,7 @@ namespace Content.Shared.Body.Components
             return true;
         }
 
-        public bool ConnectedToCenter(IBodyPart part)
+        public bool ConnectedToCenter(SharedBodyPartComponent part)
         {
             return TryGetSlot(part, out var result) &&
                    ConnectedToCenterPartRecursion(result);
@@ -343,7 +345,7 @@ namespace Content.Shared.Body.Components
             return SlotIds.ContainsKey(slot);
         }
 
-        public IEnumerable<IBodyPart> GetParts()
+        public IEnumerable<SharedBodyPartComponent> GetParts()
         {
             foreach (var slot in SlotIds.Values)
             {
@@ -354,7 +356,7 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public bool TryGetPart(string slotId, [NotNullWhen(true)] out IBodyPart? result)
+        public bool TryGetPart(string slotId, [NotNullWhen(true)] out SharedBodyPartComponent? result)
         {
             result = null;
 
@@ -367,7 +369,7 @@ namespace Content.Shared.Body.Components
             return SlotIds.GetValueOrDefault(id);
         }
 
-        public BodyPartSlot? GetSlot(IBodyPart part)
+        public BodyPartSlot? GetSlot(SharedBodyPartComponent part)
         {
             return SlotParts.GetValueOrDefault(part);
         }
@@ -377,12 +379,12 @@ namespace Content.Shared.Body.Components
             return (slot = GetSlot(slotId)) != null;
         }
 
-        public bool TryGetSlot(IBodyPart part, [NotNullWhen(true)] out BodyPartSlot? slot)
+        public bool TryGetSlot(SharedBodyPartComponent part, [NotNullWhen(true)] out BodyPartSlot? slot)
         {
             return (slot = GetSlot(part)) != null;
         }
 
-        public bool TryGetPartConnections(string slotId, [NotNullWhen(true)] out List<IBodyPart>? connections)
+        public bool TryGetPartConnections(string slotId, [NotNullWhen(true)] out List<SharedBodyPartComponent>? connections)
         {
             if (!SlotIds.TryGetValue(slotId, out var slot))
             {
@@ -390,7 +392,7 @@ namespace Content.Shared.Body.Components
                 return false;
             }
 
-            connections = new List<IBodyPart>();
+            connections = new List<SharedBodyPartComponent>();
             foreach (var connection in slot.Connections)
             {
                 if (connection.Part != null)
@@ -439,7 +441,7 @@ namespace Content.Shared.Body.Components
             return false;
         }
 
-        public IEnumerable<IBodyPart> GetPartsOfType(BodyPartType type)
+        public IEnumerable<SharedBodyPartComponent> GetPartsOfType(BodyPartType type)
         {
             foreach (var slot in GetSlotsOfType(type))
             {
@@ -450,7 +452,8 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public IEnumerable<(IBodyPart part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
+        /// <returns>A list of parts with that property.</returns>
+        public IEnumerable<(SharedBodyPartComponent part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
         {
             foreach (var slot in SlotIds.Values)
             {
@@ -461,7 +464,7 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public IEnumerable<(IBodyPart part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
+        public IEnumerable<(SharedBodyPartComponent part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
         {
             foreach (var part in SlotParts.Keys)
             {
@@ -509,9 +512,6 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        /// <summary>
-        ///     Called when the layout of this body changes.
-        /// </summary>
         private void OnBodyChanged()
         {
             // Calculate move speed based on this body.
@@ -523,19 +523,7 @@ namespace Content.Shared.Body.Components
             Dirty();
         }
 
-        /// <summary>
-        ///     Returns the combined length of the distance to the nearest
-        ///     <see cref="IBodyPart"/> that is a foot.
-        ///     If you consider a <see cref="IBody"/> a node map, then it will
-        ///     look for a foot node from the given node. It can only search
-        ///     through <see cref="IBodyPart"/>s with an
-        ///     <see cref="ExtensionComponent"/>.
-        /// </summary>
-        /// <returns>
-        ///     The distance to the foot if found, <see cref="float.MinValue"/>
-        ///     otherwise.
-        /// </returns>
-        public float DistanceToNearestFoot(IBodyPart source)
+        public float DistanceToNearestFoot(SharedBodyPartComponent source)
         {
             if (source.PartType == BodyPartType.Foot &&
                 source.TryGetProperty<ExtensionComponent>(out var extension))
@@ -546,7 +534,7 @@ namespace Content.Shared.Body.Components
             return LookForFootRecursion(source);
         }
 
-        private float LookForFootRecursion(IBodyPart current, HashSet<BodyPartSlot>? searched = null)
+        private float LookForFootRecursion(SharedBodyPartComponent current, HashSet<BodyPartSlot>? searched = null)
         {
             searched ??= new HashSet<BodyPartSlot>();
 
@@ -555,13 +543,11 @@ namespace Content.Shared.Body.Components
                 return float.MinValue;
             }
 
-            // Get all connected parts if the current part has an extension property
             if (!TryGetSlot(current, out var slot))
             {
                 return float.MinValue;
             }
 
-            // If a connected BodyPart is a foot, return this BodyPart's length.
             foreach (var connection in slot.Connections)
             {
                 if (connection.PartType == BodyPartType.Foot &&
@@ -571,8 +557,6 @@ namespace Content.Shared.Body.Components
                 }
             }
 
-            // Otherwise, get the recursion values of all connected BodyParts and
-            // store them in a list.
             var distances = new List<float>();
             foreach (var connection in slot.Connections)
             {
@@ -589,8 +573,6 @@ namespace Content.Shared.Body.Components
                 }
             }
 
-            // If one or more of the searches found a foot, return the smallest one
-            // and add this ones length.
             if (distances.Count > 0)
             {
                 return distances.Min<float>() + extProperty.Distance;
@@ -605,7 +587,7 @@ namespace Content.Shared.Body.Components
             return SlotIds.Values.ElementAt(index);
         }
 
-        public KeyValuePair<IBodyPart, BodyPartSlot> PartAt(int index)
+        public KeyValuePair<SharedBodyPartComponent, BodyPartSlot> PartAt(int index)
         {
             return SlotParts.ElementAt(index);
         }
@@ -664,12 +646,68 @@ namespace Content.Shared.Body.Components
                     part.Gib();
             }
         }
+
+        public bool TryGetMechanismBehaviors([NotNullWhen(true)] out List<SharedMechanismBehavior>? behaviors)
+        {
+            behaviors = GetMechanismBehaviors().ToList();
+
+            if (behaviors.Count == 0)
+            {
+                behaviors = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool HasMechanismBehavior<T>() where T : SharedMechanismBehavior
+        {
+            return Parts.Any(p => p.Key.HasMechanismBehavior<T>());
+        }
+
+        // TODO cache these 2 methods jesus
+        public IEnumerable<SharedMechanismBehavior> GetMechanismBehaviors()
+        {
+            foreach (var (part, _) in Parts)
+            foreach (var mechanism in part.Mechanisms)
+            foreach (var behavior in mechanism.Behaviors.Values)
+            {
+                yield return behavior;
+            }
+        }
+
+        public IEnumerable<T> GetMechanismBehaviors<T>() where T : SharedMechanismBehavior
+        {
+            foreach (var (part, _) in Parts)
+            foreach (var mechanism in part.Mechanisms)
+            foreach (var behavior in mechanism.Behaviors.Values)
+            {
+                if (behavior is T tBehavior)
+                {
+                    yield return tBehavior;
+                }
+            }
+        }
+
+        public bool TryGetMechanismBehaviors<T>([NotNullWhen(true)] out List<T>? behaviors)
+            where T : SharedMechanismBehavior
+        {
+            behaviors = GetMechanismBehaviors<T>().ToList();
+
+            if (behaviors.Count == 0)
+            {
+                behaviors = null;
+                return false;
+            }
+
+            return true;
+        }
     }
 
     [Serializable, NetSerializable]
     public class BodyComponentState : ComponentState
     {
-        private Dictionary<string, IBodyPart>? _parts;
+        private Dictionary<string, SharedBodyPartComponent>? _parts;
 
         public readonly (string slot, EntityUid partId)[] PartIds;
 
@@ -678,7 +716,7 @@ namespace Content.Shared.Body.Components
             PartIds = partIds;
         }
 
-        public Dictionary<string, IBodyPart> Parts(IEntityManager? entityManager = null)
+        public Dictionary<string, SharedBodyPartComponent> Parts(IEntityManager? entityManager = null)
         {
             if (_parts != null)
             {
@@ -687,7 +725,7 @@ namespace Content.Shared.Body.Components
 
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
-            var parts = new Dictionary<string, IBodyPart>(PartIds.Length);
+            var parts = new Dictionary<string, SharedBodyPartComponent>(PartIds.Length);
 
             foreach (var (slot, partId) in PartIds)
             {
@@ -696,7 +734,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out IBodyPart? part))
+                if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
                 {
                     continue;
                 }

@@ -10,7 +10,7 @@ namespace Content.Shared.Body.Part
     public interface IBodyPartRemoved
     {
         /// <summary>
-        ///     Called when a <see cref="IBodyPart"/> is removed from the
+        ///     Called when a <see cref="SharedBodyPartComponent"/> is removed from the
         ///     entity owning this component.
         /// </summary>
         /// <param name="args">Information about the part that was removed.</param>
@@ -19,7 +19,7 @@ namespace Content.Shared.Body.Part
 
     public class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(string slot, IBodyPart part)
+        public BodyPartRemovedEventArgs(string slot, SharedBodyPartComponent part)
         {
             Slot = slot;
             Part = part;
@@ -33,6 +33,6 @@ namespace Content.Shared.Body.Part
         /// <summary>
         ///     The part that was removed.
         /// </summary>
-        public IBodyPart Part { get; }
+        public SharedBodyPartComponent Part { get; }
     }
 }

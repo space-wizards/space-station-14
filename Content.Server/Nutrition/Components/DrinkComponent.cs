@@ -187,7 +187,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!target.TryGetComponent(out IBody? body) ||
+            if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 target.PopupMessage(Loc.GetString("You can't drink {0:theName}!", Owner));
