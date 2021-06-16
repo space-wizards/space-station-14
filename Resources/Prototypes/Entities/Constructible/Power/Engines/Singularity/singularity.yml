@@ -17,6 +17,7 @@
       mask:
       - AllMask
   - type: Singularity
+  - type: SingularityDistortion
   - type: RadiationPulse
     range: 15
     decay: false
