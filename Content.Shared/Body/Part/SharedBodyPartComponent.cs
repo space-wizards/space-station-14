@@ -36,10 +36,6 @@ namespace Content.Shared.Body.Part
         [ViewVariables]
         private readonly HashSet<SharedMechanismComponent> _mechanisms = new();
 
-        /// <summary>
-        ///     The <see cref="Content.Shared.Body.Components.SharedBodyComponent"/> to which this <see cref="SharedBodyPartComponent"/> is
-        ///     attached to.
-        /// </summary>
         [ViewVariables]
         public SharedBodyComponent? Body
         {
