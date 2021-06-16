@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// Class of damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary> 
         [DataField("damageClass")]
-        public DamageClass DamageType { get; set; } = DamageClass.Brute;
+        public DamageClass DamageClass { get; set; } = DamageClass.Brute;
 
         [DataField("overdoseReagent")]
         public string OverdoseReagent { get; set; } = "Water";
@@ -51,10 +51,10 @@ namespace Content.Server.Chemistry.Metabolism
             {
 
                 solutionComponent.Solution.ContainsReagent(OverdoseReagent, out ReagentUnit chemicalAmount);
-                    
+
                 if (chemicalAmount >= OverdoseAmount)
                 {
-                    health.ChangeDamage(DamageType, (int) HealthChange, true);
+                    health.ChangeDamage(DamageClass, (int) HealthChange, true);
                 }
             }
             return MetabolismRate;
