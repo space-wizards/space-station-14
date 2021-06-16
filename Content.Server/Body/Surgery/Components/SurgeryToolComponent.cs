@@ -47,7 +47,7 @@ namespace Content.Server.Body.Surgery.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
-        public IBody? BodyCache { get; private set; }
+        public SharedBodyComponent? BodyCache { get; private set; }
 
         public IEntity? PerformerCache { get; private set; }
 
@@ -66,7 +66,7 @@ namespace Content.Server.Body.Surgery.Components
             CloseAllSurgeryUIs();
 
             // Attempt surgery on a body by sending a list of operable parts for the client to choose from
-            if (eventArgs.Target.TryGetComponent(out IBody? body))
+            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
@@ -93,7 +93,7 @@ namespace Content.Server.Body.Surgery.Components
                     NotUsefulPopup();
                 }
             }
-            else if (eventArgs.Target.TryGetComponent<IBodyPart>(out var part))
+            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
             {
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 PerformerCache = eventArgs.User;
@@ -113,7 +113,7 @@ namespace Content.Server.Body.Surgery.Components
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(IBodyPart)} {eventArgs.User.Name}");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {eventArgs.User.Name}");
                 throw new InvalidOperationException();
             }
 
@@ -122,7 +122,7 @@ namespace Content.Server.Body.Surgery.Components
 
         public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
 
-        public void RequestMechanism(IEnumerable<IMechanism> options, ISurgeon.MechanismRequestCallback callback)
+        public void RequestMechanism(IEnumerable<SharedMechanismComponent> options, ISurgeon.MechanismRequestCallback callback)
         {
             var toSend = new Dictionary<string, int>();
             foreach (var mechanism in options)
@@ -211,7 +211,7 @@ namespace Content.Server.Body.Surgery.Components
 
         /// <summary>
         ///     Called after the client chooses from a list of possible
-        ///     <see cref="IBodyPart"/> that can be operated on.
+        ///     <see cref="SharedBodyPartComponent"/> that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
@@ -230,7 +230,7 @@ namespace Content.Server.Body.Surgery.Components
                 return;
             }
 
-            var target = (IBodyPart) targetObject!;
+            var target = (SharedBodyPartComponent) targetObject!;
 
             // TODO BODY Reconsider
             if (!target.AttemptSurgery(_surgeryType, BodyCache, this, PerformerCache))
@@ -241,7 +241,7 @@ namespace Content.Server.Body.Surgery.Components
 
         /// <summary>
         ///     Called after the client chooses from a list of possible
-        ///     <see cref="IMechanism"/> to choose from.
+        ///     <see cref="SharedMechanismComponent"/> to choose from.
         /// </summary>
         private void HandleReceiveMechanism(int key)
         {

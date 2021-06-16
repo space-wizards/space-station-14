@@ -5,6 +5,7 @@ namespace Content.Client.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMechanismComponent))]
-    [ComponentReference(typeof(IMechanism))]
-    public class MechanismComponent : SharedMechanismComponent { }
+    public class MechanismComponent : SharedMechanismComponent
+    {
+    }
 }

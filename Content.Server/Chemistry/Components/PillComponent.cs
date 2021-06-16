@@ -70,7 +70,7 @@ namespace Content.Server.Chemistry.Components
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out IBody? body) ||
+            if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;

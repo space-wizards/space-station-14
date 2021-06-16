@@ -75,7 +75,7 @@ namespace Content.Server.Climbing.Components
             }
 
             if (!user.HasComponent<ClimbingComponent>() ||
-                !user.TryGetComponent(out IBody? body))
+                !user.TryGetComponent(out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;

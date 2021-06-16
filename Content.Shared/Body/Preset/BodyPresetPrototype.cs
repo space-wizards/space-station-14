@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Preset
 {
     /// <summary>
-    ///     Defines the <see cref="IBodyPart"/>s used in a <see cref="IBody"/>.
+    ///     Defines the <see cref="SharedBodyPartComponent"/>s used in a <see cref="Content.Shared.Body.Components.SharedBodyComponent"/>.
     /// </summary>
     [Prototype("bodyPreset")]
     [Serializable, NetSerializable]
