@@ -99,10 +99,6 @@ namespace Content.Server.AI.Pathfinding.Accessible
             _queuedCacheDeletions.Clear();
 
             _mapManager.OnGridRemoved -= GridRemoved;
-
-            UnsubscribeLocalEvent<PathfindingChunkUpdateMessage>();
-            UnsubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>();
-            UnsubscribeNetworkEvent<SharedAiDebug.UnsubscribeReachableMessage>();
         }
 
         private void GridRemoved(MapId mapId, GridId gridId)

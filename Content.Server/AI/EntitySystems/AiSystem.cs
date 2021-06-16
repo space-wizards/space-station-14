@@ -42,13 +42,6 @@ namespace Content.Server.AI.EntitySystems
             SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            UnsubscribeLocalEvent<SleepAiMessage>();
-            UnsubscribeLocalEvent<MobStateChangedMessage>();
-        }
-
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
