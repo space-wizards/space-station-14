@@ -23,19 +23,19 @@ namespace Content.Server.Chemistry.Metabolism
         /// <summary>
         /// How much damage is changed when the overdose happenes, allowing for possible positive overdose?
         /// </summary>
-        [DataField("healthChange")]
+        [DataField("healthChange", required: true)]
         public int HealthChange { get; set; } = 10;
 
         /// <summary>
         /// Class of damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary> 
-        [DataField("damageClass")]
+        [DataField("damageClass", required: true)]
         public DamageClass DamageClass { get; set; } = DamageClass.Brute;
 
-        [DataField("overdoseReagent")]
+        [DataField("overdoseReagent", required: true)]
         public string OverdoseReagent { get; set; } = "Water";
 
-        [DataField("overdoseAmount")]
+        [DataField("overdoseAmount", required: true)]
         public ReagentUnit OverdoseAmount { get; set; } = ReagentUnit.New(30.0f);
 
         /// <summary>
