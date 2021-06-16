@@ -1,11 +1,10 @@
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Chemistry;
+using Content.Shared.Chemistry.Metabolizable;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage.Components;
+using Content.Server.Chemistry.Components;
 
 namespace Content.Server.Chemistry.Metabolism
 {
