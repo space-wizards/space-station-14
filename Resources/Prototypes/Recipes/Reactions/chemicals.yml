@@ -230,11 +230,11 @@
 - type: reaction
   id: Meth
   reactants:
-    Ephedrine:
+    Oxygen:
       amount: 1
     Hydrogen:
       amount: 1
-    Iodine:
+    Chlorine:
       amount: 1
     Phosphorus:
      amount: 1
