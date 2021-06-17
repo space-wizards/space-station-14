@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.MobState;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

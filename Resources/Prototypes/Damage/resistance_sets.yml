@@ -67,7 +67,7 @@
     Bloodloss: 0
     Cellular: 0
   flatReductions:
-    Blunt: 0
+    Blunt: 5
     Slash: 0
     Piercing: 0
     Heat: 0
@@ -86,6 +86,33 @@
     Slash: 1.0
     Piercing: 2.0
     Heat: 0.5
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
+  flatReductions:
+    Blunt: 5
+    Slash: 0
+    Piercing: 0
+    Heat: 0
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
+
+- type: resistanceSet
+  id: glassResistances
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 0.5
+    Heat: 0
     Shock: 0
     Cold: 0
     Poison: 0

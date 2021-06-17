@@ -1,6 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Metabolizable;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

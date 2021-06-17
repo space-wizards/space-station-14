@@ -4,7 +4,6 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
-  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -83,7 +82,6 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
-  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     netsync: false

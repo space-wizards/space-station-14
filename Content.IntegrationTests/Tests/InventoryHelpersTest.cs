@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Utility;
+using Content.Server.Inventory;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.Stunnable.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
 {

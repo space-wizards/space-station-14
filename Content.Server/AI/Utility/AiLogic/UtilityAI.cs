@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
+using Content.Server.AI.Components;
+using Content.Server.AI.LoadBalancer;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.EntitySystems.AI;
-using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
-using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Shared.GameObjects.Components.Mobs.State;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Server.CPUJob.JobQueues;
+using Content.Shared.MobState;
+using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -137,6 +137,9 @@ namespace Content.Server.AI.Utility.AiLogic
                     break;
                 default:
                     Logger.FatalS("ai", _actionRequest.Exception.ToString());
+                    ExceptionDispatchInfo.Capture(_actionRequest.Exception).Throw();
+                    // The code never actually reaches here, because the above throws.
+                    // This is to tell the compiler that the flow never leaves here.
                     throw _actionRequest.Exception;
             }
             var action = _actionRequest.Result;

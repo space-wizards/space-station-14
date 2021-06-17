@@ -23,7 +23,7 @@
     - Belt
   - type: PointLight
     enabled: false
-    radius: 3
+    radius: 1.4
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -93,7 +93,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.3,-0.4,0.3,0.4"
-      name: "slips"
+      id: "slips"
       hard: false
       layer:
       - SmallImpassable

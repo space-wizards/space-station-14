@@ -1,4 +1,4 @@
-using Content.Server.GlobalVerbs;
+using Content.Server.Damage;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;

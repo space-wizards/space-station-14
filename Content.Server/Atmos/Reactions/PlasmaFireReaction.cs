@@ -1,7 +1,7 @@
 #nullable enable
 using System;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

@@ -1,5 +1,5 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Controllers;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;

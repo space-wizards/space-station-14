@@ -9,6 +9,7 @@
       actions:
         - actionType: ToggleLight
     - type: PowerCellSlot
+      startingCellType: PowerCellSmallHigh
     - type: Sprite
       sprite: Objects/Tools/flashlight.rsi
       layers:

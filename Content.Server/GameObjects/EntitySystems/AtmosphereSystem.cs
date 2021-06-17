@@ -5,9 +5,9 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -120,9 +120,6 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
 
             _mapManager.MapCreated -= OnMapCreated;
-
-            UnsubscribeLocalEvent<RotateEvent>();
-            UnsubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
         private void RotateEvent(RotateEvent ev)

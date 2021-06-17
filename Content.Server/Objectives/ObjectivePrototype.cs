@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -39,7 +38,7 @@ namespace Content.Server.Objectives
         [DataField("difficultyOverride")]
         private float? _difficultyOverride = null;
 
-        public bool CanBeAssigned(Mind mind)
+        public bool CanBeAssigned(Mind.Mind mind)
         {
             foreach (var requirement in _requirements)
             {
@@ -57,7 +56,7 @@ namespace Content.Server.Objectives
             return true;
         }
 
-        public Objective GetObjective(Mind mind)
+        public Objective GetObjective(Mind.Mind mind)
         {
             return new(this, mind);
         }
