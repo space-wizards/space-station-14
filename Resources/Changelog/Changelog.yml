@@ -1326,3 +1326,37 @@ Entries:
     type: Add}
   id: 234
   time: '2021-06-09T08:39:31.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Made windows and walls immune to punches and low damaging tools, type: Tweak}
+  - {message: Made reinforced and plasma windows stronger, type: Tweak}
+  id: 235
+  time: '2021-06-11T23:53:51.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Made RCDs unable to destroy reinforced walls and airlocks., type: Tweak}
+  id: 236
+  time: '2021-06-16T03:36:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix uncuffing yourself, type: Fix}
+  - {message: Can no longer break pulling when cuffed, type: Fix}
+  id: 237
+  time: '2021-06-16T14:37:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Solar control computers UI scale properly, better prediction, unusable
+      by ghosts', type: Fix}
+  id: 238
+  time: '2021-06-16T14:49:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Lights have been dimmed around the station for budgetary purposes.
+      Also, our incandescents are actually incandescents now.', type: Tweak}
+  id: 239
+  time: '2021-06-16T22:55:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Removes Warden, type: Remove}
+  id: 240
+  time: '2021-06-17T22:35:37.577392+00:00'
