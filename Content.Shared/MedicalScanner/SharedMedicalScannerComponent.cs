@@ -82,7 +82,7 @@ namespace Content.Shared.MedicalScanner
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            return eventArgs.Dragged.HasComponent<IBody>();
+            return eventArgs.Dragged.HasComponent<SharedBodyComponent>();
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Newtonsoft.Json;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Asynchronous;

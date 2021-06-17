@@ -11,7 +11,7 @@ namespace Content.Shared.Body.Mechanism
         {
             base.Update(frameTime);
 
-            foreach (var mechanism in ComponentManager.EntityQuery<IMechanism>(true))
+            foreach (var mechanism in ComponentManager.EntityQuery<SharedMechanismComponent>(true))
             {
                 mechanism.Update(frameTime);
             }

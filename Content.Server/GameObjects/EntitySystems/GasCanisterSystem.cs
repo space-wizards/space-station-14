@@ -14,13 +14,6 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<GasCanisterComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<GasCanisterComponent, PhysicsBodyTypeChangedEvent>();
-        }
-
         private static void OnBodyTypeChanged(
             EntityUid uid,
             GasCanisterComponent component,

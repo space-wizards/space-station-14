@@ -13,6 +13,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -188,13 +189,12 @@ namespace Content.Server.Hands
             }
             else
             {
-                var splitStack = new StackSplitEvent() { Amount = 1, SpawnPosition = playerEnt.Transform.Coordinates };
-                RaiseLocalEvent(throwEnt.Uid, splitStack);
+                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stackComp, 1, playerEnt.Transform.Coordinates);
 
-                if (splitStack.Result == null)
+                if (splitStack == null)
                     return false;
 
-                throwEnt = splitStack.Result;
+                throwEnt = splitStack;
             }
 
             var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;

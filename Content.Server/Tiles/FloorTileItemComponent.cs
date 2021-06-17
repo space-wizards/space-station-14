@@ -80,10 +80,7 @@ namespace Content.Server.Tiles
 
                     if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
                     {
-                        var stackUse = new StackUseEvent() {Amount = 1};
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
-
-                        if (!stackUse.Result)
+                        if (!EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
                             continue;
 
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);

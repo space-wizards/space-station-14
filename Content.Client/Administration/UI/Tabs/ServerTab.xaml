@@ -1,12 +1,11 @@
 ﻿<Control
     xmlns="https://spacestation14.io"
-    xmlns:amc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
-    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Margin="4"
     MinSize="50 50">
     <GridContainer
         Columns="4" >
-        <customControls:CommandButton Command="restart" Text="{Loc Reboot}"></customControls:CommandButton>
-        <customControls:CommandButton Command="shutdown" Text="{Loc Shutdown}"></customControls:CommandButton>
+        <cc:CommandButton Command="restart" Text="{Loc Reboot}"></cc:CommandButton>
+        <cc:CommandButton Command="shutdown" Text="{Loc Shutdown}"></cc:CommandButton>
     </GridContainer>
 </Control>
