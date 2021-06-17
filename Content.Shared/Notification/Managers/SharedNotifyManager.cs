@@ -16,7 +16,7 @@ namespace Content.Shared.Notification.Managers
 
         protected class MsgDoNotifyCursor : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string Message { get; set; } = string.Empty;
 
@@ -33,7 +33,7 @@ namespace Content.Shared.Notification.Managers
 
         protected class MsgDoNotifyCoordinates : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string Message { get; set; } = string.Empty;
             public EntityCoordinates Coordinates;
@@ -53,7 +53,7 @@ namespace Content.Shared.Notification.Managers
 
         protected class MsgDoNotifyEntity : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string Message { get; set; } = string.Empty;
             public EntityUid Entity;

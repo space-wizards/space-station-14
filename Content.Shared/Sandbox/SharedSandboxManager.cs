@@ -25,7 +25,7 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxRespawn : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -38,7 +38,7 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxGiveAccess : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -52,7 +52,7 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxGiveAghost : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -66,7 +66,7 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxSuicide : NetMessage
         {
-            public MsgGroups MsgGroups = MsgGroups.Command;
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {

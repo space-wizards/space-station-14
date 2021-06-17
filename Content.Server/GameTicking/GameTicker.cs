@@ -162,16 +162,16 @@ namespace Content.Server.GameTicking
             _lobbyCollection = _prototypeManager.Index<SoundCollectionPrototype>("LobbyMusic");
             LobbySong = _robustRandom.Pick(_lobbyCollection.PickFiles);
 
-            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
-            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
-            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
-            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
-            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
-            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
-            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
-            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
-            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
-            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable));
+            _netManager.RegisterNetMessage<MsgTickerJoinLobby>();
+            _netManager.RegisterNetMessage<MsgTickerJoinGame>();
+            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>();
+            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>();
+            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>();
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>();
+            _netManager.RegisterNetMessage<MsgRoundEndMessage>();
+            _netManager.RegisterNetMessage<MsgRequestWindowAttention>();
+            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>();
+            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>();
 
             SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
