@@ -47,6 +47,10 @@ namespace Content.Server.GameTicking
 
         private void SpawnPlayer(IPlayerSession player, HumanoidCharacterProfile character, string? jobId = null, bool lateJoin = true)
         {
+            // Can't spawn players with a dummy ticker!
+            if (DummyTicker)
+                return;
+
             if (lateJoin && DisallowLateJoin)
             {
                 MakeObserve(player);
@@ -121,6 +125,10 @@ namespace Content.Server.GameTicking
 
         public void MakeObserve(IPlayerSession player)
         {
+            // Can't spawn players with a dummy ticker!
+            if (DummyTicker)
+                return;
+
             if (!_playersInLobby.ContainsKey(player)) return;
 
             PlayerJoinGame(player);
