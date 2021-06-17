@@ -241,7 +241,7 @@
       healthChange: 60
       damageClass: Toxin
       overdoseReagent: Meth
-      OverdoseAmount: 45
+      overdoseAmount: 45
     - !type:HealthChangeMetabolism
       healthChange: 0.5
       damageClass: Toxin
