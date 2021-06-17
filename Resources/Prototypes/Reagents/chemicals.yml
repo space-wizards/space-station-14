@@ -237,11 +237,6 @@
   boilingPoint: 212.0 #Meth vape when? 
   meltingPoint: 170.0
   metabolism:
-    - !type:OverdoseMetabolism
-      healthChange: 60
-      damageClass: Toxin
-      overdoseReagent: Meth
-      overdoseAmount: 45
     - !type:HealthChangeMetabolism
       healthChange: 0.5
       damageClass: Toxin
