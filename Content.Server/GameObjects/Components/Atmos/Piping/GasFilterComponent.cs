@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ComponentDependency]
         private readonly AppearanceComponent? _appearance = default;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponent<PipeNetDeviceComponent>();

@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private AppearanceComponent? _appearance;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (Owner.TryGetComponent<IPhysBody>(out var physics))
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         #region Connector port methods
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             if (UserInterface != null)

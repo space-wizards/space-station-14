@@ -48,7 +48,7 @@ namespace Content.Server.Body
             part.Owner.RandomOffset(0.25f);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

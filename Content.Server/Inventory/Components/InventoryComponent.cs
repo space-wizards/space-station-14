@@ -48,7 +48,7 @@ namespace Content.Server.Inventory.Components
 
         public event Action? OnItemChanged;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -152,7 +152,7 @@ namespace Content.Server.Inventory.Components
             return !TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes) || EffectBlockerSystem.CanSlip(shoes.Owner);
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             var slots = _slotContainers.Keys.ToList();
 

@@ -171,7 +171,7 @@ namespace Content.Server.Chemistry.Components
 
         protected abstract void UpdateVisuals();
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             Inception?.Remove(this);

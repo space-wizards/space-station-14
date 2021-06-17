@@ -82,7 +82,7 @@ namespace Content.Server.Fluids.Components
 
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

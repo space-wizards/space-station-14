@@ -32,7 +32,7 @@ namespace Content.Server.AI.Components
         }
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

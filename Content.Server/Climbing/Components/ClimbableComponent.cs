@@ -30,7 +30,7 @@ namespace Content.Server.Climbing.Components
         [DataField("delay")]
         private float _climbDelay = 0.8f;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

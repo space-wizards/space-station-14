@@ -98,7 +98,7 @@ namespace Content.Server.ParticleAccelerator.Components
             ? ParticleAcceleratorPowerState.Level3
             : ParticleAcceleratorPowerState.Level2;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)
@@ -239,7 +239,7 @@ namespace Content.Server.ParticleAccelerator.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();

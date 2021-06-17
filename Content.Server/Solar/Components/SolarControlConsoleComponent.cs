@@ -22,7 +22,7 @@ namespace Content.Server.Solar.Components
 
         public SolarControlConsoleComponent() : base(SolarControlConsoleUiKey.Key) { }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();

@@ -18,13 +18,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private PipeNetUpdateMessage _cachedUpdateMessage = new();
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             JoinGridAtmos();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             LeaveGridAtmos();

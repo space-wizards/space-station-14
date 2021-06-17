@@ -98,7 +98,7 @@ namespace Content.Shared.Damage.Components
             return _supportedTypes.Contains(type);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

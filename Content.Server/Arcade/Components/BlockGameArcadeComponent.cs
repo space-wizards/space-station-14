@@ -107,7 +107,7 @@ namespace Content.Server.Arcade.Components
             UserInterface?.SendMessage(new BlockGameMessages.BlockGameUserStatusMessage(_player == session), session);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)

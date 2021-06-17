@@ -57,7 +57,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         private byte? _lastLevel;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -67,7 +67,7 @@ namespace Content.Server.Light.Components
             Dirty();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));

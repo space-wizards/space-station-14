@@ -131,7 +131,7 @@ namespace Content.Server.Buckle.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

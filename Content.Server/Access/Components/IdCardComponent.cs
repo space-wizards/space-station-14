@@ -62,7 +62,7 @@ namespace Content.Server.Access.Components
                 : Loc.GetString("{0}'s ID card{1}", FullName, jobSuffix);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             // ReSharper disable once ConstantNullCoalescingCondition

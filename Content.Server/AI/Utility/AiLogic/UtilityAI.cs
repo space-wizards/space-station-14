@@ -79,7 +79,7 @@ namespace Content.Server.AI.Utility.AiLogic
             }
         }*/
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             if (BehaviorSets.Count > 0)
             {
@@ -94,7 +94,7 @@ namespace Content.Server.AI.Utility.AiLogic
             _planner = EntitySystem.Get<AiActionSystem>();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             var currentOp = CurrentAction?.ActionOperators.Peek();

@@ -79,7 +79,7 @@ namespace Content.Server.Arcade.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

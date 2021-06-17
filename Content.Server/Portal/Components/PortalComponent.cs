@@ -33,7 +33,7 @@ namespace Content.Server.Portal.Components
         public readonly List<IEntity> ImmuneEntities = new(); // K
         [ViewVariables(VVAccess.ReadWrite)] [DataField("alive_time")] private float _aliveTime = 10f;
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             // This will blow up an entity it's attached to
             base.OnAdd();

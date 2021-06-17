@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         public bool FixVacuum => _fixVacuum;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

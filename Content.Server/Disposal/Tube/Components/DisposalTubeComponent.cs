@@ -224,7 +224,7 @@ namespace Content.Server.Disposal.Tube.Components
             UpdateVisualState();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -246,7 +246,7 @@ namespace Content.Server.Disposal.Tube.Components
             UpdateVisualState();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

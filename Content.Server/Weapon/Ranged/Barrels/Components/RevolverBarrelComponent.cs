@@ -99,7 +99,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 SoundGunshot);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _unspawnedCount = Capacity;

@@ -553,7 +553,7 @@ namespace Content.Server.Disposal.Mailing
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -582,7 +582,7 @@ namespace Content.Server.Disposal.Mailing
             UpdateInterface();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (_container != null)
             {

@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables]
         private PipeNode? _gasPort;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PipeNetDeviceComponent>();
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             ConnectedCanister?.DisconnectFromPort();

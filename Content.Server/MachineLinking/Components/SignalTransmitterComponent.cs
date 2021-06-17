@@ -63,7 +63,7 @@ namespace Content.Server.MachineLinking.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

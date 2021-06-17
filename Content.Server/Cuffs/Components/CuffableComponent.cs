@@ -50,7 +50,7 @@ namespace Content.Server.Cuffs.Components
 
         private bool _uncuffing;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

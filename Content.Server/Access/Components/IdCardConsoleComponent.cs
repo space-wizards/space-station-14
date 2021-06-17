@@ -39,7 +39,7 @@ namespace Content.Server.Access.Components
         private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
         private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

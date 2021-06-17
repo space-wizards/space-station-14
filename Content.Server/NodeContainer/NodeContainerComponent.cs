@@ -29,7 +29,7 @@ namespace Content.Server.NodeContainer
         [DataField("examinable")]
         private bool _examinable = false;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             foreach (var node in _nodes.Values)

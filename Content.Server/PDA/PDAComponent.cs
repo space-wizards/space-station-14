@@ -63,7 +63,7 @@ namespace Content.Server.PDA
             _accessSet = new PdaAccessSet(this);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _idSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");

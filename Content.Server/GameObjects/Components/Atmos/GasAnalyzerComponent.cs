@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables]
         private PipeNode? Pipe { get; set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PipeNetDeviceComponent>();

@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 
         private AppearanceComponent? _appearance;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PipeNetDeviceComponent>();

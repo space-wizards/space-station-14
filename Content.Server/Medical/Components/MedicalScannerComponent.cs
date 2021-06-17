@@ -54,7 +54,7 @@ namespace Content.Server.Medical.Components
 
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

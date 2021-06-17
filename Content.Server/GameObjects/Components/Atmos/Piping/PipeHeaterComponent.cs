@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables(VVAccess.ReadWrite)]
         private float TargetTemperature { get; set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PipeNetDeviceComponent>();

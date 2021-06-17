@@ -8,7 +8,7 @@ namespace Content.Server.ParticleAccelerator.Components
     {
         [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             // FIXME: this has to be an entity system, full stop.
@@ -21,7 +21,7 @@ namespace Content.Server.ParticleAccelerator.Components
             RescanIfPossible();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

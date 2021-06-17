@@ -486,7 +486,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -513,7 +513,7 @@ namespace Content.Server.Disposal.Unit.Components
             UpdateInterface();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
             {

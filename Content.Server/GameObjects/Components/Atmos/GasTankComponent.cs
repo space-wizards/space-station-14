@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [DataField("tankFragmentScale")]
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);

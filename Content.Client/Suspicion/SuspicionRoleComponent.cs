@@ -128,7 +128,7 @@ namespace Content.Client.Suspicion
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

@@ -10,7 +10,7 @@ namespace Content.Client.Singularity.Components
 
         private SpriteComponent? _spriteComponent;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -21,7 +21,7 @@ namespace Content.Client.Window
 
         private ISpriteComponent? _sprite;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

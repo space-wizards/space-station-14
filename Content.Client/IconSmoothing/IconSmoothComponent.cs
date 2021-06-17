@@ -59,7 +59,7 @@ namespace Content.Client.IconSmoothing
         /// </summary>
         internal int UpdateGeneration { get; set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
