@@ -6,12 +6,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Solar
 {
-    public class SharedSolarControlConsoleComponent : Component
-    {
-        public override string Name => "SolarControlConsole";
-
-    }
-
     [Serializable, NetSerializable]
     public class SolarControlConsoleBoundInterfaceState : BoundUserInterfaceState
     {

@@ -26,7 +26,7 @@ namespace Content.Server.Metabolism
     [RegisterComponent]
     public class MetabolismComponent : Component
     {
-        [ComponentDependency] private readonly IBody? _body = default!;
+        [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
 
         public override string Name => "Metabolism";
 

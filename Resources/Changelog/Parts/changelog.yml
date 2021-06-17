@@ -1,0 +1,4 @@
+author: Swept
+changes:
+  - type: Tweak # One of the following: Add, Remove, Tweak, Fix
+    message: PDA is now much weaker than flashlight

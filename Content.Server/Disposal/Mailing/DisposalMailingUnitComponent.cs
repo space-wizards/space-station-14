@@ -161,7 +161,7 @@ namespace Content.Server.Disposal.Mailing
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<IBody>())
+                !entity.HasComponent<SharedBodyComponent>())
             {
                 return false;
             }

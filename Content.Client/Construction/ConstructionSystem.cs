@@ -52,9 +52,6 @@ namespace Content.Client.Construction
         {
             base.Shutdown();
 
-            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
-            UnsubscribeNetworkEvent<AckStructureConstructionMessage>();
-
             CommandBinds.Unregister<ConstructionSystem>();
         }
 

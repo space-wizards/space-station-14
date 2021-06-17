@@ -21,26 +21,25 @@ namespace Content.Server.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
-    [ComponentReference(typeof(IBody))]
     [ComponentReference(typeof(IGhostOnMove))]
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
         private Container _partContainer = default!;
 
-        protected override bool CanAddPart(string slotId, IBodyPart part)
+        protected override bool CanAddPart(string slotId, SharedBodyPartComponent part)
         {
             return base.CanAddPart(slotId, part) &&
                    _partContainer.CanInsert(part.Owner);
         }
 
-        protected override void OnAddPart(BodyPartSlot slot, IBodyPart part)
+        protected override void OnAddPart(BodyPartSlot slot, SharedBodyPartComponent part)
         {
             base.OnAddPart(slot, part);
 
             _partContainer.Insert(part.Owner);
         }
 
-        protected override void OnRemovePart(BodyPartSlot slot, IBodyPart part)
+        protected override void OnRemovePart(BodyPartSlot slot, SharedBodyPartComponent part)
         {
             base.OnRemovePart(slot, part);
 
@@ -63,9 +62,9 @@ namespace Content.Server.Body
                     // a crash within the character preview menu in the lobby
                     var entity = Owner.EntityManager.SpawnEntity(preset.PartIDs[slot.Id], Owner.Transform.MapPosition);
 
-                    if (!entity.TryGetComponent(out IBodyPart? part))
+                    if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
                     {
-                        Logger.Error($"Entity {slot.Id} does not have a {nameof(IBodyPart)} component.");
+                        Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
                         continue;
                     }
 

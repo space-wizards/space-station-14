@@ -137,7 +137,7 @@ namespace Content.Server.Solar.EntitySystems
             {
                 // Determine if the solar panel is occluded, and zero out coverage if so.
                 // FIXME: The "Opaque" collision group doesn't seem to work right now.
-                var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToVec(), (int) CollisionGroup.Opaque);
+                var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
                 var rayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
                 if (rayCastResults.Any())
                     coverage = 0;

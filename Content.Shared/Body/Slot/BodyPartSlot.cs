@@ -37,7 +37,7 @@ namespace Content.Shared.Body.Slot
         ///     The part currently in this slot, if any.
         /// </summary>
         [ViewVariables]
-        public IBodyPart? Part { get; private set; }
+        public SharedBodyPartComponent? Part { get; private set; }
 
         /// <summary>
         ///     List of slots that this slot connects to.
@@ -45,21 +45,21 @@ namespace Content.Shared.Body.Slot
         [ViewVariables]
         public HashSet<BodyPartSlot> Connections { get; private set; }
 
-        public event Action<IBodyPart>? PartAdded;
+        public event Action<SharedBodyPartComponent>? PartAdded;
 
-        public event Action<IBodyPart>? PartRemoved;
+        public event Action<SharedBodyPartComponent>? PartRemoved;
 
         internal void SetConnectionsInternal(IEnumerable<BodyPartSlot> connections)
         {
             Connections = new HashSet<BodyPartSlot>(connections);
         }
 
-        public bool CanAddPart(IBodyPart part)
+        public bool CanAddPart(SharedBodyPartComponent part)
         {
             return Part == null && part.PartType == PartType;
         }
 
-        public bool TryAddPart(IBodyPart part)
+        public bool TryAddPart(SharedBodyPartComponent part)
         {
             if (!CanAddPart(part))
             {
@@ -70,7 +70,7 @@ namespace Content.Shared.Body.Slot
             return true;
         }
 
-        public void SetPart(IBodyPart part)
+        public void SetPart(SharedBodyPartComponent part)
         {
             if (Part != null)
             {

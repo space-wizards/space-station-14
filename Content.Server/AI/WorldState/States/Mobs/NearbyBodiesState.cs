@@ -21,7 +21,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
                 return result;
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(Owner.Transform.Coordinates, typeof(IBody), controller.VisionRadius))
+            foreach (var entity in Visibility.GetEntitiesInRange(Owner.Transform.Coordinates, typeof(SharedBodyComponent), controller.VisionRadius))
             {
                 if (entity == Owner) continue;
                 result.Add(entity);

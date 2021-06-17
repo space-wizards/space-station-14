@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Template
 {
     /// <summary>
-    ///     Defines the layout of a <see cref="IBody"/>.
+    ///     Defines the layout of a body.
     /// </summary>
     [Prototype("bodyTemplate")]
     [Serializable, NetSerializable]
