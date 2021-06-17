@@ -48,12 +48,12 @@ The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
         }
 
-        private MsgTickerLobbyReady GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
+        private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
         {
             return new (new Dictionary<NetUserId, LobbyPlayerStatus> { { player.UserId, status } });
         }
 
-        private MsgTickerLobbyReady GetPlayerStatus()
+        private TickerLobbyReadyEvent GetPlayerStatus()
         {
             var players = new Dictionary<NetUserId, LobbyPlayerStatus>();
             foreach (var player in _playersInLobby.Keys)
@@ -61,13 +61,13 @@ The current game mode is: [color=white]{0}[/color].
                 _playersInLobby.TryGetValue(player, out var status);
                 players.Add(player.UserId, status);
             }
-            return new MsgTickerLobbyReady(players);
+            return new TickerLobbyReadyEvent(players);
         }
 
-        private MsgTickerLobbyStatus GetStatusMsg(IPlayerSession session)
+        private TickerLobbyStatusEvent GetStatusMsg(IPlayerSession session)
         {
             _playersInLobby.TryGetValue(session, out var status);
-            return new MsgTickerLobbyStatus(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
         }
 
         private void SendStatusToAll()
@@ -78,14 +78,14 @@ The current game mode is: [color=white]{0}[/color].
             }
         }
 
-        private MsgTickerLobbyInfo GetInfoMsg()
+        private TickerLobbyInfoEvent GetInfoMsg()
         {
             return new (GetInfoText());
         }
 
         private void UpdateLateJoinStatus()
         {
-            RaiseNetworkEvent(new MsgTickerLateJoinStatus(DisallowLateJoin));
+            RaiseNetworkEvent(new TickerLateJoinStatusEvent(DisallowLateJoin));
         }
 
         public bool PauseStart(bool pause = true)
@@ -106,7 +106,7 @@ The current game mode is: [color=white]{0}[/color].
                 _roundStartTime += _gameTiming.CurTime - _pauseTime;
             }
 
-            RaiseNetworkEvent(new MsgTickerLobbyCountdown(_roundStartTime, Paused));
+            RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
 
             _chatManager.DispatchServerAnnouncement(Paused
                 ? "Round start has been paused."

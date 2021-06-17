@@ -16,7 +16,7 @@ namespace Content.Client.RoundEnd
         private VBoxContainer PlayerManifestoTab { get; }
         private TabContainer RoundEndWindowTabs { get; }
 
-        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, MsgRoundEndMessage.RoundEndPlayerInfo[] info)
+        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
         {
             MinSize = SetSize = (520, 580);
 

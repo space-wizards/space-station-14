@@ -121,7 +121,7 @@ namespace Content.Server.GameTicking
             if (_playersInLobby.ContainsKey(session))
                 _playersInLobby.Remove(session);
 
-            RaiseNetworkEvent(new MsgTickerJoinGame(), session.ConnectedClient);
+            RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
         }
 
         private void PlayerJoinLobby(IPlayerSession session)
@@ -129,7 +129,7 @@ namespace Content.Server.GameTicking
             _playersInLobby[session] = LobbyPlayerStatus.NotReady;
 
             var client = session.ConnectedClient;
-            RaiseNetworkEvent(new MsgTickerJoinLobby(), client);
+            RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
             RaiseNetworkEvent(GetStatusMsg(session), client);
             RaiseNetworkEvent(GetInfoMsg(), client);
             RaiseNetworkEvent(GetPlayerStatus(), client);
@@ -138,7 +138,7 @@ namespace Content.Server.GameTicking
 
         private void ReqWindowAttentionAll()
         {
-            RaiseNetworkEvent(new MsgRequestWindowAttention());
+            RaiseNetworkEvent(new RequestWindowAttentionEvent());
         }
     }
 }

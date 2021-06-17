@@ -17,22 +17,22 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerJoinLobby : EntityEventArgs
+    public class TickerJoinLobbyEvent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerJoinGame : EntityEventArgs
+    public class TickerJoinGameEvent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerLateJoinStatus : EntityEventArgs
+    public class TickerLateJoinStatusEvent : EntityEventArgs
     {
         // TODO: Make this a replicated CVar, honestly.
         public bool Disallowed { get; }
 
-        public MsgTickerLateJoinStatus(bool disallowed)
+        public TickerLateJoinStatusEvent(bool disallowed)
         {
             Disallowed = disallowed;
         }
@@ -40,7 +40,7 @@ namespace Content.Shared.GameTicking
 
 
     [Serializable, NetSerializable]
-    public class MsgTickerLobbyStatus : EntityEventArgs
+    public class TickerLobbyStatusEvent : EntityEventArgs
     {
         public bool IsRoundStarted { get; }
         public string? LobbySong { get; }
@@ -49,7 +49,7 @@ namespace Content.Shared.GameTicking
         public TimeSpan StartTime { get; }
         public bool Paused { get; }
 
-        public MsgTickerLobbyStatus(bool isRoundStarted, string? lobbySong, bool youAreReady, TimeSpan startTime, bool paused)
+        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, bool youAreReady, TimeSpan startTime, bool paused)
         {
             IsRoundStarted = isRoundStarted;
             LobbySong = lobbySong;
@@ -60,18 +60,18 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerLobbyInfo : EntityEventArgs
+    public class TickerLobbyInfoEvent : EntityEventArgs
     {
         public string TextBlob { get; }
 
-        public MsgTickerLobbyInfo(string textBlob)
+        public TickerLobbyInfoEvent(string textBlob)
         {
             TextBlob = textBlob;
         }
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerLobbyCountdown : EntityEventArgs
+    public class TickerLobbyCountdownEvent : EntityEventArgs
     {
         /// <summary>
         /// The game time that the game will start at.
@@ -83,7 +83,7 @@ namespace Content.Shared.GameTicking
         /// </summary>
         public bool Paused { get; }
 
-        public MsgTickerLobbyCountdown(TimeSpan startTime, bool paused)
+        public TickerLobbyCountdownEvent(TimeSpan startTime, bool paused)
         {
             StartTime = startTime;
             Paused = paused;
@@ -91,35 +91,35 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerLobbyReady : EntityEventArgs
+    public class TickerLobbyReadyEvent : EntityEventArgs
     {
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
         public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; }
 
-        public MsgTickerLobbyReady(Dictionary<NetUserId, LobbyPlayerStatus> status)
+        public TickerLobbyReadyEvent(Dictionary<NetUserId, LobbyPlayerStatus> status)
         {
             Status = status;
         }
     }
 
     [Serializable, NetSerializable]
-    public class MsgTickerJobsAvailable : EntityEventArgs
+    public class TickerJobsAvailableEvent : EntityEventArgs
     {
         /// <summary>
         /// The Status of the Player in the lobby (ready, observer, ...)
         /// </summary>
         public string[] JobsAvailable { get; }
 
-        public MsgTickerJobsAvailable(string[] jobsAvailable)
+        public TickerJobsAvailableEvent(string[] jobsAvailable)
         {
             JobsAvailable = jobsAvailable;
         }
     }
 
     [Serializable, NetSerializable]
-    public class MsgRoundEndMessage : EntityEventArgs
+    public class RoundEndMessageEvent : EntityEventArgs
     {
         [Serializable, NetSerializable]
         public struct RoundEndPlayerInfo
@@ -137,7 +137,7 @@ namespace Content.Shared.GameTicking
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
 
-        public MsgRoundEndMessage(string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int playerCount,
+        public RoundEndMessageEvent(string gamemodeTitle, string roundEndText, TimeSpan roundDuration, int playerCount,
             RoundEndPlayerInfo[] allPlayersEndInfo)
         {
             GamemodeTitle = gamemodeTitle;

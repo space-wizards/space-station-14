@@ -207,18 +207,18 @@ namespace Content.Server.GameTicking
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
         }
 
-        private MsgTickerJobsAvailable GetJobsAvailable()
+        private TickerJobsAvailableEvent GetJobsAvailable()
         {
             // If late join is disallowed, return no available jobs.
             if (DisallowLateJoin)
-                return new MsgTickerJobsAvailable(Array.Empty<string>());
+                return new TickerJobsAvailableEvent(Array.Empty<string>());
 
             var jobs = GetAvailablePositions()
                 .Where(e => e.Value > 0)
                 .Select(e => e.Key)
                 .ToArray();
 
-            return new MsgTickerJobsAvailable(jobs);
+            return new TickerJobsAvailableEvent(jobs);
         }
 
         private void UpdateJobsAvailable()

@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
             var roundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
 
             //Generate a list of basic player info to display in the end round summary.
-            var listOfPlayerInfo = new List<MsgRoundEndMessage.RoundEndPlayerInfo>();
+            var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             foreach (var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
                 var mind = ply.ContentData()?.Mind;
@@ -197,7 +197,7 @@ namespace Content.Server.GameTicking
                 {
                     _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
-                    var playerEndRoundInfo = new MsgRoundEndMessage.RoundEndPlayerInfo()
+                    var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity?.Name,
@@ -211,7 +211,7 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            RaiseNetworkEvent(new MsgRoundEndMessage(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfo.Count, listOfPlayerInfo.ToArray()));
+            RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfo.Count, listOfPlayerInfo.ToArray()));
         }
 
         public void RestartRound()
@@ -316,7 +316,7 @@ namespace Content.Server.GameTicking
 
             _roundStartTime += time;
 
-            RaiseNetworkEvent(new MsgTickerLobbyCountdown(_roundStartTime, Paused));
+            RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
 
             _chatManager.DispatchServerAnnouncement($"Round start has been delayed for {time.TotalSeconds} seconds.");
 
