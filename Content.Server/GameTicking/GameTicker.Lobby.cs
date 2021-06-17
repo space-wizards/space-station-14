@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
@@ -11,7 +14,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [ViewVariables]
-        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new();
+        private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();
 
         [ViewVariables]
         private TimeSpan _roundStartTime;
@@ -27,9 +30,7 @@ namespace Content.Server.GameTicking
 
         private void UpdateInfoText()
         {
-            var infoMsg = GetInfoMsg();
-
-            _netManager.ServerSendToMany(infoMsg, _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList());
+            RaiseNetworkEvent(GetInfoMsg(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
         }
 
         private string GetInfoText()
@@ -47,59 +48,44 @@ The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
         }
 
-        private MsgTickerLobbyReady GetStatusSingle(IPlayerSession player, PlayerStatus status)
+        private MsgTickerLobbyReady GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
         {
-            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerStatus = new Dictionary<NetUserId, PlayerStatus>
-            {
-                { player.UserId, status }
-            };
-            return msg;
+            return new (new Dictionary<NetUserId, LobbyPlayerStatus> { { player.UserId, status } });
         }
 
         private MsgTickerLobbyReady GetPlayerStatus()
         {
-            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerStatus = new Dictionary<NetUserId, PlayerStatus>();
+            var players = new Dictionary<NetUserId, LobbyPlayerStatus>();
             foreach (var player in _playersInLobby.Keys)
             {
                 _playersInLobby.TryGetValue(player, out var status);
-                msg.PlayerStatus.Add(player.UserId, status);
+                players.Add(player.UserId, status);
             }
-            return msg;
+            return new MsgTickerLobbyReady(players);
         }
 
-        private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)
+        private MsgTickerLobbyStatus GetStatusMsg(IPlayerSession session)
         {
             _playersInLobby.TryGetValue(session, out var status);
-            var msg = _netManager.CreateNetMessage<MsgTickerLobbyStatus>();
-            msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
-            msg.StartTime = _roundStartTime;
-            msg.YouAreReady = status == PlayerStatus.Ready;
-            msg.Paused = Paused;
-            msg.LobbySong = LobbySong;
-            return msg;
+            return new MsgTickerLobbyStatus(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
         }
 
-        private void _sendStatusToAll()
+        private void SendStatusToAll()
         {
             foreach (var player in _playersInLobby.Keys)
             {
-                _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+                RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
             }
         }
 
         private MsgTickerLobbyInfo GetInfoMsg()
         {
-            var msg = _netManager.CreateNetMessage<MsgTickerLobbyInfo>();
-            msg.TextBlob = GetInfoText();
-            return msg;
+            return new (GetInfoText());
         }
 
         private void UpdateLateJoinStatus()
         {
-            var msg = new MsgTickerLateJoinStatus(null!) {Disallowed = DisallowLateJoin};
-            _netManager.ServerSendToAll(msg);
+            RaiseNetworkEvent(new MsgTickerLateJoinStatus(DisallowLateJoin));
         }
 
         public bool PauseStart(bool pause = true)
@@ -120,10 +106,7 @@ The current game mode is: [color=white]{0}[/color].
                 _roundStartTime += _gameTiming.CurTime - _pauseTime;
             }
 
-            var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.StartTime = _roundStartTime;
-            lobbyCountdownMessage.Paused = Paused;
-            _netManager.ServerSendToAll(lobbyCountdownMessage);
+            RaiseNetworkEvent(new MsgTickerLobbyCountdown(_roundStartTime, Paused));
 
             _chatManager.DispatchServerAnnouncement(Paused
                 ? "Round start has been paused."
@@ -147,10 +130,10 @@ The current game mode is: [color=white]{0}[/color].
                 return;
             }
 
-            var status = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
-            _playersInLobby[player] = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
-            _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
-            _netManager.ServerSendToAll(GetStatusSingle(player, status));
+            var status = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
+            _playersInLobby[player] = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
+            RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
+            RaiseNetworkEvent(GetStatusSingle(player, status));
         }
     }
 }

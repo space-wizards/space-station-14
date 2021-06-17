@@ -5,6 +5,7 @@ using Content.Client.RoundEnd;
 using Content.Client.Viewport;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.IoC;
@@ -14,10 +15,11 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameTicking.Managers
 {
-    public class ClientGameTicker : SharedGameTicker, IClientGameTicker
+    [UsedImplicitly]
+    public class ClientGameTicker : SharedGameTicker
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
 
         [ViewVariables] private bool _initialized;
         private readonly List<string> _jobsAvailable = new();
@@ -29,7 +31,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; } = new();
+        [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
         [ViewVariables] public IReadOnlyList<string> JobsAvailable => _jobsAvailable;
 
         public event Action? InfoBlobUpdated;
@@ -38,25 +40,25 @@ namespace Content.Client.GameTicking.Managers
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyList<string>>? LobbyJobsAvailableUpdated;
 
-        public void Initialize()
+        public override void Initialize()
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby), JoinLobby);
-            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
-            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
-            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
-            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
-            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady), LobbyReady);
-            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
-            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention), msg =>
+            SubscribeNetworkEvent<MsgTickerJoinLobby>(JoinLobby);
+            SubscribeNetworkEvent<MsgTickerJoinGame>(JoinGame);
+            SubscribeNetworkEvent<MsgTickerLobbyStatus>(LobbyStatus);
+            SubscribeNetworkEvent<MsgTickerLobbyInfo>(LobbyInfo);
+            SubscribeNetworkEvent<MsgTickerLobbyCountdown>(LobbyCountdown);
+            SubscribeNetworkEvent<MsgTickerLobbyReady>(LobbyReady);
+            SubscribeNetworkEvent<MsgRoundEndMessage>(RoundEnd);
+            SubscribeNetworkEvent<MsgRequestWindowAttention>(msg =>
             {
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
-            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
-            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable), UpdateJobsAvailable);
+            SubscribeNetworkEvent<MsgTickerLateJoinStatus>(LateJoinStatus);
+            SubscribeNetworkEvent<MsgTickerJobsAvailable>(UpdateJobsAvailable);
 
-            Status = new Dictionary<NetUserId, PlayerStatus>();
+            Status = new Dictionary<NetUserId, LobbyPlayerStatus>();
             _initialized = true;
         }
 
@@ -112,7 +114,7 @@ namespace Content.Client.GameTicking.Managers
         private void LobbyReady(MsgTickerLobbyReady message)
         {
             // Merge the Dictionaries
-            foreach (var p in message.PlayerStatus)
+            foreach (var p in message.Status)
             {
                 Status[p.Key] = p.Value;
             }

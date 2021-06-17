@@ -1,4 +1,6 @@
 using Content.Server.Players;
+using Content.Shared.GameTicking;
+using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -119,26 +121,24 @@ namespace Content.Server.GameTicking
             if (_playersInLobby.ContainsKey(session))
                 _playersInLobby.Remove(session);
 
-            _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
+            RaiseNetworkEvent(new MsgTickerJoinGame(), session.ConnectedClient);
         }
 
         private void PlayerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby[session] = PlayerStatus.NotReady;
+            _playersInLobby[session] = LobbyPlayerStatus.NotReady;
 
-            _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
-            _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
-            _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
-            _netManager.ServerSendMessage(GetPlayerStatus(), session.ConnectedClient);
-            _netManager.ServerSendMessage(GetJobsAvailable(), session.ConnectedClient);
+            var client = session.ConnectedClient;
+            RaiseNetworkEvent(new MsgTickerJoinLobby(), client);
+            RaiseNetworkEvent(GetStatusMsg(session), client);
+            RaiseNetworkEvent(GetInfoMsg(), client);
+            RaiseNetworkEvent(GetPlayerStatus(), client);
+            RaiseNetworkEvent(GetJobsAvailable(), client);
         }
 
         private void ReqWindowAttentionAll()
         {
-            foreach (var player in _playerManager.GetAllPlayers())
-            {
-                player.RequestWindowAttention();
-            }
+            RaiseNetworkEvent(new MsgRequestWindowAttention());
         }
     }
 }

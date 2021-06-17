@@ -6,6 +6,9 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
+        /// <summary>
+        ///     Used for thread safety, given <see cref="IStatusHost.OnStatusRequest"/> is called from another thread.
+        /// </summary>
         private readonly object _statusShellLock = new();
 
         private void InitializeStatusShell()
@@ -15,6 +18,7 @@ namespace Content.Server.GameTicking
 
         private void GetStatusResponse(JObject jObject)
         {
+            // This method is raised from another thread, so this better be thread safe!
             lock (_statusShellLock)
             {
                 jObject["name"] = _baseServer.ServerName;

@@ -1,27 +1,12 @@
 ﻿#nullable enable
-using Lidgren.Network;
-using Robust.Shared.Network;
+using System;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameWindow
 {
-    public sealed class MsgRequestWindowAttention : NetMessage
+    [Serializable, NetSerializable]
+    public sealed class MsgRequestWindowAttention : EntityEventArgs
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgRequestWindowAttention);
-        public MsgRequestWindowAttention(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
-
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
-        {
-            // Nothing
-        }
-
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
-        {
-            // Nothing
-        }
     }
 }

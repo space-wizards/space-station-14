@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
-using Prometheus;
 using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.ServerStatus;
@@ -38,17 +35,6 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(!_initialized);
             DebugTools.Assert(!_postInitialized);
 
-            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
-            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
-            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
-            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
-            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
-            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
-            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
-            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
-            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
-            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable));
-
             // Initialize the other parts of the game ticker.
             InitializeStatusShell();
             InitializeCVars();
@@ -66,6 +52,7 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(_initialized);
             DebugTools.Assert(!_postInitialized);
 
+            // We restart the round now that entities are initialized and prototypes have been loaded.
             RestartRound();
 
             _postInitialized = true;
@@ -77,13 +64,6 @@ namespace Content.Server.GameTicking
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
             IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
-        }
-
-        public void ToggleDisallowLateJoin(bool disallowLateJoin)
-        {
-            DisallowLateJoin = disallowLateJoin;
-            UpdateLateJoinStatus();
-            UpdateJobsAvailable();
         }
 
         public override void Update(float frameTime)

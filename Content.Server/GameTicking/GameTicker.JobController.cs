@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -207,24 +209,21 @@ namespace Content.Server.GameTicking
 
         private MsgTickerJobsAvailable GetJobsAvailable()
         {
-            var message = _netManager.CreateNetMessage<MsgTickerJobsAvailable>();
-
             // If late join is disallowed, return no available jobs.
             if (DisallowLateJoin)
-                return message;
+                return new MsgTickerJobsAvailable(Array.Empty<string>());
 
-            message.JobsAvailable = GetAvailablePositions()
+            var jobs = GetAvailablePositions()
                 .Where(e => e.Value > 0)
                 .Select(e => e.Key)
                 .ToArray();
 
-            return message;
+            return new MsgTickerJobsAvailable(jobs);
         }
 
         private void UpdateJobsAvailable()
         {
-            var lobbyPlayers = _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList();
-            _netManager.ServerSendToMany(GetJobsAvailable(), lobbyPlayers);
+            RaiseNetworkEvent(GetJobsAvailable(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
         }
     }
 }

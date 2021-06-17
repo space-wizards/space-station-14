@@ -49,9 +49,6 @@ namespace Content.Server.GameTicking
             }
         }
 
-        [ViewVariables]
-        private bool DisallowLateJoin { get; set; } = false;
-
         private void PreRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
@@ -85,7 +82,7 @@ namespace Content.Server.GameTicking
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
-                readyPlayers = _playersInLobby.Where(p => p.Value == PlayerStatus.Ready).Select(p => p.Key).ToList();
+                readyPlayers = _playersInLobby.Where(p => p.Value == LobbyPlayerStatus.Ready).Select(p => p.Key).ToList();
             }
             else
             {
@@ -166,13 +163,13 @@ namespace Content.Server.GameTicking
             Preset.OnGameStarted();
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
-            _sendStatusToAll();
+            SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             UpdateJobsAvailable();
         }
 
-        public void EndRound(string roundEndText = "")
+        public void EndRound(string text = "")
         {
             // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
@@ -184,15 +181,14 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
-            roundEndMessage.GamemodeTitle = Preset?.ModeTitle ?? string.Empty;
-            roundEndMessage.RoundEndText = roundEndText + $"\n{Preset?.GetRoundEndDescription() ?? string.Empty}";
+            var gamemodeTitle = Preset?.ModeTitle ?? string.Empty;
+            var roundEndText = text + $"\n{Preset?.GetRoundEndDescription() ?? string.Empty}";
 
             //Get the timespan of the round.
-            roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
+            var roundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
 
             //Generate a list of basic player info to display in the end round summary.
-            var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
+            var listOfPlayerInfo = new List<MsgRoundEndMessage.RoundEndPlayerInfo>();
             foreach (var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
                 var mind = ply.ContentData()?.Mind;
@@ -201,7 +197,7 @@ namespace Content.Server.GameTicking
                 {
                     _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
-                    var playerEndRoundInfo = new RoundEndPlayerInfo()
+                    var playerEndRoundInfo = new MsgRoundEndMessage.RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity?.Name,
@@ -209,14 +205,13 @@ namespace Content.Server.GameTicking
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
                         Antag = antag,
-                        Observer = status == PlayerStatus.Observer,
+                        Observer = status == LobbyPlayerStatus.Observer,
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
             }
 
-            roundEndMessage.AllPlayersEndInfo = listOfPlayerInfo;
-            _netManager.ServerSendToAll(roundEndMessage);
+            RaiseNetworkEvent(new MsgRoundEndMessage(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfo.Count, listOfPlayerInfo.ToArray()));
         }
 
         public void RestartRound()
@@ -256,7 +251,7 @@ namespace Content.Server.GameTicking
                 else
                     _roundStartTime = _gameTiming.CurTime + LobbyDuration;
 
-                _sendStatusToAll();
+                SendStatusToAll();
 
                 ReqWindowAttentionAll();
             }
@@ -321,10 +316,7 @@ namespace Content.Server.GameTicking
 
             _roundStartTime += time;
 
-            var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.StartTime = _roundStartTime;
-            lobbyCountdownMessage.Paused = Paused;
-            _netManager.ServerSendToAll(lobbyCountdownMessage);
+            RaiseNetworkEvent(new MsgTickerLobbyCountdown(_roundStartTime, Paused));
 
             _chatManager.DispatchServerAnnouncement($"Round start has been delayed for {time.TotalSeconds} seconds.");
 

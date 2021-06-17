@@ -12,6 +12,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -138,8 +139,8 @@ namespace Content.Server.GameTicking
             mob.GetComponent<GhostComponent>().CanReturnToBody = false;
             data.Mind.TransferTo(mob);
 
-            _playersInLobby[player] = PlayerStatus.Observer;
-            _netManager.ServerSendToAll(GetStatusSingle(player, PlayerStatus.Observer));
+            _playersInLobby[player] = LobbyPlayerStatus.Observer;
+            RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));
         }
 
         #region Mob Spawning Helpers
