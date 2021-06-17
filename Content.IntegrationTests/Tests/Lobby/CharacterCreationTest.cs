@@ -41,11 +41,15 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             await server.WaitAssertion(() =>
             {
+                serverConfig.SetCVar(CCVars.GameDummyTicker, false);
                 serverConfig.SetCVar(CCVars.GameLobbyEnabled, true);
                 serverTicker.RestartRound();
             });
 
             Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
+
+            // Need to run them in sync to receive the messages.
+            await RunTicksSync(client, server, 1);
 
             await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
 
