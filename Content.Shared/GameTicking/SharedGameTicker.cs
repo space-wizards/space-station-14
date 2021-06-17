@@ -19,13 +19,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerJoinLobby : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerJoinLobby);
-            public MsgTickerJoinLobby(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -38,13 +32,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerJoinGame : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerJoinGame);
-            public MsgTickerJoinGame(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -57,16 +45,8 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerLateJoinStatus : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerLateJoinStatus);
-
+            public override MsgGroups MsgGroup => MsgGroups.Command;
             public bool Disallowed { get; set; }
-
-            public MsgTickerLateJoinStatus(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -82,13 +62,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerLobbyStatus : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerLobbyStatus);
-            public MsgTickerLobbyStatus(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public bool IsRoundStarted { get; set; }
             public string? LobbySong { get; set; }
@@ -132,13 +106,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerLobbyInfo : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerLobbyInfo);
-            public MsgTickerLobbyInfo(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string TextBlob { get; set; } = string.Empty;
 
@@ -155,13 +123,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerLobbyCountdown : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerLobbyCountdown);
-            public MsgTickerLobbyCountdown(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             /// <summary>
             /// The game time that the game will start at.
@@ -188,13 +150,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerLobbyReady : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerLobbyReady);
-            public MsgTickerLobbyReady(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             /// <summary>
             /// The Status of the Player in the lobby (ready, observer, ...)
@@ -239,13 +195,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgTickerJobsAvailable : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerJobsAvailable);
-            public MsgTickerJobsAvailable(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             /// <summary>
             /// The Status of the Player in the lobby (ready, observer, ...)
@@ -285,14 +235,7 @@ namespace Content.Shared.GameTicking
 
         protected class MsgRoundEndMessage : NetMessage
         {
-
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgRoundEndMessage);
-            public MsgRoundEndMessage(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string GamemodeTitle = string.Empty;
             public string RoundEndText = string.Empty;

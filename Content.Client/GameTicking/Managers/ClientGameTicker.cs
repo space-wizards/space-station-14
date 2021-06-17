@@ -42,19 +42,19 @@ namespace Content.Client.GameTicking.Managers
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby), JoinLobby);
-            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
-            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
-            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
-            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
-            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady), LobbyReady);
-            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
-            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention), msg =>
+            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(JoinLobby);
+            _netManager.RegisterNetMessage<MsgTickerJoinGame>(JoinGame);
+            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(LobbyStatus);
+            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(LobbyInfo);
+            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(LobbyCountdown);
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(LobbyReady);
+            _netManager.RegisterNetMessage<MsgRoundEndMessage>(RoundEnd);
+            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(msg =>
             {
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
-            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
-            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable), UpdateJobsAvailable);
+            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(LateJoinStatus);
+            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(UpdateJobsAvailable);
 
             Status = new Dictionary<NetUserId, PlayerStatus>();
             _initialized = true;

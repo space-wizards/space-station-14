@@ -6,13 +6,7 @@ namespace Content.Shared.GameWindow
 {
     public sealed class MsgRequestWindowAttention : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgRequestWindowAttention);
-        public MsgRequestWindowAttention(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {

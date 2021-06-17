@@ -25,8 +25,8 @@ namespace Content.Client.Administration.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<AdminMenuPlayerListRequest>(AdminMenuPlayerListRequest.NAME);
-            _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(AdminMenuPlayerListMessage.NAME, HandlePlayerListMessage);
+            _netManager.RegisterNetMessage<AdminMenuPlayerListRequest>();
+            _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(HandlePlayerListMessage);
 
             _commandWindows = new List<SS14Window>();
             // Reset the AdminMenu Window on disconnect

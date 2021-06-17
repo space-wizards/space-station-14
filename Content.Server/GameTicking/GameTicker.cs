@@ -356,7 +356,7 @@ namespace Content.Server.GameTicking
 
         private void UpdateLateJoinStatus()
         {
-            var msg = new MsgTickerLateJoinStatus(null!) {Disallowed = DisallowLateJoin};
+            var msg = new MsgTickerLateJoinStatus() {Disallowed = DisallowLateJoin};
             _netManager.ServerSendToAll(msg);
         }
 
