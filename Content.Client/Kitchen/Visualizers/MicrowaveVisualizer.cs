@@ -7,7 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Log;
 
-namespace Content.Client.GameObjects.Components.Kitchen
+namespace Content.Client.Kitchen.Visualizers
 {
     [UsedImplicitly]
     public sealed class MicrowaveVisualizer : AppearanceVisualizer
