@@ -335,20 +335,20 @@
   - type: Icon
     state: pda-hos
 
-- type: entity
-  parent: BasePDA
-  id: WardenPDA
-  name: warden PDA
-  description: The OS appears to have been jailbroken.
-  components:
-    - type: PDA
-      idCard: WardenIDCard
-    - type: Appearance
-      visuals:
-        - type: PDAVisualizer
-          state: pda-warden
-    - type: Icon
-      state: pda-warden
+# - type: entity
+#   parent: BasePDA
+#   id: WardenPDA
+#   name: warden PDA
+#   description: The OS appears to have been jailbroken.
+#   components:
+#     - type: PDA
+#       idCard: WardenIDCard
+#     - type: Appearance
+#       visuals:
+#         - type: PDAVisualizer
+#           state: pda-warden
+#     - type: Icon
+#       state: pda-warden
 
 - type: entity
   parent: BasePDA
