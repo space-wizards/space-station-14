@@ -49,7 +49,7 @@ namespace Content.Server.Body.Behavior
             IoCManager.InjectDependencies(this);
         }
 
-        protected override void OnAddedToBody(IBody body)
+        protected override void OnAddedToBody(SharedBodyComponent body)
         {
             base.OnAddedToBody(body);
             Inhale(CycleDelay);

@@ -12,6 +12,7 @@ namespace Content.Shared.Damage
     ///     <see cref="SharedBodyComponent"/> may require it for extra data
     ///     (such as selecting which limb to target).
     /// </summary>
+    // TODO BODY: Remove and pretend it never existed
     public class DamageChangeParams : EventArgs
     {
     }

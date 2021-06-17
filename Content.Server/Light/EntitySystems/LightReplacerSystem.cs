@@ -19,14 +19,6 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<LightReplacerComponent, InteractUsingEvent>(HandleInteract);
-            UnsubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
-        }
-
         private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
         {
             // standard interaction checks

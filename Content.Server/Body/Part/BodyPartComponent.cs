@@ -25,31 +25,30 @@ namespace Content.Server.Body.Part
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]
-    [ComponentReference(typeof(IBodyPart))]
     public class BodyPartComponent : SharedBodyPartComponent, IAfterInteract
     {
         private readonly Dictionary<int, object> _optionsCache = new();
-        private IBody? _owningBodyCache;
+        private SharedBodyComponent? _owningBodyCache;
         private int _idHash;
         private IEntity? _surgeonCache;
         private Container _mechanismContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
-        public override bool CanAddMechanism(IMechanism mechanism)
+        public override bool CanAddMechanism(SharedMechanismComponent mechanism)
         {
             return base.CanAddMechanism(mechanism) &&
                    _mechanismContainer.CanInsert(mechanism.Owner);
         }
 
-        protected override void OnAddMechanism(IMechanism mechanism)
+        protected override void OnAddMechanism(SharedMechanismComponent mechanism)
         {
             base.OnAddMechanism(mechanism);
 
             _mechanismContainer.Insert(mechanism.Owner);
         }
 
-        protected override void OnRemoveMechanism(IMechanism mechanism)
+        protected override void OnRemoveMechanism(SharedMechanismComponent mechanism)
         {
             base.OnRemoveMechanism(mechanism);
 
@@ -70,9 +69,9 @@ namespace Content.Server.Body.Part
             {
                 var entity = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
 
-                if (!entity.TryGetComponent(out IMechanism? mechanism))
+                if (!entity.TryGetComponent(out SharedMechanismComponent? mechanism))
                 {
-                    Logger.Error($"Entity {mechanismId} does not have a {nameof(IMechanism)} component.");
+                    Logger.Error($"Entity {mechanismId} does not have a {nameof(SharedMechanismComponent)} component.");
                     continue;
                 }
 
@@ -108,7 +107,7 @@ namespace Content.Server.Body.Part
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out IBody? body))
+            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
             {
                 SendSlots(eventArgs, body);
             }
@@ -116,7 +115,7 @@ namespace Content.Server.Body.Part
             return true;
         }
 
-        private void SendSlots(AfterInteractEventArgs eventArgs, IBody body)
+        private void SendSlots(AfterInteractEventArgs eventArgs, SharedBodyComponent body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
@@ -246,7 +245,7 @@ namespace Content.Server.Body.Part
                     return;
                 }
 
-                if (!user.TryGetComponent(out IBody? body))
+                if (!user.TryGetComponent(out SharedBodyComponent? body))
                 {
                     return;
                 }
@@ -262,7 +261,7 @@ namespace Content.Server.Body.Part
 
             protected override void Activate(IEntity user, BodyPartComponent component)
             {
-                if (!user.TryGetComponent(out IBody? body))
+                if (!user.TryGetComponent(out SharedBodyComponent? body))
                 {
                     return;
                 }

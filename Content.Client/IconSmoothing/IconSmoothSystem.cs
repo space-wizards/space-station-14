@@ -29,16 +29,6 @@ namespace Content.Client.IconSmoothing
             SubscribeLocalEvent<IconSmoothComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<IconSmoothDirtyEvent>();
-
-            UnsubscribeLocalEvent<IconSmoothComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
-        }
-
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);

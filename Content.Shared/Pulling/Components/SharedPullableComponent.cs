@@ -245,12 +245,17 @@ namespace Content.Shared.Pulling.Components
             return true;
         }
 
-        public bool TryStopPull()
+        public bool TryStopPull(IEntity? user = null)
         {
             if (!BeingPulled)
             {
                 return false;
             }
+
+            var msg = new StopPullingEvent(user?.Uid);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
+
+            if (msg.Cancelled) return false;
 
             if (_physics != null && _pullJoint != null)
             {
@@ -373,6 +378,19 @@ namespace Content.Shared.Pulling.Components
         public PullableComponentState(EntityUid? puller) : base(ContentNetIDs.PULLABLE)
         {
             Puller = puller;
+        }
+    }
+
+    /// <summary>
+    /// Raised when a request is made to stop pulling an entity.
+    /// </summary>
+    public sealed class StopPullingEvent : CancellableEntityEventArgs
+    {
+        public EntityUid? User { get; }
+
+        public StopPullingEvent(EntityUid? uid = null)
+        {
+            User = uid;
         }
     }
 }

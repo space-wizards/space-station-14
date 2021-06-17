@@ -16,14 +16,6 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
-            UnsubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
-        }
-
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)
         {
             DeleteEntity(uid);

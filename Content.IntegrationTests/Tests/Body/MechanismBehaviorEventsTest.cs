@@ -59,42 +59,42 @@ namespace Content.IntegrationTests.Tests.Body
                 ResetRemoved();
             }
 
-            protected override void OnAddedToBody(IBody body)
+            protected override void OnAddedToBody(SharedBodyComponent body)
             {
                 base.OnAddedToBody(body);
 
                 WasAddedToBody = true;
             }
 
-            protected override void OnAddedToPart(IBodyPart part)
+            protected override void OnAddedToPart(SharedBodyPartComponent part)
             {
                 base.OnAddedToPart(part);
 
                 WasAddedToPart = true;
             }
 
-            protected override void OnAddedToPartInBody(IBody body, IBodyPart part)
+            protected override void OnAddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
             {
                 base.OnAddedToPartInBody(body, part);
 
                 WasAddedToPartInBody = true;
             }
 
-            protected override void OnRemovedFromBody(IBody old)
+            protected override void OnRemovedFromBody(SharedBodyComponent old)
             {
                 base.OnRemovedFromBody(old);
 
                 WasRemovedFromBody = true;
             }
 
-            protected override void OnRemovedFromPart(IBodyPart old)
+            protected override void OnRemovedFromPart(SharedBodyPartComponent old)
             {
                 base.OnRemovedFromPart(old);
 
                 WasRemovedFromPart = true;
             }
 
-            protected override void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
+            protected override void OnRemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
             {
                 base.OnRemovedFromPartInBody(oldBody, oldPart);
 
@@ -128,7 +128,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out IBody? body));
+                Assert.That(human.TryGetComponent(out SharedBodyComponent? body));
                 Assert.NotNull(body);
 
                 var centerPart = body!.CenterPart;

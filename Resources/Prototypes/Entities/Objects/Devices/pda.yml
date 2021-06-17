@@ -23,7 +23,7 @@
     - Belt
   - type: PointLight
     enabled: false
-    radius: 3
+    radius: 1.4
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
