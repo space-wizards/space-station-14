@@ -8,6 +8,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -19,7 +20,6 @@ namespace Content.Server.Body.Mechanism
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMechanismComponent))]
-    [ComponentReference(typeof(IMechanism))]
     public class MechanismComponent : SharedMechanismComponent, IAfterInteract
     {
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
@@ -46,11 +46,11 @@ namespace Content.Server.Body.Mechanism
             PerformerCache = null;
             BodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out IBody? body))
+            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }
-            else if (eventArgs.Target.TryGetComponent<IBodyPart>(out var part))
+            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
             {
                 DebugTools.AssertNotNull(part);
 
@@ -63,7 +63,7 @@ namespace Content.Server.Body.Mechanism
             return true;
         }
 
-        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, IBody body)
+        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, SharedBodyComponent body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
@@ -119,7 +119,7 @@ namespace Content.Server.Body.Mechanism
                 return;
             }
 
-            var target = (IBodyPart) targetObject;
+            var target = (SharedBodyPartComponent) targetObject;
             var message = target.TryAddMechanism(this)
                 ? Loc.GetString("You jam {0:theName} inside {1:them}.", Owner, PerformerCache)
                 : Loc.GetString("You can't fit it in!");

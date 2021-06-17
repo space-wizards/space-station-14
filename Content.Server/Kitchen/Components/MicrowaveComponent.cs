@@ -21,6 +21,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -469,7 +470,7 @@ namespace Content.Server.Kitchen.Components
         {
             var headCount = 0;
 
-            if (victim.TryGetComponent<IBody>(out var body))
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
             {
                 var headSlots = body.GetSlotsOfType(BodyPartType.Head);
 

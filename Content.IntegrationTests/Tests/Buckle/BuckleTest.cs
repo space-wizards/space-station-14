@@ -213,7 +213,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             IEntity human = null;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
-            IBody body = null;
+            SharedBodyComponent body = null;
 
             await server.WaitIdleAsync();
 

@@ -8,6 +8,7 @@ using Content.Server.Interfaces;
 using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Client.State;

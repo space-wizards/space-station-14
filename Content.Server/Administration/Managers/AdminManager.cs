@@ -10,6 +10,7 @@ using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Menu;
+using Content.Shared.CCVar;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;

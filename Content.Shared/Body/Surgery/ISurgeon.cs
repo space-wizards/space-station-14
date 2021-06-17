@@ -12,7 +12,7 @@ namespace Content.Shared.Body.Surgery
     public interface ISurgeon
     {
         public delegate void MechanismRequestCallback(
-            IMechanism target,
+            SharedMechanismComponent target,
             IBodyPartContainer container,
             ISurgeon surgeon,
             IEntity performer);
@@ -25,10 +25,10 @@ namespace Content.Shared.Body.Surgery
         /// <summary>
         ///     When performing a surgery, the <see cref="SurgeryDataComponent"/>
         ///     may sometimes require selecting from a set of
-        ///     <see cref="IMechanism"/>s to operate on.
+        ///     <see cref="SharedMechanismComponent"/>s to operate on.
         ///     This function is called in that scenario, and it is expected that you call
-        ///     the callback with one <see cref="IMechanism"/> from the provided list.
+        ///     the callback with one <see cref="SharedMechanismComponent"/> from the provided list.
         /// </summary>
-        public void RequestMechanism(IEnumerable<IMechanism> options, MechanismRequestCallback callback);
+        public void RequestMechanism(IEnumerable<SharedMechanismComponent> options, MechanismRequestCallback callback);
     }
 }

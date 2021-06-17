@@ -131,7 +131,7 @@ namespace Content.Shared.Disposal.Components
 
             // TODO: Probably just need a disposable tag.
             if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<IBody>())
+                !entity.HasComponent<SharedBodyComponent>())
             {
                 return false;
             }

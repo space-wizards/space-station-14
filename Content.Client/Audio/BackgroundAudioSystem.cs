@@ -4,6 +4,7 @@ using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.State;
