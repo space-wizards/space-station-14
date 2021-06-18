@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Pow3r.PowerState;
+using static Content.Server.Power.Pow3r.PowerState;
 
-namespace Pow3r
+namespace Content.Server.Power.Pow3r
 {
     public sealed class BatteryRampPegSolver : IPowerSolver
     {
@@ -10,7 +10,7 @@ namespace Pow3r
         {
             public static HeightComparer Instance { get; } = new();
 
-            public int Compare(Network x, Network y)
+            public int Compare(Network? x, Network? y)
             {
                 if (ReferenceEquals(x, y)) return 0;
                 if (ReferenceEquals(null, y)) return 1;
@@ -19,14 +19,21 @@ namespace Pow3r
             }
         }
 
-        private Network[] _sortBuffer = new Network[0];
+        private Network[] _sortBuffer = Array.Empty<Network>();
 
         public void Tick(float frameTime, PowerState state)
         {
             // Clear loads and supplies.
-            state.Loads.Values.ForEach(l => l.ReceivingPower = 0);
-            state.Supplies.Values.ForEach(g => g.CurrentSupply = 0);
-            state.Supplies.Values.ForEach(g => g.SupplyRampTarget = 0);
+            foreach (var load in state.Loads.Values)
+            {
+                load.ReceivingPower = 0;
+            }
+
+            foreach (var supply in state.Supplies.Values)
+            {
+                supply.CurrentSupply = 0;
+                supply.SupplyRampTarget = 0;
+            }
 
             // Run a pass to estimate network tree graph height.
             // This is so that we can run networks before their children,
@@ -55,7 +62,7 @@ namespace Pow3r
                 _sortBuffer[i++] = network;
             }
 
-            //Array.Sort(_sortBuffer, HeightComparer.Instance);
+            Array.Sort(_sortBuffer, HeightComparer.Instance);
 
             // Go over every network.
             foreach (var network in _sortBuffer)

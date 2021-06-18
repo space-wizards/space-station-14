@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Pow3r
+namespace Content.Server.Power.Pow3r
 {
     public sealed class PowerState
     {
@@ -36,7 +36,7 @@ namespace Pow3r
                 return Id == other.Id;
             }
 
-            public override bool Equals(object obj)
+            public override bool Equals(object? obj)
             {
                 return obj is NodeId other && Equals(other);
             }

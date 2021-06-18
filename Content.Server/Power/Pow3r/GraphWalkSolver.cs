@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Pow3r.PowerState;
+using static Content.Server.Power.Pow3r.PowerState;
 
-namespace Pow3r
+namespace Content.Server.Power.Pow3r
 {
     /// <summary>
     ///     Partial implementation of full-graph-walking power solving under pow3r.
@@ -18,8 +18,15 @@ namespace Pow3r
     {
         public void Tick(float frameTime, PowerState state)
         {
-            state.Loads.Values.ForEach(l => l.ReceivingPower = 0);
-            state.Supplies.Values.ForEach(g => g.CurrentSupply = 0);
+            foreach (var load in state.Loads.Values)
+            {
+                load.ReceivingPower = 0;
+            }
+
+            foreach (var supply in state.Supplies.Values)
+            {
+                supply.CurrentSupply = 0;
+            }
 
             foreach (var network in state.Networks.Values)
             {

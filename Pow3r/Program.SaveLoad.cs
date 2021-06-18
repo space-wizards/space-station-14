@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using static Pow3r.PowerState;
+using Content.Server.Power.Pow3r;
+using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Pow3r
 {

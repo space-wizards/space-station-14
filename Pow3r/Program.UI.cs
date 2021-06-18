@@ -5,7 +5,7 @@ using static ImGuiNET.ImGui;
 using Color = System.Drawing.Color;
 using Vector2 = System.Numerics.Vector2;
 using RobustVec2 = Robust.Shared.Maths.Vector2;
-using static Pow3r.PowerState;
+using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Pow3r
 {

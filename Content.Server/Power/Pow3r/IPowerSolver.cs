@@ -1,4 +1,4 @@
-﻿namespace Pow3r
+﻿namespace Content.Server.Power.Pow3r
 {
     public interface IPowerSolver
     {
