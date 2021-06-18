@@ -489,7 +489,7 @@ namespace Content.Server.Inventory.Components
         /// The underlying Container System just notified us that an entity was removed from it.
         /// We need to make sure we process that removed entity as being unequipped from the slot.
         /// </summary>
-        private void ForceUnequip(IContainer container, IEntity entity)
+        public void ForceUnequip(IContainer container, IEntity entity)
         {
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
@@ -569,23 +569,6 @@ namespace Content.Server.Inventory.Components
 
                     break;
                 }
-            }
-        }
-
-        /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case ContainerContentsModifiedMessage msg:
-                    if (msg.Removed)
-                        ForceUnequip(msg.Container, msg.Entity);
-                    break;
-
-                default:
-                    break;
             }
         }
 

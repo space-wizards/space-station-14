@@ -10,6 +10,7 @@ using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Movement;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
