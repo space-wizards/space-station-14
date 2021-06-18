@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
@@ -33,7 +35,7 @@ namespace Content.Server.Power
     {
         private static readonly Priority[] CachedPriorities = (Priority[]) Enum.GetValues(typeof(Priority));
 
-        [Dependency] private readonly IPowerNetManager _powerNetManager = default!;
+        private readonly PowerNetSystem _powerNetManager = EntitySystem.Get<PowerNetSystem>();
 
         [ViewVariables]
         private readonly List<PowerSupplierComponent> _suppliers = new();
