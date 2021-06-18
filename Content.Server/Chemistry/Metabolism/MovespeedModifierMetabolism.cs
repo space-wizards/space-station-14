@@ -23,21 +23,25 @@ namespace Content.Server.Chemistry.Metabolism
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         /// <summary>
-        /// Walk speed modifier
+        /// How much the entities' walk speed is multiplied by.
         /// </summary>
         [DataField("walkSpeedModifier")]
-        public float WalkSpeedModifier { get; set; } = 10;
+        public float WalkSpeedModifier { get; set; } = 1;
 
         /// <summary>
-        /// Run speed modifier
+        /// How much the entities' run speed is multiplied by.
         /// </summary>
         [DataField("sprintSpeedModifier")]
-        public float SprintSpeedModifier { get; set; } = 10;
+        public float SprintSpeedModifier { get; set; } = 1;
 
+        /// <summary>
+        /// how long the modifier persist after the final unit of reagent is metabolised,
+        /// should really be longer than however long it takes for a metabolism tick(1 second).
+        /// </summary>
         [DataField("statusLifetime")]
         public int StatusLifetime = 1200;
         /// <summary>
-        /// Remove reagent at set rate, changes the movespeed modifiers and adds a Movespeed
+        /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
         /// </summary>
         /// <param name="solutionEntity"></param>
         /// <param name="reagentId"></param>
