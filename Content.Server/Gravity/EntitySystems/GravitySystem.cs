@@ -48,16 +48,17 @@ namespace Content.Server.Gravity.EntitySystems
 
             foreach (var grid in _mapManager.GetAllGrids())
             {
-                if (grid.HasGravity && !gridsWithGravity.Contains(grid.Index))
+                var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
+                if (gridEntity.HasComponent<GravityComponent>() && !gridsWithGravity.Contains(grid.Index))
                 {
                     DisableGravity(grid);
                 }
-                else if (!grid.HasGravity && gridsWithGravity.Contains(grid.Index))
+                else if (!gridEntity.HasComponent<GravityComponent>() && gridsWithGravity.Contains(grid.Index))
                 {
                     EnableGravity(grid);
                 }
             }
-
+            
             if (_internalTimer > 0.2f)
             {
                 ShakeGrids();
@@ -67,20 +68,23 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void EnableGravity(IMapGrid grid)
         {
-            grid.HasGravity = true;
+            var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
+            ComponentManager.AddComponent<GravityComponent>(gridEntity);
+            
             ScheduleGridToShake(grid.Index, ShakeTimes);
 
-            var message = new GravityChangedMessage(grid);
+            var message = new GravityChangedMessage(grid.Index, true);
 
             RaiseLocalEvent(message);
         }
 
         private void DisableGravity(IMapGrid grid)
         {
-            grid.HasGravity = false;
+            ComponentManager.RemoveComponent<GravityComponent>(grid.GridEntityId);
+            
             ScheduleGridToShake(grid.Index, ShakeTimes);
 
-            var message = new GravityChangedMessage(grid);
+            var message = new GravityChangedMessage(grid.Index, false);
 
             RaiseLocalEvent(message);
         }

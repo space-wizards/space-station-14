@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -32,10 +33,13 @@ namespace Content.Shared.Movement.Components
                 return true;
             }
 
-            mapManager ??= IoCManager.Resolve<IMapManager>();
+            mapManager ??= IoCManager.Resolve<IMapManager>(); 
             var grid = mapManager.GetGrid(gridId);
+            var gridEntityId = grid.GridEntityId;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var gridEntity = entityManager.GetEntity(gridEntityId);
 
-            if (!grid.HasGravity)
+            if (gridEntity?.HasComponent<GravityComponent>() != true)
             {
                 return true;
             }
