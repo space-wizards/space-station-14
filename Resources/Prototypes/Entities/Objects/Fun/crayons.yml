@@ -152,15 +152,22 @@
     - id: CrayonBlue
     - id: CrayonPurple
     - id: CrayonBlack
+  - type: ItemCounter
+    mapLayers:
+      - layer: red_box
+        ids: [ CrayonRed ]
+      - layer: orange_box
+        ids: [ CrayonOrange]
+      - layer: yellow_box
+        ids: [ CrayonYellow ]
+      - layer: green_box
+        ids: [ CrayonGreen ]
+      - layer: blue_box
+        ids: [ CrayonBlue ]
+      - layer: purple_box
+        ids: [ CrayonPurple ]
+      - layer: black_box
+        ids: [ CrayonBlack ]
   - type: Appearance
     visuals:
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - red_box
-      - orange_box
-      - yellow_box
-      - green_box
-      - blue_box
-      - purple_box
-      - black_box
+      - type: MappedItemVisualizer

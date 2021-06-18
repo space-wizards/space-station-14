@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using Content.Shared.Stacks;
 using Content.Shared.Tag;
@@ -22,6 +23,7 @@ namespace Content.Server.Storage.Components
     ///    amount: 6 # Note: this field can be omitted
     ///    countTag: Cigarette # Note: field doesn't point to entity Id, but its tag
     /// </code>
+    [Obsolete("Should be deprecated in favor of SharedItemCounterSystem")]
     [RegisterComponent]
     public class StorageCounterComponent : Component, ISerializationHooks
     {
