@@ -47,24 +47,17 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public void ContainerUpdateAppearance(IContainer container)
         {
-            base.HandleMessage(message, component);
+            if(_appearanceComponent is null)
+                return;
 
-            if (_appearanceComponent != null)
+            var actual = Count(container.ContainedEntities);
+            _appearanceComponent.SetData(StackVisuals.Actual, actual);
+
+            if (_maxAmount != null)
             {
-                switch (message)
-                {
-                    case ContainerContentsModifiedMessage msg:
-                        var actual = Count(msg.Container.ContainedEntities);
-                        _appearanceComponent.SetData(StackVisuals.Actual, actual);
-                        if (_maxAmount != null)
-                        {
-                            _appearanceComponent.SetData(StackVisuals.MaxCount, _maxAmount);
-                        }
-
-                        break;
-                }
+                _appearanceComponent.SetData(StackVisuals.MaxCount, _maxAmount);
             }
         }
 

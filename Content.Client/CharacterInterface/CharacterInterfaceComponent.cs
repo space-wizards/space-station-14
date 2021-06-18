@@ -76,39 +76,32 @@ namespace Content.Client.CharacterInterface
             inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public void PlayerDetached()
         {
-            base.HandleMessage(message, component);
-
-            switch (message)
+            if (Window != null)
             {
-                case PlayerAttachedMsg _:
-                    if (Window != null)
+                _gameHud.CharacterButtonVisible = false;
+                Window.Close();
+            }
+        }
+
+        public void PlayerAttached()
+        {
+            if (Window != null)
+            {
+                _gameHud.CharacterButtonVisible = true;
+
+                _gameHud.CharacterButtonToggled = b =>
+                {
+                    if (b)
                     {
-                        _gameHud.CharacterButtonVisible = true;
-                        _gameHud.CharacterButtonToggled = b =>
-                        {
-                            if (b)
-                            {
-                                Window.OpenCentered();
-                            }
-                            else
-                            {
-                                Window.Close();
-                            }
-                        };
+                        Window.OpenCentered();
                     }
-
-                    break;
-
-                case PlayerDetachedMsg _:
-                    if (Window != null)
+                    else
                     {
-                        _gameHud.CharacterButtonVisible = false;
                         Window.Close();
                     }
-
-                    break;
+                };
             }
         }
 
