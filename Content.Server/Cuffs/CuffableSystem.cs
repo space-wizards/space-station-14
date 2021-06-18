@@ -1,13 +1,14 @@
 ﻿#nullable enable
 using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
+using Content.Shared.Cuffs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
-    public class CuffableSystem : EntitySystem
+    internal sealed class CuffableSystem : SharedCuffableSystem
     {
         public override void Initialize()
         {

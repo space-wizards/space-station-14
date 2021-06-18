@@ -14,7 +14,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            args.Player.GetComponentOrNull<SharedPullableComponent>()?.TryStopPull();
+            args.Player.GetComponentOrNull<SharedPullableComponent>()?.TryStopPull(args.Player);
         }
     }
 }

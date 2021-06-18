@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out IBody body));
+                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
                 Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
                 Assert.That(lungs.Count, Is.EqualTo(1));
                 Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
@@ -167,7 +167,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
-                Assert.True(human.TryGetComponent(out IBody body));
+                Assert.True(human.TryGetComponent(out SharedBodyComponent body));
                 Assert.True(body.HasMechanismBehavior<LungBehavior>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);

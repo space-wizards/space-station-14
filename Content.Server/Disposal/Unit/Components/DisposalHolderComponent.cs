@@ -79,7 +79,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
 
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<IBody>();
+                   entity.HasComponent<SharedBodyComponent>();
         }
 
         public bool TryInsert(IEntity entity)

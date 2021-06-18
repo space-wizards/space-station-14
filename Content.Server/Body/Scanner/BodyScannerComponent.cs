@@ -30,7 +30,7 @@ namespace Content.Server.Body.Scanner
                 return;
             }
 
-            if (session.AttachedEntity.TryGetComponent(out IBody? body))
+            if (session.AttachedEntity.TryGetComponent(out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);
@@ -56,7 +56,7 @@ namespace Content.Server.Body.Scanner
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerUIState InterfaceState(IBody body)
+        private BodyScannerUIState InterfaceState(SharedBodyComponent body)
         {
             return new(body.Owner.Uid);
         }

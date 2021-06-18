@@ -60,17 +60,7 @@ namespace Content.Server.Inventory.Components
             return flagsCheck;
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case ContainerContentsModifiedMessage contentsModified:
-                    Owner.SpawnTimer(0, DropIdAndPocketsIfWeNoLongerHaveAUniform);
-                    break;
-            }
-        }
+        public void CheckUniformExists() { Owner.SpawnTimer(0, DropIdAndPocketsIfWeNoLongerHaveAUniform); }
 
         // Hey, it's descriptive.
         private void DropIdAndPocketsIfWeNoLongerHaveAUniform()

@@ -69,7 +69,7 @@ namespace Content.Server.Recycling.Components
         private bool CanGib(IEntity entity)
         {
             // We suppose this entity has a Recyclable component.
-            return entity.HasComponent<IBody>() && !_safe && Powered;
+            return entity.HasComponent<SharedBodyComponent>() && !_safe && Powered;
         }
 
         private void Recycle(IEntity entity)
@@ -87,7 +87,7 @@ namespace Content.Server.Recycling.Components
             // Mobs are a special case!
             if (CanGib(entity))
             {
-                entity.GetComponent<IBody>().Gib(true);
+                entity.GetComponent<SharedBodyComponent>().Gib(true);
                 Bloodstain();
                 return;
             }
@@ -159,7 +159,7 @@ namespace Content.Server.Recycling.Components
 
             victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
 
-            if (victim.TryGetComponent<IBody>(out var body))
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
             {
                 body.Gib(true);
             }
