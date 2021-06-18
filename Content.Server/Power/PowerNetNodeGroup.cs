@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Power.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.NodeContainer.NodeGroups
+namespace Content.Server.Power
 {
     public interface IPowerNet
     {
