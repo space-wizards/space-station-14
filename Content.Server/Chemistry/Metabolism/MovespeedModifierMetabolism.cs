@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// <returns></returns>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            if (solutionEntity.TryGetComponent(out MovementspeedModifierComponent? movement))
+            if (solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
                 solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
