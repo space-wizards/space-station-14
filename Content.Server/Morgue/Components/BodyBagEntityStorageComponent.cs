@@ -5,6 +5,7 @@ using Content.Server.Items;
 using Content.Server.Paper;
 using Content.Server.Standing;
 using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -106,7 +107,7 @@ namespace Content.Server.Morgue.Components
         {
             protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, VerbData data)
             {
-                if (!user.CanInteract() || component.LabelContainer?.ContainedEntity == null)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

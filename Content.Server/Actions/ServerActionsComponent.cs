@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
@@ -186,7 +187,7 @@ namespace Content.Server.Actions
                 return false;
             }
 
-            if (!player.CanChangeDirection()) return true;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player)) return true;
 
             // don't set facing unless they clicked far enough away
             var diff = targetWorldPos - player.Transform.WorldPosition;

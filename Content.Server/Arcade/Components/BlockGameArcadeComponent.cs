@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -49,15 +50,11 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
+            if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
-            }
-            if (!Powered)
-            {
+
+            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
-            }
-            if(!actor.PlayerSession.AttachedEntity?.CanInteract() ?? true) return;
 
             UserInterface?.Toggle(actor.PlayerSession);
             RegisterPlayerSession(actor.PlayerSession);
@@ -134,7 +131,8 @@ namespace Content.Server.Arcade.Components
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 
-                    if (!Owner.CanInteract())
+                    // TODO: Should this check if the Owner can interact...?
+                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
                     {
                         DeactivePlayer(obj.Session);
                         break;

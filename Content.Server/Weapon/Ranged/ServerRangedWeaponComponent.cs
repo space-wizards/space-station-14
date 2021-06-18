@@ -5,6 +5,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
@@ -77,7 +78,7 @@ namespace Content.Server.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && user.CanAttack();
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
         }
 
         /// <inheritdoc />

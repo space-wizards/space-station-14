@@ -3,6 +3,7 @@ using Content.Server.Alert;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
@@ -125,7 +126,7 @@ namespace Content.Server.Clothing.Components
         {
             protected override void GetData(IEntity user, MagbootsComponent component, VerbData data)
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

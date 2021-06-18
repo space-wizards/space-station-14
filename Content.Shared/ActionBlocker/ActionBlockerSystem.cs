@@ -21,29 +21,13 @@ namespace Content.Shared.ActionBlocker
     [UsedImplicitly]
     public class ActionBlockerSystem : EntitySystem
     {
-        public override void Initialize()
+        public bool CanMove(IEntity entity)
         {
-            base.Initialize();
+            var ev = new MovementAttemptEvent(entity);
 
-            SubscribeLocalEvent<MovementAttemptEvent>(OnMoveAttempt);
-            SubscribeLocalEvent<InteractionAttemptEvent>(OnInteractAttempt);
-            SubscribeLocalEvent<UseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<ThrowAttemptEvent>(OnThrwoAttempt);
-            SubscribeLocalEvent<SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<DropAttemptEvent>(OnDropAttempt);
-            SubscribeLocalEvent<PickupAttemptEvent>(OnPickupAttempt);
-            SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
-            SubscribeLocalEvent<AttackAttemptEvent>(OnAttackAttempt);
-            SubscribeLocalEvent<EquipAttemptEvent>(OnEquipAttempt);
-            SubscribeLocalEvent<UnequipAttemptEvent>(OnUnequipAttempt);
-            SubscribeLocalEvent<ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
-            SubscribeLocalEvent<ShiverAttemptEvent>(OnShiverAttempt);
-            SubscribeLocalEvent<SweatAttemptEvent>(OnSweatAttempt);
-        }
+            RaiseLocalEvent(entity.Uid, ev);
 
-        private void OnMoveAttempt(MovementAttemptEvent ev)
-        {
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanMove())
                 {
@@ -51,10 +35,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnInteractAttempt(InteractionAttemptEvent ev)
+        public bool CanInteract(IEntity entity)
         {
+            var ev = new InteractionAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanInteract())
@@ -63,10 +53,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnUseAttempt(UseAttemptEvent ev)
+        public bool CanUse(IEntity entity)
         {
+            var ev = new UseAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanUse())
@@ -75,10 +71,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnThrwoAttempt(ThrowAttemptEvent ev)
+        public bool CanThrow(IEntity entity)
         {
+            var ev = new ThrowAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanThrow())
@@ -87,15 +89,15 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnSpeakAttempt(SpeakAttemptEvent ev)
+        public bool CanSpeak(IEntity entity)
         {
-            if (!ev.Entity.HasComponent<SharedSpeechComponent>())
-            {
-                ev.Cancel();
-                return;
-            }
+            var ev = new SpeakAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
 
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -105,10 +107,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnDropAttempt(DropAttemptEvent ev)
+        public bool CanDrop(IEntity entity)
         {
+            var ev = new DropAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanDrop())
@@ -117,10 +125,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnPickupAttempt(PickupAttemptEvent ev)
+        public bool CanPickup(IEntity entity)
         {
+            var ev = new PickupAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanPickup())
@@ -129,15 +143,15 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnEmoteAttempt(EmoteAttemptEvent ev)
+        public bool CanEmote(IEntity entity)
         {
-            if (!ev.Entity.HasComponent<SharedEmotingComponent>())
-            {
-                ev.Cancel();
-                return;
-            }
+            var ev = new EmoteAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
 
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
@@ -147,10 +161,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnAttackAttempt(AttackAttemptEvent ev)
+        public bool CanAttack(IEntity entity)
         {
+            var ev = new AttackAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanAttack())
@@ -159,10 +179,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnEquipAttempt(EquipAttemptEvent ev)
+        public bool CanEquip(IEntity entity)
         {
+            var ev = new EquipAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanEquip())
@@ -171,10 +197,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnUnequipAttempt(UnequipAttemptEvent ev)
+        public bool CanUnequip(IEntity entity)
         {
+            var ev = new UnequipAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanUnequip())
@@ -183,10 +215,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnChangeDirectionAttempt(ChangeDirectionAttemptEvent ev)
+        public bool CanChangeDirection(IEntity entity)
         {
+            var ev = new ChangeDirectionAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanChangeDirection())
@@ -195,10 +233,14 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnShiverAttempt(ShiverAttemptEvent ev)
+        public bool CanShiver(IEntity entity)
         {
+            var ev = new ShiverAttemptEvent(entity);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanShiver())
@@ -207,10 +249,16 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
 
-        private void OnSweatAttempt(SweatAttemptEvent ev)
+        public bool CanSweat(IEntity entity)
         {
+            var ev = new SweatAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
             foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanSweat())
@@ -219,6 +267,8 @@ namespace Content.Shared.ActionBlocker
                     break;
                 }
             }
+
+            return !ev.Cancelled;
         }
     }
 }

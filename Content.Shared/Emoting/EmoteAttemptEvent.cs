@@ -11,14 +11,4 @@ namespace Content.Shared.Emoting
 
         public IEntity Entity { get; }
     }
-
-    public static class EmoteAttemptExtensions
-    {
-        public static bool CanEmote(this IEntity entity)
-        {
-            var ev = new EmoteAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

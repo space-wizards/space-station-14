@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Tool;
@@ -67,7 +68,7 @@ namespace Content.Server.Tools.Components
 
         public virtual async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
-            if (!HasQuality(toolQualityNeeded) || !user.CanInteract())
+            if (!HasQuality(toolQualityNeeded) || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
             if (doAfterDelay > 0f)

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interaction;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MachineLinking;
 using Content.Shared.Notification.Managers;
@@ -71,7 +72,7 @@ namespace Content.Server.MachineLinking.Components
 
             protected override void GetData(IEntity user, SignalSwitchComponent component, VerbData data)
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

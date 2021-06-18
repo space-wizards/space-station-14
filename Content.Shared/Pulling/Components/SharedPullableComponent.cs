@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
@@ -365,7 +366,7 @@ namespace Content.Shared.Pulling.Components
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
             var entity = session.AttachedEntity;
-            if (entity == null || !entity.CanMove()) return;
+            if (entity == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity)) return;
             TryStopPull();
         }
     }

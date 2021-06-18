@@ -11,14 +11,4 @@ namespace Content.Shared.Inventory.Events
 
         public IEntity Entity { get; }
     }
-
-    public static class EquipAttemptExtensions
-    {
-        public static bool CanEquip(this IEntity entity)
-        {
-            var ev = new EquipAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

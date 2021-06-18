@@ -9,6 +9,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Server.Wires.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Singularity.Components;
@@ -150,7 +151,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
 
             if (obj.Session.AttachedEntity == null ||
-                !obj.Session.AttachedEntity.CanInteract())
+                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntity))
             {
                 return;
             }

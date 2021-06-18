@@ -5,6 +5,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
@@ -111,7 +112,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (player.CanChangeDirection())
+            if (EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player))
             {
                 var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)

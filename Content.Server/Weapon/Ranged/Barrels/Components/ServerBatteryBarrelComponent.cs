@@ -5,6 +5,7 @@ using Content.Server.Battery.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Projectiles.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -295,7 +296,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
             {
-                if (!user.CanInteract() || !component._powerCellRemovable)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

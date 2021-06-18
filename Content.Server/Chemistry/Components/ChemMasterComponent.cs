@@ -6,6 +6,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -143,8 +144,11 @@ namespace Content.Server.Chemistry.Components
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
                 return false;
+
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
             //Check if player can interact in their current state
-            if (!playerEntity.CanInteract() || !playerEntity.CanUse())
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -422,7 +426,7 @@ namespace Content.Server.Chemistry.Components
         {
             protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

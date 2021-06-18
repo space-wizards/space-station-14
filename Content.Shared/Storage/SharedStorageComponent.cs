@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
@@ -34,7 +35,7 @@ namespace Content.Shared.Storage
 
         bool IDraggable.Drop(DragDropEvent eventArgs)
         {
-            if (!eventArgs.User.CanInteract())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return false;
             }

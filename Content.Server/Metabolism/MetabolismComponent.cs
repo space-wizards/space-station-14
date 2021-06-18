@@ -7,6 +7,7 @@ using Content.Server.Atmos;
 using Content.Server.Body.Behavior;
 using Content.Server.Body.Circulatory;
 using Content.Server.Temperature.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -270,9 +271,11 @@ namespace Content.Server.Metabolism
             }
 
 
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                if (!Owner.CanSweat()) return;
+                if (!actionBlocker.CanSweat(Owner)) return;
                 if (!_isSweating)
                 {
                     Owner.PopupMessage(Loc.GetString("You are sweating"));
@@ -287,7 +290,7 @@ namespace Content.Server.Metabolism
             }
             else
             {
-                if (!Owner.CanShiver()) return;
+                if (!actionBlocker.CanShiver(Owner)) return;
                 if (!_isShivering)
                 {
                     Owner.PopupMessage(Loc.GetString("You are shivering"));

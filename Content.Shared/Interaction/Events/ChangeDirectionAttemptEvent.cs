@@ -11,14 +11,4 @@ namespace Content.Shared.Interaction.Events
 
         public IEntity Entity { get; }
     }
-
-    public static class ChangeDirectionAttemptExtensions
-    {
-        public static bool CanChangeDirection(this IEntity entity)
-        {
-            var ev = new ChangeDirectionAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

@@ -11,14 +11,4 @@ namespace Content.Shared.Interaction.Events
 
         public IEntity Entity { get; }
     }
-
-    public static class AttackAttemptExtensions
-    {
-        public static bool CanAttack(this IEntity entity)
-        {
-            var ev = new AttackAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

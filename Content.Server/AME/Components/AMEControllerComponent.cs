@@ -6,6 +6,7 @@ using Content.Server.Items;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -156,8 +157,11 @@ namespace Content.Server.AME.Components
             //Need player entity to check if they are still able to use the dispenser
             if (playerEntity == null)
                 return false;
+
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
             //Check if player can interact in their current state
-            if (!playerEntity.CanInteract() || !playerEntity.CanUse())
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)

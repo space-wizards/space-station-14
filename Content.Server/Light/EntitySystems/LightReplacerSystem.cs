@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Server.Light.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
@@ -22,7 +23,7 @@ namespace Content.Server.Light.EntitySystems
         private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
         {
             // standard interaction checks
-            if (!eventArgs.User.CanUse()) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User)) return;
             if (!eventArgs.CanReach) return;
 
             // behaviour will depends on target type
@@ -40,7 +41,7 @@ namespace Content.Server.Light.EntitySystems
         private void HandleInteract(EntityUid uid, LightReplacerComponent component, InteractUsingEvent eventArgs)
         {
             // standard interaction checks
-            if (!eventArgs.User.CanInteract()) return;
+            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return;
 
             if (eventArgs.Used != null)
             {

@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
@@ -179,7 +180,7 @@ namespace Content.Server.Buckle.Components
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!component.Owner.CanInteract() ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(component.Owner) ||
                     !user.TryGetComponent<BuckleComponent>(out var buckle) ||
                     buckle.BuckledTo != null && buckle.BuckledTo != component ||
                     user == component.Owner)

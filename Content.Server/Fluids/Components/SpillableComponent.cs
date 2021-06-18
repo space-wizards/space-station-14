@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
@@ -22,7 +23,7 @@ namespace Content.Server.Fluids.Components
         {
             protected override void GetData(IEntity user, SpillableComponent component, VerbData data)
             {
-                if (!user.CanInteract() ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     !component.Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent) ||
                     !solutionComponent.CanDrain)
                 {

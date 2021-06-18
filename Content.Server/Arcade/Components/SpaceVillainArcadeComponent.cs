@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
 using Content.Server.Wires.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -58,15 +59,11 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
+            if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
-            }
-            if (!Powered)
-            {
+
+            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
-            }
-            if(!actor.PlayerSession.AttachedEntity?.CanInteract() ?? true) return;
 
             _game ??= new SpaceVillainGame(this);
 

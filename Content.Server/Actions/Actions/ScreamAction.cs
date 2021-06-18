@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.CharacterAppearance.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
@@ -10,6 +11,7 @@ using Content.Shared.Cooldown;
 using Content.Shared.Speech;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -40,7 +42,7 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!args.Performer.CanSpeak()) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer)) return;
             if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 

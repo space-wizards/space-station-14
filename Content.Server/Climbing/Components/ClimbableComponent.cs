@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.DoAfter;
 using Content.Server.Notification;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Climbing;
@@ -67,7 +68,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity target, out string reason)
         {
-            if (!user.CanInteract())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
@@ -107,7 +108,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
         {
-            if (!user.CanInteract())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;

@@ -6,6 +6,7 @@ using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
 using Content.Server.Interfaces;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
@@ -217,7 +218,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         internal void ToggleInternals()
         {
-            if (!GetInternalsComponent()?.Owner.CanUse() ?? true) return;
+            var user = GetInternalsComponent()?.Owner;
+
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+                return;
+
             if (IsConnected)
             {
                 DisconnectFromInternals();

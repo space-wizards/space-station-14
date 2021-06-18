@@ -11,14 +11,4 @@ namespace Content.Shared.Movement
 
         public IEntity Entity { get; }
     }
-
-    public static class MovementAttemptExtensions
-    {
-        public static bool CanMove(this IEntity entity)
-        {
-            var ev = new MovementAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

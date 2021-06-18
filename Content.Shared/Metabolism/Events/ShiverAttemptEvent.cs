@@ -11,14 +11,4 @@ namespace Content.Shared.Metabolism.Events
 
         public IEntity Entity { get; }
     }
-
-    public static class ShiverAttemptExtensions
-    {
-        public static bool CanShiver(this IEntity entity)
-        {
-            var ev = new ShiverAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

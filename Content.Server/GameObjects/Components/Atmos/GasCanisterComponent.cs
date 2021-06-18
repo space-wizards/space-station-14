@@ -5,6 +5,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.Interaction;
@@ -266,8 +267,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return false;
             }
 
-            if (!player.CanInteract() ||
-                !player.CanUse())
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
+            if (!actionBlocker.CanInteract(player) ||
+                !actionBlocker.CanUse(player))
             {
                 return false;
             }

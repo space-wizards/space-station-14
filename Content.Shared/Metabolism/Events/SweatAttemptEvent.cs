@@ -11,14 +11,4 @@ namespace Content.Shared.Metabolism.Events
 
         public IEntity Entity { get; }
     }
-
-    public static class SweatAttemptExtensions
-    {
-        public static bool CanSweat(this IEntity entity)
-        {
-            var ev = new SweatAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

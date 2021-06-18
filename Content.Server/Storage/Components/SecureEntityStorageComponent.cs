@@ -1,4 +1,5 @@
 using Content.Server.Access.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
@@ -129,7 +130,7 @@ namespace Content.Server.Storage.Components
         {
             protected override void GetData(IEntity user, SecureEntityStorageComponent component, VerbData data)
             {
-                if (!user.CanInteract() || component.Open)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.Open)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

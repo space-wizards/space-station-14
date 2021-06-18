@@ -5,6 +5,7 @@ using Content.Server.Alert;
 using Content.Server.Atmos;
 using Content.Server.Stunnable.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -191,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         // This needs some improvements...
         public void Resist()
         {
-            if (!OnFire || !Owner.CanInteract() || _resisting || !Owner.TryGetComponent(out StunnableComponent? stunnable)) return;
+            if (!OnFire || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner) || _resisting || !Owner.TryGetComponent(out StunnableComponent? stunnable)) return;
 
             _resisting = true;
 

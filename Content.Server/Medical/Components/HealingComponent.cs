@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
@@ -31,7 +32,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (!eventArgs.User.CanInteract())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return true;
             }

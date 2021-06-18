@@ -8,6 +8,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Notification;
 using Content.Server.Plants;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Reagent;
@@ -419,7 +420,7 @@ namespace Content.Server.Botany.Components
 
         public bool DoHarvest(IEntity user)
         {
-            if (Seed == null || user.Deleted || !user.CanInteract())
+            if (Seed == null || user.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
             if (Harvest && !Dead)
@@ -644,7 +645,7 @@ namespace Content.Server.Botany.Components
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
 
-            if (usingItem == null || usingItem.Deleted || !user.CanInteract())
+            if (usingItem == null || usingItem.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
             if (usingItem.TryGetComponent(out SeedComponent? seeds))

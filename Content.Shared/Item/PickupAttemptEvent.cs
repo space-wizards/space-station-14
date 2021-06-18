@@ -11,14 +11,4 @@ namespace Content.Shared.Item
 
         public IEntity Entity { get; }
     }
-
-    public static class PickupAttemptExtensions
-    {
-        public static bool CanPickup(this IEntity entity)
-        {
-            var ev = new PickupAttemptEvent(entity);
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, ev);
-            return !ev.Cancelled;
-        }
-    }
 }

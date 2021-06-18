@@ -8,6 +8,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Timing;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -174,7 +175,9 @@ namespace Content.Server.Interaction
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
-            if (!user.CanInteract() || ! user.CanUse())
+            var actionBlocker = Get<ActionBlockerSystem>();
+
+            if (!actionBlocker.CanInteract(user) || ! actionBlocker.CanUse(user))
                 return;
 
             // all activates should only fire when in range / unobstructed
@@ -272,7 +275,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!user.CanInteract())
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -341,7 +344,7 @@ namespace Content.Server.Interaction
             if (diff.LengthSquared <= 0.01f)
                 return;
             var diffAngle = Angle.FromWorldVec(diff);
-            if (user.CanChangeDirection())
+            if (Get<ActionBlockerSystem>().CanChangeDirection(user))
             {
                 user.Transform.WorldRotation = diffAngle;
             }
@@ -391,7 +394,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
-            if (!user.CanInteract())
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -421,7 +424,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!user.CanInteract())
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -454,7 +457,7 @@ namespace Content.Server.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(IEntity user, IEntity used)
         {
-            if (user != null && used != null && user.CanUse())
+            if (user != null && used != null && Get<ActionBlockerSystem>().CanUse(user))
             {
                 UseInteraction(user, used);
             }
@@ -498,7 +501,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
-            if (user == null || item == null || !user.CanThrow()) return false;
+            if (user == null || item == null || !Get<ActionBlockerSystem>().CanThrow(user)) return false;
 
             ThrownInteraction(user, item);
             return true;
@@ -615,7 +618,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            if (user == null || item == null || !user.CanDrop()) return false;
+            if (user == null || item == null || !Get<ActionBlockerSystem>().CanDrop(user)) return false;
 
             DroppedInteraction(user, item, intentional);
             return true;
@@ -723,7 +726,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!user.CanAttack())
+            if (!Get<ActionBlockerSystem>().CanAttack(user))
                 return;
 
             IEntity? targetEnt = null;

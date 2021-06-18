@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
@@ -111,7 +112,7 @@ namespace Content.Shared.Item
         /// </summary>
         public bool CanPickup(IEntity user)
         {
-            if (!user.CanPickup())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
 
             if (user.Transform.MapID != Owner.Transform.MapID)

@@ -5,6 +5,7 @@ using Content.Server.Act;
 using Content.Server.Interaction;
 using Content.Server.Notification;
 using Content.Server.Weapon.Melee;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
@@ -56,7 +57,7 @@ namespace Content.Server.Actions.Actions
             }
 
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
+            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var audio = EntitySystem.Get<AudioSystem>();

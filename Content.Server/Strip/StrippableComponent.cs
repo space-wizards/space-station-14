@@ -7,6 +7,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
@@ -151,7 +152,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (item == null)
@@ -216,7 +217,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (item == null)
@@ -279,7 +280,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (!inventory.HasSlot(slot))
@@ -335,7 +336,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (!hands.HasHand(hand))

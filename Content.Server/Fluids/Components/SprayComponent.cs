@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cooldown;
@@ -95,7 +96,7 @@ namespace Content.Server.Fluids.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.User.CanInteract())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             if (_hasSafety && _safety)
@@ -206,7 +207,7 @@ namespace Content.Server.Fluids.Components
 
         private void SetSafety(IEntity user, bool state)
         {
-            if (!user.CanInteract() || !_hasSafety)
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
                 return;
 
             _safety = state;

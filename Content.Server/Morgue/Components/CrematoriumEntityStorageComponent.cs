@@ -6,6 +6,7 @@ using Content.Server.GameTicking;
 using Content.Server.Notification;
 using Content.Server.Players;
 using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -151,7 +152,7 @@ namespace Content.Server.Morgue.Components
         {
             protected override void GetData(IEntity user, CrematoriumEntityStorageComponent component, VerbData data)
             {
-                if (!user.CanInteract() || component.Cooking || component.Open)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.Cooking || component.Open)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
@@ -43,7 +44,7 @@ namespace Content.Server.Rotation.Components
         {
             protected override void GetData(IEntity user, FlippableComponent component, VerbData data)
             {
-                if (!user.CanInteract())
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

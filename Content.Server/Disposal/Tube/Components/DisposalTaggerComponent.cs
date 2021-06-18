@@ -2,6 +2,7 @@
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
@@ -89,9 +90,10 @@ namespace Content.Server.Disposal.Tube.Components
             if (!Anchored)
                 return false;
 
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
             var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!session.AttachedEntity.CanInteract() || !session.AttachedEntity.CanUse()))
+            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntity) || !actionBlocker.CanUse(session.AttachedEntity)))
                 return false;
 
             return true;

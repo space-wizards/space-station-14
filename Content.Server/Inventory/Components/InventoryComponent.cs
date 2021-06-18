@@ -9,6 +9,7 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Pressure;
 using Content.Server.Storage.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
@@ -290,7 +291,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !Owner.CanEquip())
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(Owner))
             {
                 reason = Loc.GetString("You can't equip this!");
                 return false;
@@ -416,7 +417,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !Owner.CanUnequip())
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(Owner))
                 return false;
 
             var inventorySlot = _slotContainers[slot];

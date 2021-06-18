@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.Alert;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction.Events;
@@ -208,7 +209,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             // TODO: Make into an event and instead have a system check for owner.
-            if (!isOwner && !user.CanInteract())
+            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("You can't do that!"));
                 return;
@@ -321,7 +322,7 @@ namespace Content.Server.Cuffs.Components
         {
             protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
             {
-                if ((user != component.Owner && !user.CanInteract()) || component.CuffedHandCount == 0)
+                if ((user != component.Owner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) || component.CuffedHandCount == 0)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

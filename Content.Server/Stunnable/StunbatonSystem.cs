@@ -3,6 +3,7 @@ using Content.Server.Items;
 using Content.Server.PowerCell.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -67,7 +68,9 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!args.User.CanUse()) return;
+            if (!Get<ActionBlockerSystem>().CanUse(args.User))
+                return;
+
             if (comp.Activated)
             {
                 TurnOff(comp);
@@ -96,7 +99,9 @@ namespace Content.Server.Stunnable
 
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
-            if (!args.User.CanInteract()) return;
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
+                return;
+
             if (ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
                 cellslot.InsertCell(args.Used);
         }

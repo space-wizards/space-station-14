@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
@@ -18,7 +19,7 @@ namespace Content.Shared.Strip.Components
         {
             return by != Owner
                    && by.HasComponent<ISharedHandsComponent>()
-                   && by.CanInteract();
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(by);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)
