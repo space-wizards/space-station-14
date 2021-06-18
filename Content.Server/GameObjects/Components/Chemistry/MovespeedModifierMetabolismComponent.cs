@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
         
-        public override string Name => "ChemicalMovementSpeedChangeStatus";
+        public override string Name => "MovespeedModifierMetabolism";
 
         
         public float WalkSpeedModifier { get; set; }
