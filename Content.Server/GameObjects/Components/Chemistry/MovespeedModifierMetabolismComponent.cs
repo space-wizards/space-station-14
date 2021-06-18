@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         
         public override string Name => "ChemicalMovementSpeedChangeStatus";
 
-        [ViewVariables]
+        
         public float WalkSpeedModifier { get; set; }
 
         public float SprintSpeedModifier { get; set; }
