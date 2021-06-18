@@ -240,7 +240,7 @@
     - !type:HealthChangeMetabolism
       healthChange: 0.5
       damageClass: Toxin
-    - !type:MovementSpeedModifierMetabolism
+    - !type:MovespeedModifierMetabolism
       walkSpeedModifier: 2.5
       sprintSpeedModifier: 2.5
       
