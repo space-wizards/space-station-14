@@ -47,13 +47,6 @@ namespace Content.Client.HealthOverlay
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
-        }
-
         public void Reset()
         {
             foreach (var gui in _guis.Values)

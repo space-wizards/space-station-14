@@ -27,7 +27,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
-namespace Content.Server.EntryPoint
+namespace Content.Server.Entry
 {
     public class EntryPoint : GameServer
     {

@@ -6,6 +6,7 @@ using System.Text;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Events;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.StationEvents;
 using JetBrains.Annotations;

@@ -8,6 +8,7 @@ using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -74,7 +75,7 @@ namespace Content.Server.Climbing.Components
             }
 
             if (!user.HasComponent<ClimbingComponent>() ||
-                !user.TryGetComponent(out IBody? body))
+                !user.TryGetComponent(out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;

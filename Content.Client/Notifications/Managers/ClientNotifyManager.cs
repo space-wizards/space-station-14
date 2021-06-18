@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared;
+using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;

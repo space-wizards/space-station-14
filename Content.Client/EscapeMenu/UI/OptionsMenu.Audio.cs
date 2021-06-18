@@ -1,6 +1,7 @@
 using Content.Client.HUD.UI;
 using Content.Client.Stylesheets;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

@@ -15,6 +15,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.MobState;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -25,7 +26,7 @@ namespace Content.Server.Metabolism
     [RegisterComponent]
     public class MetabolismComponent : Component
     {
-        [ComponentDependency] private readonly IBody? _body = default!;
+        [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
 
         public override string Name => "Metabolism";
 

@@ -13,6 +13,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -186,7 +187,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!target.TryGetComponent(out IBody? body) ||
+            if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 target.PopupMessage(Loc.GetString("You can't drink {0:theName}!", Owner));
