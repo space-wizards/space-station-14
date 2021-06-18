@@ -71,10 +71,9 @@ void main()
         private Texture _vdTexture;
         private Sampler _vdSampler;
         private DeviceBuffer _vdProjMatrixUniformBuffer;
-        private DeviceBuffer _vdVtxBuffer;
-        private DeviceBuffer _vdIdxBuffer;
         private int _vdLastWidth;
         private int _vdLastHeight;
+        private VdFencedDatum[] _fencedData = Array.Empty<VdFencedDatum>();
 
         private void InitVeldrid()
         {
@@ -270,30 +269,34 @@ void main()
 
             var drawData = ImGui.GetDrawData();
 
+            ref var fencedData = ref GetFreeFencedData();
+            ref var vtxBuf = ref fencedData.VertexBuffer;
+            ref var idxBuf = ref fencedData.IndexBuffer;
+
             var byteLenVtx = (uint) (sizeof(ImDrawVert) * drawData.TotalVtxCount);
-            if (_vdVtxBuffer == null || _vdVtxBuffer.SizeInBytes < byteLenVtx)
+            if (fencedData.VertexBuffer == null || vtxBuf.SizeInBytes < byteLenVtx)
             {
-                _vdVtxBuffer?.Dispose();
-                _vdVtxBuffer = factory.CreateBuffer(new BufferDescription(
+                vtxBuf?.Dispose();
+                vtxBuf = factory.CreateBuffer(new BufferDescription(
                     byteLenVtx,
                     BufferUsage.VertexBuffer | BufferUsage.Dynamic));
-                _vdVtxBuffer.Name = "_vdVtxBuffer";
+                vtxBuf.Name = "_vdVtxBuffer";
             }
 
             var byteLenIdx = (uint) (sizeof(ushort) * drawData.TotalIdxCount);
-            if (_vdIdxBuffer == null || _vdIdxBuffer.SizeInBytes < byteLenIdx)
+            if (idxBuf == null || idxBuf.SizeInBytes < byteLenIdx)
             {
-                _vdIdxBuffer?.Dispose();
-                _vdIdxBuffer = factory.CreateBuffer(new BufferDescription(
+                idxBuf?.Dispose();
+                idxBuf = factory.CreateBuffer(new BufferDescription(
                     byteLenIdx,
                     BufferUsage.IndexBuffer | BufferUsage.Dynamic));
-                _vdIdxBuffer.Name = "_vdIdxBuffer";
+                idxBuf.Name = "_vdIdxBuffer";
             }
 
             var vtxOffset = 0;
             var idxOffset = 0;
-            var mappedVtxBuf = MappedToSpan(_vdGfxDevice.Map<ImDrawVert>(_vdVtxBuffer, MapMode.Write));
-            var mappedIdxBuf = MappedToSpan(_vdGfxDevice.Map<ushort>(_vdIdxBuffer, MapMode.Write));
+            var mappedVtxBuf = MappedToSpan(_vdGfxDevice.Map<ImDrawVert>(vtxBuf, MapMode.Write));
+            var mappedIdxBuf = MappedToSpan(_vdGfxDevice.Map<ushort>(idxBuf, MapMode.Write));
 
             var l = drawData.DisplayPos.X;
             var r = drawData.DisplayPos.X + drawData.DisplaySize.X;
@@ -306,15 +309,12 @@ void main()
             var clipScale = drawData.FramebufferScale;
 
             _vdCommandList.UpdateBuffer(_vdProjMatrixUniformBuffer, 0, ref matrix);
-            // _vdCommandList.
 
             _vdCommandList.SetPipeline(_vdPipeline);
             _vdCommandList.SetGraphicsResourceSet(0, _vdSetProjMatrix);
             _vdCommandList.SetGraphicsResourceSet(1, _vdSetTexture);
-            _vdCommandList.SetVertexBuffer(0, _vdVtxBuffer);
-            _vdCommandList.SetIndexBuffer(_vdIdxBuffer, IndexFormat.UInt16);
-
-            //_vdGfxDevice.
+            _vdCommandList.SetVertexBuffer(0, vtxBuf);
+            _vdCommandList.SetIndexBuffer(idxBuf, IndexFormat.UInt16);
 
             for (var n = 0; n < drawData.CmdListsCount; n++)
             {
@@ -355,13 +355,32 @@ void main()
                 idxOffset += drawIdx.Length;
             }
 
-            _vdGfxDevice.Unmap(_vdVtxBuffer);
-            _vdGfxDevice.Unmap(_vdIdxBuffer);
+            _vdGfxDevice.Unmap(vtxBuf);
+            _vdGfxDevice.Unmap(idxBuf);
 
             _vdCommandList.End();
 
-            _vdGfxDevice.SubmitCommands(_vdCommandList);
+            _vdGfxDevice.SubmitCommands(_vdCommandList, fencedData.Fence);
             _vdGfxDevice.SwapBuffers();
+        }
+
+        private ref VdFencedDatum GetFreeFencedData()
+        {
+            for (var i = 0; i < _fencedData.Length; i++)
+            {
+                ref var fenced = ref _fencedData[i];
+
+                if (fenced.Fence.Signaled)
+                {
+                    fenced.Fence.Reset();
+                    return ref fenced;
+                }
+            }
+
+            Array.Resize(ref _fencedData, _fencedData.Length + 1);
+            ref var slot = ref _fencedData[^1];
+            slot = new VdFencedDatum {Fence = _vdGfxDevice.ResourceFactory.CreateFence(false)};
+            return ref slot;
         }
 
         private static Span<T> MappedToSpan<T>(MappedResourceView<T> mapped) where T : struct
@@ -372,7 +391,7 @@ void main()
         [DllImport("kernel32.dll")]
         private static extern void* GetModuleHandleA(byte* lpModuleName);
 
-        private sealed class VdFencedData
+        private struct VdFencedDatum
         {
             public Fence Fence;
 
