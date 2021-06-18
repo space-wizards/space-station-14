@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.Actions.Assignments;
 using Content.Client.Actions.UI;
 using Content.Client.Hands;
@@ -51,20 +51,6 @@ namespace Content.Client.Actions
             PlayerDetached();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    PlayerAttached();
-                    break;
-                case PlayerDetachedMsg _:
-                    PlayerDetached();
-                    break;
-            }
-        }
-
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
@@ -77,7 +63,7 @@ namespace Content.Client.Actions
             UpdateUI();
         }
 
-        private void PlayerAttached()
+        public void PlayerAttached()
         {
             if (!CurrentlyControlled || _ui != null)
             {
@@ -89,7 +75,7 @@ namespace Content.Client.Actions
             UpdateUI();
         }
 
-        private void PlayerDetached()
+        public void PlayerDetached()
         {
             if (_ui == null) return;
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
