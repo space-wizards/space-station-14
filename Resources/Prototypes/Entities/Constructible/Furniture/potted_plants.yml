@@ -24,6 +24,17 @@
   - type: SecretStash
     secretPartName: the plant
   - type: Pullable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/plant_rustle.ogg
 
 - type: entity
   id: PottedPlantRandom

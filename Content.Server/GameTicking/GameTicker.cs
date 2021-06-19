@@ -24,6 +24,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Shared;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;

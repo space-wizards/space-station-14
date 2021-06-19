@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.Interfaces;
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Shared.GameObjects.Components.Atmos;
+using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.NodeContainer.Nodes
+namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
     /// <summary>
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeDirection"/>
@@ -21,12 +23,7 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
-        /// <summary>
-        ///     Modifies the <see cref="PipeDirection"/> of this pipe, and ensures the sprite is correctly rotated.
-        ///     This is a property for the sake of calling the method via ViewVariables.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public PipeDirection SetPipeDirectionAndSprite { get => PipeDirection; set => AdjustPipeDirectionAndSprite(value); }
+        private PipeDirection _connectedDirections;
 
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.
@@ -36,13 +33,41 @@ namespace Content.Server.NodeContainer.Nodes
         [DataField("pipeDirection")]
         public PipeDirection PipeDirection { get; private set; }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("connectToContainedEntities")]
+        public bool ConnectToContainedEntities { get; set; } = false;
+
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
         ///     Used by <see cref="PipeVisualState"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private PipeDirection ConnectedDirections { get => _connectedDirections; set { _connectedDirections = value; UpdateAppearance(); } }
-        private PipeDirection _connectedDirections;
+        public PipeDirection ConnectedDirections
+        {
+            get => _connectedDirections;
+            private set
+            {
+                _connectedDirections = value;
+                UpdateAppearance();
+            }
+        }
+
+        /// <summary>
+        ///     Whether this node can connect to others or not.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ConnectionsEnabled
+        {
+            get => _connectionsEnabled;
+            set
+            {
+                _connectionsEnabled = value;
+                RefreshNodeGroup();
+            }
+        }
+
+        [DataField("rotationsEnabled")]
+        public bool RotationsEnabled { get; set; } = true;
 
         /// <summary>
         ///     The <see cref="IPipeNet"/> this pipe is a part of. Set to <see cref="PipeNet.NullNet"/> when not in an <see cref="IPipeNet"/>.
@@ -50,18 +75,15 @@ namespace Content.Server.NodeContainer.Nodes
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
-        /// <summary>
-        ///     If <see cref="_pipeNet"/> is set to <see cref="PipeNet.NullNet"/>.
-        ///     When true, this pipe may be storing gas in <see cref="LocalAir"/>.
-        /// </summary>
-        [ViewVariables]
-        private bool _needsPipeNet = true;
+        [DataField("connectionsEnabled")]
+        private bool _connectionsEnabled = true;
 
         /// <summary>
-        ///     Prevents rotation events from re-calculating the <see cref="IPipeNet"/>.
-        ///     Used while rotating the sprite to the correct orientation while not affecting the pipe.
+        ///     Whether to ignore the pipenet and return the environment's air.
         /// </summary>
-        private bool IgnoreRotation { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("environmentalAir")]
+        public bool EnvironmentalAir { get; set; } = false;
 
         /// <summary>
         ///     The gases in this pipe.
@@ -69,42 +91,32 @@ namespace Content.Server.NodeContainer.Nodes
         [ViewVariables]
         public GasMixture Air
         {
-            get => _needsPipeNet ? LocalAir : _pipeNet.Air;
-            set
-            {
-                if (_needsPipeNet)
-                    LocalAir = value;
-                else
-                    _pipeNet.Air = value;
-            }
+            get => !EnvironmentalAir ? _pipeNet.Air : Owner.Transform.Coordinates.GetTileAir() ?? GasMixture.SpaceGas;
+            set => _pipeNet.Air = value;
         }
 
-        /// <summary>
-        ///     Stores gas in this pipe when disconnected from a <see cref="IPipeNet"/>.
-        ///     Only for usage by <see cref="IPipeNet"/>s.
-        /// </summary>
-        [ViewVariables]
-        [DataField("gasMixture")]
-        public GasMixture LocalAir { get; set; } = new(DefaultVolume);
-
-        [ViewVariables]
-        public float Volume => LocalAir.Volume;
-
-        private AppearanceComponent? _appearance;
-
-        private const float DefaultVolume = 1;
-
-        public override void Initialize(IEntity owner)
+        public void AssumeAir(GasMixture giver)
         {
-            base.Initialize(owner);
-            Owner.TryGetComponent(out _appearance);
+            if (EnvironmentalAir)
+            {
+                var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
+                tileAtmosphere?.AssumeAir(giver);
+                return;
+            }
+
+            _pipeNet.Air.Merge(giver);
         }
+
+        [ViewVariables]
+        [DataField("volume")]
+        public float Volume { get; set; } = DefaultVolume;
+
+        private const float DefaultVolume = 200f;
 
         public override void OnContainerStartup()
         {
             base.OnContainerStartup();
             OnConnectedDirectionsNeedsUpdating();
-            UpdateAppearance();
         }
 
         public override void OnContainerShutdown()
@@ -113,16 +125,21 @@ namespace Content.Server.NodeContainer.Nodes
             UpdateAdjacentConnectedDirections();
         }
 
+        public override void OnSnapGridMove()
+        {
+            OnConnectedDirectionsNeedsUpdating();
+        }
+
         public void JoinPipeNet(IPipeNet pipeNet)
         {
             _pipeNet = pipeNet;
-            _needsPipeNet = false;
+            OnConnectedDirectionsNeedsUpdating();
         }
 
         public void ClearPipeNet()
         {
             _pipeNet = PipeNet.NullNet;
-            _needsPipeNet = true;
+            OnConnectedDirectionsNeedsUpdating();
         }
 
         /// <summary>
@@ -130,9 +147,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         void IRotatableNode.RotateEvent(RotateEvent ev)
         {
-            if (IgnoreRotation)
-                return;
-
+            if (!RotationsEnabled) return;
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
             RefreshNodeGroup();
@@ -142,7 +157,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
+            for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
 
@@ -150,18 +165,52 @@ namespace Content.Server.NodeContainer.Nodes
                     continue;
 
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                {
                     yield return pipe;
+                }
+            }
+
+            if (!ConnectionsEnabled || !ConnectToContainedEntities || !Owner.TryGetComponent(out ContainerManagerComponent? containerManager))
+                yield break;
+
+            // TODO ATMOS Kill it with fire.
+            foreach (var container in containerManager.GetAllContainers())
+            {
+                foreach (var entity in container.ContainedEntities)
+                {
+                    if (!entity.TryGetComponent(out NodeContainerComponent? nodeContainer))
+                        continue;
+
+                    foreach (var node in nodeContainer.Nodes.Values)
+                    {
+                        yield return node;
+                    }
+                }
             }
         }
 
         /// <summary>
-        ///     Gets the pipes that can connect to us from entities on the tile adjacent in a direction.
+        ///     Gets the pipes that can connect to us from entities on the tile or adjacent in a direction.
         /// </summary>
         private IEnumerable<PipeNode> LinkableNodesInDirection(PipeDirection pipeDir)
         {
+            if (!Anchored)
+                yield break;
+
+            if (pipeDir is PipeDirection.Port or PipeDirection.Connector)
+            {
+                foreach (var pipe in PipesInTile())
+                {
+                    if (pipe.Anchored && pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                        yield return pipe;
+                }
+
+                yield break;
+            }
+
             foreach (var pipe in PipesInDirection(pipeDir))
             {
-                if (pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
                     yield return pipe;
             }
         }
@@ -190,12 +239,36 @@ namespace Content.Server.NodeContainer.Nodes
         }
 
         /// <summary>
+        ///     Gets the pipes from entities on the tile adjacent in a direction.
+        /// </summary>
+        private IEnumerable<PipeNode> PipesInTile()
+        {
+            if (!Owner.Transform.Anchored)
+                yield break;
+
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
+            var position = Owner.Transform.Coordinates;
+            foreach (var entity in grid.GetLocal(position))
+            {
+                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                    continue;
+
+                foreach (var node in container.Nodes.Values)
+                {
+                    if (node is PipeNode pipe)
+                        yield return pipe;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Updates the <see cref="ConnectedDirections"/> of this and all sorrounding pipes.
         /// </summary>
         private void OnConnectedDirectionsNeedsUpdating()
         {
             UpdateConnectedDirections();
             UpdateAdjacentConnectedDirections();
+            UpdateAppearance();
         }
 
         /// <summary>
@@ -204,7 +277,8 @@ namespace Content.Server.NodeContainer.Nodes
         private void UpdateConnectedDirections()
         {
             ConnectedDirections = PipeDirection.None;
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
+
+            for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
 
@@ -231,8 +305,12 @@ namespace Content.Server.NodeContainer.Nodes
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
                 var pipeDir = (PipeDirection) (1 << i);
+
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
+                {
                     pipe.UpdateConnectedDirections();
+                    pipe.UpdateAppearance();
+                }
             }
         }
 
@@ -242,50 +320,21 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         private void UpdateAppearance()
         {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)
+                || !Owner.TryGetComponent(out NodeContainerComponent? container))
+                return;
+
             var netConnectedDirections = PipeDirection.None;
-            if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
+
+            foreach (var node in container.Nodes.Values)
             {
-                foreach (var node in container.Nodes.Values)
+                if (node is PipeNode pipe)
                 {
-                    if (node is PipeNode pipe)
-                    {
-                        netConnectedDirections |= pipe.ConnectedDirections;
-                    }
+                    netConnectedDirections |= pipe.ConnectedDirections;
                 }
             }
 
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection.PipeDirectionToPipeShape(), netConnectedDirections));
-        }
-
-        /// <summary>
-        ///     Changes the directions of this pipe while ensuring the sprite is correctly rotated.
-        /// </summary>
-        public void AdjustPipeDirectionAndSprite(PipeDirection newDir)
-        {
-            IgnoreRotation = true;
-
-            var baseDir = newDir.PipeDirectionToPipeShape().ToBaseDirection();
-
-            var newAngle = Angle.FromDegrees(0);
-
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
-            {
-                var pipeDir = (PipeDirection) (1 << i);
-                var angle = pipeDir.ToAngle();
-                if (baseDir.RotatePipeDirection(angle) == newDir) //finds what angle the entity needs to be rotated from the base to be set to the correct direction
-                {
-                    newAngle = angle;
-                    break;
-                }
-            }
-
-            Owner.Transform.LocalRotation = newAngle; //rotate the entity so the sprite's new state will be of the correct direction
-            PipeDirection = newDir;
-
-            RefreshNodeGroup();
-            OnConnectedDirectionsNeedsUpdating();
-            UpdateAppearance();
-            IgnoreRotation = false;
+            appearance.SetData(PipeVisuals.VisualState, new PipeVisualState(netConnectedDirections));
         }
     }
 }

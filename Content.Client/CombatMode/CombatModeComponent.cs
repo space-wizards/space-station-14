@@ -1,4 +1,4 @@
-﻿using Content.Client.HUD;
+using Content.Client.HUD;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
 using Robust.Client.GameObjects;
@@ -35,21 +35,12 @@ namespace Content.Client.CombatMode
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public void PlayerDetached() { _gameHud.CombatPanelVisible = false; }
+
+        public void PlayerAttached()
         {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    _gameHud.CombatPanelVisible = true;
-                    UpdateHud();
-                    break;
-
-                case PlayerDetachedMsg _:
-                    _gameHud.CombatPanelVisible = false;
-                    break;
-            }
+            _gameHud.CombatPanelVisible = true;
+            UpdateHud();
         }
 
         private void UpdateHud()

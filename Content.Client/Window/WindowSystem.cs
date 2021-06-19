@@ -17,14 +17,6 @@ namespace Content.Client.Window
             SubscribeLocalEvent<WindowComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<WindowSmoothDirtyEvent>();
-            UnsubscribeLocalEvent<WindowComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
-        }
-
         private void HandleDirtyEvent(WindowSmoothDirtyEvent ev)
         {
             if (ev.Sender.HasComponent<WindowComponent>())

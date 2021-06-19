@@ -99,6 +99,17 @@ ui-options-function-open-admin-menu = Open admin menu
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
 
+ui-options-function-editor-place-object = Place object
+ui-options-function-editor-cancel-place = Cancel placement
+ui-options-function-editor-grid-place = Place in grid
+ui-options-function-editor-line-place = Place line
+ui-options-function-editor-rotate-object = Rotate
+
+ui-options-function-open-abilities-menu = Open action menu
+ui-options-function-show-debug-console = Open Console
+ui-options-function-show-debug-monitors = Show Debug Monitors
+ui-options-function-hide-ui = Hide UI
+
 ui-options-function-hotbar1 = Hotbar slot 1
 ui-options-function-hotbar2 = Hotbar slot 2
 ui-options-function-hotbar3 = Hotbar slot 3
@@ -118,13 +129,3 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
-
-ui-options-function-editor-place-object = Place object
-ui-options-function-editor-cancel-place = Cancel placement
-ui-options-function-editor-grid-place = Place in grid
-ui-options-function-editor-line-place = Place line
-ui-options-function-editor-rotate-object = Rotate
-
-ui-options-function-show-debug-console = Open Console
-ui-options-function-show-debug-monitors = Show Debug Monitors
-ui-options-function-hide-ui = Hide UI

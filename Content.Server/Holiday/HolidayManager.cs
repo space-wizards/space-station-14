@@ -4,6 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Holiday.Interfaces;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

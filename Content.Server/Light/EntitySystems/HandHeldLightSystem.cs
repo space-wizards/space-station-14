@@ -24,8 +24,6 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Shutdown();
             _activeLights.Clear();
-            UnsubscribeLocalEvent<ActivateHandheldLightMessage>();
-            UnsubscribeLocalEvent<DeactivateHandheldLightMessage>();
         }
 
         private void HandleActivate(ActivateHandheldLightMessage message)

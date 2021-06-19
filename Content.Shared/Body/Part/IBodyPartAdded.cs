@@ -11,7 +11,7 @@ namespace Content.Shared.Body.Part
     public interface IBodyPartAdded : IComponent
     {
         /// <summary>
-        ///     Called when a <see cref="IBodyPart"/> is added to the
+        ///     Called when a <see cref="SharedBodyPartComponent"/> is added to the
         ///     entity owning this component.
         /// </summary>
         /// <param name="args">Information about the part that was added.</param>
@@ -20,7 +20,7 @@ namespace Content.Shared.Body.Part
 
     public class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(string slot, IBodyPart part)
+        public BodyPartAddedEventArgs(string slot, SharedBodyPartComponent part)
         {
             Slot = slot;
             Part = part;
@@ -34,6 +34,6 @@ namespace Content.Shared.Body.Part
         /// <summary>
         ///     The part that was added.
         /// </summary>
-        public IBodyPart Part { get; }
+        public SharedBodyPartComponent Part { get; }
     }
 }

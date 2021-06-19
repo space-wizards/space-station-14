@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
@@ -25,6 +26,7 @@ namespace Content.Client.Actions.UI
     /// </summary>
     public sealed class ActionsUI : Container
     {
+        private const float CustomTooltipDelay = 0.4f;
         private readonly ClientActionsComponent _actionsComponent;
         private readonly ActionManager _actionManager;
         private readonly IEntityManager _entityManager;
@@ -128,7 +130,9 @@ namespace Content.Client.Actions.UI
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1,
-                Scale = (0.5f, 0.5f)
+                Scale = (0.5f, 0.5f),
+                ToolTip = Loc.GetString("ui-actionmenu-function-lock-action-slots"),
+                TooltipDelay = CustomTooltipDelay
             };
             settingsContainer.AddChild(_lockButton);
             settingsContainer.AddChild(new Control { HorizontalExpand = true, SizeFlagsStretchRatio = 2 });
@@ -138,7 +142,9 @@ namespace Content.Client.Actions.UI
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1,
-                Scale = (0.5f, 0.5f)
+                Scale = (0.5f, 0.5f),
+                ToolTip = Loc.GetString("ui-actionmenu-function-open-abilities-menu"),
+                TooltipDelay = CustomTooltipDelay
             };
             settingsContainer.AddChild(_settingsButton);
             settingsContainer.AddChild(new Control { HorizontalExpand = true, SizeFlagsStretchRatio = 1 });

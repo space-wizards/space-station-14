@@ -16,13 +16,5 @@ namespace Content.Server.Pulling
             SubscribeLocalEvent<PullableComponent, PullableMoveMessage>(OnPullableMove);
             SubscribeLocalEvent<PullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
         }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<PullableComponent, PullableMoveMessage>(OnPullableMove);
-            UnsubscribeLocalEvent<PullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
-        }
     }
 }

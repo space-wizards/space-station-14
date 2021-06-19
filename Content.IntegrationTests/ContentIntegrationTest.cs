@@ -1,12 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Content.Client;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
-using Content.Server;
 using Content.Server.GameTicking;
 using Content.Server.IoC;
-using Content.Shared;
+using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared;
@@ -17,7 +15,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using EntryPoint = Content.Client.EntryPoint.EntryPoint;
+using EntryPoint = Content.Client.Entry.EntryPoint;
 
 namespace Content.IntegrationTests
 {
@@ -35,7 +33,7 @@ namespace Content.IntegrationTests
 
             options.ContentAssemblies = new[]
             {
-                typeof(Shared.EntryPoint).Assembly,
+                typeof(Shared.Entry.EntryPoint).Assembly,
                 typeof(EntryPoint).Assembly,
                 typeof(ContentIntegrationTest).Assembly
             };
@@ -78,8 +76,8 @@ namespace Content.IntegrationTests
 
             options.ContentAssemblies = new[]
             {
-                typeof(Shared.EntryPoint).Assembly,
-                typeof(Server.EntryPoint.EntryPoint).Assembly,
+                typeof(Shared.Entry.EntryPoint).Assembly,
+                typeof(Server.Entry.EntryPoint).Assembly,
                 typeof(ContentIntegrationTest).Assembly
             };
 

@@ -33,14 +33,6 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
-            UnsubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
-        }
-
         internal void TransferMindToClone(Mind.Mind mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
