@@ -16,6 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -94,7 +95,9 @@ namespace Content.Server.Morgue.Components
                 _tray = Owner.EntityManager.SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
-                EntityQuery = new IntersectingEntityQuery(_tray);
+                var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
+                                   Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
+                CollidingEntities = PhysicsManager.GetCollidingEntities(_tray.Transform.MapID, in box);
             }
             else
             {

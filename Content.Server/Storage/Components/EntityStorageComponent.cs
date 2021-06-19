@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
@@ -25,6 +26,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -38,6 +40,7 @@ namespace Content.Server.Storage.Components
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] protected readonly SharedBroadPhaseSystem PhysicsManager = default!;
 
         public override string Name => "EntityStorage";
 
@@ -60,7 +63,7 @@ namespace Content.Server.Storage.Components
         private bool _isCollidableWhenOpen;
 
         [ViewVariables]
-        protected IEntityQuery? EntityQuery;
+        protected IEnumerable<PhysicsComponent> CollidingEntities = default!;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -150,7 +153,9 @@ namespace Content.Server.Storage.Components
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
-            EntityQuery = new IntersectingEntityQuery(Owner);
+            var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
+                                   Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
+            CollidingEntities = PhysicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
 
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
@@ -198,8 +203,15 @@ namespace Content.Server.Storage.Components
         protected virtual void CloseStorage()
         {
             Open = false;
-            EntityQuery ??= new IntersectingEntityQuery(Owner);
-            var entities = Owner.EntityManager.GetEntities(EntityQuery);
+            if(CollidingEntities == null)
+            {
+                var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
+                                   Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
+                CollidingEntities = PhysicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
+            }
+
+
+            var entities = CollidingEntities.Select(x => x.Owner);
             var count = 0;
             foreach (var entity in entities)
             {

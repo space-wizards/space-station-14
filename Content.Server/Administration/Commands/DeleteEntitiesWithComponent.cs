@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -44,7 +45,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entities = entityManager.GetEntities(new MultipleTypeEntityQuery(components));
+            var entities = entityManager.GetEntities().Where(e => entityManager.ComponentManager.HasAllComponents(e.Uid, components));
             var count = 0;
             foreach (var entity in entities)
             {
