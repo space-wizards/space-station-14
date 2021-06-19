@@ -257,6 +257,9 @@ namespace Content.Client.EntryPoint
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
+            "DummyNetworkConnection",
+            "WiredNetworkConnection",
+            "WirelessNetworkConnection",
         };
     }
 }

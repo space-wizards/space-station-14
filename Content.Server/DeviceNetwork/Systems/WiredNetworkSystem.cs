@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Content.Server.DeviceNetwork
+namespace Content.Server.DeviceNetwork.Systems
 {
 
     [UsedImplicitly]
@@ -21,7 +21,7 @@ namespace Content.Server.DeviceNetwork
 
         /// <summary>
         /// Tries to get the node groups wit the id: <see cref="NodeGroupID.WireNet"/> from both
-        /// the sending and receiving entityand checks if they are the same.
+        /// the sending and receiving entity and checks if they are the same.
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
@@ -31,7 +31,7 @@ namespace Content.Server.DeviceNetwork
                 return;
             }
 
-            if (!args.Sender.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) || !TryGetWireNet(powerReceiver, out var net))
+            if (! EntityManager.GetEntity(args.Sender).TryGetComponent<PowerReceiverComponent>(out var powerReceiver) || !TryGetWireNet(powerReceiver, out var net))
             {
                 args.Cancel();
                 return;

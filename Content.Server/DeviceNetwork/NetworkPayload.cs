@@ -7,8 +7,6 @@ namespace Content.Server.DeviceNetwork
 {
     public class NetworkPayload : Dictionary<string, object>
     {
-        //public const int MAX_STRING_SIZE = 100;
-
         private NetworkPayload(int size) : base(size)
         {
         }
@@ -23,8 +21,6 @@ namespace Content.Server.DeviceNetwork
             var packet = new NetworkPayload(data.Length);
             for (var index = 0; index < data.Length; index++)
             {
-                //if (data[index].Item1.Length <= MAX_STRING_SIZE && data[index].Item2.Length <= MAX_STRING_SIZE)
-                //{
                 if (!packet.TryAdd(data[index].Item1, data[index].Item2))
                 {
                     Logger.Error($"Duplicate device network payload entry: {data[index].Item1}");
@@ -34,7 +30,7 @@ namespace Content.Server.DeviceNetwork
         }
 
         /// <summary>
-        /// Tries to get a value from the and checks if that value is of type T.
+        /// Tries to get a value from the payload and checks if that value is of type T.
         /// </summary>
         /// <typeparam name="T">The type that sould be casted to</typeparam>
         /// <returns>Whether the value was present in the payload and of the required type</returns>
