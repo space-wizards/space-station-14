@@ -1376,3 +1376,8 @@ Entries:
   - {message: Added a vox plushie., type: Add}
   id: 243
   time: '2021-06-19T18:12:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: More machines and station equipment is destructible, type: Tweak}
+  id: 244
+  time: '2021-06-19T19:34:01.0000000+00:00'
