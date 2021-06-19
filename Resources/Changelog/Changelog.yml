@@ -1371,3 +1371,8 @@ Entries:
   - {message: You can now insert gas tanks in gas canisters., type: Add}
   id: 242
   time: '2021-06-19T11:25:05.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added a vox plushie., type: Add}
+  id: 243
+  time: '2021-06-19T18:12:55.0000000+00:00'
