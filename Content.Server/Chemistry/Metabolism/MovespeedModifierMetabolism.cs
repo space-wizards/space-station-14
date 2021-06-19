@@ -40,6 +40,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// </summary>
         [DataField("statusLifetime")]
         public int StatusLifetime = 1200;
+
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
         /// </summary>
