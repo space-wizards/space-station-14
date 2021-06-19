@@ -19,7 +19,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceUpdateEvent>(OnPumpUpdated);
-            SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceLeaveAtmosphereEvent>(OnPumpLeaveAtmosphere);
+            SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
         }
 
-        private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent component, AtmosDeviceDisabledEvent args)
         {
             if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {

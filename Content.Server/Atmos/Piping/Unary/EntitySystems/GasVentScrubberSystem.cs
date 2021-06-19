@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceUpdateEvent>(OnVentScrubberUpdated);
-            SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceLeaveAtmosphereEvent>(OnVentScrubberLeaveAtmosphere);
+            SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceDisabledEvent>(OnVentScrubberLeaveAtmosphere);
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void OnVentScrubberLeaveAtmosphere(EntityUid uid, GasVentScrubberComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        private void OnVentScrubberLeaveAtmosphere(EntityUid uid, GasVentScrubberComponent component, AtmosDeviceDisabledEvent args)
         {
             if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {

@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             component.Atmosphere = atmosphere;
             atmosphere.AddAtmosDevice(component);
 
-            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceJoinAtmosphereEvent(atmosphere), false);
+            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceEnabledEvent(atmosphere), false);
         }
 
         public void LeaveAtmosphere(AtmosDeviceComponent component)
@@ -53,7 +53,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             component.LastProcess = TimeSpan.Zero;
 
             if(atmosphere != null)
-                RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceLeaveAtmosphereEvent(atmosphere), false);
+                RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceDisabledEvent(atmosphere), false);
         }
 
         public void RejoinAtmosphere(AtmosDeviceComponent component)

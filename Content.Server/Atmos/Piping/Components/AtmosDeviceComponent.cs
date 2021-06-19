@@ -38,23 +38,23 @@ namespace Content.Server.Atmos.Piping.Components
         }
     }
 
-    public class AtmosDeviceUpdateEvent : BaseAtmosDeviceEvent
+    public sealed class AtmosDeviceUpdateEvent : BaseAtmosDeviceEvent
     {
         public AtmosDeviceUpdateEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
         {
         }
     }
 
-    public class AtmosDeviceJoinAtmosphereEvent : BaseAtmosDeviceEvent
+    public sealed class AtmosDeviceEnabledEvent : BaseAtmosDeviceEvent
     {
-        public AtmosDeviceJoinAtmosphereEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
+        public AtmosDeviceEnabledEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
         {
         }
     }
 
-    public class AtmosDeviceLeaveAtmosphereEvent : BaseAtmosDeviceEvent
+    public sealed class AtmosDeviceDisabledEvent : BaseAtmosDeviceEvent
     {
-        public AtmosDeviceLeaveAtmosphereEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
+        public AtmosDeviceDisabledEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
         {
         }
     }

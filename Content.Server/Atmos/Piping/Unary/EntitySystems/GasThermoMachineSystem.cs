@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceLeaveAtmosphereEvent>(OnThermoMachineLeaveAtmosphere);
+            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             // TODO ATMOS: Active power usage.
         }
 
-        private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceLeaveAtmosphereEvent args)
+        private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceDisabledEvent args)
         {
             if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
