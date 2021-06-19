@@ -127,12 +127,7 @@
     - type: GasPort
     - type: NodeContainer
       nodes:
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
         connected:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: Up
-          volume: 1
+          pipeDirection: SPBend
