@@ -10,14 +10,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
-        
+        [ViewVariables]
         public override string Name => "MovespeedModifierMetabolism";
 
-        
+        [ViewVariables]
         public float WalkSpeedModifier { get; set; }
-         
+
+        [ViewVariables]
         public float SprintSpeedModifier { get; set; }
 
+        [ViewVariables]
         public int EffectTime { get; set; }
 
         private CancellationTokenSource? _cancellation;
