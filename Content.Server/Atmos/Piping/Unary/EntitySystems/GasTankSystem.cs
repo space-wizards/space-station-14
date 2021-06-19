@@ -27,6 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             // Create a pipenet if we don't have one already.
             tankNode.TryAssignGroupIfNeeded();
             tankNode.AssumeAir(tank.InitialMixture);
+            tankNode.Volume = tank.InitialMixture.Volume;
             tankNode.Air.Temperature = tank.InitialMixture.Temperature;
         }
     }
