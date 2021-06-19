@@ -9,7 +9,7 @@ using Content.Server.Items;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
@@ -29,7 +29,7 @@ namespace Content.Server.Strip
         public const float StripDelay = 2f;
 
         [ViewVariables]
-		private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         public override void Initialize()
         {
@@ -152,7 +152,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (item == null)
@@ -217,7 +217,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (item == null)
@@ -280,7 +280,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (!inventory.HasSlot(slot))
@@ -336,7 +336,7 @@ namespace Content.Server.Strip
 
             bool Check()
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
                 if (!hands.HasHand(hand))

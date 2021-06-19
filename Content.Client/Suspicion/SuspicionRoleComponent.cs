@@ -102,35 +102,29 @@ namespace Content.Client.Suspicion
             Allies.AddRange(state.Allies);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public void PlayerDetached()
         {
-            base.HandleMessage(message, component);
+            _gui?.Parent?.RemoveChild(_gui);
+            RemoveTraitorOverlay();
+        }
 
-            switch (message)
+        public void PlayerAttached()
+        {
+            if (_gui == null)
             {
-                case PlayerAttachedMsg _:
-                    if (_gui == null)
-                    {
-                        _gui = new SuspicionGui();
-                    }
-                    else
-                    {
-                        _gui.Parent?.RemoveChild(_gui);
-                    }
+                _gui = new SuspicionGui();
+            }
+            else
+            {
+                _gui.Parent?.RemoveChild(_gui);
+            }
 
-                    _gameHud.SuspicionContainer.AddChild(_gui);
-                    _gui.UpdateLabel();
+            _gameHud.SuspicionContainer.AddChild(_gui);
+            _gui.UpdateLabel();
 
-                    if (_antagonist ?? false)
-                    {
-                        AddTraitorOverlay();
-                    }
-
-                    break;
-                case PlayerDetachedMsg _:
-                    _gui?.Parent?.RemoveChild(_gui);
-                    RemoveTraitorOverlay();
-                    break;
+            if (_antagonist ?? false)
+            {
+                AddTraitorOverlay();
             }
         }
 

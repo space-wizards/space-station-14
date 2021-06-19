@@ -1,7 +1,8 @@
-﻿using Content.Client.Construction;
+using Content.Client.Construction;
 using Content.Client.DragDrop;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -66,6 +67,9 @@ namespace Content.Client.Actions
                 .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse),
                     typeof(ConstructionSystem), typeof(DragDropSystem))
                 .Register<ActionsSystem>();
+
+            SubscribeLocalEvent<ClientActionsComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
+            SubscribeLocalEvent<ClientActionsComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
         }
 
         public override void Shutdown()

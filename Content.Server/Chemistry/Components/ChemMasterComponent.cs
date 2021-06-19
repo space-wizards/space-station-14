@@ -12,7 +12,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
@@ -144,8 +144,11 @@ namespace Content.Server.Chemistry.Components
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
                 return false;
+
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -423,7 +426,7 @@ namespace Content.Server.Chemistry.Components
         {
             protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
