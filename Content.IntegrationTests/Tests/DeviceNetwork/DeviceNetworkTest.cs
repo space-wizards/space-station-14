@@ -94,9 +94,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
                 deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-                deviceNetSystem.Update(0);
             });
 
+            await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
             server.Assert(() => {
@@ -157,9 +157,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
                 deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-                deviceNetSystem.Update(0);
             });
 
+            await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
             server.Assert(() => {
@@ -172,9 +172,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 wirelessNetworkComponent.Range = 0;
 
                 deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-                deviceNetSystem.Update(0);
             });
 
+            await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
             server.Assert(() => {
@@ -239,9 +239,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
 
                 deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-                deviceNetSystem.Update(0);
             });
 
+            await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
             server.Assert(() => {
@@ -250,9 +250,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 entityManager.SpawnEntity("ApcExtensionCable", grid.MapToGrid(new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 1), MapId.Nullspace)));
 
                 deviceNetSystem.QueuePacket(device1.Uid, networkComponent2.Address, networkComponent2.Frequency, payload);
-                deviceNetSystem.Update(0);
             });
 
+            await server.WaitRunTicks(1);
             await server.WaitIdleAsync();
 
             server.Assert(() => {
