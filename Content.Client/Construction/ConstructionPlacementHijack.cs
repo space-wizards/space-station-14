@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.Graphics;

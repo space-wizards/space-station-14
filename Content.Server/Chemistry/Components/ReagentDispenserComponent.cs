@@ -13,7 +13,6 @@ using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;

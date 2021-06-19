@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Server.Atmos.Components;
 using System.Linq;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Resistances;

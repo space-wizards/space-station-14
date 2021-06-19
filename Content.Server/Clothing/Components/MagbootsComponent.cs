@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Alert;
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.ActionBlocker;
@@ -10,7 +10,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;

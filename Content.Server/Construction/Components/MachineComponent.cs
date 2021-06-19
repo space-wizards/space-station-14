@@ -121,6 +121,7 @@ namespace Content.Server.Construction.Components
         public void MapInit()
         {
             CreateBoardAndStockParts();
+            RefreshParts();
         }
     }
 }

@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Damage.Components;
