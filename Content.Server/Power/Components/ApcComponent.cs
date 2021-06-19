@@ -86,6 +86,7 @@ namespace Content.Server.Power.Components
                 if (_accessReader == null || _accessReader.IsAllowed(user))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
+                    Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;
 
                     _uiDirty = true;
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
@@ -154,7 +155,7 @@ namespace Content.Server.Power.Components
             var netBattery = Owner.GetComponent<PowerNetworkBatteryComponent>();
             var delta = netBattery.CurrentSupply - netBattery.CurrentReceiving;
 
-            return delta > 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
+            return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
         }
 
         private ApcExternalPowerState CalcExtPowerState()

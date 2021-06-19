@@ -89,6 +89,22 @@ namespace Content.Server.Power.Components
             set => NetworkBattery.Enabled = value;
         }
 
+        [DataField("canCharge")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanCharge
+        {
+            get => NetworkBattery.CanCharge;
+            set => NetworkBattery.CanCharge = value;
+        }
+
+        [DataField("canDisharge")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanDischarge
+        {
+            get => NetworkBattery.CanDischarge;
+            set => NetworkBattery.CanDischarge = value;
+        }
+
         [ViewVariables]
         public PowerState.Battery NetworkBattery { get; } = new();
     }

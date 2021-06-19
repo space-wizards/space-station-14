@@ -87,7 +87,7 @@ namespace Content.Server.Power.Pow3r
                 foreach (var batteryId in network.BatteriesLoading)
                 {
                     var battery = state.Batteries[batteryId];
-                    if (!battery.Enabled)
+                    if (!battery.Enabled || !battery.CanCharge)
                         continue;
 
                     var batterySpace = (battery.Capacity - battery.CurrentStorage) * (1 / battery.Efficiency);
@@ -128,7 +128,7 @@ namespace Content.Server.Power.Pow3r
                 foreach (var batteryId in network.BatteriesSupplying)
                 {
                     var battery = state.Batteries[batteryId];
-                    if (!battery.Enabled)
+                    if (!battery.Enabled || !battery.CanDischarge)
                         continue;
 
                     var scaledSpace = battery.CurrentStorage / frameTime;

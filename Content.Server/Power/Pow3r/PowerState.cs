@@ -133,6 +133,8 @@ namespace Content.Server.Power.Pow3r
 
             // == Static parameters ==
             [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public bool CanDischarge = true;
+            [ViewVariables(VVAccess.ReadWrite)] public bool CanCharge = true;
             [ViewVariables(VVAccess.ReadWrite)] public float Capacity;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxChargeRate;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxThroughput; // 0 = infinite cuz imgui
