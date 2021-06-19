@@ -4,12 +4,16 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
     public class GasVolumePumpSystem : EntitySystem
     {
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -23,6 +27,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!ComponentManager.TryGetComponent(uid, out AtmosDeviceComponent? device))
                 return;
 
             if (!nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
@@ -40,7 +47,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
                 return;
 
-            var transferRatio = pump.TransferRate / inlet.Air.Volume;
+            // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
+            var transferRatio = (float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds) / inlet.Air.Volume;
 
             var removed = inlet.Air.RemoveRatio(transferRatio);
 

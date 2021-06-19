@@ -1,14 +1,19 @@
+using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
     public class AtmosDeviceSystem : EntitySystem
     {
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -33,6 +38,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!Get<AtmosphereSystem>().TryGetSimulatedGridAtmosphere(component.Owner.Transform.MapPosition, out var atmosphere))
                 return;
 
+            component.LastProcess = _gameTiming.CurTime;
             component.Atmosphere = atmosphere;
             atmosphere.AddAtmosDevice(component);
 
@@ -44,6 +50,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var atmosphere = component.Atmosphere;
             atmosphere?.RemoveAtmosDevice(component);
             component.Atmosphere = null;
+            component.LastProcess = TimeSpan.Zero;
 
             if(atmosphere != null)
                 RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceLeaveAtmosphereEvent(atmosphere), false);

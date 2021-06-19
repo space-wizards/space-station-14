@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Content.Server.Atmos.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -22,6 +23,9 @@ namespace Content.Server.Atmos.Piping.Components
         public bool RequireAnchored { get; private set; } = true;
 
         public IGridAtmosphereComponent? Atmosphere { get; set; }
+
+        [ViewVariables]
+        public TimeSpan LastProcess { get; set; } = TimeSpan.Zero;
     }
 
     public abstract class BaseAtmosDeviceEvent : EntityEventArgs
