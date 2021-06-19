@@ -15,10 +15,10 @@ namespace Content.Shared.Singularity.Components
         public override uint? NetID => ContentNetIDs.SINGULARITY_DISTORTION;
 
         [DataField("intensity")]
-        private float _intensity = 2;
+        private float _intensity = 0.25f;
 
         [DataField("falloff")]
-        private float _falloff = 7;
+        private float _falloff = 2;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Intensity

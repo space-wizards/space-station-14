@@ -606,6 +606,8 @@
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
   - type: SingularityDistortion
+    intensity: 2
+    falloff: 7
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi

@@ -17,7 +17,7 @@ namespace Content.Server.Singularity.Components
     [ComponentReference(typeof(SharedSingularityComponent))]
     public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
     {
-        private SingularitySystem _singularitySystem = default!;
+        private SharedSingularitySystem _singularitySystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Energy
@@ -78,7 +78,7 @@ namespace Content.Server.Singularity.Components
         {
             base.Initialize();
 
-            _singularitySystem = EntitySystem.Get<SingularitySystem>();
+            _singularitySystem = EntitySystem.Get<SharedSingularitySystem>();
 
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;

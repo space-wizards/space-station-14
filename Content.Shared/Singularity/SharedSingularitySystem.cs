@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 
 namespace Content.Shared.Singularity
 {
-    public class SingularitySystem : EntitySystem
+    public abstract class SharedSingularitySystem : EntitySystem
     {
         private float GetFalloff(int level)
         {
@@ -73,8 +72,8 @@ namespace Content.Shared.Singularity
             }
 
             if (physics != null &&
-                physics.Fixtures.Any() &&
-                physics.Fixtures[0].Shape is PhysShapeCircle circle)
+                singularity.DeleteFixtureId != null &&
+                physics.GetFixture(singularity.DeleteFixtureId) is {Shape: PhysShapeCircle circle})
             {
                 circle.Radius = value - 0.5f;
             }
