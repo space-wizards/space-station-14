@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Tag;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -13,76 +12,45 @@ namespace Content.Shared.Storage
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeNetworkEvent<AfterStorageFillEvent>(OnStorageFill);
             SubscribeLocalEvent<SharedItemCounterComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
             SubscribeLocalEvent<SharedItemCounterComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
         }
 
-        private void HandleEntityRemoved(EntityUid uid, SharedItemCounterComponent counterComponent,
+        private void OnStorageFill(AfterStorageFillEvent args)
+        {
+            if (ComponentManager.HasComponent<SharedItemCounterComponent>(args.Entity.Uid)
+                && ComponentManager.TryGetComponent(args.Entity.Uid, out SharedAppearanceComponent appearance)
+                && args.ContainedEntities != null)
+            {
+                var allLayer = new List<ShowEntityData>();
+                foreach (var entity in args.ContainedEntities)
+                {
+                    allLayer.Add(new ShowEntityData(entity.Uid, true));
+                }
+
+                appearance.SetData(StorageMapVisuals.AllLayers, allLayer);
+            }
+        }
+
+        private void HandleEntityRemoved(EntityUid uid, SharedItemCounterComponent _,
             EntRemovedFromContainerMessage args)
         {
-            UpdateSprite(counterComponent, args, false);
+            UpdateSprite(args, false);
         }
 
-        private void HandleEntityInsert(EntityUid uid, SharedItemCounterComponent counterComponent,
+        private void HandleEntityInsert(EntityUid uid, SharedItemCounterComponent _,
             EntInsertedIntoContainerMessage args)
         {
-            UpdateSprite(counterComponent, args, true);
+            UpdateSprite(args, true);
         }
 
-        private static void UpdateSprite(SharedItemCounterComponent counterComponent,
-            ContainerModifiedMessage args, bool show)
+        private static void UpdateSprite(ContainerModifiedMessage args, bool show)
         {
             if (args.Container.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
             {
-                if (counterComponent.HasItemMap()
-                    && counterComponent.TryFindEntity(args.Entity, out var layer))
-                {
-                    appearanceComponent.SetData(StorageMapHelper.GetVisibleLayer(layer), show);
-                }
+                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowEntityData(args.Entity.Uid, show));
             }
-        }
-    }
-
-    public static class StorageMapHelper
-    {
-        public static string GetVisibleLayer(string layer)
-        {
-            return $"storage_{layer}_visible";
-        }
-
-        private static bool Matches(this IEntity entity, SharedItemCounterComponent.LayerProperties layerProp)
-        {
-            var entityId = entity.Prototype?.ID;
-            if (entityId != null
-                && layerProp.Id != null
-                && layerProp.Id.Contains(entityId))
-            {
-                return true;
-            }
-
-            return layerProp.Tags != null && entity.HasAnyTag(layerProp.Tags);
-        }
-
-        public static bool TryFindEntity(this SharedItemCounterComponent self, IEntity entity,
-            [NotNullWhen(true)] out string? layer)
-        {
-            foreach (var layerProp in self._mapLayers)
-            {
-                if (entity.Matches(layerProp))
-                {
-                    layer = layerProp.Layer;
-                    return true;
-                }
-            }
-
-            layer = null;
-            return false;
-        }
-
-        public static bool HasItemMap(this SharedItemCounterComponent self)
-        {
-            return self._mapLayers.Count > 0;
         }
     }
 }

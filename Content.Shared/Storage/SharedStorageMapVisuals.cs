@@ -7,5 +7,6 @@ namespace Content.Shared.Storage
     public enum StorageMapVisuals : sbyte
     {
         AllLayers,
+        LayerChanged,
     }
 }

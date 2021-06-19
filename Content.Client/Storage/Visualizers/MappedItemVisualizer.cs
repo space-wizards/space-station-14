@@ -3,16 +3,19 @@ using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Storage.Visualizers
 {
     [UsedImplicitly]
-    public class MappedItemVisualizer : AppearanceVisualizer
+    public class MappedItemVisualizer : AppearanceVisualizer, ISerializationHooks
     {
-        [DataField("spriteLayers")] private List<string> _spriteLayers = new();
+        private Dictionary<string, SharedMapLayerData> _spriteLayers = new();
         [DataField("sprite")] private ResourcePath? _spritePath;
+        [DataField("mapLayers")] private List<SharedMapLayerData>? _mapLayers;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -21,50 +24,64 @@ namespace Content.Client.Storage.Visualizers
             if (entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
                 _spritePath ??= spriteComponent.BaseRSI!.Path!;
+
+                foreach (var (sprite,_) in _spriteLayers)
+                {
+                    spriteComponent.LayerMapReserveBlank(sprite);
+                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(_spritePath!, sprite));
+                    spriteComponent.LayerSetVisible(sprite, false);
+                }
+            }
+        }
+
+        public void AfterDeserialization()
+        {
+            if (_mapLayers is { Count: > 0 })
+            {
+                foreach (var layerProp in _mapLayers)
+                {
+                    if (_spriteLayers.ContainsKey(layerProp.Layer))
+                    {
+                        Logger.Warning($"Already added mapLayer with layer = `${layerProp.Layer}` skipping over");
+                    }
+                    else
+                    {
+                        _spriteLayers.Add(layerProp.Layer, layerProp);
+                    }
+
+
+                }
             }
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            InitializeSpriteMap(component);
-            UpdateSprite(component);
-        }
-
-        private void InitializeSpriteMap(AppearanceComponent component)
-        {
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent)
-                && component.TryGetData<List<string>>(StorageMapVisuals.AllLayers, out var initLayers))
+            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                // This should only be initialized once
                 if (_spriteLayers.Count > 0)
                 {
-                    return;
-                }
-
-                foreach (var sprite in initLayers)
-                {
-                    spriteComponent.LayerMapReserveBlank(sprite);
-                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(_spritePath!, sprite));
-                    spriteComponent.LayerSetVisible(sprite, false);
-                    _spriteLayers.Add(sprite);
-                }
-            }
-        }
-
-        private void UpdateSprite(AppearanceComponent component)
-        {
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComp)
-                && _spriteLayers.Count > 0)
-            {
-                foreach (var layerName in _spriteLayers)
-                {
-                    if (component.TryGetData<bool>(StorageMapHelper.GetVisibleLayer(layerName), out var show))
+                    foreach (var (layerName, layerFilter) in _spriteLayers)
                     {
-                        spriteComp.LayerSetVisible(layerName, show);
+                        if (component.TryGetData<ShowEntityData>(StorageMapVisuals.LayerChanged, out var layerData)
+                            && component.Owner.EntityManager.TryGetEntity(layerData.Uid, out var entity)
+                            && Matches(entity, layerFilter))
+                        {
+                            spriteComponent.LayerSetVisible(layerName, layerData.Show);
+                        }
                     }
                 }
             }
+        }
+
+        private bool Matches(IEntity entity, SharedMapLayerData layerFilter)
+        {
+            if (entity.Prototype != null && entity.Prototype.ID.Equals(layerFilter.Id))
+            {
+                return true;
+            }
+
+            return layerFilter.Whitelist != null && layerFilter.Whitelist.IsValid(entity);
         }
     }
 }
