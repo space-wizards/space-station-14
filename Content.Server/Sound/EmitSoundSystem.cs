@@ -2,7 +2,6 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Content.Server.Interaction.Components;
-using Content.Server.Sound;
 using Content.Server.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -12,7 +11,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Sound
 {
     [UsedImplicitly]
     public class EmitSoundSystem : EntitySystem
