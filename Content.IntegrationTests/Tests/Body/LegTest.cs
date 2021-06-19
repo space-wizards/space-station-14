@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out IBody body));
+                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
                 Assert.That(human.TryGetComponent(out appearance));
 
                 Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));

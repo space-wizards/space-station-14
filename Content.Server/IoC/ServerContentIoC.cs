@@ -28,6 +28,7 @@ using Content.Shared.Alert;
 using Content.Shared.Kitchen;
 using Content.Shared.Module;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.IoC;
 
 namespace Content.Server.IoC

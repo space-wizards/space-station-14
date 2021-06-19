@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.Shared.Acts;
+using Content.Shared.Damage.Resistances;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Damage.Components
@@ -22,29 +23,14 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         IReadOnlyDictionary<DamageType, int> DamageTypes { get; }
 
-        /// <summary>
-        ///     The damage flags on this component.
-        /// </summary>
-        DamageFlag Flags { get; }
+        HashSet<DamageType> SupportedTypes { get; }
+
+        HashSet<DamageClass> SupportedClasses { get; }
 
         /// <summary>
-        ///     Adds a flag to this component.
+        ///     The resistances of this component.
         /// </summary>
-        /// <param name="flag">The flag to add.</param>
-        void AddFlag(DamageFlag flag);
-
-        /// <summary>
-        ///     Checks whether or not this component has a specific flag.
-        /// </summary>
-        /// <param name="flag">The flag to check for.</param>
-        /// <returns>True if it has the flag, false otherwise.</returns>
-        bool HasFlag(DamageFlag flag);
-
-        /// <summary>
-        ///     Removes a flag from this component.
-        /// </summary>
-        /// <param name="flag">The flag to remove.</param>
-        void RemoveFlag(DamageFlag flag);
+        ResistanceSet Resistances { get; }
 
         bool SupportsDamageClass(DamageClass @class);
 

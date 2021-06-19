@@ -3,6 +3,7 @@ using Content.Server.Light.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -19,18 +20,10 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<LightReplacerComponent, InteractUsingEvent>(HandleInteract);
-            UnsubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
-        }
-
         private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
         {
             // standard interaction checks
-            if (!ActionBlockerSystem.CanUse(eventArgs.User)) return;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User)) return;
             if (!eventArgs.CanReach) return;
 
             // behaviour will depends on target type
@@ -48,7 +41,7 @@ namespace Content.Server.Light.EntitySystems
         private void HandleInteract(EntityUid uid, LightReplacerComponent component, InteractUsingEvent eventArgs)
         {
             // standard interaction checks
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return;
+            if (!Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return;
 
             if (eventArgs.Used != null)
             {

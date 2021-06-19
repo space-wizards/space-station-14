@@ -12,13 +12,6 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>();
-        }
-
         private static void BodyTypeChanged(
             EntityUid uid,
             DisposalTubeComponent component,

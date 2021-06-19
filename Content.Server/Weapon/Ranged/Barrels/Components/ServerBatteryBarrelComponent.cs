@@ -8,6 +8,7 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -295,7 +296,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || !component._powerCellRemovable)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

@@ -76,9 +76,9 @@ namespace Content.Server.Body.Commands
                     return;
             }
 
-            if (!entity.TryGetComponent(out IBody? body))
+            if (!entity.TryGetComponent(out SharedBodyComponent? body))
             {
-                shell.WriteLine($"Entity {entity.Name} with uid {entity.Uid} does not have a {nameof(IBody)} component.");
+                shell.WriteLine($"Entity {entity.Name} with uid {entity.Uid} does not have a {nameof(SharedBodyComponent)} component.");
                 return;
             }
 
@@ -88,9 +88,9 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!partEntity.TryGetComponent(out IBodyPart? part))
+            if (!partEntity.TryGetComponent(out SharedBodyPartComponent? part))
             {
-                shell.WriteLine($"Entity {partEntity.Name} with uid {args[0]} does not have a {nameof(IBodyPart)} component.");
+                shell.WriteLine($"Entity {partEntity.Name} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
                 return;
             }
 

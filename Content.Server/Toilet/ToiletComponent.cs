@@ -12,6 +12,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Toilet;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
@@ -143,7 +144,7 @@ namespace Content.Server.Toilet
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             // check that victim even have head
-            if (victim.TryGetComponent<IBody>(out var body) &&
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("{0:theName} sticks their head into {1:theName} and flushes it!", victim, Owner);

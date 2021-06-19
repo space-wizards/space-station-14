@@ -11,42 +11,42 @@ namespace Content.Server.Body.Behavior
 {
     public class BrainBehavior : MechanismBehavior
     {
-        protected override void OnAddedToBody(IBody body)
+        protected override void OnAddedToBody(SharedBodyComponent body)
         {
             base.OnAddedToBody(body);
 
             HandleMind(body.Owner, Owner);
         }
 
-        protected override void OnAddedToPart(IBodyPart part)
+        protected override void OnAddedToPart(SharedBodyPartComponent part)
         {
             base.OnAddedToPart(part);
 
             HandleMind(part.Owner, Owner);
         }
 
-        protected override void OnAddedToPartInBody(IBody body, IBodyPart part)
+        protected override void OnAddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
         {
             base.OnAddedToPartInBody(body, part);
 
             HandleMind(body.Owner, Owner);
         }
 
-        protected override void OnRemovedFromBody(IBody old)
+        protected override void OnRemovedFromBody(SharedBodyComponent old)
         {
             base.OnRemovedFromBody(old);
 
             HandleMind(Part!.Owner, old.Owner);
         }
 
-        protected override void OnRemovedFromPart(IBodyPart old)
+        protected override void OnRemovedFromPart(SharedBodyPartComponent old)
         {
             base.OnRemovedFromPart(old);
 
             HandleMind(Owner, old.Owner);
         }
 
-        protected override void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
+        protected override void OnRemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
         {
             base.OnRemovedFromPartInBody(oldBody, oldPart);
 

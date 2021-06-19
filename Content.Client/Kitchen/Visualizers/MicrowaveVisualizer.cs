@@ -1,4 +1,4 @@
-﻿using Content.Client.Sound;
+using Content.Client.Sound;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Power;
 using Content.Shared.Sound;
@@ -25,6 +25,11 @@ namespace Content.Client.Kitchen.Visualizers
             }
             switch (state)
             {
+                case MicrowaveVisualState.Broken:
+                    sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mwb");
+                    loopingSoundComponent?.StopAllSounds();
+                    break;
+
                 case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");

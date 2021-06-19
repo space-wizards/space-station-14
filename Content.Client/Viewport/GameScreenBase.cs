@@ -6,6 +6,7 @@ using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.State;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.Player;

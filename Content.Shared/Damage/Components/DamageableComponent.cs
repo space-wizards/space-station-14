@@ -35,67 +35,32 @@ namespace Content.Shared.Damage.Components
 
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
 
-        private readonly HashSet<DamageType> _supportedTypes = new();
-
-        private readonly HashSet<DamageClass> _supportedClasses = new();
-
-        [DataField("flags")]
-        private DamageFlag _flags;
-
         [DataField("resistances")] public string ResistanceSetId = DefaultResistanceSet;
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
-        [ViewVariables] private ResistanceSet Resistances { get; set; } = new();
+        [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
 
-        [ViewVariables]
-        public IReadOnlyDictionary<DamageClass, int> DamageClasses =>
-            DamageTypeExtensions.ToClassDictionary(_damageList);
+        [ViewVariables] public IReadOnlyDictionary<DamageClass, int> DamageClasses => _damageList.ToClassDictionary();
 
         [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
 
-        public DamageFlag Flags
-        {
-            get => _flags;
-            private set
-            {
-                if (_flags == value)
-                {
-                    return;
-                }
+        [ViewVariables] public HashSet<DamageType> SupportedTypes { get; } = new();
 
-                _flags = value;
-                Dirty();
-            }
-        }
-
-        public void AddFlag(DamageFlag flag)
-        {
-            Flags |= flag;
-        }
-
-        public bool HasFlag(DamageFlag flag)
-        {
-            return Flags.HasFlag(flag);
-        }
-
-        public void RemoveFlag(DamageFlag flag)
-        {
-            Flags &= ~flag;
-        }
+        [ViewVariables] public HashSet<DamageClass> SupportedClasses { get; } = new();
 
         public bool SupportsDamageClass(DamageClass @class)
         {
-            return _supportedClasses.Contains(@class);
+            return SupportedClasses.Contains(@class);
         }
 
         public bool SupportsDamageType(DamageType type)
         {
-            return _supportedTypes.Contains(type);
+            return SupportedTypes.Contains(type);
         }
 
         public override void Initialize()
@@ -107,12 +72,12 @@ namespace Content.Shared.Damage.Components
             // TODO DAMAGE Serialize damage done and resistance changes
             var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
-            _supportedClasses.Clear();
-            _supportedTypes.Clear();
+            SupportedClasses.Clear();
+            SupportedTypes.Clear();
 
             DamageContainerId = damagePrototype.ID;
-            _supportedClasses.UnionWith(damagePrototype.SupportedClasses);
-            _supportedTypes.UnionWith(damagePrototype.SupportedTypes);
+            SupportedClasses.UnionWith(damagePrototype.SupportedClasses);
+            SupportedTypes.UnionWith(damagePrototype.SupportedTypes);
 
             var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
@@ -127,7 +92,7 @@ namespace Content.Shared.Damage.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new DamageableComponentState(_damageList, _flags);
+            return new DamageableComponentState(_damageList);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -145,8 +110,6 @@ namespace Content.Shared.Damage.Components
             {
                 _damageList[type] = damage;
             }
-
-            _flags = state.Flags;
         }
 
         public int GetDamage(DamageType type)
@@ -203,7 +166,7 @@ namespace Content.Shared.Damage.Components
 
             var damageClass = type.ToClass();
 
-            if (_supportedClasses.Contains(damageClass))
+            if (SupportedClasses.Contains(damageClass))
             {
                 var old = _damageList[type] = newValue;
                 _damageList[type] = newValue;
@@ -227,7 +190,7 @@ namespace Content.Shared.Damage.Components
 
         public void Heal()
         {
-            foreach (var type in _supportedTypes)
+            foreach (var type in SupportedTypes)
             {
                 Heal(type);
             }
@@ -240,11 +203,6 @@ namespace Content.Shared.Damage.Components
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
-            {
-                return false;
-            }
-
             if (!SupportsDamageType(type))
             {
                 return false;
@@ -291,11 +249,6 @@ namespace Content.Shared.Damage.Components
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
-            {
-                return false;
-            }
-
             if (!SupportsDamageClass(@class))
             {
                 return false;
@@ -374,7 +327,7 @@ namespace Content.Shared.Damage.Components
 
         public bool SetDamage(DamageType type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
-            if (newValue >= TotalDamage && HasFlag(DamageFlag.Invulnerable))
+            if (newValue >= TotalDamage)
             {
                 return false;
             }
@@ -405,7 +358,7 @@ namespace Content.Shared.Damage.Components
         {
             var data = new List<DamageChangeData>();
 
-            foreach (var type in _supportedTypes)
+            foreach (var type in SupportedTypes)
             {
                 var damage = GetDamage(type);
                 var datum = new DamageChangeData(type, damage, 0);
@@ -457,12 +410,10 @@ namespace Content.Shared.Damage.Components
     public class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<DamageType, int> DamageList;
-        public readonly DamageFlag Flags;
 
-        public DamageableComponentState(Dictionary<DamageType, int> damageList, DamageFlag flags) : base(ContentNetIDs.DAMAGEABLE)
+        public DamageableComponentState(Dictionary<DamageType, int> damageList) : base(ContentNetIDs.DAMAGEABLE)
         {
             DamageList = damageList;
-            Flags = flags;
         }
     }
 }

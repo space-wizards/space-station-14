@@ -1,6 +1,7 @@
 using Content.Client.HUD;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -23,6 +24,9 @@ namespace Content.Client.CharacterInterface
                 .Bind(ContentKeyFunctions.OpenCharacterMenu,
                 InputCmdHandler.FromDelegate(s => HandleOpenCharacterMenu()))
                 .Register<CharacterInterfaceSystem>();
+
+            SubscribeLocalEvent<CharacterInterfaceComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
+            SubscribeLocalEvent<CharacterInterfaceComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
         }
 
         public override void Shutdown()

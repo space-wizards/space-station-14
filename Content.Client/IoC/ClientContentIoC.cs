@@ -21,6 +21,7 @@ using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Module;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.IoC;
 
 namespace Content.Client.IoC
