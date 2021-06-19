@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -25,7 +26,7 @@ namespace Content.Client.Storage.Visualizers
             {
                 _spritePath ??= spriteComponent.BaseRSI!.Path!;
 
-                foreach (var (sprite,_) in _spriteLayers)
+                foreach (var (sprite, _) in _spriteLayers)
                 {
                     spriteComponent.LayerMapReserveBlank(sprite);
                     spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(_spritePath!, sprite));
@@ -48,8 +49,6 @@ namespace Content.Client.Storage.Visualizers
                     {
                         _spriteLayers.Add(layerProp.Layer, layerProp);
                     }
-
-
                 }
             }
         }
@@ -57,17 +56,37 @@ namespace Content.Client.Storage.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent)
+                && _spriteLayers.Count > 0)
             {
-                if (_spriteLayers.Count > 0)
+                UpdateAllContainedEntities(component, spriteComponent);
+                if (component.TryGetData(StorageMapVisuals.LayerChanged, out ShowEntityData layerData))
                 {
                     foreach (var (layerName, layerFilter) in _spriteLayers)
                     {
-                        if (component.TryGetData<ShowEntityData>(StorageMapVisuals.LayerChanged, out var layerData)
-                            && component.Owner.EntityManager.TryGetEntity(layerData.Uid, out var entity)
+                        if (component.Owner.EntityManager.TryGetEntity(layerData.Uid, out var entity)
                             && Matches(entity, layerFilter))
                         {
                             spriteComponent.LayerSetVisible(layerName, layerData.Show);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void UpdateAllContainedEntities(AppearanceComponent component, ISpriteComponent spriteComponent)
+        {
+            if (component.TryGetData(StorageMapVisuals.AllLayers, out ListOfUids listOfUids)
+                && listOfUids.ContainedEntities.Count > 0)
+            {
+                foreach (var entityUid in listOfUids.ContainedEntities)
+                {
+                    foreach (var (layerName, layerFilter) in _spriteLayers)
+                    {
+                        if (component.Owner.EntityManager.TryGetEntity(entityUid, out var entity)
+                            && Matches(entity, layerFilter))
+                        {
+                            spriteComponent.LayerSetVisible(layerName, true);
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -26,5 +27,10 @@ namespace Content.Shared.Storage
             Uid = uid;
             Show = show;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public record ListOfUids(List<EntityUid> ContainedEntities)
+    {
     }
 }

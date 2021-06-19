@@ -23,13 +23,13 @@ namespace Content.Shared.Storage
                 && ComponentManager.TryGetComponent(args.Entity.Uid, out SharedAppearanceComponent appearance)
                 && args.ContainedEntities != null)
             {
-                var allLayer = new List<ShowEntityData>();
+                var allLayer = new List<EntityUid>();
                 foreach (var entity in args.ContainedEntities)
                 {
-                    allLayer.Add(new ShowEntityData(entity.Uid, true));
+                    allLayer.Add(entity.Uid);
                 }
 
-                appearance.SetData(StorageMapVisuals.AllLayers, allLayer);
+                appearance.SetData(StorageMapVisuals.AllLayers, new ListOfUids(allLayer));
             }
         }
 
@@ -50,6 +50,9 @@ namespace Content.Shared.Storage
             if (args.Container.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowEntityData(args.Entity.Uid, show));
+                // Since visualizers can't be removed we just reset this key to empty value
+                // otherwise it would always check on each update
+                appearanceComponent.SetData(StorageMapVisuals.AllLayers, new ListOfUids(new List<EntityUid>()));
             }
         }
     }

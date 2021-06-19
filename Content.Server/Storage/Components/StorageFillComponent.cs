@@ -60,6 +60,7 @@ namespace Content.Server.Storage.Components
             }
 
             // Finished Inserting all
+            // disregard poor quality of code
             if (Owner.TryGetComponent(out ServerStorageComponent? container))
             {
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Network,
