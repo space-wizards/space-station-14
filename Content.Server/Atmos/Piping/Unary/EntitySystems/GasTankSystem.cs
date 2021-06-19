@@ -28,6 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             tankNode.TryAssignGroupIfNeeded();
             tankNode.AssumeAir(tank.InitialMixture);
             tankNode.Volume = tank.InitialMixture.Volume;
+            tankNode.Air.Volume = tank.InitialMixture.Volume;
             tankNode.Air.Temperature = tank.InitialMixture.Temperature;
         }
     }
