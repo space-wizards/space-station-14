@@ -15,8 +15,8 @@ using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.GameObjects.Components.Atmos.GasTank;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -218,7 +218,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         internal void ToggleInternals()
         {
-            if (!ActionBlockerSystem.CanUse(GetInternalsComponent()?.Owner)) return;
+            var user = GetInternalsComponent()?.Owner;
+
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+                return;
+
             if (IsConnected)
             {
                 DisconnectFromInternals();

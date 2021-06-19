@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
@@ -10,13 +9,14 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -267,8 +267,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(player) ||
-                !ActionBlockerSystem.CanUse(player))
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
+            if (!actionBlocker.CanInteract(player) ||
+                !actionBlocker.CanUse(player))
             {
                 return false;
             }

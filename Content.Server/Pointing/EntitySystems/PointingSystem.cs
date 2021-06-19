@@ -7,8 +7,8 @@ using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -112,7 +112,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (ActionBlockerSystem.CanChangeDirection(player))
+            if (EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player))
             {
                 var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
@@ -137,7 +137,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) != 0))
                     return false;
-                
+
                 return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
             });
 

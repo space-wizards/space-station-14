@@ -10,6 +10,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -125,7 +126,7 @@ namespace Content.Server.Clothing.Components
         {
             protected override void GetData(IEntity user, MagbootsComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

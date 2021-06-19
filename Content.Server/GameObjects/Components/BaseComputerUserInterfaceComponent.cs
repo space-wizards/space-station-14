@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.Components
                 return; // Not powered, so this computer should probably do nothing.
             }
             // Can we interact?
-            if (!ActionBlockerSystem.CanInteract(sessionEntity))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(sessionEntity))
             {
                 sessionEntity.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
                 return;

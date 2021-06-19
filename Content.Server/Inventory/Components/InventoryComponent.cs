@@ -13,8 +13,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -291,7 +291,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !ActionBlockerSystem.CanEquip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(Owner))
             {
                 reason = Loc.GetString("You can't equip this!");
                 return false;
@@ -417,7 +417,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanUnequip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(Owner))
                 return false;
 
             var inventorySlot = _slotContainers[slot];

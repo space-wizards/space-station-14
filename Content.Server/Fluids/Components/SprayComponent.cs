@@ -8,7 +8,7 @@ using Content.Shared.Cooldown;
 using Content.Shared.DragDrop;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
@@ -96,7 +96,7 @@ namespace Content.Server.Fluids.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             if (_hasSafety && _safety)
@@ -207,7 +207,7 @@ namespace Content.Server.Fluids.Components
 
         private void SetSafety(IEntity user, bool state)
         {
-            if (!ActionBlockerSystem.CanInteract(user) || !_hasSafety)
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
                 return;
 
             _safety = state;
