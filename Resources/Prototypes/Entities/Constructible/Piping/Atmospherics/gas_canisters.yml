@@ -67,7 +67,7 @@
       port:
         !type:PipeNode
         nodeGroupID: Pipe
-        pipeDirection: Down
+        pipeDirection: Connector
         connectionsEnabled: false
         needAnchored: false
         rotationsEnabled: false

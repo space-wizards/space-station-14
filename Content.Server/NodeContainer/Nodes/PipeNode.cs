@@ -197,7 +197,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!Anchored)
                 yield break;
 
-            if (pipeDir is PipeDirection.Port or PipeDirection.Portable)
+            if (pipeDir is PipeDirection.Port or PipeDirection.Connector)
             {
                 foreach (var pipe in PipesInTile())
                 {

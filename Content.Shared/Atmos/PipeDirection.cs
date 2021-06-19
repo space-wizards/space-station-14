@@ -37,7 +37,7 @@ namespace Content.Shared.Atmos
         West  = 1 << 2,
         East  = 1 << 3,
         Port    = 1 << 4,
-        Portable  = 1 << 5,
+        Connector  = 1 << 5,
 
         //Straight pipes
         Longitudinal = North | South,
@@ -148,8 +148,8 @@ namespace Content.Shared.Atmos
                 PipeDirection.South => PipeDirection.North,
                 PipeDirection.East  => PipeDirection.West,
                 PipeDirection.West  => PipeDirection.East,
-                PipeDirection.Port    => PipeDirection.Portable,
-                PipeDirection.Portable  => PipeDirection.Port,
+                PipeDirection.Port    => PipeDirection.Connector,
+                PipeDirection.Connector  => PipeDirection.Port,
                 _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
             };
         }
