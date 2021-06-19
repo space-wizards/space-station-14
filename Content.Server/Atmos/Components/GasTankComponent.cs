@@ -48,24 +48,27 @@ namespace Content.Server.Atmos.Components
         [ViewVariables] private BoundUserInterface? _userInterface;
 
         [ViewVariables]
-        public GasMixture? Air
+        public GasMixture Air
         {
             // TODO ATMOS Kill it with fire.
             get
             {
                 if (!Owner.TryGetComponent(out NodeContainerComponent nodeContainer))
-                    return null;
+                    throw new InvalidOperationException("Can't get tank air without a node container!");
 
-                return !nodeContainer.TryGetNode(TankName, out PipeNode? node) ? null : node.Air;
+                if (!nodeContainer.TryGetNode(TankName, out PipeNode? node))
+                    throw new InvalidOperationException($"Node container doesn't have a pipenode called {TankName}!");
+
+                return node.Air;
             }
 
             set
             {
-                if (value == null || !Owner.TryGetComponent(out NodeContainerComponent nodeContainer))
-                    return;
+                // This will throw if the node container is not found.
+                var nodeContainer = Owner.GetComponent<NodeContainerComponent>();
 
                 if (!nodeContainer.TryGetNode(TankName, out PipeNode? node))
-                    return;
+                    throw new InvalidOperationException($"Node container doesn't have a pipenode called {TankName}!");
 
                 node.Air = value;
             }
