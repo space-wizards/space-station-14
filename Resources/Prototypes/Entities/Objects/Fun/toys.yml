@@ -110,6 +110,22 @@
   - type: UseDelay
     delay: 1.0
 
+- type: entity
+  parent: BaseItem
+  id: PlushieVox
+  name: vox plushie
+  description: SKREEEEEEEEEEEE!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_vox
+  - type: ItemCooldown
+  - type: LoopingSound
+  - type: EmitSoundOnUse
+    sound: /Audio/Voice/Vox/shriek1.ogg
+  - type: UseDelay
+    delay: 1.0
+
 # This stuff might be copyright claimed by From Software. The sprites are unique
 # and made by Bright but the sounds are ripped straight from the game. Idk, it's
 # probably not a big deal.
