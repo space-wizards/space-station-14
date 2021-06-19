@@ -1,75 +1,67 @@
-﻿using Content.Shared.Body.Surgery;
+﻿using System.Collections.Generic;
+using Content.Shared.Body.Surgery.Operation;
+using Content.Shared.Body.Surgery.Target;
+using Content.Shared.Body.Surgery.UI;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Body.UI
 {
-    // TODO BODY Make window close if target or surgery tool gets too far away from user.
-
-    /// <summary>
-    ///     Generic client-side UI list popup that allows users to choose from an option
-    ///     of limbs or organs to operate on.
-    /// </summary>
     [UsedImplicitly]
     public class SurgeryBoundUserInterface : BoundUserInterface
     {
-        private SurgeryWindow? _window;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        [ViewVariables] private SurgeryWindow? _window;
 
         public SurgeryBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
+            base.Open();
+
             _window = new SurgeryWindow();
-
-            _window.OpenCentered();
             _window.OnClose += Close;
+            _window.OpenCentered();
+            _window.OperationSelected += OnOperationSelected;
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        protected override void UpdateState(BoundUserInterfaceState state)
         {
-            switch (message)
+            base.UpdateState(state);
+
+            if (_window == null || state is not SurgeryUIState uiState)
             {
-                case RequestBodyPartSurgeryUIMessage msg:
-                    HandleBodyPartRequest(msg);
-                    break;
-                case RequestMechanismSurgeryUIMessage msg:
-                    HandleMechanismRequest(msg);
-                    break;
-                case RequestBodyPartSlotSurgeryUIMessage msg:
-                    HandleBodyPartSlotRequest(msg);
-                    break;
+                return;
             }
+
+            var targets = new Dictionary<IEntity, IEnumerable<SurgeryOperationPrototype>>();
+
+            foreach (var id in uiState.Entities)
+            {
+                if (!_entityManager.TryGetEntity(id, out var entity))
+                {
+                    continue;
+                }
+
+                if (!entity.TryGetComponent(out SurgeryTargetComponent? target))
+                {
+                    continue;
+                }
+
+                targets.Add(entity, target.PossibleSurgeries);
+            }
+
+            _window.SetTargets(targets);
         }
 
-        private void HandleBodyPartRequest(RequestBodyPartSurgeryUIMessage msg)
+        private void OnOperationSelected(IEntity target, string operationId)
         {
-            _window?.BuildDisplay(msg.Targets, BodyPartSelectedCallback);
-        }
-
-        private void HandleMechanismRequest(RequestMechanismSurgeryUIMessage msg)
-        {
-            _window?.BuildDisplay(msg.Targets, MechanismSelectedCallback);
-        }
-
-        private void HandleBodyPartSlotRequest(RequestBodyPartSlotSurgeryUIMessage msg)
-        {
-            _window?.BuildDisplay(msg.Targets, BodyPartSlotSelectedCallback);
-        }
-
-        private void BodyPartSelectedCallback(int selectedOptionData)
-        {
-            SendMessage(new ReceiveBodyPartSurgeryUIMessage(selectedOptionData));
-        }
-
-        private void MechanismSelectedCallback(int selectedOptionData)
-        {
-            SendMessage(new ReceiveMechanismSurgeryUIMessage(selectedOptionData));
-        }
-
-        private void BodyPartSlotSelectedCallback(int selectedOptionData)
-        {
-            SendMessage(new ReceiveBodyPartSlotSurgeryUIMessage(selectedOptionData));
+            var msg = new SurgeryOpPartSelectUIMsg(target.Uid, operationId);
+            SendMessage(msg);
         }
 
         protected override void Dispose(bool disposing)

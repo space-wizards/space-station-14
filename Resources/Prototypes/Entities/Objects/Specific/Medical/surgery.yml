@@ -12,6 +12,19 @@
     - key: enum.SurgeryUIKey.Key
       type: SurgeryBoundUserInterface
 
+# Drape
+- type: entity
+  name: drapes
+  id: Drapes
+  parent: BaseToolSurgery
+  components:
+  - type: SurgeryDrapes
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/drapes.rsi
+    state: drapes
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/drapes.rsi
+
 # Cautery
 
 - type: entity
@@ -21,8 +34,10 @@
   description: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
-    surgeryType: Cauterization
-    baseOperateTime: 3
+    behavior:
+      !type:Cauterization
+      locId: cauterization
+    delay: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
     state: cautery
@@ -40,8 +55,10 @@
   components:
 #  - type: PowerCellSlot
   - type: SurgeryTool
-    surgeryType: Drilling
-    baseOperateTime: 3
+    behavior:
+      !type:StepSurgery
+      step: Drilling
+    delay: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
     state: drill
@@ -61,10 +78,12 @@
   components:
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 5
+    behavior:
+      !type:StepSurgery
+      step: Incision
+    delay: 5
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
@@ -82,8 +101,10 @@
   description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle. # Could become a decent tool or weapon with right tool mods.
   components:
   - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 8
+    behavior:
+      !type:StepSurgery
+      step: Incision
+    delay: 8
   - type: Sprite
     state: shiv
   - type: Item
@@ -96,8 +117,10 @@
   description: Made of more expensive materials, sharper and generally more reliable.
   components:
   - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 4
+    behavior:
+      !type:StepSurgery
+      step: Incision
+    delay: 4
   - type: Sprite
     state: advanced
   - type: Item
@@ -111,8 +134,10 @@
   components:
 #  - type: PowerCellSlot
   - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 2
+    behavior:
+      !type:StepSurgery
+      step: Incision
+    delay: 2
   - type: Sprite
     state: laser
   - type: Item
@@ -127,8 +152,10 @@
   description: A surgical tool used to hold open incisions.
   components:
   - type: SurgeryTool
-    surgeryType: Retraction
-    baseOperateTime: 3
+    behavior:
+      !type:StepSurgery
+      step: Retraction
+    delay: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     state: retractor
@@ -154,7 +181,10 @@
   description: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
-    surgeryType: VesselCompression
+    behavior:
+      !type:StepSurgery
+      step: VesselCompression
+    delay: 3
   - type: Sprite
     state: hemostat
   - type: Item
@@ -185,8 +215,10 @@
     types:
       - Knife
   - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 6
+    behavior:
+      !type:StepSurgery
+      step: Amputation
+    delay: 6
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
@@ -202,8 +234,10 @@
   description: A wicked serrated blade made of whatever nasty sharp things you could find. # It would make a pretty decent weapon, given there are more space for some tool mods too.
   components:
   - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 8
+    behavior:
+      !type:StepSurgery
+      step: Amputation
+    delay: 8
   - type: Sprite
     state: improv
   - type: Item
@@ -220,8 +254,10 @@
   components:
 #  - type: PowerCellSlot
   - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 4
+    behavior:
+      !type:StepSurgery
+      step: Amputation
+    delay: 4
   - type: Sprite
     state: electric
   - type: Item
@@ -238,8 +274,10 @@
   components:
 #  - type: PowerCellSlot
   - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 2
+    behavior:
+      !type:StepSurgery
+      step: Amputation
+    delay: 2
   - type: Sprite
     state: advanced
   - type: Item

@@ -1,0 +1,13 @@
+- type: surgeryOperation
+  id: FacialReconstruction
+  name: Facial Reconstruction
+  description: The fixing of facial and vocal deformaties.
+  steps:
+  - Incision
+  - VesselCompression
+  - Retraction
+  - VesselCompression
+  - Cauterization
+  effect:
+    !type:FacialReconstructionEffect
+  hidden: true # TODO SURGERY

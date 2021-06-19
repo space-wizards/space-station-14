@@ -1,0 +1,5 @@
+﻿<cc:SS14Window Title="{Loc ui-surgery-window-title}"
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client">
+    <TabContainer Name="Operations" TabTitle="{Loc ui-surgery-window-title}"/>
+</cc:SS14Window>

@@ -5,6 +5,8 @@
   parent: BaseItem
   name: "human body part"
   abstract: true
+  components:
+  - type: Surgery
 
 - type: entity
   id: TorsoHuman
@@ -28,7 +30,6 @@
     - OrganHumanStomach
     - OrganHumanLiver
     - OrganHumanKidneys
-  - type: BiologicalSurgeryData
   - type: Damageable
     # TODO BODY DettachableDamageableComponent?
     damageContainer: biologicalDamageContainer
@@ -56,7 +57,6 @@
     mechanisms:
     - OrganHumanBrain
     - OrganHumanEyes
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -84,7 +84,6 @@
     size: 5
     compatibility: Biological
     symmetry: Left
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -110,7 +109,6 @@
     size: 5
     compatibility: Biological
     symmetry: Right
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -136,7 +134,6 @@
     size: 3
     compatibility: Biological
     symmetry: Left
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -161,7 +158,6 @@
     size: 3
     compatibility: Biological
     symmetry: Right
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -186,7 +182,6 @@
     size: 6
     compatibility: Biological
     symmetry: Left
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -214,7 +209,6 @@
     size: 6
     compatibility: Biological
     symmetry: Right
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -242,7 +236,6 @@
     size: 2
     compatibility: Biological
     symmetry: Left
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
@@ -266,7 +259,6 @@
     size: 2
     compatibility: Biological
     symmetry: Right
-  - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances

@@ -1,0 +1,11 @@
+﻿- type: surgeryOperation
+  id: Amputation
+  name: Amputation
+  description: Removing a limb or a limb stump.
+  steps:
+  - Incision
+  - VesselCompression
+  - Retraction
+  - Amputation
+  effect:
+    !type:AmputationEffect

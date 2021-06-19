@@ -1,0 +1,17 @@
+﻿- type: surgeryOperation
+  id: OpenIncision
+  name: Making an Incision
+  description: The first step of most surgeries.
+  steps:
+  - Incision
+  - VesselCompression
+  - Retraction
+  hidden: true
+
+- type: surgeryOperation
+  id: CloseIncision
+  name: Closing an Incision
+  description: The last step of most surgeries.
+  steps:
+  - Cauterization
+  hidden: true

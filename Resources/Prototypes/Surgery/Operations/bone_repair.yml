@@ -1,0 +1,13 @@
+- type: surgeryOperation
+  id: BoneRepair
+  name: Bone Repair
+  description: Mends broken bones and fractures.
+  steps:
+  - Incision
+  - BoneGel
+  - BoneSetter
+  - BoneGel
+  - Cauterization
+  effect:
+    !type:BoneRepairEffect
+  hidden: true # TODO SURGERY

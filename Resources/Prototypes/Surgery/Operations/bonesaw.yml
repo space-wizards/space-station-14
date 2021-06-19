@@ -1,0 +1,7 @@
+- type: surgeryOperation
+  id: UseBonesaw
+  name: Opening the Skull or Rib Cage
+  description: For operating on internal organs in the chest or head.
+  steps:
+  - Bonesaw
+  hidden: true

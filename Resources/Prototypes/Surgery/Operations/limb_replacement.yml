@@ -1,0 +1,12 @@
+- type: surgeryOperation
+  id: LimbReplacement
+  name: Limb Replacement
+  description: Replacing missing limbs or severed heads.
+  steps:
+  - id: Amputation
+    conditional: !type:StumpConditional
+  - LimbAttachment
+  - VesselCompression
+  effect:
+    !type:LimbReplacementEffect
+  hidden: true # TODO SURGERY

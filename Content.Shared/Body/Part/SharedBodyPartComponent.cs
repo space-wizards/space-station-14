@@ -7,7 +7,6 @@ using Content.Shared.Body.Behavior;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part.Property;
-using Content.Shared.Body.Surgery;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,7 +19,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Part
 {
-    public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
+    public abstract class SharedBodyPartComponent : Component
     {
         public override string Name => "BodyPart";
 
@@ -69,33 +68,27 @@ namespace Content.Shared.Body.Part
         public string DisplayName => Name;
 
         /// <summary>
-        ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
-        ///     to be.
-        ///     For example, <see cref="BodyPartType.Arm"/>.
+        ///     <see cref="BodyPartType"/> that this part is considered to be.
         /// </summary>
         [ViewVariables]
         [DataField("partType")]
-        public BodyPartType PartType { get; private set; } = BodyPartType.Other;
+        public BodyPartType PartType { get; } = BodyPartType.Other;
 
         /// <summary>
-        ///     Determines how many mechanisms can be fit inside this
-        ///     <see cref="SharedBodyPartComponent"/>.
+        ///     Determines how many mechanisms can be fit inside this part.
         /// </summary>
-        [ViewVariables] [DataField("size")] public int Size { get; private set; } = 1;
+        [ViewVariables] [DataField("size")] public int Size { get; } = 1;
 
         [ViewVariables] public int SizeUsed { get; private set; }
 
         // TODO BODY size used
-        // TODO BODY surgerydata
 
         /// <summary>
-        ///     What types of BodyParts this <see cref="SharedBodyPartComponent"/> can easily attach to.
-        ///     For the most part, most limbs aren't universal and require extra work to
-        ///     attach between types.
+        ///     What types of BodyParts this part can easily attach to.
         /// </summary>
         [ViewVariables]
         [DataField("compatibility")]
-        public BodyPartCompatibility Compatibility { get; private set; } = BodyPartCompatibility.Universal;
+        public BodyPartCompatibility Compatibility { get; } = BodyPartCompatibility.Universal;
 
         // TODO BODY Mechanisms occupying different parts at the body level
         [ViewVariables]
@@ -103,19 +96,16 @@ namespace Content.Shared.Body.Part
 
         // TODO BODY Replace with a simulation of organs
         /// <summary>
-        ///     Whether or not the owning <see cref="Body"/> will die if all
-        ///     <see cref="SharedBodyPartComponent"/>s of this type are removed from it.
+        ///     Whether or not the owning body will die if all parts of this type
+        ///     are removed from it.
         /// </summary>
         [ViewVariables]
         [DataField("vital")]
-        public bool IsVital { get; private set; } = false;
+        public bool IsVital { get; } = false;
 
         [ViewVariables]
         [DataField("symmetry")]
-        public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
-
-        [ViewVariables]
-        public ISurgeryData? SurgeryDataComponent => Owner.GetComponentOrNull<ISurgeryData>();
+        public BodyPartSymmetry Symmetry { get; } = BodyPartSymmetry.None;
 
         protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
         {
@@ -183,35 +173,19 @@ namespace Content.Shared.Body.Part
             }
         }
 
-        public bool SurgeryCheck(SurgeryType surgery)
-        {
-            return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
-        }
-
-        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, IEntity performer)
-        {
-            DebugTools.AssertNotNull(toolType);
-            DebugTools.AssertNotNull(target);
-            DebugTools.AssertNotNull(surgeon);
-            DebugTools.AssertNotNull(performer);
-
-            return SurgeryDataComponent?.PerformSurgery(toolType, target, surgeon, performer) ?? false;
-        }
-
         public bool CanAttachPart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
 
-            return SurgeryDataComponent?.CanAttachBodyPart(part) ?? false;
+            // TODO BODY
+            return true;
         }
 
         public virtual bool CanAddMechanism(SharedMechanismComponent mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
-            return SurgeryDataComponent != null &&
-                   SizeUsed + mechanism.Size <= Size &&
-                   SurgeryDataComponent.CanAddMechanism(mechanism);
+            return SizeUsed + mechanism.Size <= Size;
         }
 
         /// <summary>
@@ -241,6 +215,11 @@ namespace Content.Shared.Body.Part
             OnAddMechanism(mechanism);
 
             return true;
+        }
+
+        public bool HasMechanism(SharedMechanismComponent mechanism)
+        {
+            return _mechanisms.Contains(mechanism);
         }
 
         /// <summary>

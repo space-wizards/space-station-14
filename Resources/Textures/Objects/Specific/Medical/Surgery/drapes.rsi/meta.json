@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/10bfda57b9ca32e98c8562a07766f4256411ceb3/icons/obj/surgery.dmi. inhand-left taken from tgstation at https://github.com/tgstation/tgstation/blob/4e2dda164fa13b058e93ec4b2b7de7a94e9a6e4d/icons/mob/inhands/equipment/medical_lefthand.dmi. inhand-right taken from tgstation at https://github.com/tgstation/tgstation/blob/4e2dda164fa13b058e93ec4b2b7de7a94e9a6e4d/icons/mob/inhands/equipment/medical_righthand.dmi",
+    "states": [
+        {
+            "name": "drapes"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

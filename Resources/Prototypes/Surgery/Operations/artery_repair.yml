@@ -1,0 +1,11 @@
+- type: surgeryOperation
+  id: ArteryRepair
+  name: Arterial Bleeding Repair
+  description: Repairs damaged arteries to fix internal bleeding.
+  steps:
+  - Incision
+  - FixOVein
+  - Cauterization
+  effect:
+    !type:ArteryRepairEffect
+  hidden: true # TODO SURGERY

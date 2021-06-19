@@ -26,7 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
-    public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
+    public abstract class SharedBodyComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -245,6 +245,14 @@ namespace Content.Shared.Body.Components
             return SlotParts.ContainsKey(part);
         }
 
+        public bool HasPart(IEntity part)
+        {
+            DebugTools.AssertNotNull(part);
+
+            return part.TryGetComponent(out SharedBodyPartComponent? partComponent) &&
+                   HasPart(partComponent);
+        }
+
         public bool RemovePart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
@@ -324,6 +332,11 @@ namespace Content.Shared.Body.Components
             if (slot.Part == CenterPart)
             {
                 return true;
+            }
+
+            if (slot.Part == null)
+            {
+                return false;
             }
 
             searched.Add(slot);
