@@ -29,5 +29,14 @@ namespace Content.Server.Atmos.Piping.Binary.Components
 
         [DataField("leakRatio")]
         public float LeakRatio { get; set; } = 0.1f;
+
+        [DataField("lowerThreshold")]
+        public float LowerThreshold { get; set; } = 0.01f;
+
+        [DataField("higherThreshold")]
+        public float HigherThreshold { get; set; } = 9000f;
+
+        [DataField("overclockThreshold")]
+        public float OverclockThreshold { get; set; } = 1000f;
     }
 }

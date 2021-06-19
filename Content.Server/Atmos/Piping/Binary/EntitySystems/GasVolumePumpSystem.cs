@@ -33,11 +33,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var outputStartingPressure = outlet.Air.Pressure;
 
             // Pump mechanism won't do anything if the pressure is too high/too low unless you overclock it.
-            if ((inputStartingPressure < 0.01f) || (outputStartingPressure > 9000) && !pump.Overclocked)
+            if ((inputStartingPressure < pump.LowerThreshold) || (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
                 return;
 
             // Overclocked pumps can only force gas a certain amount.
-            if ((outputStartingPressure - inputStartingPressure > 1000) && pump.Overclocked)
+            if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
                 return;
 
             var transferRatio = pump.TransferRate / inlet.Air.Volume;
