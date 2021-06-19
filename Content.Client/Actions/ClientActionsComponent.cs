@@ -102,7 +102,7 @@ namespace Content.Client.Actions
                 return;
             }
 
-            Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates());
+            Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates(), _ui.Locked);
 
             _ui.UpdateUI();
         }
