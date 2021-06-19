@@ -88,8 +88,8 @@ namespace Pow3r
         {
             foreach (var battery in _state.Batteries.Values)
             {
-                battery.LinkedNetworkLoading = default;
-                battery.LinkedNetworkSupplying = default;
+                battery.LinkedNetworkCharging = default;
+                battery.LinkedNetworkDischarging = default;
             }
 
             foreach (var load in _state.Loads.Values)
@@ -116,16 +116,16 @@ namespace Pow3r
                     supply.LinkedNetwork = network.Id;
                 }
 
-                foreach (var batteryId in network.BatteriesLoading)
+                foreach (var batteryId in network.BatteriesCharging)
                 {
                     var battery = _state.Batteries[batteryId];
-                    battery.LinkedNetworkLoading = network.Id;
+                    battery.LinkedNetworkCharging = network.Id;
                 }
 
-                foreach (var batteryId in network.BatteriesSupplying)
+                foreach (var batteryId in network.BatteriesDischarging)
                 {
                     var battery = _state.Batteries[batteryId];
-                    battery.LinkedNetworkSupplying = network.Id;
+                    battery.LinkedNetworkDischarging = network.Id;
                 }
             }
         }

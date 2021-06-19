@@ -47,7 +47,7 @@ namespace Content.Server.Power.Pow3r
 
             foreach (var network in state.Networks.Values)
             {
-                if (network.BatteriesSupplying.Count != 0)
+                if (network.BatteriesDischarging.Count != 0)
                     continue;
 
                 EstimateNetworkDepth(state, network);
@@ -84,7 +84,7 @@ namespace Content.Server.Power.Pow3r
                 // Would require a second pass over the network, or something. Not sure.
 
                 // Loading batteries.
-                foreach (var batteryId in network.BatteriesLoading)
+                foreach (var batteryId in network.BatteriesCharging)
                 {
                     var battery = state.Batteries[batteryId];
                     if (!battery.Enabled || !battery.CanCharge)
@@ -125,7 +125,7 @@ namespace Content.Server.Power.Pow3r
                 // there will be a "rush" of input current when a network powers on,
                 // before power stabilizes in the network.
                 // This is fine.
-                foreach (var batteryId in network.BatteriesSupplying)
+                foreach (var batteryId in network.BatteriesDischarging)
                 {
                     var battery = state.Batteries[batteryId];
                     if (!battery.Enabled || !battery.CanDischarge)
@@ -163,7 +163,7 @@ namespace Content.Server.Power.Pow3r
                     }
 
                     // Loading batteries
-                    foreach (var batteryId in network.BatteriesLoading)
+                    foreach (var batteryId in network.BatteriesCharging)
                     {
                         var battery = state.Batteries[batteryId];
 
@@ -203,7 +203,7 @@ namespace Content.Server.Power.Pow3r
                     }
 
                     // Supplying batteries
-                    foreach (var batteryId in network.BatteriesSupplying)
+                    foreach (var batteryId in network.BatteriesDischarging)
                     {
                         var battery = state.Batteries[batteryId];
                         if (!battery.Enabled || battery.TempMaxSupply == 0)
@@ -251,21 +251,21 @@ namespace Content.Server.Power.Pow3r
         {
             network.HeightTouched = true;
 
-            if (network.BatteriesLoading.Count == 0)
+            if (network.BatteriesCharging.Count == 0)
             {
                 network.Height = 1;
                 return;
             }
 
             var max = 0;
-            foreach (var batteryId in network.BatteriesLoading)
+            foreach (var batteryId in network.BatteriesCharging)
             {
                 var battery = state.Batteries[batteryId];
 
-                if (battery.LinkedNetworkSupplying == default)
+                if (battery.LinkedNetworkDischarging == default)
                     continue;
 
-                var subNet = state.Networks[battery.LinkedNetworkSupplying];
+                var subNet = state.Networks[battery.LinkedNetworkDischarging];
                 if (!subNet.HeightTouched)
                     EstimateNetworkDepth(state, subNet);
 

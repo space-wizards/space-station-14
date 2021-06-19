@@ -97,7 +97,7 @@ namespace Content.Server.Power.NodeGroups
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
             var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            battery.NetworkBattery.LinkedNetworkLoading = default;
+            battery.NetworkBattery.LinkedNetworkCharging = default;
             Dischargers.Add(discharger);
             _powerNetSystem.QueueReconnectPowerNet(this);
         }
@@ -105,7 +105,7 @@ namespace Content.Server.Power.NodeGroups
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
             var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            battery.NetworkBattery.LinkedNetworkLoading = default;
+            battery.NetworkBattery.LinkedNetworkCharging = default;
             Dischargers.Remove(discharger);
             _powerNetSystem.QueueReconnectPowerNet(this);
         }
@@ -113,7 +113,7 @@ namespace Content.Server.Power.NodeGroups
         public void AddCharger(BatteryChargerComponent charger)
         {
             var battery = charger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            battery.NetworkBattery.LinkedNetworkLoading = default;
+            battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
             _powerNetSystem.QueueReconnectPowerNet(this);
         }
@@ -121,7 +121,7 @@ namespace Content.Server.Power.NodeGroups
         public void RemoveCharger(BatteryChargerComponent charger)
         {
             var battery = charger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            battery.NetworkBattery.LinkedNetworkLoading = default;
+            battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Remove(charger);
             _powerNetSystem.QueueReconnectPowerNet(this);
         }

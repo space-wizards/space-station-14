@@ -169,10 +169,10 @@ namespace Content.Server.Power.Pow3r
             public float SupplyRampTarget;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public NodeId LinkedNetworkLoading;
+            public NodeId LinkedNetworkCharging;
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public NodeId LinkedNetworkSupplying;
+            public NodeId LinkedNetworkDischarging;
 
             // == Display ==
             [JsonIgnore] public Vector2 CurrentWindowPos;
@@ -192,10 +192,10 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables] public List<NodeId> Loads = new();
 
             // "Loading" means the network is connected to the INPUT port of the battery.
-            [ViewVariables] public List<NodeId> BatteriesLoading = new();
+            [ViewVariables] public List<NodeId> BatteriesCharging = new();
 
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
-            [ViewVariables] public List<NodeId> BatteriesSupplying = new();
+            [ViewVariables] public List<NodeId> BatteriesDischarging = new();
 
             // Calculation parameters
             [JsonIgnore] public float LocalDemandTotal;

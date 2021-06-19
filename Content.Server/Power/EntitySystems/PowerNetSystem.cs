@@ -206,8 +206,8 @@ namespace Content.Server.Power.EntitySystems
             var netNode = net.NetworkNode;
 
             netNode.Loads.Clear();
-            netNode.BatteriesSupplying.Clear();
-            netNode.BatteriesLoading.Clear();
+            netNode.BatteriesDischarging.Clear();
+            netNode.BatteriesCharging.Clear();
             netNode.Supplies.Clear();
 
             foreach (var provider in net.Providers)
@@ -222,8 +222,8 @@ namespace Content.Server.Power.EntitySystems
             foreach (var apc in net.Apcs)
             {
                 var netBattery = apc.Owner.GetComponent<PowerNetworkBatteryComponent>();
-                netNode.BatteriesSupplying.Add(netBattery.NetworkBattery.Id);
-                netBattery.NetworkBattery.LinkedNetworkSupplying = netNode.Id;
+                netNode.BatteriesDischarging.Add(netBattery.NetworkBattery.Id);
+                netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
         }
 
@@ -233,8 +233,8 @@ namespace Content.Server.Power.EntitySystems
 
             netNode.Loads.Clear();
             netNode.Supplies.Clear();
-            netNode.BatteriesLoading.Clear();
-            netNode.BatteriesSupplying.Clear();
+            netNode.BatteriesCharging.Clear();
+            netNode.BatteriesDischarging.Clear();
 
             foreach (var consumer in net.Consumers)
             {
@@ -251,15 +251,15 @@ namespace Content.Server.Power.EntitySystems
             foreach (var charger in net.Chargers)
             {
                 var battery = charger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-                netNode.BatteriesLoading.Add(battery.NetworkBattery.Id);
-                battery.NetworkBattery.LinkedNetworkLoading = netNode.Id;
+                netNode.BatteriesCharging.Add(battery.NetworkBattery.Id);
+                battery.NetworkBattery.LinkedNetworkCharging = netNode.Id;
             }
 
             foreach (var discharger in net.Dischargers)
             {
                 var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-                netNode.BatteriesSupplying.Add(battery.NetworkBattery.Id);
-                battery.NetworkBattery.LinkedNetworkSupplying = netNode.Id;
+                netNode.BatteriesDischarging.Add(battery.NetworkBattery.Id);
+                battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
         }
 

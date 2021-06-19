@@ -252,18 +252,18 @@ namespace Pow3r
                 SameLine();
                 if (_linking != null)
                 {
-                    if (battery.LinkedNetworkLoading == default && Button("Link as load"))
+                    if (battery.LinkedNetworkCharging == default && Button("Link as load"))
                     {
-                        _linking.BatteriesLoading.Add(battery.Id);
+                        _linking.BatteriesCharging.Add(battery.Id);
                         _linking = null;
                         RefreshLinks();
                     }
                     else
                     {
                         SameLine();
-                        if (battery.LinkedNetworkSupplying == default && Button("Link as supply"))
+                        if (battery.LinkedNetworkDischarging == default && Button("Link as supply"))
                         {
-                            _linking.BatteriesSupplying.Add(battery.Id);
+                            _linking.BatteriesDischarging.Add(battery.Id);
                             _linking = null;
                             RefreshLinks();
                         }
@@ -271,20 +271,20 @@ namespace Pow3r
                 }
                 else
                 {
-                    if (battery.LinkedNetworkLoading != default && Button("Unlink loading"))
+                    if (battery.LinkedNetworkCharging != default && Button("Unlink loading"))
                     {
-                        var net = _state.Networks[battery.LinkedNetworkLoading];
-                        net.BatteriesLoading.Remove(battery.Id);
-                        battery.LinkedNetworkLoading = default;
+                        var net = _state.Networks[battery.LinkedNetworkCharging];
+                        net.BatteriesCharging.Remove(battery.Id);
+                        battery.LinkedNetworkCharging = default;
                     }
                     else
                     {
                         SameLine();
-                        if (battery.LinkedNetworkSupplying != default && Button("Unlink supplying"))
+                        if (battery.LinkedNetworkDischarging != default && Button("Unlink supplying"))
                         {
-                            var net = _state.Networks[battery.LinkedNetworkSupplying];
-                            net.BatteriesSupplying.Remove(battery.Id);
-                            battery.LinkedNetworkSupplying = default;
+                            var net = _state.Networks[battery.LinkedNetworkDischarging];
+                            net.BatteriesDischarging.Remove(battery.Id);
+                            battery.LinkedNetworkDischarging = default;
                         }
                     }
                 }
@@ -314,13 +314,13 @@ namespace Pow3r
                     DrawArrowLine(bgDrawList, load.CurrentWindowPos, network.CurrentWindowPos, Color.Red);
                 }
 
-                foreach (var batteryId in network.BatteriesLoading)
+                foreach (var batteryId in network.BatteriesCharging)
                 {
                     var battery = _state.Batteries[batteryId];
                     DrawArrowLine(bgDrawList, battery.CurrentWindowPos, network.CurrentWindowPos, Color.Purple);
                 }
 
-                foreach (var batteryId in network.BatteriesSupplying)
+                foreach (var batteryId in network.BatteriesDischarging)
                 {
                     var battery = _state.Batteries[batteryId];
                     DrawArrowLine(bgDrawList, network.CurrentWindowPos, battery.CurrentWindowPos, Color.Cyan);
@@ -354,8 +354,8 @@ namespace Pow3r
 
                     case Battery b:
                         _state.Batteries.Remove(b.Id);
-                        _state.Networks.Values.ForEach(n => n.BatteriesLoading.Remove(b.Id));
-                        _state.Networks.Values.ForEach(n => n.BatteriesSupplying.Remove(b.Id));
+                        _state.Networks.Values.ForEach(n => n.BatteriesCharging.Remove(b.Id));
+                        _state.Networks.Values.ForEach(n => n.BatteriesDischarging.Remove(b.Id));
                         break;
                 }
             }

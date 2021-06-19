@@ -143,12 +143,12 @@ namespace Content.Server.Power.Pow3r
             // TODO: Cycle detection.
             var height = network.Loads.Count;
 
-            foreach (var batteryId in network.BatteriesLoading)
+            foreach (var batteryId in network.BatteriesCharging)
             {
                 var battery = state.Batteries[batteryId];
-                if (battery.LinkedNetworkSupplying != default)
+                if (battery.LinkedNetworkDischarging != default)
                 {
-                    height += TotalSubLoadCount(state, state.Networks[battery.LinkedNetworkSupplying]);
+                    height += TotalSubLoadCount(state, state.Networks[battery.LinkedNetworkDischarging]);
                 }
             }
 
@@ -164,14 +164,14 @@ namespace Content.Server.Power.Pow3r
             networks.Add(network);
             totalDemand += network.LocalDemandTotal - network.LocalDemandMet;
 
-            foreach (var batteryId in network.BatteriesLoading)
+            foreach (var batteryId in network.BatteriesCharging)
             {
                 var battery = state.Batteries[batteryId];
-                if (battery.LinkedNetworkSupplying != default)
+                if (battery.LinkedNetworkDischarging != default)
                 {
                     GetLoadingNetworksRecursively(
                         state,
-                        state.Networks[battery.LinkedNetworkSupplying],
+                        state.Networks[battery.LinkedNetworkDischarging],
                         networks,
                         ref totalDemand);
                 }
