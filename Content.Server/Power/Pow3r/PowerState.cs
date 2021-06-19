@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Pow3r
 {
@@ -77,27 +78,28 @@ namespace Content.Server.Power.Pow3r
 
         public sealed class Supply
         {
-            public readonly NodeId Id;
+            [ViewVariables] public NodeId Id;
 
             // == Static parameters ==
-            public bool Enabled = true;
-            public float MaxSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
 
-            public float SupplyRampRate;
-            public float SupplyRampTolerance;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance;
 
             // == Runtime parameters ==
 
             // Actual power supplied last network update.
-            public float CurrentSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public float CurrentSupply;
 
             // The amount of power we WANT to be supplying to match grid load.
-            [JsonIgnore] public float SupplyRampTarget;
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public float SupplyRampTarget;
 
             // Position of the supply ramp.
-            public float SupplyRampPosition;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampPosition;
 
-            [JsonIgnore] public NodeId LinkedNetwork;
+            [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
 
             // In-tick max supply thanks to ramp. Used during calculations.
             [JsonIgnore] public float EffectiveMaxSupply;
@@ -105,94 +107,93 @@ namespace Content.Server.Power.Pow3r
             // == Display ==
             [JsonIgnore] public Vector2 CurrentWindowPos;
             [JsonIgnore] public readonly float[] SuppliedPowerData = new float[MaxTickData];
-
-            public Supply(NodeId id)
-            {
-                Id = id;
-            }
         }
 
         public sealed class Load
         {
-            public readonly NodeId Id;
+            [ViewVariables] public NodeId Id;
 
             // == Static parameters ==
-            public bool Enabled = true;
-            public float DesiredPower;
+            [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public float DesiredPower;
 
             // == Runtime parameters ==
-            public float ReceivingPower;
+            [ViewVariables(VVAccess.ReadWrite)] public float ReceivingPower;
 
-            [JsonIgnore] public NodeId LinkedNetwork;
+            [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
 
             // == Display ==
             [JsonIgnore] public Vector2 CurrentWindowPos;
             [JsonIgnore] public readonly float[] ReceivedPowerData = new float[MaxTickData];
-
-            public Load(NodeId id)
-            {
-                Id = id;
-            }
         }
 
         public sealed class Battery
         {
-            public readonly NodeId Id;
+            [ViewVariables] public NodeId Id;
 
             // == Static parameters ==
-            public bool Enabled;
-            public float Capacity;
-            public float MaxChargeRate;
-            public float MaxThroughput; // 0 = infinite cuz imgui
-            public float MaxSupply;
-            public float SupplyRampTolerance;
-            public float SupplyRampRate;
-            public float Efficiency = 1;
+            [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public float Capacity;
+            [ViewVariables(VVAccess.ReadWrite)] public float MaxChargeRate;
+            [ViewVariables(VVAccess.ReadWrite)] public float MaxThroughput; // 0 = infinite cuz imgui
+            [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate;
+            [ViewVariables(VVAccess.ReadWrite)] public float Efficiency = 1;
 
             // == Runtime parameters ==
-            public float SupplyRampPosition;
-            public float CurrentSupply;
-            public float CurrentStorage;
-            public float CurrentReceiving;
-            public float LoadingNetworkDemand;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampPosition;
+            [ViewVariables(VVAccess.ReadWrite)] public float CurrentSupply;
+            [ViewVariables(VVAccess.ReadWrite)] public float CurrentStorage;
+            [ViewVariables(VVAccess.ReadWrite)] public float CurrentReceiving;
+            [ViewVariables(VVAccess.ReadWrite)] public float LoadingNetworkDemand;
 
-            [JsonIgnore] public bool SupplyingMarked;
-            [JsonIgnore] public bool LoadingMarked;
-            [JsonIgnore] public bool LoadingDemandMarked;
-            [JsonIgnore] public float TempMaxSupply;
-            [JsonIgnore] public float DesiredPower;
-            [JsonIgnore] public float SupplyRampTarget;
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public bool SupplyingMarked;
 
-            [JsonIgnore] public NodeId LinkedNetworkLoading;
-            [JsonIgnore] public NodeId LinkedNetworkSupplying;
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public bool LoadingMarked;
+
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public bool LoadingDemandMarked;
+
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public float TempMaxSupply;
+
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public float DesiredPower;
+
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public float SupplyRampTarget;
+
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public NodeId LinkedNetworkLoading;
+
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public NodeId LinkedNetworkSupplying;
 
             // == Display ==
             [JsonIgnore] public Vector2 CurrentWindowPos;
             [JsonIgnore] public readonly float[] ReceivingPowerData = new float[MaxTickData];
             [JsonIgnore] public readonly float[] SuppliedPowerData = new float[MaxTickData];
             [JsonIgnore] public readonly float[] StoredPowerData = new float[MaxTickData];
-
-            public Battery(NodeId id)
-            {
-                Id = id;
-            }
         }
 
         // Readonly breaks json serialization.
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
         public sealed class Network
         {
-            public readonly NodeId Id;
+            [ViewVariables] public NodeId Id;
 
-            public List<NodeId> Supplies = new();
+            [ViewVariables] public List<NodeId> Supplies = new();
 
-            public List<NodeId> Loads = new();
+            [ViewVariables] public List<NodeId> Loads = new();
 
             // "Loading" means the network is connected to the INPUT port of the battery.
-            public List<NodeId> BatteriesLoading = new();
+            [ViewVariables] public List<NodeId> BatteriesLoading = new();
 
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
-            public List<NodeId> BatteriesSupplying = new();
+            [ViewVariables] public List<NodeId> BatteriesSupplying = new();
 
             // Calculation parameters
             [JsonIgnore] public float LocalDemandTotal;
@@ -200,7 +201,7 @@ namespace Content.Server.Power.Pow3r
             [JsonIgnore] public float GroupDemandTotal;
             [JsonIgnore] public float GroupDemandMet;
 
-            [JsonIgnore] public int Height;
+            [ViewVariables] [JsonIgnore] public int Height;
             [JsonIgnore] public bool HeightTouched;
 
             // Supply available this tick.
@@ -211,11 +212,6 @@ namespace Content.Server.Power.Pow3r
             public float RemainingDemand => LocalDemandTotal - LocalDemandMet;
 
             [JsonIgnore] public Vector2 CurrentWindowPos;
-
-            public Network(NodeId id)
-            {
-                Id = id;
-            }
         }
     }
 }

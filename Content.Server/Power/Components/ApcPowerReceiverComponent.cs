@@ -1,12 +1,15 @@
 #nullable enable
 using System;
-using Content.Server.APC;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.Power.NodeGroups;
+using Content.Server.Power.Pow3r;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -15,26 +18,21 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Power.Components
 {
     /// <summary>
-    ///     Attempts to link with a nearby <see cref="IPowerProvider"/>s so that it can receive power from a <see cref="IApcNet"/>.
+    ///     Attempts to link with a nearby <see cref="ApcPowerProviderComponent"/>s
+    ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
-    public class PowerReceiverComponent : Component, IExamine
+    public class ApcPowerReceiverComponent : Component, IExamine
     {
         [ViewVariables] [ComponentDependency] private readonly IPhysBody? _physicsComponent = null;
 
         public override string Name => "PowerReceiver";
 
         [ViewVariables]
-        public bool Powered => (HasApcPower || !NeedsPower) && !PowerDisabled;
+        public bool Powered => (MathHelper.CloseTo(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
 
         /// <summary>
-        ///     If this is being powered by an Apc.
-        /// </summary>
-        [ViewVariables]
-        public bool HasApcPower { get; private set; }
-
-        /// <summary>
-        ///     The max distance from a <see cref="PowerProviderComponent"/> that this can receive power from.
+        ///     The max distance from a <see cref="ApcPowerProviderComponent"/> that this can receive power from.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerReceptionRange { get => _powerReceptionRange; set => SetPowerReceptionRange(value); }
@@ -42,32 +40,53 @@ namespace Content.Server.Power.Components
         private int _powerReceptionRange = 3;
 
         [ViewVariables]
-        public IPowerProvider Provider { get => _provider; set => SetProvider(value); }
-        private IPowerProvider _provider = PowerProviderComponent.NullProvider;
+        public ApcPowerProviderComponent? Provider
+        {
+            get => _provider;
+            set
+            {
+                // Will get updated before power networks process.
+                NetworkLoad.LinkedNetwork = default;
+                _provider?.RemoveReceiver(this);
+                _provider = value;
+                value?.AddReceiver(this);
+                ApcPowerChanged();
+            }
+        }
+
+        private ApcPowerProviderComponent? _provider;
 
         /// <summary>
-        ///     If this should be considered for connection by <see cref="PowerProviderComponent"/>s.
+        ///     If this should be considered for connection by <see cref="ApcPowerProviderComponent"/>s.
         /// </summary>
         public bool Connectable => Anchored;
 
         private bool Anchored => _physicsComponent == null || _physicsComponent.BodyType == BodyType.Static;
 
-        [ViewVariables]
-        public bool NeedsProvider { get; private set; } = true;
+        [ViewVariables] public bool NeedsProvider => Provider == null;
 
         /// <summary>
         ///     Amount of charge this needs from an APC per second to function.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Load { get => _load; set => SetLoad(value); }
         [DataField("powerLoad")]
-        private int _load = 5;
+        public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
         /// <summary>
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool NeedsPower { get => _needsPower; set => SetNeedsPower(value); }
+        public bool NeedsPower
+        {
+            get => _needsPower;
+            set
+            {
+                _needsPower = value;
+                // Reset this so next tick will do a power update.
+                LastPowerReceived = float.NaN;
+            }
+        }
+
         [DataField("needsPower")]
         private bool _needsPower = true;
 
@@ -75,9 +94,16 @@ namespace Content.Server.Power.Components
         ///     When true, causes this to never appear powered.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool PowerDisabled { get => _powerDisabled; set => SetPowerDisabled(value); }
         [DataField("powerDisabled")]
-        private bool _powerDisabled;
+        public bool PowerDisabled { get => !NetworkLoad.Enabled; set => NetworkLoad.Enabled = !value; }
+
+        public float LastPowerReceived = float.NaN;
+
+        [ViewVariables]
+        public PowerState.Load NetworkLoad { get; } = new PowerState.Load
+        {
+            DesiredPower = 5
+        };
 
         protected override void Startup()
         {
@@ -94,7 +120,8 @@ namespace Content.Server.Power.Components
 
         public override void OnRemove()
         {
-            _provider.RemoveReceiver(this);
+            _provider?.RemoveReceiver(this);
+
             base.OnRemove();
         }
 
@@ -108,20 +135,17 @@ namespace Content.Server.Power.Components
 
         public void ApcPowerChanged()
         {
-            var oldPowered = Powered;
-            HasApcPower = Provider.HasApcPower;
-            if (Powered != oldPowered)
-                OnNewPowerState();
+            OnNewPowerState();
         }
 
-        private bool TryFindAvailableProvider(out IPowerProvider foundProvider)
+        private bool TryFindAvailableProvider([NotNullWhen(true)] out ApcPowerProviderComponent? foundProvider)
         {
             var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(Owner, PowerReceptionRange);
 
             foreach (var entity in nearbyEntities)
             {
-                if (entity.TryGetComponent<PowerProviderComponent>(out var provider))
+                if (entity.TryGetComponent<ApcPowerProviderComponent>(out var provider))
                 {
                     if (provider.Connectable)
                     {
@@ -136,58 +160,16 @@ namespace Content.Server.Power.Components
                     }
                 }
             }
-            foundProvider = default!;
+
+            foundProvider = default;
             return false;
-        }
-
-        public void ClearProvider()
-        {
-            _provider.RemoveReceiver(this);
-            _provider = PowerProviderComponent.NullProvider;
-            NeedsProvider = true;
-            ApcPowerChanged();
-        }
-
-        private void SetProvider(IPowerProvider newProvider)
-        {
-            _provider.RemoveReceiver(this);
-            _provider = newProvider;
-            newProvider.AddReceiver(this);
-            NeedsProvider = false;
-            ApcPowerChanged();
         }
 
         private void SetPowerReceptionRange(int newPowerReceptionRange)
         {
-            ClearProvider();
+            Provider = null;
             _powerReceptionRange = newPowerReceptionRange;
             TryFindAndSetProvider();
-        }
-
-        private void SetLoad(int newLoad)
-        {
-            Provider.UpdateReceiverLoad(Load, newLoad);
-            _load = newLoad;
-        }
-
-        private void SetNeedsPower(bool newNeedsPower)
-        {
-            var oldPowered = Powered;
-            _needsPower = newNeedsPower;
-            if (oldPowered != Powered)
-            {
-                OnNewPowerState();
-            }
-        }
-
-        private void SetPowerDisabled(bool newPowerDisabled)
-        {
-            var oldPowered = Powered;
-            _powerDisabled = newPowerDisabled;
-            if (oldPowered != Powered)
-            {
-                OnNewPowerState();
-            }
         }
 
         private void OnNewPowerState()
@@ -211,7 +193,7 @@ namespace Content.Server.Power.Components
             }
             else
             {
-                ClearProvider();
+                Provider = null;
             }
         }
 

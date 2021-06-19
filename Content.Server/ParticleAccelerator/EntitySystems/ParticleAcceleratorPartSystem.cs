@@ -3,7 +3,7 @@ using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.ParticleAccelerator
+namespace Content.Server.ParticleAccelerator.EntitySystems
 {
     [UsedImplicitly]
     public class ParticleAcceleratorPartSystem : EntitySystem

@@ -16,7 +16,7 @@ namespace Content.Server.Research.Components
         private int _pointsPerSecond;
         [DataField("active")]
         private bool _active;
-        private PowerReceiverComponent? _powerReceiver;
+        private ApcPowerReceiverComponent? _powerReceiver;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int PointsPerSecond
@@ -35,7 +35,7 @@ namespace Content.Server.Research.Components
         /// <summary>
         /// Whether this can be used to produce research points.
         /// </summary>
-        /// <remarks>If no <see cref="PowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
+        /// <remarks>If no <see cref="ApcPowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
         [ViewVariables]
         public bool CanProduce => Active && (_powerReceiver is null || _powerReceiver.Powered);
 

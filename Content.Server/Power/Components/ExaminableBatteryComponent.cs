@@ -5,7 +5,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Battery.Components
+namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     public class ExaminableBatteryComponent : Component, IExamine

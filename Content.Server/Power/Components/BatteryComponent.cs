@@ -5,8 +5,11 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Battery.Components
+namespace Content.Server.Power.Components
 {
+    /// <summary>
+    ///     Battery node on the pow3r network. Needs other components to connect to actual networks.
+    /// </summary>
     [RegisterComponent]
     public class BatteryComponent : Component
     {
@@ -35,14 +38,6 @@ namespace Content.Server.Battery.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
-
-        [ViewVariables] public BatteryState BatteryState { get; private set; }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            UpdateStorageState();
-        }
 
         /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
@@ -83,34 +78,16 @@ namespace Content.Server.Battery.Components
 
         protected virtual void OnChargeChanged() { }
 
-        private void UpdateStorageState()
-        {
-            if (IsFullyCharged)
-            {
-                BatteryState = BatteryState.Full;
-            }
-            else if (CurrentCharge == 0)
-            {
-                BatteryState = BatteryState.Empty;
-            }
-            else
-            {
-                BatteryState = BatteryState.PartlyFull;
-            }
-        }
-
         private void SetMaxCharge(int newMax)
         {
             _maxCharge = Math.Max(newMax, 0);
             _currentCharge = Math.Min(_currentCharge, MaxCharge);
-            UpdateStorageState();
             OnChargeChanged();
         }
 
         private void SetCurrentCharge(float newChargeAmount)
         {
             _currentCharge = MathHelper.Clamp(newChargeAmount, 0, MaxCharge);
-            UpdateStorageState();
             OnChargeChanged();
         }
 
@@ -120,12 +97,5 @@ namespace Content.Server.Battery.Components
             if (IsFullyCharged) return;
             CurrentCharge += AutoRechargeRate * frameTime;
         }
-    }
-
-    public enum BatteryState
-    {
-        Full,
-        PartlyFull,
-        Empty
     }
 }

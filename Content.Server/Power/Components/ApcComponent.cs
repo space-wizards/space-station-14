@@ -1,12 +1,10 @@
 #nullable enable
 using System;
 using Content.Server.Access.Components;
-using Content.Server.Battery.Components;
-using Content.Server.Power.Components;
+using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -17,7 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.APC.Components
+namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -57,7 +55,6 @@ namespace Content.Server.APC.Components
         {
             base.Initialize();
 
-            Owner.EnsureComponent<PowerConsumerComponent>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
             Owner.EnsureComponentWarn<AccessReader>();
 
@@ -89,6 +86,7 @@ namespace Content.Server.APC.Components
                 if (_accessReader == null || _accessReader.IsAllowed(user))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
+
                     _uiDirty = true;
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                 }
@@ -153,37 +151,24 @@ namespace Content.Server.APC.Components
                 return ApcChargeState.Full;
             }
 
-            if (!Owner.TryGetComponent(out PowerConsumerComponent? consumer))
-            {
-                return ApcChargeState.Full;
-            }
+            var netBattery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var delta = netBattery.CurrentSupply - netBattery.CurrentReceiving;
 
-            if (consumer.DrawRate == consumer.ReceivedPower)
-            {
-                return ApcChargeState.Charging;
-            }
-            else
-            {
-                return ApcChargeState.Lack;
-            }
+            return delta > 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
         }
 
         private ApcExternalPowerState CalcExtPowerState()
         {
-            if (!Owner.TryGetComponent(out BatteryStorageComponent? batteryStorage))
+            var bat = Battery;
+            if (bat == null)
+                return ApcExternalPowerState.None;
+
+            var netBat = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            if (netBat.CurrentReceiving == 0 && netBat.LoadingNetworkDemand != 0)
             {
                 return ApcExternalPowerState.None;
             }
-            var consumer = batteryStorage.Consumer;
-
-            if (consumer == null)
-                return ApcExternalPowerState.None;
-
-            if (consumer.ReceivedPower == 0 && consumer.DrawRate != 0)
-            {
-                return ApcExternalPowerState.None;
-            }
-            else if (consumer.ReceivedPower < consumer.DrawRate)
+            else if (netBat.CurrentReceiving < netBat.LoadingNetworkDemand)
             {
                 return ApcExternalPowerState.Low;
             }

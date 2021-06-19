@@ -27,7 +27,7 @@ namespace Content.Server.Arcade.Components
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
-        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
         [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
 
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;

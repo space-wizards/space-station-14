@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components
         protected readonly object UserInterfaceKey;
 
         [ViewVariables] protected BoundUserInterface? UserInterface => Owner.GetUIOrNull(UserInterfaceKey);
-        [ViewVariables] public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         public BaseComputerUserInterfaceComponent(object key)
         {

@@ -37,6 +37,11 @@
   - type: ClientEntitySpawner
     prototypes:
     - HVDummyWire
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
 
 - type: entity
   abstract: true
@@ -79,6 +84,11 @@
     prototypes:
     - HVDummyWire
     - MVDummyWire
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
 
 - type: entity
   abstract: true
@@ -139,3 +149,9 @@
     prototypes:
     - MVDummyWire
     - LVDummyWire
+  - type: PowerNetworkBattery
+    maxSupply: 10000
+    maxChargeRate: 5000
+    supplyRampTolerance: 1000
+    supplyRampRate: 500
+

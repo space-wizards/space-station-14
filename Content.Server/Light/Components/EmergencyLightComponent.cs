@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.Battery.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
@@ -60,7 +59,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateState()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -96,9 +95,9 @@ namespace Content.Server.Light.Components
             else
             {
                 battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
-                if (battery.BatteryState == BatteryState.Full)
+                if (battery.IsFullyCharged)
                 {
-                    if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+                    if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
                     {
                         receiver.Load = 1;
                     }

@@ -31,25 +31,25 @@ namespace Pow3r
             if (Button("Generator"))
             {
                 var id = AllocId();
-                _state.Supplies.Add(id, new Supply(id));
+                _state.Supplies.Add(id, new Supply { Id = id });
             }
 
             if (Button("Load"))
             {
                 var id = AllocId();
-                _state.Loads.Add(id, new Load(id));
+                _state.Loads.Add(id, new Load { Id = id });
             }
 
             if (Button("Network"))
             {
                 var id = AllocId();
-                _state.Networks.Add(id, new Network(id));
+                _state.Networks.Add(id, new Network { Id = id });
             }
 
             if (Button("Battery"))
             {
                 var id = AllocId();
-                _state.Batteries.Add(id, new Battery(id));
+                _state.Batteries.Add(id, new Battery { Id = id });
             }
 
             Checkbox("Paused", ref _paused);

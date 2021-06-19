@@ -36,7 +36,7 @@ namespace Content.Server.Doors.Components
         private readonly SharedAppearanceComponent? _appearanceComponent = null;
 
         [ComponentDependency]
-        private readonly PowerReceiverComponent? _receiverComponent = null;
+        private readonly ApcPowerReceiverComponent? _receiverComponent = null;
 
         [ComponentDependency]
         private readonly WiresComponent? _wiresComponent = null;

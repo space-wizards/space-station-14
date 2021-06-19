@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.SMES
+namespace Content.Server.Power.SMES
 {
     [UsedImplicitly]
     internal class PowerSmesSystem : EntitySystem

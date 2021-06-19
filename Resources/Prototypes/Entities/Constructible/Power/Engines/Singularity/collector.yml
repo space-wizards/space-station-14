@@ -52,3 +52,7 @@
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
+  - type: PowerNetworkBattery
+    maxSupply: 1000000000
+    supplyRampTolerance: 1000000000
+

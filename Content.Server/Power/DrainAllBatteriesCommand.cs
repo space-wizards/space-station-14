@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using Content.Server.Administration;
-using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Battery
+namespace Content.Server.Power
 {
     [AdminCommand(AdminFlags.Admin)]
     public class DrainAllBatteriesCommand : IConsoleCommand
@@ -21,6 +21,12 @@ namespace Content.Server.Battery
             {
                 shell.WriteLine($"Invalid amount of arguments: {args.Length}.\n{Help}");
                 return;
+            }
+
+            var comp = IoCManager.Resolve<IComponentManager>();
+            foreach (var VARIABLE in comp.EntityQuery<BatteryComponent>())
+            {
+
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();

@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using Content.Server.Battery.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -10,7 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
-namespace Content.Server.SMES
+namespace Content.Server.Power.SMES
 {
     /// <summary>
     ///     Handles the "user-facing" side of the actual SMES object.
@@ -80,20 +79,13 @@ namespace Content.Server.SMES
 
         private ChargeState GetNewChargeState()
         {
-            var supplier = Owner.GetComponent<PowerSupplierComponent>();
-            var consumer = Owner.GetComponent<PowerConsumerComponent>();
-            if (supplier.SupplyRate > 0 && consumer.DrawRate != consumer.ReceivedPower)
+            var battery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            return (battery.CurrentSupply - battery.CurrentReceiving) switch
             {
-                return ChargeState.Discharging;
-            }
-            else if (supplier.SupplyRate == 0 && consumer.DrawRate > 0)
-            {
-                return ChargeState.Charging;
-            }
-            else
-            {
-                return ChargeState.Still;
-            }
+                > 0 => ChargeState.Discharging,
+                < 0 => ChargeState.Charging,
+                _ => ChargeState.Still
+            };
         }
     }
 }
