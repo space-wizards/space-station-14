@@ -1365,3 +1365,9 @@ Entries:
   - {message: Fixed ghosts not being able to warp to players., type: Fix}
   id: 241
   time: '2021-06-18T07:56:23.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Gas canisters and their UI have been reworked completely., type: Tweak}
+  - {message: You can now insert gas tanks in gas canisters., type: Add}
+  id: 242
+  time: '2021-06-19T11:25:05.0000000+00:00'
