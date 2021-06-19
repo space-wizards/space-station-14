@@ -2,96 +2,81 @@
 
 - type: entity
   parent: BaseItem
+  id: BasePlushie
+  components:
+  - type: EmitSoundOnUse
+    soundCollection: ToySqueak
+  - type: EmitSoundOnLand
+    soundCollection: ToySqueak
+  - type: EmitSoundOnActivate
+    soundCollection: ToySqueak
+  - type: LoopingSound
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BasePlushie
   id: PlushieBee
   name: bee plushie
   description: A cute toy that resembles an even cuter programmer.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieNuke
   name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_nuke
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieLizard
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieNar
   name: nar'sie plushie
   description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: narplush
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieCarp
   name: carp plushie
   description: An adorable stuffed toy that resembles the monstrous space carp.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: carpplush
   - type: Item
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: carpplush
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieSlime
   name: slime plushie
   description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_slime
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
   parent: BaseItem
