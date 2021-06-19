@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
+namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
     public class GasPassiveGateComponent : Component

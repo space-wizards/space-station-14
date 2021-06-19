@@ -1,7 +1,5 @@
+using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.Atmos.Piping;
-using Content.Server.GameObjects.Components.Atmos.Piping.Binary;
-using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
 using Content.Shared.Atmos;
@@ -11,7 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.EntitySystems.Atmos.Piping.Binary
+namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
     public class GasPressurePumpSystem : EntitySystem

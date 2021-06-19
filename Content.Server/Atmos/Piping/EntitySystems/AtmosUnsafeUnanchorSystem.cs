@@ -3,7 +3,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
 using Content.Shared.Atmos;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

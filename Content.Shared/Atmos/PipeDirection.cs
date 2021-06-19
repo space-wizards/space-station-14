@@ -36,8 +36,8 @@ namespace Content.Shared.Atmos
         South = 1 << 1,
         West  = 1 << 2,
         East  = 1 << 3,
-        Up    = 1 << 4,
-        Down  = 1 << 5,
+        Port    = 1 << 4,
+        Portable  = 1 << 5,
 
         //Straight pipes
         Longitudinal = North | South,
@@ -49,11 +49,11 @@ namespace Content.Shared.Atmos
         SWBend = South | West,
         SEBend = South | East,
 
-        //Vertical Bends (Up only)
-        NUBend = North | Up,
-        SUBend = South | Up,
-        WUBend = West  | Up,
-        EUBend = East  | Up,
+        //Vertical Bends (Port only)
+        NPBend = North | Port,
+        SPBend = South | Port,
+        WPBend = West  | Port,
+        EPBend = East  | Port,
 
         //T-Junctions
         TNorth = North | Lateral,
@@ -89,7 +89,7 @@ namespace Content.Shared.Atmos
                 PipeShape.Half => PipeDirection.South,
                 PipeShape.Straight => PipeDirection.Longitudinal,
                 PipeShape.Bend => PipeDirection.SWBend,
-                PipeShape.VerticalBend => PipeDirection.SUBend,
+                PipeShape.VerticalBend => PipeDirection.SPBend,
                 PipeShape.TJunction => PipeDirection.TSouth,
                 PipeShape.Fourway => PipeDirection.Fourway,
                 _ => throw new ArgumentOutOfRangeException(nameof(shape), $"{shape} does not have an associated {nameof(PipeDirection)}."),
@@ -148,8 +148,8 @@ namespace Content.Shared.Atmos
                 PipeDirection.South => PipeDirection.North,
                 PipeDirection.East  => PipeDirection.West,
                 PipeDirection.West  => PipeDirection.East,
-                PipeDirection.Up    => PipeDirection.Down,
-                PipeDirection.Down  => PipeDirection.Up,
+                PipeDirection.Port    => PipeDirection.Portable,
+                PipeDirection.Portable  => PipeDirection.Port,
                 _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
             };
         }
@@ -171,10 +171,10 @@ namespace Content.Shared.Atmos
                 PipeDirection.SEBend        => PipeShape.Bend,
                 PipeDirection.SWBend        => PipeShape.Bend,
 
-                PipeDirection.NUBend        => PipeShape.VerticalBend,
-                PipeDirection.SUBend        => PipeShape.VerticalBend,
-                PipeDirection.WUBend        => PipeShape.VerticalBend,
-                PipeDirection.EUBend        => PipeShape.VerticalBend,
+                PipeDirection.NPBend        => PipeShape.VerticalBend,
+                PipeDirection.SPBend        => PipeShape.VerticalBend,
+                PipeDirection.WPBend        => PipeShape.VerticalBend,
+                PipeDirection.EPBend        => PipeShape.VerticalBend,
 
                 PipeDirection.TNorth        => PipeShape.TJunction,
                 PipeDirection.TSouth        => PipeShape.TJunction,

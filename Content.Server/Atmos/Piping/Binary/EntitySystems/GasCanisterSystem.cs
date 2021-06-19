@@ -2,12 +2,9 @@ using System;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.Atmos.Piping.Binary;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Hands.Components;
-using Content.Server.Interaction;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
@@ -88,8 +85,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnCanisterUIMessage(EntityUid uid, GasCanisterComponent canister, ServerBoundUserInterfaceMessage msg)
         {
             if (msg.Session.AttachedEntity is not {} entity
-                || !ActionBlockerSystem.CanInteract(entity)
-                || !ActionBlockerSystem.CanUse(entity))
+                || !Get<ActionBlockerSystem>().CanInteract(entity)
+                || !Get<ActionBlockerSystem>().CanUse(entity))
                 return;
 
 

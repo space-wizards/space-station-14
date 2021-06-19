@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
-using Content.Shared;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;

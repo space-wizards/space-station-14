@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Interaction;
 using Content.Server.GameObjects.Components;
-using Content.Shared.GameTicking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using JetBrains.Annotations;
 
 namespace Content.Server.GameObjects.EntitySystems

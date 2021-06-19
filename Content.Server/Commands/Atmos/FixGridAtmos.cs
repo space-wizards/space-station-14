@@ -2,7 +2,6 @@
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;

@@ -6,7 +6,6 @@ using Content.Server.Players;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

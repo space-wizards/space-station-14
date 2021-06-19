@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
+namespace Content.Server.Atmos.Piping.Binary.Components
 {
     // TODO ATMOS: Make ECS.
     [ComponentReference(typeof(IActivate))]
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Binary
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(eventArgs.InRangeUnobstructed() && eventArgs.User.CanInteract())
+            if(eventArgs.InRangeUnobstructed() && EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 Toggle();
         }
     }

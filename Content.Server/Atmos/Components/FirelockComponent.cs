@@ -2,10 +2,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors;
 using Content.Server.Doors.Components;
-using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;

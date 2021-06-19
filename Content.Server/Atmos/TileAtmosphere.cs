@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;

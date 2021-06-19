@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;

@@ -1,4 +1,3 @@
-using Content.Shared;
 using Content.Shared.CCVar;
 
 namespace Content.Server.Atmos.EntitySystems
