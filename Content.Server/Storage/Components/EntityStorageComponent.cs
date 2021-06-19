@@ -40,7 +40,6 @@ namespace Content.Server.Storage.Components
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] protected readonly SharedBroadPhaseSystem PhysicsManager = default!;
 
         public override string Name => "EntityStorage";
 
@@ -153,9 +152,10 @@ namespace Content.Server.Storage.Components
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
+            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
             var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
                                    Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
-            CollidingEntities = PhysicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
+            CollidingEntities = physicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
 
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
@@ -205,9 +205,10 @@ namespace Content.Server.Storage.Components
             Open = false;
             if(CollidingEntities == null)
             {
+                var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
                 var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
                                    Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
-                CollidingEntities = PhysicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
+                CollidingEntities = physicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
             }
 
 

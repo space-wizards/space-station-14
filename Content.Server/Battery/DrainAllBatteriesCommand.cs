@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.Battery.Components;
 using Content.Shared.Administration;
@@ -24,7 +24,7 @@ namespace Content.Server.Battery
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var ent in entityManager.GetEntities(new TypeEntityQuery(typeof(BatteryComponent))))
+            foreach (var ent in entityManager.GetEntities(e => e.HasComponent<BatteryComponent>()))
             {
                 ent.GetComponent<BatteryComponent>().CurrentCharge = 0;
             }

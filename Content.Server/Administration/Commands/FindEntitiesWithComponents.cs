@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entityIds = new HashSet<string>();
 
-            foreach (var entity in entityManager.GetEntities().Where(e => entityManager.ComponentManager.HasAllComponents(e.Uid, components)))
+            foreach (var entity in entityManager.GetEntities(e => e.HasAllComponents(components)))
             {
                 if (entity.Prototype == null)
                 {

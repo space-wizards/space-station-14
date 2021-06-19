@@ -45,7 +45,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entities = entityManager.GetEntities().Where(e => entityManager.ComponentManager.HasAllComponents(e.Uid, components));
+            var entities = entityManager.GetEntities(e => e.HasAllComponents(components));
             var count = 0;
             foreach (var entity in entities)
             {

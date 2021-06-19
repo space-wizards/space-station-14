@@ -24,7 +24,7 @@ namespace Content.Server.Administration.Commands
 
             var id = args[0].ToLower();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entities = entityManager.GetEntities().Where(e => e.Prototype?.ID.ToLower() == id);
+            var entities = entityManager.GetEntities(e => e.Prototype?.ID.ToLower() == id);
             var i = 0;
 
             foreach (var entity in entities)

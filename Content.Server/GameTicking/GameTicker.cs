@@ -668,7 +668,7 @@ namespace Content.Server.GameTicking
             var location = _spawnPoint;
 
             var possiblePoints = new List<EntityCoordinates>();
-            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
+            foreach (var entity in _entityManager.GetEntities(e => e.HasComponent<SpawnPointComponent>()))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.Coordinates);
@@ -684,7 +684,7 @@ namespace Content.Server.GameTicking
             var location = _spawnPoint;
 
             var possiblePoints = new List<EntityCoordinates>();
-            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
+            foreach (var entity in _entityManager.GetEntities(e => e.HasComponent<SpawnPointComponent>()))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId)
@@ -701,7 +701,7 @@ namespace Content.Server.GameTicking
             var location = _spawnPoint;
 
             var possiblePoints = new List<EntityCoordinates>();
-            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
+            foreach (var entity in _entityManager.GetEntities(e => e.HasComponent<SpawnPointComponent>()))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Observer)
