@@ -15,7 +15,6 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class MovespeedModifierMetabolism : IMetabolizable
     {
-
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
         /// </summary> 
