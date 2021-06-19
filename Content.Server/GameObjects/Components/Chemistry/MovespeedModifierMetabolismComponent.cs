@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         
         public float WalkSpeedModifier { get; set; }
-
+         
         public float SprintSpeedModifier { get; set; }
 
         public int EffectTime { get; set; }
