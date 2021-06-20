@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -381,7 +382,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool PlayerCanDrop()
         {
-            if (!ActionBlockerSystem.CanDrop(Owner))
+            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanDrop(Owner))
                 return false;
 
             return true;
@@ -584,7 +585,7 @@ namespace Content.Shared.Hands.Components
         /// <returns></returns>
         protected bool PlayerCanPickup()
         {
-            if (!ActionBlockerSystem.CanPickup(Owner))
+            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanPickup(Owner))
                 return false;
 
             return true;
