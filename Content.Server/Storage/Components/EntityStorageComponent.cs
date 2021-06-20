@@ -146,7 +146,7 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));

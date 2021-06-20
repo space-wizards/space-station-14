@@ -143,7 +143,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 SoundGunshot);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             // TODO: Add existing ammo support on revolvers
             base.Initialize();

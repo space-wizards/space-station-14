@@ -66,8 +66,7 @@ namespace Content.Server.StationEvents.Events
             if (_timeUntilPulse <= 0.0f)
             {
                 var pauseManager = IoCManager.Resolve<IPauseManager>();
-                var gameTicker = IoCManager.Resolve<IGameTicker>();
-                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
+                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(EntitySystem.Get<GameTicker>().DefaultGridId);
 
                 if (pauseManager.IsGridPaused(defaultGrid))
                     return;

@@ -29,7 +29,7 @@ namespace Content.Server.Chemistry.Components
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solution = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

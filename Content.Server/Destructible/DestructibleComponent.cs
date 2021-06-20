@@ -25,7 +25,7 @@ namespace Content.Server.Destructible
 
         public IReadOnlyList<Threshold> Thresholds => _thresholds;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

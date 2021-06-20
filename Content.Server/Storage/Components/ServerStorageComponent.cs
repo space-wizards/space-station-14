@@ -356,7 +356,7 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

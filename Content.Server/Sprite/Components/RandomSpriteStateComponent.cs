@@ -19,7 +19,7 @@ namespace Content.Server.Sprite.Components
         [DataField("spriteLayer")]
         private int _spriteLayer;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (_spriteStates == null) return;

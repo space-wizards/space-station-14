@@ -17,13 +17,13 @@ namespace Content.Client.Spawners
 
         private readonly List<IEntity> _entity = new();
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             SpawnEntities();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             RemoveEntities();
             base.OnRemove();

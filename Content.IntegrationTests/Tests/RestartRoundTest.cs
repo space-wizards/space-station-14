@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using NUnit.Framework;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests
@@ -15,7 +16,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                IoCManager.Resolve<IGameTicker>().RestartRound();
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
             });
 
             await RunTicksSync(client, server, 10);

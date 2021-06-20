@@ -54,7 +54,7 @@ namespace Content.Server.Disposal.Tube.Components
             return Owner.Transform.LocalRotation.GetDir();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -177,7 +177,7 @@ namespace Content.Server.Disposal.Tube.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();

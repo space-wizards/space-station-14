@@ -1,9 +1,9 @@
-using Content.Shared.Interaction;
 using Content.Server.GameObjects.Components;
-using Robust.Shared.GameObjects;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Computer
 {
     [UsedImplicitly]
     internal sealed class ComputerUIActivatorSystem : EntitySystem

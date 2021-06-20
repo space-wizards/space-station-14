@@ -9,13 +9,13 @@ namespace Content.Server.Atmos.EntitySystems
     {
         public override void Initialize()
         {
-            SubscribeLocalEvent<AirtightComponent, SnapGridPositionChangedEvent>(OnAirtightPositionChanged);
+            SubscribeLocalEvent<AirtightComponent, AnchorStateChangedEvent>(OnAirtightPositionChanged);
             SubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
         }
 
-        private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent component, SnapGridPositionChangedEvent args)
+        private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent component, AnchorStateChangedEvent args)
         {
-            component.OnSnapGridMove(args);
+            component.AnchorStateChanged();
         }
 
         private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, RotateEvent ev)

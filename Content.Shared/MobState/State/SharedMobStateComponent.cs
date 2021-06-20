@@ -58,7 +58,7 @@ namespace Content.Shared.MobState.State
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (Owner.TryGetComponent(out SharedAlertsComponent? status))
             {

@@ -41,7 +41,7 @@ namespace Content.Server.Body.Circulatory
 
         [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

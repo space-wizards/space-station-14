@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
@@ -30,7 +31,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = IoCManager.Resolve<IGameTicker>();
+            var ticker = EntitySystem.Get<GameTicker>();
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {
                 shell.WriteLine("Round has not started.");

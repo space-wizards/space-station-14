@@ -25,13 +25,13 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         private bool _needsNet = true;
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
             _net = NullNet;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (_needsNet)
@@ -40,7 +40,7 @@ namespace Content.Server.Power.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             ClearNet();
             base.OnRemove();

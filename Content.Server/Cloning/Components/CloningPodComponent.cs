@@ -43,7 +43,7 @@ namespace Content.Server.Cloning.Components
         [ViewVariables]
         public CloningPodStatus Status;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -58,7 +58,7 @@ namespace Content.Server.Cloning.Components
             EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (UserInterface != null)
             {

@@ -169,7 +169,7 @@ namespace Content.Server.Doors.Components
             CreateDoorElectronicsBoard();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _stateChangeCancelTokenSource?.Cancel();
             _autoCloseCancelTokenSource?.Cancel();

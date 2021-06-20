@@ -37,7 +37,7 @@ namespace Content.Client.Inventory
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 
@@ -48,7 +48,7 @@ namespace Content.Client.Inventory
             InterfaceController?.Dispose();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

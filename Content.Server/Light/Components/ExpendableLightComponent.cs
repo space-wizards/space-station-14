@@ -37,7 +37,7 @@ namespace Content.Server.Light.Components
             return TryActivate();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

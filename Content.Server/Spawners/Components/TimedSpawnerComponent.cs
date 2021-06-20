@@ -45,7 +45,7 @@ namespace Content.Server.Spawners.Components
                 throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             SetupTimer();
