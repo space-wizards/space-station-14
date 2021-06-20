@@ -10,7 +10,6 @@ using Content.Client.Preferences.UI;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Robust.Client;
@@ -27,7 +26,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.Lobby
 {
