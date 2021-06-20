@@ -149,14 +149,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Update(frameTime);
 
+            UpdateProcessing(frameTime);
+
             _exposedTimer += frameTime;
-
-            foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>(true))
-            {
-                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex)) continue;
-
-                gridAtmosphereComponent.Update(frameTime);
-            }
 
             if (_exposedTimer >= ExposedUpdateDelay)
             {
