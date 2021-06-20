@@ -1,6 +1,6 @@
 #nullable enable
 using Content.Server.Administration;
-using Content.Server.GameObjects.EntitySystems.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;

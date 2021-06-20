@@ -1,6 +1,9 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
@@ -20,11 +23,11 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = IoCManager.Resolve<IGameTicker>();
+            var cfgMan = IoCManager.Resolve<IConfigurationManager>();
 
             if (bool.TryParse(args[0], out var result))
             {
-                ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
+                cfgMan.SetCVar(CCVars.GameDisallowLateJoins, bool.Parse(args[0]));
                 shell.WriteLine(result ? "Late joining has been disabled." : "Late joining has been enabled.");
             }
             else

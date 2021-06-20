@@ -34,7 +34,6 @@ namespace Content.Server.GameTicking.Presets
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -50,8 +49,9 @@ namespace Content.Server.GameTicking.Presets
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            _gameTicker.AddGameRule<RuleTraitorDeathMatch>();
-            _restarter = _gameTicker.AddGameRule<RuleMaxTimeRestart>();
+            var gameTicker = EntitySystem.Get<GameTicker>();
+            gameTicker.AddGameRule<RuleTraitorDeathMatch>();
+            _restarter = gameTicker.AddGameRule<RuleMaxTimeRestart>();
             _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
             _restarter.RestartTimer();
             _safeToEndRound = true;
@@ -207,7 +207,7 @@ namespace Content.Server.GameTicking.Presets
             var session = mind.Session;
             if (session == null)
                 return false;
-            _gameTicker.Respawn(session);
+            EntitySystem.Get<GameTicker>().Respawn(session);
             return true;
         }
 

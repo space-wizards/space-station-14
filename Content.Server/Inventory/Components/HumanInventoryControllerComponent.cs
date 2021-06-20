@@ -17,7 +17,7 @@ namespace Content.Server.Inventory.Components
 
         private InventoryComponent _inventory = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

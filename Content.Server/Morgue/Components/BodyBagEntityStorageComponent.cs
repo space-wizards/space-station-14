@@ -9,8 +9,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Morgue;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -35,7 +35,7 @@ namespace Content.Server.Morgue.Components
 
         [ViewVariables] public ContainerSlot? LabelContainer { get; private set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);
@@ -107,7 +107,7 @@ namespace Content.Server.Morgue.Components
         {
             protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

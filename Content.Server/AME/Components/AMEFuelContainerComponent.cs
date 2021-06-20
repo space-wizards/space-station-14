@@ -32,7 +32,7 @@ namespace Content.Server.AME.Components
             set => _maxFuelAmount = value;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _maxFuelAmount = 1000;

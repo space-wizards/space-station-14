@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Content.Client.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;

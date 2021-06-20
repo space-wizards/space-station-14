@@ -49,7 +49,7 @@ namespace Content.Server.Tools.Components
         private ToolComponent? _tool;
         private SpriteComponent? _sprite;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.TryGetComponent(out _tool);

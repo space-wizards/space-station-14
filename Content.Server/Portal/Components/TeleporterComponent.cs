@@ -130,7 +130,7 @@ namespace Content.Server.Portal.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _state = ItemTeleporterState.Off;

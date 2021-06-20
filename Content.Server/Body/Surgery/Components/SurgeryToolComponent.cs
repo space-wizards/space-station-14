@@ -145,7 +145,7 @@ namespace Content.Server.Body.Surgery.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

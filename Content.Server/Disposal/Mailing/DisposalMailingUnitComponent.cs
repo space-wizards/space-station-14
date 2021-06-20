@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Anchor;
+using Content.Server.Construction.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Connections;
 using Content.Server.Disposal.Tube.Components;
@@ -397,8 +397,10 @@ namespace Content.Server.Disposal.Mailing
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(player) ||
-                !ActionBlockerSystem.CanUse(player))
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
+            if (!actionBlocker.CanInteract(player) ||
+                !actionBlocker.CanUse(player))
             {
                 return false;
             }
@@ -553,7 +555,7 @@ namespace Content.Server.Disposal.Mailing
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -582,7 +584,7 @@ namespace Content.Server.Disposal.Mailing
             UpdateInterface();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (_container != null)
             {
@@ -659,7 +661,7 @@ namespace Content.Server.Disposal.Mailing
 
         private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
                 return false;
@@ -746,7 +748,7 @@ namespace Content.Server.Disposal.Mailing
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     component.ContainedEntities.Contains(user))
                 {
                     return;
@@ -769,7 +771,7 @@ namespace Content.Server.Disposal.Mailing
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     component.ContainedEntities.Contains(user))
                 {
                     return;

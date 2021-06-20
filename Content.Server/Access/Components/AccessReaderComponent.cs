@@ -107,7 +107,7 @@ namespace Content.Server.Access.Components
             return Array.Empty<string>();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

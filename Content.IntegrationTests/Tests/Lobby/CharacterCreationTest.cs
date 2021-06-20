@@ -13,6 +13,7 @@ using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Client.State;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Lobby
@@ -32,7 +33,7 @@ namespace Content.IntegrationTests.Tests.Lobby
             var clientPrefManager = client.ResolveDependency<IClientPreferencesManager>();
 
             var serverConfig = server.ResolveDependency<IConfigurationManager>();
-            var serverTicker = server.ResolveDependency<IGameTicker>();
+            var serverTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var serverPrefManager = server.ResolveDependency<IServerPreferencesManager>();
 
             await server.WaitIdleAsync();
@@ -40,11 +41,15 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             await server.WaitAssertion(() =>
             {
+                serverConfig.SetCVar(CCVars.GameDummyTicker, false);
                 serverConfig.SetCVar(CCVars.GameLobbyEnabled, true);
                 serverTicker.RestartRound();
             });
 
             Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
+
+            // Need to run them in sync to receive the messages.
+            await RunTicksSync(client, server, 1);
 
             await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
 
