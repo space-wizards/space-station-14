@@ -74,7 +74,7 @@ namespace Content.Shared.Body.Components
 
         public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -99,7 +99,7 @@ namespace Content.Shared.Body.Components
             CalculateSpeed();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             foreach (var slot in SlotIds.Values)
             {

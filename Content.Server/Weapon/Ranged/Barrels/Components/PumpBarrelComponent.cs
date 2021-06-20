@@ -102,7 +102,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

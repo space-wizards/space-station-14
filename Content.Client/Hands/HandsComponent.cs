@@ -162,6 +162,23 @@ namespace Content.Client.Hands
             }
         }
 
+        public void PlayerDetached() { _gui?.Parent?.RemoveChild(_gui); }
+
+        public void PlayerAttached()
+        {
+            if (_gui == null)
+            {
+                _gui = new HandsGui();
+            }
+            else
+            {
+                _gui.Parent?.RemoveChild(_gui);
+            }
+
+            _gameHud.HandsContainer.AddChild(_gui);
+            _gui.UpdateHandIcons();
+        }
+
         public void UpdateHandVisualizer()
         {
             if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))

@@ -67,8 +67,7 @@ namespace Content.Server.Explosion.Components
             return true;
         }
 
-
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

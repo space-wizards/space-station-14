@@ -22,7 +22,7 @@ namespace Content.Server.Stunnable.Components
         [DataField("slowdownAmount")]
         private int _slowdownAmount = default;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -45,7 +45,7 @@ namespace Content.Client.Actions.Assignments
             _numHotbars = numHotbars;
             _numSlots = numSlots;
             _assignments = new Dictionary<ActionAssignment, List<(byte Hotbar, byte Slot)>>();
-            _slots = new ActionAssignment?[numHotbars,numSlots];
+            _slots = new ActionAssignment?[numHotbars, numSlots];
         }
 
         /// <summary>
@@ -55,7 +55,8 @@ namespace Content.Client.Actions.Assignments
         /// which no longer have an associated state will be decoupled from their item.
         /// </summary>
         public void Reconcile(byte currentHotbar, IReadOnlyDictionary<ActionType, ActionState> actionStates,
-            IReadOnlyDictionary<EntityUid,Dictionary<ItemActionType, ActionState>> itemActionStates)
+            IReadOnlyDictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActionStates,
+            bool actionMenuLocked)
         {
             // if we've been granted any actions which have no assignment to any hotbar, we must auto-populate them
             // into the hotbar so the user knows about them.
@@ -116,9 +117,19 @@ namespace Content.Client.Actions.Assignments
             {
                 foreach (var (hotbar, slot) in slots)
                 {
-                    if (!assignment.TryGetItemActionWithItem(out var actionType, out _)) continue;
-                    AssignSlot(hotbar, slot,
-                        ActionAssignment.For(actionType));
+                    if (!assignment.TryGetItemActionWithItem(out var actionType, out _))
+                    {
+                        continue;
+                    }
+
+                    if (actionMenuLocked)
+                    {
+                        AssignSlot(hotbar, slot, ActionAssignment.For(actionType));
+                    }
+                    else
+                    {
+                        ClearSlot(hotbar, slot, false);
+                    }
                 }
             }
 
@@ -190,7 +201,7 @@ namespace Content.Client.Actions.Assignments
             }
             var assignmentList = _assignments[currentAction.Value];
             assignmentList = assignmentList.Where(a => a.Hotbar != hotbar || a.Slot != slot).ToList();
-            if (assignmentList.Count == 0)
+            if (!assignmentList.Any())
             {
                 _assignments.Remove(currentAction.Value);
             }

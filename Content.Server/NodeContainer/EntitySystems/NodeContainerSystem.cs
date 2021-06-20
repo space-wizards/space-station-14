@@ -11,11 +11,11 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<NodeContainerComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
+            SubscribeLocalEvent<NodeContainerComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
         }
 
-        private void OnBodyTypeChanged(EntityUid uid, NodeContainerComponent component, PhysicsBodyTypeChangedEvent args)
+        private void OnAnchorStateChanged(EntityUid uid, NodeContainerComponent component, AnchorStateChangedEvent args)
         {
             component.AnchorUpdate();
         }

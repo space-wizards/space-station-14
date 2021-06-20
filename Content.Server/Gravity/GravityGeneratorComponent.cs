@@ -57,7 +57,7 @@ namespace Content.Server.Gravity
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GravityGeneratorUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -116,7 +116,7 @@ namespace Content.Shared.Body.Mechanism
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

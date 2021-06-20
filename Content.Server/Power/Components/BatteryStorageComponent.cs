@@ -27,7 +27,7 @@ namespace Content.Server.Power.Components
 
         [ComponentDependency] private PowerConsumerComponent? _consumer = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PowerConsumerComponent>();

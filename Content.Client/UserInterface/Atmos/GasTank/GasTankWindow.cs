@@ -1,7 +1,7 @@
 ﻿using Content.Client.Message;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Shared.GameObjects.Components.Atmos.GasTank;
+using Content.Shared.Atmos.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;

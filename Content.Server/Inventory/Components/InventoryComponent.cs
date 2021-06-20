@@ -13,8 +13,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -48,7 +48,7 @@ namespace Content.Server.Inventory.Components
 
         public event Action? OnItemChanged;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -152,7 +152,7 @@ namespace Content.Server.Inventory.Components
             return !TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes) || EffectBlockerSystem.CanSlip(shoes.Owner);
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             var slots = _slotContainers.Keys.ToList();
 
@@ -291,7 +291,7 @@ namespace Content.Server.Inventory.Components
             var pass = false;
             reason = null;
 
-            if (mobCheck && !ActionBlockerSystem.CanEquip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(Owner))
             {
                 reason = Loc.GetString("You can't equip this!");
                 return false;
@@ -417,7 +417,7 @@ namespace Content.Server.Inventory.Components
         /// </returns>
         public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanUnequip(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanUnequip(Owner))
                 return false;
 
             var inventorySlot = _slotContainers[slot];
@@ -489,7 +489,7 @@ namespace Content.Server.Inventory.Components
         /// The underlying Container System just notified us that an entity was removed from it.
         /// We need to make sure we process that removed entity as being unequipped from the slot.
         /// </summary>
-        private void ForceUnequip(IContainer container, IEntity entity)
+        public void ForceUnequip(IContainer container, IEntity entity)
         {
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
@@ -569,23 +569,6 @@ namespace Content.Server.Inventory.Components
 
                     break;
                 }
-            }
-        }
-
-        /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case ContainerContentsModifiedMessage msg:
-                    if (msg.Removed)
-                        ForceUnequip(msg.Container, msg.Entity);
-                    break;
-
-                default:
-                    break;
             }
         }
 

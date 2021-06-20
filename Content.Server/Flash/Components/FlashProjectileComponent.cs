@@ -21,7 +21,7 @@ namespace Content.Server.Flash.Components
 
         private bool _flashed;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             // Shouldn't be using this without a ProjectileComponent because it will just immediately collide with thrower

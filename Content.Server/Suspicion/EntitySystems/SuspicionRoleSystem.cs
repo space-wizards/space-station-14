@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Suspicion.EntitySystems
@@ -11,6 +12,28 @@ namespace Content.Server.Suspicion.EntitySystems
         private readonly HashSet<SuspicionRoleComponent> _traitors = new();
 
         public IReadOnlyCollection<SuspicionRoleComponent> Traitors => _traitors;
+
+        #region Overrides of EntitySystem
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<SuspicionRoleComponent, PlayerAttachedEvent>((HandlePlayerAttached));
+            SubscribeLocalEvent<SuspicionRoleComponent, PlayerDetachedEvent>((HandlePlayerDetached));
+        }
+
+        private void HandlePlayerDetached(EntityUid uid, SuspicionRoleComponent component, PlayerDetachedEvent args)
+        {
+            component.SyncRoles();
+        }
+
+        private void HandlePlayerAttached(EntityUid uid, SuspicionRoleComponent component, PlayerAttachedEvent args)
+        {
+            component.SyncRoles();
+        }
+
+        #endregion
 
         public void AddTraitor(SuspicionRoleComponent role)
         {

@@ -17,7 +17,7 @@ namespace Content.Client.Weapons.Melee.Components
         private SpriteComponent? _sprite;
         private Angle _baseAngle;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
