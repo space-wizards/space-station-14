@@ -126,7 +126,7 @@ namespace Content.Server.Morgue.Components
 
             if (mind != null)
             {
-                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("You cremate yourself!"));
             }
 

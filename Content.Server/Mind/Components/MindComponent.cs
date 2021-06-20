@@ -77,7 +77,7 @@ namespace Content.Server.Mind.Components
             base.Shutdown();
 
             // Let's not create ghosts if not in the middle of the round.
-            if (IoCManager.Resolve<IGameTicker>().RunLevel != GameRunLevel.InRound)
+            if (EntitySystem.Get<GameTicker>().RunLevel != GameRunLevel.InRound)
                 return;
 
             if (HasMind)
@@ -104,7 +104,7 @@ namespace Content.Server.Mind.Components
                         var gridId = spawnPosition.GetGridId(Owner.EntityManager);
                         if (gridId == GridId.Invalid || !mapMan.GridExists(gridId))
                         {
-                            spawnPosition = IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+                            spawnPosition = EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
                         }
 
                         var ghost = Owner.EntityManager.SpawnEntity("MobObserver", spawnPosition);

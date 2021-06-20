@@ -30,7 +30,6 @@ namespace Content.Server.GameTicking.Rules
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -152,12 +151,13 @@ namespace Content.Server.GameTicking.Rules
                     break;
             }
 
-            _gameTicker.EndRound(text);
+            var gameTicker = EntitySystem.Get<GameTicker>();
+            gameTicker.EndRound(text);
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
             _checkTimerCancel.Cancel();
 
-            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
+            Timer.Spawn(RoundEndDelay, () => gameTicker.RestartRound());
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.GameTicking;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
@@ -46,7 +48,7 @@ namespace Content.Server.Voting.Managers
                 if (votesYes / (float) total >= ratioRequired)
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    _ticker.RestartRound();
+                    EntitySystem.Get<GameTicker>().RestartRound();
                 }
                 else
                 {
@@ -109,7 +111,7 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
 
-                _ticker.SetStartPreset(picked);
+                EntitySystem.Get<GameTicker>().SetStartPreset(picked);
             };
         }
     }
