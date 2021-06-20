@@ -89,6 +89,7 @@ namespace Content.Server.GameTicking
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
 
+            _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
 
             RoundLengthMetric.Set(0);

@@ -1,6 +1,8 @@
+using System;
 using Newtonsoft.Json.Linq;
 using Robust.Server.ServerStatus;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -10,6 +12,12 @@ namespace Content.Server.GameTicking
         ///     Used for thread safety, given <see cref="IStatusHost.OnStatusRequest"/> is called from another thread.
         /// </summary>
         private readonly object _statusShellLock = new();
+
+        /// <summary>
+        ///     Round start time in UTC, for status shell purposes.
+        /// </summary>
+        [ViewVariables]
+        private DateTime _roundStartDateTime;
 
         private void InitializeStatusShell()
         {
@@ -26,7 +34,7 @@ namespace Content.Server.GameTicking
                 jObject["run_level"] = (int) _runLevel;
                 if (_runLevel >= GameRunLevel.InRound)
                 {
-                    jObject["round_start_time"] = _roundStartTime.ToString("o");
+                    jObject["round_start_time"] = _roundStartDateTime.ToString("o");
                 }
             }
         }
