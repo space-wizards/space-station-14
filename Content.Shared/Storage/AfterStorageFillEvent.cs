@@ -8,9 +8,9 @@ namespace Content.Shared.Storage
     public sealed class AfterStorageFillEvent : EntityEventArgs
     {
         public IEntity Entity;
-        public IReadOnlyList<IEntity>? ContainedEntities { get; }
+        public IReadOnlyList<IEntity> ContainedEntities { get; }
 
-        public AfterStorageFillEvent(IEntity entity, IReadOnlyList<IEntity>? containedEntities)
+        public AfterStorageFillEvent(IEntity entity, IReadOnlyList<IEntity> containedEntities)
         {
             Entity = entity;
             ContainedEntities = containedEntities;

@@ -63,8 +63,9 @@ namespace Content.Server.Storage.Components
             // disregard poor quality of code
             if (Owner.TryGetComponent(out ServerStorageComponent? container))
             {
+                var contained = container.StoredEntities ?? new List<IEntity>();
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Network,
-                    new AfterStorageFillEvent(container.Owner, container.StoredEntities));
+                    new AfterStorageFillEvent(container.Owner,  contained));
             }
         }
 

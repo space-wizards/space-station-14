@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Storage
+namespace Content.Shared.Storage.ItemCounter
 {
     [UsedImplicitly]
     public abstract class SharedItemCounterSystem : EntitySystem
@@ -19,9 +19,7 @@ namespace Content.Shared.Storage
 
         private void OnStorageFill(AfterStorageFillEvent args)
         {
-            if (ComponentManager.HasComponent<SharedItemCounterComponent>(args.Entity.Uid)
-                && ComponentManager.TryGetComponent(args.Entity.Uid, out SharedAppearanceComponent appearance)
-                && args.ContainedEntities != null)
+            if (ComponentManager.TryGetComponent(args.Entity.Uid, out SharedAppearanceComponent appearance))
             {
                 var allLayer = new List<EntityUid>();
                 foreach (var entity in args.ContainedEntities)

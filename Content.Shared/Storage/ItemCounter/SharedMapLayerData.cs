@@ -5,8 +5,15 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Storage
+namespace Content.Shared.Storage.ItemCounter
 {
+    [Serializable, NetSerializable]
+    public enum StorageMapVisuals : sbyte
+    {
+        AllLayers,
+        LayerChanged,
+    }
+
     [Serializable]
     [DataDefinition]
     public struct SharedMapLayerData

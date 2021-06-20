@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Storage;
+using Content.Shared.Storage.ItemCounter;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -15,8 +16,8 @@ namespace Content.Client.Storage.Visualizers
     public class MappedItemVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         private Dictionary<string, SharedMapLayerData> _spriteLayers = new();
-        [DataField("sprite")] private ResourcePath? _spritePath;
-        [DataField("mapLayers")] private List<SharedMapLayerData>? _mapLayers;
+        [DataField("sprite")] private ResourcePath? _rsiPath;
+        [DataField("mapLayers")] private List<SharedMapLayerData> _mapLayers = new();
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -24,12 +25,12 @@ namespace Content.Client.Storage.Visualizers
 
             if (entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
             {
-                _spritePath ??= spriteComponent.BaseRSI!.Path!;
+                _rsiPath ??= spriteComponent.BaseRSI!.Path!;
 
                 foreach (var (sprite, _) in _spriteLayers)
                 {
                     spriteComponent.LayerMapReserveBlank(sprite);
-                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(_spritePath!, sprite));
+                    spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(_rsiPath, sprite));
                     spriteComponent.LayerSetVisible(sprite, false);
                 }
             }
