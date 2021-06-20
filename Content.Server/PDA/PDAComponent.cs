@@ -11,7 +11,7 @@ using Content.Server.PDA.Managers;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.PDA;
 using Content.Shared.Tag;
@@ -370,7 +370,7 @@ namespace Content.Server.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -392,7 +392,7 @@ namespace Content.Server.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -414,7 +414,7 @@ namespace Content.Server.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

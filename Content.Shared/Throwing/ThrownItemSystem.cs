@@ -99,7 +99,7 @@ namespace Content.Shared.Throwing
             // LandInteraction
             // TODO: Refactor these to system messages
             var landMsg = new LandEvent(user, landing, coordinates);
-            RaiseLocalEvent(landMsg);
+            RaiseLocalEvent(landing.Uid, landMsg);
             if (landMsg.Handled)
             {
                 return;

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Shared.Chemistry;
+using Content.Server.Atmos.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using JetBrains.Annotations;

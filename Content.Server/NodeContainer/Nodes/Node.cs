@@ -41,7 +41,11 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         public bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => Owner.Transform.Anchored;
+        protected bool Anchored => !NeedAnchored || Owner.Transform.Anchored;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("needAnchored")]
+        private bool NeedAnchored { get; } = true;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.

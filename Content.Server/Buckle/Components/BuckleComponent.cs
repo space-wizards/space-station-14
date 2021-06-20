@@ -10,8 +10,8 @@ using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -161,7 +161,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("You can't do that!"));
                 return false;
@@ -314,7 +314,7 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     user.PopupMessage(Loc.GetString("You can't do that!"));
                     return false;
@@ -439,7 +439,7 @@ namespace Content.Server.Buckle.Components
         {
             protected override void GetData(IEntity user, BuckleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || !component.Buckled)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.Buckled)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

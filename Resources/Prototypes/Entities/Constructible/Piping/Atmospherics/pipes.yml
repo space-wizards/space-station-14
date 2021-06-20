@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  id: PipeBase
+  id: GasPipeBase
   name: pipe
   description: Holds gas.
   placement:
@@ -11,6 +11,9 @@
   - type: Physics
   - type: SnapGrid
   - type: Damageable
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
   - type: Destructible
     thresholds:
     - trigger:
@@ -20,19 +23,20 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
+    sprite: Constructible/Atmos/pipe.rsi
+    drawdepth: BelowFloor
     netsync: false
   - type: Appearance
     visuals:
-    - type: PipeVisualizer
     - type: PipeConnectorVisualizer
-  - type: Icon
-    sprite: Constructible/Atmos/pipe.rsi
+  - type: NodeContainer
+  - type: AtmosUnsafeUnanchor
 
-#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (east)
+#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
 - type: entity
-  parent: PipeBase
-  id: PipeHalf
+  parent: GasPipeBase
+  id: GasPipeHalf
   suffix: Half
   components:
   - type: NodeContainer
@@ -41,12 +45,12 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
-  - type: Icon
+  - type: Sprite
     state: pipeHalf
 
 - type: entity
-  parent: PipeBase
-  id: PipeStraight
+  parent: GasPipeBase
+  id: GasPipeStraight
   suffix: Straight
   components:
   - type: NodeContainer
@@ -55,12 +59,12 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
-  - type: Icon
+  - type: Sprite
     state: pipeStraight
 
 - type: entity
-  parent: PipeBase
-  id: PipeBend
+  parent: GasPipeBase
+  id: GasPipeBend
   suffix: Bend
   components:
   - type: NodeContainer
@@ -69,12 +73,12 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: SWBend
-  - type: Icon
+  - type: Sprite
     state: pipeBend
 
 - type: entity
-  parent: PipeBase
-  id: PipeTJunction
+  parent: GasPipeBase
+  id: GasPipeTJunction
   suffix: TJunction
   components:
   - type: NodeContainer
@@ -83,12 +87,12 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: TSouth
-  - type: Icon
+  - type: Sprite
     state: pipeTJunction
 
 - type: entity
-  parent: PipeBase
-  id: PipeFourway
+  parent: GasPipeBase
+  id: GasPipeFourway
   suffix: Fourway
   components:
   - type: NodeContainer
@@ -97,5 +101,5 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Fourway
-  - type: Icon
+  - type: Sprite
     state: pipeFourway

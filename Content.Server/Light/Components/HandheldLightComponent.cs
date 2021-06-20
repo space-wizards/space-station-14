@@ -9,8 +9,8 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
@@ -75,7 +75,7 @@ namespace Content.Server.Light.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
             Dirty();
             return true;
@@ -104,7 +104,7 @@ namespace Content.Server.Light.Components
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(IEntity user)
         {
-            if (!ActionBlockerSystem.CanUse(user)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user)) return false;
             return Activated ? TurnOff() : TurnOn(user);
         }
 
@@ -250,7 +250,7 @@ namespace Content.Server.Light.Components
         {
             protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

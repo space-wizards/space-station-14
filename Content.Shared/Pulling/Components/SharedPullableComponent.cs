@@ -2,6 +2,7 @@
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
+using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.NetIDs;
 using Content.Shared.Physics.Pull;
@@ -365,7 +366,7 @@ namespace Content.Shared.Pulling.Components
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
             var entity = session.AttachedEntity;
-            if (entity == null || !ActionBlockerSystem.CanMove(entity)) return;
+            if (entity == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity)) return;
             TryStopPull();
         }
     }

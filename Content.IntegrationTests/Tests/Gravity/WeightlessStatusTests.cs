@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Gravity;
 using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates;
-using Content.Shared.GameObjects.EntitySystems;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
