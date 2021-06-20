@@ -77,7 +77,7 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
 
-            SendServerMessage("The round is starting now...");
+            SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
@@ -142,7 +142,9 @@ namespace Content.Server.GameTicking
                     SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
                     _chatManager.DispatchServerAnnouncement(
-                        $"Failed to start {Preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                                      ("failedGameMode", Preset.ModeTitle),
+                                      ("fallbackMode", newPreset.ModeTitle)));
                     if (!newPreset.Start(readyPlayers, force))
                     {
                         throw new ApplicationException("Fallback preset failed to start!");
@@ -154,7 +156,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    SendServerMessage($"Failed to start {Preset.ModeTitle} mode! Restarting round...");
+                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", Preset.ModeTitle)));
                     RestartRound();
                     DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
                     return;
@@ -203,7 +205,7 @@ namespace Content.Server.GameTicking
                         PlayerICName = mind.CurrentEntity?.Name,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
-                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
+                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
                         Antag = antag,
                         Observer = status == LobbyPlayerStatus.Observer,
                     };
@@ -222,14 +224,13 @@ namespace Content.Server.GameTicking
 
             if (_updateOnRoundEnd)
             {
-                _baseServer.Shutdown(
-                    Loc.GetString("Server is shutting down for update and will automatically restart."));
+                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
                 return;
             }
 
             Logger.InfoS("ticker", "Restarting round!");
 
-            SendServerMessage("Restarting round...");
+            SendServerMessage(Loc.GetString("game-ticker-restart-round"));
 
             RoundNumberMetric.Inc();
 
@@ -318,7 +319,7 @@ namespace Content.Server.GameTicking
 
             RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
 
-            _chatManager.DispatchServerAnnouncement($"Round start has been delayed for {time.TotalSeconds} seconds.");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start", ("seconds",time.TotalSeconds)));
 
             return true;
         }

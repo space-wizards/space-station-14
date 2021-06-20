@@ -237,7 +237,7 @@ namespace Content.Client.Lobby
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                var readyState = "";
+                var readyState = string.Empty;
                 // Don't show ready state if we're ingame
                 if (!gameTicker.IsGameStarted)
                 {
@@ -249,9 +249,9 @@ namespace Content.Client.Lobby
 
                     readyState = status switch
                     {
-                        PlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
-                        PlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
-                        PlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
+                        LobbyPlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
+                        LobbyPlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
+                        LobbyPlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
                         _ => string.Empty,
                     };
                 }

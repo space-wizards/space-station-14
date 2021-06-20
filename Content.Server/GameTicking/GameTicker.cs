@@ -45,21 +45,14 @@ namespace Content.Server.GameTicking
             InitializeUpdates();
 
             _initialized = true;
-                    Loc.GetString("game-ticker-restart-round-server-update"));
-            SendServerMessage(Loc.GetString("game-ticker-restart-round"));
-            SendServerMessage("game-ticker-start-round");
         }
 
         public void PostInitialize()
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                                                                         ("failedGameMode", Preset.ModeTitle),
-                                                                         ("fallbackMode", newPreset.ModeTitle)));
         {
             DebugTools.Assert(_initialized);
             DebugTools.Assert(!_postInitialized);
 
             // We restart the round now that entities are initialized and prototypes have been loaded.
-                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",("failedGameMode", Preset.ModeTitle)));
             RestartRound();
 
             _postInitialized = true;
@@ -77,14 +70,6 @@ namespace Content.Server.GameTicking
         {
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
-                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start",("seconds",time.TotalSeconds)));
-            _chatManager.DispatchServerAnnouncement(Loc.GetString(Paused
-                ? "game-ticker-pause-start"
-                : "game-ticker-pause-start-resumed"));
-                    Loc.GetString("game-ticker-restart-round-server-update"));
-            _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
-            return Loc.GetString("game-ticker-get-info-text",("gmTitle", gmTitle),("desc", desc));
         }
 
         [Dependency] private readonly IEntityManager _entityManager = default!;
