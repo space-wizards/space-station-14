@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Robust.Shared.Utility;
 using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r
@@ -76,6 +77,7 @@ namespace Content.Server.Power.Pow3r
                     if (!load.Enabled)
                         continue;
 
+                    DebugTools.Assert(load.DesiredPower >= 0);
                     demand += load.DesiredPower;
                 }
 
@@ -91,14 +93,20 @@ namespace Content.Server.Power.Pow3r
                         continue;
 
                     var batterySpace = (battery.Capacity - battery.CurrentStorage) * (1 / battery.Efficiency);
+                    batterySpace = Math.Max(0, batterySpace);
                     var scaledSpace = batterySpace / frameTime;
 
                     var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand;
 
                     var batDemand = Math.Min(chargeRate, scaledSpace);
+
+                    DebugTools.Assert(batDemand >= 0);
+
                     battery.DesiredPower = batDemand;
                     demand += batDemand;
                 }
+
+                DebugTools.Assert(demand >= 0);
 
                 // Add up supply in network.
                 var availableSupplySum = 0f;
@@ -111,12 +119,19 @@ namespace Content.Server.Power.Pow3r
 
                     var rampMax = supply.SupplyRampPosition + supply.SupplyRampTolerance;
                     var effectiveSupply = Math.Min(rampMax, supply.MaxSupply);
+
+                    DebugTools.Assert(effectiveSupply >= 0);
+                    DebugTools.Assert(supply.MaxSupply >= 0);
+
                     supply.EffectiveMaxSupply = effectiveSupply;
                     availableSupplySum += effectiveSupply;
                     maxSupplySum += supply.MaxSupply;
                 }
 
-                var unmet = demand - availableSupplySum;
+                var unmet = Math.Max(0, demand - availableSupplySum);
+
+                DebugTools.Assert(availableSupplySum >= 0);
+                DebugTools.Assert(maxSupplySum >= 0);
 
                 // Supplying batteries.
                 // Batteries need to go after local supplies so that local supplies are prioritized.
@@ -139,10 +154,13 @@ namespace Content.Server.Power.Pow3r
                     // Clamp final supply to the unmet demand, so that batteries refrain from taking power away from supplies.
                     var clampedSupply = Math.Min(unmet, tempSupply);
 
+                    DebugTools.Assert(clampedSupply >= 0);
+
                     battery.TempMaxSupply = clampedSupply;
                     availableSupplySum += clampedSupply;
                     // TODO: Calculate this properly.
                     maxSupplySum += clampedSupply;
+
                     battery.LoadingNetworkDemand = unmet;
                     battery.LoadingDemandMarked = true;
                 }
@@ -155,7 +173,7 @@ namespace Content.Server.Power.Pow3r
                     foreach (var loadId in network.Loads)
                     {
                         var load = state.Loads[loadId];
-                        if (!load.Enabled)
+                        if (!load.Enabled || load.DesiredPower == 0)
                             continue;
 
                         var ratio = load.DesiredPower / demand;
@@ -167,7 +185,7 @@ namespace Content.Server.Power.Pow3r
                     {
                         var battery = state.Batteries[batteryId];
 
-                        if (!battery.Enabled)
+                        if (!battery.Enabled || battery.DesiredPower == 0)
                             continue;
 
                         var ratio = battery.DesiredPower / demand;
