@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.Anchor;
+using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
@@ -224,7 +224,7 @@ namespace Content.Server.Disposal.Tube.Components
             UpdateVisualState();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -246,7 +246,7 @@ namespace Content.Server.Disposal.Tube.Components
             UpdateVisualState();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

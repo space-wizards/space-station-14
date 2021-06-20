@@ -31,7 +31,7 @@ namespace Content.Server.Strip
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

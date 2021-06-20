@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components
             UserInterfaceKey = key;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

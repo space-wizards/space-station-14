@@ -15,7 +15,6 @@ namespace Content.Server.RoundEnd
 {
     public class RoundEndSystem : EntitySystem, IResettingEntitySystem
     {
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
@@ -120,11 +119,12 @@ namespace Content.Server.RoundEnd
         private void EndRound()
         {
             OnRoundEndCountdownFinished?.Invoke();
-            _gameTicker.EndRound();
+            var gameTicker = EntitySystem.Get<GameTicker>();
+            gameTicker.EndRound();
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting the round in {0} seconds...", RestartRoundTime));
 
-            Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => _gameTicker.RestartRound(), CancellationToken.None);
+            Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => gameTicker.RestartRound(), CancellationToken.None);
         }
     }
 }

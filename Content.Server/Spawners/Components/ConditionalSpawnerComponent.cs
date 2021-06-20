@@ -12,7 +12,6 @@ namespace Content.Server.Spawners.Components
     [RegisterComponent]
     public class ConditionalSpawnerComponent : Component, IMapInit
     {
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";
@@ -29,9 +28,9 @@ namespace Content.Server.Spawners.Components
         [DataField("chance")]
         public float Chance { get; set; } = 1.0f;
 
-        private void RuleAdded(GameRuleAddedEventArgs obj)
+        public void RuleAdded(GameRuleAddedEvent obj)
         {
-            if(_gameRules.Contains(obj.GameRule.GetType().Name))
+            if(_gameRules.Contains(obj.Rule.GetType().Name))
                 Spawn();
         }
 
@@ -45,7 +44,7 @@ namespace Content.Server.Spawners.Components
 
             foreach (var rule in _gameRules)
             {
-                if (!_gameTicker.HasGameRule(rule)) continue;
+                if (!EntitySystem.Get<GameTicker>().HasGameRule(rule)) continue;
                 Spawn();
                 return;
             }
@@ -68,8 +67,6 @@ namespace Content.Server.Spawners.Components
 
         public virtual void MapInit()
         {
-            _gameTicker.OnRuleAdded += RuleAdded;
-
             TrySpawn();
         }
     }

@@ -28,7 +28,6 @@ namespace Content.Server.GameTicking.Presets
     public class PresetSuspicion : GamePreset
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -149,7 +148,7 @@ namespace Content.Server.GameTicking.Presets
                 traitor.GreetSuspicion(traitors, _chatManager);
             }
 
-            _gameTicker.AddGameRule<RuleSuspicion>();
+            EntitySystem.Get<GameTicker>().AddGameRule<RuleSuspicion>();
             return true;
         }
 

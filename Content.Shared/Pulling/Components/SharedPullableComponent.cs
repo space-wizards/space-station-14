@@ -354,7 +354,7 @@ namespace Content.Shared.Pulling.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             TryStopPull();
             MovingTo = null;

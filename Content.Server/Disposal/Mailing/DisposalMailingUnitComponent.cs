@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Anchor;
+using Content.Server.Construction.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Connections;
 using Content.Server.Disposal.Tube.Components;
@@ -555,7 +555,7 @@ namespace Content.Server.Disposal.Mailing
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -584,7 +584,7 @@ namespace Content.Server.Disposal.Mailing
             UpdateInterface();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (_container != null)
             {

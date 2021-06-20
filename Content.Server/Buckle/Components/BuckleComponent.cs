@@ -388,7 +388,7 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);

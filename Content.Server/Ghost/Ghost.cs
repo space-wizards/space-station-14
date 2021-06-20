@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Ghost
@@ -31,7 +32,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (!IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, true))
+            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true))
             {
                 shell?.WriteLine("You can't ghost right now.");
                 return;

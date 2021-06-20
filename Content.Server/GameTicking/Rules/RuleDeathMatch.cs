@@ -26,7 +26,6 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private CancellationTokenSource? _checkTimerCancel;
@@ -91,7 +90,7 @@ namespace Content.Server.GameTicking.Rules
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
 
-            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
+            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => EntitySystem.Get<GameTicker>().RestartRound());
         }
 
         private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)

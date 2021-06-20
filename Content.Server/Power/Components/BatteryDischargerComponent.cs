@@ -26,7 +26,7 @@ namespace Content.Server.Power.Components
         [DataField("activeSupplyRate")]
         private int _activeSupplyRate = 50;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PowerSupplierComponent>();

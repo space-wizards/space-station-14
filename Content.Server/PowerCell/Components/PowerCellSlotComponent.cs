@@ -99,7 +99,7 @@ namespace Content.Server.PowerCell.Components
         [DataField("startingCellType")]
         private string? _startingCellType = null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _cellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "cellslot_cell_container", out _);

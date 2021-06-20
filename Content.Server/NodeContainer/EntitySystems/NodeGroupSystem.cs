@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.NodeContainer.NodeGroups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -9,21 +9,6 @@ namespace Content.Server.NodeContainer.EntitySystems
     public class NodeGroupSystem : EntitySystem
     {
         private readonly HashSet<INodeGroup> _dirtyNodeGroups = new();
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<NodeContainerComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
-        }
-
-        private void OnSnapGridPositionChanged(EntityUid uid, NodeContainerComponent component, SnapGridPositionChangedEvent args)
-        {
-            foreach (var node in component.Nodes.Values)
-            {
-                node.OnSnapGridMove();
-            }
-        }
 
         public void AddDirtyNodeGroup(INodeGroup nodeGroup)
         {

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -17,6 +19,9 @@ namespace Content.Server.GameTicking
     // This code is responsible for the assigning & picking of jobs.
     public partial class GameTicker
     {
+        [ViewVariables]
+        private readonly List<ManifestEntry> _manifest = new();
+
         [ViewVariables]
         private readonly Dictionary<string, int> _spawnedPositions = new();
 
@@ -187,7 +192,7 @@ namespace Content.Server.GameTicking
         }
 
         [Conditional("DEBUG")]
-        private void JobControllerInit()
+        private void InitializeJobController()
         {
             // Verify that the overflow role exists and has the correct name.
             var role = _prototypeManager.Index<JobPrototype>(OverflowJob);
@@ -202,10 +207,23 @@ namespace Content.Server.GameTicking
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
         }
 
+        private TickerJobsAvailableEvent GetJobsAvailable()
+        {
+            // If late join is disallowed, return no available jobs.
+            if (DisallowLateJoin)
+                return new TickerJobsAvailableEvent(Array.Empty<string>());
+
+            var jobs = GetAvailablePositions()
+                .Where(e => e.Value > 0)
+                .Select(e => e.Key)
+                .ToArray();
+
+            return new TickerJobsAvailableEvent(jobs);
+        }
+
         private void UpdateJobsAvailable()
         {
-            var lobbyPlayers = _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList();
-            _netManager.ServerSendToMany(GetJobsAvailable(), lobbyPlayers);
+            RaiseNetworkEvent(GetJobsAvailable(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
         }
     }
 }

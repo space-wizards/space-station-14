@@ -35,7 +35,7 @@ namespace Content.Server.Morgue.Components
 
         [ViewVariables] public ContainerSlot? LabelContainer { get; private set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);

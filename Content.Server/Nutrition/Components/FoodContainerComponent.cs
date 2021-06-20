@@ -37,7 +37,7 @@ namespace Content.Server.Nutrition.Components
 
         private int _count = 0;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.TryGetComponent(out _appearance);

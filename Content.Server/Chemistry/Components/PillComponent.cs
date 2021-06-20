@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables]
         private SolutionContainerComponent _contents = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -12,7 +12,7 @@ namespace Content.Client.Animations
     {
         public override string Name => "AnimationsTest";
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

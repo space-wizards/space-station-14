@@ -25,8 +25,7 @@ namespace Content.Client.IconSmoothing
             base.Initialize();
 
             SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
-
-            SubscribeLocalEvent<IconSmoothComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
+            SubscribeLocalEvent<IconSmoothComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -92,9 +91,9 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private static void HandleSnapGridMove(EntityUid uid, IconSmoothComponent component, SnapGridPositionChangedEvent args)
+        private static void HandleAnchorChanged(EntityUid uid, IconSmoothComponent component, AnchorStateChangedEvent args)
         {
-            component.SnapGridOnPositionChanged();
+            component.AnchorStateChanged();
         }
 
         private void AddValidEntities(IEnumerable<EntityUid> candidates)

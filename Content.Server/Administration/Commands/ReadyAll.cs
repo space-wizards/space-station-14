@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
@@ -22,7 +23,7 @@ namespace Content.Server.Administration.Commands
                 ready = bool.Parse(args[0]);
             }
 
-            var gameTicker = IoCManager.Resolve<IGameTicker>();
+            var gameTicker = EntitySystem.Get<GameTicker>();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
 

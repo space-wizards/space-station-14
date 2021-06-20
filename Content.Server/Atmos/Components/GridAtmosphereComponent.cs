@@ -203,7 +203,7 @@ namespace Content.Server.Atmos.Components
             _tiles = tiles;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -234,7 +234,7 @@ namespace Content.Server.Atmos.Components
             RepopulateTiles();
         }
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
 

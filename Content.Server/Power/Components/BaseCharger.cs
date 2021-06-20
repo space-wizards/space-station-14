@@ -41,7 +41,7 @@ namespace Content.Server.Power.Components
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 0.85f;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -61,7 +61,7 @@ namespace Content.Server.Power.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _heldBattery = null;
 

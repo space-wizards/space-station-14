@@ -162,7 +162,7 @@ namespace Content.Server.Instruments
             Clean();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

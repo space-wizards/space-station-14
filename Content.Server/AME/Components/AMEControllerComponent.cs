@@ -41,7 +41,7 @@ namespace Content.Server.AME.Components
         private ContainerSlot _jarSlot = default!;
         [ViewVariables] private bool HasJar => _jarSlot.ContainedEntity != null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -41,7 +41,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         public bool Connectable => !_deleting && Anchored;
 
-        protected bool Anchored => !NeedAnchored || !Owner.TryGetComponent<IPhysBody>(out var physics) || physics.BodyType == BodyType.Static;
+        protected bool Anchored => !NeedAnchored || Owner.Transform.Anchored;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("needAnchored")]
@@ -76,7 +76,7 @@ namespace Content.Server.NodeContainer.Nodes
             }
         }
 
-        public virtual void OnSnapGridMove()
+        public virtual void AnchorStateChanged()
         {
         }
 

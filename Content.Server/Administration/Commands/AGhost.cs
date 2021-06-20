@@ -42,7 +42,7 @@ namespace Content.Server.Administration.Commands
             var canReturn = mind.CurrentEntity != null;
             var ghost = IoCManager.Resolve<IEntityManager>()
                 .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
-                                              ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint());
+                                              ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint());
 
             if (canReturn)
             {
