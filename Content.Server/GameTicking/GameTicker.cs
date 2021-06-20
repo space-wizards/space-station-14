@@ -668,10 +668,9 @@ namespace Content.Server.GameTicking
             var location = _spawnPoint;
 
             var possiblePoints = new List<EntityCoordinates>();
-            foreach (var entity in _entityManager.GetEntities(e => e.HasComponent<SpawnPointComponent>()))
+            foreach (SpawnPointComponent point in _entityManager.ComponentManager.GetAllComponents(typeof(SpawnPointComponent)))
             {
-                var point = entity.GetComponent<SpawnPointComponent>();
-                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.Coordinates);
+                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(point.Owner.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -684,11 +683,10 @@ namespace Content.Server.GameTicking
             var location = _spawnPoint;
 
             var possiblePoints = new List<EntityCoordinates>();
-            foreach (var entity in _entityManager.GetEntities(e => e.HasComponent<SpawnPointComponent>()))
+            foreach (SpawnPointComponent point in _entityManager.ComponentManager.GetAllComponents(typeof(SpawnPointComponent)))
             {
-                var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId)
-                    possiblePoints.Add(entity.Transform.Coordinates);
+                    possiblePoints.Add(point.Owner.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -701,11 +699,10 @@ namespace Content.Server.GameTicking
             var location = _spawnPoint;
 
             var possiblePoints = new List<EntityCoordinates>();
-            foreach (var entity in _entityManager.GetEntities(e => e.HasComponent<SpawnPointComponent>()))
+            foreach (SpawnPointComponent point in _entityManager.ComponentManager.GetAllComponents(typeof(SpawnPointComponent)))
             {
-                var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Observer)
-                    possiblePoints.Add(entity.Transform.Coordinates);
+                    possiblePoints.Add(point.Owner.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);

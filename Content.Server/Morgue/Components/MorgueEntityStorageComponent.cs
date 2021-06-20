@@ -96,8 +96,8 @@ namespace Content.Server.Morgue.Components
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
                 var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-                var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
-                                   Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
+                var box = new Box2(Owner.Transform.WorldPosition + new Vector2(-0.25f, -0.25f),
+                                   Owner.Transform.WorldPosition + new Vector2(0.25f, 0.25f));
                 CollidingEntities = physicsManager.GetCollidingEntities(_tray.Transform.MapID, in box);
             }
             else

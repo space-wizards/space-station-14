@@ -17,14 +17,14 @@ namespace Content.Server.Administration.Commands
         {
             get
             {
-                return Loc.GetString("Deletes entities with the specified components.");
+                return Loc.GetString("Deletes entities with all of the specified components.");
             }
         }
         public string Help
         {
             get
             {
-                return Loc.GetString("Usage: deleteewc <componentName_1> <componentName_2> ... <componentName_n>\nDeletes any entities with the components specified.");
+                return Loc.GetString("Usage: deleteewc <componentName_1> <componentName_2> ... <componentName_n>\nDeletes any entities with all of the components specified.");
             }
         }
 
@@ -45,7 +45,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entities = entityManager.GetEntities(e => e.HasAllComponents(components));
+            var entities = entityManager.ComponentManager.GetAllEntitiesWithAllComponents(components);
             var count = 0;
             foreach (var entity in entities)
             {

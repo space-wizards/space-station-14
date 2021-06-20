@@ -26,7 +26,7 @@ namespace Content.Server.Storage.Components
             // No contents, we do nothing
             if (Contents.ContainedEntities.Count == 0) return;
 
-            var lockers = Owner.EntityManager.GetEntities(e => e.HasComponent<EntityStorageComponent>()).ToList();
+            var lockers = Owner.EntityManager.ComponentManager.GetAllComponents(typeof(EntityStorageComponent)).Select(c => c.Owner).ToList();
 
             if (lockers.Contains(Owner))
                 lockers.Remove(Owner);

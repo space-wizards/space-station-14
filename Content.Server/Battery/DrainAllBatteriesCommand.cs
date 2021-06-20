@@ -24,10 +24,11 @@ namespace Content.Server.Battery
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var ent in entityManager.GetEntities(e => e.HasComponent<BatteryComponent>()))
+            foreach (BatteryComponent batteryComp in entityManager.ComponentManager.GetAllComponents(typeof(BatteryComponent)))
             {
-                ent.GetComponent<BatteryComponent>().CurrentCharge = 0;
+                batteryComp.CurrentCharge = 0;
             }
+
             shell.WriteLine("Done!");
         }
     }

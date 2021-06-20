@@ -153,8 +153,8 @@ namespace Content.Server.Storage.Components
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-            var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
-                                   Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
+            var box = new Box2(Owner.Transform.WorldPosition + new Vector2(-0.25f, -0.25f),
+                               Owner.Transform.WorldPosition + new Vector2(0.25f, 0.25f));
             CollidingEntities = physicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
 
             Contents.ShowContents = _showContents;
@@ -206,8 +206,8 @@ namespace Content.Server.Storage.Components
             if(CollidingEntities == null)
             {
                 var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-                var box = new Box2(Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f),
-                                   Owner.Transform.Coordinates.Position + new Vector2(-0.2f, -0.2f));
+                var box = new Box2(Owner.Transform.WorldPosition + new Vector2(-0.25f, -0.25f),
+                                   Owner.Transform.WorldPosition + new Vector2(0.25f, 0.25f));
                 CollidingEntities = physicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
             }
 
