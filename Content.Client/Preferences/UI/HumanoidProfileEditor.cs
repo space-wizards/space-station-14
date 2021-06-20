@@ -21,6 +21,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Preferences.UI
@@ -60,6 +61,7 @@ namespace Content.Client.Preferences.UI
         private readonly SpriteView _previewSpriteSide;
 
         private bool _isDirty;
+        private bool _needUpdatePreview;
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
 
@@ -724,7 +726,7 @@ namespace Content.Client.Preferences.UI
             set
             {
                 _isDirty = value;
-                UpdatePreview();
+                _needUpdatePreview = true;
                 UpdateSaveButton();
             }
         }
@@ -843,9 +845,21 @@ namespace Content.Client.Preferences.UI
             UpdateJobPriorities();
             UpdateAntagPreferences();
 
-            UpdatePreview();
+            _needUpdatePreview = true;
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
+            if (_needUpdatePreview)
+            {
+                UpdatePreview();
+
+                _needUpdatePreview = false;
+            }
         }
 
         private void UpdateJobPriorities()
