@@ -33,13 +33,13 @@ namespace Content.Client.DoAfter
             }
         }
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
             Enable();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             Disable();

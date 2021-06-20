@@ -4,8 +4,8 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -143,7 +143,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 SoundGunshot);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             // TODO: Add existing ammo support on revolvers
             base.Initialize();
@@ -354,7 +354,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -375,7 +375,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

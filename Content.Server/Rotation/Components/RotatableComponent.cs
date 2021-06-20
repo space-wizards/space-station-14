@@ -1,6 +1,6 @@
 #nullable enable
 using Content.Shared.ActionBlocker;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
@@ -34,7 +34,7 @@ namespace Content.Server.Rotation.Components
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -56,7 +56,7 @@ namespace Content.Server.Rotation.Components
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

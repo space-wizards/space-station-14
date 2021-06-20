@@ -47,7 +47,7 @@ namespace Content.Server.RCD.Components
             Deconstruct
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _ammo = MaxAmmo;

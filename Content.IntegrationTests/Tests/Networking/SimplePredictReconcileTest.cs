@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.GameObjects;
 using Content.Shared.NetIDs;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
@@ -453,13 +452,6 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
-            }
-
-            public override void Shutdown()
-            {
-                base.Shutdown();
-                UnsubscribeNetworkEvent<SetFooMessage>();
-                UnsubscribeLocalEvent<SetFooMessage>();
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)

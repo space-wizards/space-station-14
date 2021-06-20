@@ -15,9 +15,9 @@ namespace Content.Client.Body.UI
     public sealed class BodyScannerDisplay : SS14Window
     {
         private IEntity? _currentEntity;
-        private IBodyPart? _currentBodyPart;
+        private SharedBodyPartComponent? _currentBodyPart;
 
-        private IBody? CurrentBody => _currentEntity?.GetComponentOrNull<IBody>();
+        private SharedBodyComponent? CurrentBody => _currentEntity?.GetComponentOrNull<SharedBodyComponent>();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -137,7 +137,7 @@ namespace Content.Client.Body.UI
             }
         }
 
-        private void UpdateBodyPartBox(IBodyPart part, string slotName)
+        private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
@@ -161,7 +161,7 @@ namespace Content.Client.Body.UI
             UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(IMechanism? mechanism)
+        private void UpdateMechanismBox(SharedMechanismComponent? mechanism)
         {
             // TODO BODY Improve UI
             if (mechanism == null)

@@ -47,7 +47,7 @@ namespace Content.Server.Radio.Components
 
         [ViewVariables] public IReadOnlyList<int> Channels => _channels;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

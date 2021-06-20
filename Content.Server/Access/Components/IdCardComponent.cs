@@ -66,7 +66,7 @@ namespace Content.Server.Access.Components
                                 ("jobSuffix", jobSuffix));
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             // ReSharper disable once ConstantNullCoalescingCondition

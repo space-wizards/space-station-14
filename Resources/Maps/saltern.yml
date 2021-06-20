@@ -461,12 +461,10 @@ entities:
 - uid: 49
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,-7
+  - rot: -1.5707963267948966 rad
+    pos: -35.09421,0.5072632
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -1098,36 +1096,30 @@ entities:
 - uid: 134
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 41.000477,14
+  - rot: -1.5707963267948966 rad
+    pos: 36.928772,12.48564
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 135
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -10,13.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.9229045,12.440822
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 136
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -26,-3.5
+  - rot: -1.5707963267948966 rad
+    pos: -13.082766,-25.616213
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -1170,12 +1162,9 @@ entities:
 - uid: 141
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.231159,-17
+  - pos: -18.508244,-7.132841
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -1210,12 +1199,10 @@ entities:
 - uid: 146
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 28.73304,7
+  - rot: 1.5707963267948966 rad
+    pos: 45.108562,12.421564
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -4747,12 +4734,10 @@ entities:
 - uid: 514
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -16,-1.5
+  - rot: -1.5707963267948966 rad
+    pos: 9.916167,-29.48114
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -4771,12 +4756,10 @@ entities:
 - uid: 516
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -20.5,2
+  - rot: -1.5707963267948966 rad
+    pos: -21.136164,-6.519089
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -5096,14 +5079,9 @@ entities:
 - uid: 558
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 20,-17.5
+  - pos: 13.52327,-13.17637
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -5122,16 +5100,12 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 560
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 17,-20.5
+  - rot: 1.5707963267948966 rad
+    pos: 11.041167,-29.44989
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -6308,12 +6282,9 @@ entities:
 - uid: 665
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -34.001373,10.342238
+  - pos: -38.50688,10.857263
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -12106,28 +12077,18 @@ entities:
 - uid: 857
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 52,-4.5
+  - pos: 54.543198,-9.213088
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 858
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 47,-4.5
+  - pos: 44.465073,-9.134963
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -12392,14 +12353,9 @@ entities:
 - uid: 892
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -13.5,2
+  - pos: -11.487365,5.8158755
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13466,14 +13422,9 @@ entities:
 - uid: 1035
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -38.5,11
+  - pos: -32.48585,5.8534822
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13670,56 +13621,38 @@ entities:
 - uid: 1061
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -13,-25.5
+  - rot: 1.5707963267948966 rad
+    pos: 2.1104045,7.4564466
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1062
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -13,-21.5
+  - rot: 1.5707963267948966 rad
+    pos: -9.922553,13.456606
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1063
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -18,-21.5
+  - pos: -15.539971,-17.154892
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1064
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -18,-25.5
+  - pos: 40.98358,13.845015
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13749,14 +13682,10 @@ entities:
 - uid: 1067
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -2,-23.5
+  - rot: 1.5707963267948966 rad
+    pos: -17.87964,-21.491213
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13777,14 +13706,10 @@ entities:
 - uid: 1069
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -9.5,-17
+  - rot: 1.5707963267948966 rad
+    pos: -20.870539,0.49653578
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13805,28 +13730,20 @@ entities:
 - uid: 1071
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -1.5,-13
+  - rot: 1.5707963267948966 rad
+    pos: -5.89616,-14.473355
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1072
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -6,-14.5
+  - rot: 1.5707963267948966 rad
+    pos: 2.0898275,-9.5469675
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13997,14 +13914,10 @@ entities:
 - uid: 1096
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 25,-14.5
+  - rot: -1.5707963267948966 rad
+    pos: 19.913452,-17.520119
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14218,42 +14131,30 @@ entities:
 - uid: 1124
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-4
+  - rot: -1.5707963267948966 rad
+    pos: 19.923454,-11.570569
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1125
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 7,-14.5
+  - rot: -1.5707963267948966 rad
+    pos: 5.9039526,-17.513905
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1126
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 20,-11.5
+  - rot: -1.5707963267948966 rad
+    pos: 24.894157,-14.48887
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14744,14 +14645,10 @@ entities:
 - uid: 1189
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -35,0.5
+  - rot: 1.5707963267948966 rad
+    pos: -13.905625,16.18277
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14769,14 +14666,10 @@ entities:
 - uid: 1191
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -22,0.5
+  - rot: -1.5707963267948966 rad
+    pos: -16.087059,-1.5190892
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14818,14 +14711,9 @@ entities:
 - uid: 1197
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -22,2.5
+  - pos: -18.497206,5.8113365
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14901,14 +14789,9 @@ entities:
 - uid: 1205
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -1.5,15
+  - pos: -5.502577,17.78978
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14972,14 +14855,10 @@ entities:
 - uid: 1213
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -27,1.5
+  - rot: -1.5707963267948966 rad
+    pos: -22.116953,2.4939203
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15027,28 +14906,19 @@ entities:
 - uid: 1218
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -32.5,6
+  - pos: -27.497717,11.849479
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1219
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -23,8.5
+  - rot: -1.5707963267948966 rad
+    pos: -34.08711,9.508544
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15119,14 +14989,10 @@ entities:
 - uid: 1226
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -30,9.5
+  - rot: 1.5707963267948966 rad
+    pos: -29.906116,9.430419
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15216,14 +15082,10 @@ entities:
 - uid: 1234
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -27.5,12
+  - rot: 1.5707963267948966 rad
+    pos: 17.115456,-20.488289
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15269,14 +15131,10 @@ entities:
 - uid: 1240
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -3,-6.5
+  - rot: -1.5707963267948966 rad
+    pos: -23.089119,8.505429
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15459,28 +15317,19 @@ entities:
 - uid: 1259
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -18.5,6
+  - rot: -1.5707963267948966 rad
+    pos: -35.07844,-4.406664
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1260
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,6
+  - pos: 1.5033649,0.8428016
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15529,12 +15378,10 @@ entities:
 - uid: 1266
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 6.0308504,2
+  - rot: 1.5707963267948966 rad
+    pos: 6.1210775,-4.523888
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15555,28 +15402,20 @@ entities:
 - uid: 1268
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 2,-9.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.8710775,2.273314
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1269
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 2,-4.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.8977103,23.496256
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15590,28 +15429,18 @@ entities:
 - uid: 1271
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 2,7.5
+  - pos: -1.4910796,14.8427725
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1272
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 2,12.5
+  - pos: -8.486245,22.842363
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15712,28 +15541,22 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1280
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -6.0158176,18
+  - rot: -1.5707963267948966 rad
+    pos: -11.046864,19.455282
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1281
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -15,20.5
+  - rot: 1.5707963267948966 rad
+    pos: 2.1164603,23.496256
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15805,44 +15628,31 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1289
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -3,25.5
+  - pos: 12.520373,24.758696
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1290
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 10,30.5
+  - rot: 3.141592653589793 rad
+    pos: 0.4871831,3.0057735
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1291
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -3,30.5
+  - rot: -1.5707963267948966 rad
+    pos: 10.845088,9.476223
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15891,28 +15701,19 @@ entities:
 - uid: 1295
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 5,23.5
+  - pos: 8.501338,21.797794
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1296
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 2,23.5
+  - rot: 1.5707963267948966 rad
+    pos: 6.157588,9.523098
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15973,16 +15774,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 1302
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 8.5,22
+  - pos: 25.501043,-1.1861185
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16059,28 +15855,19 @@ entities:
 - uid: 1310
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 6,9.5
+  - rot: 1.5707963267948966 rad
+    pos: 47.090073,-4.4708805
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1311
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 11,9.5
+  - pos: 12.508076,1.8582891
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16129,14 +15916,10 @@ entities:
 - uid: 1315
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 17,7.5
+  - rot: 1.5707963267948966 rad
+    pos: 18.098747,8.494373
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16157,42 +15940,28 @@ entities:
 - uid: 1317
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 15.5,13
+  - pos: 15.493641,1.8426641
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1318
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 18,8.5
+  - pos: 15.520623,12.86064
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1319
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 18,13.5
+  - rot: 1.5707963267948966 rad
+    pos: 1.1155372,-17.513905
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16241,28 +16010,18 @@ entities:
 - uid: 1324
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 6,-17.5
+  - pos: -1.4899101,-13.17648
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1325
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 1,-17.5
+  - pos: -9.521995,-17.191471
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16276,14 +16035,10 @@ entities:
 - uid: 1327
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 13,-3.5
+  - rot: -1.5707963267948966 rad
+    pos: 18.89989,-0.46983594
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16297,14 +16052,10 @@ entities:
 - uid: 1329
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 12.5,2
+  - rot: 1.5707963267948966 rad
+    pos: 2.0898275,-4.523888
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16325,14 +16076,10 @@ entities:
 - uid: 1332
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 6,-4.5
+  - rot: 1.5707963267948966 rad
+    pos: 7.1310654,-14.473245
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16367,14 +16114,10 @@ entities:
 - uid: 1335
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 12,-12.5
+  - rot: -1.5707963267948966 rad
+    pos: 19.90783,-8.476819
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16413,28 +16156,20 @@ entities:
 - uid: 1341
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 19,-0.5
+  - rot: 1.5707963267948966 rad
+    pos: 6.1367025,1.6240516
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1342
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 20,-8.5
+  - rot: 1.5707963267948966 rad
+    pos: 18.088957,13.54814
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16451,16 +16186,11 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1344
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 25,11.5
+  - pos: 22.445484,-9.293987
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16472,30 +16202,22 @@ entities:
     parent: 853
     type: Transform
 - uid: 1346
-  type: PoweredSmallLight
+  type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 30.5,-6
+  - rot: -1.5707963267948966 rad
+    pos: 51.933823,-4.5333805
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1347
-  type: PoweredSmallLight
+  type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,-1
+  - rot: -1.5707963267948966 rad
+    pos: 12.937156,-3.5445666
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16679,28 +16401,19 @@ entities:
 - uid: 1366
   type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 35.5,-6
+  - pos: 35.514977,-6.262737
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1367
   type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.5,-3
+  - rot: 1.5707963267948966 rad
+    pos: -30.97177,-5.531664
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16721,42 +16434,28 @@ entities:
 - uid: 1369
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: -35,-4.5
+  - pos: 28.505056,6.8201885
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1370
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 25,1.5
+  - pos: 30.499353,-6.200237
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1371
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 30,1.5
+  - rot: 1.5707963267948966 rad
+    pos: -25.917414,-0.5190892
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16770,14 +16469,10 @@ entities:
 - uid: 1373
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 31,0.5
+  - rot: 1.5707963267948966 rad
+    pos: 37.0966,2.484137
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16826,14 +16521,10 @@ entities:
 - uid: 1377
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 36,-2.5
+  - rot: -1.5707963267948966 rad
+    pos: 24.923923,11.532515
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16854,28 +16545,19 @@ entities:
 - uid: 1380
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 30,12.5
+  - rot: 1.5707963267948966 rad
+    pos: 30.104717,12.563765
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1381
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 37,12.5
+  - pos: 46.516445,4.843512
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16953,16 +16635,11 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1388
-  type: Poweredlight
+  type: PoweredlightEmpty
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 37,2.5
+  - pos: 13.536872,-7.156335
     parent: 853
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -39094,12 +38771,10 @@ entities:
 - uid: 3878
   type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.528679,-9.003884
+  - rot: 1.5707963267948966 rad
+    pos: -15.015614,20.502157
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -39498,12 +39173,10 @@ entities:
 - uid: 3916
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -13.924418,16.541348
+  - rot: 1.5707963267948966 rad
+    pos: 6.105843,-25.592358
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -40337,7 +40010,8 @@ entities:
 - uid: 4009
   type: Poweredlight
   components:
-  - pos: 7.5,-22
+  - rot: 1.5707963267948966 rad
+    pos: 2.100807,-25.514233
     parent: 853
     type: Transform
   - containers:
@@ -40467,8 +40141,7 @@ entities:
 - uid: 4024
   type: Poweredlight
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 6,-25.5
+  - pos: 7.512093,-22.139233
     parent: 853
     type: Transform
   - containers:
@@ -40533,7 +40206,7 @@ entities:
   type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
-    pos: 13,-25.5
+    pos: -22.097801,-0.5190892
     parent: 853
     type: Transform
   - containers:
@@ -41250,38 +40923,32 @@ entities:
     parent: 853
     type: Transform
 - uid: 4122
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -26,-0.5
+  - rot: -1.5707963267948966 rad
+    pos: 44.01483,12.438765
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4123
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 46.5,5
+  - rot: 1.5707963267948966 rad
+    pos: 46.108562,6.5075245
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4124
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 38.5,10
+  - rot: 3.141592653589793 rad
+    pos: -6.2755547,3.0213985
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -41439,44 +41106,36 @@ entities:
 - uid: 4145
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -31,-1.5
+  - rot: -1.5707963267948966 rad
+    pos: -3.099586,-5.569584
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4146
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -31,1.5
+  - pos: -13.50299,1.8497577
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4147
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -31,-4.5
+  - pos: -9.505926,1.8653827
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4148
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 12.5,25
+  - rot: 1.5707963267948966 rad
+    pos: -7.889039,-4.569584
     parent: 853
     type: Transform
   - containers:
@@ -41492,12 +41151,10 @@ entities:
 - uid: 4150
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -8,-4.5
+  - rot: 1.5707963267948966 rad
+    pos: -2.9115314,24.482988
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -41735,24 +41392,18 @@ entities:
 - uid: 4178
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -9.5,2
+  - pos: 38.499187,9.874689
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4179
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 1.5,1
+  - pos: 38.503914,-3.2242432
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -41943,12 +41594,10 @@ entities:
 - uid: 4203
   type: Poweredlight
   components:
-  - rot: 3.141592697301183 rad
-    pos: -11.5,-5
+  - rot: 1.5707963267948966 rad
+    pos: 47.090073,-10.509963
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -42360,12 +42009,10 @@ entities:
 - uid: 4258
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -8.5,23
+  - rot: -1.5707963267948966 rad
+    pos: 51.918198,-10.509963
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -42823,14 +42470,12 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4321
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 45,12.5
+  - rot: 1.5707963267948966 rad
+    pos: 38.030457,12.470015
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -43013,12 +42658,10 @@ entities:
 - uid: 4338
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 46,6.5
+  - rot: -1.5707963267948966 rad
+    pos: 35.905144,-2.4519515
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -44296,48 +43939,40 @@ entities:
 - uid: 4483
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 44.5,-9
+  - rot: -1.5707963267948966 rad
+    pos: 12.942612,-25.529858
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4484
   type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 54.5,-9
+  - rot: -1.5707963267948966 rad
+    pos: 4.928932,-28.529858
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4485
   type: Poweredlight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 52,-11.5
+  - rot: -1.5707963267948966 rad
+    pos: -2.0884767,-23.529858
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4486
   type: Poweredlight
   components:
-  - rot: 1.5707963705062866 rad
-    pos: 47,-11.5
+  - rot: -1.5707963267948966 rad
+    pos: -13.129641,-21.475588
     parent: 853
     type: Transform
-  - powerLoad: 0
-    type: PowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -46816,18 +46451,17 @@ entities:
 - uid: 4782
   type: Poweredlight
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 11,-29.5
+  - pos: 23.519926,-4.184294
     parent: 853
     type: Transform
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4783
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 10,-29.5
+  - rot: 1.5707963267948966 rad
+    pos: -30.97177,0.51521087
     parent: 853
     type: Transform
   - containers:
@@ -47474,10 +47108,10 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4852
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 5,-25.5
+  - rot: 1.5707963267948966 rad
+    pos: -30.956144,-2.5004141
     parent: 853
     type: Transform
   - containers:
@@ -47487,7 +47121,7 @@ entities:
   type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
-    pos: 5,-29.5
+    pos: 16.911247,7.525623
     parent: 853
     type: Transform
   - containers:
@@ -47937,7 +47571,8 @@ entities:
 - uid: 4911
   type: Poweredlight
   components:
-  - pos: 15.496435,2.097836
+  - rot: 1.5707963267948966 rad
+    pos: -17.91089,-25.522463
     parent: 853
     type: Transform
   - containers:
@@ -48198,4 +47833,74 @@ entities:
   - pos: 44.5,11.5
     parent: 853
     type: Transform
+- uid: 4953
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -25.886164,-4.550339
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4954
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 31.116735,0.101480484
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4955
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 25.960485,0.023355484
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4956
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 29.00736,0.038980484
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4957
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 6.4960318,3.0213985
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4958
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.8850474,30.48638
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4959
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 9.911827,30.439505
+    parent: 853
+    type: Transform
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 ...

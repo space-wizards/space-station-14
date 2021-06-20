@@ -81,7 +81,7 @@ namespace Content.Server.Nutrition.Components
         [DataField("burstSound")]
         private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -187,7 +187,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!target.TryGetComponent(out IBody? body) ||
+            if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink",("owner", Owner)));

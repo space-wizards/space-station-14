@@ -170,10 +170,6 @@ namespace Content.Server.Suspicion
 
             switch (message)
             {
-                case PlayerAttachedMsg:
-                case PlayerDetachedMsg:
-                    SyncRoles();
-                    break;
                 case RoleAddedMessage {Role: SuspicionRole role}:
                     Role = role;
                     break;

@@ -16,7 +16,7 @@ namespace Content.Server.CharacterAppearance.Components
             {
                 base.Appearance = value;
 
-                if (Owner.TryGetComponent(out IBody? body))
+                if (Owner.TryGetComponent(out SharedBodyComponent? body))
                 {
                     foreach (var (part, _) in body.Parts)
                     {
@@ -35,7 +35,7 @@ namespace Content.Server.CharacterAppearance.Components
         {
             base.Startup();
 
-            if (Appearance != null! && Owner.TryGetComponent(out IBody? body))
+            if (Appearance != null! && Owner.TryGetComponent(out SharedBodyComponent? body))
             {
                 foreach (var (part, _) in body.Parts)
                 {

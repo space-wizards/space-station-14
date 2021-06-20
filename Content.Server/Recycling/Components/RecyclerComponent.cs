@@ -69,7 +69,7 @@ namespace Content.Server.Recycling.Components
         private bool CanGib(IEntity entity)
         {
             // We suppose this entity has a Recyclable component.
-            return entity.HasComponent<IBody>() && !_safe && Powered;
+            return entity.HasComponent<SharedBodyComponent>() && !_safe && Powered;
         }
 
         private void Recycle(IEntity entity)
@@ -87,7 +87,7 @@ namespace Content.Server.Recycling.Components
             // Mobs are a special case!
             if (CanGib(entity))
             {
-                entity.GetComponent<IBody>().Gib(true);
+                entity.GetComponent<SharedBodyComponent>().Gib(true);
                 Bloodstain();
                 return;
             }
@@ -153,13 +153,13 @@ namespace Content.Server.Recycling.Components
 
             if (mind != null)
             {
-                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
+                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
             }
 
             victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
-            if (victim.TryGetComponent<IBody>(out var body))
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
             {
                 body.Gib(true);
             }

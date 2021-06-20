@@ -76,7 +76,7 @@ namespace Content.Server.BarSign
             Owner.Description = prototype.Description;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

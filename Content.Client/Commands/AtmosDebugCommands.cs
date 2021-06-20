@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using System;
+using Content.Client.Atmos.EntitySystems;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 

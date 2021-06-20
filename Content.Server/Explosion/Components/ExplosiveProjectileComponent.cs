@@ -9,7 +9,7 @@ namespace Content.Server.Explosion.Components
     {
         public override string Name => "ExplosiveProjectile";
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

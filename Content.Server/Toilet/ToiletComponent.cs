@@ -42,7 +42,7 @@ namespace Content.Server.Toilet
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _secretStash = Owner.EnsureComponent<SecretStashComponent>();
@@ -144,7 +144,7 @@ namespace Content.Server.Toilet
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             // check that victim even have head
-            if (victim.TryGetComponent<IBody>(out var body) &&
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",victim.Name),("owner", Owner.Name));

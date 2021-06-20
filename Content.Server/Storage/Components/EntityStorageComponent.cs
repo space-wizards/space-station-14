@@ -10,6 +10,7 @@ using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Movement;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
@@ -145,7 +146,7 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
@@ -208,7 +209,7 @@ namespace Content.Server.Storage.Components
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
                 if (!entity.HasComponent<SharedItemComponent>() &&
-                    !entity.HasComponent<IBody>())
+                    !entity.HasComponent<SharedBodyComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -446,7 +447,7 @@ namespace Content.Server.Storage.Components
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -464,7 +465,7 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;

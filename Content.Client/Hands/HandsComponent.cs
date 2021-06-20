@@ -72,14 +72,14 @@ namespace Content.Client.Hands
             return GetHand(handName)?.Entity;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 
             _gui?.Dispose();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -201,6 +201,7 @@ namespace Content.Client.Hands
 
         protected override void Startup()
         {
+            base.Startup();
             ActiveIndex = _hands.LastOrDefault()?.Name;
         }
 
@@ -210,22 +211,6 @@ namespace Content.Client.Hands
 
             switch (message)
             {
-                case PlayerAttachedMsg _:
-                    if (_gui == null)
-                    {
-                        _gui = new HandsGui();
-                    }
-                    else
-                    {
-                        _gui.Parent?.RemoveChild(_gui);
-                    }
-
-                    _gameHud.HandsContainer.AddChild(_gui);
-                    _gui.UpdateHandIcons();
-                    break;
-                case PlayerDetachedMsg _:
-                    _gui?.Parent?.RemoveChild(_gui);
-                    break;
                 case HandEnabledMsg msg:
                 {
                     var hand = GetHand(msg.Name);
@@ -253,6 +238,23 @@ namespace Content.Client.Hands
                     break;
                 }
             }
+        }
+
+        public void PlayerDetached() { _gui?.Parent?.RemoveChild(_gui); }
+
+        public void PlayerAttached()
+        {
+            if (_gui == null)
+            {
+                _gui = new HandsGui();
+            }
+            else
+            {
+                _gui.Parent?.RemoveChild(_gui);
+            }
+
+            _gameHud.HandsContainer.AddChild(_gui);
+            _gui.UpdateHandIcons();
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)

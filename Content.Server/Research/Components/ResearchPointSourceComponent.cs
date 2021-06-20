@@ -39,7 +39,7 @@ namespace Content.Server.Research.Components
         [ViewVariables]
         public bool CanProduce => Active && (_powerReceiver is null || _powerReceiver.Powered);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.TryGetComponent(out _powerReceiver);

@@ -11,7 +11,7 @@ namespace Content.Server.Mind.Components
 
         [ViewVariables] public Mind Mind { get; set; } = default!;
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

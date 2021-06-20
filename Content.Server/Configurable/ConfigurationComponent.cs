@@ -47,7 +47,7 @@ namespace Content.Server.Configurable
             }
         }
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
             if (UserInterface != null)
@@ -56,7 +56,7 @@ namespace Content.Server.Configurable
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             if (UserInterface != null)

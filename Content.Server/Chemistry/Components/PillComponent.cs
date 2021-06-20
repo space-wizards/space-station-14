@@ -6,7 +6,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -37,7 +36,7 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables]
         private SolutionContainerComponent _contents = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -70,7 +69,7 @@ namespace Content.Server.Chemistry.Components
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out IBody? body) ||
+            if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;

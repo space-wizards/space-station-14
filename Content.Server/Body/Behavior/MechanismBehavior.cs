@@ -8,22 +8,24 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Behavior
 {
-    public abstract class MechanismBehavior : IMechanismBehavior
+    public abstract class MechanismBehavior : SharedMechanismBehavior
     {
-        public IBody? Body => Part?.Body;
+        private SharedMechanismComponent _parent = default!;
 
-        public IBodyPart? Part => Parent.Part;
+        public override SharedBodyComponent? Body => Part?.Body;
 
-        public IMechanism Parent { get; private set; } = default!;
+        public override SharedBodyPartComponent? Part => Parent.Part;
 
-        public IEntity Owner => Parent.Owner;
+        public override SharedMechanismComponent Parent => _parent;
 
-        public virtual void Initialize(IMechanism parent)
+        public override IEntity Owner => Parent.Owner;
+
+        public override void Initialize(SharedMechanismComponent parent)
         {
-            Parent = parent;
+            _parent = parent;
         }
 
-        public virtual void Startup()
+        public override void Startup()
         {
             if (Part == null)
             {
@@ -40,7 +42,9 @@ namespace Content.Server.Body.Behavior
             }
         }
 
-        public void AddedToBody(IBody body)
+        public override void Update(float frameTime) { }
+
+        public override void AddedToBody(SharedBodyComponent body)
         {
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
@@ -48,7 +52,7 @@ namespace Content.Server.Body.Behavior
             OnAddedToBody(body);
         }
 
-        public void AddedToPart(IBodyPart part)
+        public override void AddedToPart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(Part);
             DebugTools.AssertNotNull(part);
@@ -56,7 +60,7 @@ namespace Content.Server.Body.Behavior
             OnAddedToPart(part);
         }
 
-        public void AddedToPartInBody(IBody body, IBodyPart part)
+        public override void AddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
@@ -66,7 +70,7 @@ namespace Content.Server.Body.Behavior
             OnAddedToPartInBody(body, part);
         }
 
-        public void RemovedFromBody(IBody old)
+        public override void RemovedFromBody(SharedBodyComponent old)
         {
             DebugTools.AssertNull(Body);
             DebugTools.AssertNotNull(old);
@@ -74,7 +78,7 @@ namespace Content.Server.Body.Behavior
             OnRemovedFromBody(old);
         }
 
-        public void RemovedFromPart(IBodyPart old)
+        public override void RemovedFromPart(SharedBodyPartComponent old)
         {
             DebugTools.AssertNull(Part);
             DebugTools.AssertNotNull(old);
@@ -82,7 +86,7 @@ namespace Content.Server.Body.Behavior
             OnRemovedFromPart(old);
         }
 
-        public void RemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
+        public override void RemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
         {
             DebugTools.AssertNull(Body);
             DebugTools.AssertNull(Part);
@@ -92,18 +96,16 @@ namespace Content.Server.Body.Behavior
             OnRemovedFromPartInBody(oldBody, oldPart);
         }
 
-        protected virtual void OnAddedToBody(IBody body) { }
+        protected virtual void OnAddedToBody(SharedBodyComponent body) { }
 
-        protected virtual void OnAddedToPart(IBodyPart part) { }
+        protected virtual void OnAddedToPart(SharedBodyPartComponent part) { }
 
-        protected virtual void OnAddedToPartInBody(IBody body, IBodyPart part) { }
+        protected virtual void OnAddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part) { }
 
-        protected virtual void OnRemovedFromBody(IBody old) { }
+        protected virtual void OnRemovedFromBody(SharedBodyComponent old) { }
 
-        protected virtual void OnRemovedFromPart(IBodyPart old) { }
+        protected virtual void OnRemovedFromPart(SharedBodyPartComponent old) { }
 
-        protected virtual void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart) { }
-
-        public virtual void Update(float frameTime) { }
+        protected virtual void OnRemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart) { }
     }
 }

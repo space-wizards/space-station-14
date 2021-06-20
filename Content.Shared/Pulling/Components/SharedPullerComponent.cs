@@ -37,7 +37,7 @@ namespace Content.Shared.Pulling.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (Pulling != null &&
                 Pulling.TryGetComponent(out SharedPullableComponent? pullable))

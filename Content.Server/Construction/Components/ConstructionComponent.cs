@@ -464,7 +464,7 @@ namespace Content.Server.Construction.Components
             return _containers.Add(id);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

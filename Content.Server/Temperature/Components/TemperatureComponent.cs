@@ -72,37 +72,37 @@ namespace Content.Server.Temperature.Components
                 switch (CurrentTemperature)
                 {
                     // Cold strong.
-                    case var t when t <= 260:
+                    case <= 260:
                         status.ShowAlert(AlertType.Cold, 3);
                         break;
 
                     // Cold mild.
-                    case var t when t <= 280 && t > 260:
+                    case <= 280 and > 260:
                         status.ShowAlert(AlertType.Cold, 2);
                         break;
 
                     // Cold weak.
-                    case var t when t <= 292 && t > 280:
+                    case <= 292 and > 280:
                         status.ShowAlert(AlertType.Cold, 1);
                         break;
 
                     // Safe.
-                    case var t when t <= 327 && t > 292:
+                    case <= 327 and > 292:
                         status.ClearAlertCategory(AlertCategory.Temperature);
                         break;
 
                     // Heat weak.
-                    case var t when t <= 335 && t > 327:
+                    case <= 335 and > 327:
                         status.ShowAlert(AlertType.Hot, 1);
                         break;
 
                     // Heat mild.
-                    case var t when t <= 345 && t > 335:
+                    case <= 345 and > 335:
                         status.ShowAlert(AlertType.Hot, 2);
                         break;
 
                     // Heat strong.
-                    case var t when t > 345:
+                    case > 345:
                         status.ShowAlert(AlertType.Hot, 3);
                         break;
                 }

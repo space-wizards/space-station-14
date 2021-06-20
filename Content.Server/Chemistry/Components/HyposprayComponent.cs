@@ -4,7 +4,6 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -30,7 +29,7 @@ namespace Content.Server.Chemistry.Components
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solution = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

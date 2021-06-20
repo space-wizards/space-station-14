@@ -50,7 +50,7 @@ namespace Content.Server.Crayon
             Color = Color.FromName(_color);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)

@@ -22,7 +22,7 @@ namespace Content.Server.CharacterAppearance.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -32,7 +32,7 @@ namespace Content.Server.CharacterAppearance.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (UserInterface != null)
             {

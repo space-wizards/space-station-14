@@ -30,7 +30,6 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -214,7 +213,7 @@ namespace Content.Server.StationEvents
             }
 
             // Stop events from happening in lobby and force active event to end if the round ends
-            if (_gameTicker.RunLevel != GameRunLevel.InRound)
+            if (Get<GameTicker>().RunLevel != GameRunLevel.InRound)
             {
                 if (CurrentEvent != null)
                 {

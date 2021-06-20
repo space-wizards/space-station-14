@@ -92,7 +92,7 @@ namespace Content.Server.Power.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _provider.RemoveReceiver(this);
             base.OnRemove();

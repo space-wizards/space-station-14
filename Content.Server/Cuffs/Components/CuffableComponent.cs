@@ -8,8 +8,8 @@ using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -26,6 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedCuffableComponent))]
     public class CuffableComponent : SharedCuffableComponent
     {
         /// <summary>
@@ -49,7 +50,7 @@ namespace Content.Server.Cuffs.Components
 
         private bool _uncuffing;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -207,7 +208,8 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            if (!ActionBlockerSystem.CanInteract(user))
+            // TODO: Make into an event and instead have a system check for owner.
+            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;
@@ -219,6 +221,7 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
+            // TODO: Why are we even doing this check?
             if (!cuffsToRemove.InRangeUnobstructed(Owner))
             {
                 Logger.Warning("Handcuffs being removed from player are obstructed or too far away! This should not happen!");
@@ -227,7 +230,6 @@ namespace Content.Server.Cuffs.Components
 
             user.PopupMessage(Loc.GetString("cuffable-component-start-removing-cuffs-message"));
 
-            var audio = EntitySystem.Get<AudioSystem>();
             if (isOwner)
             {
                 if (cuff.StartBreakoutSound != null)
@@ -324,7 +326,7 @@ namespace Content.Server.Cuffs.Components
         {
             protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
             {
-                if ((user != component.Owner && !ActionBlockerSystem.CanInteract(user)) || component.CuffedHandCount == 0)
+                if ((user != component.Owner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) || component.CuffedHandCount == 0)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

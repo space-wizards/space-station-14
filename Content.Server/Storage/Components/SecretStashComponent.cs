@@ -31,7 +31,7 @@ namespace Content.Server.Storage.Components
 
         public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", Owner.Name));
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _itemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "stash", out _);

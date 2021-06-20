@@ -107,6 +107,7 @@ ui-options-function-editor-grid-place = Place in grid
 ui-options-function-editor-line-place = Place line
 ui-options-function-editor-rotate-object = Rotate
 
+ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
 ui-options-function-show-debug-monitors = Show Debug Monitors
 ui-options-function-hide-ui = Hide UI

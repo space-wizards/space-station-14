@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Body.Circulatory;
 using Content.Server.Body.Respiratory;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Notification;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -48,7 +48,7 @@ namespace Content.Server.Body.Behavior
             IoCManager.InjectDependencies(this);
         }
 
-        protected override void OnAddedToBody(IBody body)
+        protected override void OnAddedToBody(SharedBodyComponent body)
         {
             base.OnAddedToBody(body);
             Inhale(CycleDelay);

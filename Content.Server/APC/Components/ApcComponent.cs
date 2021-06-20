@@ -53,7 +53,7 @@ namespace Content.Server.APC.Components
 
         [ComponentDependency] private AccessReader? _accessReader = null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

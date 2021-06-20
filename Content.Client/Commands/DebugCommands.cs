@@ -1,12 +1,6 @@
-// ReSharper disable once RedundantUsingDirective
-// Used to warn the player in big red letters in debug mode
 using System;
-using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Markers;
 using Content.Client.Notifications.Managers;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;

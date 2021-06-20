@@ -48,8 +48,7 @@ namespace Content.Server.Morgue.Components
         [ViewVariables]
         [ComponentDependency] protected readonly AppearanceComponent? Appearance = null;
 
-
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);
@@ -64,7 +63,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<IBody>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
             return base.AddToContents(entity);
         }
 
@@ -115,7 +114,7 @@ namespace Content.Server.Morgue.Components
             foreach (var entity in Contents.ContainedEntities)
             {
                 count++;
-                if (!hasMob && entity.HasComponent<IBody>()) hasMob = true;
+                if (!hasMob && entity.HasComponent<SharedBodyComponent>()) hasMob = true;
                 if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null) hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);

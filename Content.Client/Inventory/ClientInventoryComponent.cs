@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Clothing;
@@ -37,7 +37,7 @@ namespace Content.Client.Inventory
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 
@@ -48,7 +48,7 @@ namespace Content.Client.Inventory
             InterfaceController?.Dispose();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -252,22 +252,16 @@ namespace Content.Client.Inventory
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public void PlayerDetached()
         {
-            base.HandleMessage(message, component);
+            InterfaceController.PlayerDetached();
+            _playerAttached = false;
+        }
 
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    InterfaceController.PlayerAttached();
-                    _playerAttached = true;
-                    break;
-
-                case PlayerDetachedMsg _:
-                    InterfaceController.PlayerDetached();
-                    _playerAttached = false;
-                    break;
-            }
+        public void PlayerAttached()
+        {
+            InterfaceController.PlayerAttached();
+            _playerAttached = true;
         }
 
         public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
