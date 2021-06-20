@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -8,12 +7,9 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Notification;
 using Content.Server.Pulling;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
-using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
@@ -23,14 +19,10 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Hands.Components
 {

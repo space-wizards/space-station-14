@@ -1,12 +1,8 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.Animations;
 using Content.Client.HUD;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
-using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
