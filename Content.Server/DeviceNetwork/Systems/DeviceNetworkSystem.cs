@@ -10,12 +10,11 @@ namespace Content.Server.DeviceNetwork.Systems
 {
     /// <summary>
     ///     Entity system that handles everything device network related.
-    ///     Device networking allows macines and devices to communicate with each other while adhering to restrictions like range or beeing connected to the same powernet.
+    ///     Device networking allows machines and devices to communicate with each other while adhering to restrictions like range or being connected to the same powernet.
     /// </summary>
     [UsedImplicitly]
     public class DeviceNetworkSystem : EntitySystem
     {
-
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private readonly Dictionary<int, List<DeviceNetworkComponent>> _connections = new();
@@ -69,7 +68,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="broadcast">Send to all devices on the same device network on the given frequency</param>
         public void QueuePacket(EntityUid uid, string address, int frequency, NetworkPayload data, bool broadcast = false)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (ComponentManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 var packet = new NetworkPacket
                 {
@@ -98,7 +97,7 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Automaticly connect when an entity with a DeviceNetworkComponent starts up.
+        /// Automatically connect when an entity with a DeviceNetworkComponent starts up.
         /// </summary>
         private void OnNetworkStarted(EntityUid uid, DeviceNetworkComponent component, ComponentStartup args)
         {
@@ -106,7 +105,7 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Automaticly disconnect when an entity with a DeviceNetworkComponent shuts up.
+        /// Automatically disconnect when an entity with a DeviceNetworkComponent shuts down.
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
@@ -138,7 +137,7 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Generates a valid address by randomly generating one and checking if it allready exists on the device network with the given device netId.
+        /// Generates a valid address by randomly generating one and checking if it already exists on the device network with the given device netId.
         /// </summary>
         private string GenerateValidAddress(int netId)
         {
@@ -231,12 +230,11 @@ namespace Content.Server.DeviceNetwork.Systems
             public NetworkPayload Data;
             public DeviceNetworkComponent Sender;
         }
-
     }
 
     /// <summary>
     /// Event raised before a device network packet is send.
-    /// Used to for other systems to prevent the packet from beeing sent.
+    /// Subscribed to by other systems to prevent the packet from being sent.
     /// </summary>
     public class BeforePacketSentEvent : CancellableEntityEventArgs
     {

@@ -8,11 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
-
     [UsedImplicitly]
     public class WiredNetworkSystem : EntitySystem
     {
-
         public override void Initialize()
         {
             base.Initialize();
@@ -31,7 +29,7 @@ namespace Content.Server.DeviceNetwork.Systems
                 return;
             }
 
-            if (! EntityManager.GetEntity(args.Sender).TryGetComponent<PowerReceiverComponent>(out var powerReceiver) || !TryGetWireNet(powerReceiver, out var net))
+            if (!ComponentManager.TryGetComponent<PowerReceiverComponent>(args.Sender, out var powerReceiver) || !TryGetWireNet(powerReceiver, out var net))
             {
                 args.Cancel();
                 return;
@@ -72,4 +70,3 @@ namespace Content.Server.DeviceNetwork.Systems
         }
     }
 }
-
