@@ -23,7 +23,7 @@ namespace Content.Client.Hands
         [ViewVariables]
         public HandsGui? Gui { get; private set; }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             ClearGui();
             base.OnRemove();
@@ -48,22 +48,7 @@ namespace Content.Client.Hands
             UpdateHandsGuiState();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case PlayerAttachedMsg:
-                    SettupGui();
-                    break;
-                case PlayerDetachedMsg:
-                    ClearGui();
-                    break;
-            }
-        }
-
-        private void SettupGui()
+        public void SettupGui()
         {
             if (Gui == null)
             {
@@ -75,7 +60,7 @@ namespace Content.Client.Hands
             }
         }
 
-        private void ClearGui()
+        public void ClearGui()
         {
             Gui?.Dispose();
             Gui = null;
@@ -156,23 +141,6 @@ namespace Content.Client.Hands
                     hand.Container = container;
                 }
             }
-        }
-
-        public void PlayerDetached() { _gui?.Parent?.RemoveChild(_gui); }
-
-        public void PlayerAttached()
-        {
-            if (_gui == null)
-            {
-                _gui = new HandsGui();
-            }
-            else
-            {
-                _gui.Parent?.RemoveChild(_gui);
-            }
-
-            _gameHud.HandsContainer.AddChild(_gui);
-            _gui.UpdateHandIcons();
         }
 
         public void UpdateHandVisualizer()

@@ -16,6 +16,9 @@ namespace Content.Client.Hands
         {
             base.Initialize();
 
+            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>((_, component, _) => component.SettupGui());
+            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>((_, component, _) => component.ClearGui());
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed))
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
