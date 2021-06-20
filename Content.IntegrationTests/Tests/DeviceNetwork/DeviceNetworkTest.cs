@@ -70,11 +70,12 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             DeviceNetworkComponent networkComponent2 = null;
 
             var testValue = "test";
-            var payload = NetworkPayload.Create(
-                ("Test", testValue),
-                ("testnumber", 1),
-                ("testbool", true)
-                );
+            var payload = new NetworkPayload
+            {
+                ["Test"] = testValue,
+                ["testnumber"] = 1,
+                ["testbool"] = true
+            };
 
             server.Assert(() => {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
@@ -132,11 +133,12 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             WirelessNetworkComponent wirelessNetworkComponent = null;
 
             var testValue = "test";
-            var payload = NetworkPayload.Create(
-                ("Test", testValue),
-                ("testnumber", 1),
-                ("testbool", true)
-                );
+            var payload = new NetworkPayload
+            {
+                ["Test"] = testValue,
+                ["testnumber"] = 1,
+                ["testbool"] = true
+            };
 
             server.Assert(() => {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
@@ -165,9 +167,10 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             server.Assert(() => {
                 CollectionAssert.AreEqual(deviceNetTestSystem.LastPayload, payload);
 
-                payload = NetworkPayload.Create(
-                    ("Wirelesstest", 5)
-                    );
+                payload = new NetworkPayload
+                {
+                    ["Wirelesstest"] = 5
+                };
 
                 wirelessNetworkComponent.Range = 0;
 
@@ -213,11 +216,12 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             IMapGrid grid = null;
 
             var testValue = "test";
-            var payload = NetworkPayload.Create(
-                ("Test", testValue),
-                ("testnumber", 1),
-                ("testbool", true)
-                );
+            var payload = new NetworkPayload
+            {
+                ["Test"] = testValue,
+                ["testnumber"] = 1,
+                ["testbool"] = true
+            };
 
             server.Assert(() => {
                 var map = mapManager.CreateNewMapEntity(MapId.Nullspace);

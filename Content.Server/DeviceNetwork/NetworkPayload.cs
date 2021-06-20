@@ -7,7 +7,7 @@ namespace Content.Server.DeviceNetwork
 {
     public class NetworkPayload : Dictionary<string, object>
     {
-        private NetworkPayload(int size) : base(size)
+        /*private NetworkPayload(int size) : base(size)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Content.Server.DeviceNetwork
                 }
             }
             return packet;
-        }
+        }*/
 
         /// <summary>
         /// Tries to get a value from the payload and checks if that value is of type T.

@@ -32,6 +32,6 @@ namespace Content.Server.DeviceNetwork.Components
         /// 2 -> Wireless
         /// </summary>
         [DataField("deviceNetID")]
-        private int _deviceNetID = NetworkUtils.PRIVATE;
+        private int _deviceNetID = (int)DeviceNetworkConstants.ConnectionType.Private;
     }
 }
