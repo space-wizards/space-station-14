@@ -240,7 +240,7 @@ namespace Content.Client.HUD
             {
                 ToolTip = Loc.GetString("Open crafting menu."),
                 MinSize = topMinSize,
-                Visible = false,
+                Visible = true,
                 StyleClasses = {StyleBase.ButtonSquare}
             };
 
