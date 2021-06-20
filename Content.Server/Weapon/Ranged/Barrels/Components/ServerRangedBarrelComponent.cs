@@ -132,7 +132,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
 
@@ -143,7 +143,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             rangedWeaponComponent.WeaponCanFireHandler += WeaponCanFire;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             if (Owner.TryGetComponent(out ServerRangedWeaponComponent? rangedWeaponComponent))

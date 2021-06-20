@@ -5,6 +5,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
@@ -31,7 +32,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return true;
             }

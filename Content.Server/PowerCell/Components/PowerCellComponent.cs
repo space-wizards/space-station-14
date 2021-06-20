@@ -32,7 +32,7 @@ namespace Content.Server.PowerCell.Components
 
         [ViewVariables] public bool IsRigged { get; private set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             CurrentCharge = MaxCharge;

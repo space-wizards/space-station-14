@@ -46,7 +46,7 @@ namespace Content.Server.Fluids.Components
         private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<SolutionContainerComponent>();

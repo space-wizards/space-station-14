@@ -72,14 +72,14 @@ namespace Content.Client.Hands
             return GetHand(handName)?.Entity;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 
             _gui?.Dispose();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -201,6 +201,7 @@ namespace Content.Client.Hands
 
         protected override void Startup()
         {
+            base.Startup();
             ActiveIndex = _hands.LastOrDefault()?.Name;
         }
 

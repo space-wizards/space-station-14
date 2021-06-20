@@ -14,7 +14,6 @@ namespace Content.Server.Ghost.Components
     public class GhostOnMoveComponent : Component, IRelayMoveInput, IGhostOnMove
     {
         public override string Name => "GhostOnMove";
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         [DataField("canReturn")] public bool CanReturn { get; set; } = true;
 
@@ -24,7 +23,7 @@ namespace Content.Server.Ghost.Components
             if (Owner.HasComponent<VisitingMindComponent>()) return;
             if (!Owner.TryGetComponent(out MindComponent? mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
 
-            _gameTicker.OnGhostAttempt(mind.Mind!, CanReturn);
+            EntitySystem.Get<GameTicker>().OnGhostAttempt(mind.Mind!, CanReturn);
         }
     }
 }

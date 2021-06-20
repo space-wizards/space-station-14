@@ -5,6 +5,7 @@ using Content.Client.RoundEnd;
 using Content.Client.Viewport;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
 using Robust.Shared.IoC;
@@ -14,10 +15,11 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameTicking.Managers
 {
-    public class ClientGameTicker : SharedGameTicker, IClientGameTicker
+    [UsedImplicitly]
+    public class ClientGameTicker : SharedGameTicker
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
 
         [ViewVariables] private bool _initialized;
         private readonly List<string> _jobsAvailable = new();
@@ -29,7 +31,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; } = new();
+        [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
         [ViewVariables] public IReadOnlyList<string> JobsAvailable => _jobsAvailable;
 
         public event Action? InfoBlobUpdated;
@@ -38,47 +40,47 @@ namespace Content.Client.GameTicking.Managers
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyList<string>>? LobbyJobsAvailableUpdated;
 
-        public void Initialize()
+        public override void Initialize()
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby), JoinLobby);
-            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
-            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
-            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
-            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
-            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady), LobbyReady);
-            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
-            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention), msg =>
+            SubscribeNetworkEvent<TickerJoinLobbyEvent>(JoinLobby);
+            SubscribeNetworkEvent<TickerJoinGameEvent>(JoinGame);
+            SubscribeNetworkEvent<TickerLobbyStatusEvent>(LobbyStatus);
+            SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
+            SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
+            SubscribeNetworkEvent<TickerLobbyReadyEvent>(LobbyReady);
+            SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
+            SubscribeNetworkEvent<RequestWindowAttentionEvent>(msg =>
             {
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
-            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
-            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable), UpdateJobsAvailable);
+            SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
+            SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
 
-            Status = new Dictionary<NetUserId, PlayerStatus>();
+            Status = new Dictionary<NetUserId, LobbyPlayerStatus>();
             _initialized = true;
         }
 
-        private void LateJoinStatus(MsgTickerLateJoinStatus message)
+        private void LateJoinStatus(TickerLateJoinStatusEvent message)
         {
             DisallowedLateJoin = message.Disallowed;
             LobbyLateJoinStatusUpdated?.Invoke();
         }
 
-        private void UpdateJobsAvailable(MsgTickerJobsAvailable message)
+        private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
             _jobsAvailable.Clear();
             _jobsAvailable.AddRange(message.JobsAvailable);
             LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
         }
 
-        private void JoinLobby(MsgTickerJoinLobby message)
+        private void JoinLobby(TickerJoinLobbyEvent message)
         {
             _stateManager.RequestStateChange<LobbyState>();
         }
 
-        private void LobbyStatus(MsgTickerLobbyStatus message)
+        private void LobbyStatus(TickerLobbyStatusEvent message)
         {
             StartTime = message.StartTime;
             IsGameStarted = message.IsRoundStarted;
@@ -91,35 +93,35 @@ namespace Content.Client.GameTicking.Managers
             LobbyStatusUpdated?.Invoke();
         }
 
-        private void LobbyInfo(MsgTickerLobbyInfo message)
+        private void LobbyInfo(TickerLobbyInfoEvent message)
         {
             ServerInfoBlob = message.TextBlob;
 
             InfoBlobUpdated?.Invoke();
         }
 
-        private void JoinGame(MsgTickerJoinGame message)
+        private void JoinGame(TickerJoinGameEvent message)
         {
             _stateManager.RequestStateChange<GameScreen>();
         }
 
-        private void LobbyCountdown(MsgTickerLobbyCountdown message)
+        private void LobbyCountdown(TickerLobbyCountdownEvent message)
         {
             StartTime = message.StartTime;
             Paused = message.Paused;
         }
 
-        private void LobbyReady(MsgTickerLobbyReady message)
+        private void LobbyReady(TickerLobbyReadyEvent message)
         {
             // Merge the Dictionaries
-            foreach (var p in message.PlayerStatus)
+            foreach (var p in message.Status)
             {
                 Status[p.Key] = p.Value;
             }
             LobbyReadyUpdated?.Invoke();
         }
 
-        private void RoundEnd(MsgRoundEndMessage message)
+        private void RoundEnd(RoundEndMessageEvent message)
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
             var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);

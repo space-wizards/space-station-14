@@ -86,7 +86,7 @@ namespace Content.Server.Power.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             Connectable = false;
             var receivers = _linkedReceivers.ToArray();

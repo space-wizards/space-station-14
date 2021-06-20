@@ -48,8 +48,7 @@ namespace Content.Server.Morgue.Components
         [ViewVariables]
         [ComponentDependency] protected readonly AppearanceComponent? Appearance = null;
 
-
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);

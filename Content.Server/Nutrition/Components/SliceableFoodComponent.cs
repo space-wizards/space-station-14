@@ -34,7 +34,7 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Count = _totalCount;

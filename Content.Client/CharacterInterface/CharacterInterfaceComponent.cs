@@ -36,7 +36,7 @@ namespace Content.Client.CharacterInterface
         /// <summary>
         /// Create the window with all character UIs and bind it to a keypress
         /// </summary>
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -54,7 +54,7 @@ namespace Content.Client.CharacterInterface
         /// <summary>
         /// Dispose of window and the keypress binding
         /// </summary>
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

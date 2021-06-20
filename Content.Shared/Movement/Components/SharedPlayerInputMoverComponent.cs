@@ -114,7 +114,7 @@ namespace Content.Shared.Movement.Components
         public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();

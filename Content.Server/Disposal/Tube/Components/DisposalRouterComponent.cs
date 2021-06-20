@@ -7,7 +7,7 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -54,7 +54,7 @@ namespace Content.Server.Disposal.Tube.Components
             return Owner.Transform.LocalRotation.GetDir();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -108,9 +108,10 @@ namespace Content.Server.Disposal.Tube.Components
             if (!Anchored)
                 return false;
 
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
             var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!ActionBlockerSystem.CanInteract(session.AttachedEntity) || !ActionBlockerSystem.CanUse(session.AttachedEntity)))
+            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntity) || !actionBlocker.CanUse(session.AttachedEntity)))
                 return false;
 
             return true;
@@ -176,7 +177,7 @@ namespace Content.Server.Disposal.Tube.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();

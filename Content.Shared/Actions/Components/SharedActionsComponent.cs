@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -68,6 +68,7 @@ namespace Content.Shared.Actions.Components
 
         protected override void Startup()
         {
+            base.Startup();
             foreach (var actionType in InnateActions)
             {
                 Grant(actionType);

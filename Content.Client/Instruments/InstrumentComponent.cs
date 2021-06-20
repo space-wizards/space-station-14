@@ -196,7 +196,7 @@ namespace Content.Client.Instruments
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
