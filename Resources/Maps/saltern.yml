@@ -15126,8 +15126,7 @@ entities:
     type: Transform
   - startingCharge: 11999.417
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 1240
   type: Poweredlight
   components:
@@ -24509,8 +24508,7 @@ entities:
     type: Transform
   - startingCharge: 11999.634
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2505
   type: SalternApc
   components:
@@ -24520,8 +24518,7 @@ entities:
     type: Transform
   - startingCharge: 11999.3
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2506
   type: SalternApc
   components:
@@ -24531,8 +24528,7 @@ entities:
     type: Transform
   - startingCharge: 11999.066
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2507
   type: SalternApc
   components:
@@ -24542,8 +24538,7 @@ entities:
     type: Transform
   - startingCharge: 11999.733
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2508
   type: SalternApc
   components:
@@ -24553,8 +24548,7 @@ entities:
     type: Transform
   - startingCharge: 11999.483
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2509
   type: SalternApc
   components:
@@ -24564,8 +24558,7 @@ entities:
     type: Transform
   - startingCharge: 11991.15
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2510
   type: SalternApc
   components:
@@ -24575,8 +24568,7 @@ entities:
     type: Transform
   - startingCharge: 11999.15
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2511
   type: SalternApc
   components:
@@ -24586,8 +24578,7 @@ entities:
     type: Transform
   - startingCharge: 11999.384
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2512
   type: SalternApc
   components:
@@ -24597,8 +24588,7 @@ entities:
     type: Transform
   - startingCharge: 11999.116
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2513
   type: SalternApc
   components:
@@ -24608,8 +24598,7 @@ entities:
     type: Transform
   - startingCharge: 11999.2
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2514
   type: SalternApc
   components:
@@ -24619,8 +24608,7 @@ entities:
     type: Transform
   - startingCharge: 11999.066
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2515
   type: SalternApc
   components:
@@ -24630,8 +24618,7 @@ entities:
     type: Transform
   - startingCharge: 11999.467
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2516
   type: CrateServiceReplacementLights
   components:
@@ -24653,8 +24640,7 @@ entities:
     type: Transform
   - startingCharge: 11999.483
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2518
   type: SalternApc
   components:
@@ -24664,8 +24650,7 @@ entities:
     type: Transform
   - startingCharge: 11999.4
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2519
   type: SalternApc
   components:
@@ -24675,8 +24660,7 @@ entities:
     type: Transform
   - startingCharge: 11999.4
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2520
   type: SalternApc
   components:
@@ -24686,8 +24670,7 @@ entities:
     type: Transform
   - startingCharge: 11998.483
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2521
   type: ShellShotgunSlug
   components:
@@ -24705,8 +24688,7 @@ entities:
     type: Transform
   - startingCharge: 11999.75
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2523
   type: ApcExtensionCable
   components:
@@ -24734,8 +24716,7 @@ entities:
     type: Transform
   - startingCharge: 11999.083
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2526
   type: SalternApc
   components:
@@ -24745,8 +24726,7 @@ entities:
     type: Transform
   - startingCharge: 11996.233
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2527
   type: SalternApc
   components:
@@ -24756,8 +24736,7 @@ entities:
     type: Transform
   - startingCharge: 11999.65
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2528
   type: ApcExtensionCable
   components:
@@ -25041,8 +25020,7 @@ entities:
     type: Transform
   - startingCharge: 11999.833
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2555
   type: ApcExtensionCable
   components:
@@ -27563,8 +27541,7 @@ entities:
     type: Transform
   - startingCharge: 11999.45
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 2790
   type: ApcExtensionCable
   components:
@@ -33744,10 +33721,6 @@ entities:
     type: Transform
   - startingCharge: 2366791.8
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3380
   type: SalternApc
   components:
@@ -35978,10 +35951,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3614
   type: SalternSubstation
   components:
@@ -35991,10 +35960,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3615
   type: SalternSubstation
   components:
@@ -36004,10 +35969,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3616
   type: SalternSubstation
   components:
@@ -36017,10 +35978,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3617
   type: BedsheetSpawner
   components:
@@ -36037,10 +35994,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3619
   type: HVWire
   components:
@@ -36059,10 +36012,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3621
   type: SalternSubstation
   components:
@@ -36072,10 +36021,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3622
   type: SalternSubstation
   components:
@@ -36085,10 +36030,6 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 3623
   type: MVWire
   components:
@@ -39227,8 +39168,6 @@ entities:
     type: Transform
   - startingCharge: 11999.217
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 3922
   type: EmergencyLight
   components:
@@ -40842,8 +40781,7 @@ entities:
     type: Transform
   - startingCharge: 11999.233
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
+
 - uid: 4112
   type: Bed
   components:
@@ -43919,10 +43857,6 @@ entities:
     type: Transform
   - startingCharge: 3200136
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 4482
   type: SalternSubstation
   components:
@@ -43932,10 +43866,6 @@ entities:
     type: Transform
   - startingCharge: 3200136
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 4483
   type: Poweredlight
   components:
@@ -45912,10 +45842,6 @@ entities:
     type: Transform
   - startingCharge: 3969174
     type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
-  - supplyRate: 6000
-    type: PowerSupplier
 - uid: 4717
   type: HydroponicsToolSpade
   components:
