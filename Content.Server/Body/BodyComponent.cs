@@ -25,7 +25,6 @@ namespace Content.Server.Body
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
         private Container _partContainer = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         protected override bool CanAddPart(string slotId, SharedBodyPartComponent part)
         {
@@ -94,7 +93,7 @@ namespace Content.Server.Body
                 Owner.TryGetComponent(out MindComponent? mind) &&
                 mind.HasMind)
             {
-                 _gameTicker.OnGhostAttempt(mind.Mind!, true);
+                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind.Mind!, true);
             }
         }
 

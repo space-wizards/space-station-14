@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -22,7 +23,6 @@ namespace Content.Client.LateJoin
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IClientGameTicker _gameTicker = default!;
 
         public event Action<string>? SelectedId;
 
@@ -33,6 +33,8 @@ namespace Content.Client.LateJoin
         {
             MinSize = SetSize = (360, 560);
             IoCManager.InjectDependencies(this);
+
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
 
             Title = Loc.GetString("Late Join");
 
@@ -131,7 +133,7 @@ namespace Content.Client.LateJoin
                         SelectedId?.Invoke(jobButton.JobId);
                     };
 
-                    if (!_gameTicker.JobsAvailable.Contains(job.ID))
+                    if (!gameTicker.JobsAvailable.Contains(job.ID))
                     {
                         jobButton.Disabled = true;
                     }
@@ -147,7 +149,7 @@ namespace Content.Client.LateJoin
                 Close();
             };
 
-            _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
+            gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
         }
 
         private void JobsAvailableUpdated(IReadOnlyList<string> jobs)
@@ -164,7 +166,7 @@ namespace Content.Client.LateJoin
 
             if (disposing)
             {
-                _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
+                EntitySystem.Get<ClientGameTicker>().LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
                 _jobButtons.Clear();
                 _jobCategories.Clear();
             }

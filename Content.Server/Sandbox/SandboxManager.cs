@@ -21,11 +21,10 @@ using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Sandbox
 {
-    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
+    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager, IEntityEventSubscriber
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -53,7 +52,7 @@ namespace Content.Server.Sandbox
             _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide), SandboxSuicideReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            _gameTicker.OnRunLevelChanged += GameTickerOnOnRunLevelChanged;
+            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, GameTickerOnOnRunLevelChanged);
 
             _placementManager.AllowPlacementFunc = placement =>
             {
@@ -74,10 +73,10 @@ namespace Content.Server.Sandbox
             };
         }
 
-        private void GameTickerOnOnRunLevelChanged(GameRunLevelChangedEventArgs obj)
+        private void GameTickerOnOnRunLevelChanged(GameRunLevelChangedEvent obj)
         {
             // Automatically clear sandbox state when round resets.
-            if (obj.NewRunLevel == GameRunLevel.PreRoundLobby)
+            if (obj.New == GameRunLevel.PreRoundLobby)
             {
                 IsSandboxEnabled = false;
             }
@@ -103,7 +102,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _gameTicker.Respawn(player);
+            EntitySystem.Get<GameTicker>().Respawn(player);
         }
 
         private void SandboxGiveAccessReceived(MsgSandboxGiveAccess message)

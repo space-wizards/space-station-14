@@ -6,6 +6,7 @@ using Content.Server.Holiday.Interfaces;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
@@ -13,11 +14,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Holiday
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class HolidayManager : IHolidayManager
+    public class HolidayManager : IHolidayManager, IEntityEventSubscriber
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
         [ViewVariables]
@@ -74,7 +75,7 @@ namespace Content.Server.Holiday
         {
             _configManager.OnValueChanged(CCVars.HolidaysEnabled, OnHolidaysEnableChange, true);
 
-            _gameTicker.OnRunLevelChanged += OnRunLevelChanged;
+            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, OnRunLevelChanged);
         }
 
         private void OnHolidaysEnableChange(bool enabled)
@@ -84,11 +85,11 @@ namespace Content.Server.Holiday
             RefreshCurrentHolidays();
         }
 
-        private void OnRunLevelChanged(GameRunLevelChangedEventArgs eventArgs)
+        private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
         {
             if (!_enabled) return;
 
-            switch (eventArgs.NewRunLevel)
+            switch (eventArgs.New)
             {
                 case GameRunLevel.PreRoundLobby:
                     RefreshCurrentHolidays();

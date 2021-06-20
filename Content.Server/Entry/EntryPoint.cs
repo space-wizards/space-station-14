@@ -14,7 +14,6 @@ using Content.Server.Notification.Managers;
 using Content.Server.PDA.Managers;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
-using Content.Server.Shell;
 using Content.Server.Speech;
 using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
@@ -31,9 +30,7 @@ namespace Content.Server.Entry
 {
     public class EntryPoint : GameServer
     {
-        private IGameTicker _gameTicker = default!;
         private EuiManager _euiManager = default!;
-        private StatusShell _statusShell = default!;
         private IVoteManager _voteManager = default!;
 
         /// <inheritdoc />
@@ -60,7 +57,6 @@ namespace Content.Server.Entry
 
             IoCManager.BuildGraph();
 
-            _gameTicker = IoCManager.Resolve<IGameTicker>();
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
 
@@ -68,8 +64,6 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IChatManager>().Initialize();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-
-            _statusShell = new StatusShell();
 
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
@@ -79,7 +73,6 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IServerDbManager>().Init();
             IoCManager.Resolve<IServerPreferencesManager>().Init();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IAccentManager>().Initialize();
             _voteManager.Initialize();
         }
@@ -89,7 +82,7 @@ namespace Content.Server.Entry
             base.PostInit();
 
             IoCManager.Resolve<IHolidayManager>().Initialize();
-            _gameTicker.Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
@@ -99,6 +92,8 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             _euiManager.Initialize();
+
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -107,11 +102,6 @@ namespace Content.Server.Entry
 
             switch (level)
             {
-                case ModUpdateLevel.PreEngine:
-                {
-                    _gameTicker.Update(frameEventArgs);
-                    break;
-                }
                 case ModUpdateLevel.PostEngine:
                 {
                     _euiManager.SendUpdates();

@@ -1,6 +1,7 @@
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
@@ -22,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var ticker = IoCManager.Resolve<IGameTicker>();
+            var ticker = EntitySystem.Get<GameTicker>();
 
             NetUserId userId;
             if (args.Length == 0)
