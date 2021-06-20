@@ -120,7 +120,7 @@ namespace Content.Server.Botany.Components
         [ComponentDependency] private readonly SolutionContainerComponent? _solutionContainer = default!;
         [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

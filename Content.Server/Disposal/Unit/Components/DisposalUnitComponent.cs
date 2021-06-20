@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Anchor;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Construction.Components;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
@@ -487,7 +487,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -514,7 +514,7 @@ namespace Content.Server.Disposal.Unit.Components
             UpdateInterface();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
             {

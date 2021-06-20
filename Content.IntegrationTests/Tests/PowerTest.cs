@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.IntegrationTests.Tests
@@ -29,15 +30,15 @@ namespace Content.IntegrationTests.Tests
   - type: PowerSupplier
     supplyRate: 3000
   - type: Anchorable
-  - type: SnapGrid
-    offset: Center
+  - type: Transform
+    anchored: true
 
 - type: entity
   name: ConsumerDummy
   id: ConsumerDummy
   components:
-  - type: SnapGrid
-    offset: Center
+  - type: Transform
+    anchored: true
   - type: NodeContainer
     nodes:
       input:
@@ -68,8 +69,8 @@ namespace Content.IntegrationTests.Tests
     voltage: Medium
   - type: BatteryDischarger
     activeSupplyRate: 1000
-  - type: SnapGrid
-    offset: Center
+  - type: Transform
+    anchored: true
 
 - type: entity
   name: ApcDummy
@@ -94,8 +95,8 @@ namespace Content.IntegrationTests.Tests
       output:
         !type:AdjacentNode
         nodeGroupID: Apc
-  - type: SnapGrid
-    offset: Center
+  - type: Transform
+    anchored: true
   - type: UserInterface
     interfaces:
     - key: enum.ApcUiKey.Key
@@ -119,16 +120,16 @@ namespace Content.IntegrationTests.Tests
     voltage: Apc
   - type: Wire
     wireType: Apc
-  - type: SnapGrid
-    offset: Center
+  - type: Transform
+    anchored: true
 
 - type: entity
   name: PowerReceiverDummy
   id: PowerReceiverDummy
   components:
   - type: PowerReceiver
-  - type: SnapGrid
-    offset: Center
+  - type: Transform
+    anchored: true
 ";
         [Test]
         public async Task PowerNetTest()
@@ -146,6 +147,11 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
                 mapMan.CreateMap(new MapId(1));
                 var grid = mapMan.CreateGrid(new MapId(1));
+
+                // Power only works when anchored
+                grid.SetTile(new Vector2i(0, 0), new Tile(1));
+                grid.SetTile(new Vector2i(0, 1), new Tile(1));
+                grid.SetTile(new Vector2i(0, 2), new Tile(1));
 
                 var generatorEnt = entityMan.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
                 var consumerEnt1 = entityMan.SpawnEntity("ConsumerDummy", grid.ToCoordinates(0, 1));
@@ -197,6 +203,11 @@ namespace Content.IntegrationTests.Tests
                 mapMan.CreateMap(new MapId(1));
                 var grid = mapMan.CreateGrid(new MapId(1));
 
+                // Power only works when anchored
+                grid.SetTile(new Vector2i(0, 0), new Tile(1));
+                grid.SetTile(new Vector2i(0, 1), new Tile(1));
+                grid.SetTile(new Vector2i(0, 2), new Tile(1));
+
                 var generatorEnt = entityMan.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
                 var substationEnt = entityMan.SpawnEntity("SubstationDummy", grid.ToCoordinates(0, 1));
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 2));
@@ -244,6 +255,11 @@ namespace Content.IntegrationTests.Tests
                 var mapId = new MapId(1);
                 mapMan.CreateMap(mapId);
                 var grid = mapMan.CreateGrid(mapId);
+
+                // Power only works when anchored
+                grid.SetTile(new Vector2i(0, 0), new Tile(1));
+                grid.SetTile(new Vector2i(0, 1), new Tile(1));
+                grid.SetTile(new Vector2i(0, 2), new Tile(1));
 
                 var apcEnt = entityMan.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
                 var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCableDummy", grid.ToCoordinates(0, 1));

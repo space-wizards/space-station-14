@@ -64,7 +64,7 @@ namespace Content.Server.Singularity.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

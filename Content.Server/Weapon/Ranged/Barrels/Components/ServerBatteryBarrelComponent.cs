@@ -96,7 +96,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 count);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _powerCellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powercell-container", out var existing);
@@ -120,6 +120,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         protected override void Startup()
         {
+            base.Startup();
             UpdateAppearance();
         }
 

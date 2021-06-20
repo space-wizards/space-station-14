@@ -63,7 +63,7 @@ namespace Content.Server.Fluids.Components
         [DataField("speed")]
         private float _mopSpeed = 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

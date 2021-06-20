@@ -73,7 +73,7 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         public bool FixVacuum => _fixVacuum;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -137,14 +137,17 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        public void OnSnapGridMove(SnapGridPositionChangedEvent ev)
+        public void AnchorStateChanged()
         {
-            // Invalidate old position.
-            InvalidatePosition(ev.OldGrid, ev.OldPosition);
+            var gridId = Owner.Transform.GridID;
+            var coords = Owner.Transform.Coordinates;
+
+            var grid = _mapManager.GetGrid(gridId);
+            var tilePos = grid.TileIndicesFor(coords);
 
             // Update and invalidate new position.
-            _lastPosition = (ev.NewGrid, ev.Position);
-            InvalidatePosition(ev.NewGrid, ev.Position);
+            _lastPosition = (gridId, tilePos);
+            InvalidatePosition(gridId, tilePos);
         }
 
         private void UpdatePosition()

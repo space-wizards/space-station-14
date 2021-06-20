@@ -57,7 +57,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             UpdateAppearance();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-magazine", out var existing);

@@ -19,7 +19,7 @@ namespace Content.Server.Plants.Components
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _secretStash = Owner.EnsureComponent<SecretStashComponent>();

@@ -34,7 +34,7 @@ namespace Content.Server.Research.Components
             Server?.UnregisterClient(this);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

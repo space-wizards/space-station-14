@@ -49,7 +49,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("fillPrototype")]
         private string? _fillPrototype;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-container", out var existing);

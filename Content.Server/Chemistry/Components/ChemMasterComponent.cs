@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.Components
         /// Called once per instance of this component. Gets references to any other components needed
         /// by this component and initializes it's UI and other data.
         /// </summary>
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

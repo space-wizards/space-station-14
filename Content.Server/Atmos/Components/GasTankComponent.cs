@@ -124,7 +124,7 @@ namespace Content.Server.Atmos.Components
         [DataField("tank")]
         public string TankName { get; set; } = "tank";
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);

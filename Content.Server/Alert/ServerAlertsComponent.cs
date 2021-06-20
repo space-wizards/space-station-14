@@ -27,7 +27,7 @@ namespace Content.Server.Alert
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (EntitySystem.TryGet<WeightlessSystem>(out var weightlessSystem))
             {

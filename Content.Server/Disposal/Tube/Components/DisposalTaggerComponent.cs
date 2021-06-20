@@ -45,7 +45,7 @@ namespace Content.Server.Disposal.Tube.Components
             return base.NextDirection(holder);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -143,7 +143,7 @@ namespace Content.Server.Disposal.Tube.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             UserInterface?.CloseAll();

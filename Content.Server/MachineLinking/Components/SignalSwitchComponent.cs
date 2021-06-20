@@ -19,7 +19,7 @@ namespace Content.Server.MachineLinking.Components
         [DataField("on")]
         private bool _on;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
