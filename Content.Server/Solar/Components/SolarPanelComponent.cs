@@ -71,7 +71,7 @@ namespace Content.Server.Solar.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

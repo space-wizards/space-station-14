@@ -17,7 +17,7 @@ namespace Content.Server.Computer
         [DataField("board")]
         private string? _boardPrototype;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

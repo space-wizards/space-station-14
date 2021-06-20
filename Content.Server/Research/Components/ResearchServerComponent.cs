@@ -67,7 +67,7 @@ namespace Content.Server.Research.Components
 
         private ApcPowerReceiverComponent? _powerReceiver;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Id = ServerCount++;

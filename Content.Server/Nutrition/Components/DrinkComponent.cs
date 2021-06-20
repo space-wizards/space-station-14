@@ -81,7 +81,7 @@ namespace Content.Server.Nutrition.Components
         [DataField("burstSound")]
         private string _burstSound = "/Audio/Effects/flash_bang.ogg";
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

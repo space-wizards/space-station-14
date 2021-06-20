@@ -110,7 +110,7 @@ namespace Content.Server.Fluids.Components
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

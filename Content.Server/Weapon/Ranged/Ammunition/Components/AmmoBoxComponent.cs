@@ -7,7 +7,7 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -49,7 +49,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("fillPrototype")]
         private string? _fillPrototype;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-container", out var existing);
@@ -222,7 +222,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         {
             protected override void GetData(IEntity user, AmmoBoxComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

@@ -10,7 +10,7 @@ using Content.Shared.Access;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -39,7 +39,7 @@ namespace Content.Server.Access.Components
         private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
         private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -259,7 +259,7 @@ namespace Content.Server.Access.Components
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -284,7 +284,7 @@ namespace Content.Server.Access.Components
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

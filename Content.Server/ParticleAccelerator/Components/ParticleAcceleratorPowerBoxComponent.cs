@@ -12,7 +12,7 @@ namespace Content.Server.ParticleAccelerator.Components
         public override string Name => "ParticleAcceleratorPowerBox";
         [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

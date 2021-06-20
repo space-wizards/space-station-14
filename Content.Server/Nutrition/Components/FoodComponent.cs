@@ -54,7 +54,7 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<SolutionContainerComponent>();

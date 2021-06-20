@@ -51,7 +51,7 @@ namespace Content.Server.Power.Components
 
         [ComponentDependency] private AccessReader? _accessReader = null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

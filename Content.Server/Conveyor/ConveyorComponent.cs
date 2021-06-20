@@ -26,7 +26,7 @@ namespace Content.Server.Conveyor
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("angle")]
-        private Angle _angle;
+        private Angle _angle = Angle.Zero;
 
         public float Speed => _speed;
 

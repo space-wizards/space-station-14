@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Alert;
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.ActionBlocker;
@@ -125,7 +125,7 @@ namespace Content.Server.Clothing.Components
         {
             protected override void GetData(IEntity user, MagbootsComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

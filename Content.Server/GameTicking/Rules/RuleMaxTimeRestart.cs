@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timing.Timer;
@@ -9,8 +10,8 @@ namespace Content.Server.GameTicking.Rules
 {
     public sealed class RuleMaxTimeRestart : GameRule
     {
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private CancellationTokenSource _timerCancel = new();
 
@@ -21,14 +22,14 @@ namespace Content.Server.GameTicking.Rules
         {
             base.Added();
 
-            _gameTicker.OnRunLevelChanged += RunLevelChanged;
+            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, RunLevelChanged);
         }
 
         public override void Removed()
         {
             base.Removed();
 
-            _gameTicker.OnRunLevelChanged -= RunLevelChanged;
+            _entityManager.EventBus.UnsubscribeEvents(this);
             StopTimer();
         }
 
@@ -46,16 +47,16 @@ namespace Content.Server.GameTicking.Rules
 
         private void TimerFired()
         {
-            _gameTicker.EndRound(Loc.GetString("Time has run out!"));
+            EntitySystem.Get<GameTicker>().EndRound(Loc.GetString("Time has run out!"));
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
 
-            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
+            Timer.Spawn(RoundEndDelay, () => EntitySystem.Get<GameTicker>().RestartRound());
         }
 
-        private void RunLevelChanged(GameRunLevelChangedEventArgs args)
+        private void RunLevelChanged(GameRunLevelChangedEvent args)
         {
-            switch (args.NewRunLevel)
+            switch (args.New)
             {
                 case GameRunLevel.InRound:
                     RestartTimer();

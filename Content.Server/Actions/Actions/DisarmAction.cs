@@ -11,8 +11,8 @@ using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -57,7 +57,7 @@ namespace Content.Server.Actions.Actions
             }
 
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
+            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var audio = EntitySystem.Get<AudioSystem>();

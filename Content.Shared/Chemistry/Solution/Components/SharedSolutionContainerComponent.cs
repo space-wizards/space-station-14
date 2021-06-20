@@ -71,7 +71,7 @@ namespace Content.Shared.Chemistry.Solution.Components
         public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
         public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             UpdateAppearance();

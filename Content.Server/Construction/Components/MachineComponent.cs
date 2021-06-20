@@ -18,7 +18,7 @@ namespace Content.Server.Construction.Components
         private Container _boardContainer = default!;
         private Container _partContainer = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -121,6 +121,7 @@ namespace Content.Server.Construction.Components
         public void MapInit()
         {
             CreateBoardAndStockParts();
+            RefreshParts();
         }
     }
 }

@@ -99,7 +99,7 @@ namespace Content.Server.VendingMachines
             Inventory = inventory;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

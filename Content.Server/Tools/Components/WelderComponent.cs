@@ -86,7 +86,7 @@ namespace Content.Server.Tools.Components
             return WelderLit;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

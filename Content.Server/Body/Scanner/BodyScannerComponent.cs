@@ -39,7 +39,7 @@ namespace Content.Server.Body.Scanner
             UserInterface?.Open(session);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

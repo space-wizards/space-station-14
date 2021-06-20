@@ -1,6 +1,5 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;

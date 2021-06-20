@@ -45,7 +45,7 @@ namespace Content.Server.GameTicking.Presets
                 mind.UnVisit();
             }
 
-            var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var position = playerEntity?.Transform.Coordinates ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             // Ok, so, this is the master place for the logic for if ghosting is "too cheaty" to allow returning.
             // There's no reason at this time to move it to any other place, especially given that the 'side effects required' situations would also have to be moved.
             // + If CharacterDeadPhysically applies, we're physically dead. Therefore, ghosting OK, and we can return (this is critical for gibbing)

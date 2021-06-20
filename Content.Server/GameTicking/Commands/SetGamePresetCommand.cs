@@ -1,6 +1,7 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
@@ -20,7 +21,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = IoCManager.Resolve<IGameTicker>();
+            var ticker = EntitySystem.Get<GameTicker>();
 
             ticker.SetStartPreset(args[0]);
         }

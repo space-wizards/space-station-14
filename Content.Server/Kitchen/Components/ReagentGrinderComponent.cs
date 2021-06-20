@@ -68,7 +68,7 @@ namespace Content.Server.Kitchen.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")] private int _storageCap = 16;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             //A slot for the beaker where the grounds/juices will go.
@@ -98,7 +98,7 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             if (UserInterface != null)

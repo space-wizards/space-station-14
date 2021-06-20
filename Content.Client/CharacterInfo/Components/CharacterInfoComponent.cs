@@ -26,7 +26,7 @@ namespace Content.Client.CharacterInfo.Components
         public Control Scene { get; private set; } = default!;
         public UIPriority Priority => UIPriority.Info;
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
 

@@ -23,6 +23,24 @@
       ]
     },
     {
+      "name": "seedextractor-unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "seedextractor-off"
+    },
+    {
       "name": "spawner"
     },
     {

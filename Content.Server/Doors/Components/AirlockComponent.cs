@@ -103,7 +103,7 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _safety = true;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
