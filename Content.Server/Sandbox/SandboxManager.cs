@@ -45,11 +45,11 @@ namespace Content.Server.Sandbox
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus));
-            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn), SandboxRespawnReceived);
-            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessReceived);
-            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost), SandboxGiveAghostReceived);
-            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide), SandboxSuicideReceived);
+            _netManager.RegisterNetMessage<MsgSandboxStatus>();
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>(SandboxRespawnReceived);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(SandboxGiveAccessReceived);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(SandboxGiveAghostReceived);
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>(SandboxSuicideReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, GameTickerOnOnRunLevelChanged);

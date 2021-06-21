@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
@@ -136,14 +137,22 @@ namespace Content.Shared.Item
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            return TryPutInHand(eventArgs.User);
-        }
+            var user = eventArgs.User;
 
-        /// <summary>
-        ///     Tries to put this item in a player's hands.
-        ///     TODO: Move server implementation here once hands are in shared.
-        /// </summary>
-        public abstract bool TryPutInHand(IEntity user);
+            if (!CanPickup(user))
+                return false;
+
+            if (!user.TryGetComponent(out SharedHandsComponent? hands))
+                return false;
+
+            var activeHand = hands.ActiveHand;
+
+            if (activeHand == null)
+                return false;
+
+            hands.TryPickupEntityToActiveHand(Owner);
+            return true;
+        }
 
         protected virtual void OnEquippedPrefixChange() { }
 

@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Rounding;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -29,7 +30,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
@@ -49,6 +49,7 @@ namespace Content.Server.Atmos.EntitySystems
         ///     How far away do we update gas overlays (minimum; due to chunking further away tiles may also be updated).
         /// </summary>
         private float _updateRange;
+
         // Because the gas overlay updates aren't run every tick we need to avoid the pop-in that might occur with
         // the regular PVS range.
         private const float RangeOffset = 6.0f;
@@ -60,6 +61,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         private AtmosphereSystem _atmosphereSystem = default!;
 
+        private int _thresholds;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -67,6 +70,10 @@ namespace Content.Server.Atmos.EntitySystems
             _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue, true);
+            configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset, true);
+            configManager.OnValueChanged(CCVars.GasOverlayThresholds, value => _thresholds = value, true);
         }
 
         public override void Shutdown()
@@ -164,7 +171,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                     if (moles < gas.GasMolesVisible) continue;
 
-                    var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
+                    var opacity = (byte) (ContentHelpers.RoundToLevels(MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255, byte.MaxValue, _thresholds) * 255 / (_thresholds - 1));
+                    var data = new GasData(i, opacity);
                     tileData.Add(data);
                 }
 
@@ -229,15 +237,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             AccumulatedFrameTime += frameTime;
-            _updateCooldown = 1 / _configManager.GetCVar(CCVars.NetGasOverlayTickRate);
 
-            if (AccumulatedFrameTime < _updateCooldown)
-            {
-                return;
-            }
-
-            _updateRange = _configManager.GetCVar(CVars.NetMaxUpdateRange) + RangeOffset;
+            if (AccumulatedFrameTime < _updateCooldown) return;
 
             // TODO: So in the worst case scenario we still have to send a LOT of tile data per tick if there's a fire.
             // If we go with say 15 tile radius then we have up to 900 tiles to update per tick.

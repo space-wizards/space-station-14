@@ -476,6 +476,7 @@ namespace Content.Client.Construction.UI
             _constructionSystem = system;
             system.ToggleCraftingWindow += SystemOnToggleMenu;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
+            CraftingAvailable = system.CraftingEnabled;
         }
 
         private void UnbindFromSystem()

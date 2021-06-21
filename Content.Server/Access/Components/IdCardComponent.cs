@@ -55,11 +55,15 @@ namespace Content.Server.Access.Components
                 return;
             }
 
-            var jobSuffix = string.IsNullOrWhiteSpace(JobTitle) ? "" : $" ({JobTitle})";
+            var jobSuffix = string.IsNullOrWhiteSpace(JobTitle) ? string.Empty : $" ({JobTitle})";
 
             Owner.Name = string.IsNullOrWhiteSpace(FullName)
-                ? Loc.GetString("{0}{1}", _originalOwnerName, jobSuffix)
-                : Loc.GetString("{0}'s ID card{1}", FullName, jobSuffix);
+                ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
+                                ("originalOwnerName", _originalOwnerName),
+                                ("jobSuffix", jobSuffix))
+                : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
+                                ("fullName", FullName),
+                                ("jobSuffix", jobSuffix));
         }
 
         protected override void Initialize()

@@ -187,7 +187,7 @@ namespace Content.Server.GameTicking
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
-                    if (equipmentStr != "")
+                    if (equipmentStr != string.Empty)
                     {
                         var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                         inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
@@ -201,7 +201,7 @@ namespace Content.Server.GameTicking
                 foreach (var (hand, prototype) in inhand)
                 {
                     var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
-                    handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
+                    handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }
         }

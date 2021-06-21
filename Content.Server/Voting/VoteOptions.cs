@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Server.Player;
 using Robust.Shared.Localization;
@@ -61,7 +61,7 @@ namespace Content.Server.Voting
             }
             else
             {
-                InitiatorText = Loc.GetString("The server");
+                InitiatorText = Loc.GetString("vote-options-server-initiator-text");
             }
         }
     }

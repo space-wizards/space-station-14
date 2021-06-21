@@ -7,11 +7,7 @@ namespace Content.Shared.Administration.Menu
 {
     public class AdminMenuPlayerListMessage : NetMessage
     {
-        #region REQUIRED
-        public static readonly MsgGroups GROUP = MsgGroups.Command;
-        public static readonly string NAME = nameof(AdminMenuPlayerListMessage);
-        public AdminMenuPlayerListMessage(INetChannel channel) : base(NAME, GROUP) { }
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public List<PlayerInfo> PlayersInfo = new();
 

@@ -131,7 +131,7 @@ namespace Content.Client.Actions.UI
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1,
                 Scale = (0.5f, 0.5f),
-                ToolTip = Loc.GetString("ui-actionmenu-function-lock-action-slots"),
+                ToolTip = Loc.GetString("ui-actionsui-function-lock-action-slots"),
                 TooltipDelay = CustomTooltipDelay
             };
             settingsContainer.AddChild(_lockButton);
@@ -143,7 +143,7 @@ namespace Content.Client.Actions.UI
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1,
                 Scale = (0.5f, 0.5f),
-                ToolTip = Loc.GetString("ui-actionmenu-function-open-abilities-menu"),
+                ToolTip = Loc.GetString("ui-actionsui-function-open-abilities-menu"),
                 TooltipDelay = CustomTooltipDelay
             };
             settingsContainer.AddChild(_settingsButton);

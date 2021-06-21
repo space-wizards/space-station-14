@@ -7,14 +7,7 @@ namespace Content.Shared.Administration
 {
     public sealed class MsgUpdateAdminStatus : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgUpdateAdminStatus);
-
-        public MsgUpdateAdminStatus(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public AdminData? Admin;
         public string[] AvailableCommands = Array.Empty<string>();

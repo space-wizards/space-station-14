@@ -12,14 +12,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     public class MsgPreferencesAndSettings : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgPreferencesAndSettings);
-
-        public MsgPreferencesAndSettings(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public PlayerPreferences Preferences = default!;
         public GameSettings Settings = default!;

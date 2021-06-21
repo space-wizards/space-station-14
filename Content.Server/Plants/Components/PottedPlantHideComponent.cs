@@ -38,7 +38,7 @@ namespace Content.Server.Plants.Components
             var gotItem = _secretStash.TryGetItem(eventArgs.User);
             if (!gotItem)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You root around in the roots."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message"));
             }
 
             return gotItem;

@@ -102,7 +102,7 @@ namespace Content.Server.CharacterAppearance.Components
 
             if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent? looks))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("magic-mirror-component-activate-user-has-no-hair"));
                 return;
             }
 

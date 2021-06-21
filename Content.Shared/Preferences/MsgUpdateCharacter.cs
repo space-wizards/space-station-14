@@ -12,14 +12,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     public class MsgUpdateCharacter : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgUpdateCharacter);
-
-        public MsgUpdateCharacter(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public int Slot;
         public ICharacterProfile Profile = default!;

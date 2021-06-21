@@ -68,7 +68,7 @@ namespace Content.Client.Actions.UI
             _actionManager = IoCManager.Resolve<ActionManager>();
             _gameHud = IoCManager.Resolve<IGameHud>();
 
-            Title = Loc.GetString("Actions");
+            Title = Loc.GetString("ui-actionmenu-title");
             MinSize = (300, 300);
 
             Contents.AddChild(new VBoxContainer
@@ -83,17 +83,17 @@ namespace Content.Client.Actions.UI
                             {
                                 StyleClasses = { StyleNano.StyleClassActionSearchBox },
                                 HorizontalExpand = true,
-                                PlaceHolder = Loc.GetString("Search")
+                                PlaceHolder = Loc.GetString("ui-actionmenu-search-bar-placeholder-text")
                             }),
                             (_filterButton = new MultiselectOptionButton<string>()
                             {
-                                Label = Loc.GetString("Filter")
+                                Label = Loc.GetString("ui-actionmenu-filter-buttonr")
                             })
                         }
                     },
                     (_clearButton = new Button
                     {
-                        Text = Loc.GetString("Clear"),
+                        Text = Loc.GetString("ui-actionmenu-clear-button"),
                     }),
                     (_filterLabel = new Label()),
                     new ScrollContainer
@@ -353,7 +353,8 @@ namespace Content.Client.Actions.UI
             else
             {
                 _filterLabel.Visible = true;
-                _filterLabel.Text = Loc.GetString("Filters: {0}", string.Join(", ", _filterButton.SelectedLabels));
+                _filterLabel.Text = Loc.GetString("ui-actionmenu-filter-label",
+                                                  ("selectedLabels", string.Join(", ", _filterButton.SelectedLabels)));
             }
         }
 
@@ -430,7 +431,7 @@ namespace Content.Client.Actions.UI
         /// </summary>
         private static string Standardize(string rawText, bool splitOnCaseChange = false)
         {
-            rawText ??= "";
+            rawText ??= string.Empty;
 
             // treat non-alphanumeric characters as whitespace
             rawText = NonAlphanumeric.Replace(rawText, " ");

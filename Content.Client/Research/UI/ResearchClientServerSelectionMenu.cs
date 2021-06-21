@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -9,8 +9,8 @@ namespace Content.Client.Research.UI
     {
         private readonly ItemList _servers;
         private int _serverCount;
-        private string[] _serverNames = new string[]{};
-        private int[] _serverIds = new int[]{};
+        private string[] _serverNames = System.Array.Empty<string>();
+        private int[] _serverIds = System.Array.Empty<int>();
         private int _selectedServerId = -1;
 
         public ResearchClientBoundUserInterface Owner { get; }
@@ -21,7 +21,7 @@ namespace Content.Client.Research.UI
             IoCManager.InjectDependencies(this);
 
             Owner = owner;
-            Title = Loc.GetString("Research Server Selection");
+            Title = Loc.GetString("research-client-server-selection-menu-title");
 
             _servers = new ItemList() {SelectMode = ItemList.ItemListSelectMode.Single};
 
@@ -56,9 +56,11 @@ namespace Content.Client.Research.UI
             for (var i = 0; i < _serverCount; i++)
             {
                 var id = _serverIds[i];
-                _servers.AddItem($"ID: {id} || {_serverNames[i]}");
+                _servers.AddItem(Loc.GetString("research-client-server-selection-menu-server-entry-text", ("id", id), ("serverName", _serverNames[i])));
                 if (id == _selectedServerId)
+                {
                     _servers[id].Selected = true;
+                }
             }
 
             _servers.OnItemSelected += OnItemSelected;

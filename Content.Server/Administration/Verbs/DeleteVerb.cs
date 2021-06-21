@@ -30,7 +30,7 @@ namespace Content.Server.Administration.Verbs
                 return;
             }
 
-            data.Text = Loc.GetString("Delete");
+            data.Text = Loc.GetString("delete-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Visible;
             data.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";

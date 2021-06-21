@@ -26,7 +26,7 @@ namespace Content.Server.Rotation.Components
             if (Owner.TryGetComponent(out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
-                Owner.PopupMessage(user, Loc.GetString("It's stuck."));
+                Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace Content.Server.Rotation.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Flip");
+                data.Text = Loc.GetString("flippable-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, FlippableComponent component)

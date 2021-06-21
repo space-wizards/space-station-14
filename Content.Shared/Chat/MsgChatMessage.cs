@@ -13,13 +13,7 @@ namespace Content.Shared.Chat
     [UsedImplicitly]
     public sealed class MsgChatMessage : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgChatMessage);
-        public MsgChatMessage(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         /// <summary>
         ///     The channel the message is on. This can also change whether certain params are used.

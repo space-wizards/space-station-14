@@ -1,4 +1,4 @@
-﻿using Content.Shared.Transform;
+using Content.Shared.Transform;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -32,7 +32,7 @@ namespace Content.Server.Transform.Verbs
             }
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("Attach to grid");
+            data.Text = Loc.GetString("attach-to-grandparent-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
         }
 

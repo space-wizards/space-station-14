@@ -194,7 +194,7 @@ namespace Content.Server.Atmos.Components
 
             _resisting = true;
 
-            Owner.PopupMessage(Loc.GetString("You stop, drop, and roll!"));
+            Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
             stunnable.Paralyze(2f);
 
             Owner.SpawnTimer(2000, () =>

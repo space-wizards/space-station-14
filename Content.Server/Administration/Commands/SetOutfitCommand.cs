@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using NFluidsynth;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -26,22 +25,21 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "setoutfit";
 
-        public string Description =>
-            Loc.GetString("Sets the outfit of the specified entity. The entity must have an InventoryComponent");
+        public string Description => Loc.GetString("set-outfit-command-description", ("requiredComponent", nameof(InventoryComponent)));
 
-        public string Help => Loc.GetString("Usage: {0} <entityUid> | {0} <entityUid> <outfitId>", Command);
+        public string Help => Loc.GetString("set-outfit-command-help-text", ("command",Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 1)
             {
-                shell.WriteLine(Loc.GetString("Wrong number of arguments."));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
             if (!int.TryParse(args[0], out var entityUid))
             {
-                shell.WriteLine(Loc.GetString("EntityUid must be a number."));
+                shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
@@ -51,7 +49,7 @@ namespace Content.Server.Administration.Commands
 
             if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
             {
-                shell.WriteLine(Loc.GetString("Invalid entity ID."));
+                shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
@@ -59,17 +57,15 @@ namespace Content.Server.Administration.Commands
 
             if (!target.TryGetComponent<InventoryComponent>(out var inventoryComponent))
             {
-                shell.WriteLine(Loc.GetString("Target entity does not have an inventory!"));
+                shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",("missing", "inventory")));
                 return;
             }
 
             if (args.Length == 1)
             {
-                if (!(shell.Player is IPlayerSession player))
+                if (shell.Player is not IPlayerSession player)
                 {
-                    shell.WriteError(
-                        Loc.GetString(
-                            "This does not work from the server console. You must pass the outfit id aswell."));
+                    shell.WriteError(Loc.GetString("set-outfit-command-is-not-player-error"));
                     return;
                 }
 
@@ -82,7 +78,7 @@ namespace Content.Server.Administration.Commands
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             if (!prototypeManager.TryIndex<StartingGearPrototype>(args[1], out var startingGear))
             {
-                shell.WriteLine(Loc.GetString("Invalid outfit id"));
+                shell.WriteLine(Loc.GetString("set-outfit-command-invalid-outfit-id-error"));
                 return;
             }
 
@@ -100,7 +96,10 @@ namespace Content.Server.Administration.Commands
             {
                 inventoryComponent.ForceUnequip(slot);
                 var gearStr = startingGear.GetGear(slot, profile);
-                if (gearStr == "") continue;
+                if (gearStr == string.Empty)
+                {
+                    continue;
+                }
                 var equipmentEntity = entityManager.SpawnEntity(gearStr, target.Transform.Coordinates);
                 if (slot == EquipmentSlotDefines.Slots.IDCARD &&
                     equipmentEntity.TryGetComponent<PDAComponent>(out var pdaComponent) &&
