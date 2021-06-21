@@ -10,3 +10,8 @@ connecting-tip = Don't die!
 connecting-version = ver 0.1
 connecting-fail-reason = Failed to connect to server:
                          { $reason }
+connecting-state-NotConnecting = Not connecting
+connecting-state-ResolvingHost = Resolving host
+connecting-state-EstablishingConnection = Establishing connection
+connecting-state-Handshake = Handshake
+connecting-state-Connected = Connected

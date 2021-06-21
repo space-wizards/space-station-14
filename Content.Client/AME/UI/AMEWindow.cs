@@ -39,7 +39,7 @@ namespace Content.Client.AME.UI
                         {
                             Children =
                             {
-                                new Label {Text = Loc.GetString("ame-window-engine-status-label")},
+                                new Label {Text = Loc.GetString("ame-window-engine-status-label") + " "},
                                 (InjectionStatus = new Label {Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label")})
                             }
                         },
@@ -54,7 +54,7 @@ namespace Content.Client.AME.UI
                         {
                             Children =
                             {
-                                new Label {Text = Loc.GetString("ame-window-fuel-status-label")},
+                                new Label {Text = Loc.GetString("ame-window-fuel-status-label") + " "},
                                 (FuelAmount = new Label {Text = Loc.GetString("ame-window-fuel-not-inserted-text")})
                             }
                         },
@@ -69,7 +69,7 @@ namespace Content.Client.AME.UI
                         {
                             Children =
                             {
-                                new Label {Text = Loc.GetString("ame-window-injection-amount-label")},
+                                new Label {Text = Loc.GetString("ame-window-injection-amount-label") + " "},
                                 (InjectionAmount = new Label {Text = "0"})
                             }
                         },
@@ -86,7 +86,7 @@ namespace Content.Client.AME.UI
                             Children =
                             {
                                 (RefreshPartsButton = new Button {Text = Loc.GetString("ame-window-refresh-parts-button"), StyleClasses = {StyleBase.ButtonOpenBoth }, Disabled = true }),
-                                 new Label { Text = Loc.GetString("ame-window-core-count-label")},
+                                 new Label { Text = Loc.GetString("ame-window-core-count-label") + " "},
                                 (CoreCount = new Label { Text = "0"}),
                             }
                         }
@@ -132,7 +132,7 @@ namespace Content.Client.AME.UI
                 EjectButton.Disabled = false;
             }
 
-            if(!castState.HasFuelJar)
+            if (!castState.HasFuelJar)
             {
                 EjectButton.Disabled = true;
                 ToggleInjection.Disabled = true;
@@ -145,18 +145,18 @@ namespace Content.Client.AME.UI
                 FuelAmount.Text = $"{castState.FuelAmount}";
             }
 
-            if(!castState.IsMaster)
+            if (!castState.IsMaster)
             {
                 ToggleInjection.Disabled = true;
             }
 
             if (!castState.Injecting)
             {
-                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label");
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label") + " ";
             }
             else
             {
-                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label");
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label") + " ";
             }
 
             RefreshPartsButton.Disabled = castState.Injecting;

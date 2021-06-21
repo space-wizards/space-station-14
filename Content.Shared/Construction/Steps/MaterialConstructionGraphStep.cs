@@ -24,7 +24,7 @@ namespace Content.Shared.Construction.Steps
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("construction-insert-material-entity",("amount", Amount),("materialName", MaterialPrototype.Name)));
+            message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", MaterialPrototype.Name)));
         }
 
         public override bool EntityValid(IEntity entity)

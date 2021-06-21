@@ -264,7 +264,7 @@ namespace Content.Client.Research.UI
 
             _technologyIcon.Texture = TechnologySelected.Icon.Frame0();
             _technologyName.Text = TechnologySelected.Name;
-            _technologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text").ToLowerInvariant();
+            _technologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text" ,("points", Owner.Points)).ToLowerInvariant();
             _technologyRequirements.Text = Loc.GetString("research-console-tech-requirements-none");
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
@@ -286,7 +286,7 @@ namespace Content.Client.Research.UI
         public void PopulatePoints()
         {
             _pointLabel.Text = Loc.GetString("research-console-menu-research-points-text", ("points", Owner.Points));
-            _pointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSeconds", Owner.PointsPerSecond));
+            _pointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSecond", Owner.PointsPerSecond));
         }
 
         /// <summary>
