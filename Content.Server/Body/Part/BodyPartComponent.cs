@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
@@ -153,7 +153,7 @@ namespace Content.Server.Body.Part
             else // If surgery cannot be performed, show message saying so.
             {
                 eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("You see no way to install {0:theName}.", Owner));
+                    Loc.GetString("bodypart-component-no-way-to-install-message", ("partName", Owner)));
             }
         }
 
@@ -180,13 +180,13 @@ namespace Content.Server.Body.Part
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
                 _owningBodyCache.Owner.PopupMessage(_surgeonCache,
-                    Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
+                    Loc.GetString("bodypart-component-no-way-to-attach-message", ("partName", Owner)));
             }
 
             var target = (string) targetObject!;
             var message = _owningBodyCache.TryAddPart(target, this)
-                ? Loc.GetString("You attach {0:theName}.", Owner)
-                : Loc.GetString("You can't attach {0:theName}!", Owner);
+                ? Loc.GetString("bodypart-component-attach-success-message",("partName", Owner))
+                : Loc.GetString("bodypart-component-attach-fail-message",("partName", Owner));
 
             _owningBodyCache.Owner.PopupMessage(_surgeonCache, message);
         }
@@ -256,7 +256,7 @@ namespace Content.Server.Body.Part
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Attach Body Part");
+                data.Text = Loc.GetString("attach-bodypart-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, BodyPartComponent component)

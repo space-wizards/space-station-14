@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -23,7 +23,7 @@ namespace Content.Client.Construction
         {
             if (Prototype == null) return;
 
-            message.AddMarkup(Loc.GetString("Building: [color=cyan]{0}[/color]\n", Prototype.Name));
+            message.AddMarkup(Loc.GetString("construction-ghost-examine-message", ("name", Prototype.Name)));
 
             if (!_prototypeManager.TryIndex(Prototype.Graph, out ConstructionGraphPrototype? graph)) return;
             var startNode = graph.Nodes[Prototype.StartNode];

@@ -64,13 +64,13 @@ namespace Content.Server.Fluids.Components
 
             if (CurrentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Bucket is empty"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-bucket-is-empty-message"));
                 return false;
             }
 
             if (mopComponent.CurrentVolume == mopComponent.MaxVolume)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop is full"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-mop-is-full-message"));
                 return false;
             }
 

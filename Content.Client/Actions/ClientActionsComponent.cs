@@ -44,7 +44,6 @@ namespace Content.Client.Actions
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
-
         protected override void Shutdown()
         {
             base.Shutdown();

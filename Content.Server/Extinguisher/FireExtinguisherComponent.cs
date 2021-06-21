@@ -41,7 +41,7 @@ namespace Content.Server.Extinguisher
                     container.TryAddSolution(drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("{0:TheName} is now refilled", Owner));
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("fire-extinguisher-component-after-interact-refilled-message",("owner", Owner)));
                 }
 
                 return true;

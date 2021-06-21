@@ -45,7 +45,7 @@ namespace Content.Server.GameTicking.Rules
 
             _endTime = _timing.CurTime + RoundMaxTime;
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("There are traitors on the station! Find them, and kill them!"));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-added-announcement"));
 
             var filter = Filter.Empty()
                 .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking.Rules
 
         private void Timeout()
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-traitor-time-has-run-out"));
 
             EndRound(Victory.Innocents);
         }
@@ -106,23 +106,23 @@ namespace Content.Server.GameTicking.Rules
 
             if (innocentsAlive + traitorsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("Everybody is dead, it's a stalemate!"));
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-check-winner-stalemate"));
                 EndRound(Victory.Stalemate);
             }
 
             else if (traitorsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("The traitors are dead! The innocents win."));
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-check-winner-station-win"));
                 EndRound(Victory.Innocents);
             }
             else if (innocentsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("The innocents are dead! The traitors win."));
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-check-winner-traitor-win"));
                 EndRound(Victory.Traitors);
             }
             else if (_timing.CurTime > _endTime)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("Time has run out for the traitors!"));
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-traitor-time-has-run-out"));
                 EndRound(Victory.Innocents);
             }
         }
@@ -141,20 +141,20 @@ namespace Content.Server.GameTicking.Rules
             switch (victory)
             {
                 case Victory.Innocents:
-                    text = Loc.GetString("The innocents have won!");
+                    text = Loc.GetString("rule-suspicion-end-round-innocents-victory");
                     break;
                 case Victory.Traitors:
-                    text = Loc.GetString("The traitors have won!");
+                    text = Loc.GetString("rule-suspicion-end-round-trators-victory");
                     break;
                 default:
-                    text = Loc.GetString("Nobody wins!");
+                    text = Loc.GetString("rule-suspicion-end-round-nobody-victory");
                     break;
             }
 
             var gameTicker = EntitySystem.Get<GameTicker>();
             gameTicker.EndRound(text);
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) RoundEndDelay.TotalSeconds)));
             _checkTimerCancel.Cancel();
 
             Timer.Spawn(RoundEndDelay, () => gameTicker.RestartRound());

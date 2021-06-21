@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
             _expanding = true;
-            Owner.PopupMessageEveryone(Loc.GetString("{0:TheName} expands!", Owner));
+            Owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message",("owner", Owner)));
             if (!string.IsNullOrEmpty(_targetPrototype))
             {
                 var ent = Owner.EntityManager.SpawnEntity(_targetPrototype, Owner.Transform.Coordinates);

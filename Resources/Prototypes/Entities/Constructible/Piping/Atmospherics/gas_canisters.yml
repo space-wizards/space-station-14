@@ -6,7 +6,6 @@
   parent: BaseConstructibleDynamic
   components:
   - type: InteractionOutline
-  - type: SnapGrid
   - type: Sprite
     netsync: false
     sprite: Constructible/Atmos/canister.rsi

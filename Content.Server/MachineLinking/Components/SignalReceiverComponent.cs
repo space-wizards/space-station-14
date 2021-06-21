@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
@@ -73,29 +73,29 @@ namespace Content.Server.MachineLinking.Components
         {
             if (transmitter == null)
             {
-                user.PopupMessage(Loc.GetString("Signal not set."));
+                user.PopupMessage(Loc.GetString("signal-receiver-component-interact-no-transmitter-message"));
                 return false;
             }
 
             if (_transmitters.Contains(transmitter))
             {
                 Unsubscribe(transmitter);
-                Owner.PopupMessage(user, Loc.GetString("Unlinked."));
+                Owner.PopupMessage(user, Loc.GetString("signal-receiver-component-interact-unlinked"));
                 return true;
             }
 
             if (transmitter.Range > 0 && !Owner.Transform.Coordinates.InRange(Owner.EntityManager, transmitter.Owner.Transform.Coordinates, transmitter.Range))
             {
-                Owner.PopupMessage(user, Loc.GetString("Out of range."));
+                Owner.PopupMessage(user, Loc.GetString("signal-receiver-component-interact-out-of-range"));
                 return false;
             }
 
             if (!Subscribe(transmitter))
             {
-                Owner.PopupMessage(user, Loc.GetString("Max Transmitters reached!"));
+                Owner.PopupMessage(user, Loc.GetString("signal-receiver-component-interact-max-transmitters-limit"));
                 return false;
             }
-            Owner.PopupMessage(user, Loc.GetString("Linked!"));
+            Owner.PopupMessage(user, Loc.GetString("signal-receiver-component-interact-success"));
             return true;
         }
 

@@ -663,20 +663,20 @@ namespace Content.Server.Disposal.Mailing
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("disposal-mailing-unit-is-valid-interaction-cannot-interact"));
                 return false;
             }
 
             if (eventArgs.User.IsInContainer())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("disposal-mailing-unit-is-valid-interaction-cannot-reach"));
                 return false;
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("disposal-mailing-unit-is-valid-interaction-no-hands"));
                 return false;
             }
 
@@ -755,7 +755,7 @@ namespace Content.Server.Disposal.Mailing
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Jump inside");
+                data.Text = Loc.GetString("self-insert-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, DisposalMailingUnitComponent component)
@@ -778,7 +778,7 @@ namespace Content.Server.Disposal.Mailing
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Flush");
+                data.Text = Loc.GetString("flush-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 

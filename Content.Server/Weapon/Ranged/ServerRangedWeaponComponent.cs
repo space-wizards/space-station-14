@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Atmos;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
@@ -176,7 +176,7 @@ namespace Content.Server.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                user.PopupMessage(Loc.GetString("The gun blows up in your face!"));
+                user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
                 Owner.Delete();
                 return;

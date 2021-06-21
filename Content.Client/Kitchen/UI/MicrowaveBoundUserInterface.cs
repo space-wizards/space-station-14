@@ -90,8 +90,8 @@ namespace Content.Client.Kitchen.UI
             {
                 var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
                 currentlySelectedTimeButton.Pressed = true;
-                var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
-                _menu.CookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
+                var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("microwave-bound-user-interface-instant-button") : cState.CurrentCookTime.ToString();
+                _menu.CookTimeInfoLabel.Text = $"{Loc.GetString("microwave-bound-user-interface-cook-time-label")}: {label}";
             }
         }
 
@@ -181,7 +181,7 @@ namespace Content.Client.Kitchen.UI
                 SetSize = MinSize = (512, 256);
 
                 Owner = owner;
-                Title = Loc.GetString("Microwave");
+                Title = Loc.GetString("microwave-menu-title");
                 DisableCookingPanelOverlay = new PanelContainer
                 {
                     MouseFilter = MouseFilterMode.Stop,
@@ -233,14 +233,14 @@ namespace Content.Client.Kitchen.UI
 
                 StartButton = new Button
                 {
-                    Text = Loc.GetString("Start"),
+                    Text = Loc.GetString("microwave-menu-start-button"),
                     TextAlign = Label.AlignMode.Center,
                 };
 
                 EjectButton = new Button
                 {
-                    Text = Loc.GetString("Eject All Contents"),
-                    ToolTip = Loc.GetString("This vaporizes all reagents, but ejects any solids."),
+                    Text = Loc.GetString("microwave-menu-eject-all-text"),
+                    ToolTip = Loc.GetString("microwave-menu-eject-all-tooltip"),
                     TextAlign = Label.AlignMode.Center,
                 };
 
@@ -266,7 +266,7 @@ namespace Content.Client.Kitchen.UI
                 {
                     var newButton = new MicrowaveCookTimeButton
                     {
-                        Text = index <= 0 ? Loc.GetString("INSTANT") : index.ToString(),
+                        Text = index <= 0 ? Loc.GetString("microwave-menu-instant-button") : index.ToString(),
                         CookTime = (uint)index,
                         TextAlign = Label.AlignMode.Center,
                         ToggleMode = true,
@@ -286,7 +286,7 @@ namespace Content.Client.Kitchen.UI
 
                 CookTimeInfoLabel = new Label
                 {
-                    Text = Loc.GetString("COOK TIME: 1"),
+                    Text = Loc.GetString("microwave-menu-cook-time-label", ("time", 1)), // TODO, hardcoded value
                     Align = Label.AlignMode.Center,
                     Modulate = Color.White,
                     VerticalAlignment = VAlignment.Center

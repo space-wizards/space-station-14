@@ -289,7 +289,9 @@ namespace Content.Server.Arcade.Components
                 {
                     case PlayerAction.Attack:
                         var attackAmount = _random.Next(2, 6);
-                        _latestPlayerActionMessage = Loc.GetString("You attack {0} for {1}!", _enemyName, attackAmount);
+                        _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-attack-message",
+                                                                   ("enemyName", _enemyName),
+                                                                   ("attackAmount", attackAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_attack.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!_owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -297,7 +299,9 @@ namespace Content.Server.Arcade.Components
                     case PlayerAction.Heal:
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
-                        _latestPlayerActionMessage = Loc.GetString("You use {0} magic to heal for {1} damage!", pointAmount, healAmount);
+                        _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-heal-message",
+                                                                    ("magicPointAmount", pointAmount),
+                                                                    ("healAmount", healAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_heal.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!_owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
@@ -305,7 +309,7 @@ namespace Content.Server.Arcade.Components
                         break;
                     case PlayerAction.Recharge:
                         var chargeAmount = _random.Next(4, 7);
-                        _latestPlayerActionMessage = Loc.GetString("You regain {0} points", chargeAmount);
+                        _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-recharge-message",("regainedPoints", chargeAmount));
                         SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_charge.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += chargeAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -337,7 +341,9 @@ namespace Content.Server.Arcade.Components
                 if ((_playerHp > 0 && _playerMp > 0) && (_enemyHp <= 0 || _enemyMp <= 0))
                 {
                     _running = false;
-                    UpdateUi(Loc.GetString("You won!"), Loc.GetString("{0} dies.", _enemyName), true);
+                    UpdateUi(Loc.GetString("space-villain-game-player-wins-message"),
+                             Loc.GetString("space-villain-game-enemy-dies-message",("enemyName", _enemyName)),
+                             true);
                     SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/win.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     _owner.ProcessWin();
                     return false;
@@ -348,14 +354,18 @@ namespace Content.Server.Arcade.Components
                 if ((_enemyHp > 0 && _enemyMp > 0))
                 {
                     _running = false;
-                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.", _enemyName), true);
+                    UpdateUi(Loc.GetString("space-villain-game-player-loses-message"),
+                             Loc.GetString("space-villain-game-enemy-cheers-message",("enemyName", _enemyName)),
+                             true);
                     SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if (_enemyHp <= 0 || _enemyMp <= 0)
                 {
                     _running = false;
-                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.", _enemyName), true);
+                    UpdateUi(Loc.GetString("space-villain-game-player-loses-message"),
+                             Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", _enemyName)),
+                             true);
                     SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
@@ -387,14 +397,18 @@ namespace Content.Server.Arcade.Components
                 if (_turtleTracker >= 4)
                 {
                     var boomAmount = _random.Next(5, 10);
-                    _latestEnemyActionMessage = Loc.GetString("{0} throws a bomb, exploding you for {1} damage!", _enemyName, boomAmount);
+                    _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-throws-bomb-message",
+                                                              ("enemyName", _enemyName),
+                                                              ("damageReceived", boomAmount));
                     if (_owner._playerInvincibilityFlag) return;
                     _playerHp -= boomAmount;
                     _turtleTracker--;
                 }else if (_enemyMp <= 5 && _random.Prob(0.7f))
                 {
                     var stealAmount = _random.Next(2, 3);
-                    _latestEnemyActionMessage = Loc.GetString("{0} steals {1} of your power!", _enemyName, stealAmount);
+                    _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-steals-player-power-message",
+                                                              ("enemyName", _enemyName),
+                                                              ("stolenAmount", stealAmount));
                     if (_owner._playerInvincibilityFlag) return;
                     _playerMp -= stealAmount;
                     _enemyMp += stealAmount;
@@ -402,13 +416,17 @@ namespace Content.Server.Arcade.Components
                 {
                     _enemyHp += 4;
                     _enemyMp -= 4;
-                    _latestEnemyActionMessage = Loc.GetString("{0} heals for 4 health!", _enemyName);
+                    _latestEnemyActionMessage = Loc.GetString("space-villain-game-enemy-heals-message",
+                                                              ("enemyName", _enemyName),
+                                                              ("healedAmount", 4));
                 }
                 else
                 {
                     var attackAmount = _random.Next(3, 6);
                     _latestEnemyActionMessage =
-                        Loc.GetString("{0} attacks you for {1} damage!", _enemyName, attackAmount);
+                        Loc.GetString("space-villain-game-enemy-attacks-message",
+                                      ("enemyName", _enemyName),
+                                      ("damageDealt", attackAmount));
                     if (_owner._playerInvincibilityFlag) return;
                     _playerHp -= attackAmount;
                 }

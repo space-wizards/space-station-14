@@ -266,7 +266,7 @@ namespace Content.Server.Kitchen.Components
         {
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
                 return true;
             }
 

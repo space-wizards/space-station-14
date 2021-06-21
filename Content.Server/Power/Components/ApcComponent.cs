@@ -93,7 +93,7 @@ namespace Content.Server.Power.Components
                 }
                 else
                 {
-                    user.PopupMessageCursor(Loc.GetString("Insufficient access!"));
+                    user.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
                 }
 
             }
