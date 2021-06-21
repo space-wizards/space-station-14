@@ -47,6 +47,7 @@ namespace Content.Server.NodeContainer.Nodes
         public readonly HashSet<Node> ReachableNodes = new();
 
         internal int FloodGen;
+        internal int UndirectGen;
         internal bool FlaggedForFlood;
 
         public virtual void Initialize(IEntity owner)

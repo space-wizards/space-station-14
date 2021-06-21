@@ -28,7 +28,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         private readonly List<Node> _toReflood = new();
         public bool VisEnabled => _visPlayers.Count != 0;
 
-        private int _floodGen = 1;
+        private int _gen = 1;
 
         public override void Initialize()
         {
@@ -64,7 +64,16 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         public void QueueRemakeGroup(BaseNodeGroup group)
         {
+            if (group.Remaking)
+                return;
+
             _toRemake.Add(group);
+            group.Remaking = true;
+
+            foreach (var node in group.Nodes)
+            {
+                QueueReflood(node);
+            }
         }
 
         public void QueueReflood(Node node)
@@ -113,15 +122,17 @@ namespace Content.Server.NodeContainer.EntitySystems
                 group.RemoveNode(toRemove);
                 toRemove.NodeGroup = null;
 
-                MarkGroupRemake(group);
+                QueueRemakeGroup(group);
             }
 
             // Break up all remaking groups.
             // Don't clear the list yet, we'll come back to these later.
             foreach (var toRemake in _toRemake)
             {
-                MarkGroupRemake(toRemake);
+                QueueRemakeGroup(toRemake);
             }
+
+            _gen += 1;
 
             // Go over all nodes to calculate reachable nodes and make an undirected graph out of them.
             // Node.GetReachableNodes() may return results asymmetrically, namely that
@@ -130,20 +141,23 @@ namespace Content.Server.NodeContainer.EntitySystems
             {
                 var node = _toReflood[i];
 
+                ClearReachableIfNecessary(node);
+
                 if (node.NodeGroup?.Remaking == false)
                 {
-                    MarkGroupRemake((BaseNodeGroup) node.NodeGroup);
+                    QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
                 }
 
                 foreach (var compatible in GetCompatibleNodes(node))
                 {
+                    ClearReachableIfNecessary(compatible);
+
                     if (compatible.NodeGroup?.Remaking == false)
                     {
                         // We are expanding into an existing group,
                         // remake it so that we can treat it uniformly.
                         var group = (BaseNodeGroup) compatible.NodeGroup;
-                        _toRemake.Add(group);
-                        MarkGroupRemake(group);
+                        QueueRemakeGroup(group);
                     }
 
                     node.ReachableNodes.Add(compatible);
@@ -151,15 +165,13 @@ namespace Content.Server.NodeContainer.EntitySystems
                 }
             }
 
-            _floodGen += 1;
-
             // Flood fill over nodes. Every node will only be flood filled once.
             foreach (var node in _toReflood)
             {
                 node.FlaggedForFlood = false;
 
                 // Check if already flood filled.
-                if (node.FloodGen == _floodGen || node.Deleting)
+                if (node.FloodGen == _gen || node.Deleting)
                     continue;
 
                 // Flood fill
@@ -175,11 +187,22 @@ namespace Content.Server.NodeContainer.EntitySystems
                 // Group by the NEW group.
                 var newGrouped = oldGroup.Nodes.GroupBy(n => n.NodeGroup);
 
+                oldGroup.Removed = true;
                 oldGroup.AfterRemake(newGrouped);
             }
 
             _toReflood.Clear();
             _toRemake.Clear();
+            _toRemove.Clear();
+        }
+
+        private void ClearReachableIfNecessary(Node node)
+        {
+            if (node.UndirectGen != _gen)
+            {
+                node.ReachableNodes.Clear();
+                node.UndirectGen = _gen;
+            }
         }
 
         private void InitGroup(Node node, List<Node> groupNodes)
@@ -195,19 +218,6 @@ namespace Content.Server.NodeContainer.EntitySystems
             newGroup.LoadNodes(groupNodes);
         }
 
-        private void MarkGroupRemake(BaseNodeGroup group)
-        {
-            if (group.Remaking)
-                return;
-
-            group.Remaking = true;
-
-            foreach (var node in group.Nodes)
-            {
-                QueueReflood(node);
-            }
-        }
-
         private List<Node> FloodFillNode(Node rootNode)
         {
             // All nodes we're filling into that currently have NO network.
@@ -215,7 +225,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             var stack = new Stack<Node>();
             stack.Push(rootNode);
-            rootNode.FloodGen = _floodGen;
+            rootNode.FloodGen = _gen;
 
             while (stack.TryPop(out var node))
             {
@@ -223,10 +233,10 @@ namespace Content.Server.NodeContainer.EntitySystems
 
                 foreach (var reachable in node.ReachableNodes)
                 {
-                    if (reachable.FloodGen == _floodGen)
+                    if (reachable.FloodGen == _gen)
                         continue;
 
-                    reachable.FloodGen = _floodGen;
+                    reachable.FloodGen = _gen;
                     stack.Push(reachable);
                     allNodes.Add(reachable);
                 }

@@ -47,7 +47,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         ///     Debug variable to indicate that this NodeGroup should not be being used by anything.
         /// </summary>
         [ViewVariables]
-        public bool Removed { get; private set; } = false;
+        public bool Removed { get; set; } = false;
 
         protected GridId GridId { get; private set; }
 
