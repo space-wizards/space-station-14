@@ -121,7 +121,7 @@ namespace Content.Server.Crayon
 
             if (Charges <= 0)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("Not enough left."));
+                eventArgs.User.PopupMessage(Loc.GetString("crayon-interact-not-enough-left-text"));
                 return true;
             }
 

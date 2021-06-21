@@ -1,5 +1,6 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.Tool;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -18,11 +19,11 @@ namespace Content.Shared.Construction.Steps
         {
             if (!string.IsNullOrEmpty(ExamineOverride))
             {
-                message.AddMarkup(Robust.Shared.Localization.Loc.GetString(ExamineOverride));
+                message.AddMarkup(Loc.GetString(ExamineOverride));
                 return;
             }
 
-            message.AddMarkup(Robust.Shared.Localization.Loc.GetString($"Next, use a [color=cyan]{Tool.GetToolName()}[/color]."));
+            message.AddMarkup(Loc.GetString("construction-use-tool-entity", ("toolName", Tool.GetToolName())));
         }
     }
 }

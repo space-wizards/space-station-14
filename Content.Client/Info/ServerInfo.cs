@@ -1,4 +1,4 @@
-﻿using Content.Client.Changelog;
+using Content.Client.Changelog;
 using Content.Client.Credits;
 using Content.Client.Links;
 using Robust.Client.UserInterface;
@@ -26,16 +26,16 @@ namespace Content.Client.Info
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
-            var discordButton = new Button {Text = Loc.GetString("Discord")};
+            var discordButton = new Button {Text = Loc.GetString("server-info-discord-button") };
             discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
 
-            var websiteButton = new Button {Text = Loc.GetString("Website")};
+            var websiteButton = new Button {Text = Loc.GetString("server-info-website-button") };
             websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
 
-            var reportButton = new Button { Text = Loc.GetString("Report Bugs") };
+            var reportButton = new Button { Text = Loc.GetString("server-info-report-button") };
             reportButton.OnPressed += args => uriOpener.OpenUri(UILinks.BugReport);
 
-            var creditsButton = new Button { Text = Loc.GetString("Credits") };
+            var creditsButton = new Button { Text = Loc.GetString("server-info-credits-button") };
             creditsButton.OnPressed += args => new CreditsWindow().Open();
 
             var changelogButton = new ChangelogButton

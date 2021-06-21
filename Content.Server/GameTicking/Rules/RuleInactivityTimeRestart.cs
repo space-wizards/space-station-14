@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
@@ -54,9 +54,9 @@ namespace Content.Server.GameTicking.Rules
         private void TimerFired()
         {
             var gameticker = EntitySystem.Get<GameTicker>();
-            gameticker.EndRound(Loc.GetString("Time has run out!"));
+            gameticker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", (int) RoundEndDelay.TotalSeconds));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) RoundEndDelay.TotalSeconds)));
 
             Timer.Spawn(RoundEndDelay, () => gameticker.RestartRound());
         }

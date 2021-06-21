@@ -77,7 +77,8 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool InRange(IEntity pointer, EntityCoordinates coordinates)
         {
-            if (pointer.HasComponent<GhostComponent>()){
+            if (pointer.HasComponent<GhostComponent>())
+            {
                 return pointer.Transform.Coordinates.InRange(EntityManager, coordinates, 15);
             }
             else
@@ -108,7 +109,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (!InRange(player, coords))
             {
-                player.PopupMessage(Loc.GetString("You can't reach there!"));
+                player.PopupMessage(Loc.GetString("pointing-system-try-point-cannot-reach"));
                 return false;
             }
 
@@ -123,7 +124,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
 
-            var layer = (int)VisibilityFlags.Normal;
+            var layer = (int) VisibilityFlags.Normal;
             if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
@@ -148,23 +149,23 @@ namespace Content.Server.Pointing.EntitySystems
             if (EntityManager.TryGetEntity(uid, out var pointed))
             {
                 selfMessage = player == pointed
-                    ? Loc.GetString("You point at yourself.")
-                    : Loc.GetString("You point at {0:theName}.", pointed);
+                    ? Loc.GetString("pointing-system-point-at-self")
+                    : Loc.GetString("pointing-system-point-at-other", ("other", pointed));
 
                 viewerMessage = player == pointed
-                    ? $"{player.Name} {Loc.GetString("points at {0:themself}.", player)}"
-                    : $"{player.Name} {Loc.GetString("points at {0:theName}.", pointed)}";
+                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", player.Name), ("other", player))
+                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", player.Name), ("other", pointed));
 
-                viewerPointedAtMessage = $"{player.Name} {Loc.GetString("points at you.")}";
+                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", player.Name));
             }
             else
             {
                 var tileRef = _mapManager.GetGrid(coords.GetGridId(EntityManager)).GetTileRef(coords);
                 var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
 
-                selfMessage = Loc.GetString("You point at {0}.", tileDef.DisplayName);
+                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 
-                viewerMessage = $"{player.Name} {Loc.GetString("points at {0}.", tileDef.DisplayName)}";
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", player.Name), ("tileName", tileDef.DisplayName));
             }
 
             _pointers[session!] = _gameTiming.CurTime;

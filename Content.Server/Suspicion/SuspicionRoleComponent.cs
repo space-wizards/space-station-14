@@ -131,11 +131,13 @@ namespace Content.Server.Suspicion
 
             var traitor = IsTraitor();
             var color = traitor ? "red" : "green";
-            var role = traitor ? "traitor" : "innocent";
-            var article = traitor ? "a" : "an";
+            var role = traitor ? "suspicion-role-component-role-traitor" : "suspicion-role-component-role-innocent";
+            var article = traitor ? "generic-article-a" : "generic-article-an";
 
-            var tooltip = Loc.GetString("They were {0} [color={1}]{2}[/color]!", Loc.GetString(article), color,
-                Loc.GetString(role));
+            var tooltip = Loc.GetString("suspicion-role-component-on-examine-tooltip",
+                                        ("article", Loc.GetString(article)),
+                                        ("colorName", color),
+                                        ("role",Loc.GetString(role)));
 
             message.AddMarkup(tooltip);
         }

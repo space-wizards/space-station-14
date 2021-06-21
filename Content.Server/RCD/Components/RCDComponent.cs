@@ -165,7 +165,7 @@ namespace Content.Server.RCD.Components
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (_ammo <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is out of ammo!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-no-ammo-message"));
                 return false;
             }
 
@@ -186,7 +186,7 @@ namespace Content.Server.RCD.Components
                 case RcdMode.Floors:
                     if (!tile.Tile.IsEmpty)
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("You can only build a floor on space!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"));
                         return false;
                     }
 
@@ -201,13 +201,13 @@ namespace Content.Server.RCD.Components
                     //They tried to decon a turf but the turf is blocked
                     if (eventArgs.Target == null && tile.IsBlockedTurf(true))
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("That tile is obstructed!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-tile-obstructed-message"));
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
                     if (eventArgs.Target != null && !eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist? deCon))
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't deconstruct that!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"));
                         return false;
                     }
 
@@ -216,25 +216,25 @@ namespace Content.Server.RCD.Components
                 case RcdMode.Walls:
                     if (tile.Tile.IsEmpty)
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("You cannot build a wall on space!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"));
                         return false;
                     }
 
                     if (tile.IsBlockedTurf(true))
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("That tile is obstructed!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-tile-obstructed-message"));
                         return false;
                     }
                     return true;
                 case RcdMode.Airlock:
                     if (tile.Tile.IsEmpty)
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("Cannot build an airlock on space!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"));
                         return false;
                     }
                     if (tile.IsBlockedTurf(true))
                     {
-                        Owner.PopupMessage(eventArgs.User, Loc.GetString("That tile is obstructed!"));
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-tile-obstructed-message"));
                         return false;
                     }
                     return true;

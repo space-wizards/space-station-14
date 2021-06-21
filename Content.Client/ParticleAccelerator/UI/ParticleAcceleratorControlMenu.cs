@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -109,7 +109,7 @@ namespace Content.Client.ParticleAccelerator.UI
             _offButton = new Button
             {
                 ToggleMode = false,
-                Text = "Off",
+                Text = Loc.GetString("particle-accelerator-control-menu-off-button"),
                 StyleClasses = {StyleBase.ButtonOpenRight},
             };
             _offButton.OnPressed += args => owner.SendEnableMessage(false);
@@ -117,7 +117,7 @@ namespace Content.Client.ParticleAccelerator.UI
             _onButton = new Button
             {
                 ToggleMode = false,
-                Text = "On",
+                Text = Loc.GetString("particle-accelerator-control-menu-on-button"),
                 StyleClasses = {StyleBase.ButtonOpenLeft},
             };
             _onButton.OnPressed += args => owner.SendEnableMessage(true);
@@ -134,7 +134,7 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 HorizontalAlignment = HAlignment.Center,
                 StyleClasses = {StyleBase.StyleClassLabelSubText},
-                Text = Loc.GetString("Refer to p.132 of service manual")
+                Text = Loc.GetString("particle-accelerator-control-menu-service-manual-reference")
             };
             _drawLabel = new Label();
             var imgSize = new Vector2(32, 32);
@@ -149,7 +149,7 @@ namespace Content.Client.ParticleAccelerator.UI
                         {
                             new Label
                             {
-                                Text = Loc.GetString("Mark 2 Particle Accelerator"),
+                                Text = Loc.GetString("particle-accelerator-control-menu-device-version-label"),
                                 FontOverride = font,
                                 FontColorOverride = StyleNano.NanoGold,
                             },
@@ -183,7 +183,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                         {
                                             new Label
                                             {
-                                                Text = Loc.GetString("Power: "),
+                                                Text = Loc.GetString("particle-accelerator-control-menu-power-label") + " ",
                                                 HorizontalExpand = true,
                                                 HorizontalAlignment = HAlignment.Left,
                                             },
@@ -197,7 +197,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                         {
                                             new Label
                                             {
-                                                Text = Loc.GetString("Strength: "),
+                                                Text = Loc.GetString("particle-accelerator-control-menu-strength-label") + " ",
                                                 HorizontalExpand = true,
                                                 HorizontalAlignment = HAlignment.Left,
                                             },
@@ -219,7 +219,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                         {
                                             new Label
                                             {
-                                                Text = Loc.GetString("PARTICLE STRENGTH\nLIMITER FAILURE"),
+                                                Text = Loc.GetString("particle-accelerator-control-menu-alarm-control"),
                                                 FontColorOverride = Color.Red,
                                                 Align = Label.AlignMode.Center
                                             },
@@ -272,7 +272,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     },
                                     (_scanButton = new Button
                                     {
-                                        Text = Loc.GetString("Scan Parts"),
+                                        Text = Loc.GetString("particle-accelerator-control-menu-scan-parts-button"),
                                         HorizontalAlignment = HAlignment.Center
                                     })
                                 }
@@ -286,7 +286,7 @@ namespace Content.Client.ParticleAccelerator.UI
                             new Label
                             {
                                 Margin = new Thickness(4, 4, 0, 4),
-                                Text = Loc.GetString("Ensure containment field is active before operation"),
+                                Text = Loc.GetString("particle-accelerator-control-menu-check-containment-field-warning"),
                                 HorizontalAlignment = HAlignment.Center,
                                 StyleClasses = {StyleBase.StyleClassLabelSubText},
                             }
@@ -299,7 +299,7 @@ namespace Content.Client.ParticleAccelerator.UI
                         {
                             new Label
                             {
-                                Text = "FOO-BAR-BAZ",
+                                Text = Loc.GetString("particle-accelerator-control-menu-foo-bar-baz"),
                                 StyleClasses = {StyleBase.StyleClassLabelSubText}
                             }
                         }
@@ -369,7 +369,9 @@ namespace Content.Client.ParticleAccelerator.UI
             _assembled = uiState.Assembled;
             UpdateUI(uiState.Assembled, uiState.InterfaceBlock, uiState.Enabled,
                 uiState.WirePowerBlock);
-            _statusLabel.Text = Loc.GetString($"Status: {(uiState.Assembled ? "Operational" : "Incomplete")}");
+            _statusLabel.Text = Loc.GetString("particle-accelerator-control-menu-status-label",
+                                              ("status", Loc.GetString(uiState.Assembled ? "particle-accelerator-control-menu-status-operational" :
+                                                                                           "particle-accelerator-control-menu-status-incomplete")));
             UpdatePowerState(uiState.State, uiState.Enabled, uiState.Assembled,
                 uiState.MaxLevel);
             UpdatePreview(uiState);
@@ -433,7 +435,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
             if (!_assembled)
             {
-                _drawLabel.Text = Loc.GetString("Draw: N/A");
+                _drawLabel.Text = Loc.GetString("particle-accelerator-control-menu-draw-not-available");
                 return;
             }
 
@@ -446,7 +448,9 @@ namespace Content.Client.ParticleAccelerator.UI
                 watts = (int) (_lastDraw + val * 5);
             }
 
-            _drawLabel.Text = Loc.GetString("Draw: {0:##,##0}/{1:##,##0} W", watts, _lastReceive);
+            _drawLabel.Text = Loc.GetString("particle-accelerator-control-menu-draw",
+                                            ("watts", $"{watts:##,##0}"),
+                                            ("lastReceive", $"{_lastReceive:##,##0}"));
         }
 
         private sealed class PASegmentControl : Control

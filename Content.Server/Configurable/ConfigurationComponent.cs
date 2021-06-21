@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -43,7 +43,7 @@ namespace Content.Server.Configurable
         {
             foreach (var key in _keys)
             {
-                _config.Add(key, "");
+                _config.Add(key, string.Empty);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Content.Server.Configurable
                 {
                     var value = msg.Config.GetValueOrDefault(key);
 
-                    if (value == null || _validation != null && !_validation.IsMatch(value) && value != "")
+                    if (value == null || _validation != null && !_validation.IsMatch(value) && value != string.Empty)
                         continue;
 
                     _config[key] = value;
@@ -144,7 +144,7 @@ namespace Content.Server.Configurable
                     return;
                 }
 
-                data.Text = Loc.GetString("Open Configuration");
+                data.Text = Loc.GetString("configure-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 

@@ -42,10 +42,7 @@ namespace Content.Server.GameTicking
 
             var gmTitle = Preset.ModeTitle;
             var desc = Preset.Description;
-            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
-
-The current game mode is: [color=white]{0}[/color].
-[color=yellow]{1}[/color]", gmTitle, desc);
+            return Loc.GetString("game-ticker-get-info-text",("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
@@ -108,9 +105,9 @@ The current game mode is: [color=white]{0}[/color].
 
             RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
 
-            _chatManager.DispatchServerAnnouncement(Paused
-                ? "Round start has been paused."
-                : "Round start countdown is now resumed.");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString(Paused
+                ? "game-ticker-pause-start"
+                : "game-ticker-pause-start-resumed"));
 
             return true;
         }

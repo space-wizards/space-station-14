@@ -15,21 +15,21 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "setmind";
 
-        public string Description => Loc.GetString("Transfers a mind to the specified entity. The entity must have a MindComponent.");
+        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindComponent)));
 
-        public string Help => Loc.GetString("Usage: {0} <entityUid> <username>", Command);
+        public string Help => Loc.GetString("set-mind-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteLine(Loc.GetString("Wrong number of arguments."));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
             if (!int.TryParse(args[0], out var entityUid))
             {
-                shell.WriteLine(Loc.GetString("EntityUid must be a number."));
+                shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
@@ -39,21 +39,21 @@ namespace Content.Server.Administration.Commands
 
             if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
             {
-                shell.WriteLine(Loc.GetString("Invalid entity ID."));
+                shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
             var target = entityManager.GetEntity(eUid);
 
-            if (!target.TryGetComponent<MindComponent>(out var mindComponent))
+            if (!target.HasComponent<MindComponent>())
             {
-                shell.WriteLine(Loc.GetString("Target entity does not have a mind (did you forget to make sentient?)"));
+                shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;
             }
 
             if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[1], out var session))
             {
-                shell.WriteLine(Loc.GetString("Target player does not exist"));
+                shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace Content.Server.Administration.Commands
             var playerCData = session.ContentData();
             if (playerCData == null)
             {
-                shell.WriteLine(Loc.GetString("Target player does not have content data (wtf?)"));
+                shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-content-data-message"));
                 return;
             }
 

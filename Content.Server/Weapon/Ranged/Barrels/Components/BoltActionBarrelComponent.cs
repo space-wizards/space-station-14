@@ -218,7 +218,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 BoltOpen = true;
                 if (Owner.TryGetContainer(out var container))
                 {
-                    Owner.PopupMessage(container.Owner, Loc.GetString("Bolt opened"));
+                    Owner.PopupMessage(container.Owner, Loc.GetString("bolt-action-barrel-component-bolt-opened"));
                 }
                 return;
             }
@@ -243,13 +243,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-wrong-caliber"));
                 return false;
             }
 
             if (!BoltOpen)
             {
-                Owner.PopupMessage(user, Loc.GetString("Bolt isn't open"));
+                Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-bolt-closed"));
                 return false;
             }
 
@@ -278,7 +278,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return true;
             }
 
-            Owner.PopupMessage(user, Loc.GetString("No room"));
+            Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-no-room"));
 
             return false;
         }
@@ -288,7 +288,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (BoltOpen)
             {
                 BoltOpen = false;
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bolt-action-barrel-component-bolt-closed"));
                 return true;
             }
 
@@ -346,7 +346,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", _caliber));
+            message.AddMarkup("\n" + Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber",_caliber)));
         }
 
         [Verb]
@@ -360,7 +360,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Open bolt");
+                data.Text = Loc.GetString("open-bolt-verb-get-data-text");
                 data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -381,7 +381,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Close bolt");
+                data.Text = Loc.GetString("close-bolt-verb-get-data-text");
                 data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

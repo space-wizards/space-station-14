@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
@@ -23,7 +23,7 @@ namespace Content.Client.Body.UI
         {
             IoCManager.InjectDependencies(this);
             Owner = owner;
-            Title = Loc.GetString("Body Scanner");
+            Title = Loc.GetString("body-scanner-display-title");
 
             var hSplit = new HBoxContainer
             {
@@ -57,7 +57,7 @@ namespace Content.Client.Body.UI
                                         {
                                             new Label
                                             {
-                                                Text = "Health: "
+                                                Text = $"{Loc.GetString("body-scanner-display-health-label")} "
                                             },
                                             (BodyPartHealth = new Label())
                                         }
@@ -144,7 +144,7 @@ namespace Content.Client.Body.UI
             // TODO BODY Part damage
             if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                BodyPartHealth.Text = Loc.GetString("{0} damage", damageable.TotalDamage);
+                BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }
 
             MechanismList.Clear();

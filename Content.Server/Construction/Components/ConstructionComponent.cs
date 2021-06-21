@@ -536,7 +536,7 @@ namespace Content.Server.Construction.Components
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if(Target != null)
-                message.AddMarkup(Loc.GetString("To create {0}...\n", Target.Name));
+                message.AddMarkup(Loc.GetString("construction-component-to-create-header",("targetName", Target.Name)) + "\n");
 
             if (Edge == null && TargetNextEdge != null)
             {

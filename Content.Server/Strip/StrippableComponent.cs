@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Cuffs.Components;
@@ -157,13 +157,13 @@ namespace Content.Server.Strip
 
                 if (item == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("You aren't holding anything!"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
                     return false;
                 }
 
                 if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
-                    user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
                 }
 
@@ -172,13 +172,13 @@ namespace Content.Server.Strip
 
                 if (inventory.TryGetSlotItem(slot, out ItemComponent _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} already {0:have} something there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("owner", Owner)));
                     return false;
                 }
 
                 if (!inventory.CanEquip(slot, item, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot equip that there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-equip-message",("owner", Owner)));
                     return false;
                 }
 
@@ -222,28 +222,30 @@ namespace Content.Server.Strip
 
                 if (item == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("You aren't holding anything!"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-not-holding-anything"));
                     return false;
                 }
 
                 if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
-                    user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop"));
                     return false;
                 }
 
                 if (!hands.HasHand(hand))
+                {
                     return false;
+                }
 
                 if (hands.TryGetItem(hand, out var _))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} already {0:have} something there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied-message", ("owner", Owner)));
                     return false;
                 }
 
                 if (!hands.CanPutInHand(item, hand, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot put that there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-put-message",("owner", Owner)));
                     return false;
                 }
 
@@ -288,13 +290,13 @@ namespace Content.Server.Strip
 
                 if (!inventory.TryGetSlotItem(slot, out ItemComponent? itemToTake))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("owner", Owner)));
                     return false;
                 }
 
                 if (!inventory.CanUnequip(slot, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot unequip that!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message",("owner", Owner)));
                     return false;
                 }
 
@@ -344,13 +346,13 @@ namespace Content.Server.Strip
 
                 if (!hands.TryGetItem(hand, out var heldItem))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("owner", Owner)));
                     return false;
                 }
 
                 if (!hands.CanDrop(hand, false))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot drop that!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-drop-message",("owner", Owner)));
                     return false;
                 }
 
@@ -443,7 +445,7 @@ namespace Content.Server.Strip
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Strip");
+                data.Text = Loc.GetString("strip-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, StrippableComponent component)

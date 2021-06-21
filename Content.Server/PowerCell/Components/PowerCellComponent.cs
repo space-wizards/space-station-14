@@ -94,7 +94,7 @@ namespace Content.Server.PowerCell.Components
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetString($"The charge indicator reads {CurrentCharge / MaxCharge * 100:F0} %."));
+                message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100}:F0")));
             }
         }
 

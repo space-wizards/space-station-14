@@ -149,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("revolver-barrel-component-try-inser-bullet-wrong-caliber"));
                 return false;
             }
 
@@ -175,7 +175,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 }
             }
 
-            Owner.PopupMessage(user, Loc.GetString("Ammo full"));
+            Owner.PopupMessage(user, Loc.GetString("revolver-barrel-component-try-inser-bullet-ammo-full"));
             return false;
         }
 
@@ -289,7 +289,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Spin");
+                data.Text = Loc.GetString("spin-revolver-verb-get-data-text");
                 if (component.Capacity <= 1)
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -303,7 +303,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             protected override void Activate(IEntity user, RevolverBarrelComponent component)
             {
                 component.Spin();
-                component.Owner.PopupMessage(user, Loc.GetString("Spun the cylinder"));
+                component.Owner.PopupMessage(user, Loc.GetString("spin-revolver-verb-on-activate"));
             }
         }
     }

@@ -72,8 +72,11 @@ namespace Content.Server.Actions.Actions
             {
                 SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Weapons/punchmiss.ogg", args.Performer,
                     AudioHelpers.WithVariation(0.025f));
-                args.Performer.PopupMessageOtherClients(Loc.GetString("{0} fails to disarm {1}!", args.Performer.Name, args.Target.Name));
-                args.Performer.PopupMessageCursor(Loc.GetString("You fail to disarm {0}!", args.Target.Name));
+                args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
+                                                                      ("performerName", args.Performer.Name),
+                                                                      ("targetName", args.Target.Name)));
+                args.Performer.PopupMessageCursor(Loc.GetString("disarm-action-popup-message-cursor",
+                                                                ("targetName", args.Target.Name)));
                 system.SendLunge(angle, args.Performer);
                 return;
             }

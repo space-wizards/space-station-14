@@ -61,7 +61,7 @@ namespace Content.Server.Items
                     return;
                 }
 
-                data.Text = Loc.GetString("Pick Up");
+                data.Text = Loc.GetString("pick-up-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
