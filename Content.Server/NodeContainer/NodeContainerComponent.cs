@@ -20,23 +20,18 @@ namespace Content.Server.NodeContainer
     {
         public override string Name => "NodeContainer";
 
-        [ViewVariables]
-        public IReadOnlyDictionary<string, Node> Nodes => _nodes;
+        [DataField("nodes")] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
 
-        [DataField("nodes")]
-        private readonly Dictionary<string, Node> _nodes = new();
-
-        [DataField("examinable")]
-        private bool _examinable = false;
+        [DataField("examinable")] private bool _examinable = false;
 
         public T GetNode<T>(string identifier) where T : Node
         {
-            return (T)_nodes[identifier];
+            return (T) Nodes[identifier];
         }
 
         public bool TryGetNode<T>(string identifier, [NotNullWhen(true)] out T? node) where T : Node
         {
-            if (_nodes.TryGetValue(identifier, out var n) && n is T t)
+            if (Nodes.TryGetValue(identifier, out var n) && n is T t)
             {
                 node = t;
                 return true;
