@@ -55,7 +55,7 @@ namespace Content.Client.Administration.Managers
 
         public void Initialize()
         {
-            _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(MsgUpdateAdminStatus.NAME, UpdateMessageRx);
+            _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(UpdateMessageRx);
         }
 
         private void UpdateMessageRx(MsgUpdateAdminStatus message)

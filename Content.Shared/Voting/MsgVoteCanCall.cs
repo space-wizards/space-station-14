@@ -9,14 +9,7 @@ namespace Content.Shared.Voting
     /// </summary>
     public sealed class MsgVoteCanCall : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgVoteCanCall);
-
-        public MsgVoteCanCall(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public bool CanCall;
 

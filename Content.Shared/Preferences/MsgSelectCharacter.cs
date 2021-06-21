@@ -9,14 +9,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     public class MsgSelectCharacter : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgSelectCharacter);
-
-        public MsgSelectCharacter(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public int SelectedCharacterIndex;
 
