@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.Nodes
@@ -132,6 +133,8 @@ namespace Content.Server.NodeContainer.Nodes
         {
             foreach (var node in GetReachableNodes())
             {
+                DebugTools.Assert(node != this, "GetReachableNodes() should not return self.");
+
                 if (node.NodeGroupID == NodeGroupID && node.Connectable)
                 {
                     yield return node;
