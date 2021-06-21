@@ -29,43 +29,6 @@ namespace Content.Server.NodeContainer
         [DataField("examinable")]
         private bool _examinable = false;
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-            foreach (var node in _nodes.Values)
-            {
-                node.Initialize(Owner);
-            }
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-            foreach (var node in _nodes.Values)
-            {
-                node.OnContainerStartup();
-            }
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            foreach (var node in _nodes.Values)
-            {
-                node.OnContainerShutdown();
-            }
-        }
-
-        public void AnchorUpdate()
-        {
-            foreach (var node in Nodes.Values)
-            {
-                node.AnchorUpdate();
-                node.AnchorStateChanged();
-            }
-        }
-
         public T GetNode<T>(string identifier) where T : Node
         {
             return (T)_nodes[identifier];
