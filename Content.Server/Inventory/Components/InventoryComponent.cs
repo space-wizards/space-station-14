@@ -522,7 +522,7 @@ namespace Content.Server.Inventory.Components
                     var activeItem = hands.GetActiveHand;
                     if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? clothing))
                     {
-                        hands.Drop(activeHand, doDropInteraction: false);
+                        hands.TryDropNoInteraction();
                         if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
                         {
                             hands.PutInHand(clothing);
