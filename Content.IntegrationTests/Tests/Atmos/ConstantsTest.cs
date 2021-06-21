@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 
             await server.WaitIdleAsync();
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
