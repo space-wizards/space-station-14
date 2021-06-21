@@ -71,23 +71,9 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
-            var tickRate = configManager.GetCVar(CCVars.NetGasOverlayTickRate);
-            if (tickRate > 0.0f)
-            {
-                _updateCooldown = 1 / tickRate;
-            }
-            else
-            {
-                _updateCooldown = float.MaxValue;
-            }
-
-            _updateRange = configManager.GetCVar(CVars.NetMaxUpdateRange) + RangeOffset;
-
-            configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue);
-            configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset);
-
-            _thresholds = configManager.GetCVar(CCVars.GasOverlayThresholds);
-            configManager.OnValueChanged(CCVars.GasOverlayThresholds, value => _thresholds = value);
+            configManager.OnValueChanged(CCVars.NetGasOverlayTickRate, value => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue, true);
+            configManager.OnValueChanged(CVars.NetMaxUpdateRange, value => _updateRange = value + RangeOffset, true);
+            configManager.OnValueChanged(CCVars.GasOverlayThresholds, value => _thresholds = value, true);
         }
 
         public override void Shutdown()
