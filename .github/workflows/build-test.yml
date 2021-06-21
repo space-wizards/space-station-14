@@ -36,4 +36,7 @@ jobs:
     - name: Content.Tests
       run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
     - name: Content.IntegrationTests
-      run: COMPlus_gcServer=1 dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n
+      shell: pwsh
+      run: |
+        $env:COMPlus_gcServer=1
+        dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n
