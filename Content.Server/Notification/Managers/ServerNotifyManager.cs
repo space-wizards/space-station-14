@@ -20,9 +20,9 @@ namespace Content.Server.Notification.Managers
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor));
-            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates));
-            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity));
+            _netManager.RegisterNetMessage<MsgDoNotifyCursor>();
+            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>();
+            _netManager.RegisterNetMessage<MsgDoNotifyEntity>();
 
             _initialized = true;
         }

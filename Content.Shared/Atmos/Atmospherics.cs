@@ -266,7 +266,6 @@ namespace Content.Shared.Atmos
     [Serializable, NetSerializable]
     public enum Gas : sbyte
     {
-        Invalid = -1,
         Oxygen = 0,
         Nitrogen = 1,
         CarbonDioxide = 2,

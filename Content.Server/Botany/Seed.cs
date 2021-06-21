@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,35 +30,35 @@ namespace Content.Server.Botany
         SelfHarvest,
     }
 
-/*
-    public enum PlantSpread : byte
-    {
-        NoSpread,
-        Creepers,
-        Vines,
-    }
+    /*
+        public enum PlantSpread : byte
+        {
+            NoSpread,
+            Creepers,
+            Vines,
+        }
 
-    public enum PlantMutation : byte
-    {
-        NoMutation,
-        Mutable,
-        HighlyMutable,
-    }
+        public enum PlantMutation : byte
+        {
+            NoMutation,
+            Mutable,
+            HighlyMutable,
+        }
 
-    public enum PlantCarnivorous : byte
-    {
-        NotCarnivorous,
-        EatPests,
-        EatLivingBeings,
-    }
+        public enum PlantCarnivorous : byte
+        {
+            NotCarnivorous,
+            EatPests,
+            EatLivingBeings,
+        }
 
-    public enum PlantJuicy : byte
-    {
-        NotJuicy,
-        Juicy,
-        Slippery,
-    }
-*/
+        public enum PlantJuicy : byte
+        {
+            NotJuicy,
+            Juicy,
+            Slippery,
+        }
+    */
 
     [DataDefinition]
     public struct SeedChemQuantity
@@ -265,7 +265,7 @@ namespace Content.Server.Botany
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
             }
 
-            seed.Name = Loc.GetString($"packet of {SeedName} {SeedNoun}");
+            seed.Name = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNount", SeedNoun));
 
             return seed;
         }
@@ -297,11 +297,11 @@ namespace Content.Server.Botany
 
             if (ProductPrototypes == null || ProductPrototypes.Count == 0 || Yield <= 0)
             {
-                user.PopupMessageCursor(Loc.GetString("You fail to harvest anything useful."));
+                user.PopupMessageCursor(Loc.GetString("botany-harvest-fail-message"));
                 return Enumerable.Empty<IEntity>();
             }
 
-            user.PopupMessageCursor(Loc.GetString($"You harvest from the {DisplayName}"));
+            user.PopupMessageCursor(Loc.GetString("botany-harvest-success-message", ("name", DisplayName)));
             return GenerateProduct(user.Transform.Coordinates, yieldMod);
         }
 
@@ -344,7 +344,7 @@ namespace Content.Server.Botany
                 if (Mysterious)
                 {
                     entity.Name += "?";
-                    entity.Description += Loc.GetString(" On second thought, something about this one looks strange.");
+                    entity.Description += " " + Loc.GetString("botany-mysterious-description-addon");
                 }
             }
 

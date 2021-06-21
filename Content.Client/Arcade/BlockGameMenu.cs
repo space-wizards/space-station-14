@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Content.Client.Arcade.UI;
@@ -114,7 +114,7 @@ namespace Content.Client.Arcade
 
             _pauseButton = new Button
             {
-                Text = Loc.GetString("Pause"),
+                Text = Loc.GetString("blockgame-menu-button-pause"),
                 TextAlign = Label.AlignMode.Center
             };
             _pauseButton.OnPressed += (e) => TryPause();

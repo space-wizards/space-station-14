@@ -34,9 +34,9 @@ namespace Content.Client.Notifications.Managers
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor), DoNotifyCursor);
-            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates), DoNotifyCoordinates);
-            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity), DoNotifyEntity);
+            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(DoNotifyCursor);
+            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(DoNotifyCoordinates);
+            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(DoNotifyEntity);
 
             _initialized = true;
         }

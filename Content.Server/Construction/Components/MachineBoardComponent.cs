@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Examine;
 using Content.Shared.Stacks;
@@ -53,25 +53,37 @@ namespace Content.Server.Construction.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Requires:\n"));
+            message.AddMarkup(Loc.GetString("machine-board-component-on-examine-label") + "\n");
             foreach (var (part, amount) in Requirements)
             {
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(part.ToString())));
+                message.AddMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                                                ("amount", amount),
+                                                ("requiredElement", Loc.GetString(part.ToString())))
+                                  + "\n");
             }
 
             foreach (var (material, amount) in MaterialRequirements)
             {
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.Name)));
+                message.AddMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                                                ("amount", amount),
+                                                ("requiredElement", Loc.GetString(material.Name)))
+                                  + "\n");
             }
 
             foreach (var (_, info) in ComponentRequirements)
             {
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+                message.AddMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                                                ("amount", info.Amount),
+                                                ("requiredElement", Loc.GetString(info.ExamineName)))
+                                  + "\n");
             }
 
             foreach (var (_, info) in TagRequirements)
             {
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+                message.AddMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
+                                                ("amount", info.Amount),
+                                                ("requiredElement", Loc.GetString(info.ExamineName)))
+                                  + "\n");
             }
         }
     }

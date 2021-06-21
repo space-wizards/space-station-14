@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
@@ -50,16 +50,16 @@ namespace Content.Server.Morgue.Components
             {
                 if (Appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
                 {
-                    message.AddMarkup(Loc.GetString("The {0:theName} is [color=red]active[/color]!\n", Owner));
+                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning",("owner", Owner)) + "\n");
                 }
 
                 if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=green]on[/color], there's something in here."));
+                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
                 }
                 else
                 {
-                    message.AddText(Loc.GetString("The content light is off, there's nothing in here."));
+                    message.AddText(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace Content.Server.Morgue.Components
         {
             if (Cooking)
             {
-                if (!silent) Owner.PopupMessage(user, Loc.GetString("Safety first, not while it's active!"));
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("crematorium-entity-storage-component-is-cooking-safety-message"));
                 return false;
             }
             return base.CanOpen(user, silent);
@@ -127,10 +127,10 @@ namespace Content.Server.Morgue.Components
             if (mind != null)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity?.PopupMessage(Loc.GetString("You cremate yourself!"));
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
             }
 
-            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} is cremating {0:themself}!", victim));
+            victim.PopupMessageOtherClients(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)));
             EntitySystem.Get<SharedStandingStateSystem>().Down(victim, false, false, true);
 
             if (CanInsert(victim))
@@ -158,7 +158,7 @@ namespace Content.Server.Morgue.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Cremate");
+                data.Text = Loc.GetString("cremate-verb-get-data-text");
             }
 
             /// <inheritdoc />

@@ -17,22 +17,22 @@ namespace Content.Client.Cargo.UI
         {
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("Order Form");
+            Title = Loc.GetString("cargo-console-order-menu-title");
 
             var vBox = new VBoxContainer();
             var gridContainer = new GridContainer { Columns = 2 };
 
-            var requesterLabel = new Label { Text = Loc.GetString("Name:") };
+            var requesterLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-requester-label") };
             Requester = new LineEdit();
             gridContainer.AddChild(requesterLabel);
             gridContainer.AddChild(Requester);
 
-            var reasonLabel = new Label { Text = Loc.GetString("Reason:") };
+            var reasonLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-reason-label:") };
             Reason = new LineEdit();
             gridContainer.AddChild(reasonLabel);
             gridContainer.AddChild(Reason);
 
-            var amountLabel = new Label { Text = Loc.GetString("Amount:") };
+            var amountLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-amount-label:") };
             Amount = new SpinBox
             {
                 HorizontalExpand = true,
@@ -49,7 +49,7 @@ namespace Content.Client.Cargo.UI
 
             SubmitButton = new Button()
             {
-                Text = Loc.GetString("OK"),
+                Text = Loc.GetString("cargo-console-order-menu-submit-button"),
                 TextAlign = Label.AlignMode.Center,
             };
             vBox.AddChild(SubmitButton);

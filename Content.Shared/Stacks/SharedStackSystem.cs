@@ -1,6 +1,7 @@
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.Stacks
 {
@@ -66,7 +67,7 @@ namespace Content.Shared.Stacks
 
             args.Message.AddText("\n");
             args.Message.AddMarkup(
-                Robust.Shared.Localization.Loc.GetString("comp-stack-examine-detail-count",
+                Loc.GetString("comp-stack-examine-detail-count",
                     ("count", component.Count),
                     ("markupCountColor", "lightgray")
                 )

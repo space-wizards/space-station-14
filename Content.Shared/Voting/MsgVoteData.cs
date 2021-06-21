@@ -7,14 +7,7 @@ namespace Content.Shared.Voting
 {
     public sealed class MsgVoteData : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgVoteData);
-
-        public MsgVoteData(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public int VoteId;
         public bool VoteActive;

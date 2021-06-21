@@ -187,7 +187,7 @@ namespace Content.Server.GameTicking
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
-                    if (equipmentStr != "")
+                    if (equipmentStr != string.Empty)
                     {
                         var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                         inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());

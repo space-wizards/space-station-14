@@ -23,11 +23,11 @@ namespace Content.Client.MedicalScanner.UI
                 {
                     (ScanButton = new Button
                     {
-                        Text = Loc.GetString("Scan and Save DNA")
+                        Text = Loc.GetString("medical-scanner-window-save-button-text")
                     }),
                     (_diagnostics = new Label
                     {
-                        Text = ""
+                        Text = string.Empty
                     })
                 }
             });
@@ -41,17 +41,17 @@ namespace Content.Client.MedicalScanner.UI
                 !state.HasDamage() ||
                 !IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Entity.Value, out var entity))
             {
-                _diagnostics.Text = Loc.GetString("No patient data.");
+                _diagnostics.Text = Loc.GetString("medical-scanner-window-no-patient-data-text");
                 ScanButton.Disabled = true;
                 SetSize = (250, 100);
             }
             else
             {
-                text.Append($"{entity.Name}{Loc.GetString("'s health:")}\n");
+                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
                 foreach (var (@class, classAmount) in state.DamageClasses)
                 {
-                    text.Append($"\n{Loc.GetString("{0}: {1}", @class, classAmount)}");
+                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", @class), ("amount", classAmount))}");
 
                     foreach (var type in @class.ToTypes())
                     {
@@ -60,10 +60,10 @@ namespace Content.Client.MedicalScanner.UI
                             continue;
                         }
 
-                        text.Append($"\n- {Loc.GetString("{0}: {1}", type, typeAmount)}");
+                        text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType",type) ,("amount", typeAmount))}");
                     }
 
-                    text.Append("\n");
+                    text.Append('\n');
                 }
 
                 _diagnostics.Text = text.ToString();

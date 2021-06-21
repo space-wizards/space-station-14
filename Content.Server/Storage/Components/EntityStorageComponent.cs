@@ -172,7 +172,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
             return true;
@@ -410,7 +410,7 @@ namespace Content.Server.Storage.Components
             if (Contents.Contains(eventArgs.User))
             {
                 _beingWelded = false;
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("entity-storage-component-already-contains-user-message"));
                 return false;
             }
 
@@ -474,12 +474,12 @@ namespace Content.Server.Storage.Components
             if (IsWeldedShut)
             {
                 data.Visibility = VerbVisibility.Disabled;
-                var verb = Loc.GetString(component.Open ? "Close" : "Open");
-                data.Text = Loc.GetString("{0} (welded shut)", verb);
+                var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
+                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
                 return;
             }
 
-            data.Text = Loc.GetString(component.Open ? "Close" : "Open");
+            data.Text = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
             data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 

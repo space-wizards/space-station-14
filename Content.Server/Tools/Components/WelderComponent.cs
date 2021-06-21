@@ -142,7 +142,7 @@ namespace Content.Server.Tools.Components
             if (!WelderLit)
             {
                 if (!silent && user != null)
-                    Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
+                    Owner.PopupMessage(user, Loc.GetString("welder-component-welder-not-lit-message"));
 
                 return false;
             }
@@ -150,7 +150,7 @@ namespace Content.Server.Tools.Components
             if (!CanWeld(value))
             {
                 if (!silent && user != null)
-                    Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
+                    Owner.PopupMessage(user, Loc.GetString("welder-component-cannot-weld-message"));
 
                 return false;
             }
@@ -200,7 +200,7 @@ namespace Content.Server.Tools.Components
 
             if (!CanLitWelder() && user != null)
             {
-                Owner.PopupMessage(user, Loc.GetString("The welder has no fuel left!"));
+                Owner.PopupMessage(user, Loc.GetString("welder-component-no-fuel-message"));
                 return false;
             }
 
@@ -228,17 +228,19 @@ namespace Content.Server.Tools.Components
         {
             if (WelderLit)
             {
-                message.AddMarkup(Loc.GetString("[color=orange]Lit[/color]\n"));
+                message.AddMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message") + "\n");
             }
             else
             {
-                message.AddText(Loc.GetString("Not lit\n"));
+                message.AddText(Loc.GetString("welder-component-on-examine-welder-not-lit-message") + "\n");
             }
 
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
-                    Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
+                message.AddMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+                                                ("colorName", Fuel < FuelCapacity / 4f ? "darkorange" : "orange"),
+                                                ("fuelLeft", Math.Round(Fuel)),
+                                                ("fuelCapacity", FuelCapacity)));
             }
         }
 
@@ -273,21 +275,20 @@ namespace Content.Server.Tools.Components
                 PlaySoundCollection(WeldSoundCollection);
 
                 othersMessage =
-                    Loc.GetString(
-                        "{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!",
-                        victim);
+                    Loc.GetString("welder-component-suicide-lit-others-message",
+                                  ("victim",victim));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                selfMessage = Loc.GetString("You weld your every orifice closed!");
+                selfMessage = Loc.GetString("welder-component-suicide-lit-message");
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Heat;
             }
 
-            othersMessage = Loc.GetString("{0:theName} bashes themselves with the unlit welding torch!", victim);
+            othersMessage = Loc.GetString("welder-component-suicide-unlit-others-message", ("victim", victim));
             victim.PopupMessageOtherClients(othersMessage);
 
-            selfMessage = Loc.GetString("You bash yourself with the unlit welding torch!");
+            selfMessage = Loc.GetString("welder-component-suicide-unlit-message");
             victim.PopupMessage(selfMessage);
 
             return SuicideKind.Blunt;
@@ -326,7 +327,7 @@ namespace Content.Server.Tools.Components
                     _solutionComponent.TryAddSolution(drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("Welder refueled"));
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
             }
 

@@ -153,36 +153,36 @@ namespace Content.Server.Cuffs.Components
 
             if (eventArgs.Target == eventArgs.User)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You can't cuff yourself!"));
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-self-error"));
                 return true;
             }
 
             if (Broken)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("The cuffs are broken!"));
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-cuffs-broken-error"));
                 return true;
             }
 
             if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
             {
-                eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no hands!", eventArgs.Target));
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", eventArgs.Target)));
                 return true;
             }
 
             if (cuffed.CuffedHandCount == hands.Count)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", eventArgs.Target)));
                 return true;
             }
 
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true))
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You are too far away to use the cuffs!"));
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-too-far-away-error"));
                 return true;
             }
 
-            eventArgs.User.PopupMessage(Loc.GetString("You start cuffing {0:theName}.", eventArgs.Target));
-            eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
+            eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
+            eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
 
             if (StartCuffSound != null)
                 SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound, Owner);
@@ -225,14 +225,14 @@ namespace Content.Server.Cuffs.Components
                     if (EndCuffSound != null)
                         SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound, Owner);
 
-                    user.PopupMessage(Loc.GetString("You successfully cuff {0:theName}.", target));
-                    target.PopupMessage(Loc.GetString("You have been cuffed by {0:theName}!", user));
+                    user.PopupMessage(Loc.GetString("handcuff-component-cuff-other-success-message",("otherName", target)));
+                    target.PopupMessage(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)));
                 }
             }
             else
             {
-                user.PopupMessage(Loc.GetString("You were interrupted while cuffing {0:theName}!", target));
-                target.PopupMessage(Loc.GetString("You interrupt {0:theName} while they are cuffing you!", user));
+                user.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-message",("targetName", target)));
+                target.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-other-message",("otherName", user)));
             }
         }
     }

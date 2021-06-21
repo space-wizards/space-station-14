@@ -1,4 +1,4 @@
-﻿using Content.Server.MachineLinking.Signals;
+using Content.Server.MachineLinking.Signals;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
@@ -33,11 +33,11 @@ namespace Content.Server.MachineLinking.Components
             if (transmitter.TransmitSignal(new ToggleSignal()))
             {
                 // Since the button doesn't have an animation, I'm going to use a popup message
-                Owner.PopupMessage(user, Loc.GetString("Click."));
+                Owner.PopupMessage(user, Loc.GetString("signal-button-component-transmit-signal-success-message"));
             }
             else
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-button-component-transmit-signal-no-receivers-message"));
             }
         }
 

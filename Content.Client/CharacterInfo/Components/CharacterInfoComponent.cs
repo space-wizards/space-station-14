@@ -92,12 +92,12 @@ namespace Content.Client.CharacterInfo.Components
 
                 AddChild(new Placeholder()
                 {
-                    PlaceholderText = Loc.GetString("Health & status effects")
+                    PlaceholderText = Loc.GetString("character-info-health-and-status-effects-text")
                 });
 
                 AddChild(new Label
                 {
-                    Text = Loc.GetString("Objectives"),
+                    Text = Loc.GetString("character-info-objectives-label"),
                     HorizontalAlignment = HAlignment.Center
                 });
                 ObjectivesContainer = new VBoxContainer();
@@ -105,7 +105,7 @@ namespace Content.Client.CharacterInfo.Components
 
                 AddChild(new Placeholder()
                 {
-                    PlaceholderText = Loc.GetString("Antagonist Roles")
+                    PlaceholderText = Loc.GetString("character-info-roles-antagonist-text")
                 });
             }
 

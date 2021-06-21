@@ -1,4 +1,4 @@
-﻿using Content.Client.Eui;
+using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Eui;
@@ -63,7 +63,7 @@ namespace Content.Client.Administration.UI
             {
                 _eui = eui;
 
-                Title = Loc.GetString("Add reagent...");
+                Title = Loc.GetString("admin-add-reagent-eui-title");
 
                 Contents.AddChild(new VBoxContainer
                 {
@@ -74,14 +74,14 @@ namespace Content.Client.Administration.UI
                             Columns = 2,
                             Children =
                             {
-                                new Label {Text = Loc.GetString("Cur volume: ")},
+                                new Label {Text = Loc.GetString("admin-add-reagent-eui-current-volume-label") + " "},
                                 (_volumeLabel = new Label()),
-                                new Label {Text = Loc.GetString("Reagent: ")},
-                                (_reagentIdEdit = new LineEdit {PlaceHolder = Loc.GetString("Reagent ID...")}),
-                                new Label {Text = Loc.GetString("Amount: ")},
+                                new Label {Text = Loc.GetString("admin-add-reagent-eui-reagent-label") + " "},
+                                (_reagentIdEdit = new LineEdit {PlaceHolder = Loc.GetString("admin-add-reagent-eui-reagent-id-edit")}),
+                                new Label {Text = Loc.GetString("admin-add-reagent-eui-amount-label") + " "},
                                 (_amountEdit = new LineEdit
                                 {
-                                    PlaceHolder = Loc.GetString("A number..."),
+                                    PlaceHolder = Loc.GetString("admin-add-reagent-eui-amount-edit"),
                                     HorizontalExpand = true
                                 }),
                             },
@@ -98,8 +98,8 @@ namespace Content.Client.Administration.UI
                                     ClipText = true
                                 }),
 
-                                (_addButton = new Button {Text = Loc.GetString("Add")}),
-                                (_addCloseButton = new Button {Text = Loc.GetString("Add & Close")})
+                                (_addButton = new Button {Text = Loc.GetString("admin-add-reagent-eui-add-button")}),
+                                (_addCloseButton = new Button {Text = Loc.GetString("admin-add-reagent-eui-add-close-button")})
                             }
                         }
                     }
@@ -125,31 +125,32 @@ namespace Content.Client.Administration.UI
             {
                 if (string.IsNullOrWhiteSpace(_reagentIdEdit.Text))
                 {
-                    DoError(Loc.GetString("Must specify reagent ID"));
+                    DoError(Loc.GetString("admin-add-reagent-eui-no-reagent-id-error"));
                     return;
                 }
 
                 if (!_eui._prototypes.HasIndex<ReagentPrototype>(_reagentIdEdit.Text))
                 {
-                    DoError(Loc.GetString("'{0}' does not exist.", _reagentIdEdit.Text));
+                    DoError(Loc.GetString("admin-add-reagent-eui-reagent-does-not-exist-error",
+                                         ("reagent", _reagentIdEdit.Text)));
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(_amountEdit.Text))
                 {
-                    DoError(Loc.GetString("Must specify reagent amount"));
+                    DoError(Loc.GetString("admin-add-reagent-eui-no-reagent-amount-specified-error"));
                     return;
                 }
 
                 if (!float.TryParse(_amountEdit.Text, out _))
                 {
-                    DoError(Loc.GetString("Invalid amount"));
+                    DoError(Loc.GetString("admin-add-reagent-eui-invalid-amount-error"));
                     return;
                 }
 
                 _addButton.Disabled = false;
                 _addCloseButton.Disabled = false;
-                _errorLabel.Text = "";
+                _errorLabel.Text = string.Empty;
 
                 void DoError(string text)
                 {
@@ -162,7 +163,9 @@ namespace Content.Client.Administration.UI
 
             public void HandleState(AdminAddReagentEuiState state)
             {
-                _volumeLabel.Text = Loc.GetString("{0}/{1}u", state.CurVolume, state.MaxVolume);
+                _volumeLabel.Text = Loc.GetString("admin-add-reagent-eui-current-and-max-volume-label",
+                                                  ("currentVolume", state.CurVolume),
+                                                  ("maxVolume" ,state.MaxVolume));
             }
         }
     }

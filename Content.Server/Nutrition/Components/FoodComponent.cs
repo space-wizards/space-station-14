@@ -97,7 +97,7 @@ namespace Content.Server.Nutrition.Components
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(Loc.GetString("{0:TheName} is empty!", Owner));
+                user.PopupMessage(Loc.GetString("food-component-try-use-food-is-empty", ("entity", Owner)));
                 return false;
             }
 
@@ -150,7 +150,7 @@ namespace Content.Server.Nutrition.Components
 
             if (firstStomach == null)
             {
-                trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
+                trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }
 
@@ -165,7 +165,7 @@ namespace Content.Server.Nutrition.Components
                 SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
-            trueTarget.PopupMessage(user, Loc.GetString("Nom"));
+            trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
 
             // If utensils were used
             if (utensils != null)

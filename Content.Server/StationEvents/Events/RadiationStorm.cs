@@ -21,10 +21,8 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
-        public override string StartAnnouncement => Loc.GetString(
-            "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
-        protected override string EndAnnouncement => Loc.GetString(
-            "The radiation threat has passed. Please return to your workplaces.");
+        public override string StartAnnouncement => Loc.GetString("station-event-radiation-storm-start-announcement");
+        protected override string EndAnnouncement => Loc.GetString("station-event-radiation-storm-end-announcement");
         public override string StartAudio => "/Audio/Announcements/radiation.ogg";
         protected override float StartAfter => 10.0f;
 

@@ -16,13 +16,7 @@ namespace Content.Shared.Notification.Managers
 
         protected class MsgDoNotifyCursor : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgDoNotifyCursor);
-            public MsgDoNotifyCursor(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string Message { get; set; } = string.Empty;
 
@@ -39,13 +33,7 @@ namespace Content.Shared.Notification.Managers
 
         protected class MsgDoNotifyCoordinates : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgDoNotifyCoordinates);
-            public MsgDoNotifyCoordinates(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string Message { get; set; } = string.Empty;
             public EntityCoordinates Coordinates;
@@ -65,13 +53,7 @@ namespace Content.Shared.Notification.Managers
 
         protected class MsgDoNotifyEntity : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgDoNotifyEntity);
-            public MsgDoNotifyEntity(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string Message { get; set; } = string.Empty;
             public EntityUid Entity;

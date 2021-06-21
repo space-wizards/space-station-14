@@ -766,13 +766,13 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, target.Name));
-                        source.PopupMessageCursor(Loc.GetString("You disarm {0}!", target.Name));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message!",("source", source.Name),("target", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message",("target", target.Name)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, target.Name));
-                        source.PopupMessageCursor(Loc.GetString("You shove {0}!", target.Name));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message",("source", source.Name),("target", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message",("target", target.Name)));
                     }
                 }
             }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Components;
@@ -22,38 +22,44 @@ namespace Content.Server.TraitorDeathMatch.Components
         {
             if (!eventArgs.User.TryGetComponent<InventoryComponent>(out var userInv))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"USER PDA OUT OF RANGE (0039)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-inventory-message"))));
                 return false;
             }
 
             if (!eventArgs.User.TryGetComponent<MindComponent>(out var userMindComponent))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"AUTHENTICATION FAILED (0045)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-mind-message"))));
                 return false;
             }
 
             var userMind = userMindComponent.Mind;
             if (userMind == null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"AUTHENTICATION FAILED (0052)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-user-mind-message"))));
                 return false;
             }
 
             if (!eventArgs.Using.TryGetComponent<PDAComponent>(out var victimPDA))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA IS NOT A PDA (0058)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))));
                 return false;
             }
 
             if (!eventArgs.Using.TryGetComponent<TraitorDeathMatchReliableOwnerTagComponent>(out var victimPDAOwner))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA HAS NO OWNER (0064)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-owner-message"))));
                 return false;
             }
 
             if (victimPDAOwner.UserId == userMind.UserId)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA OWNED BY USER (0070)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-pda-different-user-message"))));
                 return false;
             }
 
@@ -66,7 +72,8 @@ namespace Content.Server.TraitorDeathMatch.Components
 
             if (userPDA == null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"NO USER PDA IN IDCARD POCKET (0083)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message"))));
                 return false;
             }
 
@@ -85,13 +92,15 @@ namespace Content.Server.TraitorDeathMatch.Components
                 // ...So apparently, "it probably shouldn't kill people for a mistake".
                 // :(
                 // Give boring error message instead.
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"USER PDA HAS NO UPLINK ACCOUNT (0102)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-user-no-uplink-account-message"))));
                 return false;
             }
 
             if (victimAccount == null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine buzzes, and displays: \"GIVEN PDA HAS NO UPLINK ACCOUNT (0108)\""));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
+                                                                 ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-victim-no-uplink-account-message"))));
                 return false;
             }
 
@@ -102,7 +111,7 @@ namespace Content.Server.TraitorDeathMatch.Components
 
             victimPDA.Owner.Delete();
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("The machine plays a happy little tune, and displays: \"SUCCESS: {0} TC TRANSFERRED\"", transferAmount));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message", ("tcAmount", transferAmount)));
             return true;
         }
     }

@@ -29,7 +29,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("{0:theName}", Owner);
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", Owner.Name));
 
         protected override void Initialize()
         {
@@ -47,7 +47,7 @@ namespace Content.Server.Storage.Components
         {
             if (_itemContainer.ContainedEntity != null)
             {
-                Owner.PopupMessage(user, Loc.GetString("There's already something in here?!"));
+                Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-hide-container-not-empty"));
                 return false;
             }
 
@@ -57,7 +57,7 @@ namespace Content.Server.Storage.Components
             if (item.Size > _maxItemSize)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("{0:TheName} is too big to fit in {1}!", itemToHide, SecretPartName));
+                    Loc.GetString("comp-secret-stash-action-hide-item-too-big",("item", itemToHide),("stash", SecretPartName)));
                 return false;
             }
 
@@ -67,7 +67,7 @@ namespace Content.Server.Storage.Components
             if (!hands.Drop(itemToHide, _itemContainer))
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-hide", ("item", itemToHide), ("this", SecretPartName)));
+            Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-hide-success", ("item", itemToHide), ("this", SecretPartName)));
             return true;
         }
 
@@ -82,7 +82,7 @@ namespace Content.Server.Storage.Components
             if (_itemContainer.ContainedEntity == null)
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", SecretPartName));
+            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", ("stash", SecretPartName)));
 
             if (user.TryGetComponent(out HandsComponent? hands))
             {

@@ -185,7 +185,7 @@ namespace Content.Server.PDA
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-id-card-no-hands"));
                 return true;
             }
 
@@ -220,7 +220,7 @@ namespace Content.Server.PDA
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-pen-no-hands"));
                 return true;
             }
 
@@ -376,7 +376,7 @@ namespace Content.Server.PDA
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject ID");
+                data.Text = Loc.GetString("eject-id-verb-get-data-text");
                 data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
@@ -398,7 +398,7 @@ namespace Content.Server.PDA
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Pen");
+                data.Text = Loc.GetString("eject-pen-verb-get-data-text");
                 data.Visibility = component.PenSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
@@ -420,7 +420,7 @@ namespace Content.Server.PDA
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle flashlight");
+                data.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             }
 

@@ -70,7 +70,7 @@ namespace Content.Server.BarSign
             }
             else
             {
-                Owner.Name = Loc.GetString("bar sign");
+                Owner.Name = Loc.GetString("barsign-component-name");
             }
 
             Owner.Description = prototype.Description;
