@@ -43,8 +43,8 @@ namespace Content.Server.Voting.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME);
-            _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME);
+            _netManager.RegisterNetMessage<MsgVoteData>();
+            _netManager.RegisterNetMessage<MsgVoteCanCall>();
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;

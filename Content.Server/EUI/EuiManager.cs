@@ -36,9 +36,9 @@ namespace Content.Server.EUI
 
         public void Initialize()
         {
-            _net.RegisterNetMessage<MsgEuiCtl>(MsgEuiCtl.NAME);
-            _net.RegisterNetMessage<MsgEuiState>(MsgEuiState.NAME);
-            _net.RegisterNetMessage<MsgEuiMessage>(MsgEuiMessage.NAME, RxMsgMessage);
+            _net.RegisterNetMessage<MsgEuiCtl>();
+            _net.RegisterNetMessage<MsgEuiState>();
+            _net.RegisterNetMessage<MsgEuiMessage>(RxMsgMessage);
         }
 
         public void SendUpdates()

@@ -108,13 +108,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("ammo-box-component-try-insert-ammo-wrong-caliber"));
                 return false;
             }
 
             if (AmmoLeft >= Capacity)
             {
-                Owner.PopupMessage(user, Loc.GetString("No room"));
+                Owner.PopupMessage(user, Loc.GetString("ammo-box-component-try-insert-ammo-no-room"));
                 return false;
             }
 
@@ -228,7 +228,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Dump 10");
+                data.Text = Loc.GetString("dump-vert-get-data-text");
                 data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
@@ -241,8 +241,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("\nIt's a [color=white]{0}[/color] ammo box.", _caliber));
-            message.AddMarkup(Loc.GetString("\nIt has [color=white]{0}[/color] out of [color=white]{1}[/color] ammo left.", AmmoLeft, _capacity));
+            message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-caliber-description", ("caliber", _caliber)));
+            message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-remaining-ammo-description", ("ammoLeft",AmmoLeft),("capacity", _capacity)));
         }
     }
 }

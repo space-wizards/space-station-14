@@ -20,13 +20,13 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
         private void OnMinerUpdated(EntityUid uid, GasMinerComponent miner, AtmosDeviceUpdateEvent args)
         {
-            if (!CheckMinerOperation(args.Atmosphere, miner, out var tile) || !miner.Enabled || miner.SpawnGas <= Gas.Invalid || miner.SpawnAmount <= 0f)
+            if (!CheckMinerOperation(args.Atmosphere, miner, out var tile) || !miner.Enabled || !miner.SpawnGas.HasValue || miner.SpawnAmount <= 0f)
                 return;
 
             // Time to mine some gas.
 
             var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
-            merger.SetMoles(miner.SpawnGas, miner.SpawnAmount);
+            merger.SetMoles(miner.SpawnGas.Value, miner.SpawnAmount);
 
             tile.AssumeAir(merger);
         }

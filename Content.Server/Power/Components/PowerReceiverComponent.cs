@@ -220,7 +220,9 @@ namespace Content.Server.Power.Components
         ///</summary>
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It appears to be {0}.", Powered ? "[color=darkgreen]powered[/color]" : "[color=darkred]un-powered[/color]"));
+            message.AddMarkup(Loc.GetString("power-receiver-component-on-examine-main",
+                                            ("stateText", Loc.GetString( Powered ? "power-receiver-component-on-examine-powered" :
+                                                                                   "power-receiver-component-on-examine-unpowered"))));
         }
     }
 

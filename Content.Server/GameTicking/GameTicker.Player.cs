@@ -115,8 +115,7 @@ namespace Content.Server.GameTicking
 
         private void PlayerJoinGame(IPlayerSession session)
         {
-            _chatManager.DispatchServerMessage(session,
-                "Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!");
+            _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 
             if (_playersInLobby.ContainsKey(session))
                 _playersInLobby.Remove(session);

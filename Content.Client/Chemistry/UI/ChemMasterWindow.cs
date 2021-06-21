@@ -66,9 +66,9 @@ namespace Content.Client.Chemistry.UI
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Container")},
+                            new Label {Text = Loc.GetString("chem-master-window-container-label")},
                             new Control {HorizontalExpand = true},
-                            (EjectButton = new Button {Text = Loc.GetString("Eject")})
+                            (EjectButton = new Button {Text = Loc.GetString("chem-master-window-eject-button")})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
@@ -91,7 +91,7 @@ namespace Content.Client.Chemistry.UI
                                 {
                                     new Label
                                     {
-                                        Text = Loc.GetString("No container loaded.")
+                                        Text = Loc.GetString("chem-master-window-no-container-loaded-text")
                                     }
                                 }
                             }),
@@ -106,10 +106,10 @@ namespace Content.Client.Chemistry.UI
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Buffer")},
+                            new Label {Text = Loc.GetString("chem-master-window-buffer-text")},
                             new Control {HorizontalExpand = true},
-                            (BufferTransferButton = new Button {Text = Loc.GetString("Transfer"), Pressed = BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenRight }}),
-                            (BufferDiscardButton = new Button {Text = Loc.GetString("Discard"), Pressed = !BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenLeft }})
+                            (BufferTransferButton = new Button {Text = Loc.GetString("chem-master-window-transfer-button"), Pressed = BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenRight }}),
+                            (BufferDiscardButton = new Button {Text = Loc.GetString("chem-master-window-discard-button"), Pressed = !BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenLeft }})
                         }
                     },
 
@@ -133,7 +133,7 @@ namespace Content.Client.Chemistry.UI
                                 {
                                     new Label
                                     {
-                                        Text = Loc.GetString("Buffer empty.")
+                                        Text = Loc.GetString("chem-master-window-buffer-empty-text")
                                     }
                                 }
                             }),
@@ -148,7 +148,7 @@ namespace Content.Client.Chemistry.UI
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Packaging ")},
+                            new Label {Text = $"{Loc.GetString("chem-master-window-packaging-text")} "},
                         }
                     },
 
@@ -182,7 +182,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     new Label
                     {
-                        Text = Loc.GetString("Pills:")
+                        Text = $"{Loc.GetString("chem-master-window-pills-label")} "
                     },
 
                 },
@@ -204,12 +204,12 @@ namespace Content.Client.Chemistry.UI
 
             var pillVolume = new Label
             {
-                Text = " max 50u/each ",
+                Text =  $" {Loc.GetString("chem-master-window-max-pills-volume-text")} ",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
             PillInfo.AddChild((pillVolume));
 
-            CreatePills = new Button {Text = Loc.GetString("Create")};
+            CreatePills = new Button {Text = Loc.GetString("chem-master-window-create-pill-button") };
             PillInfo.AddChild(CreatePills);
 
             //Bottles
@@ -219,7 +219,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     new Label
                     {
-                        Text = Loc.GetString("Bottles:")
+                        Text = Loc.GetString("cham-master-window-bottles-label")
                     },
 
                 },
@@ -241,12 +241,12 @@ namespace Content.Client.Chemistry.UI
 
             var bottleVolume = new Label
             {
-                Text = " max 30u/each ",
+                Text = $" {Loc.GetString("chem-master-window-max-bottle-volume-text")} ",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
             BottleInfo.AddChild((bottleVolume));
 
-            CreateBottles = new Button {Text = Loc.GetString("Create")};
+            CreateBottles = new Button {Text = Loc.GetString("chem-master-window-create-bottle-button") };
             BottleInfo.AddChild(CreateBottles);
         }
 
@@ -311,7 +311,7 @@ namespace Content.Client.Chemistry.UI
 
             if (!state.HasBeaker)
             {
-                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("No container loaded.")});
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("chem-master-window-no-container-loaded-text") });
                 return;
             }
 
@@ -330,7 +330,7 @@ namespace Content.Client.Chemistry.UI
 
             foreach (var reagent in state.ContainerReagents)
             {
-                var name = Loc.GetString("Unknown reagent");
+                var name = Loc.GetString("chem-master-window-unknown-reagent-text");
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
@@ -357,7 +357,7 @@ namespace Content.Client.Chemistry.UI
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
                             MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
                             MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
-                            MakeChemButton("All", ReagentUnit.New(-1), reagent.ReagentId, false, StyleBase.ButtonOpenLeft),
+                            MakeChemButton(Loc.GetString("chem-master-window-buffer-all-amount"), ReagentUnit.New(-1), reagent.ReagentId, false, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }
@@ -367,14 +367,14 @@ namespace Content.Client.Chemistry.UI
 
             if (!state.BufferReagents.Any())
             {
-                BufferInfo.Children.Add(new Label {Text = Loc.GetString("Buffer empty.")});
+                BufferInfo.Children.Add(new Label {Text = Loc.GetString("chem-master-window-buffer-empty-text") });
                 return;
             }
 
             var bufferHBox = new HBoxContainer();
             BufferInfo.AddChild(bufferHBox);
 
-            var bufferLabel = new Label {Text = "buffer: "};
+            var bufferLabel = new Label { Text = $"{Loc.GetString("chem-master-window-buffer-label")} " };
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
@@ -385,7 +385,7 @@ namespace Content.Client.Chemistry.UI
 
             foreach (var reagent in state.BufferReagents)
             {
-                var name = Loc.GetString("Unknown reagent");
+                var name = Loc.GetString("chem-master-window-unknown-reagent-text");
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
@@ -413,7 +413,7 @@ namespace Content.Client.Chemistry.UI
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
                             MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
                             MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeChemButton("All", ReagentUnit.New(-1), reagent.ReagentId, true, StyleBase.ButtonOpenLeft),
+                            MakeChemButton(Loc.GetString("chem-master-window-buffer-all-amount"), ReagentUnit.New(-1), reagent.ReagentId, true, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }

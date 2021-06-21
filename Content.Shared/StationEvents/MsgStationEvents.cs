@@ -10,13 +10,7 @@ namespace Content.Shared.StationEvents
 {
         public class MsgStationEvents : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgStationEvents);
-            public MsgStationEvents(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public string[] Events = Array.Empty<string>();
 

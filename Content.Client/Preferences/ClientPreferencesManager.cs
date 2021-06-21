@@ -24,11 +24,10 @@ namespace Content.Client.Preferences
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings),
-                HandlePreferencesAndSettings);
-            _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter));
-            _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter));
-            _netManager.RegisterNetMessage<MsgDeleteCharacter>(nameof(MsgDeleteCharacter));
+            _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(HandlePreferencesAndSettings);
+            _netManager.RegisterNetMessage<MsgUpdateCharacter>();
+            _netManager.RegisterNetMessage<MsgSelectCharacter>();
+            _netManager.RegisterNetMessage<MsgDeleteCharacter>();
         }
 
         public void SelectCharacter(ICharacterProfile profile)

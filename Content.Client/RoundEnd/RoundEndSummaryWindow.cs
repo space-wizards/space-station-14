@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Message;
@@ -20,7 +20,7 @@ namespace Content.Client.RoundEnd
         {
             MinSize = SetSize = (520, 580);
 
-            Title = Loc.GetString("Round End Summary");
+            Title = Loc.GetString("round-end-summary-window-title");
 
             //Round End Window is split into two tabs, one about the round stats
             //and the other is a list of RoundEndPlayerInfo for each player.
@@ -29,13 +29,13 @@ namespace Content.Client.RoundEnd
             //Also good for serious info.
             RoundEndSummaryTab = new VBoxContainer()
             {
-                Name = Loc.GetString("Round Information")
+                Name = Loc.GetString("round-end-summary-window-round-end-summary-tab-title")
             };
 
             //Tab for listing  unique info per player.
             PlayerManifestoTab = new VBoxContainer()
             {
-                Name = Loc.GetString("Player Manifesto")
+                Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
             };
 
             RoundEndWindowTabs = new TabContainer();
@@ -46,7 +46,7 @@ namespace Content.Client.RoundEnd
 
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
-            gamemodeLabel.SetMarkup(Loc.GetString("Round of [color=white]{0}[/color] has ended.", gm));
+            gamemodeLabel.SetMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode",gm)));
             RoundEndSummaryTab.AddChild(gamemodeLabel);
 
             //Round end text
@@ -59,13 +59,17 @@ namespace Content.Client.RoundEnd
 
             //Duration
             var roundTimeLabel = new RichTextLabel();
-            roundTimeLabel.SetMarkup(Loc.GetString("It lasted for [color=yellow]{0} hours, {1} minutes, and {2} seconds.",
-                roundTimeSpan.Hours,roundTimeSpan.Minutes,roundTimeSpan.Seconds));
+            roundTimeLabel.SetMarkup(Loc.GetString("round-end-summary-window-duration-label",
+                                                   ("hours",roundTimeSpan.Hours),
+                                                   ("minutes",roundTimeSpan.Minutes),
+                                                   ("seconds",roundTimeSpan.Seconds)));
             RoundEndSummaryTab.AddChild(roundTimeLabel);
 
             //Initialize what will be the list of players display.
-            var scrollContainer = new ScrollContainer();
-            scrollContainer.VerticalExpand = true;
+            var scrollContainer = new ScrollContainer
+            {
+                VerticalExpand = true
+            };
             var innerScrollContainer = new VBoxContainer();
 
             //Put observers at the bottom of the list. Put antags on top.
@@ -80,8 +84,9 @@ namespace Content.Client.RoundEnd
                     if (playerInfo.Observer)
                     {
                         playerInfoText.SetMarkup(
-                            Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
-                                playerInfo.PlayerOOCName, playerInfo.PlayerICName));
+                            Loc.GetString("round-end-summary-window-player-info-if-observer-text",
+                                          ("playerOOCName",playerInfo.PlayerOOCName),
+                                          ("playerICName", playerInfo.PlayerICName)));
                     }
                     else
                     {
@@ -89,8 +94,11 @@ namespace Content.Client.RoundEnd
                         //For example: their antag goals and if they completed them sucessfully.
                         var icNameColor = playerInfo.Antag ? "red" : "white";
                         playerInfoText.SetMarkup(
-                            Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
-                                playerInfo.PlayerOOCName, icNameColor, playerInfo.PlayerICName, Loc.GetString(playerInfo.Role)));
+                            Loc.GetString("round-end-summary-window-player-info-if-not-observer-text",
+                                ("playerOOCName", playerInfo.PlayerOOCName),
+                                ("icNameColor", icNameColor),
+                                ("playerICName",playerInfo.PlayerICName),
+                                ("playerRole", Loc.GetString(playerInfo.Role))));
                     }
                 }
                 innerScrollContainer.AddChild(playerInfoText);

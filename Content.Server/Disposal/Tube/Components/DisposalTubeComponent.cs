@@ -176,7 +176,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             var directions = string.Join(", ", ConnectableDirections());
 
-            Owner.PopupMessage(entity, Loc.GetString("{0}", directions));
+            Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }
 
         private void UpdateVisualState()
@@ -283,7 +283,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
             {
-                data.Text = Loc.GetString("Tube Directions");
+                data.Text = Loc.GetString("tube-direction-verb-get-data-text");
                 data.CategoryData = VerbCategories.Debug;
                 data.Visibility = VerbVisibility.Invisible;
 

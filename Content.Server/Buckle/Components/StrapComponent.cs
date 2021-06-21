@@ -206,7 +206,7 @@ namespace Content.Server.Buckle.Components
 
                 data.Visibility = VerbVisibility.Visible;
                 data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
-                data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
+                data.Text = Loc.GetString(buckle.BuckledTo == null ? "strap-verb-get-data-text-buckle" : "strap-verb-get-data-text-unbuckle");
             }
 
             protected override void Activate(IEntity user, StrapComponent component)

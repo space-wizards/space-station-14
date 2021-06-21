@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -265,7 +265,7 @@ namespace Content.Server.Body.Surgery.Components
             if (PerformerCache == null) return;
 
             BodyCache?.Owner.PopupMessage(PerformerCache,
-                Loc.GetString("You see no useful way to use {0:theName}.", Owner));
+                Loc.GetString("surgery-tool-component-not-useful-message", ("bodyPart", Owner)));
         }
 
         private void NotUsefulAnymorePopup()
@@ -273,7 +273,7 @@ namespace Content.Server.Body.Surgery.Components
             if (PerformerCache == null) return;
 
             BodyCache?.Owner.PopupMessage(PerformerCache,
-                Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
+                Loc.GetString("surgery-tool-component-not-useful-anymore-message", ("bodyPart", Owner)));
         }
     }
 }

@@ -31,23 +31,6 @@ namespace Content.Server.Items
             }
         }
 
-        public override bool TryPutInHand(IEntity user)
-        {
-            if (!CanPickup(user))
-                return false;
-
-            if (!user.TryGetComponent(out IHandsComponent? hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            hands.PutInHand(this, activeHand, false);
-            return true;
-        }
-
         [Verb]
         public sealed class PickUpVerb : Verb<ItemComponent>
         {
@@ -61,7 +44,7 @@ namespace Content.Server.Items
                     return;
                 }
 
-                data.Text = Loc.GetString("Pick Up");
+                data.Text = Loc.GetString("pick-up-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
@@ -74,3 +57,4 @@ namespace Content.Server.Items
         }
     }
 }
+

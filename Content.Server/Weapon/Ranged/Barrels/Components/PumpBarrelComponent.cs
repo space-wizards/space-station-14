@@ -208,7 +208,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-wrong-caliber"));
                 return false;
             }
 
@@ -225,7 +225,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return true;
             }
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("No room"));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-no-room"));
 
             return false;
         }
@@ -245,7 +245,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", _caliber));
+            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine",("caliber", _caliber)));
         }
     }
 }

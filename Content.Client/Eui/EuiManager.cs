@@ -17,9 +17,9 @@ namespace Content.Client.Eui
 
         public void Initialize()
         {
-            _net.RegisterNetMessage<MsgEuiCtl>(MsgEuiCtl.NAME, RxMsgCtl);
-            _net.RegisterNetMessage<MsgEuiState>(MsgEuiState.NAME, RxMsgState);
-            _net.RegisterNetMessage<MsgEuiMessage>(MsgEuiMessage.NAME, RxMsgMessage);
+            _net.RegisterNetMessage<MsgEuiCtl>(RxMsgCtl);
+            _net.RegisterNetMessage<MsgEuiState>(RxMsgState);
+            _net.RegisterNetMessage<MsgEuiMessage>(RxMsgMessage);
         }
 
         private void RxMsgMessage(MsgEuiMessage message)

@@ -9,14 +9,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     public class MsgDeleteCharacter : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgDeleteCharacter);
-
-        public MsgDeleteCharacter(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public int Slot;
 

@@ -73,7 +73,7 @@ namespace Content.Server.Power.Components
             var result = TryInsertItem(eventArgs.Using);
             if (!result)
             {
-                eventArgs.User.PopupMessage(Owner, Loc.GetString("Unable to insert capacitor"));
+                eventArgs.User.PopupMessage(Owner, Loc.GetString("base-charger-on-interact-using-fail"));
             }
 
             return result;
@@ -140,7 +140,7 @@ namespace Content.Server.Power.Components
 
                 var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
 
-                data.Text = Loc.GetString("Insert {0}", heldItemName);
+                data.Text = Loc.GetString("insert-verb-get-data-text", ("itemName", heldItemName));
                 data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
             }
 
@@ -179,7 +179,7 @@ namespace Content.Server.Power.Components
 
                 var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
 
-                data.Text = Loc.GetString("Eject {0}", containerItemName);
+                data.Text = Loc.GetString("eject-verb-get-data-text",("containerName", containerItemName));
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
