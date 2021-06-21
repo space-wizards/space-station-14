@@ -84,6 +84,6 @@ namespace Content.Server.GameTicking.Presets
             return true;
         }
 
-        public virtual string GetRoundEndDescription() => "";
+        public virtual string GetRoundEndDescription() => string.Empty;
     }
 }

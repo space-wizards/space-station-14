@@ -74,7 +74,7 @@ namespace Content.Server.Morgue.Components
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("There's no room for the tray to extend!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("morgue-entity-storage-component-cannot-open-no-space"));
                 return false;
             }
 
@@ -152,18 +152,18 @@ namespace Content.Server.Morgue.Components
             {
                 if (Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=green]green[/color], this body might still be saved!"));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
                 }
                 else if (Appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=red]red[/color], there's a dead body in here! Oh wait..."));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
                 }
                 else if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=yellow]yellow[/color], there's something in here."));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
                 } else
                 {
-                    message.AddMarkup(Loc.GetString("The content light is off, there's nothing in here."));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
                 }
             }
         }

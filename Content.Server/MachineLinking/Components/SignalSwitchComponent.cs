@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MachineLinking;
@@ -50,7 +50,7 @@ namespace Content.Server.MachineLinking.Components
 
             if (!transmitter.TransmitSignal(_on))
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-switch-component-transmit-no-receivers-connected"));
             }
         }
 
@@ -78,7 +78,7 @@ namespace Content.Server.MachineLinking.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle Switch");
+                data.Text = Loc.GetString("toggle-switch-verb-get-data-text");
                 data.Visibility = VerbVisibility.Visible;
             }
         }

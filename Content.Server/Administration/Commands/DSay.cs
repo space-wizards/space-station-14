@@ -12,16 +12,16 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "dsay";
 
-        public string Description => Loc.GetString("Sends a message to deadchat as an admin");
+        public string Description => Loc.GetString("dsay-command-description");
 
-        public string Help => Loc.GetString($"Usage: {Command} <message>");
+        public string Help => Loc.GetString("dsay-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.WriteLine("Only players can use this command");
+                shell.WriteLine("shell-only-players-can-run-this-command");
                 return;
             }
 

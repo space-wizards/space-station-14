@@ -258,7 +258,7 @@ namespace Content.Server.Inventory.Components
             var inventorySlot = _slotContainers[slot];
             if (!inventorySlot.Insert(item.Owner))
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("inventory-component-on-equip-cannot");
                 return false;
             }
 
@@ -293,7 +293,7 @@ namespace Content.Server.Inventory.Components
 
             if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanEquip(Owner))
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("inventory-component-can-equip-cannot");
                 return false;
             }
 
@@ -305,7 +305,7 @@ namespace Content.Server.Inventory.Components
                 }
                 else
                 {
-                    reason = Loc.GetString("This doesn't fit.");
+                    reason = Loc.GetString("inventory-component-can-equip-does-not-fit");
                 }
             }
 
@@ -317,14 +317,14 @@ namespace Content.Server.Inventory.Components
 
             if (!pass && reason == null)
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("inventory-component-can-equip-cannot");
             }
 
             var canEquip = pass && _slotContainers[slot].CanInsert(item.Owner);
 
             if (!canEquip)
             {
-                reason = Loc.GetString("You can't equip this!");
+                reason = Loc.GetString("inventory-component-can-equip-cannot");
             }
 
             return canEquip;
@@ -667,7 +667,7 @@ namespace Content.Server.Inventory.Components
                     return;
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Set Outfit");
+                data.Text = Loc.GetString("set-outfit-verb-get-data-text");
                 data.CategoryData = VerbCategories.Debug;
                 data.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
             }

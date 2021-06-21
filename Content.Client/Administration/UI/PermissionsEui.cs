@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Eui;
@@ -207,7 +207,7 @@ namespace Content.Client.Administration.UI
 
                 al.AddChild(new Label {Text = name});
 
-                var titleControl = new Label {Text = admin.Title ?? Loc.GetString("none")};
+                var titleControl = new Label {Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant()};
                 if (admin.Title == null) // none
                 {
                     titleControl.StyleClasses.Add(StyleBase.StyleClassItalic);
@@ -228,7 +228,7 @@ namespace Content.Client.Administration.UI
                 else
                 {
                     italic = true;
-                    rank = Loc.GetString("none");
+                    rank = Loc.GetString("permissions-eui-edit-no-rank-text").ToLowerInvariant();
                 }
 
                 var rankControl = new Label {Text = rank};
@@ -248,14 +248,14 @@ namespace Content.Client.Administration.UI
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
 
-                var editButton = new Button {Text = Loc.GetString("Edit")};
+                var editButton = new Button {Text = Loc.GetString("permissions-eui-edit-title-button") };
                 editButton.OnPressed += _ => OnEditPressed(admin);
                 al.AddChild(editButton);
 
                 if (!_adminManager.HasFlag(combinedFlags))
                 {
                     editButton.Disabled = true;
-                    editButton.ToolTip = Loc.GetString("You do not have the required flags to edit this admin.");
+                    editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-admin-tooltip");
                 }
             }
 
@@ -271,14 +271,14 @@ namespace Content.Client.Administration.UI
                     HorizontalExpand = true,
                     HorizontalAlignment = Control.HAlignment.Center,
                 });
-                var editButton = new Button {Text = Loc.GetString("Edit")};
+                var editButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-rank-button") };
                 editButton.OnPressed += _ => OnEditRankPressed(kv);
                 _menu.AdminRanksList.AddChild(editButton);
 
                 if (!_adminManager.HasFlag(rank.Flags))
                 {
                     editButton.Disabled = true;
-                    editButton.ToolTip = Loc.GetString("You do not have the required flags to edit this rank.");
+                    editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-rank-tooltip");
                 }
             }
         }
@@ -299,19 +299,19 @@ namespace Content.Client.Administration.UI
             public Menu(PermissionsEui ui)
             {
                 _ui = ui;
-                Title = Loc.GetString("Permissions Panel");
+                Title = Loc.GetString("permissions-eui-menu-title");
 
                 var tab = new TabContainer();
 
                 AddAdminButton = new Button
                 {
-                    Text = Loc.GetString("Add Admin"),
+                    Text = Loc.GetString("permissions-eui-menu-add-admin-button"),
                     HorizontalAlignment = HAlignment.Right
                 };
 
                 AddAdminRankButton = new Button
                 {
-                    Text = Loc.GetString("Add Admin Rank"),
+                    Text = Loc.GetString("permissions-eui-menu-add-admin-rank-button"),
                     HorizontalAlignment = HAlignment.Right
                 };
 
@@ -320,14 +320,14 @@ namespace Content.Client.Administration.UI
                 {
                     Children = {AdminsList, AddAdminButton},
                 };
-                TabContainer.SetTabTitle(adminVBox, Loc.GetString("Admins"));
+                TabContainer.SetTabTitle(adminVBox, Loc.GetString("permissions-eui-menu-admins-tab-title"));
 
                 AdminRanksList = new GridContainer {Columns = 3};
                 var rankVBox = new VBoxContainer
                 {
                     Children = { AdminRanksList, AddAdminRankButton}
                 };
-                TabContainer.SetTabTitle(rankVBox, Loc.GetString("Admin Ranks"));
+                TabContainer.SetTabTitle(rankVBox, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
 
                 tab.AddChild(adminVBox);
                 tab.AddChild(rankVBox);
@@ -360,22 +360,23 @@ namespace Content.Client.Administration.UI
                 if (data is { } dat)
                 {
                     var name = dat.UserName ?? dat.UserId.ToString();
-                    Title = Loc.GetString("Edit admin {0}", name);
+                    Title = Loc.GetString("permissions-eui-edit-admin-window-edit-admin-label",
+                                          ("admin", name));
 
                     nameControl = new Label {Text = name};
                 }
                 else
                 {
-                    Title = Loc.GetString("Add admin");
+                    Title = Loc.GetString("permissions-eui-menu-add-admin-button");
 
-                    nameControl = NameEdit = new LineEdit {PlaceHolder = Loc.GetString("Username/User ID")};
+                    nameControl = NameEdit = new LineEdit {PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-name-edit-placeholder") };
                 }
 
-                TitleEdit = new LineEdit {PlaceHolder = Loc.GetString("Custom title, leave blank to inherit rank title.")};
+                TitleEdit = new LineEdit {PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-title-edit-placeholder") };
                 RankButton = new OptionButton();
-                SaveButton = new Button {Text = Loc.GetString("Save"), HorizontalAlignment = HAlignment.Right};
+                SaveButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-window-save-button"), HorizontalAlignment = HAlignment.Right};
 
-                RankButton.AddItem(Loc.GetString("No rank"), NoRank);
+                RankButton.AddItem(Loc.GetString("permissions-eui-edit-admin-window-no-rank-button"), NoRank);
                 foreach (var (rId, rank) in ui._ranks)
                 {
                     RankButton.AddItem(rank.Name, rId);
@@ -454,7 +455,7 @@ namespace Content.Client.Administration.UI
                 if (data != null)
                 {
                     // show remove button.
-                    RemoveButton = new Button {Text = Loc.GetString("Remove")};
+                    RemoveButton = new Button {Text = Loc.GetString("permissions-eui-edit-admin-window-remove-flag-button") };
                     bottomButtons.AddChild(RemoveButton);
                 }
 
@@ -527,7 +528,7 @@ namespace Content.Client.Administration.UI
 
                 NameEdit = new LineEdit
                 {
-                    PlaceHolder = Loc.GetString("Rank name"),
+                    PlaceHolder = Loc.GetString("permissions-eui-edit-admin-rank-window-name-edit-placeholder"),
                 };
 
                 if (data != null)
@@ -536,7 +537,7 @@ namespace Content.Client.Administration.UI
                 }
 
                 SaveButton = new Button {
-                    Text = Loc.GetString("Save"),
+                    Text = Loc.GetString("permissions-eui-menu-save-admin-rank-button"),
                     HorizontalAlignment = HAlignment.Right,
                     HorizontalExpand = true
                 };
@@ -568,7 +569,7 @@ namespace Content.Client.Administration.UI
                 if (data != null)
                 {
                     // show remove button.
-                    RemoveButton = new Button {Text = Loc.GetString("Remove")};
+                    RemoveButton = new Button {Text = Loc.GetString("permissions-eui-menu-remove-admin-rank-button") };
                     bottomButtons.AddChild(RemoveButton);
                 }
 

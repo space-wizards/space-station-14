@@ -40,7 +40,7 @@ namespace Content.Client.Research.UI
 
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("R&D Console");
+            Title = Loc.GetString("research-console-menu-title");
 
             Owner = owner;
 
@@ -92,7 +92,7 @@ namespace Content.Client.Research.UI
                 SizeFlagsStretchRatio = 1
             };
 
-            var vboxPoints =  new VBoxContainer()
+            var vboxPoints = new VBoxContainer()
             {
                 HorizontalExpand = true,
                 VerticalExpand = true,
@@ -106,8 +106,8 @@ namespace Content.Client.Research.UI
                 SizeFlagsStretchRatio = 3,
             };
 
-            _pointLabel = new Label() { Text = Loc.GetString("Research Points") + ": 0" };
-            _pointsPerSecondLabel = new Label() { Text = Loc.GetString("Points per Second") + ": 0" };
+            _pointLabel = new Label() { Text = Loc.GetString("research-console-menu-research-points-text", ("points", 0)) };
+            _pointsPerSecondLabel = new Label() { Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSecond", 0)) };
 
             var vboxPointsButtons = new VBoxContainer()
             {
@@ -116,9 +116,9 @@ namespace Content.Client.Research.UI
                 VerticalExpand = true,
             };
 
-            ServerSelectionButton = new Button() { Text = Loc.GetString("Server list") };
-            ServerSyncButton = new Button() { Text = Loc.GetString("Sync")};
-            UnlockButton = new Button() { Text = Loc.GetString("Unlock"), Disabled = true };
+            ServerSelectionButton = new Button() { Text = Loc.GetString("research-console-menu-server-selection-button") };
+            ServerSyncButton = new Button() { Text = Loc.GetString("research-console-menu-server-sync-button") };
+            UnlockButton = new Button() { Text = Loc.GetString("research-console-menu-server-unlock-button"), Disabled = true };
 
 
             vboxPointsButtons.AddChild(ServerSelectionButton);
@@ -172,9 +172,9 @@ namespace Content.Client.Research.UI
         {
             UnlockButton.Disabled = true;
             _technologyIcon.Texture = Texture.Transparent;
-            _technologyName.Text = "";
-            _technologyDescription.Text = "";
-            _technologyRequirements.Text = "";
+            _technologyName.Text = string.Empty;
+            _technologyDescription.Text = string.Empty;
+            _technologyRequirements.Text = string.Empty;
         }
 
         /// <summary>
@@ -256,16 +256,16 @@ namespace Content.Client.Research.UI
         {
             if (TechnologySelected == null)
             {
-                _technologyName.Text = "";
-                _technologyDescription.Text = "";
-                _technologyRequirements.Text = "";
+                _technologyName.Text = string.Empty;
+                _technologyDescription.Text = string.Empty;
+                _technologyRequirements.Text = string.Empty;
                 return;
             }
 
             _technologyIcon.Texture = TechnologySelected.Icon.Frame0();
             _technologyName.Text = TechnologySelected.Name;
-            _technologyDescription.Text = TechnologySelected.Description+$"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research points");
-            _technologyRequirements.Text = Loc.GetString("No technology requirements.");
+            _technologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text").ToLowerInvariant();
+            _technologyRequirements.Text = Loc.GetString("research-console-tech-requirements-none");
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
 
@@ -274,7 +274,7 @@ namespace Content.Client.Research.UI
                 var requiredId = TechnologySelected.RequiredTechnologies[i];
                 if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype? prototype)) continue;
                 if (i == 0)
-                    _technologyRequirements.Text = Loc.GetString("Requires") + $": {prototype.Name}";
+                    _technologyRequirements.Text = Loc.GetString("research-console-tech-requirements-prototype-name", ("prototypeName", prototype.Name));
                 else
                     _technologyRequirements.Text += $", {prototype.Name}";
             }
@@ -285,8 +285,8 @@ namespace Content.Client.Research.UI
         /// </summary>
         public void PopulatePoints()
         {
-            _pointLabel.Text = Loc.GetString("Research Points") + $": {Owner.Points}";
-            _pointsPerSecondLabel.Text = Loc.GetString("Points per second") + $": {Owner.PointsPerSecond}";
+            _pointLabel.Text = Loc.GetString("research-console-menu-research-points-text", ("points", Owner.Points));
+            _pointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSeconds", Owner.PointsPerSecond));
         }
 
         /// <summary>

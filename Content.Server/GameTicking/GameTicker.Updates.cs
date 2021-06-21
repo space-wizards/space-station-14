@@ -23,8 +23,7 @@ namespace Content.Server.GameTicking
 
         private void WatchdogApiOnUpdateReceived()
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString(
-                "Update has been received, server will automatically restart for update at the end of this round."));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-restart-round-server-update"));
             _updateOnRoundEnd = true;
             ServerEmptyUpdateRestartCheck();
         }
@@ -55,8 +54,7 @@ namespace Content.Server.GameTicking
 
             Timer.Spawn(UpdateRestartDelay, () =>
             {
-                _baseServer.Shutdown(
-                    Loc.GetString("Server is shutting down for update and will automatically restart."));
+                _baseServer.Shutdown(Loc.GetString("game-ticker-shutdown-server-update"));
             }, _updateShutdownCts.Token);
         }
     }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.HUD;
 using Content.Client.Items.Managers;
@@ -284,7 +284,7 @@ namespace Content.Client.Inventory
 
             public HumanInventoryWindow(IGameHud gameHud)
             {
-                Title = Loc.GetString("Your Inventory");
+                Title = Loc.GetString("human-inventory-window-title");
                 Resizable = false;
 
                 var buttonDict = new Dictionary<Slots, ItemSlotButton>();

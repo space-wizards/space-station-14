@@ -31,7 +31,7 @@ namespace Content.Client.Chemistry.UI
             //Setup window layout/elements
             _window = new ChemMasterWindow
             {
-                Title = Loc.GetString("ChemMaster 4000"),
+                Title = Loc.GetString("chem-master-bound-user-interface-title"),
             };
 
             _window.OpenCentered();
@@ -58,7 +58,7 @@ namespace Content.Client.Chemistry.UI
         {
             base.UpdateState(state);
 
-            var castState = (ChemMasterBoundUserInterfaceState)state;
+            var castState = (ChemMasterBoundUserInterfaceState) state;
 
             _window?.UpdateState(castState); //Update window state
         }
@@ -73,7 +73,6 @@ namespace Content.Client.Chemistry.UI
             {
                 SendMessage(new UiActionMessage(action, null, null, null, pillAmount, bottleAmount));
             }
-
         }
 
         protected override void Dispose(bool disposing)

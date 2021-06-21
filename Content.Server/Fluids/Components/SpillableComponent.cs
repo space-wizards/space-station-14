@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.DragDrop;
@@ -31,7 +31,7 @@ namespace Content.Server.Fluids.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Spill liquid");
+                data.Text = Loc.GetString("spill-target-verb-get-data-text");
                 data.Visibility = solutionComponent.DrainAvailable > ReagentUnit.Zero
                     ? VerbVisibility.Visible
                     : VerbVisibility.Disabled;
@@ -44,12 +44,12 @@ namespace Content.Server.Fluids.Components
                     if (!solutionComponent.CanDrain)
                     {
                         user.PopupMessage(user,
-                            Loc.GetString("You can't pour anything from {0:theName}!", component.Owner));
+                            Loc.GetString("spill-target-verb-activate-cannot-drain-message",("owner", component.Owner)));
                     }
 
                     if (solutionComponent.DrainAvailable <= 0)
                     {
-                        user.PopupMessage(user, Loc.GetString("{0:theName} is empty!", component.Owner));
+                        user.PopupMessage(user, Loc.GetString("spill-target-verb-activate-is-empty-message",("owner", component.Owner)));
                     }
 
                     // Need this as when we split the component's owner may be deleted

@@ -20,7 +20,7 @@ namespace Content.Client.Suspicion
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly Font _font;
 
-        private readonly string _traitorText = Loc.GetString("Traitor");
+        private readonly string _traitorText = Loc.GetString("traitor-overlay-traitor-text");
 
         public TraitorOverlay(
             IEntityManager entityManager,

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Examine;
@@ -65,7 +65,8 @@ namespace Content.Server.Radio.Components
         {
             RadioOn = !RadioOn;
 
-            var message = Loc.GetString($"The radio is now {(RadioOn ? "on" : "off")}.");
+            var message = Loc.GetString("handheld-radio-component-on-use",
+                                        ("radioState", Loc.GetString(RadioOn ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state")));
             Owner.PopupMessage(user, message);
 
             return true;
@@ -108,7 +109,7 @@ namespace Content.Server.Radio.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddText(Loc.GetString("It is set to broadcast over the {0} frequency.", BroadcastFrequency));
+            message.AddText(Loc.GetString("handheld-radio-component-on-examine",("frequency", BroadcastFrequency)));
         }
     }
 }

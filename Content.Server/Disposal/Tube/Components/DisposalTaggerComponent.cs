@@ -132,7 +132,7 @@ namespace Content.Server.Disposal.Tube.Components
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace Content.Server.Disposal.Tube.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Open Configuration");
+                data.Text = Loc.GetString("configure-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             }
 

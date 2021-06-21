@@ -1,0 +1,1 @@
+examine-verb-name = Examine

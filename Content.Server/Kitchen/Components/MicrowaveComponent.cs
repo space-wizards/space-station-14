@@ -222,7 +222,7 @@ namespace Content.Server.Kitchen.Components
         {
             if (!Powered)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It has no power!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-no-power"));
                 return false;
             }
 
@@ -236,7 +236,7 @@ namespace Content.Server.Kitchen.Components
 
             if (itemEntity == null)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You have no active hand!"));
+                eventArgs.User.PopupMessage(Loc.GetString("microwave-component-interact-using-no-active-hand"));
                 return false;
             }
 
@@ -257,7 +257,7 @@ namespace Content.Server.Kitchen.Components
                 var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.EmptyVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Container is full"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-container-full"));
                     return false;
                 }
 
@@ -268,14 +268,15 @@ namespace Content.Server.Kitchen.Components
                     return false;
                 }
 
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-transfer-success",
+                                                                 ("amount",removedSolution.TotalVolume)));
                 return true;
             }
 
             if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
             {
 
-                Owner.PopupMessage(eventArgs.User, "That won't work!");
+                Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
                 return false;
             }
 
@@ -529,14 +530,14 @@ namespace Content.Server.Kitchen.Components
             }
 
             var othersMessage = headCount > 1
-                ? Loc.GetString("{0:theName} is trying to cook {0:their} heads!", victim)
-                : Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+                ? Loc.GetString("microwave-component-suicide-multi-head-others-message", ("victim", victim))
+                : Loc.GetString("microwave-component-suicide-others-message",("victim", victim));
 
             victim.PopupMessageOtherClients(othersMessage);
 
             var selfMessage = headCount > 1
-                ? Loc.GetString("You cook your heads!")
-                : Loc.GetString("You cook your head!");
+                ? Loc.GetString("microwave-component-suicide-multi-head-message")
+                : Loc.GetString("microwave-component-suicide-message");
 
             victim.PopupMessage(selfMessage);
 

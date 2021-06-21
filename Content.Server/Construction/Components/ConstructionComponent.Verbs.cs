@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
@@ -28,7 +28,7 @@ namespace Content.Server.Construction.Components
                 }
 
                 data.CategoryData = VerbCategories.Construction;
-                data.Text = Loc.GetString("Begin deconstructing");
+                data.Text = Loc.GetString("deconstructible-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             }
 
@@ -38,11 +38,11 @@ namespace Content.Server.Construction.Components
                 if (component.Target == null)
                 {
                     // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                    component.Owner.PopupMessage(user, Loc.GetString("There is no way to deconstruct this."));
+                    component.Owner.PopupMessage(user, Loc.GetString("deconstructible-verb-activate-no-target-text"));
                 }
                 else
                 {
-                    component.Owner.PopupMessage(user, Loc.GetString("Examine to see instructions."));
+                    component.Owner.PopupMessage(user, Loc.GetString("deconstructible-verb-activate-text"));
                 }
             }
         }
