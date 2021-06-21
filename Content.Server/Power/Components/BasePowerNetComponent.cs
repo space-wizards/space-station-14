@@ -6,6 +6,5 @@ namespace Content.Server.Power.Components
 {
     public abstract class BasePowerNetComponent : BaseNetConnectorComponent<IPowerNet>
     {
-        protected override IPowerNet NullNet => PowerNet.NullNet;
     }
 }

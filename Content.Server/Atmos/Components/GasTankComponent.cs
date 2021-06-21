@@ -3,9 +3,9 @@
 using System;
 using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;

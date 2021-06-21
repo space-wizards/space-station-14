@@ -11,7 +11,7 @@ namespace Content.Server.Power.Nodes
     [DataDefinition]
     public class WireNode : Node
     {
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             if (!Anchored)
                 yield break;

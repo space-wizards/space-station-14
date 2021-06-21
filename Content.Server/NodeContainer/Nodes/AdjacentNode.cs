@@ -13,7 +13,7 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public class AdjacentNode : Node
     {
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             if (!Owner.Transform.Anchored)
                 yield break;

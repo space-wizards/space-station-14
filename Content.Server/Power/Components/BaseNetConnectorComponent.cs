@@ -17,23 +17,16 @@ namespace Content.Server.Power.Components
         private Voltage _voltage = Voltage.High;
 
         [ViewVariables]
-        public TNetType Net { get => _net; set => SetNet(value); }
-        private TNetType _net = default!; //set in OnAdd()
-
-        protected abstract TNetType NullNet { get; }
+        public TNetType? Net { get => _net; set => SetNet(value); }
+        private TNetType? _net;
 
         [ViewVariables]
-        private bool _needsNet = true;
-
-        protected override void OnAdd()
-        {
-            base.OnAdd();
-            _net = NullNet;
-        }
+        private bool _needsNet => _net != null;
 
         protected override void Initialize()
         {
             base.Initialize();
+
             if (_needsNet)
             {
                 TryFindAndSetNet();
@@ -56,9 +49,8 @@ namespace Content.Server.Power.Components
 
         public void ClearNet()
         {
-            RemoveSelfFromNet(_net);
-            _net = NullNet;
-            _needsNet = true;
+            if (_net != null)
+                RemoveSelfFromNet(_net);
         }
 
         protected abstract void AddSelfToNet(TNetType net);
@@ -85,12 +77,15 @@ namespace Content.Server.Power.Components
             return false;
         }
 
-        private void SetNet(TNetType newNet)
+        private void SetNet(TNetType? newNet)
         {
-            RemoveSelfFromNet(_net);
-            AddSelfToNet(newNet);
+            if (_net != null)
+                RemoveSelfFromNet(_net);
+
+            if (newNet != null)
+                AddSelfToNet(newNet);
+
             _net = newNet;
-            _needsNet = false;
         }
 
         private void SetVoltage(Voltage newVoltage)

@@ -52,8 +52,6 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();
 
-        public static readonly IApcNet NullNet = new NullApcNet();
-
         public override void Initialize(Node sourceNode)
         {
             base.Initialize(sourceNode);
@@ -61,28 +59,11 @@ namespace Content.Server.Power.NodeGroups
             _powerNetSystem.InitApcNet(this);
         }
 
-        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
+        public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             base.AfterRemake(newGroups);
 
-            StopUpdates();
-        }
-
-        protected override void OnGivingNodesForCombine(INodeGroup newGroup)
-        {
-            base.OnGivingNodesForCombine(newGroup);
-
-            StopUpdates();
-        }
-
-        private void StopUpdates()
-        {
             _powerNetSystem.DestroyApcNet(this);
-        }
-
-        protected override void SetNetConnectorNet(BaseApcNetComponent netConnectorComponent)
-        {
-            netConnectorComponent.Net = this;
         }
 
         public void AddApc(ApcComponent apc)
@@ -120,16 +101,9 @@ namespace Content.Server.Power.NodeGroups
             _powerNetSystem.QueueReconnectApcNet(this);
         }
 
-        private class NullApcNet : IApcNet
+        protected override void SetNetConnectorNet(BaseApcNetComponent netConnectorComponent)
         {
-            public GridId? GridId => default;
-            public void AddApc(ApcComponent apc) { }
-            public void AddPowerProvider(ApcPowerProviderComponent provider) { }
-            public void RemoveApc(ApcComponent apc) { }
-            public void RemovePowerProvider(ApcPowerProviderComponent provider) { }
-            public void QueueNetworkReconnect() { }
-
-            public PowerState.Network NetworkNode { get; } = new();
+            netConnectorComponent.Net = this;
         }
     }
 }

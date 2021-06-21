@@ -8,30 +8,24 @@ namespace Content.Server.NodeContainer.NodeGroups
 {
     public abstract class BaseNetConnectorNodeGroup<TNetConnector, TNetType> : BaseNodeGroup where TNetConnector : BaseNetConnectorComponent<TNetType>
     {
-        private readonly Dictionary<Node, List<TNetConnector>> _netConnectorComponents = new();
-
-        protected override void OnAddNode(Node node)
+        public override void LoadNodes(List<Node> groupNodes)
         {
-            var newNetConnectorComponents = node.Owner
-                .GetAllComponents<TNetConnector>()
-                .Where(powerComp => (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
-                .ToList();
-            _netConnectorComponents[node] = newNetConnectorComponents;
-            foreach (var netConnectorComponent in newNetConnectorComponents)
+            base.LoadNodes(groupNodes);
+
+            foreach (var node in groupNodes)
             {
-                SetNetConnectorNet(netConnectorComponent);
+                var newNetConnectorComponents = node.Owner
+                    .GetAllComponents<TNetConnector>()
+                    .Where(powerComp => (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
+                    .ToList();
+
+                foreach (var netConnector in newNetConnectorComponents)
+                {
+                    SetNetConnectorNet(netConnector);
+                }
             }
         }
 
         protected abstract void SetNetConnectorNet(TNetConnector netConnectorComponent);
-
-        protected override void OnRemoveNode(Node node)
-        {
-            foreach (var netConnectorComponent in _netConnectorComponents[node])
-            {
-                netConnectorComponent.ClearNet();
-            }
-            _netConnectorComponents.Remove(node);
-        }
     }
 }

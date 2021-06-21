@@ -36,19 +36,23 @@ namespace Content.Server.AME
 
         public int CoreCount => _cores.Count;
 
-        protected override void OnAddNode(Node node)
+        public override void LoadNodes(List<Node> groupNodes)
         {
-            base.OnAddNode(node);
-            if (_masterController == null)
+            base.LoadNodes(groupNodes);
+
+            foreach (var node in groupNodes)
             {
-                node.Owner.TryGetComponent<AMEControllerComponent>(out var controller);
-                _masterController = controller;
+                if (node.Owner.TryGetComponent(out AMEControllerComponent? controller))
+                {
+                    _masterController = controller;
+                }
             }
         }
 
-        protected override void OnRemoveNode(Node node)
+        public override void RemoveNode(Node node)
         {
-            base.OnRemoveNode(node);
+            base.RemoveNode(node);
+
             RefreshAMENodes(_masterController);
             if (_masterController != null && _masterController?.Owner == node.Owner) { _masterController = null; }
         }
@@ -119,7 +123,7 @@ namespace Content.Server.AME
                     // fuel > safeFuelLimit: Slow damage. Can safely run at this level for burst periods if the engine is small and someone is keeping an eye on it.
                     if (_random.Prob(0.5f))
                         instability = 1;
-                    // overloadVsSizeResult > 5: 
+                    // overloadVsSizeResult > 5:
                     if (overloadVsSizeResult > 5)
                         instability = 5;
                     // overloadVsSizeResult > 10: This will explode in at most 5 injections.

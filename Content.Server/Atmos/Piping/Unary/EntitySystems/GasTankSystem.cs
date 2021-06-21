@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -25,7 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // Create a pipenet if we don't have one already.
-            tankNode.TryAssignGroupIfNeeded();
+            tankNode.CreateSingleNetImmediate();
             tankNode.AssumeAir(tank.InitialMixture);
             tankNode.Volume = tank.InitialMixture.Volume;
             tankNode.Air.Volume = tank.InitialMixture.Volume;

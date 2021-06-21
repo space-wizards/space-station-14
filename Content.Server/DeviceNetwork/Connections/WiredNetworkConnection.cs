@@ -65,14 +65,14 @@ namespace Content.Server.DeviceNetwork.Connections
 
         private bool TryGetWireNet(ApcPowerReceiverComponent apcPowerReceiver, [NotNullWhen(true)] out INodeGroup? net)
         {
-            if (apcPowerReceiver.Provider is ApcPowerProviderComponent provider &&
-                provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            var provider = apcPowerReceiver.Provider;
+            if (provider != null && provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
             {
                 var nodes = nodeContainer.Nodes;
 
                 foreach (var node in nodes.Values)
                 {
-                    if (node.NodeGroupID == NodeGroupID.WireNet)
+                    if (node.NodeGroupID == NodeGroupID.WireNet && node.NodeGroup != null)
                     {
                         net = node.NodeGroup;
                         return true;

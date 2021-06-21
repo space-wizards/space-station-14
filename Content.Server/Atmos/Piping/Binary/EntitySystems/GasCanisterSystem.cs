@@ -2,9 +2,9 @@ using System;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // Create a pipenet if we don't have one already.
-            portNode.TryAssignGroupIfNeeded();
+            portNode.CreateSingleNetImmediate();
             portNode.Air.Merge(canister.InitialMixture);
             portNode.Air.Temperature = canister.InitialMixture.Temperature;
             portNode.Volume = canister.InitialMixture.Volume;
@@ -77,7 +77,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
 
             ui.SetState(new GasCanisterBoundUserInterfaceState(metadata.EntityName, portNode.Air.Pressure,
-                portNode.NodeGroup.Nodes.Count > 1, tankLabel, tankPressure,
+                portNode.NodeGroup!.Nodes.Count > 1, tankLabel, tankPressure,
                 passiveGate.TargetPressure, passiveGate.Enabled,
                 canister.MinReleasePressure, canister.MaxReleasePressure));
         }
@@ -215,7 +215,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             tankNode.EnvironmentalAir = false;
             tankNode.ConnectToContainedEntities = true;
-            tankNode.NodeGroup.RemakeGroup();
+            tankNode.NodeGroup!.QueueRemake();
 
             if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
@@ -234,7 +234,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 || !nodeContainer.TryGetNode(component.TankName, out PipeNode? tankNode))
                 return;
 
-            tankNode.NodeGroup.RemakeGroup();
+            tankNode.NodeGroup!.QueueRemake();
             tankNode.ConnectToContainedEntities = false;
             tankNode.EnvironmentalAir = true;
 

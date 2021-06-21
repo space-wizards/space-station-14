@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
@@ -41,9 +42,6 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables] public readonly List<BatteryChargerComponent> Chargers = new();
         [ViewVariables] public readonly List<BatteryDischargerComponent> Dischargers = new();
 
-
-        public static readonly IPowerNet NullNet = new NullPowerNet();
-
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();
 
@@ -54,7 +52,7 @@ namespace Content.Server.Power.NodeGroups
             _powerNetSystem.InitPowerNet(this);
         }
 
-        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
+        public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             base.AfterRemake(newGroups);
 
@@ -124,18 +122,6 @@ namespace Content.Server.Power.NodeGroups
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Remove(charger);
             _powerNetSystem.QueueReconnectPowerNet(this);
-        }
-
-        private class NullPowerNet : IPowerNet
-        {
-            public void AddConsumer(PowerConsumerComponent consumer) { }
-            public void AddSupplier(PowerSupplierComponent supplier) { }
-            public void RemoveConsumer(PowerConsumerComponent consumer) { }
-            public void AddDischarger(BatteryDischargerComponent discharger) { }
-            public void RemoveDischarger(BatteryDischargerComponent discharger) { }
-            public void AddCharger(BatteryChargerComponent charger) { }
-            public void RemoveCharger(BatteryChargerComponent charger) { }
-            public void RemoveSupplier(PowerSupplierComponent supplier) { }
         }
     }
 }

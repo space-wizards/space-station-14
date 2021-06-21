@@ -10,7 +10,7 @@ namespace Content.Server.Power.Nodes
     [DataDefinition]
     public class WireTerminalNode : Node
     {
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             var compMgr = IoCManager.Resolve<IComponentManager>();
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);

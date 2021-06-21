@@ -37,7 +37,7 @@ namespace Content.Server.Power.Components
             LinkedReceivers.Add(receiver);
             receiver.NetworkLoad.LinkedNetwork = default;
 
-            Net.QueueNetworkReconnect();
+            Net?.QueueNetworkReconnect();
         }
 
         public void RemoveReceiver(ApcPowerReceiverComponent receiver)
@@ -45,7 +45,7 @@ namespace Content.Server.Power.Components
             LinkedReceivers.Remove(receiver);
             receiver.NetworkLoad.LinkedNetwork = default;
 
-            Net.QueueNetworkReconnect();
+            Net?.QueueNetworkReconnect();
         }
 
         protected override void Startup()
