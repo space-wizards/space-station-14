@@ -11,6 +11,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -169,14 +170,14 @@ namespace Content.Server.Power.Components
             {
                 return ApcExternalPowerState.None;
             }
-            else if (netBat.CurrentReceiving < netBat.LoadingNetworkDemand)
+
+            var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
+            if (!MathHelper.CloseTo(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;
             }
-            else
-            {
-                return ApcExternalPowerState.Good;
-            }
+
+            return ApcExternalPowerState.Good;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
