@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.Examine;
 using Content.Client.Message;
 using Content.Shared.PDA;
@@ -65,7 +65,7 @@ namespace Content.Client.PDA
             {
                 if (_menu.CurrentLoggedInAccount?.DataBalance < listing.Price)
                 {
-                    _failPopup = new PDAMenuPopup(Loc.GetString("Insufficient funds!"));
+                    _failPopup = new PDAMenuPopup(Loc.GetString("pda-bound-user-interface-insufficient-funds-popup"));
                     _userInterfaceManager.ModalRoot.AddChild(_failPopup);
                     _failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150, _menu.Position.Y + 60, 156, 24));
                     _menu.OnClose += () =>
@@ -106,10 +106,10 @@ namespace Content.Client.PDA
                             ("ActualOwnerName", msg.PDAOwnerInfo.ActualOwnerName)));
                     }
 
-                    
+
                     if (msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null)
                     {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui", 
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
                             ("Owner",msg.PDAOwnerInfo.IdOwner ?? "Unknown"),
                             ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? "Unassigned")));
                     }
@@ -126,8 +126,9 @@ namespace Content.Client.PDA
                         _menu.CurrentLoggedInAccount = msg.Account;
                         var balance = msg.Account.DataBalance;
                         var weightedColor = GetWeightedColorString(balance);
-                        _menu.BalanceInfo.SetMarkup(Loc.GetString("TC Balance: [color={0}]{1}[/color]", weightedColor, balance));
-
+                        _menu.BalanceInfo.SetMarkup(Loc.GetString("pda-bound-user-interface-tc-balance-popup",
+                                                                 ("weightedColor",weightedColor),
+                                                                 ("balance",balance)));
                     }
 
                     if (msg.Listings != null)
@@ -284,7 +285,7 @@ namespace Content.Client.PDA
 
                 _owner = owner;
                 _prototypeManager = prototypeManager;
-                Title = Loc.GetString("PDA");
+                Title = Loc.GetString("comp-pda-ui-menu-title");
 
                 #region MAIN_MENU_TAB
                 //Main menu
@@ -299,13 +300,13 @@ namespace Content.Client.PDA
 
                 EjectIDButton = new Button
                 {
-                    Text = Loc.GetString("Eject ID"),
+                    Text = Loc.GetString("comp-pda-ui-eject-id-button"),
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center
                 };
                 EjectPenButton = new Button
                 {
-                    Text = Loc.GetString("Eject Pen"),
+                    Text = Loc.GetString("comp-pda-ui-eject-pen-button"),
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center
                 };
@@ -330,7 +331,7 @@ namespace Content.Client.PDA
 
                 FlashLightToggleButton = new Button
                 {
-                    Text = Loc.GetString("Toggle Flashlight"),
+                    Text = Loc.GetString("comp-pda-ui-toggle-flashlight-button"),
                     ToggleMode = true,
                 };
 
@@ -439,9 +440,9 @@ namespace Content.Client.PDA
                 };
 
                 //Add all the tabs to the Master container.
-                MasterTabContainer.SetTabTitle(0, Loc.GetString("Main Menu"));
+                MasterTabContainer.SetTabTitle(0, Loc.GetString("pda-bound-user-interface-main-menu-tab-title"));
                 MasterTabContainer.AddChild(UplinkTabContainer);
-                MasterTabContainer.SetTabTitle(1, Loc.GetString("Uplink"));
+                MasterTabContainer.SetTabTitle(1, Loc.GetString("pda-bound-user-interface-uplink-tab-title"));
                 Contents.AddChild(MasterTabContainer);
             }
 

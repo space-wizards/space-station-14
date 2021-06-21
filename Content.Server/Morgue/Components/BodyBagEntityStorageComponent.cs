@@ -9,8 +9,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Morgue;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -35,7 +35,7 @@ namespace Content.Server.Morgue.Components
 
         [ViewVariables] public ContainerSlot? LabelContainer { get; private set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);
@@ -54,7 +54,7 @@ namespace Content.Server.Morgue.Components
             {
                 if (LabelContainer?.ContainedEntity != null && LabelContainer.ContainedEntity.TryGetComponent<PaperComponent>(out var paper))
                 {
-                    message.AddText(Loc.GetString("The label reads: {0}", paper.Content));
+                    message.AddText(Loc.GetString("body-bag-entity-storage-component-on-examine-details", ("paper", paper.Content)));
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace Content.Server.Morgue.Components
 
             if (LabelContainer.ContainedEntity != null)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("There's already a label attached."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("body-bag-entity-storage-component-interact-using-already-attached"));
                 return false;
             }
 
@@ -77,7 +77,7 @@ namespace Content.Server.Morgue.Components
 
             _appearance?.SetData(BodyBagVisuals.Label, true);
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("You attach {0:theName} to the body bag.", eventArgs.Using));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("body-bag-entity-storage-component-interact-using-success",("entity", eventArgs.Using)));
             return true;
         }
 
@@ -107,13 +107,13 @@ namespace Content.Server.Morgue.Components
         {
             protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Remove label");
+                data.Text = Loc.GetString("remove-label-verb-get-data-text");
             }
 
             /// <inheritdoc />

@@ -6,7 +6,7 @@ namespace Content.Server.Interfaces
     {
         public GasMixture Air { get; set; }
 
-        public void AssumeAir(GasMixture giver)
+        public virtual void AssumeAir(GasMixture giver)
         {
             Air.Merge(giver);
         }

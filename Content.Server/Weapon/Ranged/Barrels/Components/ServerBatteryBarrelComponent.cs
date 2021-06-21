@@ -8,6 +8,7 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -95,7 +96,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 count);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _powerCellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powercell-container", out var existing);
@@ -119,6 +120,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         protected override void Startup()
         {
+            base.Startup();
             UpdateAppearance();
         }
 
@@ -295,7 +297,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || !component._powerCellRemovable)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -303,12 +305,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 if (component.PowerCell == null)
                 {
-                    data.Text = Loc.GetString("No cell");
+                    data.Text = Loc.GetString("eject-cell-verb-get-data-text-no-cell");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = Loc.GetString("Eject cell");
+                    data.Text = Loc.GetString("eject-cell-verb-get-data-text");
                     data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
             }

@@ -50,7 +50,7 @@ namespace Content.Client.Cuffs.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

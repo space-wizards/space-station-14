@@ -32,18 +32,20 @@ namespace Content.Server.Botany.Components
 
             if (Seed == null)
             {
-                message.AddMarkup(Loc.GetString("It doesn't seem to contain any seeds.\n"));
+                message.AddMarkup(Loc.GetString("seed-component-no-seeds-message") + "\n");
                 return;
             }
 
-            message.AddMarkup(Loc.GetString($"It has a picture of [color=yellow]{Seed.DisplayName}[/color] on the front.\n"));
+            message.AddMarkup(Loc.GetString($"seed-component-description", ("seedName", Seed.DisplayName)) + "\n");
 
-            if(!Seed.RoundStart)
-                message.AddMarkup(Loc.GetString($"It's tagged as variety [color=lightgray]no. {Seed.Uid}[/color].\n"));
+            if (!Seed.RoundStart)
+            {
+                message.AddMarkup(Loc.GetString($"seed-component-has-variety-tag", ("seedUid", Seed.Uid)) + "\n");
+            }
             else
             {
-                message.AddMarkup(Loc.GetString($"Plant Yield:    [color=lightblue]{Seed.Yield}[/color]\n"));
-                message.AddMarkup(Loc.GetString($"Plant Potency: [color=lightblue]{Seed.Potency}[/color]\n"));
+                message.AddMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", Seed.Yield)) + "\n");
+                message.AddMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", Seed.Potency)) + "\n");
             }
         }
     }

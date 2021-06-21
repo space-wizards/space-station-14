@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Access;
 using Content.Server.Access.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Construction.Components;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Tools.Components;
@@ -169,7 +169,7 @@ namespace Content.Server.Doors.Components
             CreateDoorElectronicsBoard();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _stateChangeCancelTokenSource?.Cancel();
             _autoCloseCancelTokenSource?.Cancel();

@@ -244,6 +244,20 @@ namespace Content.Shared.Atmos
         public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
 
         public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
+
+        #region Pipes
+
+        /// <summary>
+        ///     The pressure pumps and powered equipment max out at, in kPa.
+        /// </summary>
+        public const float MaxOutputPressure = 4500;
+
+        /// <summary>
+        ///     The maximum speed powered equipment can work at, in L/s.
+        /// </summary>
+        public const float MaxTransferRate = 200;
+
+        #endregion
     }
 
     /// <summary>
@@ -252,6 +266,7 @@ namespace Content.Shared.Atmos
     [Serializable, NetSerializable]
     public enum Gas : sbyte
     {
+        Invalid = -1,
         Oxygen = 0,
         Nitrogen = 1,
         CarbonDioxide = 2,

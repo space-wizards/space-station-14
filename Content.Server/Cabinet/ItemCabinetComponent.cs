@@ -1,4 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -54,7 +55,7 @@ namespace Content.Server.Cabinet
         {
             protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
             {
-                if (component.ItemContainer.ContainedEntity == null || !component.Opened || !ActionBlockerSystem.CanInteract(user))
+                if (component.ItemContainer.ContainedEntity == null || !component.Opened || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     data.Visibility = VerbVisibility.Invisible;
                 else
                 {
@@ -75,7 +76,7 @@ namespace Content.Server.Cabinet
         {
             protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     data.Visibility = VerbVisibility.Invisible;
                 else
                 {

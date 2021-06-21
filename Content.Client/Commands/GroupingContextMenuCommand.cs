@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;

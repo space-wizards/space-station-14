@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Mind.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -34,7 +34,7 @@ namespace Content.Server.Ghost.Roles
             }
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("Make Ghost Role");
+            data.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
         }
 

@@ -7,7 +7,7 @@ using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
@@ -41,7 +41,7 @@ namespace Content.Server.Power.Components
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 0.85f;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -61,7 +61,7 @@ namespace Content.Server.Power.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _heldBattery = null;
 
@@ -73,7 +73,7 @@ namespace Content.Server.Power.Components
             var result = TryInsertItem(eventArgs.Using);
             if (!result)
             {
-                eventArgs.User.PopupMessage(Owner, Loc.GetString("Unable to insert capacitor"));
+                eventArgs.User.PopupMessage(Owner, Loc.GetString("base-charger-on-interact-using-fail"));
             }
 
             return result;
@@ -121,7 +121,7 @@ namespace Content.Server.Power.Components
         {
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -140,7 +140,7 @@ namespace Content.Server.Power.Components
 
                 var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
 
-                data.Text = Loc.GetString("Insert {0}", heldItemName);
+                data.Text = Loc.GetString("insert-verb-get-data-text", ("itemName", heldItemName));
                 data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
             }
 
@@ -166,7 +166,7 @@ namespace Content.Server.Power.Components
         {
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -179,7 +179,7 @@ namespace Content.Server.Power.Components
 
                 var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
 
-                data.Text = Loc.GetString("Eject {0}", containerItemName);
+                data.Text = Loc.GetString("eject-verb-get-data-text",("containerName", containerItemName));
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 

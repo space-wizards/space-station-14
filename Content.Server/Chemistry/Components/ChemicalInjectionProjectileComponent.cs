@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.Components
         [DataField("transferEfficiency")]
         private float _transferEfficiency = 1f;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();

@@ -11,8 +11,9 @@ using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
+using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Notification;
+using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
@@ -224,7 +225,7 @@ namespace Content.Server.Hands.Components
 
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner))
                 return false;
 
             foreach (var handName in ActivePriorityEnumerable())
@@ -241,7 +242,7 @@ namespace Content.Server.Hands.Components
 
         public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner))
                 return false;
 
             var hand = GetHand(index);
@@ -445,7 +446,7 @@ namespace Content.Server.Hands.Components
         {
             var hand = GetHand(name);
 
-            if (mobCheck && !ActionBlockerSystem.CanDrop(Owner))
+            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanDrop(Owner))
                 return false;
 
             if (hand?.Entity == null)
@@ -765,13 +766,13 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("{0} disarms {1}!", source.Name, target.Name));
-                        source.PopupMessageCursor(Loc.GetString("You disarm {0}!", target.Name));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message!",("source", source.Name),("target", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message",("target", target.Name)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("{0} shoves {1}!", source.Name, target.Name));
-                        source.PopupMessageCursor(Loc.GetString("You shove {0}!", target.Name));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message",("source", source.Name),("target", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message",("target", target.Name)));
                     }
                 }
             }

@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -18,7 +18,7 @@ namespace Content.Client.Cargo.UI
             MinSize = SetSize = (300, 300);
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("Galactic Bank Selection");
+            Title = Loc.GetString("galactic-bank-selection-menu-title");
 
             _accounts = new ItemList() { SelectMode = ItemList.ItemListSelectMode.Single };
 

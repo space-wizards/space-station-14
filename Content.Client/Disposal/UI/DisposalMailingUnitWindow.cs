@@ -44,9 +44,9 @@ namespace Content.Client.Disposal.UI
                             {
                                 Children =
                                 {
-                                    new Label {Text = Loc.GetString("State: ")},
+                                    new Label {Text = $"{Loc.GetString("disposal-mailing-unit-window-state-label")} "},
                                     new Control {MinSize = (4, 0)},
-                                    (_unitState = new Label {Text = Loc.GetString("Ready")})
+                                    (_unitState = new Label {Text = Loc.GetString("disposal-mailing-unit-window-ready-state")})
                                 }
                             },
                             new Control {MinSize = (0, 10)},
@@ -55,7 +55,7 @@ namespace Content.Client.Disposal.UI
                                 HorizontalExpand = true,
                                 Children =
                                 {
-                                    new Label {Text = Loc.GetString("Pressure:")},
+                                    new Label {Text = Loc.GetString("disposal-mailing-unit-pressure-label")},
                                     new Control {MinSize = (4, 0)},
                                     (_pressureBar = new ProgressBar
                                     {
@@ -78,7 +78,7 @@ namespace Content.Client.Disposal.UI
                                 HorizontalExpand = true,
                                 Children =
                                 {
-                                    new Label {Text = Loc.GetString("Handle:")},
+                                    new Label {Text = Loc.GetString("disposal-mailing-unit-handle-label")},
                                     new Control
                                     {
                                         MinSize = (4, 0),
@@ -87,7 +87,7 @@ namespace Content.Client.Disposal.UI
                                     (Engage = new Button
                                     {
                                         MinSize = (16, 0),
-                                        Text = Loc.GetString("Engage"),
+                                        Text = Loc.GetString("disposal-mailing-unit-engage-button"),
                                         ToggleMode = true,
                                         Disabled = true
                                     })
@@ -99,7 +99,7 @@ namespace Content.Client.Disposal.UI
                                 HorizontalExpand = true,
                                 Children =
                                 {
-                                    new Label {Text = Loc.GetString("Eject:")},
+                                    new Label {Text = Loc.GetString("disposal-mailing-unit-eject-label")},
                                     new Control
                                     {
                                         MinSize = (4, 0),
@@ -108,7 +108,7 @@ namespace Content.Client.Disposal.UI
                                     (Eject = new Button
                                     {
                                         MinSize = (16, 0),
-                                        Text = Loc.GetString("Eject Contents"),
+                                        Text = Loc.GetString("disposal-mailing-unit-eject-button"),
                                         //HorizontalAlignment = HAlignment.Right
                                     })
                                 }
@@ -118,7 +118,7 @@ namespace Content.Client.Disposal.UI
                             {
                                 Children =
                                 {
-                                    (Power = new CheckButton {Text = Loc.GetString("Power")}),
+                                    (Power = new CheckButton {Text = Loc.GetString("disposal-mailing-unit-power-button")}),
                                 }
                             }
                         }
@@ -134,7 +134,7 @@ namespace Content.Client.Disposal.UI
                                 {
                                     new Label
                                     {
-                                        Text = Loc.GetString("Select a destination:")
+                                        Text = Loc.GetString("disposal-mailing-unit-destination-select-label")
                                     }
                                 }
                             },
@@ -176,7 +176,7 @@ namespace Content.Client.Disposal.UI
                                                 {
                                                     new Label
                                                     {
-                                                        Text = Loc.GetString("This unit:")
+                                                        Text = Loc.GetString("disposal-mailing-unit-unit-self-reference")
                                                     },
                                                     new Control
                                                     {

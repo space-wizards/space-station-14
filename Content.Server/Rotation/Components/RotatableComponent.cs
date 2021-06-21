@@ -1,6 +1,6 @@
 #nullable enable
 using Content.Shared.ActionBlocker;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
@@ -21,7 +21,7 @@ namespace Content.Server.Rotation.Components
             {
                 if (physics.BodyType == BodyType.Static)
                 {
-                    Owner.PopupMessage(user, Loc.GetString("It's stuck."));
+                    Owner.PopupMessage(user, Loc.GetString("rotatable-component-try-rotate-stuck"));
                     return;
                 }
             }
@@ -34,14 +34,14 @@ namespace Content.Server.Rotation.Components
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 data.CategoryData = VerbCategories.Rotate;
-                data.Text = Loc.GetString("Rotate clockwise");
+                data.Text = Loc.GetString("rotate-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
             }
 
@@ -56,14 +56,14 @@ namespace Content.Server.Rotation.Components
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
                 data.CategoryData = VerbCategories.Rotate;
-                data.Text = Loc.GetString("Rotate counter-clockwise");
+                data.Text = Loc.GetString("rotate-counter-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             }
 

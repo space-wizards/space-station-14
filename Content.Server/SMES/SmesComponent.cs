@@ -34,7 +34,7 @@ namespace Content.Server.SMES
 
         private const int VisualsChangeDelay = 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

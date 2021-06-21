@@ -10,7 +10,7 @@ namespace Content.Shared.Portal.Components
     {
         public override string Name => "Portal";
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
 

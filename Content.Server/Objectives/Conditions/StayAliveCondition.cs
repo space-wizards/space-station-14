@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;
@@ -18,9 +18,9 @@ namespace Content.Server.Objectives.Conditions
             return new StayAliveCondition {_mind = mind};
         }
 
-        public string Title => Loc.GetString("Stay alive.");
+        public string Title => Loc.GetString("objective-condition-stay-alive-title");
 
-        public string Description => Loc.GetString("Survive this shift, we need you for another assignment.");
+        public string Description => Loc.GetString("objective-condition-stay-alive-description");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/skub.rsi"), "icon"); //didn't know what else would have been a good icon for staying alive
 

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -99,7 +99,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 SoundGunshot);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _unspawnedCount = Capacity;
@@ -149,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("revolver-barrel-component-try-inser-bullet-wrong-caliber"));
                 return false;
             }
 
@@ -175,7 +175,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 }
             }
 
-            Owner.PopupMessage(user, Loc.GetString("Ammo full"));
+            Owner.PopupMessage(user, Loc.GetString("revolver-barrel-component-try-inser-bullet-ammo-full"));
             return false;
         }
 
@@ -283,13 +283,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             protected override void GetData(IEntity user, RevolverBarrelComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Spin");
+                data.Text = Loc.GetString("spin-revolver-verb-get-data-text");
                 if (component.Capacity <= 1)
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -303,7 +303,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             protected override void Activate(IEntity user, RevolverBarrelComponent component)
             {
                 component.Spin();
-                component.Owner.PopupMessage(user, Loc.GetString("Spun the cylinder"));
+                component.Owner.PopupMessage(user, Loc.GetString("spin-revolver-verb-on-activate"));
             }
         }
     }

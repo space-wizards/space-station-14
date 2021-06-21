@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Chemistry.Dispenser;
 using JetBrains.Annotations;
@@ -35,7 +35,7 @@ namespace Content.Client.Chemistry.UI
             //Setup window layout/elements
             _window = new ReagentDispenserWindow
             {
-                Title = Loc.GetString("Reagent dispenser"),
+                Title = Loc.GetString("reagent-dispenser-bound-user-interface-title"),
             };
 
             _window.OpenCentered();

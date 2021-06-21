@@ -1,6 +1,6 @@
 #nullable enable
 using Content.Shared.ActionBlocker;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
@@ -26,7 +26,7 @@ namespace Content.Server.Rotation.Components
             if (Owner.TryGetComponent(out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
-                Owner.PopupMessage(user, Loc.GetString("It's stuck."));
+                Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));
                 return;
             }
 
@@ -44,13 +44,13 @@ namespace Content.Server.Rotation.Components
         {
             protected override void GetData(IEntity user, FlippableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Flip");
+                data.Text = Loc.GetString("flippable-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, FlippableComponent component)

@@ -5,6 +5,7 @@ using Content.Server.Items;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -98,7 +99,7 @@ namespace Content.Server.PowerCell.Components
         [DataField("startingCellType")]
         private string? _startingCellType = null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _cellContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "cellslot_cell_container", out _);
@@ -109,9 +110,9 @@ namespace Content.Server.PowerCell.Components
             if (!inDetailsRange) return;
             string sizeLetter = SlotSize switch
             {
-                PowerCellSize.Small => Loc.GetString("S"),
-                PowerCellSize.Medium => Loc.GetString("M"),
-                PowerCellSize.Large => Loc.GetString("L"),
+                PowerCellSize.Small => Loc.GetString("power-cell-slot-component-small-size-shorthand"),
+                PowerCellSize.Medium => Loc.GetString("power-cell-slot-component-medium-size-shorthand"),
+                PowerCellSize.Large => Loc.GetString("power-cell-slot-component-large-size-shorthand"),
                 _ => "???"
             };
             if (DescFormatString != null) message.AddMarkup(string.Format(DescFormatString, sizeLetter));
@@ -180,7 +181,7 @@ namespace Content.Server.PowerCell.Components
         {
             protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
             {
-                if (!component.ShowVerb || !ActionBlockerSystem.CanInteract(user))
+                if (!component.ShowVerb || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -188,12 +189,12 @@ namespace Content.Server.PowerCell.Components
 
                 if (component.Cell == null)
                 {
-                    data.Text = Loc.GetString("No cell");
+                    data.Text = Loc.GetString("power-cell-slot-component-no-cell");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = Loc.GetString("Eject cell");
+                    data.Text = Loc.GetString("power-cell-slot-component-eject-cell");
                     data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 }
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Anchor;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Construction.Components;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.DoAfter;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Interfaces;
 using Content.Server.Power.Components;
@@ -18,7 +18,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -339,8 +339,10 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(player) ||
-                !ActionBlockerSystem.CanUse(player))
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
+            if (!actionBlocker.CanInteract(player) ||
+                !actionBlocker.CanUse(player))
             {
                 return false;
             }
@@ -485,7 +487,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -505,14 +507,14 @@ namespace Content.Server.Disposal.Unit.Components
 
             if(!Owner.HasComponent<AnchorableComponent>())
             {
-                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an {nameof(AnchorableComponent)}");
             }
 
             UpdateVisualState();
             UpdateInterface();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
@@ -555,22 +557,22 @@ namespace Content.Server.Disposal.Unit.Components
 
         bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
                 return false;
             }
 
             if (eventArgs.User.IsInContainer())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot-reach"));
                 return false;
             }
             // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
                 return false;
             }
 
@@ -648,14 +650,14 @@ namespace Content.Server.Disposal.Unit.Components
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     component.ContainedEntities.Contains(user))
                 {
                     return;
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Jump inside");
+                data.Text = Loc.GetString("self-insert-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
@@ -671,14 +673,14 @@ namespace Content.Server.Disposal.Unit.Components
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user) ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     component.ContainedEntities.Contains(user))
                 {
                     return;
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Flush");
+                data.Text = Loc.GetString("flush-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 

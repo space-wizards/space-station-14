@@ -85,9 +85,11 @@ namespace Content.Server.Dice
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             //No details check, since the sprite updates to show the side.
-            message.AddMarkup(Loc.GetString(
-                "A dice with [color=lightgray]{0}[/color] sides.\n" + "It has landed on a [color=white]{1}[/color].",
-                _sides, _currentSide));
+            message.AddMarkup(Loc.GetString("dice-component-on-examine-message-part-1",
+                                            ("sidesAmount", _sides))
+                              + "\n" +
+                              Loc.GetString("dice-component-on-examine-message-part-2",
+                                            ("currentSide", _currentSide)));
         }
     }
 }

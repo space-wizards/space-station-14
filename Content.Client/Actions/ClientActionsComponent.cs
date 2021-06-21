@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.Actions.Assignments;
 using Content.Client.Actions.UI;
 using Content.Client.Hands;
@@ -44,25 +44,10 @@ namespace Content.Client.Actions
         [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
-
         protected override void Shutdown()
         {
             base.Shutdown();
             PlayerDetached();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    PlayerAttached();
-                    break;
-                case PlayerDetachedMsg _:
-                    PlayerDetached();
-                    break;
-            }
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -77,7 +62,7 @@ namespace Content.Client.Actions
             UpdateUI();
         }
 
-        private void PlayerAttached()
+        public void PlayerAttached()
         {
             if (!CurrentlyControlled || _ui != null)
             {
@@ -89,7 +74,7 @@ namespace Content.Client.Actions
             UpdateUI();
         }
 
-        private void PlayerDetached()
+        public void PlayerDetached()
         {
             if (_ui == null) return;
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.RemoveChild(_ui);
@@ -116,7 +101,7 @@ namespace Content.Client.Actions
                 return;
             }
 
-            Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates());
+            Assignments.Reconcile(_ui.SelectedHotbar, ActionStates(), ItemActionStates(), _ui.Locked);
 
             _ui.UpdateUI();
         }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;
@@ -18,9 +18,9 @@ namespace Content.Server.Objectives.Conditions
             return new DieCondition {_mind = mind};
         }
 
-        public string Title => Loc.GetString("Die a glorious death");
+        public string Title => Loc.GetString("objective-condition-die-title");
 
-        public string Description => Loc.GetString("Die.");
+        public string Description => Loc.GetString("objective-condition-die-description");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
 

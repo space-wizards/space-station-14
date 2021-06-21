@@ -38,7 +38,7 @@ namespace Content.Server.Battery.Components
 
         [ViewVariables] public BatteryState BatteryState { get; private set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             UpdateStorageState();

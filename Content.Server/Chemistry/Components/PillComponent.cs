@@ -6,7 +6,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -37,7 +36,7 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables]
         private SolutionContainerComponent _contents = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -89,7 +88,7 @@ namespace Content.Server.Chemistry.Components
             if (firstStomach == null)
             {
                 _contents.TryAddSolution(split);
-                trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
+                trueTarget.PopupMessage(user, Loc.GetString("pill-component-cannot-eat-more-message"));
                 return false;
             }
 
@@ -104,7 +103,7 @@ namespace Content.Server.Chemistry.Components
                 SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
-            trueTarget.PopupMessage(user, Loc.GetString("You swallow the pill."));
+            trueTarget.PopupMessage(user, Loc.GetString("pill-component-swallow-success-message"));
 
             Owner.QueueDelete();
             return true;

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -31,7 +32,7 @@ namespace Content.Shared.Kitchen
         [DataField("time")]
         public int CookTime { get; } = 5;
 
-        public string Name => Robust.Shared.Localization.Loc.GetString(_name);
+        public string Name => Loc.GetString(_name);
 
         public IReadOnlyDictionary<string, int> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, int> IngredientsSolids => _ingsSolids;

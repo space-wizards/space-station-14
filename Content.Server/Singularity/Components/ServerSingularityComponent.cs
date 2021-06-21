@@ -113,7 +113,7 @@ namespace Content.Server.Singularity.Components
             return new SingularityComponentState(Level);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -175,7 +175,7 @@ namespace Content.Server.Singularity.Components
                 Energy++;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _playingSound?.Stop();
             SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);

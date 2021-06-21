@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 

@@ -10,6 +10,7 @@ using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Movement;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
@@ -145,7 +146,7 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
@@ -171,7 +172,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
             return true;
@@ -409,7 +410,7 @@ namespace Content.Server.Storage.Components
             if (Contents.Contains(eventArgs.User))
             {
                 _beingWelded = false;
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("entity-storage-component-already-contains-user-message"));
                 return false;
             }
 
@@ -446,7 +447,7 @@ namespace Content.Server.Storage.Components
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -464,7 +465,7 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -473,12 +474,12 @@ namespace Content.Server.Storage.Components
             if (IsWeldedShut)
             {
                 data.Visibility = VerbVisibility.Disabled;
-                var verb = Loc.GetString(component.Open ? "Close" : "Open");
-                data.Text = Loc.GetString("{0} (welded shut)", verb);
+                var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
+                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
                 return;
             }
 
-            data.Text = Loc.GetString(component.Open ? "Close" : "Open");
+            data.Text = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
             data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 
