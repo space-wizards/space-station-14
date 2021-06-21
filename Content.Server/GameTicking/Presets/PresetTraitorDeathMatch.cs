@@ -158,7 +158,7 @@ namespace Content.Server.GameTicking.Presets
             // On failure, the returned target is the location that we're already at.
             var bestTargetDistanceFromNearest = -1.0f;
             // Need the random shuffle or it stuffs the first person into Atmospherics pretty reliably
-            var ents = _entityManager.ComponentManager.GetAllComponents(typeof(SpawnPointComponent)).Select(x => x.Owner).ToList();
+            var ents = _entityManager.ComponentManager.EntityQuery<SpawnPointComponent>().Select(x => x.Owner).ToList();
             _robustRandom.Shuffle(ents);
             var foundATarget = false;
             bestTarget = EntityCoordinates.Invalid;
@@ -215,7 +215,7 @@ namespace Content.Server.GameTicking.Presets
         {
             var lines = new List<string>();
             lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (PDAComponent pda in _entityManager.ComponentManager.GetAllComponents(typeof(PDAComponent)))
+            foreach (var pda in _entityManager.ComponentManager.EntityQuery<PDAComponent>())
             {
                 var uplink = pda.SyndicateUplinkAccount;
                 if (uplink != null && _allOriginalNames.ContainsKey(uplink))

@@ -94,10 +94,7 @@ namespace Content.Server.Morgue.Components
                 _tray = Owner.EntityManager.SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
-                var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-                var box = new Box2(Owner.Transform.WorldPosition + new Vector2(-0.25f, -0.25f),
-                                   Owner.Transform.WorldPosition + new Vector2(0.25f, 0.25f));
-                CollidingEntities = physicsManager.GetCollidingEntities(_tray.Transform.MapID, in box);
+                DetermineCollidingEntities(_tray.Transform.MapID);
             }
             else
             {

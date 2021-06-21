@@ -24,7 +24,7 @@ namespace Content.Server.Battery
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (BatteryComponent batteryComp in entityManager.ComponentManager.GetAllComponents(typeof(BatteryComponent)))
+            foreach (var batteryComp in entityManager.ComponentManager.EntityQuery<BatteryComponent>())
             {
                 batteryComp.CurrentCharge = 0;
             }

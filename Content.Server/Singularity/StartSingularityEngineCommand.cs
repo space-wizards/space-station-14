@@ -26,15 +26,15 @@ namespace Content.Server.Singularity
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (EmitterComponent comp in entityManager.ComponentManager.GetAllComponents(typeof(EmitterComponent)))
+            foreach (var comp in entityManager.ComponentManager.EntityQuery<EmitterComponent>())
             {
                 comp.SwitchOn();
             }
-            foreach (RadiationCollectorComponent comp in entityManager.ComponentManager.GetAllComponents(typeof(RadiationCollectorComponent)))
+            foreach (var comp in entityManager.ComponentManager.EntityQuery<RadiationCollectorComponent>())
             {
                 comp.Collecting = true;
             }
-            foreach (ParticleAcceleratorControlBoxComponent comp in entityManager.ComponentManager.GetAllComponents(typeof(ParticleAcceleratorControlBoxComponent)))
+            foreach (var comp in entityManager.ComponentManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
             {
                 comp.RescanParts();
                 comp.SetStrength(ParticleAcceleratorPowerState.Level0);

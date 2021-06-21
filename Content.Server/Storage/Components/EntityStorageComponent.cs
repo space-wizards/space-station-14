@@ -152,10 +152,8 @@ namespace Content.Server.Storage.Components
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
-            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-            var box = new Box2(Owner.Transform.WorldPosition + new Vector2(-0.25f, -0.25f),
-                               Owner.Transform.WorldPosition + new Vector2(0.25f, 0.25f));
-            CollidingEntities = physicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
+
+            DetermineCollidingEntities(Owner.Transform.MapID);
 
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
@@ -205,14 +203,10 @@ namespace Content.Server.Storage.Components
             Open = false;
             if(CollidingEntities == null)
             {
-                var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-                var box = new Box2(Owner.Transform.WorldPosition + new Vector2(-0.25f, -0.25f),
-                                   Owner.Transform.WorldPosition + new Vector2(0.25f, 0.25f));
-                CollidingEntities = physicsManager.GetCollidingEntities(Owner.Transform.MapID, in box);
+                DetermineCollidingEntities(Owner.Transform.MapID);
             }
 
-
-            var entities = CollidingEntities.Select(x => x.Owner);
+            var entities = CollidingEntities!.Select(x => x.Owner);
             var count = 0;
             foreach (var entity in entities)
             {
@@ -453,6 +447,13 @@ namespace Content.Server.Storage.Components
         {
             Open = true;
             EmptyContents();
+        }
+
+        protected void DetermineCollidingEntities(Robust.Shared.Map.MapId mapId)
+        {
+            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var entityWorldAABB = Owner.GetComponent<PhysicsComponent>().GetWorldAABB();
+            CollidingEntities = physicsManager.GetCollidingEntities(mapId, in entityWorldAABB);
         }
 
         [Verb]
