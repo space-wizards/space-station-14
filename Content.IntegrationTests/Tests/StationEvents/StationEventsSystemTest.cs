@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.StationEvents;
+using Content.Server.StationEvents;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

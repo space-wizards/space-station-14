@@ -10,19 +10,19 @@ namespace Content.Shared.Stacks
     public class StackPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [field: DataField("icon")]
-        public SpriteSpecifier? Icon { get; }
+        [DataField("icon")]
+        public SpriteSpecifier? Icon { get; } = null;
 
         /// <summary>
         ///     The entity id that will be spawned by default from this stack.
         /// </summary>
-        [field: DataField("spawn")]
-        public string? Spawn { get; }
+        [DataField("spawn", required: true)]
+        public string Spawn { get; } = string.Empty;
     }
 }

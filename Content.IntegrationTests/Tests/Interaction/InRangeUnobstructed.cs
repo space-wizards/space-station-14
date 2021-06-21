@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Client.Interactable;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Interaction
 {
@@ -44,8 +45,8 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             server.Assert(() =>
             {
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-                var coordinates = MapCoordinates.Nullspace;
+                var mapId = mapManager.CreateMap();
+                var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
                 origin = entityManager.SpawnEntity(HumanId, coordinates);
                 other = entityManager.SpawnEntity(HumanId, coordinates);

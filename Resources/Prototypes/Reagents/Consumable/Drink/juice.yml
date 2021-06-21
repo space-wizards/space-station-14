@@ -1,0 +1,155 @@
+- type: reagent
+  id: JuiceApple
+  name: apple juice
+  desc: It's a little piece of Eden.
+  physicalDesc: crisp
+  color: "#FDAD01"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceBerry
+  name: berry juice
+  desc: A delicious blend of several different kinds of berries.
+  physicalDesc: sweet
+  color: "#660099"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceBanana
+  name: banana juice
+  desc: The raw essence of a banana. HONK.
+  physicalDesc: crisp
+  color: "#FFE777"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+#TODO: port on_mob_life: restore eyesight
+#if(..())
+#return 1
+# M.eye_blurry = max(M.eye_blurry - 1 , 0)
+# M.eye_blind = max(M.eye_blind - 1 , 0)
+# switch(data)
+# if(21 to INFINITY)
+# if(prob(data - 10))
+# M.disabilities &= ~NEARSIGHTED
+# data++
+
+- type: reagent
+  id: JuiceCarrot
+  name: carrot juice
+  desc: It's like a carrot, but less crunchy.
+  physicalDesc: crisp
+  color: "#FF8820"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceLime
+  name: lime juice
+  desc: The sweet-sour juice of limes.
+  physicalDesc: citric
+  color: "#99bb43"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceLemon
+  name: lemon juice
+  desc: This juice is VERY sour.
+  physicalDesc: citric
+  color: "#fff690"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceGrape
+  name: grape juice
+  desc: Freshly squeezed juice from red grapes. Quite sweet.
+  physicalDesc: crisp
+  color: "#512284"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+# /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
+
+# if(..())
+# return 1
+
+# if(M.getToxLoss() && prob(20))
+# M.adjustToxLoss(-REM)
+
+- type: reagent
+  id: JuiceOrange
+  name: orange juice
+  desc: Both delicious AND rich in Vitamin C. What more do you need?
+  physicalDesc: citric
+  color: "#E78108"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceTomato
+  name: tomato juice
+  desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
+  physicalDesc: saucey
+  color: "#731008"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+# /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M)
+
+# if(..())
+# return 1
+
+# M.adjustToxLoss(1)
+
+- type: reagent
+  id: JuiceBerryPoison
+  name: poison berry juice
+  desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
+  physicalDesc: aromatic #maybe should be 'sickly'?
+  color: "#6600CC"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuiceWatermelon
+  name: water melon juice
+  desc: The delicious juice of a watermelon.
+  physicalDesc: sweet
+  color: "#EF3520"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: JuicePineapple
+  name: pineapple juice
+  desc: The delicious juice of a pineapple.
+  physicalDesc: tropical
+  color: yellow
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+# - type: reagent
+#   id: PotatoJuice
+#   name: potato juice
+#   desc: Juice of the potato. Bleh.
+#   physicalDesc: starchy
+#   color: "#302000"
+#   metabolism:
+#     - !type:DefaultDrink
+#       rate: 1

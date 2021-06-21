@@ -1,0 +1,22 @@
+- type: vendingMachineInventory
+  id: RobotechDeluxeInventory
+  name: Robotech Deluxe
+  description: All the fine parts you need in one vending machine!
+  spriteName: robotics
+  startingInventory:
+    #TO DO: add missing prototypes
+    ClothingOuterCoatLab: 4
+    #roboticist under
+    CableStack: 4
+    Flash: 4
+    PowerCellLargeHigh: 12
+    #proximity sensor
+    #signaller
+    #health anaylzer
+    Scalpel: 2
+    Saw: 1
+    #bonesetter
+    #anaesthetic
+    #medical mask
+    Screwdriver: 5
+    Crowbar: 5

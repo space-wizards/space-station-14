@@ -145,13 +145,13 @@
     countTag: Crayon
   - type: StorageFill
     contents:
-    - name: CrayonRed
-    - name: CrayonOrange
-    - name: CrayonYellow
-    - name: CrayonGreen
-    - name: CrayonBlue
-    - name: CrayonPurple
-    - name: CrayonBlack
+    - id: CrayonRed
+    - id: CrayonOrange
+    - id: CrayonYellow
+    - id: CrayonGreen
+    - id: CrayonBlue
+    - id: CrayonPurple
+    - id: CrayonBlack
   - type: Appearance
     visuals:
     - type: StackVisualizer

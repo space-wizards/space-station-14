@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alpha"
+    },
+    {
+      "name": "alpha2"
+    },
+    {
+      "name": "alpha-filling"
+    },
+    {
+      "name": "alpha-filling2"
+    },
+    {
+      "name": "alpha-slice"
+    },
+    {
+      "name": "alpha-slice2"
+    },
+    {
+      "name": "alpha-slice-filling"
+    },
+    {
+      "name": "alpha-slice2-filling"
+    },
+    {
+      "name": "baguette"
+    },
+    {
+      "name": "banana"
+    },
+    {
+      "name": "banana-slice"
+    },
+    {
+      "name": "buttered-toast"
+    },
+    {
+      "name": "creamcheese"
+    },
+    {
+      "name": "creamcheese-slice"
+    },
+    {
+      "name": "garlic-slice"
+    },
+    {
+      "name": "jelly-toast"
+    },
+    {
+      "name": "meat"
+    },
+    {
+      "name": "meat-slice"
+    },
+    {
+      "name": "mimana"
+    },
+    {
+      "name": "mimana-slice"
+    },
+    {
+      "name": "moldy-slice"
+    },
+    {
+      "name": "plain"
+    },
+    {
+      "name": "plain-slice"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "spidermeat"
+    },
+    {
+      "name": "spidermeat-slice"
+    },
+    {
+      "name": "tofu"
+    },
+    {
+      "name": "tofu-slice"
+    },
+    {
+      "name": "two-slice"
+    },
+    {
+      "name": "xenomeat"
+    },
+    {
+      "name": "xenomeat-slice"
+    }
+  ]
+}

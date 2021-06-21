@@ -33,7 +33,7 @@
     color: "#bbeeff"
   - type: WelderRefinable
     refineResult:
-    - SheetGlass
+    - SheetGlass1
 
 - type: entity
   parent: ShardBase
@@ -47,8 +47,8 @@
     color: "#96cdef"
   - type: WelderRefinable
     refineResult:
-    - SheetGlass
-    - SheetSteel
+    - SheetGlass1
+    - SheetSteel1
   - type: DamageOtherOnHit
     amount: 10
 
@@ -64,7 +64,7 @@
     color: "#f3b489"
   - type: WelderRefinable
     refineResult:
-    - SheetGlass
-    - SheetPlasma
+    - SheetGlass1
+    - SheetPlasma1
   - type: DamageOtherOnHit
     amount: 15

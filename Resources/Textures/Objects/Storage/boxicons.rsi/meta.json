@@ -1,11 +1,11 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-NA 3.0",
-  "copyright": "https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43",
   "states": [
     {
       "name": "beaker"

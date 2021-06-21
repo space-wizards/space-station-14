@@ -33,6 +33,11 @@ namespace Content.Client.Chat
         public Color MessageColorOverride { get; set; }
 
         /// <summary>
+        /// Whether the user has read this message at least once.
+        /// </summary>
+        public bool Read { get; set; }
+
+        /// <summary>
         ///     Constructor to copy a net message into stored client variety
         /// </summary>
         public StoredChatMessage(MsgChatMessage netMsg)

@@ -90,6 +90,7 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
+    size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
@@ -109,6 +110,7 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/crowbar_red.rsi
+    size: 5
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
@@ -130,7 +132,7 @@
     - state: green-unlit
       shader: unshaded
   - type: Clothing
-    size: 10
+    size: 5
     sprite: Objects/Tools/multitool.rsi
     QuickEquip: false
     Slots:

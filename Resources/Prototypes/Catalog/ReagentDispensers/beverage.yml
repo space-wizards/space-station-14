@@ -1,0 +1,22 @@
+- type: reagentDispenserInventory
+  id: SodaDispenserInventory
+  inventory:
+  - Coffee
+  - Cola
+  - Cream
+  - Ice
+  - Tea
+  - Water
+
+- type: reagentDispenserInventory
+  id: BoozeDispenserInventory
+  inventory:
+  - Ale
+  - Beer
+  - Cognac
+  - Ice
+  - Kahlua
+  - Rum
+  - Vodka
+  - Whiskey
+  - Wine

@@ -1,15 +1,15 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Sound;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.Movement.Components;
+using Content.Server.Shuttle;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.Physics.Controllers;
+using Content.Shared.Movement;
+using Content.Shared.Movement.Components;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -22,6 +22,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -98,66 +99,65 @@ namespace Content.Server.Physics.Controllers
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
         {
+            if (!mover.Owner.HasTag("FootstepSound")) return;
+
             var transform = mover.Owner.Transform;
+            var coordinates = transform.Coordinates;
+            var gridId = coordinates.GetGridId(EntityManager);
+            var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
+
             // Handle footsteps.
-            if (_mapManager.GridExists(mobMover.LastPosition.GetGridId(EntityManager)))
+            if (_mapManager.GridExists(gridId))
             {
                 // Can happen when teleporting between grids.
-                if (!transform.Coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance))
+                if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
+                    distance > distanceNeeded)
                 {
-                    mobMover.LastPosition = transform.Coordinates;
-                    return;
-                }
-
-                mobMover.StepSoundDistance += distance;
-            }
-
-            mobMover.LastPosition = transform.Coordinates;
-            float distanceNeeded;
-            if (mover.Sprinting)
-            {
-                distanceNeeded = StepSoundMoveDistanceRunning;
-            }
-            else
-            {
-                distanceNeeded = StepSoundMoveDistanceWalking;
-            }
-
-            if (mobMover.StepSoundDistance > distanceNeeded)
-            {
-                mobMover.StepSoundDistance = 0;
-
-                if (!mover.Owner.HasTag("FootstepSound") || mover.Owner.Transform.GridID == GridId.Invalid)
-                {
-                    return;
-                }
-
-                if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
-                    && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                    && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
-                {
-                    modifier.PlayFootstep();
+                    mobMover.StepSoundDistance = distanceNeeded;
                 }
                 else
                 {
-                    PlayFootstepSound(mover.Owner, mover.Sprinting);
+                    mobMover.StepSoundDistance += distance;
                 }
+            }
+            else
+            {
+                // In space no one can hear you squeak
+                return;
+            }
+
+            DebugTools.Assert(gridId != GridId.Invalid);
+            mobMover.LastPosition = coordinates;
+
+            if (mobMover.StepSoundDistance < distanceNeeded) return;
+
+            mobMover.StepSoundDistance -= distanceNeeded;
+
+            if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+                && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
+                && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+            {
+                modifier.PlayFootstep();
+            }
+            else
+            {
+                PlayFootstepSound(mover.Owner, gridId, coordinates, mover.Sprinting);
             }
         }
 
-        private void PlayFootstepSound(IEntity mover, bool sprinting)
+        private void PlayFootstepSound(IEntity mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
         {
-            var coordinates = mover.Transform.Coordinates;
-            // Step one: figure out sound collection prototype.
-            var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
+            var grid = _mapManager.GetGrid(gridId);
             var tile = grid.GetTileRef(coordinates);
+
+            if (tile.IsSpace(_tileDefinitionManager)) return;
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
             string? soundCollectionName = null;
-            foreach (var maybeFootstep in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
+            foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (maybeFootstep.Owner.TryGetComponent(out FootstepModifierComponent? footstep))
+                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
                     soundCollectionName = footstep._soundCollectionName;
                     break;
@@ -177,19 +177,17 @@ namespace Content.Server.Physics.Controllers
                 soundCollectionName = def.FootstepSounds;
             }
 
-            // Ok well we know the position of the
-            try
+            if (!_prototypeManager.TryIndex(soundCollectionName, out SoundCollectionPrototype? soundCollection))
             {
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
-                var file = _robustRandom.Pick(soundCollection.PickFiles);
-                SoundSystem.Play(Filter.Pvs(coordinates), file, coordinates, sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
-            }
-            catch (UnknownPrototypeException)
-            {
-                // Shouldn't crash over a sound
                 Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
+                return;
             }
-        }
 
+            SoundSystem.Play(
+                Filter.Pvs(coordinates),
+                _robustRandom.Pick(soundCollection.PickFiles),
+                mover.Transform.Coordinates,
+                sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
+        }
     }
 }

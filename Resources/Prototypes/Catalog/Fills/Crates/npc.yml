@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: BeeMob_Content
+      - id: BeeMob_Content
         amount: 8
 
 
@@ -16,7 +16,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ButterflyMob_Content
+      - id: ButterflyMob_Content
         amount: 5
 
 
@@ -27,9 +27,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: CatMob_Content
+      - id: CatMob_Content
         amount: 1
-       
+
 
 - type: entity
   id: CrateNPCChicken
@@ -38,10 +38,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: ChickenMob_Content
+      - id: ChickenMob_Content
         amount: 4
-       
-        
+
+
 - type: entity
   id: CrateNPCCorgi
   name: corgi crate
@@ -49,9 +49,9 @@
   components:
   - type: StorageFill
     contents:
-      - name: CorgiMob_Content
+      - id: CorgiMob_Content
         amount: 1
-        
+
 - type: entity
   id: CrateNPCCow
   name: cow crate
@@ -59,10 +59,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: CowMob_Content
+      - id: CowMob_Content
         amount: 1
 
-   
+
 - type: entity
   id: CrateNPCGoat
   name: goat crate
@@ -70,7 +70,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GoatMob_Content
+      - id: GoatMob_Content
         amount: 1
 
 
@@ -81,7 +81,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: GooseMob_Content
+      - id: GooseMob_Content
         amount: 2
 
 
@@ -92,18 +92,18 @@
   components:
   - type: StorageFill
     contents:
-      - name: GorillaMob_Content
+      - id: GorillaMob_Content
         amount: 1
-        
-        
+
+
 - type: entity
   id: CrateNPCMonkeyCube
   name: monkey cube crate
-  parent: BoxBase
+  parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
-      - name: FoodContainerMonkeyCubeBox
+      - id: MonkeyCubeBox
         amount: 1
 
 
@@ -114,7 +114,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: ParrotMob_Content
+      - id: ParrotMob_Content
         amount: 3
 
 
@@ -125,7 +125,7 @@
   components:
   - type: StorageFill
     contents:
-      - name: PenguinMob_Content
+      - id: PenguinMob_Content
         amount: 2
 
 
@@ -136,5 +136,5 @@
   components:
   - type: StorageFill
     contents:
-      - name: SnakeMob_Content
+      - id: SnakeMob_Content
         amount: 3

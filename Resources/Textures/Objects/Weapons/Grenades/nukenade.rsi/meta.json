@@ -1,23 +1,23 @@
-﻿{
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/b13d244d761a07e200a9a41730bd446e776020d5",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/icons/obj/grenade.dmi at commit 8c96d52deed1eeea28a16334eea549369d7f9974",
-    "states": [
-        {
-            "name": "icon",
-            "delays": [
-                [1.0]
-            ]
-        },
-        {
-            "name": "primed",
-            "delays": [
-                [0.2, 0.2]
-            ]
-        }
-    ]
+    {
+      "name": "primed",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
 }

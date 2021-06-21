@@ -1,63 +1,50 @@
 {
   "version": 1,
+   "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c",
   "states": [
     {
-      "name": "dead",
-      "directions": 1
+      "name": "dead"
     },
     {
-      "name": "harvest",
-      "directions": 1
+      "name": "harvest"
     },
     {
-      "name": "produce",
-      "directions": 1
+      "name": "produce"
     },
     {
-      "name": "peel",
-      "directions": 1
+      "name": "peel"
     },
     {
-      "name": "peel2",
-      "directions": 1
+      "name": "peel2"
     },
     {
-      "name": "peel3",
-      "directions": 1
+      "name": "peel3"
     },
     {
-      "name": "seed",
-      "directions": 1
+      "name": "seed"
     },
     {
-      "name": "stage-1",
-      "directions": 1
+      "name": "stage-1"
     },
     {
-      "name": "stage-2",
-      "directions": 1
+      "name": "stage-2"
     },
     {
-      "name": "stage-3",
-      "directions": 1
+      "name": "stage-3"
     },
     {
-      "name": "stage-4",
-      "directions": 1
+      "name": "stage-4"
     },
     {
-      "name": "stage-5",
-      "directions": 1
+      "name": "stage-5"
     },
     {
-      "name": "stage-6",
-      "directions": 1
+      "name": "stage-6"
     }
   ]
 }

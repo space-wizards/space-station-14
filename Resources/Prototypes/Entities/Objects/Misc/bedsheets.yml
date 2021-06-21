@@ -17,7 +17,6 @@
     Slots:
     - neck
   - type: SnapGrid
-    offset: Center
 
 - type: entity
   id: BedsheetBlack

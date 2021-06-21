@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Doors;
+using Content.Server.Doors.Components;
+using Content.Shared.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -151,8 +151,6 @@ namespace Content.IntegrationTests.Tests.Doors
                 // Keep the airlock awake so they collide
                 airlock.GetComponent<IPhysBody>().WakeBody();
 
-                // Ensure that it is still closed
-                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();

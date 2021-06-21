@@ -1,10 +1,9 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Physics.Controllers;
+using Content.Shared.Movement;
+using Content.Shared.Movement.Components;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Client.Physics.Controllers
 {

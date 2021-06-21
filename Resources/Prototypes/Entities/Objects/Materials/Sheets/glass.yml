@@ -18,11 +18,11 @@
   parent: SheetGlassBase
   id: SheetGlass
   name: glass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: glass
+    - Glass
   - type: Stack
     stackType: Glass
   - type: Sprite
@@ -47,6 +47,7 @@
   parent: SheetGlass
   id: SheetGlass1
   name: glass
+  suffix: Single
   components:
   - type: Sprite
     state: glass
@@ -57,11 +58,11 @@
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: rglass
+    - ReinforcedGlass
   - type: Stack
     stackType: ReinforcedGlass
   - type: Sprite
@@ -86,6 +87,7 @@
   parent: SheetRGlass
   id: SheetRGlass1
   name: reinforced glass
+  suffix: Single
   components:
   - type: Sprite
     state: rglass
@@ -96,11 +98,11 @@
   parent: SheetGlassBase
   id: SheetPGlass
   name: plasma glass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: pglass
+    - PlasmaGlass
   - type: Stack
     stackType: PlasmaGlass
   - type: Sprite
@@ -122,6 +124,7 @@
   parent: SheetPGlass
   id: SheetPGlass1
   name: plasma glass
+  suffix: Single
   components:
   - type: Sprite
     state: pglass
@@ -132,11 +135,11 @@
   parent: SheetGlassBase
   id: SheetRPGlass
   name: reinforced plasma glass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: rpglass
+    - ReinforcedPlasmaGlass
   - type: Stack
     stackType: ReinforcedPlasmaGlass
   - type: Sprite
@@ -158,6 +161,7 @@
   parent: SheetPGlass
   id: SheetRPGlass1
   name: reinforced plasma glass
+  suffix: Single
   components:
   - type: Sprite
     state: rpglass
@@ -168,11 +172,11 @@
   parent: SheetGlassBase
   id: SheetTitaniumGlass
   name: titanium glass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: titaniumglass
+    - TitaniumGlass
   - type: Stack
     stackType: TitaniumGlass
   - type: Sprite
@@ -191,6 +195,7 @@
   parent: SheetTitaniumGlass
   id: SheetTitaniumGlass1
   name: titanium glass
+  suffix: Single
   components:
   - type: Sprite
     state: titaniumglass
@@ -201,11 +206,11 @@
   parent: SheetGlassBase
   id: SheetPlastitaniumGlass
   name: plastitanium glass
+  suffix: Full
   components:
   - type: Material
     materials:
-    - key: enum.MaterialKeys.Stack
-      mat: plastitaniumglass
+    - PlastitaniumGlass
   - type: Stack
     stackType: PlastitaniumGlass
   - type: Sprite
@@ -224,6 +229,7 @@
   parent: SheetPlastitaniumGlass
   id: SheetPlastitaniumGlass1
   name: plastitanium glass
+  suffix: Single
   components:
   - type: Sprite
     state: plastitaniumglass

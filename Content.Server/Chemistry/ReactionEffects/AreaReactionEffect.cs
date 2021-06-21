@@ -1,9 +1,9 @@
 #nullable enable
 using System;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Utility;
+using Content.Server.Chemistry.Components;
+using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Reaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -129,7 +129,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                ent.Delete();
+                ent.QueueDelete();
                 return;
             }
 

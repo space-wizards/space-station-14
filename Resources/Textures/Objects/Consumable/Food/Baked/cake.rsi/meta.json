@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alpha"
+    },
+    {
+      "name": "alpha-filling"
+    },
+    {
+      "name": "alpha-slice"
+    },
+    {
+      "name": "alpha-slice-filling"
+    },
+    {
+      "name": "apple"
+    },
+    {
+      "name": "apple-slice"
+    },
+    {
+      "name": "birthday"
+    },
+    {
+      "name": "birthday-slice"
+    },
+    {
+      "name": "brain"
+    },
+    {
+      "name": "brain-large"
+    },
+    {
+      "name": "brain-slice"
+    },
+    {
+      "name": "carrot"
+    },
+    {
+      "name": "carrot-slice"
+    },
+    {
+      "name": "cheese"
+    },
+    {
+      "name": "cheese-slice"
+    },
+    {
+      "name": "chocolate"
+    },
+    {
+      "name": "chocolate-slice"
+    },
+    {
+      "name": "lemon"
+    },
+    {
+      "name": "lemon-slice"
+    },
+    {
+      "name": "lime"
+    },
+    {
+      "name": "lime-slice"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange-slice"
+    },
+    {
+      "name": "plain"
+    },
+    {
+      "name": "plain-slice"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "clown-slice"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "plate-small"
+    },
+    {
+      "name": "plate-plastic"
+    },
+    {
+      "name": "plate-small-plastic"
+    },
+    {
+      "name": "plate-slice-shading"
+    },
+    {
+      "name": "pumpkinspice"
+    },
+    {
+      "name": "pumpkinspice-slice"
+    },
+    {
+      "name": "slime"
+    },
+    {
+      "name": "slime-slice"
+    },
+    {
+      "name": "christmas"
+    },
+    {
+      "name": "christmas-slice"
+    },
+    {
+      "name": "vanilla"
+    },
+    {
+      "name": "vanilla-slice"
+    },
+    {
+      "name": "trumpet"
+    },
+    {
+      "name": "trumpet-slice"
+    }
+  ]
+}
