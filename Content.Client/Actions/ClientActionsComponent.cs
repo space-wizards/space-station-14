@@ -226,11 +226,11 @@ namespace Content.Client.Actions
             StopHighlightingItemSlots();
 
             // figure out if it's in hand or inventory and highlight it
-            foreach (var hand in _handsComponent!.Hands)
+            foreach (var hand in _handsComponent!.Gui!.Hands)
             {
-                if (hand.Entity != item || hand.Button == null) continue;
-                _highlightingItemSlots.Add(hand.Button);
-                hand.Button.Highlight(true);
+                if (hand.HeldItem != item || hand.HandButton == null) continue;
+                _highlightingItemSlots.Add(hand.HandButton);
+                hand.HandButton.Highlight(true);
                 return;
             }
 

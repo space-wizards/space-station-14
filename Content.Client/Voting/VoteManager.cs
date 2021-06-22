@@ -39,8 +39,8 @@ namespace Content.Client.Voting
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME, ReceiveVoteData);
-            _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME, ReceiveVoteCanCall);
+            _netManager.RegisterNetMessage<MsgVoteData>(ReceiveVoteData);
+            _netManager.RegisterNetMessage<MsgVoteCanCall>(ReceiveVoteCanCall);
 
             _client.RunLevelChanged += ClientOnRunLevelChanged;
         }

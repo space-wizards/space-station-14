@@ -23,12 +23,12 @@ namespace Content.Shared.Hands
 
     public class EquippedHandEventArgs : UserEventArgs
     {
-        public EquippedHandEventArgs(IEntity user, SharedHand hand) : base(user)
+        public EquippedHandEventArgs(IEntity user, HandState hand) : base(user)
         {
             Hand = hand;
         }
 
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
     }
 
     /// <summary>
@@ -50,9 +50,9 @@ namespace Content.Shared.Hands
         /// <summary>
         ///     Hand that the item was placed into.
         /// </summary>
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
 
-        public EquippedHandEvent(IEntity user, IEntity equipped, SharedHand hand)
+        public EquippedHandEvent(IEntity user, IEntity equipped, HandState hand)
         {
             User = user;
             Equipped = equipped;

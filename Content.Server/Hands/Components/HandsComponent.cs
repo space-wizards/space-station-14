@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -8,12 +7,9 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Notification;
 using Content.Server.Pulling;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
-using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
@@ -23,14 +19,10 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Hands.Components
 {
@@ -42,709 +34,133 @@ namespace Content.Server.Hands.Components
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-        private string? _activeHand;
-        private uint _nextHand;
-
-        public event Action? OnItemChanged;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? ActiveHand
-        {
-            get => _activeHand;
-            set
-            {
-                if (value != null && GetHand(value) == null)
-                {
-                    throw new ArgumentException($"No hand '{value}'");
-                }
-
-                _activeHand = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables] private readonly List<Hand> _hands = new();
-
-        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
-
-        // Mostly arbitrary.
-        public const float PickupRange = 2;
-
-        [ViewVariables] public int Count => _hands.Count;
-
-        // TODO: This does not serialize what objects are held.
-        protected override void Startup()
-        {
-            base.Startup();
-            ActiveHand = _hands.LastOrDefault()?.Name;
-        }
-
-        public IEnumerable<ItemComponent> GetAllHeldItems()
-        {
-            foreach (var hand in _hands)
-            {
-                if (hand.Entity != null)
-                {
-                    yield return hand.Entity.GetComponent<ItemComponent>();
-                }
-            }
-        }
-
-        public override bool IsHolding(IEntity entity)
-        {
-            foreach (var hand in _hands)
-            {
-                if (hand.Entity == entity)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private Hand? GetHand(string? name)
-        {
-            return _hands.FirstOrDefault(hand => hand.Name == name);
-        }
-
-        public ItemComponent? GetItem(string? handName)
-        {
-            return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
-        }
-
-        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
-        {
-            return (item = GetItem(handName)) != null;
-        }
-
-        public ItemComponent? GetActiveHand => ActiveHand == null
-            ? null
-            : GetItem(ActiveHand);
-
-        /// <summary>
-        ///     Enumerates over the enabled hand keys,
-        ///     returning the active hand first.
-        /// </summary>
-        public IEnumerable<string> ActivePriorityEnumerable()
-        {
-            if (ActiveHand != null)
-            {
-                yield return ActiveHand;
-            }
-
-            foreach (var hand in _hands)
-            {
-                if (hand.Name == ActiveHand)
-                {
-                    continue;
-                }
-
-                if (!hand.Enabled)
-                {
-                    continue;
-                }
-
-                yield return hand.Name;
-            }
-        }
-
-        public bool PutInHand(ItemComponent item, bool mobCheck = true)
-        {
-            foreach (var hand in ActivePriorityEnumerable())
-            {
-                if (PutInHand(item, hand, false, mobCheck))
-                {
-                    OnItemChanged?.Invoke();
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool PutInHand(ItemComponent item, string index, bool fallback = true, bool mobChecks = true)
-        {
-            var hand = GetHand(index);
-            if (!CanPutInHand(item, index, mobChecks) || hand == null)
-            {
-                return fallback && PutInHand(item);
-            }
-
-            Dirty();
-
-            var oldParent = item.Owner.Transform.Parent;
-            var oldPosition = item.Owner.Transform.Coordinates;
-            var contained = item.Owner.IsInContainer();
-            var success = hand.Container.Insert(item.Owner);
-            if (success)
-            {
-                //If the entity isn't in a container, and it isn't located exactly at our position (i.e. in our own storage), then we can safely play the animation
-                if (oldParent != Owner.Transform && !contained)
-                {
-                    SendNetworkMessage(new AnimatePickupEntityMessage(item.Owner.Uid, oldPosition));
-                }
-                item.Owner.Transform.LocalPosition = Vector2.Zero;
-                OnItemChanged?.Invoke();
-            }
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, item.Owner,
-                ToSharedHand(hand));
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
-
-            return success;
-        }
-
-        /// <summary>
-        ///     Drops the item if <paramref name="mob"/> doesn't have hands.
-        /// </summary>
-        public static void PutInHandOrDropStatic(IEntity mob, ItemComponent item, bool mobCheck = true)
-        {
-            if (!mob.TryGetComponent(out HandsComponent? hands))
-            {
-                DropAtFeet(mob, item);
-                return;
-            }
-
-            hands.PutInHandOrDrop(item, mobCheck);
-        }
-
-        public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
-        {
-            if (!PutInHand(item, mobCheck))
-            {
-                DropAtFeet(Owner, item);
-            }
-        }
-
-        private static void DropAtFeet(IEntity mob, ItemComponent item)
-        {
-            item.Owner.Transform.Coordinates = mob.Transform.Coordinates;
-        }
-
-        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
-        {
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner))
-                return false;
-
-            foreach (var handName in ActivePriorityEnumerable())
-            {
-                // We already did a mobCheck, so let's not waste cycles.
-                if (CanPutInHand(item, handName, false))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
-        {
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner))
-                return false;
-
-            var hand = GetHand(index);
-
-            return hand != null &&
-                   hand.Enabled &&
-                   hand.Container.CanInsert(item.Owner);
-        }
-
-        /// <summary>
-        /// Calls the Dropped Interaction with the item.
-        /// </summary>
-        /// <param name="item">The itemcomponent of the item to be dropped</param>
-        /// <param name="doMobChecks">Check if the item can be dropped</param>
-        /// <param name="intentional">If the item was dropped intentionally</param>
-        /// <returns>True if IDropped.Dropped was called, otherwise false</returns>
-        private bool DroppedInteraction(ItemComponent item, bool doMobChecks, bool intentional)
-        {
-            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (doMobChecks)
-            {
-                if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner, intentional))
-                    return false;
-            }
-            else
-            {
-                interactionSystem.DroppedInteraction(Owner, item.Owner, intentional);
-            }
-            return true;
-        }
-
-        public bool TryHand(IEntity entity, [NotNullWhen(true)] out string? handName)
-        {
-            handName = null;
-
-            foreach (var hand in _hands)
-            {
-                if (hand.Entity == entity)
-                {
-                    handName = hand.Name;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
-        {
-            var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || !coords.IsValid(Owner.EntityManager) || hand?.Entity == null)
-            {
-                return false;
-            }
-
-            var item = hand.Entity.GetComponent<ItemComponent>();
-
-            if (!hand.Container.Remove(hand.Entity))
-            {
-                return false;
-            }
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, item.Owner,
-                ToSharedHand(hand));
-
-            if (doDropInteraction && !DroppedInteraction(item, false, intentional))
-                return false;
-
-            item.RemovedFromSlot();
-            item.Owner.Transform.Coordinates = coords;
-
-            if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-            {
-                spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
-            }
-
-            if (Owner.TryGetContainer(out var container))
-            {
-                container.Insert(item.Owner);
-            }
-
-            OnItemChanged?.Invoke();
-
-            Dirty();
-            return true;
-        }
-
-
-        public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
-        {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-
-            if (targetContainer == null)
-            {
-                throw new ArgumentNullException(nameof(targetContainer));
-            }
-
-            var hand = GetHand(slot);
-            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
-            {
-                return false;
-            }
-
-            if (!hand.Container.CanRemove(hand.Entity))
-            {
-                return false;
-            }
-
-            if (!targetContainer.CanInsert(hand.Entity))
-            {
-                return false;
-            }
-
-            var item = hand.Entity.GetComponent<ItemComponent>();
-
-            if (!hand.Container.Remove(hand.Entity))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, item.Owner,
-                ToSharedHand(hand));
-
-            if (doDropInteraction && !DroppedInteraction(item, doMobChecks, intentional))
-                return false;
-
-            item.RemovedFromSlot();
-
-            if (!targetContainer.Insert(item.Owner))
-            {
-                throw new InvalidOperationException();
-            }
-
-            OnItemChanged?.Invoke();
-
-            Dirty();
-            return true;
-        }
-
-        public bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (!TryHand(entity, out var slot))
-            {
-                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
-            }
-
-            return Drop(slot, coords, doMobChecks, doDropInteraction, intentional);
-        }
-
-        public bool Drop(string slot, bool mobChecks = true, bool doDropInteraction = true, bool intentional = true)
-        {
-            return Drop(slot, Owner.Transform.Coordinates, mobChecks, doDropInteraction, intentional);
-        }
-
-        public bool Drop(IEntity entity, bool mobChecks = true, bool doDropInteraction = true, bool intentional = true)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (!TryHand(entity, out var slot))
-            {
-                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
-            }
-
-            return Drop(slot, Owner.Transform.Coordinates, mobChecks, doDropInteraction, intentional);
-        }
-
-        public bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true, bool intentional = true)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (!TryHand(entity, out var slot))
-            {
-                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
-            }
-
-            return Drop(slot, targetContainer, doMobChecks, doDropInteraction, intentional);
-        }
-
-        /// <summary>
-        ///     Checks whether an item can be dropped from the specified slot.
-        /// </summary>
-        /// <param name="name">The slot to check for.</param>
-        /// <returns>
-        ///     True if there is an item in the slot and it can be dropped, false otherwise.
-        /// </returns>
-        public bool CanDrop(string name, bool mobCheck = true)
-        {
-            var hand = GetHand(name);
-
-            if (mobCheck && !EntitySystem.Get<ActionBlockerSystem>().CanDrop(Owner))
-                return false;
-
-            if (hand?.Entity == null)
-                return false;
-
-            return hand.Container.CanRemove(hand.Entity);
-        }
-
-        public void AddHand(string name)
-        {
-            if (HasHand(name))
-            {
-                throw new InvalidOperationException($"Hand '{name}' already exists.");
-            }
-
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, $"hand {_nextHand++}");
-            container.OccludesLight = false;
-            var hand = new Hand(this, name, container);
-
-            _hands.Add(hand);
-
-            ActiveHand ??= name;
-
-            OnItemChanged?.Invoke();
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
-
-            Dirty();
-        }
-
-        public void RemoveHand(string name)
-        {
-            var hand = GetHand(name);
-            if (hand == null)
-            {
-                throw new InvalidOperationException($"Hand '{name}' does not exist.");
-            }
-
-            Drop(hand.Name, false);
-            hand!.Dispose();
-            _hands.Remove(hand);
-
-            if (name == ActiveHand)
-            {
-                _activeHand = _hands.FirstOrDefault()?.Name;
-            }
-
-            OnItemChanged?.Invoke();
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
-
-            Dirty();
-        }
-
-        public bool HasHand(string name)
-        {
-            return _hands.Any(hand => hand.Name == name);
-        }
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            var hands = new SharedHand[_hands.Count];
-
-            for (var i = 0; i < _hands.Count; i++)
-            {
-                var hand = _hands[i].ToShared(i, IndexToHandLocation(i));
-                hands[i] = hand;
-            }
-
-            return new HandsComponentState(hands, ActiveHand);
-        }
-
-        private HandLocation IndexToHandLocation(int index)
-        {
-            return index == 0
-                ? HandLocation.Right
-                : index == _hands.Count - 1
-                    ? HandLocation.Left
-                    : HandLocation.Middle;
-        }
-
-        private SharedHand ToSharedHand(Hand hand)
-        {
-            var index = _hands.IndexOf(hand);
-            return hand.ToShared(index, IndexToHandLocation(index));
-        }
-
-        public void SwapHands()
-        {
-            if (ActiveHand == null)
-            {
-                return;
-            }
-
-            var hand = GetHand(ActiveHand);
-            if (hand == null)
-            {
-                throw new InvalidOperationException($"No hand found with name {ActiveHand}");
-            }
-
-            var index = _hands.IndexOf(hand);
-            index++;
-            if (index == _hands.Count)
-            {
-                index = 0;
-            }
-
-            ActiveHand = _hands[index].Name;
-        }
-
-        public void ActivateItem()
-        {
-            var used = GetActiveHand?.Owner;
-            if (used != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                interactionSystem.TryUseInteraction(Owner, used);
-            }
-        }
-
-        public bool ThrowItem()
-        {
-            var item = GetActiveHand?.Owner;
-            if (item != null)
-            {
-                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                return interactionSystem.TryThrowInteraction(Owner, item);
-            }
-
-            return false;
-        }
+        int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
-            if (message is PullMessage pullMessage &&
-                pullMessage.Puller.Owner != Owner)
-            {
-                return;
-            }
-
             switch (message)
             {
                 case PullAttemptMessage msg:
-                    if (!_hands.Any(hand => hand.Enabled))
-                    {
-                        msg.Cancelled = true;
-                    }
-
+                    AttemptPull(msg);
                     break;
-                case PullStartedMessage _:
-                    var firstFreeHand = _hands.FirstOrDefault(hand => hand.Enabled);
-
-                    if (firstFreeHand == null)
-                    {
-                        break;
-                    }
-
-                    firstFreeHand.Enabled = false;
-
+                case PullStartedMessage:
+                    StartPulling();
                     break;
-                case PullStoppedMessage _:
-                    var firstOccupiedHand = _hands.FirstOrDefault(hand => !hand.Enabled);
-
-                    if (firstOccupiedHand == null)
-                    {
-                        break;
-                    }
-
-                    firstOccupiedHand.Enabled = true;
-
-                    break;
-                case HandDisabledMsg msg:
-                    Drop(msg.Name, false);
+                case PullStoppedMessage:
+                    StopPulling();
                     break;
             }
         }
 
-        public override async void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
-
-            if (session == null)
-            {
-                throw new ArgumentNullException(nameof(session));
-            }
 
             switch (message)
             {
                 case ClientChangedHandMsg msg:
-                {
-                    var playerEntity = session.AttachedEntity;
-
-                    if (playerEntity == Owner && HasHand(msg.Index))
-                    {
-                        ActiveHand = msg.Index;
-                    }
-
+                    ActiveHand = msg.HandName;
                     break;
-                }
-
                 case ClientAttackByInHandMsg msg:
-                {
-                    var hand = GetHand(msg.Index);
-                    if (hand == null)
-                    {
-                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand name '{0}'",
-                            msg.Index);
-                        return;
-                    }
-
-                    var playerEntity = session.AttachedEntity;
-                    var used = GetActiveHand?.Owner;
-
-                    if (playerEntity == Owner && hand.Entity != null)
-                    {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        if (used != null)
-                        {
-                                await interactionSystem.InteractUsing(Owner, used, hand.Entity,
-                                    EntityCoordinates.Invalid);
-                        }
-                        else
-                        {
-                            var entity = hand.Entity;
-                            interactionSystem.InteractHand(Owner, entity);
-                        }
-                    }
-
+                    InteractHandWithActiveHand(msg.HandName);
                     break;
-                }
-
-                case UseInHandMsg _:
-                {
-                    var playerEntity = session.AttachedEntity;
-                    var used = GetActiveHand?.Owner;
-
-                    if (playerEntity == Owner && used != null)
-                    {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        interactionSystem.TryUseInteraction(Owner, used);
-                    }
-
+                case UseInHandMsg:
+                    UseActiveHeldEntity();
                     break;
-                }
-
                 case ActivateInHandMsg msg:
-                {
-                    var playerEntity = session.AttachedEntity;
-                    var used = GetItem(msg.Index)?.Owner;
-
-                    if (playerEntity == Owner && used != null)
-                    {
-                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-                        interactionSystem.TryInteractionActivate(Owner, used);
-                    }
+                    ActivateHeldEntity(msg.HandName);
                     break;
-                }
+                case MoveItemFromHandMsg msg:
+                    TryMoveHeldEntityToActiveHand(msg.HandName);
+                    break;
             }
         }
 
-        public void HandleSlotModifiedMaybe(ContainerModifiedMessage message)
+        protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
         {
-            foreach (var hand in _hands)
+            if (heldEntity.TryGetComponent(out ItemComponent? item))
             {
-                if (hand.Container != message.Container)
-                {
-                    continue;
-                }
-
-                Dirty();
-
-                if (!message.Entity.TryGetComponent(out IPhysBody? physics))
-                {
-                    return;
-                }
-
-                // set velocity to zero
-                physics.LinearVelocity = Vector2.Zero;
-                return;
+                item.RemovedFromSlot();
+                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
+            }
+            if (heldEntity.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.RenderOrder = heldEntity.EntityManager.CurrentTick.Value;
             }
         }
+
+        protected override void DoEquippedHandInteraction(IEntity entity, HandState handState)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, entity, handState);
+        }
+
+        protected override void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
+        }
+
+        protected override void DoHandSelectedInteraction(IEntity entity)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, entity);
+        }
+
+        protected override void DoHandDeselectedInteraction(IEntity entity)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandDeselectedInteraction(Owner, entity);
+        }
+
+        protected override async void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity)
+        {
+            await _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
+        }
+
+        protected override void DoActivate(IEntity heldEntity)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .TryInteractionActivate(Owner, heldEntity);
+        }
+
+        protected override void DoUse(IEntity heldEntity)
+        {
+            _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .TryUseInteraction(Owner, heldEntity);
+        }
+
+        protected override void HandlePickupAnimation(IEntity entity)
+        {
+            var pickupDirection = Owner.Transform.WorldPosition;
+
+            var outermostEntity = entity;
+            while (outermostEntity.TryGetContainer(out var container)) //TODO: Use WorldPosition instead of this loop
+                outermostEntity = container.Owner;
+
+            var initialPosition = outermostEntity.Transform.Coordinates;
+
+            if (pickupDirection == initialPosition.ToMapPos(Owner.EntityManager))
+                return;
+
+            SendNetworkMessage(new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
+        }
+
+        #region Pull/Disarm
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
-            {
                 return;
-            }
 
-            AddHand(args.Slot);
+            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: make hand body part have a handlocation?
+
+            AddHand(args.Slot, handLocation);
         }
 
         void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
-            {
                 return;
-            }
 
             RemoveHand(args.Slot);
         }
@@ -766,22 +182,19 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message!",("source", source.Name),("target", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message",("target", target.Name)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", source.Name), ("disarmed", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", target.Name)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message",("source", source.Name),("target", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message",("target", target.Name)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", source.Name), ("shoved", target.Name)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", target.Name)));
                     }
                 }
             }
 
             return true;
         }
-
-        // We want this to be the last disarm act to run.
-        int IDisarmedAct.Priority => int.MaxValue;
 
         private bool BreakPulls()
         {
@@ -792,64 +205,179 @@ namespace Content.Server.Hands.Components
 
             return pullable.TryStopPull();
         }
-    }
 
-    public class Hand : IDisposable
-    {
-        private bool _enabled = true;
-
-        public Hand(HandsComponent parent, string name, ContainerSlot container)
+        private void AttemptPull(PullAttemptMessage msg)
         {
-            Parent = parent;
-            Name = name;
-            Container = container;
-        }
-
-        private HandsComponent Parent { get; }
-        public string Name { get; }
-        public IEntity? Entity => Container.ContainedEntity;
-        public ContainerSlot Container { get; }
-
-        public bool Enabled
-        {
-            get => _enabled;
-            set
+            if (!ReadOnlyHands.Any(hand => hand.Enabled))
             {
-                if (_enabled == value)
-                {
-                    return;
-                }
-
-                _enabled = value;
-                Parent.Dirty();
-
-                var message = value
-                    ? (ComponentMessage) new HandEnabledMsg(Name)
-                    : new HandDisabledMsg(Name);
-
-                Parent.HandleMessage(message, Parent);
-                Parent.Owner.SendMessage(Parent, message);
+                msg.Cancelled = true;
             }
         }
 
-        public void Dispose()
+        private void StartPulling()
         {
-            Container.Shutdown(); // TODO verify this
+            var firstFreeHand = Hands.FirstOrDefault(hand => hand.Enabled);
+
+            if (firstFreeHand == null)
+                return;
+
+            DisableHand(firstFreeHand);
         }
 
-        public SharedHand ToShared(int index, HandLocation location)
+        private void StopPulling()
         {
-            return new(index, Name, Entity?.Uid, location, Enabled);
-        }
-    }
+            var firstOccupiedHand = Hands.FirstOrDefault(hand => !hand.Enabled);
 
-    public class HandCountChangedEvent : EntityEventArgs
-    {
-        public HandCountChangedEvent(IEntity sender)
-        {
-            Sender = sender;
+            if (firstOccupiedHand == null)
+                return;
+
+            EnableHand(firstOccupiedHand);
         }
 
-        public IEntity Sender { get; }
+        #endregion
+
+        #region Old public methods
+
+        public IEnumerable<string> HandNames => ReadOnlyHands.Select(h => h.Name);
+
+        public int Count => ReadOnlyHands.Count;
+
+        /// <summary>
+        ///     Returns a list of all hand names, with the active hand being first.
+        /// </summary>
+        public IEnumerable<string> ActivePriorityEnumerable()
+        {
+            if (ActiveHand != null)
+                yield return ActiveHand;
+
+            foreach (var hand in ReadOnlyHands)
+            {
+                if (hand.Name == ActiveHand || !hand.Enabled)
+                    continue;
+
+                yield return hand.Name;
+            }
+        }
+
+        /// <summary>
+        ///     Attempts to use the active held item.
+        /// </summary>
+        public void ActivateItem()
+        {
+            UseActiveHeldEntity();
+        }
+
+        /// <summary>
+        ///     Tries to drop the contents of a hand directly under the player.
+        /// </summary>
+        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        {
+            return TryDropHandToFloor(handName, checkActionBlocker, intentionalDrop);
+        }
+
+        /// <summary>
+        ///     Tries to drop an entity in a hand directly under the player.
+        /// </summary>
+        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        {
+            return TryDropEntityToFloor(entity, checkActionBlocker, intentionalDrop);
+        }
+
+        /// <summary>
+        ///     Tries to unequip contents of a hand directly into a container.
+        /// </summary>
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+        {
+            return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Tries to get the ItemComponent on the entity held by a hand.
+        /// </summary>
+        public ItemComponent? GetItem(string handName)
+        {
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return null;
+
+            heldEntity.TryGetComponent(out ItemComponent? item);
+            return item;
+        }
+
+        /// <summary>
+        ///     Tries to get the ItemComponent on the entity held by a hand.
+        /// </summary>
+        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
+        {
+            item = null;
+
+            if (!TryGetHeldEntity(handName, out var heldEntity))
+                return false;
+
+            return heldEntity.TryGetComponent(out item);
+        }
+
+        /// <summary>
+        ///     Tries to get the ItemComponent off the entity in the active hand.
+        /// </summary>
+        public ItemComponent? GetActiveHand
+        {
+            get
+            {
+                if (!TryGetActiveHeldEntity(out var heldEntity))
+                    return null;
+
+                heldEntity.TryGetComponent(out ItemComponent? item);
+                return item;
+            }
+        }
+
+        public IEnumerable<ItemComponent> GetAllHeldItems()
+        {
+            foreach (var entity in GetAllHeldEntities())
+            {
+                if (entity.TryGetComponent(out ItemComponent? item))
+                    yield return item;
+            }
+        }
+
+        /// <summary>
+        ///     Checks if any hand can pick up an item.
+        /// </summary>
+        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
+        {
+            var entity = item.Owner;
+
+            if (mobCheck && !PlayerCanPickup())
+                return false;
+
+            foreach (var hand in Hands)
+            {
+                if (CanInsertEntityIntoHand(hand, entity))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        ///     Attempts to put an item into the active hand, or any other hand if it cannot.
+        /// </summary>
+        public bool PutInHand(ItemComponent item, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        /// </summary>
+        public void PutInHandOrDrop(ItemComponent item, bool checkActionBlocker = true)
+        {
+            var entity = item.Owner;
+
+            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
+                entity.Transform.Coordinates = Owner.Transform.Coordinates;
+        }
+
+        #endregion
     }
 }
+

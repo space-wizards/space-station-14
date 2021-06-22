@@ -171,9 +171,9 @@ namespace Content.Server.Administration.Managers
 
         public void Initialize()
         {
-            _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(MsgUpdateAdminStatus.NAME);
-            _netMgr.RegisterNetMessage<AdminMenuPlayerListRequest>(AdminMenuPlayerListRequest.NAME, HandlePlayerListRequest);
-            _netMgr.RegisterNetMessage<AdminMenuPlayerListMessage>(AdminMenuPlayerListMessage.NAME);
+            _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
+            _netMgr.RegisterNetMessage<AdminMenuPlayerListRequest>(HandlePlayerListRequest);
+            _netMgr.RegisterNetMessage<AdminMenuPlayerListMessage>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.RegisteredCommands)

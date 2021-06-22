@@ -63,8 +63,8 @@ namespace Content.Server.Chat.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, OnMaxLengthRequest);
+            _netManager.RegisterNetMessage<MsgChatMessage>();
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthRequest);
 
             // Tell all the connected players the chat's character limit
             var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();

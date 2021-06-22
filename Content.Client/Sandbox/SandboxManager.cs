@@ -127,16 +127,15 @@ namespace Content.Client.Sandbox
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
-                message => SetAllowed(message.SandboxAllowed));
+            _netManager.RegisterNetMessage<MsgSandboxStatus>(message => SetAllowed(message.SandboxAllowed));
 
-            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess));
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>();
 
-            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>();
 
-            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost));
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>();
 
-            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide));
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>();
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 

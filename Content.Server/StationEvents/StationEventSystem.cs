@@ -183,8 +183,8 @@ namespace Content.Server.StationEvents
             // As such we'll always pause it by default.
             _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
 
-            _netManager.RegisterNetMessage<MsgRequestStationEvents>(nameof(MsgRequestStationEvents), RxRequest);
-            _netManager.RegisterNetMessage<MsgStationEvents>(nameof(MsgStationEvents));
+            _netManager.RegisterNetMessage<MsgRequestStationEvents>(RxRequest);
+            _netManager.RegisterNetMessage<MsgStationEvents>();
         }
 
         private void RxRequest(MsgRequestStationEvents msg)
