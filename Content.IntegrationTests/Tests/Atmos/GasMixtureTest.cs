@@ -16,6 +16,8 @@ namespace Content.IntegrationTests.Tests.Atmos
         {
             var server = StartServerDummyTicker();
 
+            await server.WaitIdleAsync();
+
             var atmosphereSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
 
             server.Assert(() =>
