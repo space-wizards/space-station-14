@@ -241,8 +241,8 @@
       healthChange: 0.5
       damageClass: Toxin
     - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 2.5
-      sprintSpeedModifier: 2.5
+      walkSpeedModifier: 1.2
+      sprintSpeedModifier: 1.2
       
 - type: reagent
   id: Oil

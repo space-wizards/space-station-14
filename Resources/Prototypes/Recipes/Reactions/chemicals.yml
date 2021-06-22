@@ -232,7 +232,7 @@
   reactants:
     Oxygen:
       amount: 1
-    Hydrogen:
+    Carbon:
       amount: 1
     Chlorine:
       amount: 1
