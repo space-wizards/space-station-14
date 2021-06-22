@@ -12,6 +12,7 @@ using Content.Shared.NetIDs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -20,12 +21,12 @@ namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [NetID(ContentNetIDs.BLOCKGAME_ARCADE)]
     public class BlockGameArcadeComponent : Component, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
-        public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
 
         [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
 

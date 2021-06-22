@@ -21,6 +21,7 @@ using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
@@ -35,12 +36,12 @@ namespace Content.Server.Tools.Components
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
     [ComponentReference(typeof(IHotItem))]
+    [NetID(ContentNetIDs.WELDER)]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override string Name => "Welder";
-        public override uint? NetID => ContentNetIDs.WELDER;
 
         /// <summary>
         /// Default Cost of using the welder fuel for an action

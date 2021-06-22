@@ -7,6 +7,7 @@ using Content.Shared.Tool;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -14,10 +15,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
+    [NetID(ContentNetIDs.WELDER)]
+
     public class WelderComponent : SharedToolComponent, IItemStatus
     {
         public override string Name => "Welder";
-        public override uint? NetID => ContentNetIDs.WELDER;
 
         private ToolQuality _behavior;
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;

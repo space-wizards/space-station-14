@@ -3,15 +3,16 @@ using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Sound
 {
+    [NetID(ContentNetIDs.SOUND)]
     public class SharedLoopingSoundComponent : Component
     {
         public override string Name => "LoopingSound";
-        public override uint? NetID => ContentNetIDs.SOUND;
 
         /// <summary>
         /// Stops all sounds.

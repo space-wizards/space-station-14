@@ -1,9 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,10 +12,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Cargo.Components
 {
+    [NetID(ContentNetIDs.GALACTIC_MARKET)]
     public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
     {
         public sealed override string Name => "GalacticMarket";
-        public sealed override uint? NetID => ContentNetIDs.GALACTIC_MARKET;
 
         [DataField("products")]
         protected List<string> _productIds = new();

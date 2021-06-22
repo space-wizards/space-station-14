@@ -8,6 +8,7 @@ using Content.Shared.Damage.Resistances;
 using Content.Shared.NetIDs;
 using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -23,11 +24,10 @@ namespace Content.Shared.Damage.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
+    [NetID(ContentNetIDs.DAMAGEABLE)]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
         public override string Name => "Damageable";
-
-        public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";

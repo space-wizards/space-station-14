@@ -6,6 +6,7 @@ using Content.Shared.Tool;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -13,6 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
+    [NetID(ContentNetIDs.MULTITOOLS)]
     public class MultiToolComponent : Component, IItemStatus
     {
         private ToolQuality _behavior;
@@ -24,7 +26,6 @@ namespace Content.Client.Tools.Components
         [ViewVariables] public ToolQuality? Behavior => _behavior;
 
         public override string Name => "MultiTool";
-        public override uint? NetID => ContentNetIDs.MULTITOOLS;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

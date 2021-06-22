@@ -2,6 +2,7 @@
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -16,10 +17,10 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
+    [NetID(ContentNetIDs.PLAYER_MOB_MOVER)]
     public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
         public override string Name => "PlayerMobMover";
-        public override uint? NetID => ContentNetIDs.PLAYER_MOB_MOVER;
 
         private float _stepSoundDistance;
         [DataField("grabRange")]

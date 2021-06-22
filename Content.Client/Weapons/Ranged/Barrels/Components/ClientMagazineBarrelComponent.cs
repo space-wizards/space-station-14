@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.IoC;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
@@ -12,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -21,6 +22,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetID(ContentNetIDs.MAGAZINE_BARREL)]
     public class ClientMagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()
@@ -70,7 +72,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         };
 
         public override string Name => "MagazineBarrel";
-        public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
         private StatusControl? _statusControl;
 

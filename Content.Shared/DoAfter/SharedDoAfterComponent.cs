@@ -1,18 +1,18 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.DoAfter
 {
+    [NetID(ContentNetIDs.DO_AFTER)]
     public abstract class SharedDoAfterComponent : Component
     {
         public override string Name => "DoAfter";
-
-        public override uint? NetID => ContentNetIDs.DO_AFTER;
     }
 
     [Serializable, NetSerializable]

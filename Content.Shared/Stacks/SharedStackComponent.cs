@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,10 +10,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
+    [NetID(ContentNetIDs.STACK)]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         public sealed override string Name => "Stack";
-        public sealed override uint? NetID => ContentNetIDs.STACK;
 
         [DataField("max")]
         private int _maxCount = 30;

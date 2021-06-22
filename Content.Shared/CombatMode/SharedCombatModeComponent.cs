@@ -3,15 +3,16 @@ using System;
 using Content.Shared.NetIDs;
 using Content.Shared.Targeting;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CombatMode
 {
+    [NetID(ContentNetIDs.COMBATMODE)]
     public abstract class SharedCombatModeComponent : Component
     {
-        public sealed override uint? NetID => ContentNetIDs.COMBATMODE;
         public override string Name => "CombatMode";
 
         private bool _isInCombatMode;

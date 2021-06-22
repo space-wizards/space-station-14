@@ -6,6 +6,7 @@ using System.Linq;
 using Content.Shared.Actions.Prototypes;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -29,6 +30,7 @@ namespace Content.Shared.Actions.Components
     /// may be unusable while the player is stunned, but this component will still have an entry for the action
     /// so the user can see whether it's currently toggled on or off.
     /// </summary>
+    [NetID(ContentNetIDs.ACTIONS)]
     public abstract class SharedActionsComponent : Component
     {
         private static readonly TimeSpan CooldownExpiryThreshold = TimeSpan.FromSeconds(10);
@@ -41,7 +43,6 @@ namespace Content.Shared.Actions.Components
         protected readonly IEntityManager EntityManager = default!;
 
         public override string Name => "Actions";
-        public override uint? NetID => ContentNetIDs.ACTIONS;
 
         /// <summary>
         /// Actions granted to this entity as soon as they spawn, regardless

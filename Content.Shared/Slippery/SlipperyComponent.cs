@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,7 @@ using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -24,12 +25,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Slippery
 {
     [RegisterComponent]
+    [NetID(ContentNetIDs.SLIP)]
     public class SlipperyComponent : Component, IStartCollide
     {
         [Dependency] private IModuleManager _moduleManager = default!;
 
         public sealed override string Name => "Slippery";
-        public override uint? NetID => ContentNetIDs.SLIP;
 
         private float _paralyzeTime = 3f;
         private float _intersectPercentage = 0.3f;

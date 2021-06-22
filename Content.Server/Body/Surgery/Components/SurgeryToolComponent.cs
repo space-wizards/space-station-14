@@ -16,6 +16,7 @@ using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,10 +29,10 @@ namespace Content.Server.Body.Surgery.Components
     ///     For instance, the scalpel.
     /// </summary>
     [RegisterComponent]
+    [NetID(ContentNetIDs.SURGERY)]
     public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
     {
         public override string Name => "SurgeryTool";
-        public override uint? NetID => ContentNetIDs.SURGERY;
 
         private readonly Dictionary<int, object> _optionsCache = new();
 

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -10,6 +10,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,11 +24,10 @@ namespace Content.Shared.MobState.Components
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
+    [NetID(ContentNetIDs.MOB_STATE)]
     public abstract class SharedMobStateComponent : Component, IMobStateComponent, IActionBlocker
     {
         public override string Name => "MobState";
-
-        public override uint? NetID => ContentNetIDs.MOB_STATE;
 
         /// <summary>
         ///     States that this <see cref="SharedMobStateComponent"/> mapped to

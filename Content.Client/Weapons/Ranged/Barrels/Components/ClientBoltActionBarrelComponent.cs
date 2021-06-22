@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.IoC;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
@@ -9,16 +9,17 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetID(ContentNetIDs.BOLTACTION_BARREL)]
     public class ClientBoltActionBarrelComponent : Component, IItemStatus
     {
         public override string Name => "BoltActionBarrel";
-        public override uint? NetID => ContentNetIDs.BOLTACTION_BARREL;
 
         private StatusControl? _statusControl;
 

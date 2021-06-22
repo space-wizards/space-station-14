@@ -2,15 +2,16 @@
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Placeable
 {
+    [NetID(ContentNetIDs.PLACEABLE_SURFACE)]
     public abstract class SharedPlaceableSurfaceComponent : Component
     {
         public override string Name => "PlaceableSurface";
-        public override uint? NetID => ContentNetIDs.PLACEABLE_SURFACE;
         public virtual bool IsPlaceable { get; set; }
         public virtual bool PlaceCentered { get; set; }
         public virtual Vector2 PositionOffset { get; set; }

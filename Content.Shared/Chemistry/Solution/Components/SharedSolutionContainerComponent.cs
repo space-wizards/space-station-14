@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -22,12 +23,10 @@ namespace Content.Shared.Chemistry.Solution.Components
     /// <summary>
     ///     Holds a <see cref="Solution"/> with a limited volume.
     /// </summary>
+    [NetID(ContentNetIDs.SOLUTION)]
     public abstract class SharedSolutionContainerComponent : Component, IExamine, ISolutionInteractionsComponent
     {
         public override string Name => "SolutionContainer";
-
-        /// <inheritdoc />
-        public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         [ViewVariables]
         [DataField("contents")]

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,10 +13,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Lathe
 {
+    [NetID(ContentNetIDs.LATHE_DATABASE)]
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         public override string Name => "LatheDatabase";
-        public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
 
         [DataField("recipes")] private List<string> _recipeIds = new();
 

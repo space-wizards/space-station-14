@@ -13,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -27,13 +28,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Shotguns mostly
     /// </summary>
     [RegisterComponent]
+    [NetID(ContentNetIDs.BOLTACTION_BARREL)]
     public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs
 
         public override string Name => "BoltActionBarrel";
-        public override uint? NetID => ContentNetIDs.BOLTACTION_BARREL;
 
         public override int ShotsLeft
         {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
@@ -12,10 +13,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Doors
 {
+    [NetID(ContentNetIDs.DOOR)]
     public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";
-        public override uint? NetID => ContentNetIDs.DOOR;
 
         [ComponentDependency]
         protected readonly SharedAppearanceComponent? AppearanceComponent = null;

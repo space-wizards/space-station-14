@@ -1,15 +1,16 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Suspicion
 {
+    [NetID(ContentNetIDs.SUSPICION_ROLE)]
     public abstract class SharedSuspicionRoleComponent : Component
     {
         public sealed override string Name => "SuspicionRole";
-        public sealed override uint? NetID => ContentNetIDs.SUSPICION_ROLE;
     }
 
     [Serializable, NetSerializable]

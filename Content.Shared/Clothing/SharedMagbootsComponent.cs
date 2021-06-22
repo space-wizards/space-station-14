@@ -1,16 +1,17 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.Movement.Components;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Clothing
 {
+    [NetID(ContentNetIDs.MAGBOOTS)]
     public abstract class SharedMagbootsComponent : Component, IMoveSpeedModifier
     {
         public sealed override string Name => "Magboots";
-        public sealed override uint? NetID => ContentNetIDs.MAGBOOTS;
 
         public abstract bool On { get; set; }
 

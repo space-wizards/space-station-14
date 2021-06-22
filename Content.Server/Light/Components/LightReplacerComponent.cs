@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -24,10 +25,10 @@ namespace Content.Server.Light.Components
     ///     Can be reloaded by new light tubes or light bulbs
     /// </summary>
     [RegisterComponent]
+    [NetID(ContentNetIDs.LIGHT_REPLACER)]
     public class LightReplacerComponent : Component
     {
         public override string Name => "LightReplacer";
-        public override uint? NetID => ContentNetIDs.LIGHT_REPLACER;
 
         [DataField("sound")] private string _sound = "/Audio/Weapons/click.ogg";
 

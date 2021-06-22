@@ -4,16 +4,17 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.NetIDs;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Climbing
 {
+    [NetID(ContentNetIDs.CLIMBING)]
     public abstract class SharedClimbingComponent : Component, IActionBlocker
     {
         public sealed override string Name => "Climbing";
-        public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
         protected bool IsOnClimbableThisFrame
         {

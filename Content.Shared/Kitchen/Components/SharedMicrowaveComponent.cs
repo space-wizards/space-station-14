@@ -3,16 +3,17 @@ using System;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
 {
 
+    [NetID(ContentNetIDs.MICROWAVE)]
     public class SharedMicrowaveComponent : Component
     {
 
         public override string Name => "Microwave";
-        public override uint? NetID => ContentNetIDs.MICROWAVE;
 
         [Serializable, NetSerializable]
         public class MicrowaveStartCookMessage : BoundUserInterfaceMessage

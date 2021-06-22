@@ -1,9 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components
@@ -26,11 +27,10 @@ namespace Content.Shared.Buckle.Components
         Down
     }
 
+    [NetID(ContentNetIDs.STRAP)]
     public abstract class SharedStrapComponent : Component, IDragDropOn
     {
         public sealed override string Name => "Strap";
-
-        public sealed override uint? NetID => ContentNetIDs.STRAP;
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {

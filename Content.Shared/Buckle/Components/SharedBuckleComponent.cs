@@ -6,17 +6,17 @@ using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Buckle.Components
 {
+    [NetID(ContentNetIDs.BUCKLE)]
     public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
     {
         public sealed override string Name => "Buckle";
-
-        public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.

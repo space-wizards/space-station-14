@@ -1,9 +1,10 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.CCVar;
 using Content.Shared.NetIDs;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -15,6 +16,7 @@ namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
+    [NetID(ContentNetIDs.PLAYER_INPUT_MOVER)]
     public class SharedPlayerInputMoverComponent : Component, IMoverComponent
     {
         // This class has to be able to handle server TPS being lower than client FPS.
@@ -42,7 +44,6 @@ namespace Content.Shared.Movement.Components
         [ComponentDependency] private readonly MovementSpeedModifierComponent? _movementSpeed = default!;
 
         public override string Name => "PlayerInputMover";
-        public override uint? NetID => ContentNetIDs.PLAYER_INPUT_MOVER;
 
         private GameTick _lastInputTick;
         private ushort _lastInputSubTick;

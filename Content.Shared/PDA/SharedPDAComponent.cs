@@ -1,17 +1,17 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
+    [NetID(ContentNetIDs.PDA)]
     public class SharedPDAComponent : Component
     {
         public override string Name => "PDA";
-        public override uint? NetID => ContentNetIDs.PDA;
-
     }
 
     [Serializable, NetSerializable]

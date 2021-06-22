@@ -3,15 +3,16 @@ using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Instruments
 {
+    [NetID(ContentNetIDs.INSTRUMENTS)]
     public class SharedInstrumentComponent : Component
     {
         public override string Name => "Instrument";
-        public override uint? NetID => ContentNetIDs.INSTRUMENTS;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual byte InstrumentProgram { get; set; }

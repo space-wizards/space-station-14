@@ -1,10 +1,11 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.NetIDs;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,6 +13,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CharacterAppearance.Components
 {
+    [NetID(ContentNetIDs.HUMANOID_APPEARANCE)]
     public abstract class SharedHumanoidAppearanceComponent : Component
     {
         private HumanoidCharacterAppearance _appearance = HumanoidCharacterAppearance.Default();
@@ -19,7 +21,6 @@ namespace Content.Shared.CharacterAppearance.Components
         private Gender _gender;
 
         public sealed override string Name => "HumanoidAppearance";
-        public sealed override uint? NetID => ContentNetIDs.HUMANOID_APPEARANCE;
 
         [DataField("categoriesHair")]
         [ViewVariables]

@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -25,10 +26,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
+    [NetID(ContentNetIDs.PUMP_BARREL)]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
-        public override uint? NetID => ContentNetIDs.PUMP_BARREL;
 
         public override int ShotsLeft
         {

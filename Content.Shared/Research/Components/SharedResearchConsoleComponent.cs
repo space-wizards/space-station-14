@@ -2,14 +2,15 @@
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.Components
 {
+    [NetID(ContentNetIDs.RESEARCH_CONSOLE)]
     public class SharedResearchConsoleComponent : Component
     {
         public override string Name => "ResearchConsole";
-        public override uint? NetID => ContentNetIDs.RESEARCH_CONSOLE;
 
         [NetSerializable, Serializable]
         public enum ResearchConsoleUiKey

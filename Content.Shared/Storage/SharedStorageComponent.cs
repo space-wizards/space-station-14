@@ -8,15 +8,16 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
 using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
 {
+    [NetID(ContentNetIDs.INVENTORY)]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
         public override string Name => "Storage";
-        public override uint? NetID => ContentNetIDs.INVENTORY;
 
         public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
 

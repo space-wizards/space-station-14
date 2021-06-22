@@ -12,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -25,12 +26,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetID(ContentNetIDs.REVOLVER_BARREL)]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "RevolverBarrel";
-        public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
         [ViewVariables]
         [DataField("caliber")]

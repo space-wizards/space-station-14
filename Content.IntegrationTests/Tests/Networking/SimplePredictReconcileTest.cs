@@ -10,6 +10,7 @@ using Robust.Client.GameStates;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -391,10 +392,10 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
+        [NetID(ContentNetIDs.PREDICTION_TEST)]
         private sealed class PredictionTestComponent : Component
         {
             public override string Name => "PredictionTest";
-            public override uint? NetID => ContentNetIDs.PREDICTION_TEST;
 
             private bool _foo;
 

@@ -2,14 +2,15 @@
 using System;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation
 {
+    [NetID(ContentNetIDs.RADIATION_PULSE)]
     public abstract class SharedRadiationPulseComponent : Component
     {
         public override string Name => "RadiationPulse";
-        public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
 
         public virtual float RadsPerSecond { get; set; }
 

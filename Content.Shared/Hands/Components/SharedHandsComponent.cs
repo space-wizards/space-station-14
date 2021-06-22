@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -19,11 +20,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
+    [NetID(ContentNetIDs.HANDS)]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
-
-        public sealed override uint? NetID => ContentNetIDs.HANDS;
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
 

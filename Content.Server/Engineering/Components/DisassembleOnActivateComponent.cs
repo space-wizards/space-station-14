@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -10,10 +11,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Engineering.Components
     {
         [RegisterComponent]
-        public class DisassembleOnActivateComponent : Component
+        [NetID(ContentNetIDs.DISASSEMBLE_ON_ACTIVATE)]
+    public class DisassembleOnActivateComponent : Component
     {
         public override string Name => "DisassembleOnActivate";
-        public override uint? NetID => ContentNetIDs.DISASSEMBLE_ON_ACTIVATE;
 
         [ViewVariables]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
