@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -28,7 +29,7 @@ namespace Content.Server.Disposal.Tube.Components
                 holderComponent.TryInsert(entity);
             }
 
-            holderComponent.Air.Merge(from.Air);
+            EntitySystem.Get<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
 
             return TryInsert(holderComponent);

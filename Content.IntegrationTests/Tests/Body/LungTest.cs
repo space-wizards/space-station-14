@@ -105,7 +105,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
 
                 // Not completely empty
-                Assert.Positive(lung.Air.Gases.Sum());
+                Assert.Positive(lung.Air.Moles.Sum());
 
                 // Retains needed gas
                 Assert.Positive(bloodstream.Air.GetMoles(Gas.Oxygen));

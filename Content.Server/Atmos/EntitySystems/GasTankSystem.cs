@@ -19,9 +19,13 @@ namespace Content.Server.Atmos.EntitySystems
             if (_timer < Interval) return;
             _timer = 0f;
 
+            var atmosphereSystem = Get<AtmosphereSystem>();
+
             foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>(true))
             {
-                gasTank.Update();
+                atmosphereSystem.React(gasTank.Air, gasTank);
+                gasTank.CheckStatus();
+                gasTank.UpdateUserInterface();
             }
         }
     }
