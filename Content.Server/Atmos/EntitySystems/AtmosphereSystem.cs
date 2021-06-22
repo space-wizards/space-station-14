@@ -162,7 +162,7 @@ namespace Content.Server.Atmos.EntitySystems
                     exposed.Update(tile, _exposedTimer);
                 }
 
-                _exposedTimer = 0;
+                _exposedTimer -= ExposedUpdateDelay;
             }
         }
     }
