@@ -31,9 +31,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
 
             var number = 0;
-            while (atmosphere.CurrentRunTiles.Count > 0)
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                var tile = atmosphere.CurrentRunTiles.Dequeue();
                 tile.EqualizePressureInZone(atmosphere.UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
@@ -233,7 +232,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _currentRunAtmosphere.AddRange(ComponentManager.EntityQuery<GridAtmosphereComponent>());
             }
 
-            // We set this to true just in case we have to stop processing due to time constrains.
+            // We set this to true just in case we have to stop processing due to time constraints.
             _simulationPaused = true;
 
             for (; _currentRunAtmosphereIndex < _currentRunAtmosphere.Count; _currentRunAtmosphereIndex++)
@@ -359,7 +358,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
-    public enum AtmosphereProcessingState
+    public enum AtmosphereProcessingState : byte
     {
         TileEqualize,
         ActiveTiles,

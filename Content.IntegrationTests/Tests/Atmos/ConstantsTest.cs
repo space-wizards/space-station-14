@@ -25,7 +25,6 @@ namespace Content.IntegrationTests.Tests.Atmos
 
                 Assert.That(atmosSystem.Gases.Count(), Is.EqualTo(Atmospherics.TotalNumberOfGases));
 
-                // Remove one from the length to account for the invalid gas.
                 Assert.That(Enum.GetValues(typeof(Gas)).Length, Is.EqualTo(Atmospherics.TotalNumberOfGases));
             });
         }
