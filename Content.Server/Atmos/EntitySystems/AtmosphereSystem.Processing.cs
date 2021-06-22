@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessTileEqualize(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
 
             var number = 0;
@@ -49,7 +49,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessActiveTiles(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
 
             var number = 0;
@@ -71,7 +71,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessExcitedGroups(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunExcitedGroups = new Queue<ExcitedGroup>(atmosphere.ExcitedGroups);
 
             var number = 0;
@@ -100,7 +100,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessHighPressureDelta(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
             var number = 0;
@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessHotspots(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HotspotTiles);
 
             var number = 0;
@@ -147,7 +147,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessSuperconductivity(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.SuperconductivityTiles);
 
             var number = 0;
@@ -169,7 +169,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessPipeNets(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunPipeNet = new Queue<IPipeNet>(atmosphere.PipeNets);
 
             var number = 0;
@@ -191,7 +191,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessAtmosDevices(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.Paused)
+            if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunAtmosDevices = new Queue<AtmosDeviceComponent>(atmosphere.AtmosDevices);
 
             var time = _gameTiming.CurTime;
@@ -232,7 +232,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var atmosphere = _currentRunAtmosphere[_currentRunAtmosphereIndex];
 
-                if (atmosphere.LifeStage >= ComponentLifeStage.Stopping)
+                if (atmosphere.Paused || atmosphere.LifeStage >= ComponentLifeStage.Stopping)
                     continue;
 
                 atmosphere.Timer += frameTime;
@@ -251,51 +251,51 @@ namespace Content.Server.Atmos.EntitySystems
                     case AtmosphereProcessingState.TileEqualize:
                         if (!ProcessTileEqualize(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.ActiveTiles;
                         continue;
                     case AtmosphereProcessingState.ActiveTiles:
                         if (!ProcessActiveTiles(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.ExcitedGroups;
                         continue;
                     case AtmosphereProcessingState.ExcitedGroups:
                         if (!ProcessExcitedGroups(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.HighPressureDelta;
                         continue;
                     case AtmosphereProcessingState.HighPressureDelta:
                         if (!ProcessHighPressureDelta(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.Hotspots;
                         continue;
                     case AtmosphereProcessingState.Hotspots:
                         if (!ProcessHotspots(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         // Next state depends on whether superconduction is enabled or not.
                         // Note: We do this here instead of on the tile equalization step to prevent ending it early.
                         //       Therefore, a change to this CVar might only be applied after that step is over.
@@ -306,31 +306,31 @@ namespace Content.Server.Atmos.EntitySystems
                     case AtmosphereProcessingState.Superconductivity:
                         if (!ProcessSuperconductivity(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.PipeNet;
                         continue;
                     case AtmosphereProcessingState.PipeNet:
                         if (!ProcessPipeNets(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         atmosphere.State = AtmosphereProcessingState.AtmosDevices;
                         continue;
                     case AtmosphereProcessingState.AtmosDevices:
                         if (!ProcessAtmosDevices(atmosphere))
                         {
-                            atmosphere.Paused = true;
+                            atmosphere.ProcessingPaused = true;
                             return;
                         }
 
-                        atmosphere.Paused = false;
+                        atmosphere.ProcessingPaused = false;
                         // Next state depends on whether monstermos equalization is enabled or not.
                         // Note: We do this here instead of on the tile equalization step to prevent ending it early.
                         //       Therefore, a change to this CVar might only be applied after that step is over.

@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Components
 
         public override string Name => "GridAtmosphere";
 
-        public bool Paused { get; set; } = false;
+        public bool ProcessingPaused { get; set; } = false;
         public float Timer { get; set; }
         private GridId _gridId;
 
@@ -54,16 +54,10 @@ namespace Content.Server.Atmos.Components
         public int UpdateCounter { get; set; } = 0;
 
         [ViewVariables]
-        public double TileEqualizeLastProcess;
-
-        [ViewVariables]
         public readonly HashSet<ExcitedGroup> ExcitedGroups = new(1000);
 
         [ViewVariables]
         public int ExcitedGroupCount => ExcitedGroups.Count;
-
-        [ViewVariables]
-        public double ExcitedGroupLastProcess;
 
         [DataField("uniqueMixes")]
         public List<GasMixture>? UniqueMixes;
@@ -81,25 +75,16 @@ namespace Content.Server.Atmos.Components
         public int ActiveTilesCount => ActiveTiles.Count;
 
         [ViewVariables]
-        public double ActiveTilesLastProcess;
-
-        [ViewVariables]
         public readonly HashSet<TileAtmosphere> HotspotTiles = new(1000);
 
         [ViewVariables]
         public int HotspotTilesCount => HotspotTiles.Count;
 
         [ViewVariables]
-        public double HotspotsLastProcess;
-
-        [ViewVariables]
         public readonly HashSet<TileAtmosphere> SuperconductivityTiles = new(1000);
 
         [ViewVariables]
         public int SuperconductivityTilesCount => SuperconductivityTiles.Count;
-
-        [ViewVariables]
-        public double SuperconductivityLastProcess;
 
         [ViewVariables]
         public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
@@ -111,19 +96,10 @@ namespace Content.Server.Atmos.Components
         public int HighPressureDeltaCount => HighPressureDelta.Count;
 
         [ViewVariables]
-        public double HighPressureDeltaLastProcess;
-
-        [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]
-        public double PipeNetLastProcess;
-
-        [ViewVariables]
         public readonly HashSet<AtmosDeviceComponent> AtmosDevices = new();
-
-        [ViewVariables]
-        public double AtmosDevicesLastProcess;
 
         [ViewVariables]
         public Queue<TileAtmosphere> CurrentRunTiles = new();
@@ -142,7 +118,7 @@ namespace Content.Server.Atmos.Components
 
         public GridAtmosphereComponent()
         {
-            Paused = false;
+            ProcessingPaused = false;
         }
 
         /// <inheritdoc />
