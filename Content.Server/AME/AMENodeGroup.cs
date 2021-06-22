@@ -8,6 +8,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -35,6 +36,8 @@ namespace Content.Server.AME
         private readonly List<AMEShieldComponent> _cores = new();
 
         public int CoreCount => _cores.Count;
+
+        public override Color VisColor => Color.Purple;
 
         public override void LoadNodes(List<Node> groupNodes)
         {

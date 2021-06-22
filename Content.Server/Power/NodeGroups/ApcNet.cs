@@ -9,6 +9,7 @@ using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.NodeGroups
@@ -51,6 +52,8 @@ namespace Content.Server.Power.NodeGroups
 
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();
+
+        public override Color VisColor => Color.Green;
 
         public override void Initialize(Node sourceNode)
         {

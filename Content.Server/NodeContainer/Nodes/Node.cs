@@ -43,12 +43,12 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         public bool Deleting;
 
-        // Used for debug visualizations.
         public readonly HashSet<Node> ReachableNodes = new();
 
         internal int FloodGen;
         internal int UndirectGen;
         internal bool FlaggedForFlood;
+        internal int NetId;
 
         public virtual void Initialize(IEntity owner)
         {

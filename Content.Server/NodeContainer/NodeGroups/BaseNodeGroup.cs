@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -49,7 +50,13 @@ namespace Content.Server.NodeContainer.NodeGroups
         [ViewVariables]
         public bool Removed { get; set; } = false;
 
+        [ViewVariables]
         protected GridId GridId { get; private set; }
+
+        [ViewVariables]
+        public int NetId;
+
+        public virtual Color VisColor => Color.White;
 
         public virtual void Initialize(Node sourceNode)
         {

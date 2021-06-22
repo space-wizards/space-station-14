@@ -9,6 +9,7 @@ using Content.Server.Interfaces;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -33,6 +34,8 @@ namespace Content.Server.NodeContainer.NodeGroups
         [ViewVariables]
         private IGridAtmosphereComponent? GridAtmos =>
             _atmosphereSystem?.GetGridAtmosphere(GridId);
+
+        public override Color VisColor => Color.Cyan;
 
         public override void Initialize(Node sourceNode)
         {
