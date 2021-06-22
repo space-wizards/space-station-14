@@ -114,12 +114,12 @@ namespace Content.Shared.Research.Components
     public class TechnologyDatabaseState : ComponentState
     {
         public List<string> Technologies;
-        public TechnologyDatabaseState(List<string> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
+        public TechnologyDatabaseState(List<string> technologies)
         {
             Technologies = technologies;
         }
 
-        public TechnologyDatabaseState(List<TechnologyPrototype> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
+        public TechnologyDatabaseState(List<TechnologyPrototype> technologies)
         {
             Technologies = new List<string>();
             foreach (var technology in technologies)

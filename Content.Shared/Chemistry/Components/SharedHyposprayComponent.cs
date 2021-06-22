@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Components
             public ReagentUnit CurVolume { get; }
             public ReagentUnit MaxVolume { get; }
 
-            public HyposprayComponentState(ReagentUnit curVolume, ReagentUnit maxVolume) : base(ContentNetIDs.HYPOSPRAY)
+            public HyposprayComponentState(ReagentUnit curVolume, ReagentUnit maxVolume)
             {
                 CurVolume = curVolume;
                 MaxVolume = maxVolume;

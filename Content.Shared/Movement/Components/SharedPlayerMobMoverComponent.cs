@@ -112,7 +112,7 @@ namespace Content.Shared.Movement.Components
             public float PushStrength;
             public float WeightlessStrength;
 
-            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength) : base(ContentNetIDs.PLAYER_MOB_MOVER)
+            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength)
             {
                 GrabRange = grabRange;
                 PushStrength = pushStrength;

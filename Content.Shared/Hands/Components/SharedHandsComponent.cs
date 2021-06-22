@@ -867,7 +867,7 @@ namespace Content.Shared.Hands.Components
         public HandState[] Hands { get; }
         public string? ActiveHand { get; }
 
-        public HandsComponentState(HandState[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(HandState[] hands, string? activeHand = null)
         {
             Hands = hands;
             ActiveHand = activeHand;

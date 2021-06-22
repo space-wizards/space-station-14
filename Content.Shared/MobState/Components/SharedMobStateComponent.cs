@@ -401,7 +401,7 @@ namespace Content.Shared.MobState.Components
     {
         public readonly int? CurrentThreshold;
 
-        public MobStateComponentState(int? currentThreshold) : base(ContentNetIDs.MOB_STATE)
+        public MobStateComponentState(int? currentThreshold)
         {
             CurrentThreshold = currentThreshold;
         }

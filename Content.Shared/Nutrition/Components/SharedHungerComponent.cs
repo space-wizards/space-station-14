@@ -46,7 +46,7 @@ namespace Content.Shared.Nutrition.Components
         {
             public HungerThreshold CurrentThreshold { get; }
 
-            public HungerComponentState(HungerThreshold currentThreshold) : base(ContentNetIDs.HUNGER)
+            public HungerComponentState(HungerThreshold currentThreshold)
             {
                 CurrentThreshold = currentThreshold;
             }

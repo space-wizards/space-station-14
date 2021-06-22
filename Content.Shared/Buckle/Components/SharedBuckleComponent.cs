@@ -64,7 +64,7 @@ namespace Content.Shared.Buckle.Components
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;

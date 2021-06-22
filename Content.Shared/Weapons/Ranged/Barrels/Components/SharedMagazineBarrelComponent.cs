@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -39,8 +38,7 @@ namespace Content.Shared.Weapons.Ranged.Barrels.Components
             bool chambered,
             FireRateSelector fireRateSelector,
             (int count, int max)? magazine,
-            string? soundGunshot) :
-            base(ContentNetIDs.MAGAZINE_BARREL)
+            string? soundGunshot)
         {
             Chambered = chambered;
             FireRateSelector = fireRateSelector;

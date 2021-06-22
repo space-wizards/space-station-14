@@ -18,7 +18,7 @@ namespace Content.Shared.Flash
         public double Duration { get; }
         public TimeSpan Time { get; }
 
-        public FlashComponentState(double duration, TimeSpan time) : base(ContentNetIDs.FLASHABLE)
+        public FlashComponentState(double duration, TimeSpan time)
         {
             Duration = duration;
             Time = time;

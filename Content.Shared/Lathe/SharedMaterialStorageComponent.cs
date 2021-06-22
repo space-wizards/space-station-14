@@ -72,7 +72,7 @@ namespace Content.Shared.Lathe
     public class MaterialStorageState : ComponentState
     {
         public readonly Dictionary<string, int> Storage;
-        public MaterialStorageState(Dictionary<string, int> storage) : base(ContentNetIDs.MATERIAL_STORAGE)
+        public MaterialStorageState(Dictionary<string, int> storage)
         {
             Storage = storage;
         }

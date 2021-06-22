@@ -99,7 +99,7 @@ namespace Content.Shared.Climbing
         [Serializable, NetSerializable]
         protected sealed class ClimbModeComponentState : ComponentState
         {
-            public ClimbModeComponentState(bool climbing, bool isTransitioning) : base(ContentNetIDs.CLIMBING)
+            public ClimbModeComponentState(bool climbing, bool isTransitioning)
             {
                 Climbing = climbing;
                 IsTransitioning = isTransitioning;

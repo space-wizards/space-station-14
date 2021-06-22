@@ -23,7 +23,7 @@ namespace Content.Shared.Weapons.Ranged.Components
 
         public RangedWeaponComponentState(
             FireRateSelector fireRateSelector
-            ) : base(ContentNetIDs.RANGED_WEAPON)
+            )
         {
             FireRateSelector = fireRateSelector;
         }

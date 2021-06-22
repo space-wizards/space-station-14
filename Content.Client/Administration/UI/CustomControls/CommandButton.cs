@@ -9,7 +9,7 @@ namespace Content.Client.Administration.UI.CustomControls
     {
         public string? Command { get; set; }
 
-        public CommandButton() : base()
+        public CommandButton()
         {
             OnPressed += Execute;
         }

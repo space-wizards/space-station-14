@@ -238,8 +238,7 @@ namespace Content.Shared.Movement.Components
         {
             public MoveButtons Buttons { get; }
 
-            public MoverComponentState(MoveButtons buttons) : base(ContentNetIDs
-                .PLAYER_INPUT_MOVER)
+            public MoverComponentState(MoveButtons buttons)
             {
                 Buttons = buttons;
             }

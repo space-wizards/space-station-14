@@ -167,7 +167,7 @@ namespace Content.Shared.Doors
         public readonly List<EntityUid> CurrentlyCrushing;
         public readonly TimeSpan CurTime;
 
-        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, List<EntityUid> currentlyCrushing, TimeSpan curTime) : base(ContentNetIDs.DOOR)
+        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, List<EntityUid> currentlyCrushing, TimeSpan curTime)
         {
             DoorState = doorState;
             StartTime = startTime;

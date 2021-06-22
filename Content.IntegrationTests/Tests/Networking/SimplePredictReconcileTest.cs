@@ -428,7 +428,7 @@ namespace Content.IntegrationTests.Tests.Networking
             {
                 public bool Foo { get; }
 
-                public PredictionComponentState(bool foo) : base(ContentNetIDs.PREDICTION_TEST)
+                public PredictionComponentState(bool foo)
                 {
                     Foo = foo;
                 }

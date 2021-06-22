@@ -78,7 +78,6 @@ namespace Content.Shared.CombatMode
             public TargetingZone TargetingZone { get; }
 
             public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
-                : base(ContentNetIDs.COMBATMODE)
             {
                 IsInCombatMode = isInCombatMode;
                 TargetingZone = targetingZone;

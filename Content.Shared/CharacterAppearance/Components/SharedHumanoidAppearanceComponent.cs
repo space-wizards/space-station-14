@@ -105,8 +105,7 @@ namespace Content.Shared.CharacterAppearance.Components
         [NetSerializable]
         private sealed class HumanoidAppearanceComponentState : ComponentState
         {
-            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex, Gender gender) :
-                base(ContentNetIDs.HUMANOID_APPEARANCE)
+            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
             {
                 Appearance = appearance;
                 Sex = sex;

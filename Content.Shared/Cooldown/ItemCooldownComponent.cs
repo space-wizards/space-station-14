@@ -80,8 +80,7 @@ namespace Content.Shared.Cooldown
             public TimeSpan? CooldownStart { get; set; }
             public TimeSpan? CooldownEnd { get; set; }
 
-            public ItemCooldownComponentState() : base(ContentNetIDs.ITEMCOOLDOWN)
-            {
+            public ItemCooldownComponentState() {
             }
         }
     }

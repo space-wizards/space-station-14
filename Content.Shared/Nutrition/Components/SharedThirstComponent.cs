@@ -45,7 +45,7 @@ namespace Content.Shared.Nutrition.Components
         {
             public ThirstThreshold CurrentThreshold { get; }
 
-            public ThirstComponentState(ThirstThreshold currentThreshold) : base(ContentNetIDs.THIRST)
+            public ThirstComponentState(ThirstThreshold currentThreshold)
             {
                 CurrentThreshold = currentThreshold;
             }

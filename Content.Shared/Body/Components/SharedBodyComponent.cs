@@ -711,7 +711,7 @@ namespace Content.Shared.Body.Components
 
         public readonly (string slot, EntityUid partId)[] PartIds;
 
-        public BodyComponentState((string slot, EntityUid partId)[] partIds) : base(ContentNetIDs.BODY)
+        public BodyComponentState((string slot, EntityUid partId)[] partIds)
         {
             PartIds = partIds;
         }

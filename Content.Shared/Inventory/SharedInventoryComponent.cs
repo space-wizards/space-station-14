@@ -52,7 +52,7 @@ namespace Content.Shared.Inventory
             public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
             public KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity { get; }
 
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null) : base(ContentNetIDs.STORAGE)
+            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null)
             {
                 Entities = entities;
                 HoverEntity = hoverEntity;

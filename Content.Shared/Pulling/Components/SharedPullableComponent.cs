@@ -381,7 +381,7 @@ namespace Content.Shared.Pulling.Components
     {
         public readonly EntityUid? Puller;
 
-        public PullableComponentState(EntityUid? puller) : base(ContentNetIDs.PULLABLE)
+        public PullableComponentState(EntityUid? puller)
         {
             Puller = puller;
         }

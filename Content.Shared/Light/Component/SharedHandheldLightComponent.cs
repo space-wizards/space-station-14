@@ -20,7 +20,7 @@ namespace Content.Shared.Light.Component
         {
             public byte? Charge { get; }
 
-            public HandheldLightComponentState(byte? charge) : base(ContentNetIDs.HANDHELD_LIGHT)
+            public HandheldLightComponentState(byte? charge)
             {
                 Charge = charge;
             }

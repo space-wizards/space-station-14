@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.NetIDs;
@@ -169,7 +169,7 @@ namespace Content.Shared.Alert
     {
         public Dictionary<AlertKey, AlertState> Alerts;
 
-        public AlertsComponentState(Dictionary<AlertKey, AlertState> alerts) : base(ContentNetIDs.ALERTS)
+        public AlertsComponentState(Dictionary<AlertKey, AlertState> alerts)
         {
             Alerts = alerts;
         }

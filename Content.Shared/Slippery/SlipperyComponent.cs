@@ -265,7 +265,7 @@ namespace Content.Shared.Slippery
         public string SlipSound { get; }
         public readonly EntityUid[] Slipped;
 
-        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped) : base(ContentNetIDs.SLIP)
+        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped)
         {
             ParalyzeTime = paralyzeTime;
             IntersectPercentage = intersectPercentage;

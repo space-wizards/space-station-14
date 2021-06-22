@@ -368,7 +368,7 @@ namespace Content.Shared.Stunnable
 
             public StunnableComponentState(
                 (TimeSpan Start, TimeSpan End)? stunnedTimer, (TimeSpan Start, TimeSpan End)? knockdownTimer,
-                (TimeSpan Start, TimeSpan End)? slowdownTimer, float walkModifierOverride, float runModifierOverride) : base(ContentNetIDs.STUNNABLE)
+                (TimeSpan Start, TimeSpan End)? slowdownTimer, float walkModifierOverride, float runModifierOverride)
             {
                 StunnedTimer = stunnedTimer;
                 KnockdownTimer = knockdownTimer;

@@ -411,7 +411,7 @@ namespace Content.Shared.Damage.Components
     {
         public readonly Dictionary<DamageType, int> DamageList;
 
-        public DamageableComponentState(Dictionary<DamageType, int> damageList) : base(ContentNetIDs.DAMAGEABLE)
+        public DamageableComponentState(Dictionary<DamageType, int> damageList)
         {
             DamageList = damageList;
         }

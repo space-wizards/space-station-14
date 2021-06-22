@@ -324,7 +324,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     {
         public readonly Solution Solution;
 
-        public SolutionContainerComponentState(Solution solution) : base(ContentNetIDs.SOLUTION)
+        public SolutionContainerComponentState(Solution solution)
         {
             Solution = solution;
         }

@@ -127,7 +127,7 @@ namespace Content.Shared.Lathe
     public class LatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
-        public LatheDatabaseState(List<string> recipes) : base(ContentNetIDs.LATHE_DATABASE)
+        public LatheDatabaseState(List<string> recipes)
         {
             Recipes = recipes;
         }

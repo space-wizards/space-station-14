@@ -29,7 +29,7 @@ namespace Content.Shared.Projectiles
         [NetSerializable, Serializable]
         protected class ProjectileComponentState : ComponentState
         {
-            public ProjectileComponentState(EntityUid shooter, bool ignoreShooter) : base(ContentNetIDs.PROJECTILE)
+            public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {
                 Shooter = shooter;
                 IgnoreShooter = ignoreShooter;

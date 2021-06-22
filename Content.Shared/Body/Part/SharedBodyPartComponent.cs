@@ -384,7 +384,7 @@ namespace Content.Shared.Body.Part
 
         public readonly EntityUid[] MechanismIds;
 
-        public BodyPartComponentState(EntityUid[] mechanismIds) : base(ContentNetIDs.BODY_PART)
+        public BodyPartComponentState(EntityUid[] mechanismIds)
         {
             MechanismIds = mechanismIds;
         }

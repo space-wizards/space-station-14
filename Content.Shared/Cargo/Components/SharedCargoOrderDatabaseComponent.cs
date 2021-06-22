@@ -18,7 +18,7 @@ namespace Content.Shared.Cargo.Components
     {
         public readonly List<CargoOrderData>? Orders;
 
-        public CargoOrderDatabaseState(List<CargoOrderData>? orders) : base(ContentNetIDs.CARGO_ORDER_DATABASE)
+        public CargoOrderDatabaseState(List<CargoOrderData>? orders)
         {
             Orders = orders;
         }

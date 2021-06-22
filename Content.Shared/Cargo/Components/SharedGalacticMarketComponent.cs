@@ -98,7 +98,7 @@ namespace Content.Shared.Cargo.Components
     public class GalacticMarketState : ComponentState
     {
         public List<string> Products;
-        public GalacticMarketState(List<string> technologies) : base(ContentNetIDs.GALACTIC_MARKET)
+        public GalacticMarketState(List<string> technologies)
         {
             Products = technologies;
         }

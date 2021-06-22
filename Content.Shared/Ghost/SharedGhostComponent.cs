@@ -61,7 +61,6 @@ namespace Content.Shared.Ghost
             bool canReturnToBody,
             HashSet<string>? locationWarps = null,
             Dictionary<EntityUid, string>? playerWarps = null)
-            : base(ContentNetIDs.GHOST)
         {
             CanReturnToBody = canReturnToBody;
             LocationWarps = locationWarps;

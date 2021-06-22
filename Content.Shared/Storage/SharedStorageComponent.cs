@@ -65,7 +65,7 @@ namespace Content.Shared.Storage
     {
         public readonly EntityUid[] StoredEntities;
 
-        public StorageComponentState(EntityUid[] storedEntities) : base(ContentNetIDs.INVENTORY)
+        public StorageComponentState(EntityUid[] storedEntities)
         {
             StoredEntities = storedEntities;
         }

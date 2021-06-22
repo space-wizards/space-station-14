@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -47,7 +46,7 @@ namespace Content.Shared.Tool
     {
         public ToolQuality Quality { get; }
 
-        public MultiToolComponentState(ToolQuality quality) : base(ContentNetIDs.MULTITOOLS)
+        public MultiToolComponentState(ToolQuality quality)
         {
             Quality = quality;
         }
@@ -61,7 +60,7 @@ namespace Content.Shared.Tool
         public bool Activated { get; }
         public ToolQuality Quality { get; }
 
-        public WelderComponentState(float fuelCapacity, float fuel, bool activated) : base(ContentNetIDs.WELDER)
+        public WelderComponentState(float fuelCapacity, float fuel, bool activated)
         {
             FuelCapacity = fuelCapacity;
             Fuel = fuel;

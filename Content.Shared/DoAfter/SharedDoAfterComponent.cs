@@ -20,7 +20,7 @@ namespace Content.Shared.DoAfter
     {
         public List<ClientDoAfter> DoAfters { get; }
 
-        public DoAfterComponentState(List<ClientDoAfter> doAfters) : base(ContentNetIDs.DO_AFTER)
+        public DoAfterComponentState(List<ClientDoAfter> doAfters)
         {
             DoAfters = doAfters;
         }

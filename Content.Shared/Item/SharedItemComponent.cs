@@ -169,7 +169,7 @@ namespace Content.Shared.Item
         public Color Color { get; }
         public string? RsiPath { get; }
 
-        public ItemComponentState(int size, string? equippedPrefix, Color color, string? rsiPath) : base(ContentNetIDs.ITEM)
+        public ItemComponentState(int size, string? equippedPrefix, Color color, string? rsiPath)
         {
             Size = size;
             EquippedPrefix = equippedPrefix;

@@ -46,7 +46,7 @@ namespace Content.Shared.Buckle.Components
     [Serializable, NetSerializable]
     public sealed class StrapComponentState : ComponentState
     {
-        public StrapComponentState(StrapPosition position) : base(ContentNetIDs.BUCKLE)
+        public StrapComponentState(StrapPosition position)
         {
             Position = position;
         }

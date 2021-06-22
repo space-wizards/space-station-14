@@ -41,7 +41,7 @@ namespace Content.Shared.Lathe
     public class ProtolatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
-        public ProtolatheDatabaseState(List<string> recipes) : base(ContentNetIDs.PROTOLATHE_DATABASE)
+        public ProtolatheDatabaseState(List<string> recipes)
         {
             Recipes = recipes;
         }

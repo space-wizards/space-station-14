@@ -19,7 +19,7 @@ namespace Content.Shared.Suspicion
         public readonly bool? Antagonist;
         public readonly (string name, EntityUid)[] Allies;
 
-        public SuspicionRoleComponentState(string? role, bool? antagonist, (string name, EntityUid)[] allies) : base(ContentNetIDs.SUSPICION_ROLE)
+        public SuspicionRoleComponentState(string? role, bool? antagonist, (string name, EntityUid)[] allies)
         {
             Role = role;
             Antagonist = antagonist;

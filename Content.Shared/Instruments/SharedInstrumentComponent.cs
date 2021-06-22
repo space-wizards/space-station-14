@@ -75,7 +75,7 @@ namespace Content.Shared.Instruments
         public bool AllowProgramChange { get; }
         public bool RespectMidiLimits { get; }
 
-        public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
+        public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, uint sequencerTick = 0)
         {
             Playing = playing;
             InstrumentProgram = instrumentProgram;

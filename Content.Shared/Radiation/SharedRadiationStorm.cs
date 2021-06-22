@@ -36,7 +36,7 @@ namespace Content.Shared.Radiation
         public readonly bool Decay;
         public readonly TimeSpan EndTime;
 
-        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
+        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime)
         {
             RadsPerSecond = radsPerSecond;
             Range = range;

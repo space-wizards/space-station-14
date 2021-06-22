@@ -16,7 +16,7 @@ namespace Content.Shared.Cuffs.Components
         {
             public string? IconState { get; }
 
-            public HandcuffedComponentState(string? iconState) : base(ContentNetIDs.HANDCUFFS)
+            public HandcuffedComponentState(string? iconState)
             {
                 IconState = iconState;
             }

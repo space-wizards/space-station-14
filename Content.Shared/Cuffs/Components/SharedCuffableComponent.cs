@@ -42,7 +42,7 @@ namespace Content.Shared.Cuffs.Components
             public string IconState { get; }
             public Color Color { get; }
 
-            public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string iconState, Color color) : base(ContentNetIDs.CUFFED)
+            public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string iconState, Color color)
             {
                 NumHandsCuffed = numHandsCuffed;
                 CanStillInteract = canStillInteract;

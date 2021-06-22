@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -19,8 +18,7 @@ namespace Content.Shared.Weapons.Ranged.Barrels.Components
             int currentSlot,
             FireRateSelector fireRateSelector,
             bool?[] bullets,
-            string? soundGunshot) :
-            base(ContentNetIDs.REVOLVER_BARREL)
+            string? soundGunshot)
         {
             CurrentSlot = currentSlot;
             FireRateSelector = fireRateSelector;

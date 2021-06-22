@@ -177,7 +177,7 @@ namespace Content.Shared.PDA
 
         public UplinkListingData(string listingName,string itemId,
             int price, UplinkCategory category,
-            string description) : base(ContentNetIDs.PDA)
+            string description)
         {
             ListingName = listingName;
             Price = price;

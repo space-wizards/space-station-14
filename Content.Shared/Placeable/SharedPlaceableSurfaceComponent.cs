@@ -23,7 +23,7 @@ namespace Content.Shared.Placeable
         public readonly bool PlaceCentered;
         public readonly Vector2 PositionOffset;
 
-        public PlaceableSurfaceComponentState(bool placeable, bool centered, Vector2 offset) : base(ContentNetIDs.PLACEABLE_SURFACE)
+        public PlaceableSurfaceComponentState(bool placeable, bool centered, Vector2 offset)
         {
             IsPlaceable = placeable;
             PlaceCentered = centered;

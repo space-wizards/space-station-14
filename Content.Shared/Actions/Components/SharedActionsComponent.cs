@@ -405,7 +405,7 @@ namespace Content.Shared.Actions.Components
         public Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> ItemActions;
 
         public ActionComponentState(Dictionary<ActionType, ActionState> actions,
-            Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActions) : base(ContentNetIDs.ACTIONS)
+            Dictionary<EntityUid, Dictionary<ItemActionType, ActionState>> itemActions)
         {
             Actions = actions;
             ItemActions = itemActions;

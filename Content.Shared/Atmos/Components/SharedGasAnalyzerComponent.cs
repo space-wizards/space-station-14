@@ -77,7 +77,7 @@ namespace Content.Shared.Atmos.Components
         {
             public GasAnalyzerDanger Danger;
 
-            public GasAnalyzerComponentState(GasAnalyzerDanger danger) : base(ContentNetIDs.GAS_ANALYZER)
+            public GasAnalyzerComponentState(GasAnalyzerDanger danger)
             {
                 Danger = danger;
             }

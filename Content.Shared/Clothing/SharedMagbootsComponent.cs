@@ -28,7 +28,7 @@ namespace Content.Shared.Clothing
         {
             public bool On { get; }
 
-            public MagbootsComponentState(bool @on) : base(ContentNetIDs.MAGBOOTS)
+            public MagbootsComponentState(bool @on)
             {
                 On = on;
             }
