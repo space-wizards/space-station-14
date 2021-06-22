@@ -15,7 +15,7 @@ namespace Content.Shared.Movement.Components
 
     public static class GravityExtensions
     {
-        public static bool IsWeightless(this IEntity entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null)
+        public static bool IsWeightless(this IEntity entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null, IEntityManager? entityManager = null)
         {
             if (body == null)
                 entity.TryGetComponent(out body);
@@ -36,7 +36,7 @@ namespace Content.Shared.Movement.Components
             mapManager ??= IoCManager.Resolve<IMapManager>(); 
             var grid = mapManager.GetGrid(gridId);
             var gridEntityId = grid.GridEntityId;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
             var gridEntity = entityManager.GetEntity(gridEntityId);
 
             if (gridEntity?.HasComponent<GravityComponent>() != true)

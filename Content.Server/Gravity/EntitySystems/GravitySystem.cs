@@ -49,11 +49,13 @@ namespace Content.Server.Gravity.EntitySystems
             foreach (var grid in _mapManager.GetAllGrids())
             {
                 var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
-                if (gridEntity.HasComponent<GravityComponent>() && !gridsWithGravity.Contains(grid.Index))
+                var hasGravityComponent = gridEntity.HasComponent<GravityComponent>();
+                var gridHasGravity = gridsWithGravity.Contains(grid.Index);
+                if (hasGravityComponent && !gridHasGravity)
                 {
                     DisableGravity(grid);
                 }
-                else if (!gridEntity.HasComponent<GravityComponent>() && gridsWithGravity.Contains(grid.Index))
+                else if (!hasGravityComponent && gridHasGravity)
                 {
                     EnableGravity(grid);
                 }
