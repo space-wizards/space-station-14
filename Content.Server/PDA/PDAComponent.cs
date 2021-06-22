@@ -10,6 +10,7 @@ using Content.Server.Items;
 using Content.Server.PDA.Managers;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
@@ -123,19 +124,21 @@ namespace Content.Server.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (message.Session.AttachedEntity == null)
+                    var player = message.Session.AttachedEntity;
+                    if (player == null)
                         break;
 
                     if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
-                        message.Session.AttachedEntity.Transform.Coordinates, out var entity))
+                        player.Transform.Coordinates, out var entity))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
                     }
 
-                    HandsComponent.PutInHandOrDropStatic(
-                        message.Session.AttachedEntity,
-                        entity.GetComponent<ItemComponent>());
+                    if (!player.TryGetComponent(out HandsComponent? hands) || !entity.TryGetComponent(out ItemComponent? item))
+                        break;
+
+                    hands.PutInHandOrDrop(item);
 
                     SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
                     break;
