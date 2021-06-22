@@ -152,9 +152,6 @@ namespace Content.Server.Storage.Components
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
-
-            DetermineCollidingEntities(Owner.Transform.MapID);
-
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
@@ -201,10 +198,7 @@ namespace Content.Server.Storage.Components
         protected virtual void CloseStorage()
         {
             Open = false;
-            if(CollidingEntities == null)
-            {
-                DetermineCollidingEntities(Owner.Transform.MapID);
-            }
+            DetermineCollidingEntities(Owner.Transform.MapID);
 
             var entities = CollidingEntities!.Select(x => x.Owner);
             var count = 0;
