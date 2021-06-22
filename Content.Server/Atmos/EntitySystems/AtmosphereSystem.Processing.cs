@@ -53,9 +53,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
 
             var number = 0;
-            while (atmosphere.CurrentRunTiles.Count > 0)
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                var tile = atmosphere.CurrentRunTiles.Dequeue();
                 tile.ProcessCell(atmosphere.UpdateCounter, SpaceWind);
 
                 if (number++ < LagCheckIterations) continue;
@@ -76,9 +75,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunExcitedGroups = new Queue<ExcitedGroup>(atmosphere.ExcitedGroups);
 
             var number = 0;
-            while (atmosphere.CurrentRunExcitedGroups.Count > 0)
+            while (atmosphere.CurrentRunExcitedGroups.TryDequeue(out var excitedGroup))
             {
-                var excitedGroup = atmosphere.CurrentRunExcitedGroups.Dequeue();
                 excitedGroup.BreakdownCooldown++;
                 excitedGroup.DismantleCooldown++;
 
@@ -106,9 +104,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
             var number = 0;
-            while (atmosphere.CurrentRunTiles.Count > 0)
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                var tile = atmosphere.CurrentRunTiles.Dequeue();
                 tile.HighPressureMovements();
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
@@ -132,9 +129,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HotspotTiles);
 
             var number = 0;
-            while (atmosphere.CurrentRunTiles.Count > 0)
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var hotspot))
             {
-                var hotspot = atmosphere.CurrentRunTiles.Dequeue();
                 hotspot.ProcessHotspot();
 
                 if (number++ < LagCheckIterations) continue;
@@ -155,9 +151,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.SuperconductivityTiles);
 
             var number = 0;
-            while (atmosphere.CurrentRunTiles.Count > 0)
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var superconductivity))
             {
-                var superconductivity = atmosphere.CurrentRunTiles.Dequeue();
                 superconductivity.Superconduct();
 
                 if (number++ < LagCheckIterations) continue;
@@ -178,9 +173,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunPipeNet = new Queue<IPipeNet>(atmosphere.PipeNets);
 
             var number = 0;
-            while (atmosphere.CurrentRunPipeNet.Count > 0)
+            while (atmosphere.CurrentRunPipeNet.TryDequeue(out var pipenet))
             {
-                var pipenet = atmosphere.CurrentRunPipeNet.Dequeue();
                 pipenet.Update();
 
                 if (number++ < LagCheckIterations) continue;
@@ -203,9 +197,8 @@ namespace Content.Server.Atmos.EntitySystems
             var time = _gameTiming.CurTime;
             var updateEvent = new AtmosDeviceUpdateEvent(atmosphere);
             var number = 0;
-            while (atmosphere.CurrentRunAtmosDevices.Count > 0)
+            while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                var device = atmosphere.CurrentRunAtmosDevices.Dequeue();
                 EntityManager.EventBus.RaiseLocalEvent(device.Owner.Uid, updateEvent, false);
                 device.LastProcess = time;
 
