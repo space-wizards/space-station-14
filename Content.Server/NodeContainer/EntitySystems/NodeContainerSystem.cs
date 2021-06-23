@@ -20,8 +20,9 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private static void OnInitEvent(EntityUid uid, NodeContainerComponent component, ComponentInit args)
         {
-            foreach (var node in component.Nodes.Values)
+            foreach (var (key, node) in component.Nodes)
             {
+                node.Name = key;
                 node.Initialize(component.Owner);
             }
         }

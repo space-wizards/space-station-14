@@ -35,8 +35,6 @@ namespace Content.Server.NodeContainer.NodeGroups
         private IGridAtmosphereComponent? GridAtmos =>
             _atmosphereSystem?.GetGridAtmosphere(GridId);
 
-        public override Color VisColor => Color.Cyan;
-
         public override void Initialize(Node sourceNode)
         {
             base.Initialize(sourceNode);

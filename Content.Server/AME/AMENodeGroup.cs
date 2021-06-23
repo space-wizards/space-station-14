@@ -37,8 +37,6 @@ namespace Content.Server.AME
 
         public int CoreCount => _cores.Count;
 
-        public override Color VisColor => Color.Purple;
-
         public override void LoadNodes(List<Node> groupNodes)
         {
             base.LoadNodes(groupNodes);

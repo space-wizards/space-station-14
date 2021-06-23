@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -19,6 +18,8 @@ namespace Content.Server.NodeContainer.NodeGroups
         bool Remaking { get; }
 
         IReadOnlyList<Node> Nodes { get; }
+
+        void Create(NodeGroupID groupId);
 
         void Initialize(Node sourceNode);
 
@@ -56,7 +57,13 @@ namespace Content.Server.NodeContainer.NodeGroups
         [ViewVariables]
         public int NetId;
 
-        public virtual Color VisColor => Color.White;
+        [ViewVariables]
+        public NodeGroupID GroupId { get; private set; }
+
+        public void Create(NodeGroupID groupId)
+        {
+            GroupId = groupId;
+        }
 
         public virtual void Initialize(Node sourceNode)
         {

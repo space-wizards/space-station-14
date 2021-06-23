@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Managers;
@@ -10,6 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.EntitySystems
@@ -325,19 +327,30 @@ namespace Content.Server.NodeContainer.EntitySystems
             return new()
             {
                 NetId = group.NetId,
-                GroupId = group.Nodes[0].NodeGroupID.ToString(),
-                Color = group.VisColor,
+                GroupId = group.GroupId.ToString(),
+                Color = CalcNodeGroupColor(group),
                 Nodes = group.Nodes.Select(n => new NodeVis.NodeDatum
                 {
+                    Name = n.Name,
                     NetId = n.NetId,
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
                     Entity = n.Owner.Uid
                 }).ToArray()
             };
         }
-    }
 
-    internal abstract class NodeGroupDebugVisMsg : EntityEventArgs
-    {
+        private static Color CalcNodeGroupColor(BaseNodeGroup group)
+        {
+            return group.GroupId switch
+            {
+                NodeGroupID.HVPower => Color.Orange,
+                NodeGroupID.MVPower => Color.Yellow,
+                NodeGroupID.Apc => Color.LimeGreen,
+                NodeGroupID.AMEngine => Color.Purple,
+                NodeGroupID.Pipe => Color.Blue,
+                NodeGroupID.WireNet => Color.DarkMagenta,
+                _ => Color.White
+            };
+        }
     }
 }

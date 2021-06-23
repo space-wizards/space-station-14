@@ -49,6 +49,7 @@ namespace Content.Server.NodeContainer.Nodes
         internal int UndirectGen;
         internal bool FlaggedForFlood;
         internal int NetId;
+        public string Name = default!;
 
         public virtual void Initialize(IEntity owner)
         {

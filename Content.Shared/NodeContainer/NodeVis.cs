@@ -41,6 +41,7 @@ namespace Content.Shared.NodeContainer
             public EntityUid Entity;
             public int NetId;
             public int[] Reachable = Array.Empty<int>();
+            public string Name = "";
         }
     }
 }

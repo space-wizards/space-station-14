@@ -46,8 +46,6 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();
 
-        public override Color VisColor => Color.Yellow;
-
         public override void Initialize(Node sourceNode)
         {
             base.Initialize(sourceNode);

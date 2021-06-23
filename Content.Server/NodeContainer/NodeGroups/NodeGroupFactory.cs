@@ -50,7 +50,9 @@ namespace Content.Server.NodeContainer.NodeGroups
             if (!_groupTypes.TryGetValue(id, out var type))
                 throw new ArgumentException($"{id} did not have an associated {nameof(INodeGroup)} implementation.");
 
-            return _typeFactory.CreateInstance<INodeGroup>(type);
+            var instance = _typeFactory.CreateInstance<INodeGroup>(type);
+            instance.Create(id);
+            return instance;
         }
     }
 

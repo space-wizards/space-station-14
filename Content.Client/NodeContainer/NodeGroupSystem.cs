@@ -3,6 +3,8 @@ using System.Linq;
 using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -15,6 +17,9 @@ namespace Content.Client.NodeContainer
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public bool VisEnabled { get; private set; }
 
@@ -23,6 +28,8 @@ namespace Content.Client.NodeContainer
 
         public Dictionary<EntityUid, (NodeVis.GroupData group, NodeVis.NodeDatum node)[]>
             Entities { get; private set; } = new();
+
+        public Dictionary<(int group, int node), NodeVis.NodeDatum> NodeLookup { get; private set; } = new();
 
         public override void Initialize()
         {
@@ -43,8 +50,6 @@ namespace Content.Client.NodeContainer
             if (!VisEnabled)
                 return;
 
-            Entities.Clear();
-
             foreach (var deletion in ev.GroupDeletions)
             {
                 Groups.Remove(deletion);
@@ -56,9 +61,13 @@ namespace Content.Client.NodeContainer
             }
 
             Entities = Groups.Values
-                .SelectMany(c => c.Nodes, (data, nodeData) => (data, nodeData))
+                .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
                 .GroupBy(n => n.nodeData.Entity)
                 .ToDictionary(g => g.Key, g => g.ToArray());
+
+            NodeLookup = Groups.Values
+                .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
+                .ToDictionary(n => (n.data.NetId, n.nodeData.NetId), n => n.nodeData);
         }
 
         public void SetVisEnabled(bool enabled)
@@ -69,7 +78,16 @@ namespace Content.Client.NodeContainer
 
             if (enabled)
             {
-                _overlayManager.AddOverlay(new NodeVisualizationOverlay(this, _entityLookup, _mapManager));
+                var overlay = new NodeVisualizationOverlay(
+                    this,
+                    _entityLookup,
+                    _mapManager,
+                    _inputManager,
+                    _eyeManager,
+                    _resourceCache,
+                    EntityManager);
+
+                _overlayManager.AddOverlay(overlay);
             }
             else
             {
