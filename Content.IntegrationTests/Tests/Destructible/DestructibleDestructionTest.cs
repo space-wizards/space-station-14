@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Destructible.Thresholds;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
+using Content.Server.Destructible.Thresholds;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

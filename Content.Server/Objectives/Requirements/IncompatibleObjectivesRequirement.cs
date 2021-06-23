@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -11,7 +10,7 @@ namespace Content.Server.Objectives.Requirements
         [DataField("objectives")]
         private readonly List<string> _incompatibleObjectives = new();
 
-        public bool CanBeAssigned(Mind mind)
+        public bool CanBeAssigned(Mind.Mind mind)
         {
             foreach (var objective in mind.AllObjectives)
             {

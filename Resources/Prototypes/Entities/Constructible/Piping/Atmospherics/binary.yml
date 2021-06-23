@@ -1,0 +1,133 @@
+﻿- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasBinaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AtmosDevice
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPressurePump
+  name: gas pump
+  description: A pump that moves gas by pressure.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Atmos/pump.rsi
+    layers:
+    - sprite: Constructible/Atmos/pipe.rsi
+      state: pipeStraight
+    - state: pumpPressure
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
+    - type: PressurePumpVisualizer
+      enabledState: pumpPressureOn
+  - type: GasPressurePump
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasVolumePump
+  name: volumetric gas pump
+  description: A pump that moves gas by volume.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pump.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeStraight
+        - state: pumpVolume
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasVolumePump
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPassiveGate
+  name: passive gate
+  description: A one-way air valve that does not require power.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pump.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeStraight
+        - state: pumpPassiveGate
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasPassiveGate
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasValve
+  name: manual valve
+  description: A pipe with a valve that can be used to disable the flow of gas through it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS: Give unique sprite.
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pump.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeStraight
+        - state: pumpPassiveGate
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasValve
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: Longitudinal
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPort
+  name: connector port
+  description: For connecting portable devices related to atmospherics control.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/gascanisterport.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: gasCanisterPort
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasPort
+    - type: NodeContainer
+      nodes:
+        connected:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: SPBend

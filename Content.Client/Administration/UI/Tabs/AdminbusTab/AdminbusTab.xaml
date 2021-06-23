@@ -1,0 +1,14 @@
+﻿<Control
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:abt="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
+    Margin="4"
+    MinSize="50 50">
+    <GridContainer
+        Columns="4">
+        <cc:CommandButton Name="SpawnEntitiesButton" Text="{Loc Spawn Entities}" />
+        <cc:CommandButton Name="SpawnTilesButton" Text="{Loc Spawn Tiles} " />
+        <cc:UICommandButton Command="events" Text="{Loc Station Events}" WindowType="{x:Type abt:StationEventsWindow}" />
+    </GridContainer>
+</Control>

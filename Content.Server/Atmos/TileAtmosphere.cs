@@ -4,10 +4,10 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
@@ -71,6 +71,8 @@ namespace Content.Server.Atmos
         /// </summary>
         [ViewVariables]
         private readonly TileAtmosphere[] _adjacentTiles = new TileAtmosphere[Atmospherics.Directions];
+
+        public IReadOnlyList<TileAtmosphere> AdjacentTiles => _adjacentTiles;
 
         private AtmosDirection _adjacentBits = AtmosDirection.Invalid;
 

@@ -2,7 +2,8 @@
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
