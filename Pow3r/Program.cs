@@ -117,9 +117,17 @@ namespace Pow3r
             if (openGLBased)
             {
                 windowSettings.API = ContextAPI.OpenGL;
-                windowSettings.Profile = ContextProfile.Core;
-                windowSettings.APIVersion = new Version(4, 6);
-                windowSettings.Flags = ContextFlags.ForwardCompatible;
+                if (_renderer == Renderer.Veldrid)
+                {
+                    windowSettings.Profile = ContextProfile.Core;
+                    windowSettings.APIVersion = new Version(4, 6);
+                    windowSettings.Flags = ContextFlags.ForwardCompatible;
+                }
+                else
+                {
+                    windowSettings.Profile = ContextProfile.Any;
+                    windowSettings.APIVersion = new Version(1, 5);
+                }
 #if DEBUG
                 windowSettings.Flags |= ContextFlags.Debug;
 #endif
