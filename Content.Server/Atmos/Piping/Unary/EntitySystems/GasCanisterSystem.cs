@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
@@ -18,7 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Atmos.Piping.Binary.EntitySystems
+namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public class GasCanisterSystem : EntitySystem
@@ -42,6 +43,18 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if(canister.Owner.GetUIOrNull(GasCanisterUiKey.Key) is {} ui)
                 ui.OnReceiveMessage += msg => OnCanisterUIMessage(uid, canister, msg);
 
+            // Ensure container manager.
+            if (!ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
+            {
+                containerManager = ComponentManager.AddComponent<ContainerManagerComponent>(EntityManager.GetEntity(uid));
+            }
+
+            // Ensure container.
+            if (!containerManager.TryGetContainer(canister.ContainerName, out _))
+            {
+                containerManager.MakeContainer<ContainerSlot>(canister.ContainerName);
+            }
+
             if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
@@ -59,10 +72,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             if (!ComponentManager.TryGetComponent(uid, out IMetaDataComponent? metadata)
             || !ComponentManager.TryGetComponent(uid, out GasCanisterComponent? canister)
-            || !ComponentManager.TryGetComponent(uid, out GasPassiveGateComponent? passiveGate)
             || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode)
-            || !nodeContainer.TryGetNode(canister.TankName, out PipeNode? tankNode)
             || !ComponentManager.TryGetComponent(uid, out ServerUserInterfaceComponent? userInterfaceComponent)
             || !userInterfaceComponent.TryGetBoundUserInterface(GasCanisterUiKey.Key, out var ui))
                 return;
@@ -73,13 +84,14 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) && containerManager.TryGetContainer(canister.ContainerName, out var tankContainer) && tankContainer.ContainedEntities.Count > 0)
             {
                 var tank = tankContainer.ContainedEntities[0];
+                var tankComponent = tank.GetComponent<GasTankComponent>();
                 tankLabel = tank.Name;
-                tankPressure = tankNode.Air.Pressure;
+                tankPressure = tankComponent.Air.Pressure;
             }
 
             ui.SetState(new GasCanisterBoundUserInterfaceState(metadata.EntityName, portNode.Air.Pressure,
                 portNode.NodeGroup.Nodes.Count > 1, tankLabel, tankPressure,
-                passiveGate.TargetPressure, passiveGate.Enabled,
+                canister.ReleasePressure, canister.ReleaseValve,
                 canister.MinReleasePressure, canister.MaxReleasePressure));
         }
 
@@ -91,8 +103,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
 
-            if (!ComponentManager.TryGetComponent(uid, out GasPassiveGateComponent? passiveGate)
-            || !ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
+            if (!ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
             || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                 return;
 
@@ -108,12 +119,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 case GasCanisterChangeReleasePressureMessage changeReleasePressure:
                     var pressure = Math.Clamp(changeReleasePressure.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
-                    passiveGate.TargetPressure = pressure;
+                    canister.ReleasePressure = pressure;
                     DirtyUI(uid);
                     break;
 
                 case GasCanisterChangeReleaseValveMessage changeReleaseValve:
-                    passiveGate.Enabled = changeReleaseValve.Valve;
+                    canister.ReleaseValve = changeReleaseValve.Valve;
                     DirtyUI(uid);
                     break;
             }
@@ -122,11 +133,33 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
         {
             if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                ||  !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+                || !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             if (!nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode))
                 return;
+
+            // Release valve is open, release gas.
+            if (canister.ReleaseValve)
+            {
+                if (!ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
+                    || !containerManager.TryGetContainer(canister.ContainerName, out var container))
+                    return;
+
+                var atmosphereSystem = Get<AtmosphereSystem>();
+
+                if (container.ContainedEntities.Count > 0)
+                {
+                    var gasTank = container.ContainedEntities[0].GetComponent<GasTankComponent>();
+                    atmosphereSystem.ReleaseGasTo(portNode.Air, gasTank.Air, canister.ReleasePressure);
+                }
+                else
+                {
+                    var tileAtmosphere = canister.Owner.Transform.Coordinates.GetTileAtmosphere();
+                    atmosphereSystem.ReleaseGasTo(portNode.Air, tileAtmosphere?.Air, canister.ReleasePressure);
+                    tileAtmosphere?.Invalidate();
+                }
+            }
 
             DirtyUI(uid);
 
@@ -183,8 +216,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // Check the used item is valid...
-            if (!args.Used.TryGetComponent(out GasTankComponent? _)
-                || !args.Used.TryGetComponent(out NodeContainerComponent? _))
+            if (!args.Used.TryGetComponent(out GasTankComponent? _))
                 return;
 
             // Check the user has hands.
@@ -207,14 +239,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             DirtyUI(uid);
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(component.TankName, out PipeNode? tankNode))
-                return;
-
-            tankNode.EnvironmentalAir = false;
-            tankNode.ConnectToContainedEntities = true;
-            tankNode.NodeGroup.RemakeGroup();
-
             if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
@@ -227,14 +251,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             DirtyUI(uid);
-
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(component.TankName, out PipeNode? tankNode))
-                return;
-
-            tankNode.NodeGroup.RemakeGroup();
-            tankNode.ConnectToContainedEntities = false;
-            tankNode.EnvironmentalAir = true;
 
             if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;

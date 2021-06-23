@@ -48,35 +48,7 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
-        [ViewVariables]
-        public GasMixture Air
-        {
-            // TODO ATMOS Kill it with fire.
-            get
-            {
-                if (!Owner.TryGetComponent(out NodeContainerComponent nodeContainer))
-                    throw new InvalidOperationException("Can't get tank air without a node container!");
-
-                if (!nodeContainer.TryGetNode(TankName, out PipeNode? node))
-                    throw new InvalidOperationException($"Node container doesn't have a pipenode called {TankName}!");
-
-                return node.Air;
-            }
-
-            set
-            {
-                // This will throw if the node container is not found.
-                var nodeContainer = Owner.GetComponent<NodeContainerComponent>();
-
-                if (!nodeContainer.TryGetNode(TankName, out PipeNode? node))
-                    throw new InvalidOperationException($"Node container doesn't have a pipenode called {TankName}!");
-
-                node.Air = value;
-            }
-        }
-
-        [DataField("air")] [ViewVariables]
-        public GasMixture InitialMixture { get; set; } = new();
+        [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Distributed pressure.
@@ -118,12 +90,6 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("tankFragmentScale")]
         public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
-
-        /// <summary>
-        ///     NodeContainer node.
-        /// </summary>
-        [DataField("tank")]
-        public string TankName { get; set; } = "tank";
 
         protected override void Initialize()
         {
