@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
@@ -23,14 +24,15 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         [ComponentDependency] private readonly FlammableComponent? _flammableComponent = null;
 
-        public void Update(TileAtmosphere tile, float frameDelta)
+        public void Update(TileAtmosphere tile, float frameDelta, AtmosphereSystem atmosphereSystem)
         {
             if (_temperatureComponent != null)
             {
                 if (tile.Air != null)
                 {
                     var temperatureDelta = tile.Air.Temperature - _temperatureComponent.CurrentTemperature;
-                    var heat = temperatureDelta * (tile.Air.HeatCapacity * _temperatureComponent.HeatCapacity / (tile.Air.HeatCapacity + _temperatureComponent.HeatCapacity));
+                    var tileHeatCapacity = atmosphereSystem.GetHeatCapacity(tile.Air);
+                    var heat = temperatureDelta * (tileHeatCapacity * _temperatureComponent.HeatCapacity / (tileHeatCapacity + _temperatureComponent.HeatCapacity));
                     _temperatureComponent.ReceiveHeat(heat);
                 }
                 _temperatureComponent.Update();

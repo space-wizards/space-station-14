@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             // Create a pipenet if we don't have one already.
             portNode.TryAssignGroupIfNeeded();
-            portNode.Air.Merge(canister.InitialMixture);
+            Get<AtmosphereSystem>().Merge(portNode.Air, canister.InitialMixture);
             portNode.Air.Temperature = canister.InitialMixture.Temperature;
             portNode.Volume = canister.InitialMixture.Volume;
         }

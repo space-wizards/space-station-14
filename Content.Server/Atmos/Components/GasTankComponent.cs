@@ -1,6 +1,7 @@
 #nullable enable
 #nullable disable warnings
 using System;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -155,13 +156,6 @@ namespace Content.Server.Atmos.Components
             DisconnectFromInternals();
         }
 
-        public void Update()
-        {
-            Air?.React(this);
-            CheckStatus();
-            UpdateUserInterface();
-        }
-
         public GasMixture? RemoveAir(float amount)
         {
             var gas = Air?.Remove(amount);
@@ -223,7 +217,7 @@ namespace Content.Server.Atmos.Components
             UpdateUserInterface();
         }
 
-        private void UpdateUserInterface(bool initialUpdate = false)
+        public void UpdateUserInterface(bool initialUpdate = false)
         {
             var internals = GetInternalsComponent();
             _userInterface?.SetState(
@@ -279,14 +273,16 @@ namespace Content.Server.Atmos.Components
 
         public void AssumeAir(GasMixture giver)
         {
-            Air?.Merge(giver);
+            EntitySystem.Get<AtmosphereSystem>().Merge(Air, giver);
             CheckStatus();
         }
 
-        private void CheckStatus()
+        public void CheckStatus()
         {
             if (Air == null)
                 return;
+
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var pressure = Air.Pressure;
 
@@ -295,7 +291,7 @@ namespace Content.Server.Atmos.Components
                 // Give the gas a chance to build up more pressure.
                 for (var i = 0; i < 3; i++)
                 {
-                    Air.React(this);
+                    atmosphereSystem.React(Air, this);
                 }
 
                 pressure = Air.Pressure;

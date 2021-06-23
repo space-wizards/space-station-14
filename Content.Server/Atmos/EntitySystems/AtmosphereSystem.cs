@@ -159,7 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var tile = exposed.Owner.Transform.Coordinates.GetTileAtmosphere();
                     if (tile == null) continue;
-                    exposed.Update(tile, _exposedTimer);
+                    exposed.Update(tile, _exposedTimer, this);
                 }
 
                 _exposedTimer -= ExposedUpdateDelay;
