@@ -46,7 +46,7 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public void Update()
         {
-            Air.React(this);
+            EntitySystem.Get<AtmosphereSystem>().React(Air, this);
         }
 
         protected override void OnAddNode(Node node)
@@ -74,7 +74,7 @@ namespace Content.Server.NodeContainer.NodeGroups
             if (newGroup is not IPipeNet newPipeNet)
                 return;
 
-            newPipeNet.Air.Merge(Air);
+            EntitySystem.Get<AtmosphereSystem>().Merge(newPipeNet.Air, Air);
         }
 
         protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
@@ -82,6 +82,7 @@ namespace Content.Server.NodeContainer.NodeGroups
             RemoveFromGridAtmos();
 
             var buffer = new GasMixture(Air.Volume) {Temperature = Air.Temperature};
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             foreach (var newGroup in newGroups)
             {
@@ -91,9 +92,9 @@ namespace Content.Server.NodeContainer.NodeGroups
                 var newAir = newPipeNet.Air;
 
                 buffer.Clear();
-                buffer.Merge(Air);
+                atmosphereSystem.Merge(buffer, Air);
                 buffer.Multiply(MathF.Min(newAir.Volume / Air.Volume, 1f));
-                newAir.Merge(buffer);
+                atmosphereSystem.Merge(newAir, buffer);
             }
         }
 

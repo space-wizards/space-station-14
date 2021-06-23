@@ -7,8 +7,8 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public class GasTankSystem : EntitySystem
     {
+        private const float TimerDelay = 0.5f;
         private float _timer = 0f;
-        private const float Interval = 0.5f;
 
         public override void Update(float frameTime)
         {
@@ -16,12 +16,16 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer += frameTime;
 
-            if (_timer < Interval) return;
-            _timer = 0f;
+            if (_timer < TimerDelay) return;
+            _timer -= TimerDelay;
 
-            foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>(true))
+            var atmosphereSystem = Get<AtmosphereSystem>();
+
+            foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>())
             {
-                gasTank.Update();
+                atmosphereSystem.React(gasTank.Air, gasTank);
+                gasTank.CheckStatus();
+                gasTank.UpdateUserInterface();
             }
         }
     }
