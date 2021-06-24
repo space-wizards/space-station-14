@@ -7,6 +7,7 @@
     - type: InteractionOutline
     - type: Sprite
       sprite: Constructible/Misc/extinguisher_cabinet.rsi
+      netsync: false
       state: extinguisher_closed
     - type: ItemCabinet
       doorSound: /Audio/Machines/machine_switch.ogg
