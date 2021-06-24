@@ -19,6 +19,7 @@
           emptyState: extinguisher_empty
           fullState: extinguisher_full
           closedState: extinguisher_closed
+          closedEmptyState: extinguisher_closed
   placement:
     mode: SnapgridCenter
 
