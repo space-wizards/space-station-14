@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
@@ -106,7 +106,7 @@ namespace Content.Client.Verbs
 
             if (!entity.Uid.IsClientSide())
             {
-                _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("Waiting on Server...") });
+                _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
                 RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
             }
 
@@ -251,7 +251,7 @@ namespace Content.Client.Verbs
             else
             {
                 var panel = new PanelContainer();
-                panel.AddChild(new Label { Text = Loc.GetString("No verbs!") });
+                panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
                 vBox.AddChild(panel);
             }
         }

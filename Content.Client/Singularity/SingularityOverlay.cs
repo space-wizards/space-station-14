@@ -1,7 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Singularity.Components;
+using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -17,14 +17,14 @@ namespace Content.Client.Singularity
         [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClyde _displayManager = default!;
+
+        private const float MaxDist = 15.0f;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
 
         private readonly ShaderInstance _shader;
-
-        Dictionary<EntityUid, SingularityShaderInstance> _singularities = new Dictionary<EntityUid, SingularityShaderInstance>();
+        private readonly Dictionary<EntityUid, SingularityShaderInstance> _singularities = new();
 
         public SingularityOverlay()
         {
@@ -34,7 +34,7 @@ namespace Content.Client.Singularity
 
         public override bool OverwriteTargetFrameBuffer()
         {
-            return _singularities.Count() > 0;
+            return _singularities.Count > 0;
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -63,10 +63,7 @@ namespace Content.Client.Singularity
 
         }
 
-
-
         //Queries all singulos on the map and either adds or removes them from the list of rendered singulos based on whether they should be drawn (in range? on the same z-level/map? singulo entity still exists?)
-        private float _maxDist = 15.0f;
         private void SingularityQuery(IEye? currentEye)
         {
             if (currentEye == null)
@@ -74,24 +71,24 @@ namespace Content.Client.Singularity
                 _singularities.Clear();
                 return;
             }
-            var currentEyeLoc = currentEye.Position;
-            var currentMap = currentEye.Position.MapId;
 
-            var singuloComponents = _componentManager.EntityQuery<IClientSingularityInstance>();
-            foreach (var singuloInterface in singuloComponents) //Add all singulos that are not added yet but qualify
+            var currentEyeLoc = currentEye.Position;
+
+            var distortions = _componentManager.EntityQuery<SingularityDistortionComponent>();
+            foreach (var distortion in distortions) //Add all singulos that are not added yet but qualify
             {
-                var singuloComponent = (Component)singuloInterface;
-                var singuloEntity = singuloComponent.Owner;
+                var singuloEntity = distortion.Owner;
+
                 if (!_singularities.Keys.Contains(singuloEntity.Uid) && SinguloQualifies(singuloEntity, currentEyeLoc))
                 {
-                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(singuloEntity.Transform.MapPosition.Position, singuloInterface.Intensity, singuloInterface.Falloff));
+                    _singularities.Add(singuloEntity.Uid, new SingularityShaderInstance(singuloEntity.Transform.MapPosition.Position, distortion.Intensity, distortion.Falloff));
                 }
             }
 
-            var activeShaderUids = _singularities.Keys;
-            foreach (var activeSinguloUid in activeShaderUids) //Remove all singulos that are added and no longer qualify
+            var activeShaderIds = _singularities.Keys;
+            foreach (var activeSinguloUid in activeShaderIds) //Remove all singulos that are added and no longer qualify
             {
-                if (_entityManager.TryGetEntity(activeSinguloUid, out IEntity? singuloEntity))
+                if (_entityManager.TryGetEntity(activeSinguloUid, out var singuloEntity))
                 {
                     if (!SinguloQualifies(singuloEntity, currentEyeLoc))
                     {
@@ -99,7 +96,7 @@ namespace Content.Client.Singularity
                     }
                     else
                     {
-                        if (!singuloEntity.TryGetComponent<IClientSingularityInstance>(out var singuloInterface))
+                        if (!singuloEntity.TryGetComponent<SingularityDistortionComponent>(out var distortion))
                         {
                             _singularities.Remove(activeSinguloUid);
                         }
@@ -107,8 +104,8 @@ namespace Content.Client.Singularity
                         {
                             var shaderInstance = _singularities[activeSinguloUid];
                             shaderInstance.CurrentMapCoords = singuloEntity.Transform.MapPosition.Position;
-                            shaderInstance.Intensity = singuloInterface.Intensity;
-                            shaderInstance.Falloff = singuloInterface.Falloff;
+                            shaderInstance.Intensity = distortion.Intensity;
+                            shaderInstance.Falloff = distortion.Falloff;
                         }
                     }
 
@@ -123,7 +120,7 @@ namespace Content.Client.Singularity
 
         private bool SinguloQualifies(IEntity singuloEntity, MapCoordinates currentEyeLoc)
         {
-            return singuloEntity.Transform.MapID == currentEyeLoc.MapId && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), _maxDist);
+            return singuloEntity.Transform.MapID == currentEyeLoc.MapId && singuloEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, singuloEntity.Transform.ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed class SingularityShaderInstance
@@ -131,6 +128,7 @@ namespace Content.Client.Singularity
             public Vector2 CurrentMapCoords;
             public float Intensity;
             public float Falloff;
+
             public SingularityShaderInstance(Vector2 mapCoords, float intensity, float falloff)
             {
                 CurrentMapCoords = mapCoords;

@@ -34,7 +34,6 @@ namespace Content.Server.GameTicking.Presets
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -50,8 +49,9 @@ namespace Content.Server.GameTicking.Presets
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            _gameTicker.AddGameRule<RuleTraitorDeathMatch>();
-            _restarter = _gameTicker.AddGameRule<RuleMaxTimeRestart>();
+            var gameTicker = EntitySystem.Get<GameTicker>();
+            gameTicker.AddGameRule<RuleTraitorDeathMatch>();
+            _restarter = gameTicker.AddGameRule<RuleMaxTimeRestart>();
             _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
             _restarter.RestartTimer();
             _safeToEndRound = true;
@@ -119,7 +119,7 @@ namespace Content.Server.GameTicking.Presets
                 // The station is too drained of air to safely continue.
                 if (_safeToEndRound)
                 {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("The station is too unsafe to continue. You have one minute."));
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-death-match-station-is-too-unsafe-announcement"));
                     _restarter.RoundMaxTime = TimeSpan.FromMinutes(1);
                     _restarter.RestartTimer();
                     _safeToEndRound = false;
@@ -207,27 +207,29 @@ namespace Content.Server.GameTicking.Presets
             var session = mind.Session;
             if (session == null)
                 return false;
-            _gameTicker.Respawn(session);
+            EntitySystem.Get<GameTicker>().Respawn(session);
             return true;
         }
 
         public override string GetRoundEndDescription()
         {
             var lines = new List<string>();
-            lines.Add("The PDAs recovered afterwards...");
+            lines.Add("traitor-death-match-end-round-description-first-line");
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(PDAComponent))))
             {
                 var pda = entity.GetComponent<PDAComponent>();
                 var uplink = pda.SyndicateUplinkAccount;
-                if ((uplink != null) && _allOriginalNames.ContainsKey(uplink))
+                if (uplink != null && _allOriginalNames.ContainsKey(uplink))
                 {
-                    lines.Add(Loc.GetString("{0}'s PDA, with {1} TC", _allOriginalNames[uplink], uplink.Balance));
+                    lines.Add(Loc.GetString("traitor-death-match-end-round-description-entry",
+                                            ("originalName", _allOriginalNames[uplink]),
+                                            ("tcBalance", uplink.Balance)));
                 }
             }
             return string.Join('\n', lines);
         }
 
-        public override string ModeTitle => "Traitor Deathmatch";
-        public override string Description => Loc.GetString("Everyone's a traitor. Everyone wants each other dead.");
+        public override string ModeTitle => Loc.GetString("traitor-death-match-title");
+        public override string Description => Loc.GetString("traitor-death-match-description");
     }
 }

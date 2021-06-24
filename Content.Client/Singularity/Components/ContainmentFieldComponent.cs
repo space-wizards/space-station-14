@@ -6,17 +6,17 @@ namespace Content.Client.Singularity.Components
 {
     public class ContainmentFieldComponent : Component
     {
-        public override string Name => "Containment Field";
+        public override string Name => "ContainmentField";
 
         private SpriteComponent? _spriteComponent;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
             if (!Owner.TryGetComponent(out _spriteComponent))
             {
-                Logger.Error("Containmentfieldcomponent created without spritecomponent");
+                Logger.Error($"{nameof(ContainmentFieldComponent)} created without {nameof(SpriteComponent)}");
             }
             else
             {

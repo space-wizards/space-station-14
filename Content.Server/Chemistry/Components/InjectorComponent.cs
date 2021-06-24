@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Body.Circulatory;
@@ -8,7 +8,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -89,11 +88,11 @@ namespace Content.Server.Chemistry.Components
             {
                 case InjectorToggleMode.Inject:
                     ToggleState = InjectorToggleMode.Draw;
-                    msg = "Now drawing";
+                    msg = "injector-component-drawing-text";
                     break;
                 case InjectorToggleMode.Draw:
                     ToggleState = InjectorToggleMode.Inject;
-                    msg = "Now injecting";
+                    msg = "injector-component-injecting-text";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -131,7 +130,7 @@ namespace Content.Server.Chemistry.Components
                     else
                     {
                         eventArgs.User.PopupMessage(eventArgs.User,
-                            Loc.GetString("You aren't able to transfer to {0:theName}!", targetSolution.Owner));
+                            Loc.GetString("injector-component-cannot-transfer-message", ("owner", targetSolution.Owner)));
                     }
                 }
                 else if (ToggleState == InjectorToggleMode.Draw)
@@ -143,7 +142,7 @@ namespace Content.Server.Chemistry.Components
                     else
                     {
                         eventArgs.User.PopupMessage(eventArgs.User,
-                            Loc.GetString("You aren't able to draw from {0:theName}!", targetSolution.Owner));
+                            Loc.GetString("injector-component-cannot-draw-message", ("owner", targetSolution.Owner)));
                     }
                 }
             }
@@ -181,7 +180,7 @@ namespace Content.Server.Chemistry.Components
             if (realTransferAmount <= 0)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("You aren't able to inject {0:theName}!", targetBloodstream.Owner));
+                    Loc.GetString("injector-component-cannot-inject-message",("owner", targetBloodstream.Owner)));
                 return;
             }
 
@@ -202,8 +201,9 @@ namespace Content.Server.Chemistry.Components
             removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
             Owner.PopupMessage(user,
-                Loc.GetString("You inject {0}u into {1:theName}!", removedSolution.TotalVolume,
-                    targetBloodstream.Owner));
+                Loc.GetString("injector-component-inject-success-message",
+                              ("amount", removedSolution.TotalVolume),
+                              ("target", targetBloodstream.Owner)));
             Dirty();
             AfterInject();
         }
@@ -220,7 +220,7 @@ namespace Content.Server.Chemistry.Components
 
             if (realTransferAmount <= 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("{0:theName} is already full!", targetSolution.Owner));
+                Owner.PopupMessage(user, Loc.GetString("injector-component-target-already-full-message", ("target", targetSolution.Owner)));
                 return;
             }
 
@@ -232,7 +232,9 @@ namespace Content.Server.Chemistry.Components
             targetSolution.Inject(removedSolution);
 
             Owner.PopupMessage(user,
-                Loc.GetString("You transfer {0}u to {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
+                Loc.GetString("injector-component-transfer-success-message",
+                              ("amount", removedSolution.TotalVolume),
+                              ("target", targetSolution.Owner)));
             Dirty();
             AfterInject();
         }
@@ -258,7 +260,7 @@ namespace Content.Server.Chemistry.Components
 
             if (realTransferAmount <= 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("{0:theName} is empty!", targetSolution.Owner));
+                Owner.PopupMessage(user, Loc.GetString("injector-component-target-is-empty-message",("target", targetSolution.Owner)));
                 return;
             }
 
@@ -271,7 +273,9 @@ namespace Content.Server.Chemistry.Components
             }
 
             Owner.PopupMessage(user,
-                Loc.GetString("Drew {0}u from {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
+                Loc.GetString("injector-component-draw-success-message",
+                              ("amount", removedSolution.TotalVolume),
+                              ("target", targetSolution.Owner)));
             Dirty();
             AfterDraw();
         }

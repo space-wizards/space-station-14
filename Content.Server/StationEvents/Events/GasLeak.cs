@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.GameTicking;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
@@ -167,7 +167,7 @@ namespace Content.Server.StationEvents.Events
         private bool TryFindRandomTile(out Vector2i tile, IRobustRandom? robustRandom = null)
         {
             tile = default;
-            var defaultGridId = IoCManager.Resolve<IGameTicker>().DefaultGridId;
+            var defaultGridId = EntitySystem.Get<GameTicker>().DefaultGridId;
 
             if (!IoCManager.Resolve<IMapManager>().TryGetGrid(defaultGridId, out var grid) ||
                 !IoCManager.Resolve<IEntityManager>().TryGetEntity(grid.GridEntityId, out _targetGrid)) return false;

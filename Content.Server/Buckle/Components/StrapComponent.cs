@@ -7,6 +7,7 @@ using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -131,7 +132,7 @@ namespace Content.Server.Buckle.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 
@@ -179,7 +180,7 @@ namespace Content.Server.Buckle.Components
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(component.Owner) ||
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(component.Owner) ||
                     !user.TryGetComponent<BuckleComponent>(out var buckle) ||
                     buckle.BuckledTo != null && buckle.BuckledTo != component ||
                     user == component.Owner)
@@ -205,7 +206,7 @@ namespace Content.Server.Buckle.Components
 
                 data.Visibility = VerbVisibility.Visible;
                 data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
-                data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
+                data.Text = Loc.GetString(buckle.BuckledTo == null ? "strap-verb-get-data-text-buckle" : "strap-verb-get-data-text-unbuckle");
             }
 
             protected override void Activate(IEntity user, StrapComponent component)

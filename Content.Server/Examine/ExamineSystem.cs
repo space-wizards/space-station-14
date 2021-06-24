@@ -1,4 +1,4 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -16,7 +16,7 @@ namespace Content.Server.Examine
         static ExamineSystem()
         {
             _entityNotFoundMessage = new FormattedMessage();
-            _entityNotFoundMessage.AddText(Loc.GetString("That entity doesn't exist"));
+            _entityNotFoundMessage.AddText(Loc.GetString("examine-system-entity-does-not-exist"));
         }
 
         public override void Initialize()

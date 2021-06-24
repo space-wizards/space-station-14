@@ -110,7 +110,7 @@ namespace Content.Server.Light.Components
             sprite.Color = Color;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             UpdateColor();

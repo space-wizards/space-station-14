@@ -21,7 +21,7 @@ namespace Content.Server.Mining.Components
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

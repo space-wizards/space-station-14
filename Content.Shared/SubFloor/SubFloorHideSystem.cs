@@ -54,7 +54,7 @@ namespace Content.Shared.SubFloor
 
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
-            SubscribeLocalEvent<SubFloorHideComponent, SnapGridPositionChangedEvent>(OnSnapGridPositionChanged);
+            SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
         }
 
         public override void Shutdown()
@@ -75,11 +75,13 @@ namespace Content.Shared.SubFloor
             UpdateEntity(uid);
         }
 
-        private void OnSnapGridPositionChanged(EntityUid uid, SubFloorHideComponent component, SnapGridPositionChangedEvent ev)
+        private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, AnchorStateChangedEvent args)
         {
+            var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
+
             // We do this directly instead of calling UpdateEntity.
-            if(_mapManager.TryGetGrid(ev.NewGrid, out var grid))
-                UpdateTile(grid, ev.Position);
+            if(_mapManager.TryGetGrid(transform.GridID, out var grid))
+                UpdateTile(grid, grid.TileIndicesFor(transform.Coordinates));
         }
 
         private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)

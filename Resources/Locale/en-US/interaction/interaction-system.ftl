@@ -1,0 +1,1 @@
+shared-interaction-system-in-range-unobstructed-cannot-reach = You can't reach there!

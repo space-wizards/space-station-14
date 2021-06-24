@@ -107,7 +107,7 @@ namespace Content.Server.Construction.Components
 
         public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

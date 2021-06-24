@@ -1,0 +1,1 @@
+signal-two-way-lever-component-next-state-no-receivers-connected = No receivers connected.

@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
@@ -12,10 +13,10 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public class TritiumFireReaction : IGasReactionEffect
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {
             var energyReleased = 0f;
-            var oldHeatCapacity = mixture.HeatCapacity;
+            var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
             var temperature = mixture.Temperature;
             var location = holder as TileAtmosphere;
             mixture.ReactionResults[GasReaction.Fire] = 0f;
@@ -42,7 +43,7 @@ namespace Content.Server.Atmos.Reactions
             if (burnedFuel > 0)
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
-                
+
                 // TODO ATMOS Radiation pulse here!
 
                 // Conservation of mass is important.
@@ -53,7 +54,7 @@ namespace Content.Server.Atmos.Reactions
 
             if (energyReleased > 0)
             {
-                var newHeatCapacity = mixture.HeatCapacity;
+                var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
                 if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
                     mixture.Temperature = ((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity);
             }
@@ -65,7 +66,7 @@ namespace Content.Server.Atmos.Reactions
                 {
                     location.HotspotExpose(temperature, mixture.Volume);
 
-                    foreach (var entity in location.GridIndices.GetEntitiesInTileFast(location.GridIndex, gridTileLookup))
+                    foreach (var entity in location.GridIndices.GetEntitiesInTileFast(location.GridIndex))
                     {
                         foreach (var temperatureExpose in entity.GetAllComponents<ITemperatureExpose>())
                         {

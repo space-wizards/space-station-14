@@ -33,7 +33,7 @@ namespace Content.Client.Cloning.UI
             SetSize = MinSize = (250, 300);
             _scanManager = scanManager;
 
-            Title = Loc.GetString("Cloning Machine");
+            Title = Loc.GetString("cloning-pod-window-title");
 
             Contents.AddChild(new VBoxContainer
             {
@@ -54,7 +54,7 @@ namespace Content.Client.Cloning.UI
                         {
                             (CloneButton = new Button
                             {
-                                Text = Loc.GetString("Clone")
+                                Text = Loc.GetString("cloning-pod-clone-button")
                             })
                         }
                     },
@@ -72,7 +72,7 @@ namespace Content.Client.Cloning.UI
                     }),
                     (EjectButton = new Button
                     {
-                        Text = Loc.GetString("Eject Body")
+                        Text = Loc.GetString("cloning-pod-eject-body-button")
                     }),
                     new HBoxContainer
                     {
@@ -80,11 +80,11 @@ namespace Content.Client.Cloning.UI
                         {
                             new Label()
                             {
-                                Text = Loc.GetString("Neural Interface: ")
+                                Text = Loc.GetString($"{Loc.GetString("cloning-pod-neural-interface-label")} ")
                             },
                             (_mindState = new Label()
                             {
-                                Text = Loc.GetString("No Activity"),
+                                Text = Loc.GetString("cloning-pod-no-activity-text"),
                                 FontColorOverride = Color.Red
                             }),
                         }
@@ -108,7 +108,7 @@ namespace Content.Client.Cloning.UI
 
             _cloningProgressBar.MaxValue = state.Maximum;
             UpdateProgress();
-            _mindState.Text = Loc.GetString(state.MindPresent ? "Consciousness Detected" : "No Activity");
+            _mindState.Text = Loc.GetString(state.MindPresent ? "cloning-pod-mind-present-text" : "cloning-pod-no-activity-text");
             _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
         }
 
@@ -235,7 +235,7 @@ namespace Content.Client.Cloning.UI
                         {
                             VerticalAlignment = VAlignment.Center,
                             HorizontalExpand = true,
-                            Text = "",
+                            Text = string.Empty,
                             ClipText = true
                         })
                     }

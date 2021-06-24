@@ -15,8 +15,8 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -98,7 +98,7 @@ namespace Content.Server.Construction
 
             if (existed)
             {
-                user.PopupMessageCursor(Loc.GetString("You can't start another construction now!"));
+                user.PopupMessageCursor(Loc.GetString("construction-system-construct-cannot-start-another-construction"));
                 return null;
             }
 
@@ -222,7 +222,7 @@ namespace Content.Server.Construction
 
             if (failed)
             {
-                user.PopupMessageCursor(Loc.GetString("You don't have the materials to build that!"));
+                user.PopupMessageCursor(Loc.GetString("construction-system-construct-no-materials"));
                 FailCleanup();
                 return null;
             }
@@ -305,7 +305,7 @@ namespace Content.Server.Construction
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
+            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user)) return;
 
             if (!user.TryGetComponent(out HandsComponent? hands)) return;
 
@@ -374,7 +374,7 @@ namespace Content.Server.Construction
             {
                 if (!set.Add(ev.Ack))
                 {
-                    user.PopupMessageCursor(Loc.GetString("You are already building that!"));
+                    user.PopupMessageCursor(Loc.GetString("construction-system-already-building"));
                     return;
                 }
             }
@@ -399,7 +399,7 @@ namespace Content.Server.Construction
             }
 
             if (user == null
-                || !ActionBlockerSystem.CanInteract(user)
+                || !Get<ActionBlockerSystem>().CanInteract(user)
                 || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {

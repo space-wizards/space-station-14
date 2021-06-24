@@ -14,9 +14,9 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rotatable;
 using Content.Shared.Throwing;
@@ -175,10 +175,12 @@ namespace Content.Server.Interaction
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
-            if (!ActionBlockerSystem.CanInteract(user) || ! ActionBlockerSystem.CanUse(user))
+            var actionBlocker = Get<ActionBlockerSystem>();
+
+            if (!actionBlocker.CanInteract(user) || ! actionBlocker.CanUse(user))
                 return;
 
-            // all activates should only fire when in range / unbostructed
+            // all activates should only fire when in range / unobstructed
             if (!InRangeUnobstructed(user, used, ignoreInsideBlocker: true, popup: true))
                 return;
 
@@ -273,7 +275,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -342,7 +344,7 @@ namespace Content.Server.Interaction
             if (diff.LengthSquared <= 0.01f)
                 return;
             var diffAngle = Angle.FromWorldVec(diff);
-            if (ActionBlockerSystem.CanChangeDirection(user))
+            if (Get<ActionBlockerSystem>().CanChangeDirection(user))
             {
                 user.Transform.WorldRotation = diffAngle;
             }
@@ -392,7 +394,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -422,7 +424,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -455,7 +457,7 @@ namespace Content.Server.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(IEntity user, IEntity used)
         {
-            if (user != null && used != null && ActionBlockerSystem.CanUse(user))
+            if (user != null && used != null && Get<ActionBlockerSystem>().CanUse(user))
             {
                 UseInteraction(user, used);
             }
@@ -499,7 +501,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
-            if (user == null || item == null || !ActionBlockerSystem.CanThrow(user)) return false;
+            if (user == null || item == null || !Get<ActionBlockerSystem>().CanThrow(user)) return false;
 
             ThrownInteraction(user, item);
             return true;
@@ -573,7 +575,7 @@ namespace Content.Server.Interaction
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
         ///     on an item.
         /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        public void EquippedHandInteraction(IEntity user, IEntity item, HandState hand)
         {
             var equippedHandMessage = new EquippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, equippedHandMessage);
@@ -592,7 +594,7 @@ namespace Content.Server.Interaction
         ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
         ///     on an item.
         /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        public void UnequippedHandInteraction(IEntity user, IEntity item, HandState hand)
         {
             var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, unequippedHandMessage);
@@ -616,7 +618,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            if (user == null || item == null || !ActionBlockerSystem.CanDrop(user)) return false;
+            if (user == null || item == null || !Get<ActionBlockerSystem>().CanDrop(user)) return false;
 
             DroppedInteraction(user, item, intentional);
             return true;
@@ -724,7 +726,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!ActionBlockerSystem.CanAttack(user))
+            if (!Get<ActionBlockerSystem>().CanAttack(user))
                 return;
 
             IEntity? targetEnt = null;
@@ -759,7 +761,7 @@ namespace Content.Server.Interaction
                         var ev = new WideAttackEvent(item, user, coordinates);
                         RaiseLocalEvent(item.Uid, ev, false);
 
-                        if(ev.Handled)
+                        if (ev.Handled)
                             return;
                     }
                     else
@@ -767,7 +769,7 @@ namespace Content.Server.Interaction
                         var ev = new ClickAttackEvent(item, user, coordinates, targetUid);
                         RaiseLocalEvent(item.Uid, ev, false);
 
-                        if(ev.Handled)
+                        if (ev.Handled)
                             return;
                     }
                 }
@@ -783,7 +785,7 @@ namespace Content.Server.Interaction
 
             // TODO: Make this saner?
             // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
-            if(wideAttack)
+            if (wideAttack)
                 RaiseLocalEvent(user.Uid, new WideAttackEvent(user, user, coordinates), false);
             else
                 RaiseLocalEvent(user.Uid, new ClickAttackEvent(user, user, coordinates, targetUid), false);

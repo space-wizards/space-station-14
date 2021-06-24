@@ -63,7 +63,7 @@ namespace Content.Server.Fluids.Components
         [DataField("speed")]
         private float _mopSpeed = 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -110,7 +110,7 @@ namespace Content.Server.Fluids.Components
 
             if (currentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop needs to be wet!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-dry-message"));
                 return false;
             }
 

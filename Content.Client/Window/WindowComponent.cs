@@ -21,7 +21,7 @@ namespace Content.Client.Window
 
         private ISpriteComponent? _sprite;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -64,7 +64,7 @@ namespace Content.Client.Window
             }
         }
 
-        public void SnapGridOnPositionChanged()
+        public void AnchorStateChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
         }

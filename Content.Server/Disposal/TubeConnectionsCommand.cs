@@ -14,15 +14,15 @@ namespace Content.Server.Disposal
     public class TubeConnectionsCommand : IConsoleCommand
     {
         public string Command => "tubeconnections";
-        public string Description => Loc.GetString("Shows all the directions that a tube can connect in.");
-        public string Help => $"Usage: {Command} <entityUid>";
+        public string Description => Loc.GetString("tube-connections-command-description");
+        public string Help => Loc.GetString("tube-connections-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine(Loc.GetString("Only players can use this command"));
+                shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
@@ -34,20 +34,22 @@ namespace Content.Server.Disposal
 
             if (!EntityUid.TryParse(args[0], out var id))
             {
-                shell.WriteLine(Loc.GetString("{0} isn't a valid entity uid", args[0]));
+                shell.WriteLine(Loc.GetString("shell-invalid-entity-uid",("uid", args[0])));
                 return;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (!entityManager.TryGetEntity(id, out var entity))
             {
-                shell.WriteLine(Loc.GetString("No entity exists with uid {0}", id));
+                shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid",("uid", id)));
                 return;
             }
 
             if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
             {
-                shell.WriteLine(Loc.GetString("Entity with uid {0} doesn't have a {1} component", id, nameof(IDisposalTubeComponent)));
+                shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
+                                              ("uid", id),
+                                              ("componentName", nameof(IDisposalTubeComponent))));
                 return;
             }
 

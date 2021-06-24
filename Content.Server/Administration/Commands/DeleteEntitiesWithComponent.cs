@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -12,20 +12,10 @@ namespace Content.Server.Administration.Commands
     class DeleteEntitiesWithComponent : IConsoleCommand
     {
         public string Command => "deleteewc";
-        public string Description
-        {
-            get
-            {
-                return Loc.GetString("Deletes entities with the specified components.");
-            }
-        }
-        public string Help
-        {
-            get
-            {
-                return Loc.GetString("Usage: deleteewc <componentName_1> <componentName_2> ... <componentName_n>\nDeletes any entities with the components specified.");
-            }
-        }
+
+        public string Description => Loc.GetString("delete-entities-with-component-command-description");
+
+        public string Help => Loc.GetString("delete-entities-with-component-command-help-text");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -52,7 +42,7 @@ namespace Content.Server.Administration.Commands
                 count += 1;
             }
 
-            shell.WriteLine(Loc.GetString("Deleted {0} entities", count));
+            shell.WriteLine(Loc.GetString("delete-entities-with-component-command-deleted-components",("count", count)));
         }
     }
 }

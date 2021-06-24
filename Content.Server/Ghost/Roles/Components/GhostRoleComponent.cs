@@ -41,7 +41,7 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables]
         public uint Identifier { get; set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

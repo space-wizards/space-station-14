@@ -34,7 +34,7 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Count = _totalCount;
@@ -81,7 +81,7 @@ namespace Content.Server.Nutrition.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString($"There are { Count } slices remaining."));
+            message.AddMarkup(Loc.GetString("sliceable-food-component-on-examine-remaining-slices-text", ("remainingCount", Count)));
         }
     }
 }

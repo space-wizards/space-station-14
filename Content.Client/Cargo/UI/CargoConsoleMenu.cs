@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared.Cargo;
@@ -45,19 +46,19 @@ namespace Content.Client.Cargo.UI
             Owner = owner;
 
             if (Owner.RequestOnly)
-                Title = Loc.GetString("Cargo Request Console");
+                Title = Loc.GetString("cargo-console-menu-request-only-title");
             else
-                Title = Loc.GetString("Cargo Shuttle Console");
+                Title = Loc.GetString("cargo-console-menu-title");
 
             var rows = new VBoxContainer();
 
             var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
-                Text = Loc.GetString("Account Name: "),
+                Text = Loc.GetString("cargo-console-menu-account-name-label") + " ",
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _accountNameLabel = new Label {
-                Text = "None" //Owner.Bank.Account.Name
+                Text = Loc.GetString("cargo-console-menu-account-name-none-text") //Owner.Bank.Account.Name
             };
             accountName.AddChild(accountNameLabel);
             accountName.AddChild(_accountNameLabel);
@@ -66,7 +67,7 @@ namespace Content.Client.Cargo.UI
             var points = new HBoxContainer();
             var pointsLabel = new Label
             {
-                Text = Loc.GetString("Points: "),
+                Text = Loc.GetString("cargo-console-menu-points-label") + " ",
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _pointsLabel = new Label
@@ -80,12 +81,12 @@ namespace Content.Client.Cargo.UI
             var shuttleStatus = new HBoxContainer();
             var shuttleStatusLabel = new Label
             {
-                Text = Loc.GetString("Shuttle Status: "),
+                Text = Loc.GetString("cargo-console-menu-shuttle-status-label") + " ",
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _shuttleStatusLabel = new Label
             {
-                Text = Loc.GetString("Away") // Shuttle.Status
+                Text = Loc.GetString("cargo-console-menu-shuttle-status-away-text") // Shuttle.Status
             };
             shuttleStatus.AddChild(shuttleStatusLabel);
             shuttleStatus.AddChild(_shuttleStatusLabel);
@@ -94,12 +95,12 @@ namespace Content.Client.Cargo.UI
             var shuttleCapacity = new HBoxContainer();
             var shuttleCapacityLabel = new Label
             {
-                Text = Loc.GetString("Order Capacity: "),
+                Text = Loc.GetString("cargo-console-menu-order-capacity-label") + " ",
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _shuttleCapacityLabel = new Label
             {
-                Text = "0/20"
+                Text = $"{0}/{20}"
             };
             shuttleCapacity.AddChild(shuttleCapacityLabel);
             shuttleCapacity.AddChild(_shuttleCapacityLabel);
@@ -109,13 +110,13 @@ namespace Content.Client.Cargo.UI
             CallShuttleButton = new Button()
             {
                 //Text = Loc.GetString("Call Shuttle"),
-                Text = Loc.GetString("Activate Telepad"), //Shuttle code pending
+                Text = Loc.GetString("cargo-console-menu-call-shuttle-button"), //Shuttle code pending
                 TextAlign = Label.AlignMode.Center,
                 HorizontalExpand = true
             };
             PermissionsButton = new Button()
             {
-                Text = Loc.GetString("Permissions"),
+                Text = Loc.GetString("cargo-console-menu-permissions-button"),
                 TextAlign = Label.AlignMode.Center
             };
             buttons.AddChild(CallShuttleButton);
@@ -125,13 +126,13 @@ namespace Content.Client.Cargo.UI
             var category = new HBoxContainer();
             _categories = new OptionButton
             {
-                Prefix = Loc.GetString("Categories: "),
+                Prefix = Loc.GetString("cargo-console-menu-categories-label") + " ",
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
             _searchBar = new LineEdit
             {
-                PlaceHolder = Loc.GetString("Search"),
+                PlaceHolder = Loc.GetString("cargo-console-menu-search-bar-placeholder"),
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
@@ -164,14 +165,14 @@ namespace Content.Client.Cargo.UI
                 VerticalExpand = true
             };
             var rAndOVBox = new VBoxContainer();
-            var requestsLabel = new Label { Text = Loc.GetString("Requests") };
+            var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
             _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added
             {
                 StyleClasses = { "transparentItemList" },
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
-            var ordersLabel = new Label { Text = Loc.GetString("Orders") };
+            var ordersLabel = new Label { Text = Loc.GetString("cargo-console-menu-orders-label") };
             _orders = new VBoxContainer
             {
                 StyleClasses = { "transparentItemList" },
@@ -270,7 +271,7 @@ namespace Content.Client.Cargo.UI
                 return;
             }
 
-            _categoryStrings.Add(Loc.GetString("All"));
+            _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
@@ -305,13 +306,17 @@ namespace Content.Client.Cargo.UI
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = {Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0()},
+                    Icon = { Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0() },
                     ProductName =
                     {
-                        Text =
-                            $"{Owner.Market.GetProduct(order.ProductId)?.Name} (x{order.Amount}) by {order.Requester}"
+                        Text = Loc.GetString(
+                            "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                            ("productName", Owner.Market.GetProduct(order.ProductId)?.Name!),
+                            ("orderAmount", order.Amount),
+                            ("orderRequester", order.Requester))
                     },
-                    Description = {Text = $"Reasons: {order.Reason}"}
+                    Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
+                                                        ("reason", order.Reason))}
                 };
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
                 if (order.Approved)
@@ -463,14 +468,14 @@ namespace Content.Client.Cargo.UI
 
             Approve = new Button
             {
-                Text = "Approve",
+                Text = Loc.GetString("cargo-console-menu-cargo-order-row-approve-button"),
                 StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Approve);
 
             Cancel = new Button
             {
-                Text = "Cancel",
+                Text = Loc.GetString("cargo-console-menu-cargo-order-row-cancel-button"),
                 StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Cancel);

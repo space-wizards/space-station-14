@@ -23,7 +23,7 @@ namespace Content.Shared.Tag
 
         public IReadOnlySet<string> Tags => _tags;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -83,7 +83,7 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (!Owner.HasComponent<IMoverComponent>())

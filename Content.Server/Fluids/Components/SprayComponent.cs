@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
 using Content.Shared.ActionBlocker;
@@ -8,7 +8,7 @@ using Content.Shared.Cooldown;
 using Content.Shared.DragDrop;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
@@ -82,7 +82,7 @@ namespace Content.Server.Fluids.Components
 
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -96,18 +96,18 @@ namespace Content.Server.Fluids.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             if (_hasSafety && _safety)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Its safety is on!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-safety-on-message"));
                 return true;
             }
 
             if (CurrentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-is-empty-message"));
                 return true;
             }
 
@@ -207,7 +207,7 @@ namespace Content.Server.Fluids.Components
 
         private void SetSafety(IEntity user, bool state)
         {
-            if (!ActionBlockerSystem.CanInteract(user) || !_hasSafety)
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
                 return;
 
             _safety = state;

@@ -12,7 +12,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
@@ -51,7 +50,7 @@ namespace Content.Server.Chemistry.Components
         /// Called once per instance of this component. Gets references to any other components needed
         /// by this component and initializes it's UI and other data.
         /// </summary>
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -144,8 +143,11 @@ namespace Content.Server.Chemistry.Components
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
                 return false;
+
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -353,7 +355,7 @@ namespace Content.Server.Chemistry.Components
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-activate-no-hands"));
                 return;
             }
 
@@ -375,13 +377,13 @@ namespace Content.Server.Chemistry.Components
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-interact-using-no-hands"));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have nothing in your hand!"));
+                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-interact-using-nothing-in-hands"));
                 return false;
             }
 
@@ -390,12 +392,12 @@ namespace Content.Server.Chemistry.Components
             {
                 if (HasBeaker)
                 {
-                    Owner.PopupMessage(args.User, Loc.GetString("This ChemMaster already has a container in it."));
+                    Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-has-beaker-already-message"));
                 }
                 else if (!solution.CanUseWithChemDispenser)
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
-                    Owner.PopupMessage(args.User, Loc.GetString("The {0:theName} is too large for the ChemMaster!", activeHandEntity));
+                    Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-container-too-large-message",("container", activeHandEntity)));
                 }
                 else
                 {
@@ -405,7 +407,7 @@ namespace Content.Server.Chemistry.Components
             }
             else
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You can't put {0:theName} in the ChemMaster!", activeHandEntity));
+                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
             }
 
             return true;
@@ -423,13 +425,13 @@ namespace Content.Server.Chemistry.Components
         {
             protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Beaker");
+                data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
                 data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

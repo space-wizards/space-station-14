@@ -71,8 +71,10 @@ namespace Content.Client.Tools.Components
                 var fuelCap = _parent.FuelCapacity;
                 var fuel = _parent.Fuel;
 
-                _label.SetMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color]",
-                    fuel < fuelCap / 4f ? "darkorange" : "orange", Math.Round(fuel), fuelCap));
+                _label.SetMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+                                               ("colorName", fuel < fuelCap / 4f ? "darkorange" : "orange"),
+                                               ("fuelLeft", Math.Round(fuel)),
+                                               ("fuelCapacity", fuelCap)));
             }
         }
     }

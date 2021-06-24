@@ -176,7 +176,7 @@ namespace Content.Server.Shuttle
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponent<ServerAlertsComponent>();

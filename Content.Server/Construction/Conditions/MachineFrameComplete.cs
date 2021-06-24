@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -31,20 +31,23 @@ namespace Content.Server.Construction.Conditions
 
             if (!machineFrame.HasBoard)
             {
-                message.AddMarkup(Loc.GetString("Insert [color=cyan]any machine circuit board[/color]."));
+                message.AddMarkup(Loc.GetString("construction-condition-machine-frame-insert-circuit-board-message"));
                 return true;
             }
 
             if (machineFrame.IsComplete) return false;
 
-            message.AddMarkup(Loc.GetString("Requires:\n"));
+            message.AddMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label") + "\n");
             foreach (var (part, required) in machineFrame.Requirements)
             {
                 var amount = required - machineFrame.Progress[part];
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(part.ToString())));
+                message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                                ("amount", amount),
+                                                ("elementName", Loc.GetString(part.ToString())))
+                                  + "\n");
             }
 
             foreach (var (material, required) in machineFrame.MaterialRequirements)
@@ -53,7 +56,10 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.ToString())));
+                message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                                ("amount", amount),
+                                                ("elementName", Loc.GetString(material.ToString())))
+                                  + "\n");
             }
 
             foreach (var (compName, info) in machineFrame.ComponentRequirements)
@@ -62,7 +68,10 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+                message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                                ("amount", info.Amount),
+                                                ("elementName", Loc.GetString(info.ExamineName)))
+                                  + "\n");
             }
 
             foreach (var (tagName, info) in machineFrame.TagRequirements)
@@ -71,7 +80,10 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+                message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                                ("amount", info.Amount),
+                                                ("elementName", Loc.GetString(info.ExamineName)))
+                                  + "\n");
             }
 
             return true;

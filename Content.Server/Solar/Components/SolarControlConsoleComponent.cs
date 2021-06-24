@@ -2,7 +2,6 @@
 using Content.Shared.Solar;
 using Content.Server.Solar.EntitySystems;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,7 +21,7 @@ namespace Content.Server.Solar.Components
 
         public SolarControlConsoleComponent() : base(SolarControlConsoleUiKey.Key) { }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();
