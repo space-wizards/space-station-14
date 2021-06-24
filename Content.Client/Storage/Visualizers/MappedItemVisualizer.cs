@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Content.Shared.Storage;
 using Content.Shared.Storage.ItemCounter;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -42,14 +40,8 @@ namespace Content.Client.Storage.Visualizers
             {
                 foreach (var layerProp in _mapLayers)
                 {
-                    if (_spriteLayers.ContainsKey(layerProp.Layer))
-                    {
+                    if (!_spriteLayers.TryAdd(layerProp.Layer, layerProp))
                         Logger.Warning($"Already added mapLayer with layer = `${layerProp.Layer}` skipping over");
-                    }
-                    else
-                    {
-                        _spriteLayers.Add(layerProp.Layer, layerProp);
-                    }
                 }
             }
         }
@@ -60,36 +52,21 @@ namespace Content.Client.Storage.Visualizers
             if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent)
                 && _spriteLayers.Count > 0)
             {
-                UpdateAllContainedEntities(component, spriteComponent);
                 if (component.TryGetData(StorageMapVisuals.LayerChanged, out ShowEntityData layerData))
                 {
-                    foreach (var (layerName, layerFilter) in _spriteLayers)
+                    foreach (var (entityUid, show) in layerData.QueuedEntities)
                     {
-                        if (component.Owner.EntityManager.TryGetEntity(layerData.Uid, out var entity)
-                            && Matches(entity, layerFilter))
+                        foreach (var (layerName, layerFilter) in _spriteLayers)
                         {
-                            spriteComponent.LayerSetVisible(layerName, layerData.Show);
+                            if (component.Owner.EntityManager.TryGetEntity(entityUid, out var entity)
+                                && Matches(entity, layerFilter))
+                            {
+                                spriteComponent.LayerSetVisible(layerName, show);
+                            }
                         }
                     }
-                }
-            }
-        }
 
-        private void UpdateAllContainedEntities(AppearanceComponent component, ISpriteComponent spriteComponent)
-        {
-            if (component.TryGetData(StorageMapVisuals.AllLayers, out ListOfUids listOfUids)
-                && listOfUids.ContainedEntities.Count > 0)
-            {
-                foreach (var entityUid in listOfUids.ContainedEntities)
-                {
-                    foreach (var (layerName, layerFilter) in _spriteLayers)
-                    {
-                        if (component.Owner.EntityManager.TryGetEntity(entityUid, out var entity)
-                            && Matches(entity, layerFilter))
-                        {
-                            spriteComponent.LayerSetVisible(layerName, true);
-                        }
-                    }
+                    layerData.QueuedEntities.Clear();
                 }
             }
         }

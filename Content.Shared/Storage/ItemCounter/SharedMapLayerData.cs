@@ -26,18 +26,16 @@ namespace Content.Shared.Storage.ItemCounter
     [Serializable, NetSerializable]
     public class ShowEntityData
     {
-        public EntityUid Uid { get; }
-        public bool Show { get; }
+        public List<(EntityUid, bool)> QueuedEntities { get; }
 
-        public ShowEntityData(EntityUid uid, bool show)
+        public ShowEntityData()
         {
-            Uid = uid;
-            Show = show;
+            QueuedEntities = new();
         }
-    }
 
-    [Serializable, NetSerializable]
-    public record ListOfUids(List<EntityUid> ContainedEntities)
-    {
+        public ShowEntityData(ShowEntityData other)
+        {
+            QueuedEntities = new List<(EntityUid, bool)>(other.QueuedEntities);
+        }
     }
 }
