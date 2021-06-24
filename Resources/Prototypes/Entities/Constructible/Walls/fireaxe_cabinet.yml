@@ -11,7 +11,7 @@
     - type: ItemCabinet
       doorSound: /Audio/Machines/machine_switch.ogg
       whitelist:
-        components:
+        tags:
         - FireAxe
     - type: Appearance
       visuals:
