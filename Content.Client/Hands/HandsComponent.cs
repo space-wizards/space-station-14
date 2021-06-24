@@ -1,16 +1,14 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.Animations;
 using Content.Client.HUD;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
-using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Hands
@@ -22,239 +20,50 @@ namespace Content.Client.Hands
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
 
-        private HandsGui? _gui;
-
-        private readonly List<Hand> _hands = new();
-
-        [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
-
-        [ViewVariables] public string? ActiveIndex { get; private set; }
-
-        [ViewVariables] private ISpriteComponent? _sprite;
-
-        [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
-
-        public override bool IsHolding(IEntity entity)
-        {
-            foreach (var hand in _hands)
-            {
-                if (hand.Entity == entity)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private void AddHand(Hand hand)
-        {
-            _sprite?.LayerMapReserveBlank($"hand-{hand.Name}");
-            _hands.Insert(hand.Index, hand);
-        }
-
-        public Hand? GetHand(string? name)
-        {
-            return Hands.FirstOrDefault(hand => hand.Name == name);
-        }
-
-        private bool TryHand(string name, [NotNullWhen(true)] out Hand? hand)
-        {
-            return (hand = GetHand(name)) != null;
-        }
-
-        public IEntity? GetEntity(string? handName)
-        {
-            if (handName == null)
-            {
-                return null;
-            }
-
-            return GetHand(handName)?.Entity;
-        }
+        [ViewVariables]
+        public HandsGui? Gui { get; private set; }
 
         protected override void OnRemove()
         {
+            ClearGui();
             base.OnRemove();
-
-            _gui?.Dispose();
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (Owner.TryGetComponent(out _sprite))
-            {
-                foreach (var hand in _hands)
-                {
-                    _sprite.LayerMapReserveBlank($"hand-{hand.Name}");
-                    UpdateHandSprites(hand);
-                }
-            }
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (curState == null)
-            {
-                return;
-            }
-
-            var cast = (HandsComponentState) curState;
-            foreach (var sharedHand in cast.Hands)
-            {
-                if (!TryHand(sharedHand.Name, out var hand))
-                {
-                    hand = new Hand(this, sharedHand, Owner.EntityManager);
-                    AddHand(hand);
-                }
-                else
-                {
-                    hand.Location = sharedHand.Location;
-
-                    hand.Entity = sharedHand.EntityUid.HasValue
-                        ? Owner.EntityManager.GetEntity(sharedHand.EntityUid.Value)
-                        : null;
-                }
-
-                hand.Enabled = sharedHand.Enabled;
-
-                UpdateHandSprites(hand);
-            }
-
-            foreach (var currentHand in _hands.ToList())
-            {
-                if (cast.Hands.All(newHand => newHand.Name != currentHand.Name))
-                {
-                    _hands.Remove(currentHand);
-                    _gui?.RemoveHand(currentHand);
-                    HideHand(currentHand);
-                }
-            }
-
-            ActiveIndex = cast.ActiveIndex;
-
-            _gui?.UpdateHandIcons();
-            RefreshInHands();
-        }
-
-        private void HideHand(Hand hand)
-        {
-            _sprite?.LayerSetVisible($"hand-{hand.Name}", false);
-        }
-
-        private void UpdateHandSprites(Hand hand)
-        {
-            if (_sprite == null)
-            {
-                return;
-            }
-
-            var entity = hand.Entity;
-            var name = hand.Name;
-
-            if (entity == null)
-            {
-                if (_sprite.LayerMapTryGet($"hand-{name}", out var layer))
-                {
-                    _sprite.LayerSetVisible(layer, false);
-                }
-
-                return;
-            }
-
-            if (!entity.TryGetComponent(out SharedItemComponent? item))
+            if (curState is not HandsComponentState state)
                 return;
 
-            if (item.RsiPath == null)
+            Hands.Clear();
+
+            foreach (var handState in state.Hands)
             {
-                _sprite.LayerSetVisible($"hand-{name}", false);
+                var newHand = new Hand(handState.Name, handState.Enabled, handState.Location);
+                Hands.Add(newHand);
             }
-            else
+            ActiveHand = state.ActiveHand;
+
+            UpdateHandContainers();
+            UpdateHandVisualizer();
+            UpdateHandsGuiState();
+        }
+
+        public void SettupGui()
+        {
+            if (Gui == null)
             {
-                var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / item.RsiPath).RSI;
-
-                var handName = hand.Location.ToString().ToLowerInvariant();
-                var prefix = item.EquippedPrefix;
-                var state = prefix != null ? $"{prefix}-inhand-{handName}" : $"inhand-{handName}";
-
-                if (!rsi.TryGetState(state, out _))
-                    return;
-
-                var color = item.Color;
-
-                _sprite.LayerSetColor($"hand-{name}", color);
-                _sprite.LayerSetVisible($"hand-{name}", true);
-                _sprite.LayerSetState($"hand-{name}", state, rsi);
+                Gui = new HandsGui();
+                _gameHud.HandsContainer.AddChild(Gui);
+                Gui.HandClick += args => OnHandClick(args.HandClicked);
+                Gui.HandActivate += args => OnActivateInHand(args.HandUsed);
+                UpdateHandsGuiState();
             }
         }
 
-        public void RefreshInHands()
+        public void ClearGui()
         {
-            if (!Initialized) return;
-
-            foreach (var hand in _hands)
-            {
-                UpdateHandSprites(hand);
-            }
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-            ActiveIndex = _hands.LastOrDefault()?.Name;
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case HandEnabledMsg msg:
-                {
-                    var hand = GetHand(msg.Name);
-
-                    if (hand?.Button == null)
-                    {
-                        break;
-                    }
-
-                    hand.Button.Blocked.Visible = false;
-
-                    break;
-                }
-                case HandDisabledMsg msg:
-                {
-                    var hand = GetHand(msg.Name);
-
-                    if (hand?.Button == null)
-                    {
-                        break;
-                    }
-
-                    hand.Button.Blocked.Visible = true;
-
-                    break;
-                }
-            }
-        }
-
-        public void PlayerDetached() { _gui?.Parent?.RemoveChild(_gui); }
-
-        public void PlayerAttached()
-        {
-            if (_gui == null)
-            {
-                _gui = new HandsGui();
-            }
-            else
-            {
-                _gui.Parent?.RemoveChild(_gui);
-            }
-
-            _gameHud.HandsContainer.AddChild(_gui);
-            _gui.UpdateHandIcons();
+            Gui?.Dispose();
+            Gui = null;
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
@@ -263,94 +72,126 @@ namespace Content.Client.Hands
 
             switch (message)
             {
-                case AnimatePickupEntityMessage msg:
-                {
-                    if (Owner.EntityManager.TryGetEntity(msg.EntityId, out var entity))
-                    {
-                        ReusableAnimations.AnimateEntityPickup(entity, msg.EntityPosition, Owner.Transform.WorldPosition);
-                    }
+                case PickupAnimationMessage msg:
+                    RunPickupAnimation(msg);
                     break;
-                }
             }
         }
 
-        public void SendChangeHand(string index)
+        public override void HandsModified()
         {
-            SendNetworkMessage(new ClientChangedHandMsg(index));
+            base.HandsModified();
+
+            UpdateHandContainers();
+            UpdateHandVisualizer();
+            UpdateHandsGuiState();
         }
 
-        public void AttackByInHand(string index)
+        private void OnHandClick(string handClicked)
         {
-            SendNetworkMessage(new ClientAttackByInHandMsg(index));
-        }
+            if (!TryGetHand(handClicked, out var pressedHand))
+                return;
 
-        public void UseActiveHand()
-        {
-            if (GetEntity(ActiveIndex) != null)
+            if (!TryGetActiveHand(out var activeHand))
+                return;
+
+            var pressedEntity = pressedHand.HeldEntity;
+            var activeEntity = activeHand.HeldEntity;
+
+            if (pressedHand == activeHand && activeEntity != null)
             {
-                SendNetworkMessage(new UseInHandMsg());
-            }
-        }
-
-        public void ActivateItemInHand(string handIndex)
-        {
-            if (GetEntity(handIndex) == null)
-            {
+                SendNetworkMessage(new UseInHandMsg()); //use item in hand
                 return;
             }
 
-            SendNetworkMessage(new ActivateInHandMsg(handIndex));
-        }
-    }
-
-    public class Hand
-    {
-        private bool _enabled = true;
-
-        public Hand(HandsComponent parent, SharedHand hand, IEntityManager manager, HandButton? button = null)
-        {
-            Parent = parent;
-            Index = hand.Index;
-            Name = hand.Name;
-            Location = hand.Location;
-            Button = button;
-
-            if (!hand.EntityUid.HasValue)
+            if (pressedHand != activeHand && pressedEntity == null)
             {
+                SendNetworkMessage(new ClientChangedHandMsg(pressedHand.Name)); //swap hand
                 return;
             }
 
-            manager.TryGetEntity(hand.EntityUid.Value, out var entity);
-            Entity = entity;
+            if (pressedHand != activeHand && pressedEntity != null && activeEntity != null)
+            {
+                SendNetworkMessage(new ClientAttackByInHandMsg(pressedHand.Name)); //use active item on held item
+                return;
+            }
+
+            if (pressedHand != activeHand && pressedEntity != null && activeEntity == null)
+            {
+                SendNetworkMessage(new MoveItemFromHandMsg(pressedHand.Name)); //move item in hand to active hand
+                return;
+            }
         }
 
-        private HandsComponent Parent { get; }
-        public int Index { get; }
-        public string Name { get; }
-        public HandLocation Location { get; set; }
-        public IEntity? Entity { get; set; }
-        public HandButton? Button { get; set; }
-
-        public bool Enabled
+        private void OnActivateInHand(string handActivated)
         {
-            get => _enabled;
-            set
+            SendNetworkMessage(new ActivateInHandMsg(handActivated));
+        }
+
+        public void UpdateHandContainers()
+        {
+            if (!Owner.TryGetComponent<ContainerManagerComponent>(out var containerMan))
+                return;
+
+            foreach (var hand in Hands)
             {
-                if (_enabled == value)
+                if (hand.Container == null)
                 {
-                    return;
+                    containerMan.TryGetContainer(hand.Name, out var container);
+                    hand.Container = container;
                 }
-
-                _enabled = value;
-                Parent.Dirty();
-
-                var message = value
-                    ? (ComponentMessage) new HandEnabledMsg(Name)
-                    : new HandDisabledMsg(Name);
-
-                Parent.HandleMessage(message, Parent);
-                Parent.Owner.SendMessage(Parent, message);
             }
+        }
+
+        public void UpdateHandVisualizer()
+        {
+            if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+                appearance.SetData(HandsVisuals.VisualState, GetHandsVisualState());
+        }
+
+        public void UpdateHandsGuiState()
+        {
+            Gui?.SetState(GetHandsGuiState());
+        }
+
+        private HandsGuiState GetHandsGuiState()
+        {
+            var handStates = new List<GuiHand>();
+
+            foreach (var hand in ReadOnlyHands)
+            {
+                var handState = new GuiHand(hand.Name, hand.Location, hand.HeldEntity, hand.Enabled);
+                handStates.Add(handState);
+            }
+            return new HandsGuiState(handStates, ActiveHand);
+        }
+
+        private HandsVisualState GetHandsVisualState()
+        {
+            var hands = new List<HandVisualState>();
+            foreach (var hand in ReadOnlyHands)
+            {
+                if (hand.HeldEntity == null)
+                    continue;
+
+                if (!hand.HeldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
+                    continue;
+
+                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
+                hands.Add(handState);
+            }
+            return new(hands);
+        }
+
+        private void RunPickupAnimation(PickupAnimationMessage msg)
+        {
+            if (!Owner.EntityManager.TryGetEntity(msg.EntityUid, out var entity))
+                return;
+
+            if (!IoCManager.Resolve<IGameTiming>().IsFirstTimePredicted)
+                return;
+
+            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.PickupDirection);
         }
     }
 }

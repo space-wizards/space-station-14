@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -195,7 +196,7 @@ namespace Content.Shared.Chemistry.Solution.Components
 
             if (ReagentList.Count == 0)
             {
-                message.AddText(Robust.Shared.Localization.Loc.GetString("Contains no chemicals."));
+                message.AddText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
                 return;
             }
 
@@ -207,9 +208,13 @@ namespace Content.Shared.Chemistry.Solution.Components
             }
 
             var colorHex = Color.ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
-            var messageString = "It contains a [color={0}]{1}[/color] " + (ReagentList.Count == 1 ? "chemical." : "mixture of chemicals.");
+            var messageString = "shared-solution-container-component-on-examine-main-text";
 
-            message.AddMarkup(Robust.Shared.Localization.Loc.GetString(messageString, colorHex, Robust.Shared.Localization.Loc.GetString(proto.PhysicalDescription)));
+            message.AddMarkup(Loc.GetString(messageString,
+                                            ("color", colorHex),
+                                            ("wordedAmount", Loc.GetString(ReagentList.Count == 1 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent" :
+                                                                                                    "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
+                                            ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
         ReagentUnit ISolutionInteractionsComponent.RefillSpaceAvailable => EmptyVolume;

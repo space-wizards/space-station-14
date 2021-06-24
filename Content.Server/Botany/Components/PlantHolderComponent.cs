@@ -654,12 +654,14 @@ namespace Content.Server.Botany.Components
                 {
                     if (seeds.Seed == null)
                     {
-                        user.PopupMessageCursor(Loc.GetString("The packet seems to be empty. You throw it away."));
+                        user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
                         usingItem.QueueDelete();
                         return false;
                     }
 
-                    user.PopupMessageCursor(Loc.GetString("You plant the {0} {1}.", seeds.Seed.SeedName, seeds.Seed.SeedNoun));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-plant-success-message",
+                                                          ("seedName", seeds.Seed.SeedName),
+                                                          ("seedNoun", seeds.Seed.SeedNoun)));
 
                     Seed = seeds.Seed;
                     Dead = false;
@@ -675,7 +677,7 @@ namespace Content.Server.Botany.Components
                     return true;
                 }
 
-                user.PopupMessageCursor(Loc.GetString("The {0} already has seeds in it!", Owner.Name));
+                user.PopupMessageCursor(Loc.GetString("plant-holder-component-already-seeded-message", ("name", Owner.Name)));
                 return false;
             }
 
@@ -683,14 +685,14 @@ namespace Content.Server.Botany.Components
             {
                 if (WeedLevel > 0)
                 {
-                    user.PopupMessageCursor(Loc.GetString("You remove the weeds from the {0}.", Owner.Name));
-                    user.PopupMessageOtherClients(Loc.GetString("{0} starts uprooting the weeds.", user.Name));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-weeds-message",("name", Owner.Name)));
+                    user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-weeds-others-message",("otherName", user.Name)));
                     WeedLevel = 0;
                     UpdateSprite();
                 }
                 else
                 {
-                    user.PopupMessageCursor(Loc.GetString("This plot is devoid of weeds! It doesn't need uprooting."));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-no-weeds-message"));
                 }
 
                 return true;
@@ -700,13 +702,13 @@ namespace Content.Server.Botany.Components
             {
                 if (Seed != null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("You remove the plant from the {0}.", Owner.Name));
-                    user.PopupMessageOtherClients(Loc.GetString("{0} removes the plant.", user.Name));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-plant-message",("name", Owner.Name)));
+                    user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-plant-others-message",("name", user.Name)));
                     RemovePlant();
                 }
                 else
                 {
-                    user.PopupMessageCursor(Loc.GetString("There is no plant to remove."));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-no-plant-message"));
                 }
 
                 return true;
@@ -731,13 +733,13 @@ namespace Content.Server.Botany.Components
                 var split = solution.Drain(amount);
                 if (split.TotalVolume == 0)
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:TheName} is empty!", usingItem));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-message",("owner", usingItem)));
                     return true;
                 }
 
-                user.PopupMessageCursor(Loc.GetString(
-                    sprayed ? "You spray {0:TheName}" : "You transfer {1}u to {0:TheName}",
-                    Owner, split.TotalVolume));
+                user.PopupMessageCursor(Loc.GetString(sprayed ? "plant-holder-component-spray-message" : "plant-holder-component-transfer-message",
+                                                      ("owner",Owner),
+                                                      ("amount",split.TotalVolume)));
 
                 _solutionContainer?.TryAddSolution(split);
 
@@ -750,25 +752,25 @@ namespace Content.Server.Botany.Components
             {
                 if (Seed == null)
                 {
-                    user.PopupMessageCursor(Loc.GetString("There is nothing to take a sample of!"));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"));
                     return false;
                 }
 
                 if (Sampled)
                 {
-                    user.PopupMessageCursor(Loc.GetString("This plant has already been sampled."));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-already-sampled-message"));
                     return false;
                 }
 
                 if (Dead)
                 {
-                    user.PopupMessageCursor(Loc.GetString("This plant is dead."));
+                    user.PopupMessageCursor(Loc.GetString("plant-holder-component-dead-plant-message"));
                     return false;
                 }
 
                 var seed = Seed.SpawnSeedPacket(user.Transform.Coordinates);
                 seed.RandomOffset(0.25f);
-                user.PopupMessageCursor(Loc.GetString($"You take a sample from the {Seed.DisplayName}."));
+                user.PopupMessageCursor(Loc.GetString("plant-holder-component-take-sample-message", ("seedName", Seed.DisplayName)));
                 Health -= (_random.Next(3, 5) * 10);
 
                 if (_random.Prob(0.3f))
@@ -788,8 +790,13 @@ namespace Content.Server.Botany.Components
 
             if (usingItem.HasComponent<ProduceComponent>())
             {
-                user.PopupMessageCursor(Loc.GetString("You compost {1:theName} into {0:theName}.", Owner, usingItem));
-                user.PopupMessageOtherClients(Loc.GetString("{0:TheName} composts {1:theName} into {2:theName}.", user, usingItem, Owner));
+                user.PopupMessageCursor(Loc.GetString("plant-holder-component-compost-message",
+                                                      ("owner", Owner),
+                                                      ("usingItem", usingItem)));
+                user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-compost-others-message",
+                                                            ("user",user),
+                                                            ("usingItem", usingItem),
+                                                            ("owner", Owner)));
 
                 if (usingItem.TryGetComponent(out SolutionContainerComponent? solution2))
                 {
@@ -826,45 +833,51 @@ namespace Content.Server.Botany.Components
 
             if (Seed == null)
             {
-                message.AddMarkup(Loc.GetString("It has nothing planted in it.\n"));
+                message.AddMarkup(Loc.GetString("plant-holder-component-nothing-planted-message") + "\n");
             }
             else if (!Dead)
             {
-                message.AddMarkup(Loc.GetString($"[color=green]{Seed.DisplayName}[/color] {(Seed.DisplayName.EndsWith('s') ? "are" : "is")} growing here.\n"));
+                message.AddMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
+                                                ("seedName", Seed.DisplayName),
+                                                ("toBeForm", Seed.DisplayName.EndsWith('s') ? "are" : "is"))
+                                  + "\n");
 
                 if(Health <= Seed.Endurance / 2)
-                    message.AddMarkup(Loc.GetString($"The plant looks [color=red]{(Age > Seed.Lifespan ? "old and wilting" : "unhealthy")}[/color].\n"));
+                    message.AddMarkup(Loc.GetString("plant-holder-component-something-already-growing-low-health-message",
+                                                    ("healthState", Loc.GetString(Age > Seed.Lifespan ? "plant-holder-component-plant-old-adjective" :
+                                                                                                        "plant-holder-component-plant-unhealthy-adjective")))
+                                      + "\n");
             }
             else
             {
-                message.AddMarkup(Loc.GetString("It is full of [color=red]dead plant matter[/color].\n"));
+                message.AddMarkup(Loc.GetString("plant-holder-component-dead-plant-matter-message") + "\n");
             }
 
             if(WeedLevel >= 5)
-                message.AddMarkup(Loc.GetString("It is filled with [color=green]weeds[/color]!\n"));
+                message.AddMarkup(Loc.GetString("plant-holder-component-weed-high-level-message") + "\n");
 
             if(PestLevel >= 5)
-                message.AddMarkup(Loc.GetString("It is filled with [color=gray]tiny worms[/color]!\n"));
+                message.AddMarkup(Loc.GetString("plant-holder-component-pest-high-level-message") + "\n");
 
-            message.AddMarkup(Loc.GetString($"Water:     [color=cyan]{(int)WaterLevel}[/color]\n"));
-            message.AddMarkup(Loc.GetString($"Nutrient: [color=orange]{(int)NutritionLevel}[/color]\n"));
+            message.AddMarkup(Loc.GetString($"plant-holder-component-water-level-message",("waterLevel", (int)WaterLevel)) + "\n");
+            message.AddMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message", ("nutritionLevel", (int)NutritionLevel)) + "\n");
 
             if (DrawWarnings)
             {
                 if(Toxins > 40f)
-                    message.AddMarkup(Loc.GetString("The [color=red]toxicity level alert[/color] is flashing red.\n"));
+                    message.AddMarkup(Loc.GetString("plant-holder-component-toxins-high-warning") + "\n");
 
                 if(ImproperLight)
-                    message.AddMarkup(Loc.GetString("The [color=yellow]improper light level alert[/color] is blinking.\n"));
+                    message.AddMarkup(Loc.GetString("plant-holder-component-light-improper-warning") + "\n");
 
                 if(ImproperHeat)
-                    message.AddMarkup(Loc.GetString("The [color=orange]improper temperature level alert[/color] is blinking.\n"));
+                    message.AddMarkup(Loc.GetString("plant-holder-component-heat-improper-warning") + "\n");
 
                 if(ImproperPressure)
-                    message.AddMarkup(Loc.GetString("The [color=lightblue]improper environment pressure alert[/color] is blinking.\n"));
+                    message.AddMarkup(Loc.GetString("plant-holder-component-pressure-improper-warning") + "\n");
 
                 if(_missingGas > 0)
-                    message.AddMarkup(Loc.GetString("The [color=cyan]improper gas environment alert[/color] is blinking.\n"));
+                    message.AddMarkup(Loc.GetString("plant-holder-component-gas-missing-warning") + "\n");
             }
         }
     }

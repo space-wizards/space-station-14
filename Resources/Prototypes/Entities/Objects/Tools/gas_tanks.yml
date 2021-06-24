@@ -13,15 +13,6 @@
   - type: Clothing
     sprite: Objects/Tanks/generic.rsi
     QuickEquip: false
-  - type: NodeContainer
-    nodes:
-      tank:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: None
-        connectionsEnabled: false
-        needAnchored: false
-        rotationsEnabled: false
   - type: GasTank
   - type: ItemActions
     actions:

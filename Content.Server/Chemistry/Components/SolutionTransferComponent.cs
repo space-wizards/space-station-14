@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
@@ -68,10 +68,10 @@ namespace Content.Server.Chemistry.Components
                 {
                     var toTheBrim = ownerSolution.RefillSpaceAvailable == 0;
                     var msg = toTheBrim
-                        ? "You fill {0:TheName} to the brim with {1}u from {2:theName}"
-                        : "You fill {0:TheName} with {1}u from {2:theName}";
+                        ? "solution-transfer-component-fill-to-brim-message"
+                        : "solution-transfer-component-fill--message";
 
-                    target.PopupMessage(eventArgs.User, Loc.GetString(msg, Owner, transferred, target));
+                    target.PopupMessage(eventArgs.User, Loc.GetString(msg,("owner", Owner),("amount", transferred),("target", target)));
                     return true;
                 }
             }
@@ -82,8 +82,10 @@ namespace Content.Server.Chemistry.Components
 
                 if (transferred > 0)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("You transfer {0}u to {1:theName}.",
-                        transferred, target));
+                    Owner.PopupMessage(eventArgs.User,
+                                       Loc.GetString("solution-transfer-component-transfer-success-message",
+                                                     ("amount",transferred),
+                                                     ("target",target)));
 
                     return true;
                 }
@@ -101,13 +103,13 @@ namespace Content.Server.Chemistry.Components
         {
             if (source.DrainAvailable == 0)
             {
-                source.Owner.PopupMessage(user, Loc.GetString("{0:TheName} is empty!", source.Owner));
+                source.Owner.PopupMessage(user, Loc.GetString("solution-transfer-component-do-transfer-component-is-empty", ("entity",source.Owner)));
                 return ReagentUnit.Zero;
             }
 
             if (target.RefillSpaceAvailable == 0)
             {
-                target.Owner.PopupMessage(user, Loc.GetString("{0:TheName} is full!", target.Owner));
+                target.Owner.PopupMessage(user, Loc.GetString("solution-transfer-component-do-transfer-component-is-full", ("entity", target.Owner)));
                 return ReagentUnit.Zero;
             }
 

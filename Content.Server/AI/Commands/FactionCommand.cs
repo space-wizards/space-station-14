@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using Content.Server.Administration;
 using Content.Server.AI.EntitySystems;
@@ -13,9 +13,8 @@ namespace Content.Server.AI.Commands
     public sealed class FactionCommand : IConsoleCommand
     {
         public string Command => "factions";
-        public string Description => "Update / list factional relationships for NPCs.";
-        public string Help => "faction <source> <friendly/hostile> target\n" +
-                              "faction <source> list: hostile factions";
+        public string Description => Loc.GetString("faction-command-description");
+        public string Help => Loc.GetString("faction-command-help-text");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -35,13 +34,13 @@ namespace Content.Server.AI.Commands
 
             if (args.Length < 2)
             {
-                shell.WriteLine(Loc.GetString("Need more args"));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
             if (!Enum.TryParse(args[0], true, out Faction faction))
             {
-                shell.WriteLine(Loc.GetString("Invalid faction"));
+                shell.WriteLine(Loc.GetString("faction-command-invalid-faction-error"));
                 return;
             }
 
@@ -52,40 +51,40 @@ namespace Content.Server.AI.Commands
                 case "friendly":
                     if (args.Length < 3)
                     {
-                        shell.WriteLine(Loc.GetString("Need to supply a target faction"));
+                        shell.WriteLine(Loc.GetString("faction-command-no-target-faction-error"));
                         return;
                     }
 
                     if (!Enum.TryParse(args[2], true, out targetFaction))
                     {
-                        shell.WriteLine(Loc.GetString("Invalid target faction"));
+                        shell.WriteLine(Loc.GetString("faction-command-invalid-target-faction-error"));
                         return;
                     }
 
                     EntitySystem.Get<AiFactionTagSystem>().MakeFriendly(faction, targetFaction);
-                    shell.WriteLine(Loc.GetString("Command successful"));
+                    shell.WriteLine(Loc.GetString("shell-command-success"));
                     break;
                 case "hostile":
                     if (args.Length < 3)
                     {
-                        shell.WriteLine(Loc.GetString("Need to supply a target faction"));
+                        shell.WriteLine(Loc.GetString("faction-command-no-target-faction-error"));
                         return;
                     }
 
                     if (!Enum.TryParse(args[2], true, out targetFaction))
                     {
-                        shell.WriteLine(Loc.GetString("Invalid target faction"));
+                        shell.WriteLine(Loc.GetString("faction-command-invalid-target-faction-error"));
                         return;
                     }
 
                     EntitySystem.Get<AiFactionTagSystem>().MakeHostile(faction, targetFaction);
-                    shell.WriteLine(Loc.GetString("Command successful"));
+                    shell.WriteLine(Loc.GetString("shell-command-success"));
                     break;
                 case "list":
                     shell.WriteLine(EntitySystem.Get<AiFactionTagSystem>().GetHostileFactions(faction).ToString());
                     break;
                 default:
-                    shell.WriteLine(Loc.GetString("Unknown faction arg"));
+                    shell.WriteLine(Loc.GetString("faction-command-unknown-faction-argument-error"));
                     break;
             }
 

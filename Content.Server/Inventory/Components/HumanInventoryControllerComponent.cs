@@ -35,8 +35,8 @@ namespace Content.Server.Inventory.Components
                 if (_inventory.GetSlotItem(Slots.INNERCLOTHING) == null)
                 {
                     reason = Loc.GetString(slotMask == SlotFlags.IDCARD
-                        ? "You need a uniform to store something in your ID slot!"
-                        : "You need a uniform to store something in your pockets!");
+                        ? "human-inventory-controller-component-need-uniform-to-store-in-id-slot-text"
+                        : "human-inventory-controller-component-need-uniform-to-store-in-pockets-text");
                     return false;
                 }
 
@@ -51,7 +51,7 @@ namespace Content.Server.Inventory.Components
                     }
                     else if (!flagsCheck)
                     {
-                        reason = Loc.GetString("This is too large!");
+                        reason = Loc.GetString("human-inventory-controller-component-too-large-text");
                     }
                 }
             }

@@ -35,8 +35,8 @@ namespace Content.Client.LateJoin
             IoCManager.InjectDependencies(this);
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            Title = Loc.GetString("late-join-gui-title");
 
-            Title = Loc.GetString("Late Join");
 
             var jobList = new VBoxContainer();
             var vBox = new VBoxContainer
@@ -67,7 +67,8 @@ namespace Content.Client.LateJoin
                         category = new VBoxContainer
                         {
                             Name = department,
-                            ToolTip = Loc.GetString("Jobs in the {0} department", department)
+                            ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
+                                                    ("departmentName", department))
                         };
 
                         if (firstCategory)
@@ -89,7 +90,7 @@ namespace Content.Client.LateJoin
                             {
                                 new Label
                                 {
-                                    Text = Loc.GetString("{0} jobs", department)
+                                    Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", department))
                                 }
                             }
                         });

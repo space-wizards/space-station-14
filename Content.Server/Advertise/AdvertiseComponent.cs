@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Advertisements;
 using Content.Server.Chat.Managers;

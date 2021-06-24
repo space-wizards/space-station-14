@@ -48,12 +48,8 @@ namespace Content.Shared.Stunnable
         [DataField("slowdownCap")]
         protected float _slowdownCap = 20f;
 
-        private float _helpKnockdownRemove = 1f;
-
         [DataField("helpInterval")]
         private float _helpInterval = 1f;
-
-        [DataField("stunAlertId")] private string _stunAlertId = "stun";
 
         private bool _canHelp = true;
 

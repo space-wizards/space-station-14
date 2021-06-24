@@ -171,8 +171,6 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false);
 
-        void Update(float frameTime);
-
         void AddPipeNet(IPipeNet pipeNet);
 
         void RemovePipeNet(IPipeNet pipeNet);

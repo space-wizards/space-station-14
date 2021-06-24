@@ -10,14 +10,7 @@ namespace Content.Shared.Eui
 {
     public sealed class MsgEuiMessage : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgEuiMessage);
-
-        public MsgEuiMessage(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public uint Id;
         public EuiMessageBase Message = default!;

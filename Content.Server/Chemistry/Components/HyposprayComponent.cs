@@ -41,28 +41,28 @@ namespace Content.Server.Chemistry.Components
             if (target == null || !EligibleEntity(target))
                 return false;
 
-            var msgFormat = "You inject {0:TheName}.";
+            string? msgFormat = null;
 
             if (target == user)
             {
-                msgFormat = "You inject yourself.";
+                msgFormat = "hypospray-component-inject-self-message";
             }
             else if (EligibleEntity(user) && ClumsyComponent.TryRollClumsy(user, ClumsyFailChance))
             {
-                msgFormat = "Oops! You injected yourself!";
+                msgFormat = "hypospray-component-inject-self-clumsy-message";
                 target = user;
             }
 
             if (_solution == null || _solution.CurrentVolume == 0)
             {
-                user.PopupMessageCursor(Loc.GetString("It's empty!"));
+                user.PopupMessageCursor(Loc.GetString("hypospray-component-empty-message"));
                 return true;
             }
 
-            user.PopupMessage(Loc.GetString(msgFormat, target));
+            user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",("other", target)));
             if (target != user)
             {
-                target.PopupMessage(Loc.GetString("You feel a tiny prick!"));
+                target.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
                 var angle = Angle.FromWorldVec(target.Transform.WorldPosition - user.Transform.WorldPosition);
                 meleeSys.SendLunge(angle, user);
@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.Components
 
             if (realTransferAmount <= 0)
             {
-                user.PopupMessage(user, Loc.GetString("{0:TheName} is already full!", targetSolution.Owner));
+                user.PopupMessage(user, Loc.GetString("hypospray-component-transfer-already-full-message ",("owner", targetSolution.Owner)));
                 return true;
             }
 

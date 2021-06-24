@@ -15,7 +15,7 @@ namespace Content.Server.GameTicking.Rules
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Hello crew! Have a good shift!"));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
 
             var filter = Filter.Empty()
                 .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<TraitorRole>() ?? false);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.ViewVariables;
 
@@ -82,7 +83,7 @@ namespace Content.Server.Atmos
             DismantleCooldown = 0;
         }
 
-        public void SelfBreakdown(bool spaceIsAllConsuming = false)
+        public void SelfBreakdown(AtmosphereSystem atmosphereSystem, bool spaceIsAllConsuming = false)
         {
             var combined = new GasMixture(Atmospherics.CellVolume);
 
@@ -99,7 +100,7 @@ namespace Content.Server.Atmos
             foreach (var tile in _tiles)
             {
                 if (tile?.Air == null) continue;
-                combined.Merge(tile.Air);
+                atmosphereSystem.Merge(combined, tile.Air);
                 if (!spaceIsAllConsuming || !tile.Air.Immutable) continue;
                 combined.Clear();
                 break;
