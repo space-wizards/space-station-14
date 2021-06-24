@@ -36,7 +36,7 @@ namespace Content.Client.Storage.Visualizers
             }
         }
 
-        public void AfterDeserialization()
+        void ISerializationHooks.AfterDeserialization()
         {
             if (_mapLayers is { Count: > 0 })
             {
