@@ -109,7 +109,7 @@ namespace Content.Server.Radiation
                 return;
 
             if(_duration <= 0f)
-                Owner.Delete();
+                Owner.QueueDelete();
 
             _duration -= frameTime;
         }
