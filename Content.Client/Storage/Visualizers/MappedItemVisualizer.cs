@@ -59,7 +59,7 @@ namespace Content.Client.Storage.Visualizers
                         foreach (var (layerName, layerFilter) in _spriteLayers)
                         {
                             if (component.Owner.EntityManager.TryGetEntity(entityUid, out var entity)
-                                && Matches(entity, layerFilter))
+                                && layerFilter.Whitelist.IsValid(entity))
                             {
                                 spriteComponent.LayerSetVisible(layerName, show);
                             }
@@ -69,16 +69,6 @@ namespace Content.Client.Storage.Visualizers
                     layerData.QueuedEntities.Clear();
                 }
             }
-        }
-
-        private bool Matches(IEntity entity, SharedMapLayerData layerFilter)
-        {
-            if (entity.Prototype != null && entity.Prototype.ID.Equals(layerFilter.Id))
-            {
-                return true;
-            }
-
-            return layerFilter.Whitelist != null && layerFilter.Whitelist.IsValid(entity);
         }
     }
 }
