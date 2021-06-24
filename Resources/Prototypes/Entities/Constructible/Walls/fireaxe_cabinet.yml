@@ -6,7 +6,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      sprite: Constructible/Misc/fireaxe_cabinet.rsi
+      sprite: Constructible/Storage/Cabinets/fireaxe_cabinet.rsi
       netsync: false
       state: cabinet-filled-closed
     - type: ItemCabinet
