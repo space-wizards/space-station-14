@@ -45,11 +45,11 @@ namespace Content.Client.Access.UI
                 Columns = 3,
                 Children =
                 {
-                    new Label {Text = Loc.GetString("Privileged ID:")},
+                    new Label {Text = Loc.GetString("id-card-console-window-privileged-id")},
                     (_privilegedIdButton = new Button()),
                     (_privilegedIdLabel = new Label()),
 
-                    new Label {Text = Loc.GetString("Target ID:")},
+                    new Label {Text = Loc.GetString("id-card-console-window-target-id")},
                     (_targetIdButton = new Button()),
                     (_targetIdLabel = new Label())
                 }
@@ -71,7 +71,7 @@ namespace Content.Client.Access.UI
                     // Name
                     (_fullNameLabel = new Label
                     {
-                        Text = Loc.GetString("Full name:")
+                        Text = Loc.GetString("id-card-console-window-full-name-label")
                     }),
                     (_fullNameLineEdit = new LineEdit
                     {
@@ -79,14 +79,14 @@ namespace Content.Client.Access.UI
                     }),
                     (_fullNameSaveButton = new Button
                     {
-                        Text = Loc.GetString("Save"),
+                        Text = Loc.GetString("id-card-console-window-save-button"),
                         Disabled = true
                     }),
 
                     // Title
                     (_jobTitleLabel = new Label
                     {
-                        Text = Loc.GetString("Job title:")
+                        Text = Loc.GetString("id-card-console-window-job-title-label")
                     }),
                     (_jobTitleLineEdit = new LineEdit
                     {
@@ -94,7 +94,7 @@ namespace Content.Client.Access.UI
                     }),
                     (_jobTitleSaveButton = new Button
                     {
-                        Text = Loc.GetString("Save"),
+                        Text = Loc.GetString("id-card-console-window-save-button"),
                         Disabled = true
                     }),
                 },
@@ -144,14 +144,14 @@ namespace Content.Client.Access.UI
         public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
         {
             _privilegedIdButton.Text = state.IsPrivilegedIdPresent
-                ? Loc.GetString("Eject")
-                : Loc.GetString("Insert");
+                ? Loc.GetString("id-card-console-window-eject-button")
+                : Loc.GetString("id-card-console-window-insert-button");
 
             _privilegedIdLabel.Text = state.PrivilegedIdName;
 
             _targetIdButton.Text = state.IsTargetIdPresent
-                ? Loc.GetString("Eject")
-                : Loc.GetString("Insert");
+                ? Loc.GetString("id-card-console-window-eject-button")
+                : Loc.GetString("id-card-console-window-insert-button");
 
             _targetIdLabel.Text = state.TargetIdName;
 
@@ -165,7 +165,7 @@ namespace Content.Client.Access.UI
             _fullNameLineEdit.Editable = interfaceEnabled;
             if (!fullNameDirty)
             {
-                _fullNameLineEdit.Text = state.TargetIdFullName ?? "";
+                _fullNameLineEdit.Text = state.TargetIdFullName ?? string.Empty;
             }
 
             _fullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
@@ -174,7 +174,7 @@ namespace Content.Client.Access.UI
             _jobTitleLineEdit.Editable = interfaceEnabled;
             if (!jobTitleDirty)
             {
-                _jobTitleLineEdit.Text = state.TargetIdJobTitle ?? "";
+                _jobTitleLineEdit.Text = state.TargetIdJobTitle ?? string.Empty;
             }
 
             _jobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;

@@ -11,8 +11,8 @@ using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -57,7 +57,7 @@ namespace Content.Server.Actions.Actions
             }
 
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
-            if (args.Target == args.Performer || !args.Performer.CanAttack()) return;
+            if (args.Target == args.Performer || !EntitySystem.Get<ActionBlockerSystem>().CanAttack(args.Performer)) return;
 
             var random = IoCManager.Resolve<IRobustRandom>();
             var audio = EntitySystem.Get<AudioSystem>();
@@ -72,8 +72,11 @@ namespace Content.Server.Actions.Actions
             {
                 SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Weapons/punchmiss.ogg", args.Performer,
                     AudioHelpers.WithVariation(0.025f));
-                args.Performer.PopupMessageOtherClients(Loc.GetString("{0} fails to disarm {1}!", args.Performer.Name, args.Target.Name));
-                args.Performer.PopupMessageCursor(Loc.GetString("You fail to disarm {0}!", args.Target.Name));
+                args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
+                                                                      ("performerName", args.Performer.Name),
+                                                                      ("targetName", args.Target.Name)));
+                args.Performer.PopupMessageCursor(Loc.GetString("disarm-action-popup-message-cursor",
+                                                                ("targetName", args.Target.Name)));
                 system.SendLunge(angle, args.Performer);
                 return;
             }

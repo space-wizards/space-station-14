@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using JetBrains.Annotations;

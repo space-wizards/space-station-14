@@ -16,6 +16,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -29,13 +30,12 @@ namespace Content.Server.GameTicking.Presets
     [GamePreset("traitor")]
     public class PresetTraitor : GamePreset
     {
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string ModeTitle => "Traitor";
+        public override string ModeTitle => Loc.GetString("traitor-title");
 
         private int MinPlayers { get; set; }
         private int PlayersPerTraitor { get; set; }
@@ -59,13 +59,13 @@ namespace Content.Server.GameTicking.Presets
 
             if (!force && readyPlayers.Count < MinPlayers)
             {
-                _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {readyPlayers.Count} players readied up out of {MinPlayers} needed.");
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", readyPlayers.Count), ("minumumPlayers", MinPlayers)));
                 return false;
             }
 
             if (readyPlayers.Count == 0)
             {
-                _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Traitor.");
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-no-one-ready"));
                 return false;
             }
 
@@ -159,7 +159,7 @@ namespace Content.Server.GameTicking.Presets
                 traitor.GreetTraitor(codewords);
             }
 
-            _gameTicker.AddGameRule<RuleTraitor>();
+            EntitySystem.Get<GameTicker>().AddGameRule<RuleTraitor>();
             return true;
         }
 

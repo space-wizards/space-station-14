@@ -11,6 +11,7 @@ using Content.Server.Items;
 using Content.Server.Notification;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry;
@@ -37,7 +38,7 @@ namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct
+    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct, IBreakAct
     {
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
@@ -56,6 +57,7 @@ namespace Content.Server.Kitchen.Components
 
 [ViewVariables]
         private bool _busy = false;
+        private bool _broken;
 
         /// <summary>
         /// This is a fixed offset of 5.
@@ -77,7 +79,7 @@ namespace Content.Server.Kitchen.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MicrowaveUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -160,6 +162,17 @@ namespace Content.Server.Kitchen.Components
                 _uiDirty = true;
             }
 
+            if (_busy && _broken)
+            {
+                SetAppearance(MicrowaveVisualState.Broken);
+                //we broke while we were cooking/busy!
+                _lostPower = true;
+                VaporizeReagents();
+                EjectSolids();
+                _busy = false;
+                _uiDirty = true;
+            }
+
             if (_uiDirty && Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
@@ -176,10 +189,22 @@ namespace Content.Server.Kitchen.Components
 
         private void SetAppearance(MicrowaveVisualState state)
         {
+            var finalState = state;
+            if (_broken)
+            {
+                finalState = MicrowaveVisualState.Broken;
+            }
+
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+                appearance.SetData(PowerDeviceVisuals.VisualState, finalState);
             }
+        }
+
+        public void OnBreak(BreakageEventArgs eventArgs)
+        {
+            _broken = true;
+            SetAppearance(MicrowaveVisualState.Broken);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -197,7 +222,13 @@ namespace Content.Server.Kitchen.Components
         {
             if (!Powered)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It has no power!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-no-power"));
+                return false;
+            }
+
+            if (_broken)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's broken!"));
                 return false;
             }
 
@@ -205,7 +236,7 @@ namespace Content.Server.Kitchen.Components
 
             if (itemEntity == null)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You have no active hand!"));
+                eventArgs.User.PopupMessage(Loc.GetString("microwave-component-interact-using-no-active-hand"));
                 return false;
             }
 
@@ -226,7 +257,7 @@ namespace Content.Server.Kitchen.Components
                 var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.EmptyVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Container is full"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-container-full"));
                     return false;
                 }
 
@@ -237,14 +268,15 @@ namespace Content.Server.Kitchen.Components
                     return false;
                 }
 
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-transfer-success",
+                                                                 ("amount",removedSolution.TotalVolume)));
                 return true;
             }
 
             if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
             {
 
-                Owner.PopupMessage(eventArgs.User, "That won't work!");
+                Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
                 return false;
             }
 
@@ -498,14 +530,14 @@ namespace Content.Server.Kitchen.Components
             }
 
             var othersMessage = headCount > 1
-                ? Loc.GetString("{0:theName} is trying to cook {0:their} heads!", victim)
-                : Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+                ? Loc.GetString("microwave-component-suicide-multi-head-others-message", ("victim", victim))
+                : Loc.GetString("microwave-component-suicide-others-message",("victim", victim));
 
             victim.PopupMessageOtherClients(othersMessage);
 
             var selfMessage = headCount > 1
-                ? Loc.GetString("You cook your heads!")
-                : Loc.GetString("You cook your head!");
+                ? Loc.GetString("microwave-component-suicide-multi-head-message")
+                : Loc.GetString("microwave-component-suicide-message");
 
             victim.PopupMessage(selfMessage);
 

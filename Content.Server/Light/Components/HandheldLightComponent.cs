@@ -9,8 +9,8 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
@@ -57,7 +57,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         private byte? _lastLevel;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -67,7 +67,7 @@ namespace Content.Server.Light.Components
             Dirty();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
@@ -75,7 +75,7 @@ namespace Content.Server.Light.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
             Dirty();
             return true;
@@ -85,11 +85,11 @@ namespace Content.Server.Light.Components
         {
             if (Activated)
             {
-                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("handheld-light-component-on-examine-is-on-message"));
             }
             else
             {
-                message.AddMarkup(Loc.GetString("The light is currently [color=darkred]off[/color]."));
+                message.AddMarkup(Loc.GetString("handheld-light-component-on-examine-is-off-message"));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Content.Server.Light.Components
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus(IEntity user)
         {
-            if (!ActionBlockerSystem.CanUse(user)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user)) return false;
             return Activated ? TurnOff() : TurnOn(user);
         }
 
@@ -138,7 +138,7 @@ namespace Content.Server.Light.Components
             if (Cell == null)
             {
                 if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
-                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-missing-message"));
                 UpdateLightAction();
                 return false;
             }
@@ -149,7 +149,7 @@ namespace Content.Server.Light.Components
             if (Wattage > Cell.CurrentCharge)
             {
                 if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
-                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-dead-message"));
                 UpdateLightAction();
                 return false;
             }
@@ -177,12 +177,12 @@ namespace Content.Server.Light.Components
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "on" : "off";
+                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
             {
-                item.EquippedPrefix = on ? "on" : "off";
+                item.EquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
             }
         }
 
@@ -250,13 +250,13 @@ namespace Content.Server.Light.Components
         {
             protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle light");
+                data.Text = Loc.GetString("toggle-light-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, HandheldLightComponent component)

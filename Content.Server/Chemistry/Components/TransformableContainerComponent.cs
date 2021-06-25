@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.Components
 
         public bool Transformed { get; private set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

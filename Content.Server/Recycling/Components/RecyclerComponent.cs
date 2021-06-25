@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
@@ -153,11 +153,11 @@ namespace Content.Server.Recycling.Components
 
             if (mind != null)
             {
-                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity?.PopupMessage(Loc.GetString("You recycle yourself!"));
+                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
             }
 
-            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+            victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
             if (victim.TryGetComponent<SharedBodyComponent>(out var body))
             {

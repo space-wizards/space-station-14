@@ -10,7 +10,7 @@ using Content.Shared.Access;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -39,7 +39,7 @@ namespace Content.Server.Access.Components
         private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
         private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -132,7 +132,7 @@ namespace Content.Server.Access.Components
         {
             if (!user.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(user, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(user, Loc.GetString("access-id-card-console-component-no-hands-error"));
                 return;
             }
 
@@ -159,9 +159,9 @@ namespace Content.Server.Access.Components
                 return;
             }
 
-            if (!hands.Drop(hands.ActiveHand, container))
+            if (!hands.TryPutHandIntoContainer(hands.ActiveHand, container))
             {
-                Owner.PopupMessage(user, Loc.GetString("You can't let go of the ID card!"));
+                Owner.PopupMessage(user, Loc.GetString("access-id-card-console-component-cannot-let-go-error"));
                 return;
             }
             UpdateUserInterface();
@@ -194,8 +194,8 @@ namespace Content.Server.Access.Components
                     null,
                     null,
                     null,
-                    _privilegedIdContainer.ContainedEntity?.Name ?? "",
-                    _targetIdContainer.ContainedEntity?.Name ?? "");
+                    _privilegedIdContainer.ContainedEntity?.Name ?? string.Empty,
+                    _targetIdContainer.ContainedEntity?.Name ?? string.Empty);
             }
             else
             {
@@ -208,19 +208,19 @@ namespace Content.Server.Access.Components
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
                     targetAccessComponent.Tags.ToArray(),
-                    _privilegedIdContainer.ContainedEntity?.Name ?? "",
-                    _targetIdContainer.ContainedEntity?.Name ?? "");
+                    _privilegedIdContainer.ContainedEntity?.Name ?? string.Empty,
+                    _targetIdContainer.ContainedEntity?.Name ?? string.Empty);
             }
             UserInterface?.SetState(newState);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
-            if(!Powered) return;
+            if (!Powered) return;
 
             UserInterface?.Open(actor.PlayerSession);
         }
@@ -235,7 +235,7 @@ namespace Content.Server.Access.Components
                 return false;
             }
 
-            if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || !user.TryGetComponent(out IHandsComponent? hand))
+            if (!item.HasComponent<IdCardComponent>() || !user.TryGetComponent(out IHandsComponent? hand))
             {
                 return false;
             }
@@ -259,13 +259,13 @@ namespace Content.Server.Access.Components
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Privileged ID");
+                data.Text = Loc.GetString("access-eject-privileged-id-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                 data.Visibility = component.PrivilegedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
@@ -284,13 +284,13 @@ namespace Content.Server.Access.Components
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Target ID");
+                data.Text = Loc.GetString("access-eject-target-id-verb-get-data-text");
                 data.Visibility = component.TargetIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }

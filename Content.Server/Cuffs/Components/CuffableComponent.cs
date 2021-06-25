@@ -8,8 +8,8 @@ using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -50,7 +50,7 @@ namespace Content.Server.Cuffs.Components
 
         private bool _uncuffing;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -113,7 +113,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             Container.Insert(handcuff);
-            CanStillInteract = Owner.TryGetComponent(out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
+            CanStillInteract = Owner.TryGetComponent(out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
 
             OnCuffedStateChanged?.Invoke();
             UpdateAlert();
@@ -136,7 +136,7 @@ namespace Content.Server.Cuffs.Components
             if (!Owner.TryGetComponent(out HandsComponent? handsComponent)) return;
 
             var itemCount = handsComponent.GetAllHeldItems().Count();
-            var freeHandCount = handsComponent.Hands.Count() - CuffedHandCount;
+            var freeHandCount = handsComponent.HandNames.Count() - CuffedHandCount;
 
             if (freeHandCount < itemCount)
             {
@@ -209,15 +209,15 @@ namespace Content.Server.Cuffs.Components
             }
 
             // TODO: Make into an event and instead have a system check for owner.
-            if (!isOwner && !ActionBlockerSystem.CanInteract(user))
+            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
-                user.PopupMessage(Loc.GetString("You can't do that!"));
+                user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;
             }
 
             if (!isOwner && !user.InRangeUnobstructed(Owner))
             {
-                user.PopupMessage(Loc.GetString("You are too far away to remove the cuffs."));
+                user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
                 return;
             }
 
@@ -228,7 +228,7 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            user.PopupMessage(Loc.GetString("You start removing the cuffs."));
+            user.PopupMessage(Loc.GetString("cuffable-component-start-removing-cuffs-message"));
 
             if (isOwner)
             {
@@ -279,36 +279,40 @@ namespace Content.Server.Cuffs.Components
                     }
                 }
 
-                CanStillInteract = Owner.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.Hands.Count() > CuffedHandCount;
+                CanStillInteract = Owner.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
                 OnCuffedStateChanged?.Invoke();
                 UpdateAlert();
                 Dirty();
 
                 if (CuffedHandCount == 0)
                 {
-                    user.PopupMessage(Loc.GetString("You successfully remove the cuffs."));
+                    user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-success-message"));
 
                     if (!isOwner)
                     {
-                        user.PopupMessage(Owner, Loc.GetString("{0:theName} uncuffs your hands.", user));
+                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",("otherName", user)));
                     }
                 }
                 else
                 {
                     if (!isOwner)
                     {
-                        user.PopupMessage(Loc.GetString("You successfully remove the cuffs. {0} of {1:theName}'s hands remain cuffed.", CuffedHandCount, user));
-                        user.PopupMessage(Owner, Loc.GetString("{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
+                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
+                                                        ("cuffedHandCount", CuffedHandCount),
+                                                        ("otherName", user)));
+                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-partial-success-message",
+                                                               ("otherName", user),
+                                                               ("cuffedHandCount", CuffedHandCount)));
                     }
                     else
                     {
-                        user.PopupMessage(Loc.GetString("You successfully remove the cuffs. {0} of your hands remain cuffed.", CuffedHandCount));
+                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",("cuffedHandCount", CuffedHandCount)));
                     }
                 }
             }
             else
             {
-                user.PopupMessage(Loc.GetString("You fail to remove the cuffs."));
+                user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-fail-message"));
             }
 
             return;
@@ -322,13 +326,13 @@ namespace Content.Server.Cuffs.Components
         {
             protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
             {
-                if ((user != component.Owner && !ActionBlockerSystem.CanInteract(user)) || component.CuffedHandCount == 0)
+                if ((user != component.Owner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) || component.CuffedHandCount == 0)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Uncuff");
+                data.Text = Loc.GetString("uncuff-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, CuffableComponent component)

@@ -10,8 +10,9 @@ using Content.Server.Items;
 using Content.Server.PDA.Managers;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.PDA;
 using Content.Shared.Tag;
@@ -63,7 +64,7 @@ namespace Content.Server.PDA
             _accessSet = new PdaAccessSet(this);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _idSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");
@@ -123,19 +124,21 @@ namespace Content.Server.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (message.Session.AttachedEntity == null)
+                    var player = message.Session.AttachedEntity;
+                    if (player == null)
                         break;
 
                     if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
-                        message.Session.AttachedEntity.Transform.Coordinates, out var entity))
+                        player.Transform.Coordinates, out var entity))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
                     }
 
-                    HandsComponent.PutInHandOrDropStatic(
-                        message.Session.AttachedEntity,
-                        entity.GetComponent<ItemComponent>());
+                    if (!player.TryGetComponent(out HandsComponent? hands) || !entity.TryGetComponent(out ItemComponent? item))
+                        break;
+
+                    hands.PutInHandOrDrop(item);
 
                     SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
                     break;
@@ -185,7 +188,7 @@ namespace Content.Server.PDA
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-id-card-no-hands"));
                 return true;
             }
 
@@ -220,7 +223,7 @@ namespace Content.Server.PDA
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-pen-no-hands"));
                 return true;
             }
 
@@ -370,13 +373,13 @@ namespace Content.Server.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject ID");
+                data.Text = Loc.GetString("eject-id-verb-get-data-text");
                 data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
@@ -392,13 +395,13 @@ namespace Content.Server.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Pen");
+                data.Text = Loc.GetString("eject-pen-verb-get-data-text");
                 data.Visibility = component.PenSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
@@ -414,13 +417,13 @@ namespace Content.Server.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle flashlight");
+                data.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             }
 

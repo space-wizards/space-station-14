@@ -7,7 +7,7 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -49,7 +49,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("fillPrototype")]
         private string? _fillPrototype;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-container", out var existing);
@@ -108,13 +108,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("ammo-box-component-try-insert-ammo-wrong-caliber"));
                 return false;
             }
 
             if (AmmoLeft >= Capacity)
             {
-                Owner.PopupMessage(user, Loc.GetString("No room"));
+                Owner.PopupMessage(user, Loc.GetString("ammo-box-component-try-insert-ammo-no-room"));
                 return false;
             }
 
@@ -222,13 +222,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         {
             protected override void GetData(IEntity user, AmmoBoxComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Dump 10");
+                data.Text = Loc.GetString("dump-vert-get-data-text");
                 data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
@@ -241,8 +241,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("\nIt's a [color=white]{0}[/color] ammo box.", _caliber));
-            message.AddMarkup(Loc.GetString("\nIt has [color=white]{0}[/color] out of [color=white]{1}[/color] ammo left.", AmmoLeft, _capacity));
+            message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-caliber-description", ("caliber", _caliber)));
+            message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-remaining-ammo-description", ("ammoLeft",AmmoLeft),("capacity", _capacity)));
         }
     }
 }

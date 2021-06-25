@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Atmos;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
@@ -9,7 +9,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
@@ -78,7 +78,7 @@ namespace Content.Server.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && ActionBlockerSystem.CanAttack(user);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
         }
 
         /// <inheritdoc />
@@ -176,7 +176,7 @@ namespace Content.Server.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                user.PopupMessage(Loc.GetString("The gun blows up in your face!"));
+                user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
                 Owner.Delete();
                 return;

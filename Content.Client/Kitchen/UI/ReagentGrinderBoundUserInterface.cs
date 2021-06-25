@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
 using Robust.Client.GameObjects;
@@ -146,7 +146,7 @@ namespace Content.Client.Kitchen.UI
             //Looks like we have a beaker attached.
             if (reagents.Count <= 0)
             {
-                _menu.BeakerContentBox.BoxContents.AddItem(Loc.GetString("Empty"));
+                _menu.BeakerContentBox.BoxContents.AddItem(Loc.GetString("grinder-menu-beaker-content-box-is-empty"));
             }
             else
             {
@@ -236,7 +236,7 @@ namespace Content.Client.Kitchen.UI
             {
                 SetSize = MinSize = (512, 256);
                 Owner = owner;
-                Title = Loc.GetString("All-In-One Grinder 3000");
+                Title = Loc.GetString("grinder-menu-title");
 
                 var hSplit = new HBoxContainer();
 
@@ -247,14 +247,14 @@ namespace Content.Client.Kitchen.UI
 
                 GrindButton = new Button
                 {
-                    Text = Loc.GetString("Grind"),
+                    Text = Loc.GetString("grinder-menu-grind-button"),
                     TextAlign = Label.AlignMode.Center,
                     MinSize = (64, 64)
                 };
 
                 JuiceButton = new Button
                 {
-                    Text = Loc.GetString("Juice"),
+                    Text = Loc.GetString("grinder-menu-juice-button"),
                     TextAlign = Label.AlignMode.Center,
                     MinSize = (64, 64)
                 };
@@ -267,7 +267,7 @@ namespace Content.Client.Kitchen.UI
                 });
                 vBoxGrindJuiceButtonPanel.AddChild(JuiceButton);
 
-                ChamberContentBox = new LabelledContentBox(Loc.GetString("Chamber"), Loc.GetString("Eject Contents"))
+                ChamberContentBox = new LabelledContentBox(Loc.GetString("grinder-menu-chamber-content-box-label"), Loc.GetString("grinder-menu-chamber-content-box-button"))
                 {
                     //Modulate = Color.Red,
                     VerticalExpand = true,
@@ -276,7 +276,7 @@ namespace Content.Client.Kitchen.UI
 
                 };
 
-                BeakerContentBox = new LabelledContentBox(Loc.GetString("Beaker"), Loc.GetString("Eject Beaker"))
+                BeakerContentBox = new LabelledContentBox(Loc.GetString("grinder-menu-beaker-content-box-label"), Loc.GetString("grinder-menu-beaker-content-box-button"))
                 {
                     //Modulate = Color.Blue,
                     VerticalExpand = true,

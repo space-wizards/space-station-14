@@ -1,7 +1,7 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MachineLinking;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -19,7 +19,7 @@ namespace Content.Server.MachineLinking.Components
         [DataField("on")]
         private bool _on;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -50,7 +50,7 @@ namespace Content.Server.MachineLinking.Components
 
             if (!transmitter.TransmitSignal(_on))
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-switch-component-transmit-no-receivers-connected"));
             }
         }
 
@@ -72,13 +72,13 @@ namespace Content.Server.MachineLinking.Components
 
             protected override void GetData(IEntity user, SignalSwitchComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle Switch");
+                data.Text = Loc.GetString("toggle-switch-verb-get-data-text");
                 data.Visibility = VerbVisibility.Visible;
             }
         }

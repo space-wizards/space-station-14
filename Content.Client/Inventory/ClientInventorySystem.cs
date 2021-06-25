@@ -1,7 +1,7 @@
 using Content.Client.HUD;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.Player;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -12,7 +12,6 @@ namespace Content.Client.Inventory
     public sealed class ClientInventorySystem : EntitySystem
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void Initialize()
         {
@@ -22,6 +21,9 @@ namespace Content.Client.Inventory
                 .Bind(ContentKeyFunctions.OpenInventoryMenu,
                     InputCmdHandler.FromDelegate(_ => HandleOpenInventoryMenu()))
                 .Register<ClientInventorySystem>();
+
+            SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
+            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
         }
 
         public override void Shutdown()

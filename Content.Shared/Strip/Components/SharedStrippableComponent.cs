@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -18,7 +19,7 @@ namespace Content.Shared.Strip.Components
         {
             return by != Owner
                    && by.HasComponent<ISharedHandsComponent>()
-                   && ActionBlockerSystem.CanInteract(by);
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(by);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)

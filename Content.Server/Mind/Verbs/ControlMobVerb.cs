@@ -35,7 +35,7 @@ namespace Content.Server.Mind.Verbs
                 if (groupController.CanCommand(player.PlayerSession, "controlmob"))
                 {
                     data.Visibility = VerbVisibility.Visible;
-                    data.Text = Loc.GetString("Control Mob");
+                    data.Text = Loc.GetString("control-mob-verb-get-data-text");
                     data.CategoryData = VerbCategories.Debug;
                 }
             }

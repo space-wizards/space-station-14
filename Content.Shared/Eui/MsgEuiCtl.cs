@@ -9,14 +9,7 @@ namespace Content.Shared.Eui
     /// </summary>
     public sealed class MsgEuiCtl : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(MsgEuiCtl);
-
-        public MsgEuiCtl(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         public CtlType Type;
         public string OpenType = string.Empty;

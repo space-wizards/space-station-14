@@ -41,7 +41,7 @@ namespace Content.Server.Headset
 
         public bool RadioRequested { get; set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -1,0 +1,1 @@
+signal-transmitter-component-get-signal-success = Signal fetched.

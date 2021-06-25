@@ -10,6 +10,7 @@ using Content.Client.Preferences.UI;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Robust.Client;
 using Robust.Client.Console;
@@ -25,7 +26,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.Lobby
 {
@@ -38,7 +38,6 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IClientGameTicker _clientGameTicker = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
@@ -50,6 +49,7 @@ namespace Content.Client.Lobby
 
         public override void Startup()
         {
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
@@ -105,7 +105,7 @@ namespace Content.Client.Lobby
             _lobby.ObserveButton.OnPressed += _ => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += _ =>
             {
-                if (!_clientGameTicker.IsGameStarted)
+                if (!gameTicker.IsGameStarted)
                 {
                     return;
                 }
@@ -124,47 +124,41 @@ namespace Content.Client.Lobby
             UpdatePlayerList();
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
-            _clientGameTicker.InfoBlobUpdated += UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
-            _clientGameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
-            _clientGameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
+            gameTicker.InfoBlobUpdated += UpdateLobbyUi;
+            gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
+            gameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
+            gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
         public override void Shutdown()
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
-            _clientGameTicker.InfoBlobUpdated -= UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
-            _clientGameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
-            _clientGameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
-
-            _clientGameTicker.Status.Clear();
-
             _lobby.Dispose();
             _characterSetup.Dispose();
         }
 
         public override void FrameUpdate(FrameEventArgs e)
         {
-            if (_clientGameTicker.IsGameStarted)
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            if (gameTicker.IsGameStarted)
             {
-                _lobby.StartTime.Text = "";
+                _lobby.StartTime.Text = string.Empty;
                 return;
             }
 
             string text;
 
-            if (_clientGameTicker.Paused)
+            if (gameTicker.Paused)
             {
-                text = Loc.GetString("Paused");
+                text = Loc.GetString("lobby-state-paused");
             }
             else
             {
-                var difference = _clientGameTicker.StartTime - _gameTiming.CurTime;
+                var difference = gameTicker.StartTime - _gameTiming.CurTime;
                 var seconds = difference.TotalSeconds;
                 if (seconds < 0)
                 {
-                    text = Loc.GetString(seconds < -5 ? "Right Now?" : "Right Now");
+                    text = Loc.GetString(seconds < -5 ? "lobby-state-right-now-question" : "lobby-state-right-now-confirmation");
                 }
                 else
                 {
@@ -172,20 +166,21 @@ namespace Content.Client.Lobby
                 }
             }
 
-            _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);
+            _lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
         private void PlayerManagerOnPlayerListUpdated(object? sender, EventArgs e)
         {
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
             // Remove disconnected sessions from the Ready Dict
-            foreach (var p in _clientGameTicker.Status)
+            foreach (var p in gameTicker.Status)
             {
                 if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
                 {
                     // This is a shitty fix. Observers can rejoin because they are already in the game.
                     // So we don't delete them, but keep them if they decide to rejoin
-                    if (p.Value != PlayerStatus.Observer)
-                        _clientGameTicker.Status.Remove(p.Key);
+                    if (p.Value != LobbyPlayerStatus.Observer)
+                        gameTicker.Status.Remove(p.Key);
                 }
             }
 
@@ -202,7 +197,7 @@ namespace Content.Client.Lobby
 
         private void LobbyLateJoinStatusUpdated()
         {
-            _lobby.ReadyButton.Disabled = _clientGameTicker.DisallowedLateJoin;
+            _lobby.ReadyButton.Disabled = EntitySystem.Get<ClientGameTicker>().DisallowedLateJoin;
         }
 
         private void UpdateLobbyUi()
@@ -212,49 +207,52 @@ namespace Content.Client.Lobby
                 return;
             }
 
-            if (_clientGameTicker.IsGameStarted)
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
+
+            if (gameTicker.IsGameStarted)
             {
-                _lobby.ReadyButton.Text = Loc.GetString("Join");
+                _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
                 _lobby.ReadyButton.ToggleMode = false;
                 _lobby.ReadyButton.Pressed = false;
             }
             else
             {
-                _lobby.StartTime.Text = "";
-                _lobby.ReadyButton.Text = Loc.GetString("Ready Up");
+                _lobby.StartTime.Text = string.Empty;
+                _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Disabled = false;
-                _lobby.ReadyButton.Pressed = _clientGameTicker.AreWeReady;
+                _lobby.ReadyButton.Pressed = gameTicker.AreWeReady;
             }
 
-            if (_clientGameTicker.ServerInfoBlob != null)
+            if (gameTicker.ServerInfoBlob != null)
             {
-                _lobby.ServerInfo.SetInfoBlob(_clientGameTicker.ServerInfoBlob);
+                _lobby.ServerInfo.SetInfoBlob(gameTicker.ServerInfoBlob);
             }
         }
 
         private void UpdatePlayerList()
         {
             _lobby.OnlinePlayerList.Clear();
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                var readyState = "";
+                var readyState = string.Empty;
                 // Don't show ready state if we're ingame
-                if (!_clientGameTicker.IsGameStarted)
+                if (!gameTicker.IsGameStarted)
                 {
-                    PlayerStatus status;
+                    LobbyPlayerStatus status;
                     if (session.UserId == _playerManager.LocalPlayer?.UserId)
-                        status = _clientGameTicker.AreWeReady ? PlayerStatus.Ready : PlayerStatus.NotReady;
+                        status = gameTicker.AreWeReady ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
                     else
-                        _clientGameTicker.Status.TryGetValue(session.UserId, out status);
+                        gameTicker.Status.TryGetValue(session.UserId, out status);
 
                     readyState = status switch
                     {
-                        PlayerStatus.NotReady => Loc.GetString("Not Ready"),
-                        PlayerStatus.Ready => Loc.GetString("Ready"),
-                        PlayerStatus.Observer => Loc.GetString("Observer"),
-                        _ => "",
+                        LobbyPlayerStatus.NotReady => Loc.GetString("lobby-state-player-status-not-ready"),
+                        LobbyPlayerStatus.Ready => Loc.GetString("lobby-state-player-status-ready"),
+                        LobbyPlayerStatus.Observer => Loc.GetString("lobby-state-player-status-observer"),
+                        _ => string.Empty,
                     };
                 }
 
@@ -264,7 +262,7 @@ namespace Content.Client.Lobby
 
         private void SetReady(bool newReady)
         {
-            if (_clientGameTicker.IsGameStarted)
+            if (EntitySystem.Get<ClientGameTicker>().IsGameStarted)
             {
                 return;
             }

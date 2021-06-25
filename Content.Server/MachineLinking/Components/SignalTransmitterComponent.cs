@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
@@ -63,7 +63,7 @@ namespace Content.Server.MachineLinking.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -118,7 +118,7 @@ namespace Content.Server.MachineLinking.Components
         {
             if (user != null)
             {
-                Owner.PopupMessage(user, Loc.GetString("Signal fetched."));
+                Owner.PopupMessage(user, Loc.GetString("signal-transmitter-component-get-signal-success"));
             }
 
             return this;

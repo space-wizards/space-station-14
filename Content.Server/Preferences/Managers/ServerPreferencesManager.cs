@@ -38,13 +38,10 @@ namespace Content.Server.Preferences.Managers
 
         public void Init()
         {
-            _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings));
-            _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter),
-                HandleSelectCharacterMessage);
-            _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter),
-                HandleUpdateCharacterMessage);
-            _netManager.RegisterNetMessage<MsgDeleteCharacter>(nameof(MsgDeleteCharacter),
-                HandleDeleteCharacterMessage);
+            _netManager.RegisterNetMessage<MsgPreferencesAndSettings>();
+            _netManager.RegisterNetMessage<MsgSelectCharacter>(HandleSelectCharacterMessage);
+            _netManager.RegisterNetMessage<MsgUpdateCharacter>(HandleUpdateCharacterMessage);
+            _netManager.RegisterNetMessage<MsgDeleteCharacter>(HandleDeleteCharacterMessage);
         }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)

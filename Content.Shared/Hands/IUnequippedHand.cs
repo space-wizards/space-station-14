@@ -22,12 +22,12 @@ namespace Content.Shared.Hands
 
     public class UnequippedHandEventArgs : UserEventArgs
     {
-        public UnequippedHandEventArgs(IEntity user, SharedHand hand) : base(user)
+        public UnequippedHandEventArgs(IEntity user, HandState hand) : base(user)
         {
             Hand = hand;
         }
 
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
     }
 
     /// <summary>
@@ -49,9 +49,9 @@ namespace Content.Shared.Hands
         /// <summary>
         ///     Hand that the item is removed from.
         /// </summary>
-        public SharedHand Hand { get; }
+        public HandState Hand { get; }
 
-        public UnequippedHandEvent(IEntity user, IEntity unequipped, SharedHand hand)
+        public UnequippedHandEvent(IEntity user, IEntity unequipped, HandState hand)
         {
             User = user;
             Unequipped = unequipped;

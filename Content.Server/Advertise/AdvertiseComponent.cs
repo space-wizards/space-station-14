@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Advertisements;
 using Content.Server.Chat.Managers;
@@ -40,7 +40,7 @@ namespace Content.Server.Advertise
 
         private List<string> _advertisements = new();
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -80,7 +80,7 @@ namespace Content.Server.Advertise
             RefreshTimer(false);
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _cancellationSource.Cancel();
             _cancellationSource.Dispose();

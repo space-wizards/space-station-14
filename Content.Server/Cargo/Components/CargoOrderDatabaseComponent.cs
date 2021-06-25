@@ -10,7 +10,7 @@ namespace Content.Server.Cargo.Components
         public CargoOrderDatabase? Database { get; set; }
         public bool ConnectedToDatabase => Database != null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

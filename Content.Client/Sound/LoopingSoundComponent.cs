@@ -96,7 +96,7 @@ namespace Content.Client.Sound
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             SoundSystem.OcclusionCollisionMask = (int) CollisionGroup.Impassable;

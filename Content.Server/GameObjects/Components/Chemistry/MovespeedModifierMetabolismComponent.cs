@@ -29,6 +29,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _cancellation?.Cancel();
             WalkSpeedModifier = 1;
             SprintSpeedModifier = 1;
+            var movement = Owner.GetComponent<MovementSpeedModifierComponent>();
+            movement.RefreshMovementSpeedModifiers();
         }
 
         public void ResetTimer()

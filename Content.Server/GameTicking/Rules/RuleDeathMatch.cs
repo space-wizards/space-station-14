@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Shared;
@@ -26,14 +26,13 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private CancellationTokenSource? _checkTimerCancel;
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("The game is now a death match. Kill everybody else to win!"));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
 
             _entityManager.EventBus.SubscribeEvent<DamageChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
@@ -84,14 +83,14 @@ namespace Content.Server.GameTicking.Rules
             }
 
             _chatManager.DispatchServerAnnouncement(winner == null
-                ? Loc.GetString("Everybody is dead, it's a stalemate!")
-                : Loc.GetString("{0} wins the death match!", winner));
+                ? Loc.GetString("rule-death-match-check-winner-stalemate")
+                : Loc.GetString("rule-death-match-check-winner",("winner", winner)));
 
             var restartDelay = 10;
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds", restartDelay)));
 
-            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
+            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => EntitySystem.Get<GameTicker>().RestartRound());
         }
 
         private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)

@@ -52,7 +52,7 @@ namespace Content.Client.Clothing
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             ClothingEquippedPrefix = ClothingEquippedPrefix;

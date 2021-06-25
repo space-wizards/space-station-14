@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,6 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -107,11 +106,11 @@ namespace Content.Server.StationEvents
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
                 stationEvent.Announce();
-                return Loc.GetString("Running event ") + stationEvent.Name;
+                return Loc.GetString("station-event-system-run-event", ("eventName", stationEvent.Name));
             }
 
             // I had string interpolation but lord it made it hard to read
-            return Loc.GetString("No event named ") + name;
+            return Loc.GetString("station-event-system-run-event-no-event-name", ("eventName", name));
         }
 
         /// <summary>
@@ -124,14 +123,14 @@ namespace Content.Server.StationEvents
 
             if (randomEvent == null)
             {
-                return Loc.GetString("No valid events available");
+                return Loc.GetString("station-event-system-run-random-event-no-valid-events");
             }
 
             CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
             CurrentEvent.Startup();
 
-            return Loc.GetString("Running ") + randomEvent.Name;
+            return Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Name));
         }
 
         /// <summary>
@@ -153,11 +152,11 @@ namespace Content.Server.StationEvents
 
             if (CurrentEvent == null)
             {
-                resultText = Loc.GetString("No event running currently");
+                resultText = Loc.GetString("station-event-system-stop-event-no-running-event");
             }
             else
             {
-                resultText = Loc.GetString("Stopped event ") + CurrentEvent.Name;
+                resultText = Loc.GetString("station-event-system-stop-event", ("eventName", CurrentEvent.Name));
                 CurrentEvent.Shutdown();
                 CurrentEvent = null;
             }
@@ -184,8 +183,8 @@ namespace Content.Server.StationEvents
             // As such we'll always pause it by default.
             _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
 
-            _netManager.RegisterNetMessage<MsgRequestStationEvents>(nameof(MsgRequestStationEvents), RxRequest);
-            _netManager.RegisterNetMessage<MsgStationEvents>(nameof(MsgStationEvents));
+            _netManager.RegisterNetMessage<MsgRequestStationEvents>(RxRequest);
+            _netManager.RegisterNetMessage<MsgStationEvents>();
         }
 
         private void RxRequest(MsgRequestStationEvents msg)
@@ -214,7 +213,7 @@ namespace Content.Server.StationEvents
             }
 
             // Stop events from happening in lobby and force active event to end if the round ends
-            if (_gameTicker.RunLevel != GameRunLevel.InRound)
+            if (Get<GameTicker>().RunLevel != GameRunLevel.InRound)
             {
                 if (CurrentEvent != null)
                 {

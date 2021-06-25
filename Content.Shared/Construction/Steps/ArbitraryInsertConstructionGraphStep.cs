@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -13,7 +14,7 @@ namespace Content.Shared.Construction.Steps
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
             if (string.IsNullOrEmpty(Name)) return;
-            message.AddMarkup(Robust.Shared.Localization.Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
+            message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
     }
 }

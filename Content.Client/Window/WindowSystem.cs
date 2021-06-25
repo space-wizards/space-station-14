@@ -14,7 +14,7 @@ namespace Content.Client.Window
             base.Initialize();
 
             SubscribeLocalEvent<WindowSmoothDirtyEvent>(HandleDirtyEvent);
-            SubscribeLocalEvent<WindowComponent, SnapGridPositionChangedEvent>(HandleSnapGridMove);
+            SubscribeLocalEvent<WindowComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
         }
 
         private void HandleDirtyEvent(WindowSmoothDirtyEvent ev)
@@ -25,9 +25,9 @@ namespace Content.Client.Window
             }
         }
 
-        private static void HandleSnapGridMove(EntityUid uid, WindowComponent component, SnapGridPositionChangedEvent args)
+        private static void HandleAnchorChanged(EntityUid uid, WindowComponent component, AnchorStateChangedEvent args)
         {
-            component.SnapGridOnPositionChanged();
+            component.AnchorStateChanged();
         }
 
         public override void FrameUpdate(float frameTime)

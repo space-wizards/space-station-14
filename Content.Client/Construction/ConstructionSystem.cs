@@ -29,7 +29,7 @@ namespace Content.Client.Construction
 
         private int _nextId;
 
-        private bool CraftingEnabled { get; set; }
+        public bool CraftingEnabled { get; private set; }
 
         /// <inheritdoc />
         public override void Initialize()

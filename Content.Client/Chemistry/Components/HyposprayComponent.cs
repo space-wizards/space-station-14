@@ -60,8 +60,9 @@ namespace Content.Client.Chemistry.Components
                 _parent._uiUpdateNeeded = false;
 
                 _label.SetMarkup(Loc.GetString(
-                    "Volume: [color=white]{0}/{1}[/color]",
-                    _parent.CurrentVolume, _parent.TotalVolume));
+                    "hypospray-volume-text",
+                    ("currentVolume", _parent.CurrentVolume),
+                    ("totalVolume", _parent.TotalVolume)));
             }
         }
     }

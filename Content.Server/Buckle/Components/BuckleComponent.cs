@@ -10,8 +10,8 @@ using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -161,9 +161,9 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
-                user.PopupMessage(Loc.GetString("You can't do that!"));
+                user.PopupMessage(Loc.GetString("buckle-component-cannot-do-that-message"));
                 return false;
             }
 
@@ -193,15 +193,15 @@ namespace Content.Server.Buckle.Components
 
             if (!user.HasComponent<HandsComponent>())
             {
-                user.PopupMessage(Loc.GetString("You don't have hands!"));
+                user.PopupMessage(Loc.GetString("buckle-component-no-hands-message "));
                 return false;
             }
 
             if (Buckled)
             {
                 var message = Loc.GetString(Owner == user
-                    ? "You are already buckled in!"
-                    : "{0:They} are already buckled in!", Owner);
+                    ? "buckle-component-already-buckled-message"
+                    : "buckle-component-other-already-buckled-message",("owner", Owner));
                 Owner.PopupMessage(user, message);
 
                 return false;
@@ -213,8 +213,8 @@ namespace Content.Server.Buckle.Components
                 if (parent == user.Transform)
                 {
                     var message = Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner);
+                        ? "buckle-component-cannot-buckle-message"
+                        : "buckle-component-other-cannot-buckle-message",("owner", Owner));
                     Owner.PopupMessage(user, message);
 
                     return false;
@@ -226,8 +226,8 @@ namespace Content.Server.Buckle.Components
             if (!strap.HasSpace(this))
             {
                 var message = Loc.GetString(Owner == user
-                    ? "You can't fit there!"
-                    : "{0:They} can't fit there!", Owner);
+                    ? "buckle-component-cannot-fit-message"
+                    : "buckle-component-other-cannot-fit-message",("owner", Owner));
                 Owner.PopupMessage(user, message);
 
                 return false;
@@ -248,8 +248,8 @@ namespace Content.Server.Buckle.Components
             if (!strap.TryAdd(this))
             {
                 var message = Loc.GetString(Owner == user
-                    ? "You can't buckle yourself there!"
-                    : "You can't buckle {0:them} there!", Owner);
+                    ? "buckle-component-cannot-buckle-message"
+                    : "buckle-component-other-cannot-buckle-message",("owner", Owner));
                 Owner.PopupMessage(user, message);
                 return false;
             }
@@ -314,9 +314,9 @@ namespace Content.Server.Buckle.Components
                     return false;
                 }
 
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
-                    user.PopupMessage(Loc.GetString("You can't do that!"));
+                    user.PopupMessage(Loc.GetString("buckle-component-cannot-do-that-message"));
                     return false;
                 }
 
@@ -388,7 +388,7 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);
@@ -439,13 +439,13 @@ namespace Content.Server.Buckle.Components
         {
             protected override void GetData(IEntity user, BuckleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || !component.Buckled)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.Buckled)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Unbuckle");
+                data.Text = Loc.GetString("buckle-verb-unbuckle");
             }
 
             protected override void Activate(IEntity user, BuckleComponent component)

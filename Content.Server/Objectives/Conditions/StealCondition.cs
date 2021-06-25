@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Containers;
 using Content.Server.GameObjects;
@@ -46,9 +46,11 @@ namespace Content.Server.Objectives.Conditions
                 ? prototype.Name
                 : "[CANNOT FIND NAME]";
 
-        public string Title => Loc.GetString("Steal {0}{1}", _amount > 1 ? $"{_amount}x " : "", Loc.GetString(PrototypeName));
+        public string Title => Loc.GetString("objective-condition-steal-title",
+                                             ("amount", _amount > 1 ? $"{_amount}x " : string.Empty),
+                                             ("itemName", Loc.GetString(PrototypeName)));
 
-        public string Description => Loc.GetString("We need you to steal {0}. Don't get caught.", Loc.GetString(PrototypeName));
+        public string Description => Loc.GetString("objective-condition-steal-description",("itemName", Loc.GetString(PrototypeName)));
 
         public SpriteSpecifier Icon => new SpriteSpecifier.EntityPrototype(_prototypeId);
 

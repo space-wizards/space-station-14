@@ -1,8 +1,8 @@
 #nullable enable
 using System;
 using System.Linq;
+using Content.Server.Atmos.Components;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
@@ -171,7 +171,7 @@ namespace Content.Server.Chemistry.Components
 
         protected abstract void UpdateVisuals();
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             Inception?.Remove(this);

@@ -110,7 +110,7 @@ namespace Content.Server.Fluids.Components
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -144,7 +144,7 @@ namespace Content.Server.Fluids.Components
         {
             if(Slippery)
             {
-                message.AddText(Loc.GetString("It looks slippery."));
+                message.AddText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }
         }
 

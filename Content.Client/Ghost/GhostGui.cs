@@ -1,8 +1,11 @@
 #nullable enable
+using System.Collections.Generic;
+using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
@@ -10,26 +13,36 @@ namespace Content.Client.Ghost
 {
     public class GhostGui : Control
     {
-        private readonly Button _returnToBody = new() {Text = Loc.GetString("Return to body")};
-        private readonly Button _ghostWarp = new() {Text = Loc.GetString("Ghost Warp")};
-        private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
+        private readonly Button _returnToBody = new() {Text = Loc.GetString("ghost-gui-return-to-body-button") };
+        private readonly Button _ghostWarp = new() {Text = Loc.GetString("ghost-gui-ghost-warp-button") };
+        private readonly Button _ghostRoles = new() {Text = Loc.GetString("ghost-gui-ghost-roles-button") };
         private readonly GhostComponent _owner;
 
         public GhostTargetWindow? TargetWindow { get; }
 
-        public GhostGui(GhostComponent owner)
+        public GhostGui(GhostComponent owner, IEntityNetworkManager eventBus)
         {
             IoCManager.InjectDependencies(this);
 
             _owner = owner;
 
-            TargetWindow = new GhostTargetWindow(owner);
+            TargetWindow = new GhostTargetWindow(owner, eventBus);
 
             MouseFilter = MouseFilterMode.Ignore;
 
-            _ghostWarp.OnPressed += _ => TargetWindow.Populate();
-            _returnToBody.OnPressed += _ => owner.SendReturnToBodyMessage();
-            _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>().RemoteExecuteCommand(null, "ghostroles");
+            _ghostWarp.OnPressed += _ =>
+            {
+                eventBus.SendSystemNetworkMessage(new GhostWarpsRequestEvent());
+                TargetWindow.Populate();
+                TargetWindow.OpenCentered();
+            };
+            _returnToBody.OnPressed += _ =>
+            {
+                var msg = new GhostReturnToBodyRequest();
+                eventBus.SendSystemNetworkMessage(msg);
+            };
+            _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>()
+                .RemoteExecuteCommand(null, "ghostroles");
 
             AddChild(new HBoxContainer
             {
@@ -40,28 +53,42 @@ namespace Content.Client.Ghost
                     _ghostRoles,
                 }
             });
-
-            Update();
         }
 
         public void Update()
         {
             _returnToBody.Disabled = !_owner.CanReturnToBody;
+            TargetWindow?.Populate();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                TargetWindow?.Dispose();
+            }
         }
     }
 
     public class GhostTargetWindow : SS14Window
     {
         private readonly GhostComponent _owner;
+        private readonly IEntityNetworkManager _netManager;
+
         private readonly VBoxContainer _buttonContainer;
 
-        public GhostTargetWindow(GhostComponent owner)
+        public List<string> Locations { get; set; } = new();
+
+        public Dictionary<EntityUid, string> Players { get; set; } = new();
+
+        public GhostTargetWindow(GhostComponent owner, IEntityNetworkManager netManager)
         {
             MinSize = SetSize = (300, 450);
-            Title = "Ghost Warp";
+            Title = Loc.GetString("ghost-target-window-title");
             _owner = owner;
-            _owner.GhostRequestWarpPoint();
-            _owner.GhostRequestPlayerNames();
+            _netManager = netManager;
 
             _buttonContainer = new VBoxContainer()
             {
@@ -86,12 +113,11 @@ namespace Content.Client.Ghost
             _buttonContainer.DisposeAllChildren();
             AddButtonPlayers();
             AddButtonLocations();
-            OpenCentered();
         }
 
         private void AddButtonPlayers()
         {
-            foreach (var (key, value) in _owner.PlayerNames)
+            foreach (var (key, value) in Players)
             {
                 var currentButtonRef = new Button
                 {
@@ -106,7 +132,8 @@ namespace Content.Client.Ghost
 
                 currentButtonRef.OnPressed += (_) =>
                 {
-                    _owner.SendGhostWarpRequestMessage(key);
+                    var msg = new GhostWarpToTargetRequestEvent(key);
+                    _netManager.SendSystemNetworkMessage(msg);
                 };
 
                 _buttonContainer.AddChild(currentButtonRef);
@@ -115,11 +142,11 @@ namespace Content.Client.Ghost
 
         private void AddButtonLocations()
         {
-            foreach (var name in _owner.WarpNames)
+            foreach (var name in Locations)
             {
                 var currentButtonRef = new Button
                 {
-                    Text = $"Warp: {name}",
+                    Text = Loc.GetString("ghost-target-window-current-button", ("name", name)),
                     TextAlign = Label.AlignMode.Right,
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
@@ -130,7 +157,8 @@ namespace Content.Client.Ghost
 
                 currentButtonRef.OnPressed += (_) =>
                 {
-                    _owner.SendGhostWarpRequestMessage(name);
+                    var msg = new GhostWarpToLocationRequestEvent(name);
+                    _netManager.SendSystemNetworkMessage(msg);
                 };
 
                 _buttonContainer.AddChild(currentButtonRef);
