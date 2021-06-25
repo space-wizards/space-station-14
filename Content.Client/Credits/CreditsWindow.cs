@@ -35,7 +35,7 @@ namespace Content.Client.Credits
         {
             IoCManager.InjectDependencies(this);
 
-            Title = Loc.GetString("Credits");
+            Title = Loc.GetString("credits-window-title");
 
             var rootContainer = new TabContainer();
 
@@ -56,9 +56,9 @@ namespace Content.Client.Credits
             rootContainer.AddChild(patronsList);
             rootContainer.AddChild(licensesList);
 
-            TabContainer.SetTabTitle(patronsList, Loc.GetString("Patrons"));
-            TabContainer.SetTabTitle(ss14ContributorsList, Loc.GetString("Credits"));
-            TabContainer.SetTabTitle(licensesList, Loc.GetString("Open Source Licenses"));
+            TabContainer.SetTabTitle(patronsList, Loc.GetString("credits-window-patrons-tab"));
+            TabContainer.SetTabTitle(ss14ContributorsList, Loc.GetString("credits-window-ss14contributorslist-tab"));
+            TabContainer.SetTabTitle(licensesList, Loc.GetString("credits-window-licenses-tab"));
 
             PopulatePatronsList(patronsList);
             PopulateCredits(ss14ContributorsList);
@@ -106,7 +106,7 @@ namespace Content.Client.Credits
                 Button patronButton;
                 vBox.AddChild(patronButton = new Button
                 {
-                    Text = "Become a Patron",
+                    Text = Loc.GetString("credits-window-become-patron-button"),
                     HorizontalAlignment = HAlignment.Center
                 });
 
@@ -163,8 +163,8 @@ namespace Content.Client.Credits
                 SeparationOverride = 20,
                 Children =
                 {
-                    new Label {Text = "Want to get on this list?"},
-                    (contributeButton = new Button {Text = "Contribute!"})
+                    new Label {Text = Loc.GetString("credits-window-contributor-encouragement-label") },
+                    (contributeButton = new Button {Text = Loc.GetString("credits-window-contribute-button")})
                 }
             });
 
@@ -194,10 +194,10 @@ namespace Content.Client.Credits
                 vBox.AddChild(label);
             }
 
-            AddSection("Space Station 14 Contributors", "GitHub.txt");
-            AddSection("Space Station 13 Codebases", "SpaceStation13.txt");
-            AddSection("Original Space Station 13 Remake Team", "OriginalRemake.txt");
-            AddSection("Special Thanks", "SpecialThanks.txt", true);
+            AddSection(Loc.GetString("credits-window-contributors-section-title"), "GitHub.txt");
+            AddSection(Loc.GetString("credits-window-codebases-section-title"), "SpaceStation13.txt");
+            AddSection(Loc.GetString("credits-window-original-remake-team-section-title"), "OriginalRemake.txt");
+            AddSection(Loc.GetString("credits-window-special-thanks-section-title"), "SpecialThanks.txt", true);
 
             contributorsList.AddChild(vBox);
 
@@ -205,6 +205,7 @@ namespace Content.Client.Credits
                 IoCManager.Resolve<IUriOpener>().OpenUri(UILinks.GitHub);
         }
 
+        // TODO this doesn't looked used anywhere
         private static IEnumerable<string> Lines(TextReader reader)
         {
             while (true)

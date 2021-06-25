@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.Strip;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
@@ -28,7 +28,7 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            _strippingMenu = new StrippingMenu($"{Owner.Owner.Name}'s inventory");
+            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", Owner.Owner.Name))}");
 
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCentered();
@@ -76,7 +76,7 @@ namespace Content.Client.Inventory
             {
                 foreach (var (id, name) in Handcuffs)
                 {
-                    _strippingMenu.AddButton(Loc.GetString("Restraints"), name, (ev) =>
+                    _strippingMenu.AddButton(Loc.GetString("strippable-bound-user-interface-stripping-menu-handcuffs-button"), name, (ev) =>
                     {
                         SendMessage(new StrippingHandcuffButtonPressed(id));
                     });

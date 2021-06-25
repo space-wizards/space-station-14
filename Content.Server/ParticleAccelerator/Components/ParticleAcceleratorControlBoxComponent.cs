@@ -309,7 +309,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 case ParticleAcceleratorControlBoxWires.Limiter:
                     if (args.Action == WiresAction.Pulse)
                     {
-                        Owner.PopupMessageEveryone(Loc.GetString("The control box makes a whirring noise."));
+                        Owner.PopupMessageEveryone(Loc.GetString("particle-accelerator-control-box-component-wires-update-limiter-on-pulse"));
                     }
                     else
                     {

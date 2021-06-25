@@ -85,11 +85,11 @@ namespace Content.Server.Light.Components
         {
             if (Activated)
             {
-                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("handheld-light-component-on-examine-is-on-message"));
             }
             else
             {
-                message.AddMarkup(Loc.GetString("The light is currently [color=darkred]off[/color]."));
+                message.AddMarkup(Loc.GetString("handheld-light-component-on-examine-is-off-message"));
             }
         }
 
@@ -138,7 +138,7 @@ namespace Content.Server.Light.Components
             if (Cell == null)
             {
                 if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
-                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-missing-message"));
                 UpdateLightAction();
                 return false;
             }
@@ -149,7 +149,7 @@ namespace Content.Server.Light.Components
             if (Wattage > Cell.CurrentCharge)
             {
                 if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
-                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-dead-message"));
                 UpdateLightAction();
                 return false;
             }
@@ -177,12 +177,12 @@ namespace Content.Server.Light.Components
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "on" : "off";
+                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
             {
-                item.EquippedPrefix = on ? "on" : "off";
+                item.EquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Content.Server.Light.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle light");
+                data.Text = Loc.GetString("toggle-light-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, HandheldLightComponent component)

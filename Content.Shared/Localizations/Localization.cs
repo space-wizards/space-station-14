@@ -47,7 +47,7 @@ namespace Content.Shared.Localizations
                 places += 1;
             }
 
-            return new LocValueString(Robust.Shared.Localization.Loc.GetString("zzzz-fmt-pressure", ("divided", pressure), ("places", places)));
+            return new LocValueString(Loc.GetString("zzzz-fmt-pressure", ("divided", pressure), ("places", places)));
         }
     }
 }

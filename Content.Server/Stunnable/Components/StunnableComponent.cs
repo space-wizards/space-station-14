@@ -74,8 +74,8 @@ namespace Content.Server.Stunnable.Components
                     AudioHelpers.WithVariation(0.025f));
                 if (target != null)
                 {
-                    source.PopupMessageOtherClients(Loc.GetString("{0} pushes {1}!", source.Name, target.Name));
-                    source.PopupMessageCursor(Loc.GetString("You push {0}!", target.Name));
+                    source.PopupMessageOtherClients(Loc.GetString("stunnable-component-disarm-success-others", ("source", source.Name),("target", target.Name)));
+                    source.PopupMessageCursor(Loc.GetString("stunnable-component-disarm-success",("target", target.Name)));
                 }
             }
 

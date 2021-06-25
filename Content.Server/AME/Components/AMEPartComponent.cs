@@ -31,7 +31,7 @@ namespace Content.Server.AME.Components
         {
             if (!args.User.TryGetComponent<IHandsComponent>(out var hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return true;
             }
 
@@ -44,7 +44,7 @@ namespace Content.Server.AME.Components
             var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
             if (mapGrid.GetAnchoredEntities(snapPos).Any(sc => _serverEntityManager.ComponentManager.HasComponent<AMEShieldComponent>(sc)))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("Shielding is already there!"));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-shielding-already-present"));
                 return true;
             }
 

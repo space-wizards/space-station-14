@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using Content.Client.Changelog;
 using Content.Client.EscapeMenu.UI;
@@ -105,8 +105,8 @@ namespace Content.Client.MainMenu
             {
                 var invalidReason = Loc.GetString(reason.ToText());
                 _userInterfaceManager.Popup(
-                    Loc.GetString("Invalid username:\n{0}", invalidReason),
-                    Loc.GetString("Invalid Username"));
+                    Loc.GetString("main-menu-invalid-username-with-reason", ("invalidReason", invalidReason)),
+                    Loc.GetString("main-menu-invalid-username"));
                 return;
             }
 
@@ -182,7 +182,7 @@ namespace Content.Client.MainMenu
 
         private void _onConnectFailed(object? _, NetConnectFailArgs args)
         {
-            _userInterfaceManager.Popup($"Failed to connect:\n{args.Reason}");
+            _userInterfaceManager.Popup(Loc.GetString("main-menu-failed-to-connect",("reason", args.Reason)));
             _netManager.ConnectFailed -= _onConnectFailed;
             _setConnectingState(false);
         }
@@ -242,12 +242,12 @@ namespace Content.Client.MainMenu
 
                 var userNameHBox = new HBoxContainer {SeparationOverride = 4};
                 vBox.AddChild(userNameHBox);
-                userNameHBox.AddChild(new Label {Text = "Username:"});
+                userNameHBox.AddChild(new Label {Text = Loc.GetString("main-menu-username-label") });
 
                 var currentUserName = _configurationManager.GetCVar(CVars.PlayerName);
                 UserNameBox = new LineEdit
                 {
-                    Text = currentUserName, PlaceHolder = "Username",
+                    Text = currentUserName, PlaceHolder = Loc.GetString("main-menu-username-text"),
                     HorizontalExpand = true
                 };
 
@@ -255,12 +255,12 @@ namespace Content.Client.MainMenu
 
                 JoinPublicServerButton = new Button
                 {
-                    Text = "Join Public Server",
+                    Text = Loc.GetString("main-menu-join-public-server-button"),
                     StyleIdentifier = "mainMenu",
                     TextAlign = Label.AlignMode.Center,
 #if !FULL_RELEASE
                     Disabled = true,
-                    ToolTip = "Cannot connect to public server with a debug build."
+                    ToolTip =  Loc.GetString("main-menu-join-public-server-button-tooltip")
 #endif
                 };
 
@@ -280,7 +280,7 @@ namespace Content.Client.MainMenu
 
                 DirectConnectButton = new Button
                 {
-                    Text = "Direct Connect",
+                    Text = Loc.GetString("main-menu-direct-connect-button"),
                     TextAlign = Label.AlignMode.Center,
                     StyleIdentifier = "mainMenu",
                 };
@@ -292,7 +292,7 @@ namespace Content.Client.MainMenu
 
                 OptionsButton = new Button
                 {
-                    Text = "Options",
+                    Text = Loc.GetString("main-menu-options-button"),
                     TextAlign = Label.AlignMode.Center,
                     StyleIdentifier = "mainMenu",
                 };
@@ -301,7 +301,7 @@ namespace Content.Client.MainMenu
 
                 QuitButton = new Button
                 {
-                    Text = "Quit",
+                    Text = Loc.GetString("main-menu-quit-button"),
                     TextAlign = Label.AlignMode.Center,
                     StyleIdentifier = "mainMenu",
                 };

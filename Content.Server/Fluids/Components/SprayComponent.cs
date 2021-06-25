@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
 using Content.Shared.ActionBlocker;
@@ -101,13 +101,13 @@ namespace Content.Server.Fluids.Components
 
             if (_hasSafety && _safety)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Its safety is on!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-safety-on-message"));
                 return true;
             }
 
             if (CurrentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-is-empty-message"));
                 return true;
             }
 

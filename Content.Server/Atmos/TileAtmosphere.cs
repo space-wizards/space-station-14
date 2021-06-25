@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Interfaces;
@@ -12,6 +13,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -197,7 +199,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        public void EqualizePressureInZone(int cycleNum)
+        public void EqualizePressureInZone(AtmosphereSystem atmosphereSystem, int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
 
@@ -504,7 +506,7 @@ namespace Content.Server.Atmos
             for (var i = 0; i < tileCount; i++)
             {
                 var tile = tiles[i];
-                tile.FinalizeEq();
+                tile.FinalizeEq(atmosphereSystem);
             }
 
             for (var i = 0; i < tileCount; i++)
@@ -526,7 +528,7 @@ namespace Content.Server.Atmos
             ArrayPool<TileAtmosphere>.Shared.Return(takerTiles);
         }
 
-        private void FinalizeEq()
+        private void FinalizeEq(AtmosphereSystem atmosphereSystem)
         {
             Span<float> transferDirections = stackalloc float[Atmospherics.Directions];
             var hasTransferDirs = false;
@@ -551,10 +553,10 @@ namespace Content.Server.Atmos
                 if (amount > 0)
                 {
                     if (Air.TotalMoles < amount)
-                        FinalizeEqNeighbors(transferDirections);
+                        FinalizeEqNeighbors(atmosphereSystem, transferDirections);
 
                     tile._tileAtmosInfo[direction.GetOpposite()] = 0;
-                    tile.Air.Merge(Air.Remove(amount));
+                    atmosphereSystem.Merge(tile.Air, Air.Remove(amount));
                     UpdateVisuals();
                     tile.UpdateVisuals();
                     ConsiderPressureDifference(tile, amount);
@@ -563,14 +565,14 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void FinalizeEqNeighbors(ReadOnlySpan<float> transferDirs)
+        private void FinalizeEqNeighbors(AtmosphereSystem atmosphereSystem, ReadOnlySpan<float> transferDirs)
         {
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
                 var amount = transferDirs[i];
                 if(amount < 0 && _adjacentBits.IsFlagSet(direction))
-                    _adjacentTiles[i].FinalizeEq();  // A bit of recursion if needed.
+                    _adjacentTiles[i].FinalizeEq(atmosphereSystem);  // A bit of recursion if needed.
             }
         }
 
@@ -592,7 +594,7 @@ namespace Content.Server.Atmos
             _adjacentTiles[direction.ToIndex()]._tileAtmosInfo[direction.GetOpposite()] -= amount;
         }
 
-        public void ProcessCell(int fireCount, bool spaceWind = true)
+        public void ProcessCell(AtmosphereSystem atmosphereSystem, int fireCount, bool spaceWind = true)
         {
             // Can't process a tile without air
             if (Air == null)
@@ -662,7 +664,7 @@ namespace Content.Server.Atmos
 
                 if (shouldShareAir)
                 {
-                    var difference = Air.Share(enemyTile.Air, adjacentTileLength);
+                    var difference = atmosphereSystem.Share(Air, enemyTile.Air, adjacentTileLength);
 
                     if (spaceWind)
                     {
@@ -680,7 +682,8 @@ namespace Content.Server.Atmos
                 }
             }
 
-            React();
+            if(Air != null)
+                _gridAtmosphereComponent.AtmosphereSystem.React(Air, this);
             UpdateVisuals();
 
             var remove = true;
@@ -715,7 +718,7 @@ namespace Content.Server.Atmos
             ExcitedGroup?.ResetCooldowns();
 
             if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
-                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Plasma] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
+                || Air == null || Air.GetMoles(Gas.Oxygen) < 0.5f || (Air.GetMoles(Gas.Plasma) < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 Hotspot = new Hotspot();
                 UpdateVisuals();
@@ -767,7 +770,7 @@ namespace Content.Server.Atmos
             {
                 var affected = Air.RemoveRatio(Hotspot.Volume / Air.Volume);
                 affected.Temperature = Hotspot.Temperature;
-                affected.React(this);
+                _gridAtmosphereComponent.AtmosphereSystem.React(affected, this);
                 Hotspot.Temperature = affected.Temperature;
                 Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 AssumeAir(affected);
@@ -846,10 +849,10 @@ namespace Content.Server.Atmos
                 : Atmospherics.MinimumTemperatureForSuperconduction))
                 return false;
 
-            return !(Air.HeatCapacity < Atmospherics.MCellWithRatio) && ConsiderSuperconductivity();
+            return !(_gridAtmosphereComponent.AtmosphereSystem.GetHeatCapacity(Air) < Atmospherics.MCellWithRatio) && ConsiderSuperconductivity();
         }
 
-        public void Superconduct()
+        public void Superconduct(AtmosphereSystem atmosphereSystem)
         {
             var directions = ConductivityDirections();
 
@@ -867,22 +870,22 @@ namespace Content.Server.Atmos
                 if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
                     adjacent.Archive(_gridAtmosphereComponent.UpdateCounter);
 
-                adjacent.NeighborConductWithSource(this);
+                adjacent.NeighborConductWithSource(atmosphereSystem, this);
 
                 adjacent.ConsiderSuperconductivity();
             }
 
             RadiateToSpace();
 
-            FinishSuperconduction();
+            FinishSuperconduction(atmosphereSystem);
         }
 
-        private void FinishSuperconduction()
+        private void FinishSuperconduction(AtmosphereSystem atmosphereSystem)
         {
             // Conduct with air on my tile if I have it
             if (!BlocksAllAir)
             {
-                Temperature = Air.TemperatureShare(ThermalConductivity, Temperature, HeatCapacity);
+                Temperature = atmosphereSystem.TemperatureShare(Air, ThermalConductivity, Temperature, HeatCapacity);
             }
 
             FinishSuperconduction(BlocksAllAir ? Temperature : Air.Temperature);
@@ -897,13 +900,13 @@ namespace Content.Server.Atmos
             }
         }
 
-        private void NeighborConductWithSource(TileAtmosphere other)
+        private void NeighborConductWithSource(AtmosphereSystem atmosphereSystem, TileAtmosphere other)
         {
             if (BlocksAllAir)
             {
                 if (!other.BlocksAllAir)
                 {
-                    other.TemperatureShareOpenToSolid(this);
+                    other.TemperatureShareOpenToSolid(atmosphereSystem, this);
                 }
                 else
                 {
@@ -916,20 +919,19 @@ namespace Content.Server.Atmos
 
             if (!other.BlocksAllAir)
             {
-                other.Air.TemperatureShare(Air, Atmospherics.WindowHeatTransferCoefficient);
+                atmosphereSystem.TemperatureShare(other.Air, Air, Atmospherics.WindowHeatTransferCoefficient);
             }
             else
             {
-                TemperatureShareOpenToSolid(other);
+                TemperatureShareOpenToSolid(atmosphereSystem, other);
             }
 
             _gridAtmosphereComponent.AddActiveTile(this);
         }
 
-        private void TemperatureShareOpenToSolid(TileAtmosphere other)
+        private void TemperatureShareOpenToSolid(AtmosphereSystem atmosphereSystem, TileAtmosphere other)
         {
-            other.Temperature =
-                Air.TemperatureShare(other.ThermalConductivity, other.Temperature, other.HeatCapacity);
+            other.Temperature = atmosphereSystem.TemperatureShare(Air, other.ThermalConductivity, other.Temperature, other.HeatCapacity);
         }
 
         private void TemperatureShareMutualSolid(TileAtmosphere other, float conductionCoefficient)
@@ -1120,17 +1122,11 @@ namespace Content.Server.Atmos
             }
         }
 
-        private void React()
-        {
-            // TODO ATMOS I think this is enough? gotta make sure...
-            Air?.React(this);
-        }
-
         public bool AssumeAir(GasMixture giver)
         {
             if (Air == null) return false;
 
-            Air.Merge(giver);
+            EntitySystem.Get<AtmosphereSystem>().Merge(Air, giver);
 
             UpdateVisuals();
 

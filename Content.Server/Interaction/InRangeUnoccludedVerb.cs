@@ -1,4 +1,4 @@
-﻿using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
@@ -31,7 +31,7 @@ namespace Content.Server.Interaction
             }
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("In Range Unoccluded");
+            data.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
         }
 
@@ -49,8 +49,8 @@ namespace Content.Server.Interaction
             }
 
             var message = user.InRangeUnOccluded(target)
-                ? Loc.GetString("Not occluded")
-                : Loc.GetString("Occluded");
+                ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
+                : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
 
             target.PopupMessage(user, message);
         }

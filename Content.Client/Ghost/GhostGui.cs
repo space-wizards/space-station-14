@@ -13,9 +13,9 @@ namespace Content.Client.Ghost
 {
     public class GhostGui : Control
     {
-        private readonly Button _returnToBody = new() {Text = Loc.GetString("Return to body")};
-        private readonly Button _ghostWarp = new() {Text = Loc.GetString("Ghost Warp")};
-        private readonly Button _ghostRoles = new() {Text = Loc.GetString("Ghost Roles")};
+        private readonly Button _returnToBody = new() {Text = Loc.GetString("ghost-gui-return-to-body-button") };
+        private readonly Button _ghostWarp = new() {Text = Loc.GetString("ghost-gui-ghost-warp-button") };
+        private readonly Button _ghostRoles = new() {Text = Loc.GetString("ghost-gui-ghost-roles-button") };
         private readonly GhostComponent _owner;
 
         public GhostTargetWindow? TargetWindow { get; }
@@ -86,7 +86,7 @@ namespace Content.Client.Ghost
         public GhostTargetWindow(GhostComponent owner, IEntityNetworkManager netManager)
         {
             MinSize = SetSize = (300, 450);
-            Title = "Ghost Warp";
+            Title = Loc.GetString("ghost-target-window-title");
             _owner = owner;
             _netManager = netManager;
 
@@ -146,7 +146,7 @@ namespace Content.Client.Ghost
             {
                 var currentButtonRef = new Button
                 {
-                    Text = $"Warp: {name}",
+                    Text = Loc.GetString("ghost-target-window-current-button", ("name", name)),
                     TextAlign = Label.AlignMode.Right,
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,

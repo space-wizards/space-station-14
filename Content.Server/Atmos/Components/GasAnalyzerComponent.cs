@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
@@ -204,9 +204,9 @@ namespace Content.Server.Atmos.Components
             {
                 var gas = atmosSystem.GetGas(i);
 
-                if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
+                if (tile.Moles[i] <= Atmospherics.GasMinMoles) continue;
 
-                gases.Add(new GasEntry(gas.Name, tile.Gases[i], gas.Color));
+                gases.Add(new GasEntry(gas.Name, tile.Moles[i], gas.Color));
             }
 
             UserInterface.SetState(
@@ -231,14 +231,14 @@ namespace Content.Server.Atmos.Components
 
                     if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
+                        Owner.PopupMessage(player, Loc.GetString("gas-analyzer-component-player-has-no-hands-message"));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        serverMsg.Session.AttachedEntity?.PopupMessage(Loc.GetString("gas-analyzer-component-need-gas-analyzer-in-hand-message"));
                         return;
                     }
 
@@ -252,7 +252,7 @@ namespace Content.Server.Atmos.Components
         {
             if (!eventArgs.CanReach)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
+                eventArgs.User.PopupMessage(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"));
                 return true;
             }
 

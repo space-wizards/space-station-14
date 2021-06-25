@@ -26,12 +26,9 @@ namespace Content.Server.Chat.Commands
     {
         public string Command => "suicide";
 
-        public string Description => "Commits suicide";
+        public string Description => Loc.GetString("suicide-command-description");
 
-        public string Help => "The suicide command gives you a quick way out of a round while remaining in-character.\n" +
-            "The method varies, first it will attempt to use the held item in your active hand.\n" +
-            "If that fails, it will attempt to use an object in the environment.\n" +
-            "Finally, if neither of the above worked, you will die by biting your tongue.";
+        public string Help => Loc.GetString("suicide-command-help-text");
 
         private void DealDamage(ISuicideAct suicide, IChatManager chat, IDamageableComponent damageableComponent, IEntity source, IEntity target)
         {
@@ -61,7 +58,7 @@ namespace Content.Server.Chat.Commands
             var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.WriteLine("You cannot run this command from the server.");
+                shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
@@ -115,10 +112,10 @@ namespace Content.Server.Chat.Commands
             }
 
             // Default suicide, bite your tongue
-            var othersMessage = Loc.GetString("{0:theName} is attempting to bite {0:their} own tongue!", owner);
+            var othersMessage = Loc.GetString("suicide-command-default-text-others",("name", owner));
             owner.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("You attempt to bite your own tongue!");
+            var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
             dmgComponent.SetDamage(DamageType.Piercing, 200, owner);

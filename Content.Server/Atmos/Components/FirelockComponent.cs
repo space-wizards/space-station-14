@@ -63,11 +63,11 @@ namespace Content.Server.Atmos.Components
 
             if (IsHoldingPressure())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of air blows in your face... Maybe you should reconsider."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("firelock-component-is-holding-pressure-message"));
             }
             else if (IsHoldingFire())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("A gush of warm air blows in your face... Maybe you should reconsider."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("firelock-component-is-holding-fire-message"));
             }
         }
 

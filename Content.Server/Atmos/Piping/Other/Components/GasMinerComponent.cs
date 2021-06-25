@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Piping.Other.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawnGas")]
-        public Gas SpawnGas { get; set; } = Gas.Invalid;
+        public Gas? SpawnGas { get; set; } = null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawnTemperature")]

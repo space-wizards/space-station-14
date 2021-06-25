@@ -575,7 +575,7 @@ namespace Content.Server.Interaction
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
         ///     on an item.
         /// </summary>
-        public void EquippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        public void EquippedHandInteraction(IEntity user, IEntity item, HandState hand)
         {
             var equippedHandMessage = new EquippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, equippedHandMessage);
@@ -594,7 +594,7 @@ namespace Content.Server.Interaction
         ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
         ///     on an item.
         /// </summary>
-        public void UnequippedHandInteraction(IEntity user, IEntity item, SharedHand hand)
+        public void UnequippedHandInteraction(IEntity user, IEntity item, HandState hand)
         {
             var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
             RaiseLocalEvent(item.Uid, unequippedHandMessage);
@@ -761,7 +761,7 @@ namespace Content.Server.Interaction
                         var ev = new WideAttackEvent(item, user, coordinates);
                         RaiseLocalEvent(item.Uid, ev, false);
 
-                        if(ev.Handled)
+                        if (ev.Handled)
                             return;
                     }
                     else
@@ -769,7 +769,7 @@ namespace Content.Server.Interaction
                         var ev = new ClickAttackEvent(item, user, coordinates, targetUid);
                         RaiseLocalEvent(item.Uid, ev, false);
 
-                        if(ev.Handled)
+                        if (ev.Handled)
                             return;
                     }
                 }
@@ -785,7 +785,7 @@ namespace Content.Server.Interaction
 
             // TODO: Make this saner?
             // Attempt to do unarmed combat. We don't check for handled just because at this point it doesn't matter.
-            if(wideAttack)
+            if (wideAttack)
                 RaiseLocalEvent(user.Uid, new WideAttackEvent(user, user, coordinates), false);
             else
                 RaiseLocalEvent(user.Uid, new ClickAttackEvent(user, user, coordinates, targetUid), false);

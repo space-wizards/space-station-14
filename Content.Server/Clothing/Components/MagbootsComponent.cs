@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Inventory.Components;
@@ -131,7 +131,7 @@ namespace Content.Server.Clothing.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle Magboots");
+                data.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, MagbootsComponent component)

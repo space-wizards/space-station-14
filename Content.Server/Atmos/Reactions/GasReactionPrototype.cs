@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
@@ -66,13 +67,13 @@ namespace Content.Server.Atmos.Reactions
         /// </summary>
         [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, AtmosphereSystem atmosphereSystem)
         {
             var result = ReactionResult.NoReaction;
 
             foreach (var effect in _effects)
             {
-                result |= effect.React(mixture, holder, gridLookup);
+                result |= effect.React(mixture, holder, atmosphereSystem);
             }
 
             return result;

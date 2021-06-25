@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -88,7 +89,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (MathHelper.CloseTo(removed.TotalMoles, 0f))
                     return;
 
-                removed.ScrubInto(outlet.Air, scrubber.FilterGases);
+                // TODO: Entity system dependency
+                Get<AtmosphereSystem>().ScrubInto(removed, outlet.Air, scrubber.FilterGases);
 
                 // Remix the gases.
                 tile.AssumeAir(removed);

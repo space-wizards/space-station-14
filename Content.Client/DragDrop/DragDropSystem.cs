@@ -343,7 +343,7 @@ namespace Content.Client.DragDrop
 
             if (outOfRange)
             {
-                _playerManager.LocalPlayer?.ControlledEntity?.PopupMessage(Loc.GetString("You can't reach there!"));
+                _playerManager.LocalPlayer?.ControlledEntity?.PopupMessage(Loc.GetString("drag-drop-system-out-of-range-text"));
             }
 
             _dragDropHelper.EndDrag();

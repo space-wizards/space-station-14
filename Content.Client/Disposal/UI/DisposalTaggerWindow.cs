@@ -1,4 +1,4 @@
-﻿using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -18,13 +18,13 @@ namespace Content.Client.Disposal.UI
         public DisposalTaggerWindow()
         {
             MinSize = SetSize = (500, 110);
-            Title = Loc.GetString("Disposal Tagger");
+            Title = Loc.GetString("disposal-tagger-window-title");
 
             Contents.AddChild(new VBoxContainer
             {
                 Children =
                 {
-                    new Label {Text = Loc.GetString("Tag:")},
+                    new Label {Text = Loc.GetString("disposal-tagger-window-tag-input-label")},
                     new Control {MinSize = (0, 10)},
                     new HBoxContainer
                     {
@@ -37,7 +37,7 @@ namespace Content.Client.Disposal.UI
                                 IsValid = tag => TagRegex.IsMatch(tag)
                             }),
                             new Control {MinSize = (10, 0)},
-                            (Confirm = new Button {Text = Loc.GetString("Confirm")})
+                            (Confirm = new Button {Text = Loc.GetString("disposal-tagger-window-tag-confirm-button")})
                         }
                     }
                 }
