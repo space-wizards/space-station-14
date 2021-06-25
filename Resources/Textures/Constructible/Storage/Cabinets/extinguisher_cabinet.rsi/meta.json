@@ -8,28 +8,28 @@
   },
   "states": [
     {
-      "name": "extinguisher_closed",
+      "name": "extinguisher_closed"
     },
     {
-      "name": "extinguisher_empty",
+      "name": "extinguisher_empty"
     },
     {
-      "name": "extinguisher_full",
+      "name": "extinguisher_full"
     },
     {
-      "name": "extinguisher_mini",
+      "name": "extinguisher_mini"
     },
     {
-      "name": "closed",
+      "name": "closed"
     },
     {
-      "name": "extinguisher",
+      "name": "extinguisher"
     },
     {
-      "name": "extinguisher-mini",
+      "name": "extinguisher-mini"
     },
     {
-      "name": "frame",
+      "name": "frame"
     },
     {
       "name": "open"
