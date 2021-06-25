@@ -1,14 +1,11 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Arcade
 {
-    [NetID(ContentNetIDs.SPACE_VILLAIN_ARCADE)]
-    public class SharedSpaceVillainArcadeComponent : Component
+    public abstract class SharedSpaceVillainArcadeComponent : Component
     {
         public override string Name => "SpaceVillainArcade";
 

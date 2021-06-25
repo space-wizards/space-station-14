@@ -1,17 +1,14 @@
 #nullable enable
 using System.Threading;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Engineering.Components
-    {
-        [RegisterComponent]
-        [NetID(ContentNetIDs.DISASSEMBLE_ON_ACTIVATE)]
+{
+    [RegisterComponent]
     public class DisassembleOnActivateComponent : Component
     {
         public override string Name => "DisassembleOnActivate";
