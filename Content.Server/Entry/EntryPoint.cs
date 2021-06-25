@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
@@ -46,6 +46,8 @@ namespace Content.Server.Entry
             {
                 factory.RegisterIgnore(ignoreName);
             }
+
+            factory.CalculateNetIds();
 
             ServerContentIoC.Register();
 
