@@ -33,13 +33,13 @@ namespace Content.Shared.Movement.Components
                 return true;
             }
 
-            mapManager ??= IoCManager.Resolve<IMapManager>(); 
+            mapManager ??= IoCManager.Resolve<IMapManager>();
             var grid = mapManager.GetGrid(gridId);
             var gridEntityId = grid.GridEntityId;
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             var gridEntity = entityManager.GetEntity(gridEntityId);
 
-            if (gridEntity?.HasComponent<GravityComponent>() != true)
+            if (!gridEntity.GetComponent<GravityComponent>().Enabled)
             {
                 return true;
             }
