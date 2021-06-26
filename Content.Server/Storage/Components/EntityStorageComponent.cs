@@ -60,9 +60,6 @@ namespace Content.Server.Storage.Components
         [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
 
-        [ViewVariables]
-        protected IEnumerable<IEntity> CollidingEntities = default!;
-
         [DataField("showContents")]
         private bool _showContents;
 
@@ -197,10 +194,9 @@ namespace Content.Server.Storage.Components
         protected virtual void CloseStorage()
         {
             Open = false;
-            DetermineCollidingEntities(Owner.Transform.MapID);
 
             var count = 0;
-            foreach (var entity in CollidingEntities)
+            foreach (var entity in DetermineCollidingEntities(Owner.Transform.MapID))
             {
                 // prevents taking items out of inventories, out of containers, and orphaning child entities
                 if(!entity.Transform.IsMapTransform)
@@ -441,15 +437,15 @@ namespace Content.Server.Storage.Components
             EmptyContents();
         }
 
-        protected void DetermineCollidingEntities(Robust.Shared.Map.MapId mapId)
+        protected IEnumerable<IEntity> DetermineCollidingEntities(Robust.Shared.Map.MapId mapId)
         {
             var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
             var entityWorldAABB = Owner.GetComponent<PhysicsComponent>().GetWorldAABB();
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            // HACK items are (currently) removed from broadphase due to performance reasons
+            // HACK items are (currently) removed from broadphase due to performance reasons, so I need check both Entity Lookup and Physics Manager
             var collidingItems = entityLookup.GetEntitiesIntersecting(mapId, entityWorldAABB);
             var collidingEntities = physicsManager.GetCollidingEntities(mapId, in entityWorldAABB).Select(x => x.Owner);
-            CollidingEntities = collidingEntities.Union(collidingItems);
+            return collidingEntities.Union(collidingItems);
         }
 
         [Verb]

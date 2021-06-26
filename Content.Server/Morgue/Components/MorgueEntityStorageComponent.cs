@@ -92,7 +92,6 @@ namespace Content.Server.Morgue.Components
                 _tray = Owner.EntityManager.SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
-                DetermineCollidingEntities(_tray.Transform.MapID);
             }
             else
             {
