@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Sound
+namespace Content.Server.Sound.Components
 {
     /// <summary>
     /// Base sound emitter which defines most of the data fields.
