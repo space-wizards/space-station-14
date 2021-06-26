@@ -11,7 +11,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using Content.Shared.Storage;
@@ -134,7 +133,8 @@ namespace Content.Server.Storage.Components
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut {
+        public bool CanWeldShut
+        {
             get => _canWeldShut;
             set
             {
@@ -165,6 +165,13 @@ namespace Content.Server.Storage.Components
 
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
+            // HACK until EntityStorageComponent gets refactored to the new ECS system
+            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            {
+                // Do nothing, LockSystem is responsible for handling this case
+                return;
+            }
+
             ToggleOpen(eventArgs.User);
         }
 
@@ -172,7 +179,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
             return true;
@@ -204,7 +211,7 @@ namespace Content.Server.Storage.Components
             foreach (var entity in entities)
             {
                 // prevents taking items out of inventories, out of containers, and orphaning child entities
-                if(!entity.Transform.IsMapTransform)
+                if (!entity.Transform.IsMapTransform)
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
@@ -465,7 +472,8 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
+                (component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked)) // HACK extra check, until EntityStorage gets refactored
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -475,7 +483,7 @@ namespace Content.Server.Storage.Components
             {
                 data.Visibility = VerbVisibility.Disabled;
                 var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
+                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message", ("verb", verb));
                 return;
             }
 
