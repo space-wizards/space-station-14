@@ -14,18 +14,10 @@ namespace Content.Shared.Damage.Resistances
     ///     reduction value.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ResistanceSet
+    public class ResistanceSet : ISerializationHooks
     {
-        [ViewVariables]
-        private Dictionary<DamageTypePrototype, ResistanceSetSettings> _resistances = new();
-
-        public void AfterDeserialization()
+        public ResistanceSet()
         {
-            var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var damageType in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
-            {
-                Resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
-            }
         }
 
         public ResistanceSet(ResistanceSetPrototype data)
@@ -34,11 +26,21 @@ namespace Content.Shared.Damage.Resistances
             Resistances = data.Resistances;
         }
 
+        void ISerializationHooks.AfterDeserialization()
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var damageType in prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
+            {
+                Resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
+            }
+        }
+
         [ViewVariables]
         public string ID { get; } = string.Empty;
 
         [ViewVariables]
-        public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; } = new();
+        public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; } = new();
 
         /// <summary>
         ///     Adjusts input damage with the resistance set values.

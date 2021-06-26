@@ -48,8 +48,8 @@ namespace Content.Server.Weapon.Melee.Components
         public int Damage { get; set; } = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("damageType")]
-        public DamageType DamageType { get; set; } = DamageType.Blunt;
+        [DataField("damageType", required: true)]
+        public DamageTypePrototype DamageType { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clickAttackEffect")]

@@ -25,12 +25,6 @@ namespace Content.Shared.Damage.Components
     [ComponentReference(typeof(IDamageableComponent))]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
-        private Dictionary<string, DamageTypePrototype> _damageTypeDict = default!;
-        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
-        private readonly HashSet<DamageTypePrototype> _supportedDamageTypes = new();
-        private readonly HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
-        [ViewVariables] private ResistanceSet Resistances { get; set; } = new();
-
         public override string Name => "Damageable";
 
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
@@ -42,25 +36,32 @@ namespace Content.Shared.Damage.Components
         [DataField("resistances")]
         public string ResistanceSetId = DefaultResistanceSet;
 
-
+        [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] [DataField("damageContainer")]
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
+
+        private readonly Dictionary<string, DamageTypePrototype> _damageTypeDict = default!;
+        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => damageListToDamageGroup(_damageList);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageList;
 
+        public HashSet<DamageGroupPrototype> SupportedGroups { get; } = new();
+
+        public HashSet<DamageTypePrototype> SupportedTypes { get; } = new();
+
         public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
         {
-            return _supportedDamageGroups.Contains(damageGroup);
+            return SupportedGroups.Contains(damageGroup);
         }
 
         public bool SupportsDamageType(DamageTypePrototype type)
         {
-            return _supportedDamageTypes.Contains(type);
+            return SupportedTypes.Contains(type);
         }
 
         protected override void Initialize()
@@ -77,12 +78,12 @@ namespace Content.Shared.Damage.Components
             // TODO DAMAGE Serialize damage done and resistance changes
             var damageContainerPrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
-            _supportedDamageGroups.Clear();
-            _supportedDamageTypes.Clear();
+            SupportedGroups.Clear();
+            SupportedTypes.Clear();
 
             DamageContainerId = damageContainerPrototype.ID;
-            _supportedDamageGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
-            _supportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
+            SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
+            SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
             var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
@@ -174,7 +175,7 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            if (_supportedDamageTypes.Contains(type))
+            if (SupportedTypes.Contains(type))
             {
                 var old = _damageList[type] = newValue;
                 _damageList[type] = newValue;
@@ -262,7 +263,7 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            var types = damageGroup.DamageTypes;
+            var types = damageGroup.DamageTypes.ToArray();
 
             if (amount < 0)
             {
@@ -279,7 +280,7 @@ namespace Content.Shared.Damage.Components
                     healThisCycle = 0;
 
                     int healPerType;
-                    if (healingLeft < types.Count)
+                    if (healingLeft < types.Length)
                     {
                         // Say we were to distribute 2 healing between 3
                         // this will distribute 1 to each (and stop after 2 are given)
@@ -289,7 +290,7 @@ namespace Content.Shared.Damage.Components
                     {
                         // Say we were to distribute 62 healing between 3
                         // this will distribute 20 to each, leaving 2 for next loop
-                        healPerType = healingLeft / types.Count;
+                        healPerType = healingLeft / types.Length;
                     }
 
                     foreach (var type in types)
@@ -313,13 +314,13 @@ namespace Content.Shared.Damage.Components
             {
                 int damagePerType;
 
-                if (damageLeft < types.Count)
+                if (damageLeft < types.Length)
                 {
                     damagePerType = 1;
                 }
                 else
                 {
-                    damagePerType = damageLeft / types.Count;
+                    damagePerType = damageLeft / types.Length;
                 }
 
                 foreach (var type in types)
@@ -350,11 +351,6 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            if (Godmode)
-            {
-                return false;
-            }
-
             var old = _damageList[type];
             _damageList[type] = newValue;
 
@@ -371,7 +367,7 @@ namespace Content.Shared.Damage.Components
         {
             var data = new List<DamageChangeData>();
 
-            foreach (var type in _supportedDamageTypes)
+            foreach (var type in SupportedTypes)
             {
                 var damage = GetDamage(type);
                 var datum = new DamageChangeData(type, damage, 0);
@@ -392,10 +388,10 @@ namespace Content.Shared.Damage.Components
             var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
             int damageGroupSumDamage = 0;
             int damageTypeDamage = 0 ;
-            foreach (var damageGroup in _supportedDamageGroups)
+            foreach (var damageGroup in SupportedGroups)
             {
                 damageGroupSumDamage = 0;
-                foreach (var damageType in _supportedDamageTypes)
+                foreach (var damageType in SupportedTypes)
                 {
                     damageTypeDamage = 0;
                      damagelist.TryGetValue(damageType,out damageTypeDamage);

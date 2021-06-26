@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -21,15 +20,16 @@ namespace Content.Shared.Damage.Resistances
         private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
-        [field: DataField("coefficients")]
+        [DataField("coefficients")]
         public Dictionary<string, float> Coefficients { get; } = new();
 
         [ViewVariables]
-        [field: DataField("flatReductions")]
+        [DataField("flatReductions")]
         public Dictionary<string, int> FlatReductions { get; } = new();
 
         [ViewVariables]
         public Dictionary<DamageTypePrototype, float> Resistances { get; private set; } = new();
+
         [ViewVariables]
         public Dictionary<DamageTypePrototype, int> FlatResistances { get; private set; } = new();
 
