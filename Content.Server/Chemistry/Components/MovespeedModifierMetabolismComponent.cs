@@ -26,11 +26,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ResetModifiers()
         {
-            _cancellation?.Cancel();
             WalkSpeedModifier = 1;
             SprintSpeedModifier = 1;
             var movement = Owner.GetComponent<MovementSpeedModifierComponent>();
             movement.RefreshMovementSpeedModifiers();
+            _cancellation?.Cancel();
         }
 
         public void ResetTimer()

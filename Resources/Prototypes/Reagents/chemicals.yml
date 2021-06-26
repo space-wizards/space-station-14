@@ -238,12 +238,38 @@
   meltingPoint: 170.0
   metabolism:
     - !type:HealthChangeMetabolism
-      healthChange: 0.5
+      healthChange: 1.2
       damageClass: Toxin
     - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 2.5
-      sprintSpeedModifier: 2.5
-      
+      walkSpeedModifier: 1.3
+      sprintSpeedModifier: 1.3
+
+- type: reagent
+  id: Iodine
+  name: iodine
+  desc: Iodine is a dark purple element, and a potent dye.
+  physicalDesc: Dark Brown
+  color: "#331A00"
+  boilingPoint: 184.3  
+  meltingPoint: 113.7 
+  metabolism: # don't know what effects it should have, didn't find any on the tg wiki.
+  
+  - type: reagent
+  id: Ephedrine
+  name: ephedrine
+  desc: Ephedrine is a medication and stimulant and is a component of Methamphetamine.
+  physicalDesc: Bone white
+  color: "#FFFFE6"
+  boilingPoint: 255.0  
+  meltingPoint: 36.0 
+  metabolism: 
+    - !type:HealthChangeMetabolism
+      healthChange: 0.3
+      damageClass: Toxin
+    - !type:MovespeedModifierMetabolism
+      walkSpeedModifier: 1.1
+      sprintSpeedModifier: 1.1
+            
 - type: reagent
   id: Oil
   name: oil
