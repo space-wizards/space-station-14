@@ -6,7 +6,7 @@
   result: Handcuffs
   completetime: 500
   materials:
-    steel: 300
+    Steel: 300
 
 - type: latheRecipe
   id: Stunbaton
@@ -16,8 +16,8 @@
   result: Stunbaton
   completetime: 500
   materials:
-    steel: 300
-    plastic: 300
+    Steel: 300
+    Plastic: 300
 
 - type: latheRecipe
   id: Flash
@@ -27,6 +27,46 @@
   result: Flash
   completetime: 500
   materials:
-    glass: 100
-    plastic: 200
-    metal: 100
+    Glass: 100
+    Plastic: 200
+    Steel: 100
+
+- type: latheRecipe
+  id: CartridgePistolBase
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgePistolBase
+  completetime: 500
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: ShellShotgunBase
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: base
+  result: ShellShotgunBase
+  completetime: 500
+  materials:
+    Steel: 20
+
+- type: latheRecipe
+  id: CartridgeMagnumBase
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgeMagnumBase
+  completetime: 500
+  materials:
+    Steel: 20
+
+- type: latheRecipe
+  id: CartridgeLRifleBase
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgeLRifleBase
+  completetime: 500
+  materials:
+    Steel: 30

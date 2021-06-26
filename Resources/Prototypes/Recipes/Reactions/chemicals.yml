@@ -204,6 +204,18 @@
     Water: 2
 
 - type: reaction
+  id: Oil
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Oil: 3
+
+- type: reaction
   id: Fluorosurfactant
   reactants:
     Carbon:

@@ -8,9 +8,12 @@
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
   - type: MeleeWeapon
+    damage: 10
     range: 1.5
     arcwidth: 0
     arc: spear
+  - type: DamageOtherOnHit
+    amount: 15
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
@@ -21,6 +24,7 @@
   - type: ItemCooldown
   - type: MeleeChemicalInjector
   - type: SolutionContainer
+    caps: Refillable
     maxVol: 5
   - type: SolutionTransfer
 

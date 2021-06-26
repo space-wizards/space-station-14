@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.GlobalVerbs;
+using Content.Server.Damage;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs.State;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

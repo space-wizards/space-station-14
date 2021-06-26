@@ -7,15 +7,18 @@
   - type: Physics
     bodyType: Dynamic
     fixtures:
-    - shape:
+    - id: DeleteCircle
+      shape:
         !type:PhysShapeCircle
           radius: 0.5
       mass: 5
+      # Keep an eye on ParticlesProjectile when adjusting these
       layer:
       - Impassable
       mask:
       - AllMask
   - type: Singularity
+  - type: SingularityDistortion
   - type: RadiationPulse
     range: 15
     decay: false

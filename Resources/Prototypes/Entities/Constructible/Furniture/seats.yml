@@ -89,6 +89,8 @@
   id: StoolBar
   parent: SeatBase
   components:
+  - type: Rotatable
+    rotateWhileAnchored: true
   - type: Anchorable
   - type: Sprite
     state: bar_stool

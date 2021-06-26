@@ -23,6 +23,7 @@
       - Thermite
       - Plasma
       - Ethanol
+      - Oil
     - !type:WashCreamPieReaction
       touch: true
       reagents:
@@ -134,6 +135,8 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
+    - map: [ "enum.Slots.POCKET1" ]
+    - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
     bodyType: KinematicController
     fixtures: # TODO: This needs a second fixture just for mob collisions.
@@ -208,6 +211,7 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
+    - type: HandsVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -234,6 +238,10 @@
     safe: false
   - type: Speech
   - type: Emoting
+  - type: Grammar
+    attributes:
+      proper: true
+
 
 - type: entity
   save: false
@@ -318,6 +326,8 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: ["enum.Slots.MASK"]
       - map: ["enum.Slots.HEAD"]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics

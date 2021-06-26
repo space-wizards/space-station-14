@@ -10,6 +10,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/bartender.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtCaptain
+  name: captain's jumpskirt
+  description: It's a blue jumpskirt with some gold markings denoting the rank of "Captain".
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+
+- type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCargo
   name: cargo tech jumpskirt

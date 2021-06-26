@@ -4,7 +4,7 @@
   result: Wirecutter
   completetime: 500
   materials:
-    steel: 200
+    Steel: 200
 
 - type: latheRecipe
   id: Screwdriver
@@ -14,7 +14,7 @@
   result: Screwdriver
   completetime: 500
   materials:
-    steel: 200
+    Steel: 200
 
 - type: latheRecipe
   id: Welder
@@ -24,7 +24,7 @@
   result: Welder
   completetime: 500
   materials:
-    steel: 400
+    Steel: 400
 
 - type: latheRecipe
   id: Wrench
@@ -32,16 +32,34 @@
   result: Wrench
   completetime: 500
   materials:
-    steel: 200
+    Steel: 200
 
 - type: latheRecipe
   id: CableStack
   name: cable coil
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coil-30.png
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: ApcExtensionCableStack1
   completetime: 500
   materials:
-    steel: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: MVWireStack
+  name: MV cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
+  result: MVWireStack1
+  completetime: 500
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  id: HVWireStack
+  name: HV cable coil
+  icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
+  result: HVWireStack1
+  completetime: 500
+  materials:
+    Steel: 200
 
 - type: latheRecipe
   id: Crowbar
@@ -49,7 +67,7 @@
   result: Crowbar
   completetime: 500
   materials:
-    steel: 200
+    Steel: 200
 
 - type: latheRecipe
   id: Pickaxe
@@ -57,8 +75,8 @@
   result: Pickaxe
   completetime: 500
   materials:
-    steel: 200
-    wood: 100
+    Steel: 200
+    Wood: 100
 
 - type: latheRecipe
   id: Shovel
@@ -68,8 +86,8 @@
   result: Shovel
   completetime: 500
   materials:
-    steel: 200
-    wood: 100
+    Steel: 200
+    Wood: 100
 
 - type: latheRecipe
   id: Multitool
@@ -79,8 +97,8 @@
   result: Multitool
   completetime: 500
   materials:
-    steel: 200
-    plastic: 200
+    Steel: 200
+    Plastic: 200
 
 - type: latheRecipe
   id: PowerDrill
@@ -90,8 +108,8 @@
   result: PowerDrill
   completetime: 500
   materials:
-    steel: 600
-    plastic: 200
+    Steel: 600
+    Plastic: 200
 
 - type: latheRecipe
   id: RCD
@@ -101,8 +119,8 @@
   result: RCD
   completetime: 1000
   materials:
-    steel: 1000
-    plastic: 300
+    Steel: 1000
+    Plastic: 300
 
 - type: latheRecipe
   id: RCDAmmo
@@ -112,5 +130,5 @@
   result: RCDAmmo
   completetime: 600
   materials:
-    steel: 500
-    plastic: 250
+    Steel: 500
+    Plastic: 250

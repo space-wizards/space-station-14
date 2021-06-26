@@ -10,13 +10,7 @@ namespace Content.Shared.Chat
     /// </summary>
     public sealed class ChatMaxMsgLengthMessage : NetMessage
     {
-        #region REQUIRED
-
-        public const MsgGroups GROUP = MsgGroups.Command;
-        public const string NAME = nameof(ChatMaxMsgLengthMessage);
-        public ChatMaxMsgLengthMessage(INetChannel channel) : base(NAME, GROUP) { }
-
-        #endregion
+        public override MsgGroups MsgGroup => MsgGroups.Command;
 
         /// <summary>
         /// The max length a player-sent message can get

@@ -5,25 +5,25 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingNeckCloakQm
+      - id: ClothingNeckCloakQm
         prob: 1
-      - name: ClothingHeadsetCargo
+      - id: ClothingHeadsetCargo
         prob: 1
-      - name: PlushieLizard
+      - id: PlushieLizard
         prob: 0.1
-      - name: ClothingHandsGlovesColorBrown
+      - id: ClothingHandsGlovesColorBrown
         prob: 1
-      - name: ClothingOuterSuitFire
+      - id: ClothingOuterSuitFire
         prob: 0.5
-      - name: ClothingShoesColorBrown
+      - id: ClothingShoesColorBrown
         prob: 0.7
-      - name: ClothingHeadHatCargosoft
+      - id: ClothingHeadHatCargosoft
         prob: 0.8
-      - name: SupplyRequestComputerCircuitboard
+      - id: SupplyRequestComputerCircuitboard
         prob: 1
-      - name: SupplyComputerCircuitboard
+      - id: SupplyComputerCircuitboard
         prob: 1
-      - name: CigPackGreen
+      - id: CigPackGreen
         prob: 0.50
 
 - type: entity
@@ -33,31 +33,31 @@
   components:
   - type: StorageFill
     contents:
-      - name: NukeDisk
+      - id: NukeDisk
         prob: 1
-      - name: CaptainIDCard
+      - id: CaptainIDCard
         prob: 1
-      - name: ClothingHeadHatCaptain
+      - id: ClothingHeadHatCaptain
         prob: 1
-      - name: ClothingNeckCloakCap
+      - id: ClothingNeckCloakCap
         prob: 1
-      - name: ClothingHandsGlovesCaptain
+      - id: ClothingHandsGlovesCaptain
         prob: 1
-      - name: ClothingOuterHardsuitCap
+      - id: ClothingOuterHardsuitCap
         prob: 1
-      - name: TaserGun
+      - id: TaserGun
         prob: 1
-      - name: ClothingShoesColorBlack
+      - id: ClothingShoesColorBlack
         prob: 0.7
-      - name: ClothingHeadHelmetHardsuitCap
+      - id: ClothingHeadHelmetHardsuitCap
         prob: 1
-      - name: CommsComputerCircuitboard
+      - id: CommsComputerCircuitboard
         prob: 1
-      - name: ClothingHeadsetAltCommand
+      - id: ClothingHeadsetAltCommand
         prob: 1
-      - name: PlushieNuke
+      - id: PlushieNuke
         prob: 0.1
-      - name: CigarGoldCase
+      - id: CigarGoldCase
         prob: 0.25
 
 - type: entity
@@ -67,25 +67,25 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingNeckCloakHop
+      - id: ClothingNeckCloakHop
         prob: 1
-      - name: ClothingHeadHatHopcap
+      - id: ClothingHeadHatHopcap
         prob: 1
-      - name: HoPIDCard
+      - id: HoPIDCard
         prob: 0.9
-      - name: ClothingHeadsetCommand
+      - id: ClothingHeadsetCommand
         prob: 1
-      - name: BoxPDA
+      - id: BoxPDA
         prob: 1
-      - name: IDComputerCircuitboard
+      - id: IDComputerCircuitboard
         prob: 1
-      - name: TaserGun
+      - id: TaserGun
         prob: 1
-      - name: ClothingShoesColorBlack
+      - id: ClothingShoesColorBlack
         prob: 0.7
-      - name: PlushieLizard
+      - id: PlushieLizard
         prob: 0.1
-      - name: CigarGoldCase
+      - id: CigarGoldCase
         prob: 0.10
         # Fuck the HoP they don't deserve fucking cigars.
 
@@ -96,16 +96,16 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHelmetHardsuitEngineeringWhite
-      - name: ClothingOuterHardsuitEngineeringWhite
-      - name: ClothingMaskBreath
-      - name: OxygenTankFilled
-      - name: ClothingNeckCloakCe
-      - name: ClothingEyesGlassesMeson
-      - name: ClothingBeltChiefEngineerFilled
-      - name: ClothingHeadHatBeretEngineering
-      - name: ClothingShoesBootsMag
-      - name: CigarCase
+      - id: ClothingHeadHelmetHardsuitEngineeringWhite
+      - id: ClothingOuterHardsuitEngineeringWhite
+      - id: ClothingMaskBreath
+      - id: OxygenTankFilled
+      - id: ClothingNeckCloakCe
+      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltChiefEngineerFilled
+      - id: ClothingHeadHatBeretEngineering
+      - id: ClothingShoesBootsMag
+      - id: CigarCase
         prob: 0.15
 
 - type: entity
@@ -115,21 +115,21 @@
   components:
   - type: StorageFill
     contents:
-      - name: MedkitFilled
+      - id: MedkitFilled
         prob: 1
-      - name: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesLatex
         prob: 1
       #- name: ClothingEyesHudMedical #Removed until working properly
       #  prob: 1
-      - name: ClothingHeadsetAltMedical
+      - id: ClothingHeadsetAltMedical
         prob: 1
-      - name: ClothingCloakCmo
+      - id: ClothingCloakCmo
         prob: 1
-      - name: ClothingBackpackDuffelSurgeryFilled
+      - id: ClothingBackpackDuffelSurgeryFilled
         prob: 1
-      - name: ClothingOuterCoatLabCmo
+      - id: ClothingOuterCoatLabCmo
         prob: 1
-      - name: ClothingMaskSterile
+      - id: ClothingMaskSterile
         prob: 1
 
 - type: entity
@@ -139,15 +139,15 @@
   components:
   - type: StorageFill
     contents:
-      - name: ResearchComputerCircuitboard
+      - id: ResearchComputerCircuitboard
         prob: 1
-      - name: ProtolatheMachineCircuitboard
+      - id: ProtolatheMachineCircuitboard
         prob: 1
-      - name: ClothingNeckCloakRd
+      - id: ClothingNeckCloakRd
         prob: 1
-      - name: ClothingHeadsetMedicalScience
+      - id: ClothingHeadsetMedicalScience
         prob: 1
-      - name: PlushieSlime
+      - id: PlushieSlime
         prob: 0.1
 
 - type: entity
@@ -157,41 +157,41 @@
   components:
   - type: StorageFill
     contents:
-      - name: TaserGun
+      - id: TaserGun
         prob: 1
-      - name: ClothingHeadHatBeretHoS
+      - id: ClothingHeadHatBeretHoS
         prob: 1
-      - name: ClothingHeadHatHoshat
+      - id: ClothingHeadHatHoshat
         prob: 1
-      - name: ClothingNeckCloakHos
+      - id: ClothingNeckCloakHos
         prob: 1
-      - name: ClothingOuterCoatHoSTrench
+      - id: ClothingOuterCoatHoSTrench
         prob: 1
-      - name: ClothingUniformJumpskirtHoSAlt
+      - id: ClothingUniformJumpskirtHoSAlt
         prob: 1
-      - name: ClothingUniformJumpsuitHoSAlt
+      - id: ClothingUniformJumpsuitHoSAlt
         prob: 1
-      - name: ClothingUniformJumpsuitHoSBlue
+      - id: ClothingUniformJumpsuitHoSBlue
         prob: 0.5
-      - name: ClothingUniformJumpsuitHoSGrey
+      - id: ClothingUniformJumpsuitHoSGrey
         prob: 0.5
-      - name: ClothingUniformJumpsuitHoSParadeMale
+      - id: ClothingUniformJumpsuitHoSParadeMale
         prob: 0.1
-      - name: ClothingUniformJumpskirtHoSParadeMale
+      - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
-      - name: ClothingHeadHelmetHardsuitSecurityRed
+      - id: ClothingHeadHelmetHardsuitSecurityRed
         prob: 1
-      - name: ClothingOuterHardsuitSecurityRed
+      - id: ClothingOuterHardsuitSecurityRed
         prob: 1
-      - name: DrinkVacuumFlask
+      - id: DrinkVacuumFlask
         prob: 0.8
-      - name: ClothingBeltSecurityFilled
+      - id: ClothingBeltSecurityFilled
         prob: 1
-      - name: ClothingHeadsetAltSecurity
+      - id: ClothingHeadsetAltSecurity
         prob: 1
-      - name: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesSecurity
         prob: 1
-      - name: ClothingShoesBootsJack
+      - id: ClothingShoesBootsJack
         prob: 1
-      - name: CigarGoldCase
+      - id: CigarGoldCase
         prob: 0.50

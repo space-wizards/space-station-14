@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Metabolism;
+using Content.Server.Body.Behavior;
+using Content.Server.Body.Circulatory;
+using Content.Server.Metabolism;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Body.Components;
 using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.GameObjects;
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out IBody body));
+                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
                 Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
                 Assert.That(lungs.Count, Is.EqualTo(1));
                 Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
@@ -105,7 +105,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
 
                 // Not completely empty
-                Assert.Positive(lung.Air.Gases.Sum());
+                Assert.Positive(lung.Air.Moles.Sum());
 
                 // Retains needed gas
                 Assert.Positive(bloodstream.Air.GetMoles(Gas.Oxygen));
@@ -167,7 +167,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
-                Assert.True(human.TryGetComponent(out IBody body));
+                Assert.True(human.TryGetComponent(out SharedBodyComponent body));
                 Assert.True(body.HasMechanismBehavior<LungBehavior>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);

@@ -1,8 +1,8 @@
 #nullable enable
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Nutrition;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;

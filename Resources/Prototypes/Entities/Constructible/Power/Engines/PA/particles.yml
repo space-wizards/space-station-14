@@ -22,5 +22,10 @@
         hard: false
         layer: [None]
         mask:
-        - MobMask
+          # Has to hit mobs, singularity, and singularity generator
+          - MobMask
+          - Opaque
     - type: ParticleProjectile
+    - type: SinguloFood
+      # Energy is setup by the PA particle fire function.
+

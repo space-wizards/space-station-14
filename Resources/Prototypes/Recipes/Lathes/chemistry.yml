@@ -6,7 +6,7 @@
   result: Beaker
   completetime: 500
   materials:
-    glass: 100
+    Glass: 100
 
 - type: latheRecipe
   id: LargeBeaker
@@ -16,7 +16,17 @@
   result: LargeBeaker
   completetime: 500
   materials:
-    glass: 200
+    Glass: 200
+
+- type: latheRecipe
+  id: CryostasisBeaker
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
+    state: beakernoreact
+  result: CryostasisBeaker
+  completetime: 500
+  materials:
+    Steel: 250
 
 - type: latheRecipe
   id: Dropper
@@ -26,9 +36,9 @@
   result: Dropper
   completetime: 500
   materials:
-    glass: 200
-    plastic: 100
-    
+    Glass: 200
+    Plastic: 100
+
 - type: latheRecipe
   id: Syringe
   icon:
@@ -37,4 +47,4 @@
   result: Syringe
   completetime: 500
   materials:
-    glass: 200
+    Glass: 200

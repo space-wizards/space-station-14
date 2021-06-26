@@ -1,5 +1,20 @@
 # Lots of misc stuff in here, hard to parent it.
 
+# Powder (For when you throw stuff like flour and it explodes)
+
+- type: entity
+  name: flour
+  id: PuddleFlour
+  parent: PuddleBase
+  description: Call the janitor.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: powder-0
+    color: white
+  - type: Puddle
+    state: powder
+
 # Reagent Containers
 
 - type: entity
@@ -31,6 +46,26 @@
       reagents:
       - ReagentId: Flour
         Quantity: 50
+  - type: DamageOnLand
+    amount: 1
+  - type: DamageOtherOnHit
+    amount: 1
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PuddleFlour:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: ReagentContainerBase
@@ -46,6 +81,26 @@
       reagents:
       - ReagentId: Flour
         Quantity: 20
+  - type: DamageOnLand
+    amount: 1
+  - type: DamageOtherOnHit
+    amount: 1
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PuddleFlour:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: ReagentContainerBase

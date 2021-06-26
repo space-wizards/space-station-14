@@ -4,8 +4,8 @@
   result: FirelockElectronics
   completetime: 500
   materials:
-     steel: 50
-     glass: 50
+     Steel: 50
+     Glass: 50
 
 - type: latheRecipe
   id: DoorElectronics
@@ -13,8 +13,8 @@
   result: DoorElectronics
   completetime: 500
   materials:
-     steel: 50
-     glass: 50
+     Steel: 50
+     Glass: 50
 
 - type: latheRecipe
   id: APCElectronics
@@ -22,5 +22,5 @@
   result: APCElectronics
   completetime: 500
   materials:
-     steel: 50
-     glass: 50
+     Steel: 50
+     Glass: 50

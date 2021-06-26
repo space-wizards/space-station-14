@@ -1,6 +1,6 @@
 - type: cargoProduct
   name: "crate of glass sheets"
-  id: cargo.materialglass
+  id: MaterialGlass
   description: "90 sheets of glass, packed with care."
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
@@ -12,7 +12,7 @@
 
 - type: cargoProduct
   name: "crate of steel sheets"
-  id: cargo.materialsteel
+  id: MaterialSteel
   description: "90 sheets of steel."
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
@@ -24,12 +24,24 @@
 
 - type: cargoProduct
   name: "crate of plastic sheets"
-  id: cargo.materialplastic
+  id: MaterialPlastic
   description: "90 sheets of plastic."
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: plastic_3
   product: CrateMaterialPlastic
   cost: 1500
+  category: Materials
+  group: market
+
+- type: cargoProduct
+  name: "crate of plasteel sheets"
+  id: MaterialPlasteel
+  description: "90 sheets of plasteel."
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plasteel_3
+  product: CrateMaterialPlasteel
+  cost: 6000
   category: Materials
   group: market

@@ -1,9 +1,7 @@
 - type: entity
   save: false
-  name: Slime Person
-  parent: BaseSlimeMob_Content
-  id: SlimeMob_Content
-  description: A miserable pile of slime
+  parent: BaseSlimePerson
+  id: SlimePerson
   components:
     - type: Mind
       showExamineInfo: true
