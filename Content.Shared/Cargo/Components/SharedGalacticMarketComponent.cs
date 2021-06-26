@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Cargo.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
     {
         public sealed override string Name => "GalacticMarket";

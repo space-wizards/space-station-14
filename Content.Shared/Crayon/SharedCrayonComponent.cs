@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Crayon
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedCrayonComponent : Component
     {
         public override string Name => "Crayon";

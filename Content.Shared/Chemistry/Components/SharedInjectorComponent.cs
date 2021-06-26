@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry.Components
     /// <summary>
     /// Shared class for injectors & syringes
     /// </summary>
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedInjectorComponent : Component
     {
         public override string Name => "Injector";

@@ -13,7 +13,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
         public override string Name => "Storage";

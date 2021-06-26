@@ -18,7 +18,7 @@ namespace Content.Client.Clothing
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
-    [NetID()]
+    [NetworkedComponent()]
     public class ClothingComponent : ItemComponent
     {
         [DataField("femaleMask")]

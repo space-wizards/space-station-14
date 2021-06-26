@@ -23,7 +23,7 @@ namespace Content.Shared.MobState.Components
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedMobStateComponent : Component, IMobStateComponent, IActionBlocker
     {
         public override string Name => "MobState";

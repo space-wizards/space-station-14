@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cuffs.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedHandcuffComponent : Component
     {
         public override string Name => "Handcuff";

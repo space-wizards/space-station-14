@@ -17,7 +17,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedPullableComponent : Component, IRelayMoveInput
     {
         public override string Name => "Pullable";

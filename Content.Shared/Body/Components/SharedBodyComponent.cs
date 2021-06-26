@@ -27,7 +27,7 @@ namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
 
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

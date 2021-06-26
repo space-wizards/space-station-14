@@ -26,7 +26,7 @@ namespace Content.Shared.Buckle.Components
         Down
     }
 
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedStrapComponent : Component, IDragDropOn
     {
         public sealed override string Name => "Strap";

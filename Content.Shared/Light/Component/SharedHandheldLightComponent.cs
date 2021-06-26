@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Component
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
         public sealed override string Name => "HandheldLight";

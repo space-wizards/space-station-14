@@ -15,7 +15,7 @@ namespace Content.Server.Tools.Components
     ///     Not to be confused with Multitool (power)
     /// </summary>
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public class MultiToolComponent : Component, IUse
     {
         [DataDefinition]

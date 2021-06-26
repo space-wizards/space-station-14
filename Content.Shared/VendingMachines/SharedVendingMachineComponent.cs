@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
         public override string Name => "VendingMachine";

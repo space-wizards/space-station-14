@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Suspicion
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedSuspicionRoleComponent : Component
     {
         public sealed override string Name => "SuspicionRole";

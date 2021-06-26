@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Kitchen.Components
 {
 
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedMicrowaveComponent : Component
     {
 

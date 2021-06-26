@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Clothing
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedMagbootsComponent : Component, IMoveSpeedModifier
     {
         public sealed override string Name => "Magboots";

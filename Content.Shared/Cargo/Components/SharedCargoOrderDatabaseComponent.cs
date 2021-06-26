@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedCargoOrderDatabaseComponent : Component
     {
         public sealed override string Name => "CargoOrderDatabase";

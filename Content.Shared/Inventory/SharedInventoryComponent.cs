@@ -13,7 +13,7 @@ using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Inventory
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
     {
         [Dependency] protected readonly IReflectionManager ReflectionManager = default!;

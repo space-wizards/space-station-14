@@ -16,7 +16,7 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
         public override string Name => "PlayerMobMover";

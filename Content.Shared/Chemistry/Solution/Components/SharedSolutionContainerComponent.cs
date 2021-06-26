@@ -22,7 +22,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     /// <summary>
     ///     Holds a <see cref="Solution"/> with a limited volume.
     /// </summary>
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedSolutionContainerComponent : Component, IExamine, ISolutionInteractionsComponent
     {
         public override string Name => "SolutionContainer";

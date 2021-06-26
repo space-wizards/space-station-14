@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedPDAComponent : Component
     {
         public override string Name => "PDA";

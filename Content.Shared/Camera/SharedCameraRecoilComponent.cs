@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Camera
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedCameraRecoilComponent : Component
     {
         public sealed override string Name => "CameraRecoil";

@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
 
     public class WelderComponent : SharedToolComponent, IItemStatus
     {

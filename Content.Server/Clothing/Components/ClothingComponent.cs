@@ -17,7 +17,7 @@ namespace Content.Server.Clothing.Components
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
-    [NetID()]
+    [NetworkedComponent()]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";

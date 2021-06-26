@@ -24,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Slippery
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public class SlipperyComponent : Component, IStartCollide
     {
         [Dependency] private IModuleManager _moduleManager = default!;

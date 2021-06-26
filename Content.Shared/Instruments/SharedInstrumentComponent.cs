@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Instruments
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedInstrumentComponent : Component
     {
         public override string Name => "Instrument";

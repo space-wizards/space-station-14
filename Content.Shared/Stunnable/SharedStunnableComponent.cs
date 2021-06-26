@@ -16,7 +16,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stunnable
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

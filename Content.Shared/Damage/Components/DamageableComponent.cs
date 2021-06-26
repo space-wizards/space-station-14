@@ -23,7 +23,7 @@ namespace Content.Shared.Damage.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [NetID()]
+    [NetworkedComponent()]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
         public override string Name => "Damageable";

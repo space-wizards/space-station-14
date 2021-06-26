@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Lathe
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         public override string Name => "LatheDatabase";

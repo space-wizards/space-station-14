@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Ghost
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedGhostComponent : Component, IActionBlocker
     {
         public override string Name => "Ghost";

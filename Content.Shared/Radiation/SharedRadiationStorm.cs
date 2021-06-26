@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedRadiationPulseComponent : Component
     {
         public override string Name => "RadiationPulse";

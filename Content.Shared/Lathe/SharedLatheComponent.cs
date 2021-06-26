@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedLatheComponent : Component
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;

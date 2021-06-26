@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Research.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
         public override string Name => "TechnologyDatabase";

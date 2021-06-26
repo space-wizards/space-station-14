@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Gravity
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedGravityGeneratorComponent : Component
     {
         public override string Name => "GravityGenerator";

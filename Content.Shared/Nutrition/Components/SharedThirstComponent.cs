@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedThirstComponent : Component, IMoveSpeedModifier
     {
         public sealed override string Name => "Thirst";

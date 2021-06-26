@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedResearchConsoleComponent : Component
     {
         public override string Name => "ResearchConsole";

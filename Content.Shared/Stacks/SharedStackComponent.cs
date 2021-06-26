@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         public sealed override string Name => "Stack";

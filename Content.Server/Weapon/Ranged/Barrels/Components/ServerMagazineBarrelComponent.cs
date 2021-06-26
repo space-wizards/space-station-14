@@ -28,7 +28,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
     {
         public override string Name => "MagazineBarrel";

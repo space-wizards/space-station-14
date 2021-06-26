@@ -21,7 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public class ClientMagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()

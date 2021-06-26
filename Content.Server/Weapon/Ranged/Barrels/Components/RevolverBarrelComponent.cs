@@ -25,7 +25,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _random = default!;

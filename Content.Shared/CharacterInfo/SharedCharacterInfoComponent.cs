@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterInfo
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedCharacterInfoComponent : Component
     {
         public override string Name => "CharacterInfo";

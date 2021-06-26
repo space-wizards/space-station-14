@@ -26,7 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";

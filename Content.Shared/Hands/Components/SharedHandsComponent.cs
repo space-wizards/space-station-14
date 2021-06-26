@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";

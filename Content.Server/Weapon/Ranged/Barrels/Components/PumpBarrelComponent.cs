@@ -25,7 +25,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";

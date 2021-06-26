@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public class ClientBatteryBarrelComponent : Component, IItemStatus
     {
         public override string Name => "BatteryBarrel";

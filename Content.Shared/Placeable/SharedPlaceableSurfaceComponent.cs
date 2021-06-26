@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Placeable
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedPlaceableSurfaceComponent : Component
     {
         public override string Name => "PlaceableSurface";

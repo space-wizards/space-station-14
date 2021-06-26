@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CharacterAppearance.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedHumanoidAppearanceComponent : Component
     {
         private HumanoidCharacterAppearance _appearance = HumanoidCharacterAppearance.Default();

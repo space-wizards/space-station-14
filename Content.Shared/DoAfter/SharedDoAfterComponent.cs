@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.DoAfter
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedDoAfterComponent : Component
     {
         public override string Name => "DoAfter";

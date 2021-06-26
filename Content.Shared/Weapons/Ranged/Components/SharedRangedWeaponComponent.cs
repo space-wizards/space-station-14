@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedRangedWeaponComponent : Component
     {
         // Each RangedWeapon should have a RangedWeapon component +

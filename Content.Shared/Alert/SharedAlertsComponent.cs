@@ -15,7 +15,7 @@ namespace Content.Shared.Alert
     /// Handles the icons on the right side of the screen.
     /// Should only be used for player-controlled entities.
     /// </summary>
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedAlertsComponent : Component
     {
         [Dependency]

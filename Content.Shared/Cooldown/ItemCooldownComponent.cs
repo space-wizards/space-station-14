@@ -12,7 +12,7 @@ namespace Content.Shared.Cooldown
     ///     Stores a visual "cooldown" for items, that gets displayed in the hands GUI.
     /// </summary>
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public sealed class ItemCooldownComponent : Component
     {
         public override string Name => "ItemCooldown";

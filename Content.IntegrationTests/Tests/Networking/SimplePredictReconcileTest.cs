@@ -391,7 +391,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        [NetID()]
+        [NetworkedComponent()]
         private sealed class PredictionTestComponent : Component
         {
             public override string Name => "PredictionTest";

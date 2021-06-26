@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Singularity.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedSingularityComponent : Component
     {
         public override string Name => "Singularity";

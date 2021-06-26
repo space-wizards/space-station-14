@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedFlashableComponent : Component
     {
         public override string Name => "Flashable";

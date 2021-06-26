@@ -20,7 +20,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Part
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
     {
         public override string Name => "BodyPart";

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Projectiles
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedProjectileComponent : Component
     {
         private bool _ignoreShooter = true;

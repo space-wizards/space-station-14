@@ -35,7 +35,7 @@ namespace Content.Server.Tools.Components
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
     [ComponentReference(typeof(IHotItem))]
-    [NetID()]
+    [NetworkedComponent()]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

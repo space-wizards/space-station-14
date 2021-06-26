@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Sound
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedLoopingSoundComponent : Component
     {
         public override string Name => "LoopingSound";

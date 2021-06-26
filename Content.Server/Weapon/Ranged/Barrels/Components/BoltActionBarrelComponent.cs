@@ -27,7 +27,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Shotguns mostly
     /// </summary>
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things

@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Doors
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";

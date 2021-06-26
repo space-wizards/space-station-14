@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedGasAnalyzerComponent : Component
     {
         public override string Name => "GasAnalyzer";

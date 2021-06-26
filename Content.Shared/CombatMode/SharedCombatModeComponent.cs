@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CombatMode
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedCombatModeComponent : Component
     {
         public override string Name => "CombatMode";

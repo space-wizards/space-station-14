@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID()]
+    [NetworkedComponent()]
     public class ClientBoltActionBarrelComponent : Component, IItemStatus
     {
         public override string Name => "BoltActionBarrel";

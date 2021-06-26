@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components
 {
-    [NetID()]
+    [NetworkedComponent()]
     public abstract class SharedHyposprayComponent : Component
     {
         public sealed override string Name => "Hypospray";

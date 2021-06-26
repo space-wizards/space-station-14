@@ -15,7 +15,7 @@ namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    [NetID()]
+    [NetworkedComponent()]
     public class SharedPlayerInputMoverComponent : Component, IMoverComponent
     {
         // This class has to be able to handle server TPS being lower than client FPS.
