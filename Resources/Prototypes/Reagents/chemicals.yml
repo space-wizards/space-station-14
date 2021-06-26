@@ -254,7 +254,7 @@
   meltingPoint: 113.7 
   metabolism: # don't know what effects it should have, didn't find any on the tg wiki.
   
-  - type: reagent
+- type: reagent
   id: Ephedrine
   name: ephedrine
   desc: Ephedrine is a medication and stimulant and is a component of Methamphetamine.
