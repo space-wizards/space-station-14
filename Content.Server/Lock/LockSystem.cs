@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Content.Server.Access.Components;
-using Content.Server.Interaction;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -8,9 +6,7 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
