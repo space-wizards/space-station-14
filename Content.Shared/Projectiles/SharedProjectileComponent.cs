@@ -1,13 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Projectiles
 {
-    [NetID(ContentNetIDs.PROJECTILE)]
+    [NetID()]
     public abstract class SharedProjectileComponent : Component
     {
         private bool _ignoreShooter = true;

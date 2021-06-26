@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -9,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [NetID(ContentNetIDs.THIRST)]
+    [NetID()]
     public abstract class SharedThirstComponent : Component, IMoveSpeedModifier
     {
         public sealed override string Name => "Thirst";

@@ -13,7 +13,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Temperature;
@@ -36,7 +35,7 @@ namespace Content.Server.Tools.Components
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
     [ComponentReference(typeof(IHotItem))]
-    [NetID(ContentNetIDs.WELDER)]
+    [NetID()]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;

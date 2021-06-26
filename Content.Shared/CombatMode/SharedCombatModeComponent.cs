@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Content.Shared.Targeting;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -10,7 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CombatMode
 {
-    [NetID(ContentNetIDs.COMBATMODE)]
+    [NetID()]
     public abstract class SharedCombatModeComponent : Component
     {
         public override string Name => "CombatMode";

@@ -1,13 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.Components
 {
-    [NetID(ContentNetIDs.RESEARCH_CONSOLE)]
+    [NetID()]
     public class SharedResearchConsoleComponent : Component
     {
         public override string Name => "ResearchConsole";

@@ -3,7 +3,6 @@ using Content.Client.IoC;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Animations;
@@ -22,7 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.MAGAZINE_BARREL)]
+    [NetID()]
     public class ClientMagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()

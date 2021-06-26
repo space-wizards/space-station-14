@@ -4,7 +4,6 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -26,7 +25,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.REVOLVER_BARREL)]
+    [NetID()]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _random = default!;

@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
@@ -7,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components
 {
-    [NetID(ContentNetIDs.GAS_ANALYZER)]
+    [NetID()]
     public class SharedGasAnalyzerComponent : Component
     {
         public override string Name => "GasAnalyzer";

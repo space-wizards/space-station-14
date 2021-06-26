@@ -45,7 +45,7 @@ namespace Content.Benchmarks
             var dummyReg = new Mock<IComponentRegistration>();
             dummyReg.SetupGet(p => p.Name).Returns("Dummy");
             dummyReg.SetupGet(p => p.Type).Returns(typeof(DummyComponent));
-            dummyReg.SetupGet(p => p.NetID).Returns((uint?) null);
+            dummyReg.SetupGet(p => p.NetID).Returns((ushort?) null);
             dummyReg.SetupGet(p => p.References).Returns(new [] {typeof(DummyComponent)});
 
             var componentFactory = new Mock<IComponentFactory>();

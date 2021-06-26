@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -11,7 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Ghost
 {
-    [NetID(ContentNetIDs.GHOST)]
+    [NetID()]
     public class SharedGhostComponent : Component, IActionBlocker
     {
         public override string Name => "Ghost";

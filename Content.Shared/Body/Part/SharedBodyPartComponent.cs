@@ -8,7 +8,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Surgery;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -21,7 +20,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Part
 {
-    [NetID(ContentNetIDs.BODY_PART)]
+    [NetID()]
     public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
     {
         public override string Name => "BodyPart";

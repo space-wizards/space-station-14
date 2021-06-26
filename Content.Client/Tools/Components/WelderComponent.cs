@@ -2,7 +2,6 @@ using System;
 using Content.Client.Items.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Tool;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.WELDER)]
+    [NetID()]
 
     public class WelderComponent : SharedToolComponent, IItemStatus
     {

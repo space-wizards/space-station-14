@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -9,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
-    [NetID(ContentNetIDs.VENDING_MACHINE)]
+    [NetID()]
     public class SharedVendingMachineComponent : Component
     {
         public override string Name => "VendingMachine";

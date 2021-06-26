@@ -1,13 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation
 {
-    [NetID(ContentNetIDs.RADIATION_PULSE)]
+    [NetID()]
     public abstract class SharedRadiationPulseComponent : Component
     {
         public override string Name => "RadiationPulse";

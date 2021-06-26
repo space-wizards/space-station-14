@@ -12,7 +12,6 @@ using Content.Shared.Body.Template;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -28,7 +27,7 @@ namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
 
-    [NetID(ContentNetIDs.BODY)]
+    [NetID()]
     public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

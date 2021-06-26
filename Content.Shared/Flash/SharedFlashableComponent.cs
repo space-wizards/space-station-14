@@ -1,13 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash
 {
-    [NetID(ContentNetIDs.FLASHABLE)]
+    [NetID()]
     public class SharedFlashableComponent : Component
     {
         public override string Name => "Flashable";

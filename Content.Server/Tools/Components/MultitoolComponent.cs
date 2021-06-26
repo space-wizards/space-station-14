@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -16,7 +15,7 @@ namespace Content.Server.Tools.Components
     ///     Not to be confused with Multitool (power)
     /// </summary>
     [RegisterComponent]
-    [NetID(ContentNetIDs.MULTITOOLS)]
+    [NetID()]
     public class MultiToolComponent : Component, IUse
     {
         [DataDefinition]

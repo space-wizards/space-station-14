@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.NetIDs;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
@@ -392,7 +391,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        [NetID(ContentNetIDs.PREDICTION_TEST)]
+        [NetID()]
         private sealed class PredictionTestComponent : Component
         {
             public override string Name => "PredictionTest";

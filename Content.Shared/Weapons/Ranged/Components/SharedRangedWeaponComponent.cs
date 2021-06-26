@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Components
 {
-    [NetID(ContentNetIDs.RANGED_WEAPON)]
+    [NetID()]
     public abstract class SharedRangedWeaponComponent : Component
     {
         // Each RangedWeapon should have a RangedWeapon component +

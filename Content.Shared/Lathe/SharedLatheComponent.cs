@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -11,7 +10,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe
 {
-    [NetID(ContentNetIDs.LATHE)]
+    [NetID()]
     public class SharedLatheComponent : Component
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;

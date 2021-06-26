@@ -1,14 +1,13 @@
 #nullable enable
 using System;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components
 {
-    [NetID(ContentNetIDs.HYPOSPRAY)]
+    [NetID()]
     public abstract class SharedHyposprayComponent : Component
     {
         public sealed override string Name => "Hypospray";

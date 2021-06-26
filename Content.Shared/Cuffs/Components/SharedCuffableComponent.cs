@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using Content.Shared.ActionBlocker;
-using Content.Shared.NetIDs;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -11,7 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Cuffs.Components
 {
-    [NetID(ContentNetIDs.CUFFED)]
+    [NetID()]
     public class SharedCuffableComponent : Component, IActionBlocker
     {
         public override string Name => "Cuffable";

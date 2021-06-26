@@ -1,7 +1,6 @@
 using System;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -14,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.BATTERY_BARREL)]
+    [NetID()]
     public class ClientBatteryBarrelComponent : Component, IItemStatus
     {
         public override string Name => "BatteryBarrel";

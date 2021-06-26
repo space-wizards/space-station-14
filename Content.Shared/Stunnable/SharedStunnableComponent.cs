@@ -5,7 +5,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -17,7 +16,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stunnable
 {
-    [NetID(ContentNetIDs.STUNNABLE)]
+    [NetID()]
     public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;

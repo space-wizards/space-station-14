@@ -9,7 +9,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
@@ -27,7 +26,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.BATTERY_BARREL)]
+    [NetID()]
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";

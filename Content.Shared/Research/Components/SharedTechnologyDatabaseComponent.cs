@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -13,7 +12,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Research.Components
 {
-    [NetID(ContentNetIDs.TECHNOLOGY_DATABASE)]
+    [NetID()]
     public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
         public override string Name => "TechnologyDatabase";

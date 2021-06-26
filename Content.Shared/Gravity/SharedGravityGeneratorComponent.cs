@@ -1,13 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Gravity
 {
-    [NetID(ContentNetIDs.GRAVITY_GENERATOR)]
+    [NetID()]
     public class SharedGravityGeneratorComponent : Component
     {
         public override string Name => "GravityGenerator";

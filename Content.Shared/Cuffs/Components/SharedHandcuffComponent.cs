@@ -1,13 +1,12 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cuffs.Components
 {
-    [NetID(ContentNetIDs.HANDCUFFS)]
+    [NetID()]
     public abstract class SharedHandcuffComponent : Component
     {
         public override string Name => "Handcuff";

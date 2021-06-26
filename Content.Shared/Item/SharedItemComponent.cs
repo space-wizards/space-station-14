@@ -5,7 +5,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -20,7 +19,7 @@ namespace Content.Shared.Item
     /// <summary>
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
-    [NetID(ContentNetIDs.ITEM)]
+    [NetID()]
     public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
     {
         public override string Name => "Item";

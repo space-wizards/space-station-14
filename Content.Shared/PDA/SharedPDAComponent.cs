@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -8,7 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
-    [NetID(ContentNetIDs.PDA)]
+    [NetID()]
     public class SharedPDAComponent : Component
     {
         public override string Name => "PDA";

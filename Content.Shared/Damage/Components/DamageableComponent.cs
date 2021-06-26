@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Container;
 using Content.Shared.Damage.Resistances;
-using Content.Shared.NetIDs;
 using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -24,7 +23,7 @@ namespace Content.Shared.Damage.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [NetID(ContentNetIDs.DAMAGEABLE)]
+    [NetID()]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
         public override string Name => "Damageable";

@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -8,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Placeable
 {
-    [NetID(ContentNetIDs.PLACEABLE_SURFACE)]
+    [NetID()]
     public abstract class SharedPlaceableSurfaceComponent : Component
     {
         public override string Name => "PlaceableSurface";

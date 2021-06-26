@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -10,7 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
-    [NetID(ContentNetIDs.STACK)]
+    [NetID()]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         public sealed override string Name => "Stack";

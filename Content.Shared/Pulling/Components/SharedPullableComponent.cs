@@ -4,7 +4,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -18,7 +17,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
 {
-    [NetID(ContentNetIDs.PULLABLE)]
+    [NetID()]
     public abstract class SharedPullableComponent : Component, IRelayMoveInput
     {
         public override string Name => "Pullable";

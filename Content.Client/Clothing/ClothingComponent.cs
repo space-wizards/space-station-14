@@ -4,7 +4,6 @@ using Content.Client.Items.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Content.Shared.NetIDs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
@@ -19,7 +18,7 @@ namespace Content.Client.Clothing
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
-    [NetID(ContentNetIDs.CLOTHING)]
+    [NetID()]
     public class ClothingComponent : ItemComponent
     {
         [DataField("femaleMask")]

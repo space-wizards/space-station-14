@@ -4,7 +4,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -13,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Buckle.Components
 {
-    [NetID(ContentNetIDs.BUCKLE)]
+    [NetID()]
     public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
     {
         public sealed override string Name => "Buckle";

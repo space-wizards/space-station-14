@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -13,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CharacterAppearance.Components
 {
-    [NetID(ContentNetIDs.HUMANOID_APPEARANCE)]
+    [NetID()]
     public abstract class SharedHumanoidAppearanceComponent : Component
     {
         private HumanoidCharacterAppearance _appearance = HumanoidCharacterAppearance.Default();

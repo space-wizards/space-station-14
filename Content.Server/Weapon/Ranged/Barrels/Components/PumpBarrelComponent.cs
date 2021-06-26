@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -26,7 +25,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
-    [NetID(ContentNetIDs.PUMP_BARREL)]
+    [NetID()]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";

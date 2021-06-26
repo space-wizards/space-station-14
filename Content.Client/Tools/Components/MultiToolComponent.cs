@@ -1,7 +1,6 @@
 using Content.Client.Items.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Tool;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -14,7 +13,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.MULTITOOLS)]
+    [NetID()]
     public class MultiToolComponent : Component, IItemStatus
     {
         private ToolQuality _behavior;

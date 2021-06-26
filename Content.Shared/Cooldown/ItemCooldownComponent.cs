@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -13,7 +12,7 @@ namespace Content.Shared.Cooldown
     ///     Stores a visual "cooldown" for items, that gets displayed in the hands GUI.
     /// </summary>
     [RegisterComponent]
-    [NetID(ContentNetIDs.ITEMCOOLDOWN)]
+    [NetID()]
     public sealed class ItemCooldownComponent : Component
     {
         public override string Name => "ItemCooldown";

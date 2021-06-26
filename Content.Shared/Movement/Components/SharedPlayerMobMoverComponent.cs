@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -17,7 +16,7 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
-    [NetID(ContentNetIDs.PLAYER_MOB_MOVER)]
+    [NetID()]
     public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
         public override string Name => "PlayerMobMover";

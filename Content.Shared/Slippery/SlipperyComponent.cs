@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Module;
-using Content.Shared.NetIDs;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -25,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Slippery
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.SLIP)]
+    [NetID()]
     public class SlipperyComponent : Component, IStartCollide
     {
         [Dependency] private IModuleManager _moduleManager = default!;

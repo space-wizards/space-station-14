@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Kitchen.Components
 {
 
-    [NetID(ContentNetIDs.MICROWAVE)]
+    [NetID()]
     public class SharedMicrowaveComponent : Component
     {
 

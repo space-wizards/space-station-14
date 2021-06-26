@@ -8,7 +8,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
@@ -29,7 +28,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetID(ContentNetIDs.MAGAZINE_BARREL)]
+    [NetID()]
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
     {
         public override string Name => "MagazineBarrel";

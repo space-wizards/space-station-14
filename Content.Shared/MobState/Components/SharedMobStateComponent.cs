@@ -8,7 +8,6 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.MobState.State;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -24,7 +23,7 @@ namespace Content.Shared.MobState.Components
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
-    [NetID(ContentNetIDs.MOB_STATE)]
+    [NetID()]
     public abstract class SharedMobStateComponent : Component, IMobStateComponent, IActionBlocker
     {
         public override string Name => "MobState";

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -14,7 +13,7 @@ using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Inventory
 {
-    [NetID(ContentNetIDs.STORAGE)]
+    [NetID()]
     public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
     {
         [Dependency] protected readonly IReflectionManager ReflectionManager = default!;

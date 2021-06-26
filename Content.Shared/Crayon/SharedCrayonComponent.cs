@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -12,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Crayon
 {
-    [NetID(ContentNetIDs.CRAYONS)]
+    [NetID()]
     public class SharedCrayonComponent : Component
     {
         public override string Name => "Crayon";

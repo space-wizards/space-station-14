@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -20,7 +19,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
-    [NetID(ContentNetIDs.HANDS)]
+    [NetID()]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";

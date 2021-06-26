@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Objectives;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterInfo
 {
-    [NetID(ContentNetIDs.CHARACTERINFO)]
+    [NetID()]
     public class SharedCharacterInfoComponent : Component
     {
         public override string Name => "CharacterInfo";

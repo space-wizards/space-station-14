@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -13,7 +12,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Doors
 {
-    [NetID(ContentNetIDs.DOOR)]
+    [NetID()]
     public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Actions.Prototypes;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -30,7 +29,7 @@ namespace Content.Shared.Actions.Components
     /// may be unusable while the player is stunned, but this component will still have an entry for the action
     /// so the user can see whether it's currently toggled on or off.
     /// </summary>
-    [NetID(ContentNetIDs.ACTIONS)]
+    [NetID()]
     public abstract class SharedActionsComponent : Component
     {
         private static readonly TimeSpan CooldownExpiryThreshold = TimeSpan.FromSeconds(10);

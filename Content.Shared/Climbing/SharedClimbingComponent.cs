@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using Content.Shared.ActionBlocker;
-using Content.Shared.NetIDs;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -11,7 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Climbing
 {
-    [NetID(ContentNetIDs.CLIMBING)]
+    [NetID()]
     public abstract class SharedClimbingComponent : Component, IActionBlocker
     {
         public sealed override string Name => "Climbing";

@@ -5,7 +5,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
@@ -28,7 +27,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Shotguns mostly
     /// </summary>
     [RegisterComponent]
-    [NetID(ContentNetIDs.BOLTACTION_BARREL)]
+    [NetID()]
     public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things

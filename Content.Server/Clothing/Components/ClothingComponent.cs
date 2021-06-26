@@ -4,7 +4,6 @@ using Content.Server.Items;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -18,7 +17,7 @@ namespace Content.Server.Clothing.Components
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
-    [NetID(ContentNetIDs.CLOTHING)]
+    [NetID()]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";

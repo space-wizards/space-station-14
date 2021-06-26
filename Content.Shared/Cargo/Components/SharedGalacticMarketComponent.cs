@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -12,7 +11,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Cargo.Components
 {
-    [NetID(ContentNetIDs.GALACTIC_MARKET)]
+    [NetID()]
     public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
     {
         public sealed override string Name => "GalacticMarket";

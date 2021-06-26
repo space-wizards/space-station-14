@@ -1,14 +1,13 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.Components
 {
-    [NetID(ContentNetIDs.CARGO_ORDER_DATABASE)]
+    [NetID()]
     public class SharedCargoOrderDatabaseComponent : Component
     {
         public sealed override string Name => "CargoOrderDatabase";
