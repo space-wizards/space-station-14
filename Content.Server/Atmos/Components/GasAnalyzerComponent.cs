@@ -204,9 +204,9 @@ namespace Content.Server.Atmos.Components
             {
                 var gas = atmosSystem.GetGas(i);
 
-                if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
+                if (tile.Moles[i] <= Atmospherics.GasMinMoles) continue;
 
-                gases.Add(new GasEntry(gas.Name, tile.Gases[i], gas.Color));
+                gases.Add(new GasEntry(gas.Name, tile.Moles[i], gas.Color));
             }
 
             UserInterface.SetState(

@@ -1,3 +1,4 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Construction.Components;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -67,11 +68,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var sharedLoss = lost / timesLost;
             var buffer = new GasMixture();
 
+            var atmosphereSystem = Get<AtmosphereSystem>();
+
             foreach (var node in nodes.Nodes.Values)
             {
                 if (node is not PipeNode pipe) continue;
 
-                buffer.Merge(pipe.Air.Remove(sharedLoss));
+                atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
             }
 
             environment?.AssumeAir(buffer);

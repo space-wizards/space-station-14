@@ -1,3 +1,4 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
@@ -34,7 +35,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
                 return;
 
-            var airHeatCapacity = inlet.Air.HeatCapacity;
+            var airHeatCapacity = Get<AtmosphereSystem>().GetHeatCapacity(inlet.Air);
             var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
             var oldTemperature = inlet.Air.Temperature;
 

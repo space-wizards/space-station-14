@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.Components
 
         public override void Invalidate(Vector2i indices) { }
 
-        protected override void Revalidate() { }
+        public override void Revalidate() { }
 
         public override void FixVacuum(Vector2i indices) { }
 
@@ -67,47 +67,5 @@ namespace Content.Server.Atmos.Components
         public override void AddAtmosDevice(AtmosDeviceComponent atmosDevice) { }
 
         public override void RemoveAtmosDevice(AtmosDeviceComponent atmosDevice) { }
-
-        public override void Update(float frameTime) { }
-
-        public override bool ProcessTileEqualize(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        public override bool ProcessActiveTiles(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        public override bool ProcessExcitedGroups(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        public override bool ProcessHighPressureDelta(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        protected override bool ProcessHotspots(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        protected override bool ProcessSuperconductivity(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        protected override bool ProcessPipeNets(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
-
-        protected override bool ProcessAtmosDevices(bool resumed = false, float lagCheck = 5f)
-        {
-            return false;
-        }
     }
 }

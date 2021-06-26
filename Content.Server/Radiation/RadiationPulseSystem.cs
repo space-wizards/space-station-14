@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Radiation;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -53,7 +54,7 @@ namespace Content.Server.Radiation
                 {
                     if (entity.Deleted) continue;
 
-                    foreach (var radiation in entity.GetAllComponents<IRadiationAct>())
+                    foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
                     {
                         radiation.RadiationAct(frameTime, comp);
                     }
