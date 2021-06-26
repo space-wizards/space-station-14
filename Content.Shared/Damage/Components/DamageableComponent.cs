@@ -31,18 +31,29 @@ namespace Content.Shared.Damage.Components
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
 
+<<<<<<< refs/remotes/origin/master
         private readonly Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToNewDictionary();
 
         [DataField("resistances")] public string ResistanceSetId = DefaultResistanceSet;
+=======
+        [DataField("resistances")]
+        public string ResistanceSetId = DefaultResistanceSet;
+
+        [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
+>>>>>>> Merge fixes
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 
+        private readonly Dictionary<string, DamageTypePrototype> _damageTypeDict = default!;
+        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
+
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
 
+<<<<<<< refs/remotes/origin/master
         [ViewVariables] public IReadOnlyDictionary<DamageClass, int> DamageClasses => _damageList.ToClassDictionary();
 
         [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
@@ -54,6 +65,15 @@ namespace Content.Shared.Damage.Components
         public bool SupportsDamageClass(DamageClass @class)
         {
             return SupportedClasses.Contains(@class);
+=======
+        public HashSet<DamageGroupPrototype> SupportedGroups { get; } = new();
+
+        public HashSet<DamageTypePrototype> SupportedTypes { get; } = new();
+
+        public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
+        {
+            return SupportedGroups.Contains(damageGroup);
+>>>>>>> Merge fixes
         }
 
         public bool SupportsDamageType(DamageType type)
@@ -70,12 +90,21 @@ namespace Content.Shared.Damage.Components
             // TODO DAMAGE Serialize damage done and resistance changes
             var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
+<<<<<<< refs/remotes/origin/master
             SupportedClasses.Clear();
             SupportedTypes.Clear();
 
             DamageContainerId = damagePrototype.ID;
             SupportedClasses.UnionWith(damagePrototype.SupportedClasses);
             SupportedTypes.UnionWith(damagePrototype.SupportedTypes);
+=======
+            SupportedGroups.Clear();
+            SupportedTypes.Clear();
+
+            DamageContainerId = damageContainerPrototype.ID;
+            SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
+            SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
+>>>>>>> Merge fixes
 
             var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
@@ -162,9 +191,13 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
+<<<<<<< refs/remotes/origin/master
             var damageClass = type.ToClass();
 
             if (SupportedClasses.Contains(damageClass))
+=======
+            if (SupportedTypes.Contains(type))
+>>>>>>> Merge fixes
             {
                 var old = _damageList[type] = newValue;
                 _damageList[type] = newValue;
@@ -252,7 +285,11 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
+<<<<<<< refs/remotes/origin/master
             var types = @class.ToTypes();
+=======
+            var types = damageGroup.DamageTypes.ToArray();
+>>>>>>> Merge fixes
 
             if (amount < 0)
             {
@@ -269,7 +306,7 @@ namespace Content.Shared.Damage.Components
                     healThisCycle = 0;
 
                     int healPerType;
-                    if (healingLeft < types.Count)
+                    if (healingLeft < types.Length)
                     {
                         // Say we were to distribute 2 healing between 3
                         // this will distribute 1 to each (and stop after 2 are given)
@@ -279,7 +316,7 @@ namespace Content.Shared.Damage.Components
                     {
                         // Say we were to distribute 62 healing between 3
                         // this will distribute 20 to each, leaving 2 for next loop
-                        healPerType = healingLeft / types.Count;
+                        healPerType = healingLeft / types.Length;
                     }
 
                     foreach (var type in types)
@@ -303,13 +340,13 @@ namespace Content.Shared.Damage.Components
             {
                 int damagePerType;
 
-                if (damageLeft < types.Count)
+                if (damageLeft < types.Length)
                 {
                     damagePerType = 1;
                 }
                 else
                 {
-                    damagePerType = damageLeft / types.Count;
+                    damagePerType = damageLeft / types.Length;
                 }
 
                 foreach (var type in types)
@@ -372,6 +409,29 @@ namespace Content.Shared.Damage.Components
             OnHealthChanged(args);
         }
 
+<<<<<<< refs/remotes/origin/master
+=======
+        private IReadOnlyDictionary<DamageGroupPrototype, int> damageListToDamageGroup(IReadOnlyDictionary<DamageTypePrototype, int> damagelist)
+        {
+            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
+            int damageGroupSumDamage = 0;
+            int damageTypeDamage = 0 ;
+            foreach (var damageGroup in SupportedGroups)
+            {
+                damageGroupSumDamage = 0;
+                foreach (var damageType in SupportedTypes)
+                {
+                    damageTypeDamage = 0;
+                     damagelist.TryGetValue(damageType,out damageTypeDamage);
+                     damageGroupSumDamage += damageTypeDamage;
+                }
+                damageGroupDict.Add(damageGroup,damageGroupSumDamage);
+            }
+
+            return damageGroupDict;
+        }
+
+>>>>>>> Merge fixes
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);

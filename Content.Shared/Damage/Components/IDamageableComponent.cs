@@ -13,18 +13,18 @@ namespace Content.Shared.Damage.Components
         int TotalDamage { get; }
 
         /// <summary>
-        ///     The amount of damage mapped by <see cref="DamageClass"/>.
+        ///     The amount of damage mapped by <see cref="DamageGroupPrototype"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageClass, int> DamageClasses { get; }
+        IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses { get; }
 
         /// <summary>
-        ///     The amount of damage mapped by <see cref="DamageType"/>.
+        ///     The amount of damage mapped by <see cref="DamageTypePrototype"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageType, int> DamageTypes { get; }
+        IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes { get; }
 
-        HashSet<DamageType> SupportedTypes { get; }
+        HashSet<DamageTypePrototype> SupportedTypes { get; }
 
-        HashSet<DamageClass> SupportedClasses { get; }
+        HashSet<DamageGroupPrototype> SupportedGroups { get; }
 
         /// <summary>
         ///     The resistances of this component.

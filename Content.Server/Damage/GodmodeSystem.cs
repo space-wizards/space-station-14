@@ -1,9 +1,14 @@
+<<<<<<< refs/remotes/origin/master
 ﻿using System.Collections.Generic;
 using Content.Server.Atmos.Components;
+=======
+﻿#nullable enable
+using System.Collections.Generic;
+>>>>>>> Merge fixes
 using System.Linq;
+using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Resistances;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -44,7 +49,7 @@ namespace Content.Server.Damage
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 damageable.SupportedTypes.Clear();
-                damageable.SupportedClasses.Clear();
+                damageable.SupportedGroups.Clear();
             }
 
             return true;
@@ -76,7 +81,7 @@ namespace Content.Server.Damage
 
                 if (old.SupportedClasses != null)
                 {
-                    damageable.SupportedClasses.UnionWith(old.SupportedClasses);
+                    damageable.SupportedGroups.UnionWith(old.SupportedClasses);
                 }
             }
 
@@ -112,7 +117,7 @@ namespace Content.Server.Damage
                 if (entity.TryGetComponent(out IDamageableComponent? damageable))
                 {
                     SupportedTypes = damageable.SupportedTypes.ToHashSet();
-                    SupportedClasses = damageable.SupportedClasses.ToHashSet();
+                    SupportedClasses = damageable.SupportedGroups.ToHashSet();
                 }
             }
 
@@ -120,9 +125,9 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public HashSet<DamageType>? SupportedTypes { get; }
+            public HashSet<DamageTypePrototype>? SupportedTypes { get; }
 
-            public HashSet<DamageClass>? SupportedClasses { get; }
+            public HashSet<DamageGroupPrototype>? SupportedClasses { get; }
         }
     }
 }

@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
-using Newtonsoft.Json;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Damage
 {
@@ -22,10 +18,10 @@ namespace Content.Shared.Damage
         [Dependency]
         private readonly IPrototypeManager _prototypeManager = default!;
 
-        [field: DataField(tag: "id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField(tag: "damageTypes", required: true)]
+        [DataField("damageTypes", required: true)]
         public List<string> TypeIds { get; } = default!;
 
         public IEnumerable<DamageTypePrototype> DamageTypes = default!;
@@ -37,6 +33,5 @@ namespace Content.Shared.Damage
                 DamageTypes = DamageTypes.Concat(new []{_prototypeManager.Index<DamageTypePrototype>(typeid)});
             }
         }
-
     }
 }

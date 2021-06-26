@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< refs/remotes/origin/master
+=======
+using Robust.Shared.IoC;
+>>>>>>> Merge fixes
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -16,6 +20,7 @@ namespace Content.Shared.Damage.Resistances
     {
         [ViewVariables]
         [DataField("coefficients")]
+<<<<<<< refs/remotes/origin/master
         public Dictionary<DamageType, float> Coefficients { get; } = new();
 
         [ViewVariables]
@@ -24,6 +29,19 @@ namespace Content.Shared.Damage.Resistances
 
         [ViewVariables]
         public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; } = new();
+=======
+        public Dictionary<string, float> Coefficients { get; } = new();
+
+        [ViewVariables]
+        [DataField("flatReductions")]
+        public Dictionary<string, int> FlatReductions { get; } = new();
+
+        [ViewVariables]
+        public Dictionary<DamageTypePrototype, float> Resistances { get; private set; } = new();
+
+        [ViewVariables]
+        public Dictionary<DamageTypePrototype, int> FlatResistances { get; private set; } = new();
+>>>>>>> Merge fixes
 
         [ViewVariables]
         [DataField("id", required: true)]
