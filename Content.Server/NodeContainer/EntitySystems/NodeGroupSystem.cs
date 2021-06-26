@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.NodeContainer.NodeGroups;
@@ -11,6 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -24,6 +25,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
@@ -33,6 +35,8 @@ namespace Content.Server.NodeContainer.EntitySystems
         private readonly HashSet<Node> _toRemove = new();
         private readonly List<Node> _toReflood = new();
 
+        private ISawmill _sawmill = default!;
+
         public bool VisEnabled => _visPlayers.Count != 0;
 
         private int _gen = 1;
@@ -41,6 +45,8 @@ namespace Content.Server.NodeContainer.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            _sawmill = _logManager.GetSawmill("nodegroup");
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -131,6 +137,8 @@ namespace Content.Server.NodeContainer.EntitySystems
             if (_toRemake.Count == 0 && _toReflood.Count == 0 && _toRemove.Count == 0)
                 return;
 
+            var sw = Stopwatch.StartNew();
+
             foreach (var toRemove in _toRemove)
             {
                 if (toRemove.NodeGroup == null)
@@ -186,6 +194,8 @@ namespace Content.Server.NodeContainer.EntitySystems
                 }
             }
 
+            var newGroupCount = 0;
+
             // Flood fill over nodes. Every node will only be flood filled once.
             foreach (var node in _toReflood)
             {
@@ -199,6 +209,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 var groupNodes = FloodFillNode(node);
 
                 InitGroup(node, groupNodes);
+                newGroupCount += 1;
             }
 
             // Go over dead groups that need to be cleaned up.
@@ -214,9 +225,13 @@ namespace Content.Server.NodeContainer.EntitySystems
                     _visDeletes.Add(oldGroup.NetId);
             }
 
+            var refloodCount = _toReflood.Count;
+
             _toReflood.Clear();
             _toRemake.Clear();
             _toRemove.Clear();
+
+            _sawmill.Debug($"Updates node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroupCount} new groups {refloodCount} nodes processed.");
         }
 
         private void ClearReachableIfNecessary(Node node)
