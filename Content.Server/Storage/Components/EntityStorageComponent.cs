@@ -62,7 +62,7 @@ namespace Content.Server.Storage.Components
         private bool _isCollidableWhenOpen;
 
         [ViewVariables]
-        protected IEnumerable<PhysicsComponent> CollidingEntities = default!;
+        protected IEnumerable<IEntity> CollidingEntities = default!;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -200,9 +200,8 @@ namespace Content.Server.Storage.Components
             Open = false;
             DetermineCollidingEntities(Owner.Transform.MapID);
 
-            var entities = CollidingEntities!.Select(x => x.Owner);
             var count = 0;
-            foreach (var entity in entities)
+            foreach (var entity in CollidingEntities)
             {
                 // prevents taking items out of inventories, out of containers, and orphaning child entities
                 if(!entity.Transform.IsMapTransform)
@@ -447,7 +446,11 @@ namespace Content.Server.Storage.Components
         {
             var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
             var entityWorldAABB = Owner.GetComponent<PhysicsComponent>().GetWorldAABB();
-            CollidingEntities = physicsManager.GetCollidingEntities(mapId, in entityWorldAABB);
+            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            // HACK items are (currently) removed from broadphase due to performance reasons
+            var collidingItems = entityLookup.GetEntitiesIntersecting(mapId, entityWorldAABB);
+            var collidingEntities = physicsManager.GetCollidingEntities(mapId, in entityWorldAABB).Select(x => x.Owner);
+            CollidingEntities = collidingEntities.Union(collidingItems);
         }
 
         [Verb]
