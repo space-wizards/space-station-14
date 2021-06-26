@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -110,8 +111,7 @@ namespace Content.Server.NodeContainer.Nodes
                 return;
             }
 
-            DebugTools.Assert(PipeNet != null);
-            PipeNet!.Air.Merge(giver);
+            EntitySystem.Get<AtmosphereSystem>().Merge(PipeNet!.Air, giver);
         }
 
         [ViewVariables]

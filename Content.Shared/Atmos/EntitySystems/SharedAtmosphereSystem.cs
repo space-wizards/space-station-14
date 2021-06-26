@@ -14,7 +14,7 @@ namespace Content.Shared.Atmos.EntitySystems
 
         protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
 
-        private readonly SpriteSpecifier[] _gasOverlays = new SpriteSpecifier[Atmospherics.TotalNumberOfGases];
+        private readonly SpriteSpecifier?[] _gasOverlays = new SpriteSpecifier[Atmospherics.TotalNumberOfGases];
 
         public override void Initialize()
         {
@@ -39,6 +39,6 @@ namespace Content.Shared.Atmos.EntitySystems
 
         public IEnumerable<GasPrototype> Gases => GasPrototypes;
 
-        public SpriteSpecifier GetOverlay(int overlayId) => _gasOverlays[overlayId];
+        public SpriteSpecifier? GetOverlay(int overlayId) => _gasOverlays[overlayId];
     }
 }

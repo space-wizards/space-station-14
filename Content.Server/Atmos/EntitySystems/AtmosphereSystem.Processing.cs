@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                tile.EqualizePressureInZone(atmosphere.UpdateCounter);
+                tile.EqualizePressureInZone(this, atmosphere.UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                tile.ProcessCell(atmosphere.UpdateCounter, SpaceWind);
+                tile.ProcessCell(this, atmosphere.UpdateCounter, SpaceWind);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.EntitySystems
                 excitedGroup.DismantleCooldown++;
 
                 if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    excitedGroup.SelfBreakdown(ExcitedGroupsSpaceIsAllConsuming);
+                    excitedGroup.SelfBreakdown(this, ExcitedGroupsSpaceIsAllConsuming);
 
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     excitedGroup.Dismantle();
@@ -153,7 +153,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var superconductivity))
             {
-                superconductivity.Superconduct();
+                superconductivity.Superconduct(this);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;

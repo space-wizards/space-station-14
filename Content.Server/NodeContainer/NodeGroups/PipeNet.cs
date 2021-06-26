@@ -45,7 +45,7 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public void Update()
         {
-            Air.React(this);
+            EntitySystem.Get<AtmosphereSystem>().React(Air, this);
         }
 
         public override void LoadNodes(List<Node> groupNodes)
@@ -76,6 +76,7 @@ namespace Content.Server.NodeContainer.NodeGroups
             RemoveFromGridAtmos();
 
             var buffer = new GasMixture(Air.Volume) {Temperature = Air.Temperature};
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             foreach (var newGroup in newGroups)
             {
@@ -86,9 +87,9 @@ namespace Content.Server.NodeContainer.NodeGroups
                 var newVolume = newGroup.Cast<PipeNode>().Sum(n => n.Volume);
 
                 buffer.Clear();
-                buffer.Merge(Air);
+                atmosphereSystem.Merge(buffer, Air);
                 buffer.Multiply(MathF.Min(newVolume / Air.Volume, 1f));
-                newAir.Merge(buffer);
+                atmosphereSystem.Merge(newAir, buffer);
             }
         }
 

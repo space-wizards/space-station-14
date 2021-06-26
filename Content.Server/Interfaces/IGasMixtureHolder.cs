@@ -1,4 +1,6 @@
 ﻿using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Interfaces
 {
@@ -8,7 +10,7 @@ namespace Content.Server.Interfaces
 
         public virtual void AssumeAir(GasMixture giver)
         {
-            Air.Merge(giver);
+            EntitySystem.Get<AtmosphereSystem>().Merge(Air, giver);
         }
 
         public GasMixture RemoveAir(float amount)

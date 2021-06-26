@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Interfaces;
 using Content.Server.Metabolism;
@@ -69,17 +71,20 @@ namespace Content.Server.Body.Circulatory
 
         public void PumpToxins(GasMixture to)
         {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
             if (!Owner.TryGetComponent(out MetabolismComponent? metabolism))
             {
-                to.Merge(Air);
+                atmosphereSystem.Merge(to, Air);
                 Air.Clear();
                 return;
             }
 
             var toxins = metabolism.Clean(this);
-            var toOld = to.Gases.ToArray();
+            var toOld = new float[to.Moles.Length];
+            Array.Copy(to.Moles, toOld, toOld.Length);
 
-            to.Merge(toxins);
+            atmosphereSystem.Merge(to, toxins);
 
             for (var i = 0; i < toOld.Length; i++)
             {
@@ -90,7 +95,7 @@ namespace Content.Server.Body.Circulatory
                 toxins.AdjustMoles(i, -delta);
             }
 
-            Air.Merge(toxins);
+            atmosphereSystem.Merge(Air, toxins);
         }
     }
 }

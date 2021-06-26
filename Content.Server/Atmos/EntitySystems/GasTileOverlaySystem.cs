@@ -167,7 +167,7 @@ namespace Content.Server.Atmos.EntitySystems
                     var overlay = _atmosphereSystem.GetOverlay(i);
                     if (overlay == null) continue;
 
-                    var moles = tile.Air.Gases[i];
+                    var moles = tile.Air.Moles[i];
 
                     if (moles < gas.GasMolesVisible) continue;
 
