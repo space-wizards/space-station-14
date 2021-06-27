@@ -12,6 +12,7 @@ using Content.Shared.Acts;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Notification.Managers;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -102,7 +103,7 @@ namespace Content.Server.VendingMachines.Components
         {
             if(_packPrototype == null)
             {
-                // not initialized yet
+                // not initialized properly
                 return;
             }
 
@@ -117,6 +118,8 @@ namespace Content.Server.VendingMachines.Components
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
             RestockInventory();
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("vending-machine-component-on-restock-success", ("entityName", Owner.Name)));
+            eventArgs.Dragged.Delete();
             return true;
         }
 

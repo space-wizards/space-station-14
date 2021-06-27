@@ -24,7 +24,6 @@ namespace Content.Shared.VendingMachines
                 return false;
             }
 
-            // TODO: Once we get silicons need to check organic
             return true;
         }
 

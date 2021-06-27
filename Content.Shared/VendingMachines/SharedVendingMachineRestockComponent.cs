@@ -15,7 +15,6 @@ namespace Content.Shared.VendingMachines
         bool IDraggable.CanDrop(CanDropEvent args)
         {
             return true;
-            //return args.Target.HasComponent<SharedVendingMachineComponent>();
         }
     }
 }
