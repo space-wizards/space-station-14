@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Shared.Coordinates;
@@ -62,8 +62,12 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.On));
 
-                Assert.That(!grid1.HasGravity);
-                Assert.That(grid2.HasGravity);
+                var entityMan = IoCManager.Resolve<IEntityManager>();
+                var grid1Entity = entityMan.GetEntity(grid1.GridEntityId);
+                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+
+                Assert.That(!grid1Entity.HasComponent<GravityComponent>());
+                Assert.That(grid2Entity.HasComponent<GravityComponent>());
             });
 
             await server.WaitIdleAsync();
