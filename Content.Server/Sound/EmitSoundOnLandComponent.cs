@@ -9,6 +9,7 @@ namespace Content.Server.Sound
     public class EmitSoundOnLandComponent : BaseEmitSoundComponent
     {
         /// <inheritdoc />
+        ///
         public override string Name => "EmitSoundOnLand";
     }
 }

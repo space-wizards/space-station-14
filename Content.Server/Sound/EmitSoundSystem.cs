@@ -1,8 +1,8 @@
-#nullable enable
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Content.Server.Interaction.Components;
+using Content.Server.Sound;
 using Content.Server.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -13,7 +13,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Log;
 
-namespace Content.Server.Sound
+
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     public class EmitSoundSystem : EntitySystem
@@ -33,20 +34,27 @@ namespace Content.Server.Sound
 
         private void PlaySound(BaseEmitSoundComponent component)
         {
-            if (!string.IsNullOrWhiteSpace(component.SoundCollectionName))
+            if (!string.IsNullOrWhiteSpace(component._soundCollectionName))
             {
                 PlayRandomSoundFromCollection(component);
             }
+            else if(!string.IsNullOrWhiteSpace(component._soundName))
+            {
+                PlaySingleSound(component._soundName, component);
+            }
             else
             {
-                Logger.Warning($"{nameof(component)}: {component.Owner} has no {nameof(component.SoundCollectionName)} to play.");
+                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has neither {nameof(component._soundCollectionName)} nor {nameof(component._soundName)} to play.");
             }
         }
 
         private void PlayRandomSoundFromCollection(BaseEmitSoundComponent component)
         {
-            var file = SelectRandomSoundFromSoundCollection(component.SoundCollectionName!);
-            PlaySingleSound(file, component);
+            if (!string.IsNullOrWhiteSpace(component._soundCollectionName))
+            {
+                var file = SelectRandomSoundFromSoundCollection(component._soundCollectionName);
+                PlaySingleSound(file, component);
+            }
         }
 
         private string SelectRandomSoundFromSoundCollection(string soundCollectionName)
@@ -57,10 +65,15 @@ namespace Content.Server.Sound
 
         private static void PlaySingleSound(string soundName, BaseEmitSoundComponent component)
         {
-            if (component.PitchVariation > 0.0)
+            if (string.IsNullOrWhiteSpace(soundName))
+            {
+                return;
+            }
+
+            if (component._pitchVariation > 0.0)
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                                 AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+                                 AudioHelpers.WithVariation(component._pitchVariation).WithVolume(-2f));
             }
             else
             {
