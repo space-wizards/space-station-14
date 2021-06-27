@@ -23,7 +23,6 @@ namespace Content.Shared.MobState.State
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
-            EntitySystem.Get<SharedHandsSystem>().DropHandItems(entity);
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {

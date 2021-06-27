@@ -18,10 +18,10 @@ namespace Content.Shared.Standing
             return false;
         }
 
-        public void Down(IEntity entity, bool playSound = true)
+        public void Down(IEntity entity, bool playSound = true, bool dropHeldItems = true)
         {
             if (!entity.TryGetComponent(out StandingStateComponent? comp)) return;
-            Down(comp, playSound);
+            Down(comp, playSound, dropHeldItems);
         }
 
         public void Stand(IEntity entity)
@@ -30,12 +30,21 @@ namespace Content.Shared.Standing
             Stand(comp);
         }
 
-        public void Down(StandingStateComponent component, bool playSound = true)
+        public void Down(StandingStateComponent component, bool playSound = true, bool dropHeldItems = true)
         {
             if (!component.Standing) return;
 
             var entity = component.Owner;
             var uid = entity.Uid;
+
+            // This is just to avoid most callers doing this manually saving boilerplate
+            // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
+            // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
+            // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
+            if (dropHeldItems)
+            {
+                Get<SharedHandsSystem>().DropHandItems(entity, false);
+            }
 
             var msg = new DownAttemptEvent();
             EntityManager.EventBus.RaiseLocalEvent(uid, msg);

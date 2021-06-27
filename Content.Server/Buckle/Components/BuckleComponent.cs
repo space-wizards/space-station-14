@@ -133,7 +133,7 @@ namespace Content.Server.Buckle.Components
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false);
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
                     ownTransform.LocalRotation = Angle.Zero;
                     break;
             }

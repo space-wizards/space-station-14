@@ -23,13 +23,13 @@ namespace Content.Shared.Hands
             SubscribeNetworkEvent<RequestDropHeldEntityEvent>(HandleDrop);
         }
 
-        public void DropHandItems(IEntity entity)
+        public void DropHandItems(IEntity entity, bool doMobChecks = true)
         {
             if (!entity.TryGetComponent(out SharedHandsComponent? handsComponent)) return;
-            DropHandItems(handsComponent);
+            DropHandItems(handsComponent, doMobChecks);
         }
 
-        private void DropHandItems(SharedHandsComponent handsComponent)
+        private void DropHandItems(SharedHandsComponent handsComponent, bool doMobChecks = true)
         {
             var msg = new DropHandItemsAttemptEvent();
             var entity = handsComponent.Owner;
@@ -48,10 +48,10 @@ namespace Content.Shared.Hands
                 if (parentMsg.Cancelled) return;
             }
 
-            DropAllItemsInHands(entity, false);
+            DropAllItemsInHands(entity, doMobChecks);
         }
 
-        public virtual void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
+        protected virtual void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
         {
         }
 

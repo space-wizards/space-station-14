@@ -50,7 +50,7 @@ namespace Content.Server.Hands
             CommandBinds.Unregister<HandsSystem>();
         }
 
-        public override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
+        protected override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
         {
             base.DropAllItemsInHands(entity, doMobChecks);
 

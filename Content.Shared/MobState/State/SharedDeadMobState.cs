@@ -21,8 +21,6 @@ namespace Content.Shared.MobState.State
                 physics.CanCollide = false;
             }
 
-            EntitySystem.Get<SharedHandsSystem>().DropHandItems(entity);
-
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
