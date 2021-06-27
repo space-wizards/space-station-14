@@ -124,6 +124,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             }
 
+            appearance.SetData(DrinkCanStateVisuals.Opened, Opened);
             appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, contents.DrainAvailable.Float());
         }
 
