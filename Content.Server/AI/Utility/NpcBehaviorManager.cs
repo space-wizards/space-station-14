@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.AI.EntitySystems;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.AiLogic;
-using Content.Server.GameObjects.EntitySystems.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;

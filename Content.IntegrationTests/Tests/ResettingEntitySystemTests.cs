@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -37,8 +36,8 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitIdleAsync();
 
-            var gameTicker = server.ResolveDependency<IGameTicker>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
 
             await server.WaitAssertion(() =>
             {

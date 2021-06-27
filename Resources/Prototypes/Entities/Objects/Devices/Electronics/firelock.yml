@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: FirelockElectronics
   parent: BaseItem
-  name: Firelock Electronics
+  name: firelock electronics
   description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
   components:
     - type: Tag

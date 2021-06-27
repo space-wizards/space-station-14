@@ -2,7 +2,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Hands;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Items;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {

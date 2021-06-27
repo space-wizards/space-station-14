@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Gravity;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.GameObjects.Components.Gravity;
-using Content.Shared.Utility;
+using System.Threading.Tasks;
+using Content.Server.Gravity;
+using Content.Server.Power.Components;
+using Content.Shared.Coordinates;
+using Content.Shared.Gravity;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -62,8 +62,12 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.On));
 
-                Assert.That(!grid1.HasGravity);
-                Assert.That(grid2.HasGravity);
+                var entityMan = IoCManager.Resolve<IEntityManager>();
+                var grid1Entity = entityMan.GetEntity(grid1.GridEntityId);
+                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+
+                Assert.That(!grid1Entity.GetComponent<GravityComponent>().Enabled);
+                Assert.That(grid2Entity.GetComponent<GravityComponent>().Enabled);
             });
 
             await server.WaitIdleAsync();

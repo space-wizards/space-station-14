@@ -4,12 +4,14 @@
   id: FireAxe
   description: A large, robust axe. Can pry open doors and skulls alike.
   components:
+  - type: Tag
+    tags:
+    - FireAxe
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
     damage: 25
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     prefix: inhand
