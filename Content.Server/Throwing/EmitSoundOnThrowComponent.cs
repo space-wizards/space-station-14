@@ -10,7 +10,6 @@ namespace Content.Server.Throwing
     public class EmitSoundOnThrowComponent : BaseEmitSoundComponent
     {
         /// <inheritdoc />
-        ///
         public override string Name => "EmitSoundOnThrow";
     }
 }

@@ -2,7 +2,6 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Content.Server.Interaction.Components;
-using Content.Server.Sound;
 using Content.Server.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -13,8 +12,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Log;
 
-
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Sound
 {
     [UsedImplicitly]
     public class EmitSoundSystem : EntitySystem
@@ -34,27 +32,24 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void PlaySound(BaseEmitSoundComponent component)
         {
-            if (!string.IsNullOrWhiteSpace(component._soundCollectionName))
+            if (!string.IsNullOrWhiteSpace(component.SoundCollectionName))
             {
                 PlayRandomSoundFromCollection(component);
             }
-            else if(!string.IsNullOrWhiteSpace(component._soundName))
+            else if (!string.IsNullOrWhiteSpace(component.SoundName))
             {
-                PlaySingleSound(component._soundName, component);
+                PlaySingleSound(component.SoundName, component);
             }
             else
             {
-                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has neither {nameof(component._soundCollectionName)} nor {nameof(component._soundName)} to play.");
+                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has neither {nameof(component.SoundCollectionName)} nor {nameof(component.SoundName)} to play.");
             }
         }
 
         private void PlayRandomSoundFromCollection(BaseEmitSoundComponent component)
         {
-            if (!string.IsNullOrWhiteSpace(component._soundCollectionName))
-            {
-                var file = SelectRandomSoundFromSoundCollection(component._soundCollectionName);
-                PlaySingleSound(file, component);
-            }
+            var file = SelectRandomSoundFromSoundCollection(component.SoundCollectionName!);
+            PlaySingleSound(file, component);
         }
 
         private string SelectRandomSoundFromSoundCollection(string soundCollectionName)
@@ -65,21 +60,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void PlaySingleSound(string soundName, BaseEmitSoundComponent component)
         {
-            if (string.IsNullOrWhiteSpace(soundName))
-            {
-                return;
-            }
-
-            if (component._pitchVariation > 0.0)
-            {
-                SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                                 AudioHelpers.WithVariation(component._pitchVariation).WithVolume(-2f));
-            }
-            else
-            {
-                SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                                 AudioParams.Default.WithVolume(-2f));
-            }
+            SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
+                             AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
         }
     }
 }
