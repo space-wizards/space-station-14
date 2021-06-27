@@ -7,10 +7,10 @@ namespace Content.Shared.Gravity
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GridInitializedEvent>(HandleGridInitialize);
+            SubscribeLocalEvent<GridInitializeEvent>(HandleGridInitialize);
         }
 
-        private void HandleGridInitialize(GridInitializedEvent ev)
+        private void HandleGridInitialize(GridInitializeEvent ev)
         {
             var gridEnt = EntityManager.GetEntity(ev.EntityUid);
             gridEnt.EnsureComponent<GravityComponent>();
