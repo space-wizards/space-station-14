@@ -3,15 +3,14 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Paper;
-using Content.Server.Standing;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Morgue;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -39,7 +38,7 @@ namespace Content.Server.Morgue.Components
         {
             base.Initialize();
             _appearance?.SetData(BodyBagVisuals.Label, false);
-            LabelContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "body_bag_label", out _);
+            LabelContainer = Owner.EnsureContainer<ContainerSlot>("body_bag_label", out _);
         }
 
         protected override bool AddToContents(IEntity entity)
