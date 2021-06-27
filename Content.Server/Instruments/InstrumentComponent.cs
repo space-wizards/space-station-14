@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Standing;
@@ -9,7 +9,8 @@ using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -161,7 +162,7 @@ namespace Content.Server.Instruments
             Clean();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -203,11 +204,11 @@ namespace Content.Server.Instruments
                             if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                             {
                                 InstrumentPlayer.AttachedEntity?.PopupMessage(
-                                    Loc.GetString("Your fingers are beginning to a cramp a little!"));
+                                    Loc.GetString("instrument-component-finger-cramps-light-message"));
                             } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
                             {
                                 InstrumentPlayer.AttachedEntity?.PopupMessage(
-                                    Loc.GetString("Your fingers are seriously cramping up!"));
+                                    Loc.GetString("instrument-component-finger-cramps-serious-message"));
                             }
                         }
 
@@ -333,7 +334,9 @@ namespace Content.Server.Instruments
             var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
             var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchesDropped;
 
-            if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
+            if (_instrumentPlayer != null
+                && (_instrumentPlayer.AttachedEntity == null
+                    || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(_instrumentPlayer.AttachedEntity)))
             {
                 InstrumentPlayer = null;
                 Clean();
@@ -362,7 +365,7 @@ namespace Content.Server.Instruments
                         Clean();
                     }
 
-                    Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
+                    Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }
 
                 InstrumentPlayer = null;

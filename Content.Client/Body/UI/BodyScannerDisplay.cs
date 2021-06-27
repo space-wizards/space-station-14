@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
@@ -15,15 +15,15 @@ namespace Content.Client.Body.UI
     public sealed class BodyScannerDisplay : SS14Window
     {
         private IEntity? _currentEntity;
-        private IBodyPart? _currentBodyPart;
+        private SharedBodyPartComponent? _currentBodyPart;
 
-        private IBody? CurrentBody => _currentEntity?.GetComponentOrNull<IBody>();
+        private SharedBodyComponent? CurrentBody => _currentEntity?.GetComponentOrNull<SharedBodyComponent>();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
             Owner = owner;
-            Title = Loc.GetString("Body Scanner");
+            Title = Loc.GetString("body-scanner-display-title");
 
             var hSplit = new HBoxContainer
             {
@@ -57,7 +57,7 @@ namespace Content.Client.Body.UI
                                         {
                                             new Label
                                             {
-                                                Text = "Health: "
+                                                Text = $"{Loc.GetString("body-scanner-display-health-label")} "
                                             },
                                             (BodyPartHealth = new Label())
                                         }
@@ -137,14 +137,14 @@ namespace Content.Client.Body.UI
             }
         }
 
-        private void UpdateBodyPartBox(IBodyPart part, string slotName)
+        private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
             // TODO BODY Part damage
             if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                BodyPartHealth.Text = Loc.GetString("{0} damage", damageable.TotalDamage);
+                BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }
 
             MechanismList.Clear();
@@ -161,7 +161,7 @@ namespace Content.Client.Body.UI
             UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(IMechanism? mechanism)
+        private void UpdateMechanismBox(SharedMechanismComponent? mechanism)
         {
             // TODO BODY Improve UI
             if (mechanism == null)

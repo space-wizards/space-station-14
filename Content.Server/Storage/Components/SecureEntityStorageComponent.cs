@@ -1,7 +1,8 @@
 using Content.Server.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -116,7 +117,7 @@ namespace Content.Server.Storage.Components
             {
                 if (!reader.IsAllowed(user))
                 {
-                    Owner.PopupMessage(user, Loc.GetString("Access denied"));
+                    Owner.PopupMessage(user, Loc.GetString("secure-entity-storage-component-not-allowed-message"));
                     return false;
                 }
             }
@@ -129,13 +130,13 @@ namespace Content.Server.Storage.Components
         {
             protected override void GetData(IEntity user, SecureEntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || component.Open)
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.Open)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString(component.Locked ? "Unlock" : "Lock");
+                data.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
             }
 
             protected override void Activate(IEntity user, SecureEntityStorageComponent component)

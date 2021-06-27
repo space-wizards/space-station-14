@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
 using JetBrains.Annotations;
@@ -22,14 +22,6 @@ namespace Content.Server.Storage
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<EntRemovedFromContainerMessage>();
-            UnsubscribeLocalEvent<EntInsertedIntoContainerMessage>();
-        }
-
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
@@ -47,6 +39,11 @@ namespace Content.Server.Storage
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
+
+            if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
+            {
+                newStorageComp.ContainerUpdateAppearance(message.Container);
+            }
         }
 
         private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
@@ -56,6 +53,11 @@ namespace Content.Server.Storage
             if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
+            }
+            
+            if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
+            {
+                newStorageComp.ContainerUpdateAppearance(message.Container);
             }
         }
 

@@ -11,6 +11,7 @@ using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Hands.Components;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {
@@ -66,7 +67,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = entityManager.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = entityManager.SpawnEntity(null, coords);
                 item = entityManager.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -137,7 +138,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = entityManager.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = entityManager.SpawnEntity(null, new MapCoordinates((1.9f, 0), mapId));
                 item = entityManager.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -207,7 +208,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = entityManager.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = entityManager.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange - 0.1f, 0), mapId));
                 item = entityManager.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -277,7 +278,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = entityManager.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = entityManager.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
                 item = entityManager.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
@@ -349,7 +350,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             server.Assert(() =>
             {
                 user = entityManager.SpawnEntity(null, coords);
-                user.EnsureComponent<HandsComponent>().AddHand("hand");
+                user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = entityManager.SpawnEntity(null, coords);
                 item = entityManager.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();

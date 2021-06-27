@@ -21,6 +21,7 @@ using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Module;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.IoC;
 
 namespace Content.Client.IoC
@@ -32,7 +33,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
-            IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();

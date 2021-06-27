@@ -23,7 +23,6 @@ namespace Content.Server.Disposal.Unit.Components
     {
         public override string Name => "DisposalHolder";
 
-        private bool _deletionRequested = false;
         private Container _contents = null!;
 
         /// <summary>
@@ -58,14 +57,14 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
             _contents = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             ExitDisposals();
@@ -79,7 +78,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
 
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<IBody>();
+                   entity.HasComponent<SharedBodyComponent>();
         }
 
         public bool TryInsert(IEntity entity)
@@ -113,7 +112,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         public void ExitDisposals()
         {
-            if (_deletionRequested || Deleted)
+            if (Deleted)
                 return;
 
             PreviousTube = null;
@@ -144,9 +143,7 @@ namespace Content.Server.Disposal.Unit.Components
                 Air.Clear();
             }
 
-            // FIXME: This is a workaround for https://github.com/space-wizards/RobustToolbox/issues/1646
-            Owner.SpawnTimer(TimeSpan.Zero, () => Owner.Delete());
-            _deletionRequested = true;
+            Owner.Delete();
         }
 
         public void Update(float frameTime)

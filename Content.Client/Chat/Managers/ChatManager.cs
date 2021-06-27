@@ -127,8 +127,8 @@ namespace Content.Client.Chat.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, OnChatMessage);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, OnMaxLengthReceived);
+            _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
@@ -357,7 +357,7 @@ namespace Content.Client.Chat.Managers
             var messageText = FormattedMessage.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
-                messageText = string.Format(message.MessageWrap, messageText);
+               messageText = string.Format(message.MessageWrap, messageText);
             }
 
             if (message.MessageColorOverride != Color.Transparent)

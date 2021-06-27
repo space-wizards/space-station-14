@@ -37,7 +37,7 @@ namespace Content.Server.Pointing
 
             data.Visibility = VerbVisibility.Visible;
 
-            data.Text = Loc.GetString("Point at");
+            data.Text = Loc.GetString("pointing-verb-get-data-text");
         }
 
         public override void Activate(IEntity user, IEntity target)

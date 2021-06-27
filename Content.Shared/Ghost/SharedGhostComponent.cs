@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Ghost
 {
@@ -12,8 +15,31 @@ namespace Content.Shared.Ghost
         public override string Name => "Ghost";
         public override uint? NetID => ContentNetIDs.GHOST;
 
-        public virtual bool CanGhostInteract { get; set; }
-        public bool CanInteract() => CanGhostInteract;
+        /// <summary>
+        ///     Changed by <see cref="GhostChangeCanReturnToBodyEvent"/>
+        /// </summary>
+        [DataField("canReturnToBody")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanReturnToBody { get; set; }
+
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new GhostComponentState(CanReturnToBody);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not GhostComponentState state)
+            {
+                return;
+            }
+
+            CanReturnToBody = state.CanReturnToBody;
+        }
+
+        public bool CanInteract() => false;
         public bool CanUse() => false;
         public bool CanThrow() => false;
         public bool CanDrop() => false;
@@ -28,61 +54,19 @@ namespace Content.Shared.Ghost
         public bool CanReturnToBody { get; }
         public bool CanGhostInteract { get; }
 
-        public GhostComponentState(bool canReturnToBody, bool canGhostInteract) : base(ContentNetIDs.GHOST)
+        public HashSet<string>? LocationWarps { get; }
+
+        public Dictionary<EntityUid, string>? PlayerWarps { get; }
+
+        public GhostComponentState(
+            bool canReturnToBody,
+            HashSet<string>? locationWarps = null,
+            Dictionary<EntityUid, string>? playerWarps = null)
+            : base(ContentNetIDs.GHOST)
         {
             CanReturnToBody = canReturnToBody;
-            CanGhostInteract = canGhostInteract;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class ReturnToBodyComponentMessage : ComponentMessage
-    {
-        public ReturnToBodyComponentMessage()
-        {
-            Directed = true;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class GhostRequestWarpPointData : ComponentMessage
-    {
-        public GhostRequestWarpPointData()
-        {
-            Directed = true;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class GhostRequestPlayerNameData : ComponentMessage
-    {
-        public GhostRequestPlayerNameData()
-        {
-            Directed = true;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class GhostReplyWarpPointData : ComponentMessage
-    {
-        public List<string> WarpName;
-
-        public GhostReplyWarpPointData(List<string> warpName)
-        {
-            WarpName = warpName;
-            Directed = true;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class GhostReplyPlayerNameData : ComponentMessage
-    {
-        public Dictionary<EntityUid,string> PlayerNames;
-
-        public GhostReplyPlayerNameData(Dictionary<EntityUid, string> playerNameDict)
-        {
-            PlayerNames = playerNameDict;
-            Directed = true;
+            LocationWarps = locationWarps;
+            PlayerWarps = playerWarps;
         }
     }
 }

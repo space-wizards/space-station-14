@@ -7,7 +7,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -67,7 +68,9 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!ActionBlockerSystem.CanUse(args.User)) return;
+            if (!Get<ActionBlockerSystem>().CanUse(args.User))
+                return;
+
             if (comp.Activated)
             {
                 TurnOff(comp);
@@ -96,7 +99,9 @@ namespace Content.Server.Stunnable
 
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
-            if (!ActionBlockerSystem.CanInteract(args.User)) return;
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
+                return;
+
             if (ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
                 cellslot.InsertCell(args.Used);
         }

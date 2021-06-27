@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
@@ -10,7 +11,8 @@ using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Notification;
+using Content.Shared.Movement;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Content.Shared.Tool;
@@ -23,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -56,9 +59,6 @@ namespace Content.Server.Storage.Components
         [ViewVariables]
         [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
-
-        [ViewVariables]
-        protected IEntityQuery? EntityQuery;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -144,12 +144,10 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
-            EntityQuery = new IntersectingEntityQuery(Owner);
-
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
@@ -170,7 +168,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
             return true;
@@ -196,18 +194,17 @@ namespace Content.Server.Storage.Components
         protected virtual void CloseStorage()
         {
             Open = false;
-            EntityQuery ??= new IntersectingEntityQuery(Owner);
-            var entities = Owner.EntityManager.GetEntities(EntityQuery);
+
             var count = 0;
-            foreach (var entity in entities)
+            foreach (var entity in DetermineCollidingEntities())
             {
                 // prevents taking items out of inventories, out of containers, and orphaning child entities
-                if(!entity.Transform.IsMapTransform)
+                if (entity.IsInContainer())
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
                 if (!entity.HasComponent<SharedItemComponent>() &&
-                    !entity.HasComponent<IBody>())
+                    !entity.HasComponent<SharedBodyComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -408,7 +405,7 @@ namespace Content.Server.Storage.Components
             if (Contents.Contains(eventArgs.User))
             {
                 _beingWelded = false;
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("entity-storage-component-already-contains-user-message"));
                 return false;
             }
 
@@ -440,12 +437,18 @@ namespace Content.Server.Storage.Components
             EmptyContents();
         }
 
+        protected IEnumerable<IEntity> DetermineCollidingEntities()
+        {
+            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            return entityLookup.GetEntitiesIntersecting(Owner);
+        }
+
         [Verb]
         private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -463,7 +466,7 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -472,12 +475,12 @@ namespace Content.Server.Storage.Components
             if (IsWeldedShut)
             {
                 data.Visibility = VerbVisibility.Disabled;
-                var verb = Loc.GetString(component.Open ? "Close" : "Open");
-                data.Text = Loc.GetString("{0} (welded shut)", verb);
+                var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
+                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
                 return;
             }
 
-            data.Text = Loc.GetString(component.Open ? "Close" : "Open");
+            data.Text = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
             data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 

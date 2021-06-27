@@ -132,7 +132,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
 
@@ -143,7 +143,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             rangedWeaponComponent.WeaponCanFireHandler += WeaponCanFire;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
             if (Owner.TryGetComponent(out ServerRangedWeaponComponent? rangedWeaponComponent))
@@ -429,9 +429,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             var fireRateMessage = Loc.GetString(FireRateSelector switch
             {
-                FireRateSelector.Safety => "Its safety is enabled.",
-                FireRateSelector.Single => "It's in single fire mode.",
-                FireRateSelector.Automatic => "It's in automatic fire mode.",
+                FireRateSelector.Safety => "server-ranged-barrel-component-on-examine-fire-rate-safety-description",
+                FireRateSelector.Single => "server-ranged-barrel-component-on-examine-fire-rate-single-description",
+                FireRateSelector.Automatic => "server-ranged-barrel-component-on-examine-fire-rate-automatic-description",
                 _ => throw new IndexOutOfRangeException()
             });
 

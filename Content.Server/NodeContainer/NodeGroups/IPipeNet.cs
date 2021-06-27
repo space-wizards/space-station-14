@@ -1,15 +1,19 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
-    public interface IPipeNet : IGasMixtureHolder
+    public interface IPipeNet : INodeGroup, IGasMixtureHolder
     {
         /// <summary>
         ///     Causes gas in the PipeNet to react.
@@ -21,7 +25,7 @@ namespace Content.Server.NodeContainer.NodeGroups
     public class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables]
-        public GasMixture Air { get; set; } = new();
+        public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};
 
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
@@ -42,18 +46,17 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public void Update()
         {
-            Air.React(this);
+            _atmosphereSystem?.React(Air, this);
         }
 
         protected override void OnAddNode(Node node)
         {
             if (node is not PipeNode pipeNode)
                 return;
+
             _pipes.Add(pipeNode);
             pipeNode.JoinPipeNet(this);
             Air.Volume += pipeNode.Volume;
-            Air.Merge(pipeNode.LocalAir);
-            pipeNode.LocalAir.Clear();
         }
 
         protected override void OnRemoveNode(Node node)
@@ -61,9 +64,8 @@ namespace Content.Server.NodeContainer.NodeGroups
             RemoveFromGridAtmos();
             if (node is not PipeNode pipeNode)
                 return;
-            var pipeAir = pipeNode.LocalAir;
-            pipeAir.Merge(Air);
-            pipeAir.Multiply(pipeNode.Volume / Air.Volume);
+
+            pipeNode.ClearPipeNet();
             _pipes.Remove(pipeNode);
         }
 
@@ -71,21 +73,29 @@ namespace Content.Server.NodeContainer.NodeGroups
         {
             if (newGroup is not IPipeNet newPipeNet)
                 return;
-            newPipeNet.Air.Merge(Air);
-            Air.Clear();
+
+            EntitySystem.Get<AtmosphereSystem>().Merge(newPipeNet.Air, Air);
         }
 
         protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
         {
+            RemoveFromGridAtmos();
+
+            var buffer = new GasMixture(Air.Volume) {Temperature = Air.Temperature};
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
             foreach (var newGroup in newGroups)
             {
                 if (newGroup is not IPipeNet newPipeNet)
                     continue;
-                newPipeNet.Air.Merge(Air);
-                var newPipeNetGas = newPipeNet.Air;
-                newPipeNetGas.Multiply(newPipeNetGas.Volume / Air.Volume);
+
+                var newAir = newPipeNet.Air;
+
+                buffer.Clear();
+                atmosphereSystem.Merge(buffer, Air);
+                buffer.Multiply(MathF.Min(newAir.Volume / Air.Volume, 1f));
+                atmosphereSystem.Merge(newAir, buffer);
             }
-            RemoveFromGridAtmos();
         }
 
         private void RemoveFromGridAtmos()
@@ -93,9 +103,18 @@ namespace Content.Server.NodeContainer.NodeGroups
             GridAtmos?.RemovePipeNet(this);
         }
 
-        private class NullPipeNet : IPipeNet
+        private class NullPipeNet : NullNodeGroup, IPipeNet
         {
-            GasMixture IGasMixtureHolder.Air { get; set; } = new();
+            private readonly GasMixture _air;
+
+            GasMixture IGasMixtureHolder.Air { get => _air; set { } }
+
+            public NullPipeNet()
+            {
+                _air = new GasMixture(1f) {Temperature = Atmospherics.T20C};
+                _air.MarkImmutable();
+            }
+
             public void Update() { }
         }
     }

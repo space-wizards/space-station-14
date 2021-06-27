@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,7 @@ using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using static Content.Shared.Body.Surgery.ISurgeryData;
@@ -24,7 +25,7 @@ namespace Content.Server.Body.Surgery
     {
         public override string Name => "BiologicalSurgeryData";
 
-        private readonly HashSet<IMechanism> _disconnectedOrgans = new();
+        private readonly HashSet<SharedMechanismComponent> _disconnectedOrgans = new();
 
         private bool SkinOpened { get; set; }
 
@@ -32,11 +33,11 @@ namespace Content.Server.Body.Surgery
 
         private bool VesselsClamped { get; set; }
 
-        public IBodyPart? Parent => Owner.GetComponentOrNull<IBodyPart>();
+        public SharedBodyPartComponent? Parent => Owner.GetComponentOrNull<SharedBodyPartComponent>();
 
         public BodyPartType? ParentType => Parent?.PartType;
 
-        private void AddDisconnectedOrgan(IMechanism mechanism)
+        private void AddDisconnectedOrgan(SharedMechanismComponent mechanism)
         {
             if (_disconnectedOrgans.Add(mechanism))
             {
@@ -44,7 +45,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void RemoveDisconnectedOrgan(IMechanism mechanism)
+        private void RemoveDisconnectedOrgan(SharedMechanismComponent mechanism)
         {
             if (_disconnectedOrgans.Remove(mechanism))
             {
@@ -96,27 +97,27 @@ namespace Content.Server.Body.Surgery
 
             if (HasIncisionNotClamped())
             {
-                toReturn.Append(Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.",
-                    Owner, Parent.Name));
+                toReturn.Append(Loc.GetString("biological-surgery-data-component-has-incision-not-clamped-message",
+                    ("owner", Owner),("bodyPart", Parent.Name)));
             }
             else if (HasClampedIncisionNotRetracted())
             {
-                toReturn.AppendLine(Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.",
-                    Owner, Parent.Name));
+                toReturn.AppendLine(Loc.GetString("biological-surgery-data-component-has-clamped-incision-not-retracted-message",
+                    ("owner", Owner),("bodyPary", Parent.Name)));
             }
             else if (HasFullyOpenIncision())
             {
-                toReturn.AppendLine(Loc.GetString("There is an incision on {0:their} {1}.\n", Owner, Parent.Name));
+                toReturn.AppendLine(Loc.GetString("biological-surgery-data-component-has-fully-open-incision-message", ("owner", Owner), ("bodyPart", Parent.Name)) + "\n");
                 foreach (var mechanism in _disconnectedOrgans)
                 {
-                    toReturn.AppendLine(Loc.GetString("{0:their} {1} is loose.", Owner, mechanism.Name));
+                    toReturn.AppendLine(Loc.GetString("biological-surgery-data-component-part-is-loose-message",("owner", Owner), ("bodyPart", mechanism.Name)));
                 }
             }
 
             return toReturn.ToString();
         }
 
-        public bool CanAddMechanism(IMechanism mechanism)
+        public bool CanAddMechanism(SharedMechanismComponent mechanism)
         {
             return Parent != null &&
                    SkinOpened &&
@@ -124,7 +125,7 @@ namespace Content.Server.Body.Surgery
                    SkinRetracted;
         }
 
-        public bool CanAttachBodyPart(IBodyPart part)
+        public bool CanAttachBodyPart(SharedBodyPartComponent part)
         {
             return Parent != null;
             // TODO BODY if a part is disconnected, you should have to do some surgery to allow another body part to be attached.
@@ -224,7 +225,7 @@ namespace Content.Server.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Cut open the skin..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-open-skin-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -236,7 +237,7 @@ namespace Content.Server.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Clamp the vessels..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-clamp-vessels-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -248,7 +249,7 @@ namespace Content.Server.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Retracting the skin..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-retract-skin-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -260,7 +261,7 @@ namespace Content.Server.Body.Surgery
         {
             if (Parent == null) return;
 
-            performer.PopupMessage(Loc.GetString("Cauterizing the incision..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-cauterize-incision-message"));
 
             if (await SurgeryDoAfter(performer))
             {
@@ -275,7 +276,7 @@ namespace Content.Server.Body.Surgery
             if (Parent == null) return;
             if (Parent.Mechanisms.Count <= 0) return;
 
-            var toSend = new List<IMechanism>();
+            var toSend = new List<SharedMechanismComponent>();
             foreach (var mechanism in Parent.Mechanisms)
             {
                 if (!_disconnectedOrgans.Contains(mechanism))
@@ -290,7 +291,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void LoosenOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
+        private async void LoosenOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
@@ -298,7 +299,7 @@ namespace Content.Server.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Loosening the organ..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-loosen-organ-message"));
 
             if (!performer.HasComponent<DoAfterComponent>())
             {
@@ -331,7 +332,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void RemoveOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
+        private async void RemoveOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
@@ -339,7 +340,7 @@ namespace Content.Server.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(Loc.GetString("Removing the organ..."));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-organ-message"));
 
             if (!performer.HasComponent<DoAfterComponent>())
             {
@@ -358,9 +359,9 @@ namespace Content.Server.Body.Surgery
         private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (Parent == null) return;
-            if (container is not IBody body) return;
+            if (container is not SharedBodyComponent body) return;
 
-            performer.PopupMessage(Loc.GetString("Sawing off the limb!"));
+            performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-bodypart-message"));
 
             if (await SurgeryDoAfter(performer))
             {

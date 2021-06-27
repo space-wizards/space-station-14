@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.NetIDs;
@@ -89,7 +89,8 @@ namespace Content.Shared.Kitchen.Components
     public enum MicrowaveVisualState
     {
         Idle,
-        Cooking
+        Cooking,
+        Broken
     }
 
     [NetSerializable, Serializable]

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
@@ -10,6 +10,7 @@ using Content.Server.Players;
 using Content.Server.Power.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Recycling;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -68,7 +69,7 @@ namespace Content.Server.Recycling.Components
         private bool CanGib(IEntity entity)
         {
             // We suppose this entity has a Recyclable component.
-            return entity.HasComponent<IBody>() && !_safe && Powered;
+            return entity.HasComponent<SharedBodyComponent>() && !_safe && Powered;
         }
 
         private void Recycle(IEntity entity)
@@ -86,7 +87,7 @@ namespace Content.Server.Recycling.Components
             // Mobs are a special case!
             if (CanGib(entity))
             {
-                entity.GetComponent<IBody>().Gib(true);
+                entity.GetComponent<SharedBodyComponent>().Gib(true);
                 Bloodstain();
                 return;
             }
@@ -152,13 +153,13 @@ namespace Content.Server.Recycling.Components
 
             if (mind != null)
             {
-                IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, false);
-                mind.OwnedEntity?.PopupMessage(Loc.GetString("You recycle yourself!"));
+                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
+                mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
             }
 
-            victim.PopupMessageOtherClients(Loc.GetString("{0:theName} tries to recycle {0:themself}!", victim));
+            victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
-            if (victim.TryGetComponent<IBody>(out var body))
+            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
             {
                 body.Gib(true);
             }

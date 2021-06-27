@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
+using Content.Shared.Interaction.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.GameObjects;
@@ -186,7 +187,7 @@ namespace Content.Server.Actions
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanChangeDirection(player)) return true;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player)) return true;
 
             // don't set facing unless they clicked far enough away
             var diff = targetWorldPos - player.Transform.WorldPosition;

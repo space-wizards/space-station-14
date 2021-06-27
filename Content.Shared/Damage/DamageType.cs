@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
@@ -42,7 +41,7 @@ namespace Content.Shared.Damage
             return ToNewDictionary<int>();
         }
 
-        public static Dictionary<DamageClass, int> ToClassDictionary(IReadOnlyDictionary<DamageType, int> types)
+        public static Dictionary<DamageClass, int> ToClassDictionary(this IReadOnlyDictionary<DamageType, int> types)
         {
             var classes = DamageClassExtensions.ToNewDictionary();
 

@@ -5,6 +5,7 @@ using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -36,7 +37,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("fillPrototype")]
         private string? _fillPrototype = default;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-container", out var existing);
@@ -76,13 +77,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(user, Loc.GetString("speed-loader-component-try-insert-ammo-wrong-caliber"));
                 return false;
             }
 
             if (AmmoLeft >= Capacity)
             {
-                Owner.PopupMessage(user, Loc.GetString("No room"));
+                Owner.PopupMessage(user, Loc.GetString("speed-loader-component-try-insert-ammo-no-room"));
                 return false;
             }
 

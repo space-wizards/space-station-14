@@ -64,7 +64,7 @@ namespace Content.Server.Cargo.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -80,7 +80,7 @@ namespace Content.Server.Cargo.Components
             BankAccount = _cargoConsoleSystem.StationAccount;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (UserInterface != null)
             {

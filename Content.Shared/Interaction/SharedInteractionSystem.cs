@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
@@ -326,7 +328,7 @@ namespace Content.Shared.Interaction
 
             if (!inRange && popup)
             {
-                var message = Robust.Shared.Localization.Loc.GetString("You can't reach there!");
+                var message = Loc.GetString("shared-interaction-system-in-range-unobstructed-cannot-reach");
                 origin.PopupMessage(message);
             }
 

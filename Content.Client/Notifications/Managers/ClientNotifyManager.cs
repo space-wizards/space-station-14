@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared;
+using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -32,9 +34,9 @@ namespace Content.Client.Notifications.Managers
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor), DoNotifyCursor);
-            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates), DoNotifyCoordinates);
-            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity), DoNotifyEntity);
+            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(DoNotifyCursor);
+            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(DoNotifyCoordinates);
+            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(DoNotifyEntity);
 
             _initialized = true;
         }

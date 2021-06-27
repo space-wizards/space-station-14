@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.NetIDs;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -35,7 +36,7 @@ namespace Content.Server.Light.Components
         // bulbs that were inserted inside light replacer
         [ViewVariables] private IContainer _insertedBulbs = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _insertedBulbs = ContainerHelpers.EnsureContainer<Container>(Owner, "light_replacer_storage");

@@ -31,7 +31,6 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IGameTicker _ticker = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
 
         private int _nextVoteId = 1;
@@ -44,8 +43,8 @@ namespace Content.Server.Voting.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME);
-            _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME);
+            _netManager.RegisterNetMessage<MsgVoteData>();
+            _netManager.RegisterNetMessage<MsgVoteCanCall>();
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;

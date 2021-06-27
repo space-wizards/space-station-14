@@ -43,7 +43,7 @@ namespace Content.Server.Administration.Verbs
                 return;
             }
 
-            data.Text = Loc.GetString("Add Reagent...");
+            data.Text = Loc.GetString("admin-add-reagent-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
 

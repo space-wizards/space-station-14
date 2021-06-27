@@ -7,6 +7,7 @@ using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,7 @@ namespace Content.Server.APC.Components
 
         [ComponentDependency] private AccessReader? _accessReader = null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -93,7 +94,7 @@ namespace Content.Server.APC.Components
                 }
                 else
                 {
-                    user.PopupMessageCursor(Loc.GetString("Insufficient access!"));
+                    user.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
                 }
 
             }

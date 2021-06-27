@@ -107,7 +107,7 @@ namespace Content.Server.Construction.Components
 
         public IReadOnlyDictionary<string, GenericPartInfo> TagRequirements => _tagRequirements;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -313,14 +313,12 @@ namespace Content.Server.Construction.Components
                         return true;
                     }
 
-                    var splitStack = new StackSplitEvent()
-                        {Amount = needed, SpawnPosition = Owner.Transform.Coordinates};
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(stack.Owner.Uid, splitStack);
+                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, stack, needed, Owner.Transform.Coordinates);
 
-                    if (splitStack.Result == null)
+                    if (splitStack == null)
                         return false;
 
-                    if(!_partContainer.Insert(splitStack.Result))
+                    if(!_partContainer.Insert(splitStack))
                         return false;
 
                     _materialProgress[type] += needed;

@@ -11,6 +11,7 @@ using Content.Server.VendingMachines;
 using Content.Server.Wires.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -98,7 +99,7 @@ namespace Content.Server.ParticleAccelerator.Components
             ? ParticleAcceleratorPowerState.Level3
             : ParticleAcceleratorPowerState.Level2;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)
@@ -150,7 +151,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
 
             if (obj.Session.AttachedEntity == null ||
-                !ActionBlockerSystem.CanInteract(obj.Session.AttachedEntity))
+                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntity))
             {
                 return;
             }
@@ -239,7 +240,7 @@ namespace Content.Server.ParticleAccelerator.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();
@@ -308,7 +309,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 case ParticleAcceleratorControlBoxWires.Limiter:
                     if (args.Action == WiresAction.Pulse)
                     {
-                        Owner.PopupMessageEveryone(Loc.GetString("The control box makes a whirring noise."));
+                        Owner.PopupMessageEveryone(Loc.GetString("particle-accelerator-control-box-component-wires-update-limiter-on-pulse"));
                     }
                     else
                     {

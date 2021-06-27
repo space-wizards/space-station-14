@@ -1,11 +1,13 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.Anchor;
+using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Movement;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -174,7 +176,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             var directions = string.Join(", ", ConnectableDirections());
 
-            Owner.PopupMessage(entity, Loc.GetString("{0}", directions));
+            Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }
 
         private void UpdateVisualState()
@@ -222,7 +224,7 @@ namespace Content.Server.Disposal.Tube.Components
             UpdateVisualState();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -244,7 +246,7 @@ namespace Content.Server.Disposal.Tube.Components
             UpdateVisualState();
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 
@@ -281,7 +283,7 @@ namespace Content.Server.Disposal.Tube.Components
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
             {
-                data.Text = Loc.GetString("Tube Directions");
+                data.Text = Loc.GetString("tube-direction-verb-get-data-text");
                 data.CategoryData = VerbCategories.Debug;
                 data.Visibility = VerbVisibility.Invisible;
 

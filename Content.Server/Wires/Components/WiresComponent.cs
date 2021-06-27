@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Tool;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
@@ -148,7 +149,7 @@ namespace Content.Server.Wires.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
@@ -396,13 +397,13 @@ namespace Content.Server.Wires.Components
 
                     if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
+                        Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
                         return;
                     }
 
                     if (!player.InRangeUnobstructed(Owner))
                     {
-                        Owner.PopupMessage(player, Loc.GetString("You can't reach there!"));
+                        Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"));
                         return;
                     }
 
@@ -415,7 +416,7 @@ namespace Content.Server.Wires.Components
                         case WiresAction.Cut:
                             if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
-                                player.PopupMessageCursor(Loc.GetString("You need to hold a wirecutter in your hand!"));
+                                player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
@@ -426,7 +427,7 @@ namespace Content.Server.Wires.Components
                         case WiresAction.Mend:
                             if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
-                                player.PopupMessageCursor(Loc.GetString("You need to hold a wirecutter in your hand!"));
+                                player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
@@ -437,13 +438,13 @@ namespace Content.Server.Wires.Components
                         case WiresAction.Pulse:
                             if (tool == null || !tool.HasQuality(ToolQuality.Multitool))
                             {
-                                player.PopupMessageCursor(Loc.GetString("You need to hold a multitool in your hand!"));
+                                player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
                             if (wire.IsCut)
                             {
-                                player.PopupMessageCursor(Loc.GetString("You can't pulse a wire that's been cut!"));
+                                player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-cannot-pulse-cut-wire"));
                                 return;
                             }
 
@@ -508,8 +509,8 @@ namespace Content.Server.Wires.Components
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString(IsPanelOpen
-                ? "The [color=lightgray]maintenance panel[/color] is [color=darkgreen]open[/color]."
-                : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
+                ? "wires-component-on-examine-panel-open"
+                : "wires-component-on-examine-panel-closed"));
         }
 
         public void SetStatus(object statusIdentifier, object status)

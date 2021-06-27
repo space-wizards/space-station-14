@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -45,7 +46,7 @@ namespace Content.Server.Fluids.Components
         private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<SolutionContainerComponent>();
@@ -63,13 +64,13 @@ namespace Content.Server.Fluids.Components
 
             if (CurrentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Bucket is empty"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-bucket-is-empty-message"));
                 return false;
             }
 
             if (mopComponent.CurrentVolume == mopComponent.MaxVolume)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop is full"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-mop-is-full-message"));
                 return false;
             }
 

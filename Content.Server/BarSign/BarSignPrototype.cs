@@ -9,15 +9,15 @@ namespace Content.Server.BarSign
     [Prototype("barSign")]
     public class BarSignPrototype : IPrototype
     {
-        private string _description = "";
-        private string _name = "";
+        private string _description = string.Empty;
+        private string _name = string.Empty;
 
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
 
-        [DataField("icon")] public string Icon { get; private set; } = "";
+        [DataField("icon")] public string Icon { get; private set; } = string.Empty;
 
         [DataField("name")]
         public string Name

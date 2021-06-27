@@ -20,6 +20,9 @@ namespace Content.Client.CombatMode
             base.Initialize();
 
             _gameHud.OnTargetingZoneChanged = OnTargetingZoneChanged;
+
+            SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
+            SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
         }
 
         public override void Shutdown()

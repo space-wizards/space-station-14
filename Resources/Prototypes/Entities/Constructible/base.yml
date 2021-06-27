@@ -4,7 +4,8 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Clickable
   - type: Physics
     bodyType: Static
@@ -30,6 +31,8 @@
 #  - type: DamageOnHighSpeedImpact
 #  - type: TileFrictionModifier
 #    modifier: 0.5
+  - type: Transform
+    anchored: false
   - type: Clickable
   - type: Physics
     bodyType: Dynamic

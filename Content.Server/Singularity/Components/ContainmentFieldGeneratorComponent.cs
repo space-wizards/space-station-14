@@ -182,7 +182,7 @@ namespace Content.Server.Singularity.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _connection1?.Item2.Dispose();
             _connection2?.Item2.Dispose();

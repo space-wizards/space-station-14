@@ -42,7 +42,7 @@ namespace Content.Shared.Actions.Components
         /// <summary>
         /// hand it's currently in, null if not in a hand.
         /// </summary>
-        public SharedHand? InHand { get; private set; }
+        public HandState? InHand { get; private set; }
 
         /// <summary>
         /// Entity currently holding this in hand or equip slot. Null if not held.

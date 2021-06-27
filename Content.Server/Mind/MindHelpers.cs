@@ -14,7 +14,7 @@ namespace Content.Server.Mind
 
             if (mind == null) return;
 
-            IoCManager.Resolve<IGameTicker>().OnGhostAttempt(mind, canReturn);
+            EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, canReturn);
         }
     }
 }

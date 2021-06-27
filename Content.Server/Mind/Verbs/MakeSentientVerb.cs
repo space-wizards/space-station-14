@@ -29,7 +29,7 @@ namespace Content.Server.Mind.Verbs
             if (groupController.CanCommand(player, "makesentient"))
             {
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Make Sentient");
+                data.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 data.CategoryData = VerbCategories.Debug;
                 data.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
             }

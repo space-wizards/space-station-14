@@ -32,7 +32,7 @@ namespace Content.Server.AI.Components
         }
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -46,7 +46,7 @@ namespace Content.Server.AI.Components
 
             if (StartingGearPrototype != null)
             {
-                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var gameTicker = EntitySystem.Get<GameTicker>();
                 var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
                 var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);

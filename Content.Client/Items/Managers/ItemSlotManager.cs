@@ -1,4 +1,4 @@
-﻿using Content.Client.Examine;
+using Content.Client.Examine;
 using Content.Client.Items.UI;
 using Content.Client.Storage;
 using Content.Client.Verbs;
@@ -104,6 +104,7 @@ namespace Content.Client.Items.Managers
             }
 
             if (entity == null ||
+                entity.Deleted ||
                 !entity.TryGetComponent(out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)

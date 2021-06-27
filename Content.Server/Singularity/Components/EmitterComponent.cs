@@ -8,6 +8,7 @@ using Content.Server.Projectiles.Components;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -63,7 +64,7 @@ namespace Content.Server.Singularity.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -41,8 +41,8 @@ namespace Content.Server.Pulling
 
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = component.Puller == userPhysics.Owner
-                    ? Loc.GetString("Stop pulling")
-                    : Loc.GetString("Pull");
+                    ? Loc.GetString("pulling-verb-get-data-text-stop-pulling")
+                    : Loc.GetString("pulling-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, PullableComponent component)

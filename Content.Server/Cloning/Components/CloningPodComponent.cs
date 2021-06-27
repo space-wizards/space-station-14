@@ -7,6 +7,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Cloning;
 using Content.Shared.MobState;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -42,7 +43,7 @@ namespace Content.Server.Cloning.Components
         [ViewVariables]
         public CloningPodStatus Status;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -57,7 +58,7 @@ namespace Content.Server.Cloning.Components
             EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (UserInterface != null)
             {

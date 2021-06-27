@@ -12,6 +12,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -53,7 +54,7 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<SolutionContainerComponent>();
@@ -96,13 +97,13 @@ namespace Content.Server.Nutrition.Components
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(Loc.GetString("{0:TheName} is empty!", Owner));
+                user.PopupMessage(Loc.GetString("food-component-try-use-food-is-empty", ("entity", Owner)));
                 return false;
             }
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out IBody? body) ||
+            if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;
@@ -149,7 +150,7 @@ namespace Content.Server.Nutrition.Components
 
             if (firstStomach == null)
             {
-                trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
+                trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }
 
@@ -164,7 +165,7 @@ namespace Content.Server.Nutrition.Components
                 SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
-            trueTarget.PopupMessage(user, Loc.GetString("Nom"));
+            trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
 
             // If utensils were used
             if (utensils != null)

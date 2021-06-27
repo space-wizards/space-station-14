@@ -37,7 +37,7 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out IBody? body))
+            if (!player.AttachedEntity.TryGetComponent(out SharedBodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
