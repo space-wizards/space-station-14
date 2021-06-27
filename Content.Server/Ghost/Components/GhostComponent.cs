@@ -8,7 +8,6 @@ namespace Content.Server.Ghost.Components
     [RegisterComponent]
     public class GhostComponent : SharedGhostComponent
     {
-        [DataField("canInteract")]
         public TimeSpan TimeOfDeath { get; set; } = TimeSpan.Zero;
     }
 }

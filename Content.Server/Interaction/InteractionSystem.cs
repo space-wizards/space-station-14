@@ -177,7 +177,7 @@ namespace Content.Server.Interaction
         {
             var actionBlocker = Get<ActionBlockerSystem>();
 
-            if (!actionBlocker.CanInteract(user) || ! actionBlocker.CanUse(user))
+            if (!actionBlocker.CanInteract(user) || !actionBlocker.CanUse(user))
                 return;
 
             // all activates should only fire when in range / unobstructed

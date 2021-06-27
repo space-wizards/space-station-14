@@ -15,16 +15,42 @@ namespace Content.Shared.Ghost
         public override string Name => "Ghost";
         public override uint? NetID => ContentNetIDs.GHOST;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanGhostInteract
+        {
+            get => _canGhostInteract;
+            set
+            {
+                if (_canGhostInteract == value) return;
+                _canGhostInteract = value;
+                Dirty();
+            }
+        }
+
+        [DataField("canInteract")]
+        private bool _canGhostInteract;
+
         /// <summary>
         ///     Changed by <see cref="GhostChangeCanReturnToBodyEvent"/>
         /// </summary>
-        [DataField("canReturnToBody")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanReturnToBody { get; set; }
+        public bool CanReturnToBody
+        {
+            get => _canReturnToBody;
+            set
+            {
+                if (_canReturnToBody == value) return;
+                _canReturnToBody = value;
+                Dirty();
+            }
+        }
+
+        [DataField("canReturnToBody")]
+        private bool _canReturnToBody;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new GhostComponentState(CanReturnToBody);
+            return new GhostComponentState(CanReturnToBody, CanGhostInteract);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -37,10 +63,11 @@ namespace Content.Shared.Ghost
             }
 
             CanReturnToBody = state.CanReturnToBody;
+            CanGhostInteract = state.CanGhostInteract;
         }
 
-        public bool CanInteract() => false;
-        public bool CanUse() => false;
+        public bool CanInteract() => CanGhostInteract;
+        public bool CanUse() => CanGhostInteract;
         public bool CanThrow() => false;
         public bool CanDrop() => false;
         public bool CanPickup() => false;
@@ -60,11 +87,13 @@ namespace Content.Shared.Ghost
 
         public GhostComponentState(
             bool canReturnToBody,
+            bool canGhostInteract,
             HashSet<string>? locationWarps = null,
             Dictionary<EntityUid, string>? playerWarps = null)
             : base(ContentNetIDs.GHOST)
         {
             CanReturnToBody = canReturnToBody;
+            CanGhostInteract = canGhostInteract;
             LocationWarps = locationWarps;
             PlayerWarps = playerWarps;
         }
