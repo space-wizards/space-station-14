@@ -1,18 +1,37 @@
 using System;
-using System.Runtime.CompilerServices;
 using Content.Client.CombatMode;
+using Content.Shared.Audio;
 using Content.Shared.Camera;
+using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Guns;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Guns
 {
     internal sealed class GunSystem : SharedGunSystem
     {
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
         private CombatModeSystem _combatModeSystem = default!;
         private InputSystem _inputSystem = default!;
+
+        private SharedGunComponent? _firingWeapon;
 
         public override void Initialize()
         {
@@ -24,11 +43,30 @@ namespace Content.Client.Weapons.Guns
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            GunUpdate(frameTime, GameTiming.InSimulation || GameTiming.IsFirstTimePredicted);
         }
 
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);
+            GunUpdate(frameTime, true);
+        }
+
+        private void StopFiring(TimeSpan currentTime)
+        {
+            if (_firingWeapon != null)
+                _firingWeapon.Firing = false;
+
+            _firingWeapon = null;
+        }
+
+        private SharedGunComponent? GetRangedWeapon(IEntity entity)
+        {
+            if (!entity.TryGetComponent(out SharedHandsComponent? handsComponent) ||
+                !handsComponent.TryGetActiveHeldEntity(out var item) ||
+                !item.TryGetComponent(out SharedGunComponent? gunComponent)) return null;
+
+            return gunComponent;
         }
 
         private void GunUpdate(float frametime, bool prediction)
@@ -58,11 +96,11 @@ namespace Content.Client.Weapons.Guns
             if (_firingWeapon == null)
                 return;
 
-            if (!_firing)
+            if (!_firingWeapon.Firing)
             {
                 // TODO: Set Firing on weapon?
                 _firingWeapon.NextFire = TimeSpan.FromSeconds(Math.Max(_firingWeapon.NextFire.TotalSeconds, currentTime.TotalSeconds));
-                _firing = true;
+                _firingWeapon.Firing = true;
             }
 
             var mouseCoordinates = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
@@ -70,30 +108,35 @@ namespace Content.Client.Weapons.Guns
 
             if (TryFire(player, _firingWeapon, mouseCoordinates, out var shots, currentTime) && shots > 0)
             {
-                switch (_firingWeapon)
+                if (prediction)
                 {
-                    case ChamberedGunComponent chamberedGun:
-                        var mag = chamberedGun.Magazine;
-
-                        EntityManager.EventBus.RaiseLocalEvent(
-                            _firingWeapon.Owner.Uid,
-                            new AmmoUpdateEvent(chamberedGun.Chamber != null, mag?.AmmoCount, mag?.AmmoMax));
-
-                        break;
-                }
-
-                if (_prediction)
-                {
+                    /*
                     var kickBack = _firingWeapon.KickBack;
 
                     if (kickBack > 0.0f && player.TryGetComponent(out SharedCameraRecoilComponent? cameraRecoil))
                     {
                         cameraRecoil.Kick(-fireAngle.ToVec() * kickBack * shots);
                     }
+                    */
 
                     Logger.DebugS("gun", $"Fired {shots} shots at {currentTime}");
-                    RaiseNetworkEvent(new ShootMessage(_firingWeapon.Owner.Uid, mouseCoordinates, shots, currentTime));
+                    //RaiseNetworkEvent(new ShootMessage(_firingWeapon.Owner.Uid, mouseCoordinates, shots, currentTime));
+
+                    if (_firingWeapon.SoundGunshot != null)
+                    {
+                        for (var i = 0; i < shots; i++)
+                        {
+                            SoundSystem.Play(Filter.Local(), _firingWeapon.SoundGunshot,
+                                AudioHelpers.WithVariation(0.01f));
+                        }
+                    }
+
+                    // TODO: Muzzle Effect
                 }
+            }
+            else
+            {
+                StopFiring(currentTime);
             }
         }
     }
