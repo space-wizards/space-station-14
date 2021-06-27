@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
@@ -10,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Log;
 
 namespace Content.Server.Sound
 {
@@ -31,7 +33,14 @@ namespace Content.Server.Sound
 
         private void PlaySound(BaseEmitSoundComponent component)
         {
-            PlayRandomSoundFromCollection(component);
+            if (!string.IsNullOrWhiteSpace(component.SoundCollectionName))
+            {
+                PlayRandomSoundFromCollection(component);
+            }
+            else
+            {
+                Logger.Warning($"{nameof(component)}: {component.Owner} has no {nameof(component.SoundCollectionName)} to play.");
+            }
         }
 
         private void PlayRandomSoundFromCollection(BaseEmitSoundComponent component)
@@ -48,8 +57,16 @@ namespace Content.Server.Sound
 
         private static void PlaySingleSound(string soundName, BaseEmitSoundComponent component)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                             AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+            if (component.PitchVariation > 0.0)
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
+                                 AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+            }
+            else
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
+                                 AudioParams.Default.WithVolume(-2f));
+            }
         }
     }
 }
