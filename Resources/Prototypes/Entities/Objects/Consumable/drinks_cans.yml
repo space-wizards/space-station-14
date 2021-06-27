@@ -139,9 +139,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+  - type: Appearance
+    visuals:
+    - type: DrinkCanVisual
+      base_state: drgibcan_closed
+      state_open: drgibcan_open
 
 - type: entity
   parent: DrinkCanBaseFull

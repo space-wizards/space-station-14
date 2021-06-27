@@ -26,4 +26,10 @@ namespace Content.Shared.Nutrition.Components
         Capacity,
         Current,
     }
+
+    [NetSerializable, Serializable]
+    public enum DrinkCanStateVisuals
+    {
+        Opened
+    }
 }

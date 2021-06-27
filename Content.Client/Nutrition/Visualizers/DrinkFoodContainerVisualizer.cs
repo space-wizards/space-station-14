@@ -13,12 +13,15 @@ namespace Content.Client.Nutrition.Visualizers
         [DataField("base_state", required: true)]
         private string? _baseState;
 
+        [DataField("state_open")]
+        private string? _stateOpen;
+
         [DataField("steps", required: true)]
         private int _steps;
 
         [DataField("mode")]
         private FoodContainerVisualMode _mode = FoodContainerVisualMode.Rounded;
-
+#error I think I need to create separate OpenableDrinkVisualser
         public override void OnChangeData(AppearanceComponent component)
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
