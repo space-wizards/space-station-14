@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
-namespace Content.Server.Sound
+namespace Content.Server.Sound.Components
 {
     [RegisterComponent]
     public class LoopingLoopingSoundComponent : SharedLoopingSoundComponent
