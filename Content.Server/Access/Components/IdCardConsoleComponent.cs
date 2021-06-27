@@ -159,7 +159,7 @@ namespace Content.Server.Access.Components
                 return;
             }
 
-            if (!hands.Drop(hands.ActiveHand, container))
+            if (!hands.TryPutHandIntoContainer(hands.ActiveHand, container))
             {
                 Owner.PopupMessage(user, Loc.GetString("access-id-card-console-component-cannot-let-go-error"));
                 return;
@@ -216,11 +216,11 @@ namespace Content.Server.Access.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
             {
                 return;
             }
-            if(!Powered) return;
+            if (!Powered) return;
 
             UserInterface?.Open(actor.PlayerSession);
         }

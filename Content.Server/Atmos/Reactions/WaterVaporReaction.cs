@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Interfaces;
 using Content.Shared.Chemistry.Reagent;
@@ -22,7 +23,7 @@ namespace Content.Server.Atmos.Reactions
 
         [DataField("puddlePrototype")] public string? PuddlePrototype { get; } = "PuddleSmear";
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {
             // If any of the prototypes is invalid, we do nothing.
             if (string.IsNullOrEmpty(Reagent) || string.IsNullOrEmpty(PuddlePrototype)) return ReactionResult.NoReaction;

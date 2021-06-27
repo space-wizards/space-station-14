@@ -30,7 +30,28 @@
     - type: SolutionContainerVisualizer
       maxFillLevels: 6
       fillBaseName: beaker
-
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    amount: 5
+  - type: DamageOtherOnHit
+    amount: 5
+  
 - type: entity
   name: large beaker
   parent: Beaker

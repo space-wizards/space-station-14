@@ -7,7 +7,8 @@
   - type: Physics
     bodyType: Dynamic
     fixtures:
-    - shape:
+    - id: DeleteCircle
+      shape:
         !type:PhysShapeCircle
           radius: 0.5
       mass: 5
@@ -17,6 +18,7 @@
       mask:
       - AllMask
   - type: Singularity
+  - type: SingularityDistortion
   - type: RadiationPulse
     range: 15
     decay: false

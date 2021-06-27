@@ -10,6 +10,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
+        public float AtmosTime => 1f / AtmosTickRate;
 
         private void InitializeCVars()
         {
