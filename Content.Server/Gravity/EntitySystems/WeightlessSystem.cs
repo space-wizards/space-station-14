@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
@@ -41,7 +41,7 @@ namespace Content.Server.Gravity.EntitySystems
             if (_mapManager.TryGetGrid(status.Owner.Transform.GridID, out var grid))
             {
                 var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
-                if (gridEntity.HasComponent<GravityComponent>())
+                if (gridEntity.GetComponent<GravityComponent>().Enabled)
                 {
                     RemoveWeightless(status);
                 }

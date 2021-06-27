@@ -66,8 +66,8 @@ namespace Content.IntegrationTests.Tests
                 var grid1Entity = entityMan.GetEntity(grid1.GridEntityId);
                 var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
 
-                Assert.That(!grid1Entity.HasComponent<GravityComponent>());
-                Assert.That(grid2Entity.HasComponent<GravityComponent>());
+                Assert.That(!grid1Entity.GetComponent<GravityComponent>().Enabled);
+                Assert.That(grid2Entity.GetComponent<GravityComponent>().Enabled);
             });
 
             await server.WaitIdleAsync();
