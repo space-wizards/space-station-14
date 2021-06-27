@@ -43,7 +43,7 @@ namespace Content.Client.Weapons.Guns
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            GunUpdate(frameTime, GameTiming.InSimulation || GameTiming.IsFirstTimePredicted);
+            GunUpdate(frameTime, !GameTiming.InSimulation || GameTiming.IsFirstTimePredicted);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -96,7 +96,7 @@ namespace Content.Client.Weapons.Guns
             if (_firingWeapon == null)
                 return;
 
-            if (!_firingWeapon.Firing)
+            if (prediction && !_firingWeapon.Firing)
             {
                 // TODO: Set Firing on weapon?
                 _firingWeapon.NextFire = TimeSpan.FromSeconds(Math.Max(_firingWeapon.NextFire.TotalSeconds, currentTime.TotalSeconds));
@@ -104,7 +104,6 @@ namespace Content.Client.Weapons.Guns
             }
 
             var mouseCoordinates = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-            var fireAngle = (mouseCoordinates.Position - player.Transform.WorldPosition).ToAngle();
 
             if (TryFire(player, _firingWeapon, mouseCoordinates, out var shots, currentTime) && shots > 0)
             {
@@ -120,7 +119,7 @@ namespace Content.Client.Weapons.Guns
                     */
 
                     Logger.DebugS("gun", $"Fired {shots} shots at {currentTime}");
-                    //RaiseNetworkEvent(new ShootMessage(_firingWeapon.Owner.Uid, mouseCoordinates, shots, currentTime));
+                    RaiseNetworkEvent(new ShootMessage(_firingWeapon.Owner.Uid, mouseCoordinates, shots, currentTime));
 
                     if (_firingWeapon.SoundGunshot != null)
                     {
