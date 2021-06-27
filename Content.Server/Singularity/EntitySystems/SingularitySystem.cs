@@ -1,11 +1,11 @@
 using Content.Server.Singularity.Components;
+using Content.Shared.Singularity;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
-    public class SingularitySystem : EntitySystem
+    public class SingularitySystem : SharedSingularitySystem
     {
         private float _updateInterval = 1.0f;
         private float _accumulator;
@@ -24,7 +24,6 @@ namespace Content.Server.Singularity.EntitySystems
                     singularity.Update(1);
                 }
             }
-
         }
     }
 }
