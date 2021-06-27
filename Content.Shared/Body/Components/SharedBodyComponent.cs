@@ -189,7 +189,7 @@ namespace Content.Shared.Body.Components
             if (part.PartType == BodyPartType.Leg &&
                 GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
 
             // creadth: immediately kill entity if last vital part removed

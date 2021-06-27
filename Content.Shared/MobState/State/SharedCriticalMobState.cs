@@ -20,13 +20,20 @@ namespace Content.Shared.MobState.State
             {
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
+
+            EntitySystem.Get<StandingStateSystem>().Down(entity);
+
+            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
+            }
         }
 
         public override void ExitState(IEntity entity)
         {
             base.ExitState(entity);
 
-            entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new AttemptStandEvent());
+            EntitySystem.Get<StandingStateSystem>().Stand(entity);
         }
 
         public override bool CanInteract()

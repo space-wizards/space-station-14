@@ -5,14 +5,13 @@ using Content.Server.Alert;
 using Content.Server.Hands.Components;
 using Content.Server.MobState.States;
 using Content.Server.Pulling;
-using Content.Server.Standing;
 using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -130,12 +129,12 @@ namespace Content.Server.Buckle.Components
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptStandEvent());
+                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
-                    ownTransform.WorldRotation = Angle.South;
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner);
+                    ownTransform.LocalRotation = Angle.Zero;
                     break;
             }
 
@@ -339,11 +338,11 @@ namespace Content.Server.Buckle.Components
             if (_stunnable != null && _stunnable.KnockedDown
                 || (_mobState?.IsIncapacitated() ?? false))
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptDownEvent());
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
             else
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new AttemptStandEvent());
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
             _mobState?.CurrentState?.EnterState(Owner);

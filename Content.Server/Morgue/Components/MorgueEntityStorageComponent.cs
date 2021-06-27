@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Server.Standing;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Directions;
@@ -9,6 +8,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

@@ -9,6 +9,7 @@ namespace Content.Shared.EffectBlocker
     /// </summary>
     public interface IEffectBlocker
     {
+        bool CanFall() => true;
         bool CanSlip() => true;
     }
 }

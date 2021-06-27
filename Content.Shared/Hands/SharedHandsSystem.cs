@@ -21,6 +21,22 @@ namespace Content.Shared.Hands
 
             SubscribeLocalEvent<RequestDropHeldEntityEvent>(HandleDrop);
             SubscribeNetworkEvent<RequestDropHeldEntityEvent>(HandleDrop);
+
+            SubscribeLocalEvent<SharedHandsComponent, DropHandItemsEvent>(HandleDown);
+        }
+
+        private void HandleDown(EntityUid uid, SharedHandsComponent component, DropHandItemsEvent args)
+        {
+            var msg = new DropHandItemsAttemptEvent();
+            EntityManager.EventBus.RaiseLocalEvent(uid, msg);
+
+            if (msg.Cancelled) return;
+
+            DropAllItemsInHands(EntityManager.GetEntity(uid), false);
+        }
+
+        public virtual void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
+        {
         }
 
         private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
@@ -45,6 +61,10 @@ namespace Content.Shared.Hands
 
         protected abstract void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args);
     }
+
+    public sealed class DropHandItemsEvent : EntityEventArgs {}
+
+    public sealed class DropHandItemsAttemptEvent : CancellableEntityEventArgs {}
 
     [Serializable, NetSerializable]
     public class RequestSetHandEvent : EntityEventArgs
