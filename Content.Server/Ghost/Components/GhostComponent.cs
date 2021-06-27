@@ -24,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent, IExamine, IActionBlocker
+    public class GhostComponent : SharedGhostComponent, IExamine
     {
         [DataField("canInteract")]
         private bool _canGhostInteract = false;
@@ -39,15 +39,17 @@ namespace Content.Server.Ghost.Components
             get => _canReturnToBody;
             set
             {
+                if (_canReturnToBody == value) return;
                 _canReturnToBody = value;
                 Dirty();
             }
         }
-        public bool CanGhostInteract
+        public override bool CanGhostInteract
         {
             get => _canGhostInteract;
             set
             {
+                if (_canGhostInteract == value) return;
                 _canGhostInteract = value;
                 Dirty();
             }
@@ -85,7 +87,10 @@ namespace Content.Server.Ghost.Components
             base.Shutdown();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player) => new GhostComponentState(CanReturnToBody);
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new GhostComponentState(CanReturnToBody, CanGhostInteract);
+        }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
         {

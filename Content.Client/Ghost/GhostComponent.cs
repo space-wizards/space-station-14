@@ -111,6 +111,7 @@ namespace Content.Client.Ghost
             if (curState is not GhostComponentState state) return;
 
             CanReturnToBody = state.CanReturnToBody;
+            CanGhostInteract = state.CanGhostInteract;
 
             if (Owner == _playerManager.LocalPlayer!.ControlledEntity)
             {

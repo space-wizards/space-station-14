@@ -12,7 +12,7 @@ namespace Content.Shared.Ghost
         public override string Name => "Ghost";
         public override uint? NetID => ContentNetIDs.GHOST;
 
-        public bool CanGhostInteract { get; set; }
+        public virtual bool CanGhostInteract { get; set; }
         public bool CanInteract() => CanGhostInteract;
         public bool CanUse() => false;
         public bool CanThrow() => false;
@@ -26,10 +26,12 @@ namespace Content.Shared.Ghost
     public class GhostComponentState : ComponentState
     {
         public bool CanReturnToBody { get; }
+        public bool CanGhostInteract { get; }
 
-        public GhostComponentState(bool canReturnToBody) : base(ContentNetIDs.GHOST)
+        public GhostComponentState(bool canReturnToBody, bool canGhostInteract) : base(ContentNetIDs.GHOST)
         {
             CanReturnToBody = canReturnToBody;
+            CanGhostInteract = canGhostInteract;
         }
     }
 
