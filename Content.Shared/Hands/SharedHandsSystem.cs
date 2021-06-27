@@ -32,11 +32,23 @@ namespace Content.Shared.Hands
         private void DropHandItems(SharedHandsComponent handsComponent)
         {
             var msg = new DropHandItemsAttemptEvent();
-            EntityManager.EventBus.RaiseLocalEvent(handsComponent.Owner.Uid, msg);
+            var entity = handsComponent.Owner;
+            var uid = entity.Uid;
+            var eventBus = EntityManager.EventBus;
+
+            eventBus.RaiseLocalEvent(uid, msg);
 
             if (msg.Cancelled) return;
 
-            DropAllItemsInHands(handsComponent.Owner, false);
+            if (entity.TryGetContainerMan(out var containerManager))
+            {
+                var parentMsg = new ContainedEntityDropHandItemsAttemptEvent(uid);
+                eventBus.RaiseLocalEvent(containerManager.Owner.Uid, parentMsg);
+
+                if (parentMsg.Cancelled) return;
+            }
+
+            DropAllItemsInHands(entity, false);
         }
 
         public virtual void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
@@ -64,6 +76,16 @@ namespace Content.Shared.Hands
         }
 
         protected abstract void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args);
+    }
+
+    public sealed class ContainedEntityDropHandItemsAttemptEvent : CancellableEntityEventArgs
+    {
+        public EntityUid EntityUid { get; }
+
+        public ContainedEntityDropHandItemsAttemptEvent(EntityUid uid)
+        {
+            EntityUid = uid;
+        }
     }
 
     public sealed class DropHandItemsAttemptEvent : CancellableEntityEventArgs {}
