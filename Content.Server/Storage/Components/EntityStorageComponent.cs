@@ -196,10 +196,10 @@ namespace Content.Server.Storage.Components
             Open = false;
 
             var count = 0;
-            foreach (var entity in DetermineCollidingEntities(Owner.Transform.MapID))
+            foreach (var entity in DetermineCollidingEntities())
             {
                 // prevents taking items out of inventories, out of containers, and orphaning child entities
-                if(!entity.Transform.IsMapTransform)
+                if (entity.IsInContainer())
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
@@ -437,15 +437,10 @@ namespace Content.Server.Storage.Components
             EmptyContents();
         }
 
-        protected IEnumerable<IEntity> DetermineCollidingEntities(Robust.Shared.Map.MapId mapId)
+        protected IEnumerable<IEntity> DetermineCollidingEntities()
         {
-            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
-            var entityWorldAABB = Owner.GetComponent<PhysicsComponent>().GetWorldAABB();
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            // HACK items are (currently) removed from broadphase due to performance reasons, so I need check both Entity Lookup and Physics Manager
-            var collidingItems = entityLookup.GetEntitiesIntersecting(mapId, entityWorldAABB);
-            var collidingEntities = physicsManager.GetCollidingEntities(mapId, in entityWorldAABB).Select(x => x.Owner);
-            return collidingEntities.Union(collidingItems);
+            return entityLookup.GetEntitiesIntersecting(Owner);
         }
 
         [Verb]
