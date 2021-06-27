@@ -15,14 +15,23 @@ namespace Content.Server.Weapon.Guns
         {
             base.Update(frameTime);
 
+            if (_queuedShoot.Count == 0) return;
+
+            var currentTime = GameTiming.CurTime;
+
             for (var i = _queuedShoot.Count - 1; i >= 0; i--)
             {
                 var msg = _queuedShoot[i];
+
+                if (msg.Time > currentTime)
+                {
+                    break;
+                }
+
                 if (HandleShoot(msg))
                 {
                     _queuedShoot.RemoveAt(i);
                 }
-                break;
             }
         }
 

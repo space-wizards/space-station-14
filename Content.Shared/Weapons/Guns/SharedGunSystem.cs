@@ -42,10 +42,13 @@ namespace Content.Shared.Weapons.Guns
     [Serializable, NetSerializable]
     public sealed class ShootMessage : EntityEventArgs
     {
+        public TimeSpan Time { get; }
+
         public int Shots { get; set; }
 
-        public ShootMessage(int shots)
+        public ShootMessage(TimeSpan time, int shots)
         {
+            Time = time;
             Shots = shots;
         }
     }
