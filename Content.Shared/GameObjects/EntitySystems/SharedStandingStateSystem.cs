@@ -8,29 +8,34 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public class StandingStateSystem : EntitySystem
+    public sealed class StandingStateSystem : EntitySystem
     {
-        public override void Initialize()
+        public bool IsDown(IEntity entity)
         {
-            base.Initialize();
-            SubscribeLocalEvent<StandingStateComponent, AttemptStandEvent>(HandleStandAttempt);
-            SubscribeLocalEvent<StandingStateComponent, AttemptDownEvent>(HandleDownAttempt);
-            // Need broadcast because it can be raised on whatever
-            SubscribeLocalEvent<IsDownEvent>(HandleIsDown);
+            if (entity.TryGetComponent(out StandingStateComponent? standingState) &&
+                standingState.Standing) return true;
+
+            return false;
         }
 
-        private void HandleIsDown(IsDownEvent ev)
+        public void Down(IEntity entity)
         {
-            if (EntityManager.TryGetEntity(ev.Uid, out var entity) &&
-                entity.TryGetComponent(out StandingStateComponent? standingState) &&
-                standingState.Standing) return;
-
-            ev.Cancel();
+            if (!entity.TryGetComponent(out StandingStateComponent? comp)) return;
+            Down(comp);
         }
 
-        private void HandleDownAttempt(EntityUid uid, StandingStateComponent component, AttemptDownEvent args)
+        public void Stand(IEntity entity)
         {
-            if (!component.Standing || !EntityManager.TryGetEntity(uid, out var entity)) return;
+            if (!entity.TryGetComponent(out StandingStateComponent? comp)) return;
+            Stand(comp);
+        }
+
+        public void Down(StandingStateComponent component)
+        {
+            if (!component.Standing) return;
+
+            var entity = component.Owner;
+            var uid = entity.Uid;
 
             // Drop hands regardless unless blocky blocky.
             EntityManager.EventBus.RaiseLocalEvent(uid, new DropHandItemsEvent());
@@ -58,12 +63,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
         }
 
-        private void HandleStandAttempt(EntityUid uid, StandingStateComponent component, AttemptStandEvent args)
+        public void Stand(StandingStateComponent component)
         {
-            if (component.Standing || !EntityManager.TryGetEntity(uid, out var entity)) return;
+            if (component.Standing) return;
+
+            var entity = component.Owner;
 
             var msg = new BlockStandEvent();
-            EntityManager.EventBus.RaiseLocalEvent(uid, msg);
+            EntityManager.EventBus.RaiseLocalEvent(entity.Uid, msg);
 
             if (msg.Cancelled) return;
 
@@ -73,16 +80,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 appearance.SetData(RotationVisuals.RotationState, RotationState.Vertical);
             }
-        }
-    }
-
-    public sealed class IsDownEvent : CancellableEntityEventArgs
-    {
-        public EntityUid Uid { get; }
-
-        public IsDownEvent(EntityUid uid)
-        {
-            Uid = uid;
         }
     }
 
@@ -101,22 +98,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     {
 
     }
-
-    /// <summary>
-    /// Attempt to knock an entity down.
-    /// </summary>
-    public sealed class AttemptDownEvent : EntityEventArgs
-    {
-    }
-
-    // Stando powa
-    /// <summary>
-    /// Atempt to stand an entity.
-    /// </summary>
-    public sealed class AttemptStandEvent : EntityEventArgs
-    {
-    }
-
 
     /// <summary>
     /// Raised when an entity becomes standing
