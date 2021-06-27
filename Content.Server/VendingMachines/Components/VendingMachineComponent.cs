@@ -9,6 +9,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Wires.Components;
 using Content.Shared.Acts;
+using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.VendingMachines;
@@ -25,7 +26,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Server.VendingMachines
+namespace Content.Server.VendingMachines.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -40,6 +41,8 @@ namespace Content.Server.VendingMachines
         private string _packPrototypeId = string.Empty;
         private string? _description;
         private string _spriteName = "";
+        // a vending machine cannot change this after initialization
+        private VendingMachineInventoryPrototype? _packPrototype;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
@@ -80,10 +83,11 @@ namespace Content.Server.VendingMachines
                 return;
             }
 
-            Owner.Name = packPrototype.Name;
-            _description = packPrototype.Description;
-            _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
-            _spriteName = packPrototype.SpriteName;
+            _packPrototype = packPrototype;
+            Owner.Name = _packPrototype.Name;
+            _description = _packPrototype.Description;
+            _animationDuration = TimeSpan.FromSeconds(_packPrototype.AnimationDuration);
+            _spriteName = _packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
             {
                 var spriteComponent = Owner.GetComponent<SpriteComponent>();
@@ -91,12 +95,29 @@ namespace Content.Server.VendingMachines
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
 
+            RestockInventory();
+        }
+
+        public void RestockInventory()
+        {
+            if(_packPrototype == null)
+            {
+                // not initialized yet
+                return;
+            }
+
             var inventory = new List<VendingMachineInventoryEntry>();
-            foreach(var (id, amount) in packPrototype.StartingInventory)
+            foreach (var (id, amount) in _packPrototype.StartingInventory)
             {
                 inventory.Add(new VendingMachineInventoryEntry(id, amount));
             }
             Inventory = inventory;
+        }
+
+        public override bool DragDropOn(DragDropEvent eventArgs)
+        {
+            RestockInventory();
+            return true;
         }
 
         protected override void Initialize()

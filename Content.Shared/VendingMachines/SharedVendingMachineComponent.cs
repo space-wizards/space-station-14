@@ -1,6 +1,7 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.DragDrop;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -8,13 +9,29 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
-    public class SharedVendingMachineComponent : Component
+    public class SharedVendingMachineComponent : Component, IDragDropOn
     {
         public override string Name => "VendingMachine";
         public override uint? NetID => ContentNetIDs.VENDING_MACHINE;
 
         [ViewVariables]
         public List<VendingMachineInventoryEntry> Inventory = new();
+
+        bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
+        {
+            if (!eventArgs.Dragged.HasComponent<SharedVendingMachineRestockComponent>())
+            {
+                return false;
+            }
+
+            // TODO: Once we get silicons need to check organic
+            return true;
+        }
+
+        public virtual bool DragDropOn(DragDropEvent eventArgs)
+        {
+            return true;
+        }
 
         [Serializable, NetSerializable]
         public enum VendingMachineVisuals

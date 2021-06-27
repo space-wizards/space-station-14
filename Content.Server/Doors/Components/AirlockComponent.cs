@@ -2,11 +2,10 @@
 using System;
 using System.Threading;
 using Content.Server.Power.Components;
-using Content.Server.VendingMachines;
+using Content.Server.VendingMachines.Components;
 using Content.Server.Wires.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

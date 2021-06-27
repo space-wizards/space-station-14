@@ -7,7 +7,7 @@ using System.Threading;
 using Content.Server.Notification;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.VendingMachines;
+using Content.Server.VendingMachines.Components;
 using Content.Server.Wires.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
