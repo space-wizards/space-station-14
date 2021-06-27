@@ -1,4 +1,5 @@
-﻿using Content.Shared.Standing;
+﻿using Content.Shared.Hands;
+using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.State
@@ -19,6 +20,8 @@ namespace Content.Shared.MobState.State
             {
                 physics.CanCollide = false;
             }
+
+            EntitySystem.Get<SharedHandsSystem>().DropHandItems(entity);
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {

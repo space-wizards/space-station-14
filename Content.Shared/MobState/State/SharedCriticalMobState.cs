@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.Alert;
+using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
@@ -22,6 +23,7 @@ namespace Content.Shared.MobState.State
             }
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
+            EntitySystem.Get<SharedHandsSystem>().DropHandItems(entity);
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {

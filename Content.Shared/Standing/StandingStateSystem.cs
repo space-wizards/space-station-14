@@ -18,10 +18,10 @@ namespace Content.Shared.Standing
             return false;
         }
 
-        public void Down(IEntity entity)
+        public void Down(IEntity entity, bool playSound = true)
         {
             if (!entity.TryGetComponent(out StandingStateComponent? comp)) return;
-            Down(comp);
+            Down(comp, playSound);
         }
 
         public void Stand(IEntity entity)
@@ -30,16 +30,12 @@ namespace Content.Shared.Standing
             Stand(comp);
         }
 
-        public void Down(StandingStateComponent component)
+        public void Down(StandingStateComponent component, bool playSound = true)
         {
             if (!component.Standing) return;
 
             var entity = component.Owner;
             var uid = entity.Uid;
-
-            // Drop hands regardless unless blocky blocky.
-            // TODO: When entitysystem dependencies use that.
-            Get<SharedHandsSystem>().DropHandItems(component.Owner);
 
             var msg = new DownAttemptEvent();
             EntityManager.EventBus.RaiseLocalEvent(uid, msg);
@@ -59,7 +55,7 @@ namespace Content.Shared.Standing
             // Currently shit is only downed by server but when it's predicted we can probably only play this on server / client
             var sound = component.DownSoundCollection;
 
-            if (!string.IsNullOrEmpty(sound))
+            if (playSound && !string.IsNullOrEmpty(sound))
             {
                 var file = AudioHelpers.GetRandomFileFromSoundCollection(sound);
                 SoundSystem.Play(Filter.Pvs(entity), file, entity, AudioHelpers.WithVariation(0.25f));

@@ -135,7 +135,7 @@ namespace Content.Server.Morgue.Components
             if (CanInsert(victim))
             {
                 Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim);
+                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
             }
             else
             {
