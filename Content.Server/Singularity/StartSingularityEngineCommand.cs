@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.Administration;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
@@ -26,20 +26,19 @@ namespace Content.Server.Singularity
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var ent in entityManager.GetEntities(new TypeEntityQuery(typeof(EmitterComponent))))
+            foreach (var comp in entityManager.ComponentManager.EntityQuery<EmitterComponent>())
             {
-                ent.GetComponent<EmitterComponent>().SwitchOn();
+                comp.SwitchOn();
             }
-            foreach (var ent in entityManager.GetEntities(new TypeEntityQuery(typeof(RadiationCollectorComponent))))
+            foreach (var comp in entityManager.ComponentManager.EntityQuery<RadiationCollectorComponent>())
             {
-                ent.GetComponent<RadiationCollectorComponent>().Collecting = true;
+                comp.Collecting = true;
             }
-            foreach (var ent in entityManager.GetEntities(new TypeEntityQuery(typeof(ParticleAcceleratorControlBoxComponent))))
+            foreach (var comp in entityManager.ComponentManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
             {
-                var pacb = ent.GetComponent<ParticleAcceleratorControlBoxComponent>();
-                pacb.RescanParts();
-                pacb.SetStrength(ParticleAcceleratorPowerState.Level0);
-                pacb.SwitchOn();
+                comp.RescanParts();
+                comp.SetStrength(ParticleAcceleratorPowerState.Level0);
+                comp.SwitchOn();
             }
             shell.WriteLine("Done!");
         }
