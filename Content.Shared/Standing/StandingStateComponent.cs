@@ -21,32 +21,11 @@ namespace Content.Shared.Standing
 
         [ViewVariables]
         [DataField("standing")]
-        public bool Standing
-        {
-            get => _standing;
-            set
-            {
-                if (_standing == value) return;
-
-                _standing = value;
-                if (_standing)
-                {
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new StandEvent());
-                }
-                else
-                {
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DownEvent());
-                }
-
-                Dirty();
-            }
-        }
-
-        private bool _standing = true;
+        public bool Standing { get; set; } = true;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new StandingComponentState(_standing);
+            return new StandingComponentState(Standing);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

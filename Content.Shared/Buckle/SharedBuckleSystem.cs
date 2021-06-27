@@ -11,10 +11,19 @@ namespace Content.Shared.Buckle
         {
             base.Initialize();
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
-            SubscribeLocalEvent<SharedBuckleComponent, BlockDownEvent>(HandleDown);
+            SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
+            SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
         }
 
-        private void HandleDown(EntityUid uid, SharedBuckleComponent component, BlockDownEvent args)
+        private void HandleStand(EntityUid uid, SharedBuckleComponent component, StandAttemptEvent args)
+        {
+            if (component.Buckled)
+            {
+                args.Cancel();
+            }
+        }
+
+        private void HandleDown(EntityUid uid, SharedBuckleComponent component, DownAttemptEvent args)
         {
             if (component.Buckled)
             {

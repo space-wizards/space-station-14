@@ -38,14 +38,17 @@ namespace Content.Shared.Standing
             var uid = entity.Uid;
 
             // Drop hands regardless unless blocky blocky.
-            EntityManager.EventBus.RaiseLocalEvent(uid, new DropHandItemsEvent());
+            // TODO: When entitysystem dependencies use that.
+            Get<SharedHandsSystem>().DropHandItems(component.Owner);
 
-            var msg = new BlockDownEvent();
+            var msg = new DownAttemptEvent();
             EntityManager.EventBus.RaiseLocalEvent(uid, msg);
 
             if (msg.Cancelled) return;
 
             component.Standing = false;
+            component.Dirty();
+            EntityManager.EventBus.RaiseLocalEvent(uid, new DownedEvent());
 
             // Seemed like the best place to put it
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
@@ -68,13 +71,16 @@ namespace Content.Shared.Standing
             if (component.Standing) return;
 
             var entity = component.Owner;
+            var uid = entity.Uid;
 
-            var msg = new BlockStandEvent();
-            EntityManager.EventBus.RaiseLocalEvent(entity.Uid, msg);
+            var msg = new StandAttemptEvent();
+            EntityManager.EventBus.RaiseLocalEvent(uid, msg);
 
             if (msg.Cancelled) return;
 
             component.Standing = true;
+            component.Dirty();
+            EntityManager.EventBus.RaiseLocalEvent(uid, new StoodEvent());
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
@@ -86,7 +92,7 @@ namespace Content.Shared.Standing
     /// <summary>
     /// Subscribe if you can potentially block a down attempt.
     /// </summary>
-    public sealed class BlockDownEvent : CancellableEntityEventArgs
+    public sealed class DownAttemptEvent : CancellableEntityEventArgs
     {
 
     }
@@ -94,7 +100,7 @@ namespace Content.Shared.Standing
     /// <summary>
     /// Subscribe if you can potentially block a stand attempt.
     /// </summary>
-    public sealed class BlockStandEvent : CancellableEntityEventArgs
+    public sealed class StandAttemptEvent : CancellableEntityEventArgs
     {
 
     }
@@ -102,14 +108,14 @@ namespace Content.Shared.Standing
     /// <summary>
     /// Raised when an entity becomes standing
     /// </summary>
-    public sealed class StandEvent : EntityEventArgs
+    public sealed class StoodEvent : EntityEventArgs
     {
     }
 
     /// <summary>
     /// Raised when an entity is not standing
     /// </summary>
-    public sealed class DownEvent : EntityEventArgs
+    public sealed class DownedEvent : EntityEventArgs
     {
     }
 }
