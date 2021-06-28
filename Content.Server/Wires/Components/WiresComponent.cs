@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
-using Content.Server.VendingMachines;
+using Content.Server.VendingMachines.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;

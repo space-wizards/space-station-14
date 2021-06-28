@@ -1,0 +1,25 @@
+- type: entity
+  id: VendingMachineColaRestock
+  name: soft drinks vending machine restock pack
+  parent: BaseConstructibleDynamic
+  description: Refills Robust Softdrinks
+  components:
+  - type: Sprite
+    sprite: "Objects/Storage/vending-restock.rsi"
+    state: refill_cola
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4, -0.4, 0.29, 0.4"
+      mass: 25
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - SmallImpassable
+  - type: InteractionOutline
+  - type: VendingMachineRestock
