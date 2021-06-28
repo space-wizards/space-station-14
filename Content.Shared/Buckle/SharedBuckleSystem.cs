@@ -11,10 +11,10 @@ namespace Content.Shared.Buckle
         {
             base.Initialize();
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
-            SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackEvent>(HandleThrowPushback);
+            SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
         }
 
-        private void HandleThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackEvent args)
+        private void HandleThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackAttemptEvent args)
         {
             if (!component.Buckled) return;
             args.Cancel();
