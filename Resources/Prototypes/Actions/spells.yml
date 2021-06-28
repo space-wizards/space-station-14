@@ -9,5 +9,5 @@
   behavior: !type:GiveItemSpell
     spellItem: FoodPieBananaCream
     castMessage: I NEED A PIE!
-    cooldown: 1
-    castsound: /Audio/Effects/Chemistry/bubbles.ogg
+    cooldown: 15
+    castSound: /Audio/Items/bikehorn.ogg
