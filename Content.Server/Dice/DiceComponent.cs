@@ -32,7 +32,7 @@ namespace Content.Server.Dice
         private readonly SoundSpecifier _sound = new SoundCollectionSpecifier("Dice");
 
         [ViewVariables]
-        [field: DataField("step")]
+        [DataField("step")]
         public int Step { get; } = 1;
 
         [ViewVariables]
