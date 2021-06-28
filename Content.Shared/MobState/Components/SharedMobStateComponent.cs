@@ -7,6 +7,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.MobState.State;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -14,7 +15,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.MobState.State
+namespace Content.Shared.MobState.Components
 {
     /// <summary>
     ///     When attached to an <see cref="IDamageableComponent"/>,
