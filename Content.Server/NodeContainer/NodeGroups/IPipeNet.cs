@@ -46,7 +46,7 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public void Update()
         {
-            EntitySystem.Get<AtmosphereSystem>().React(Air, this);
+            _atmosphereSystem?.React(Air, this);
         }
 
         protected override void OnAddNode(Node node)

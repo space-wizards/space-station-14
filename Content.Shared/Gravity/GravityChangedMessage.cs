@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -6,13 +6,14 @@ namespace Content.Shared.Gravity
 {
     public class GravityChangedMessage : EntityEventArgs
     {
-        public GravityChangedMessage(IMapGrid grid)
+        public GravityChangedMessage(GridId changedGridIndex, bool newGravityState)
         {
-            Grid = grid;
+            HasGravity = newGravityState;
+            ChangedGridIndex = changedGridIndex;
         }
 
-        public IMapGrid Grid { get; }
+        public GridId ChangedGridIndex { get; }
 
-        public bool HasGravity => Grid.HasGravity;
+        public bool HasGravity { get; }
     }
 }

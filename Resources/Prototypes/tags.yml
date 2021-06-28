@@ -11,6 +11,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAxe
+
+- type: Tag
   id: FirelockElectronics
 
 - type: Tag

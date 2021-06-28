@@ -6,7 +6,8 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      sprite: Constructible/Misc/extinguisher_cabinet.rsi
+      sprite: Constructible/Storage/Cabinets/extinguisher_cabinet.rsi
+      netsync: false
       state: extinguisher_closed
     - type: ItemCabinet
       doorSound: /Audio/Machines/machine_switch.ogg
@@ -19,6 +20,7 @@
           emptyState: extinguisher_empty
           fullState: extinguisher_full
           closedState: extinguisher_closed
+          closedEmptyState: extinguisher_closed
   placement:
     mode: SnapgridCenter
 

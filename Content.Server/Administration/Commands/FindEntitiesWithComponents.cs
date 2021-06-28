@@ -1,6 +1,7 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -45,10 +46,12 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var query = new MultipleTypeEntityQuery(components);
             var entityIds = new HashSet<string>();
 
-            foreach (var entity in entityManager.GetEntities(query))
+            var entitiesWithComponents = components.Select(c => entityManager.ComponentManager.GetAllComponents(c).Select(x => x.Owner));
+            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<IEntity>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
+
+            foreach (var entity in entitiesWithAllComponents)
             {
                 if (entity.Prototype == null)
                 {
