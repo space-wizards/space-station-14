@@ -93,6 +93,7 @@ namespace Content.Shared.NetIDs
         public const uint DAMAGEABLE = 1084;
         public const uint MAGBOOTS = 1085;
         public const uint TAG = 1086;
+        
         // Used for clientside fake prediction of doors.
         public const uint DOOR = 1087;
         public const uint SPAWN_AFTER_INTERACT = 1088;
@@ -102,5 +103,6 @@ namespace Content.Shared.NetIDs
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
+        public const uint METABOLISM_SPEEDCHANGE = 10002;
     }
 }

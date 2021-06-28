@@ -1,7 +1,5 @@
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Threading;
@@ -42,16 +40,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
             Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            return new MovespeedModifierMetabolismComponentState();
-        }
+            base.HandleComponentState(curState, nextState);
 
-        private class MovespeedModifierMetabolismComponentState : ComponentState
-        {
-            public MovespeedModifierMetabolismComponentState(ContentNetIDs.METABOLISM_SPEEDCHANGE)
+            if (curState is not StunnableComponentState state)
             {
+                return;
+            }
+
+
+            WalkModifierOverride = state.WalkModifierOverride;
+            RunModifierOverride = state.RunModifierOverride;
+
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
+            {
+                movement.RefreshMovementSpeedModifiers();
             }
         }
-    }
 }
