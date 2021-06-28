@@ -6,6 +6,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Rotatable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -236,6 +237,13 @@ namespace Content.Shared.Pulling
                 if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
                     pulled.Transform.WorldRotation = newAngle;
             }
+        }
+
+        public bool CanPull(IEntity puller, IEntity pulled)
+        {
+            var startPull = new StartPullAttemptEvent(puller, pulled);
+            RaiseLocalEvent(puller.Uid, startPull);
+            return !startPull.Cancelled;
         }
     }
 }
