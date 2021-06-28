@@ -1,5 +1,6 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.Standing;
+using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
@@ -30,6 +31,7 @@ namespace Content.Shared.Buckle
             {
                 args.Cancel();
             }
+        }
 
         private void HandleThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackAttemptEvent args)
         {
