@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Linq;
-using Content.Server.Standing;
 using Content.Server.Stunnable.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -9,8 +8,8 @@ using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -357,7 +356,7 @@ namespace Content.Server.Instruments
                 if (mob != null)
                 {
                     if (Handheld)
-                        EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+                        EntitySystem.Get<StandingStateSystem>().Down(mob, false);
 
                     if (mob.TryGetComponent(out StunnableComponent? stun))
                     {
