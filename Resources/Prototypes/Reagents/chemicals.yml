@@ -252,7 +252,7 @@
   color: "#331A00"
   boilingPoint: 184.3  
   meltingPoint: 113.7 
-  metabolism: # don't know what effects it should have, didn't find any on the tg wiki.
+  # don't know what effects it should have, didn't find any on the tg wiki.
   
 - type: reagent
   id: Ephedrine
