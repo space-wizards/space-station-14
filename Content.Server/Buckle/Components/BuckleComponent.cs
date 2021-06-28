@@ -5,14 +5,13 @@ using Content.Server.Alert;
 using Content.Server.Hands.Components;
 using Content.Server.MobState.States;
 using Content.Server.Pulling;
-using Content.Server.Standing;
 using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -130,12 +129,12 @@ namespace Content.Server.Buckle.Components
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner, force: true);
-                    ownTransform.WorldRotation = Angle.South;
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
+                    ownTransform.LocalRotation = Angle.Zero;
                     break;
             }
 
@@ -343,7 +342,7 @@ namespace Content.Server.Buckle.Components
             }
             else
             {
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
             _mobState?.CurrentState?.EnterState(Owner);
