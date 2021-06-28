@@ -17,16 +17,13 @@ namespace Content.Shared.Sound
             var hasPath = node.Has(SoundPathSpecifier.Node);
             var hasCollection = node.Has(SoundCollectionSpecifier.Node);
 
-            if (!(hasPath ^ hasCollection))
-                return typeof(SoundEmptySpecifier);
-
-            if (hasPath)
+            if (hasPath || !(hasPath ^ hasCollection))
                 return typeof(SoundPathSpecifier);
 
             if (hasCollection)
                 return typeof(SoundCollectionSpecifier);
 
-            return typeof(SoundEmptySpecifier);
+            return typeof(SoundPathSpecifier);
         }
 
         public DeserializationResult Read(ISerializationManager serializationManager, MappingDataNode node,
