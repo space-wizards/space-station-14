@@ -1,0 +1,13 @@
+﻿- type: action
+  actionType: SpellPie
+  icon: Objects/Consumable/Food/Baked/pie.rsi/plain.png
+  name: "Pie"
+  filters:
+    - spells
+  description: "Give me a pie, I dare you!"
+  behaviorType: Instant
+  behavior: !type:SummonSpell
+    spellItem: FoodPieBananaCream
+    castMessage: I NEED A PIE!
+    cooldown: 1
+    castsound: /Audio/Effects/Chemistry/bubbles.ogg
