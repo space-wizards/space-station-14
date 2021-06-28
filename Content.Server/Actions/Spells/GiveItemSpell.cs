@@ -15,7 +15,7 @@ namespace Content.Server.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class SummonSpell : IInstantAction
+    public class GiveItemSpell : IInstantAction
     {
         [ViewVariables] [DataField("castMessage")] public string CastMessage { get; set; } = "I CAST SPELL";
         [ViewVariables] [DataField("coolDown")] public float CoolDown { get; set; } = 1f;
