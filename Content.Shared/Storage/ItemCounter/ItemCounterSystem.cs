@@ -1,30 +1,27 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Storage.ItemCounter
 {
     [UsedImplicitly]
-    public abstract class SharedItemCounterSystem : EntitySystem
+    public class ItemCounterSystem : EntitySystem
     {
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedItemCounterComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
-            SubscribeLocalEvent<SharedItemCounterComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+            SubscribeLocalEvent<ItemCounterComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
+            SubscribeLocalEvent<ItemCounterComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
         }
 
-
-
-        private void HandleEntityRemoved(EntityUid uid, SharedItemCounterComponent _,
+        private void HandleEntityRemoved(EntityUid uid, ItemCounterComponent _,
             EntRemovedFromContainerMessage args)
         {
             UpdateSprite(args, false);
         }
 
-        private void HandleEntityInsert(EntityUid uid, SharedItemCounterComponent _,
+        private void HandleEntityInsert(EntityUid uid, ItemCounterComponent _,
             EntInsertedIntoContainerMessage args)
         {
             UpdateSprite(args, true);
@@ -39,6 +36,7 @@ namespace Content.Shared.Storage.ItemCounter
                 {
                     newData = new(oldData);
                 }
+
                 newData.QueuedEntities.Add((args.Entity.Uid, show));
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, newData);
             }

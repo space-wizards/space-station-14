@@ -3,7 +3,7 @@
 namespace Content.Shared.Storage.ItemCounter
 {
     [RegisterComponent]
-    public class SharedItemCounterComponent : Component
+    public class ItemCounterComponent : Component
     {
         public override string Name => "ItemCounter";
     }
