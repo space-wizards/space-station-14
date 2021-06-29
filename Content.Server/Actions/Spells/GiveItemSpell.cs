@@ -1,12 +1,14 @@
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Notification;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Cooldown;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -17,7 +19,7 @@ namespace Content.Server.Actions
     [DataDefinition]
     public class GiveItemSpell : IInstantAction
     {
-        [ViewVariables] [DataField("castMessage")] public string CastMessage { get; set; } = "I CAST SPELL";
+        [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
         [ViewVariables] [DataField("coolDown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
 
@@ -32,19 +34,21 @@ namespace Content.Server.Actions
             var caster = args.Performer;
             var casterCoords = caster.Transform.Coordinates;
             var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords);
-            caster.PopupMessageEveryone(CastMessage);
-            args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
+            //Checks if caster can perform the action
             if (!caster.TryGetComponent<HandsComponent>(out var hands))
             {
                 caster.PopupMessage("You don't have hands!");
                 return;
             }
-            caster.GetComponent<HandsComponent>().PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>());
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
+            //Perfrom the action
+            args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
+            if (CastMessage != null) caster.PopupMessageEveryone(CastMessage);
+            caster.GetComponent<HandsComponent>().PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>(), true);
             if (CastSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
             }
-            else return;
         }
-    }
+    } 
 }
