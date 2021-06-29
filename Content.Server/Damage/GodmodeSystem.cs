@@ -12,11 +12,18 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Damage
 {
     [UsedImplicitly]
-    public class GodmodeSystem : EntitySystem, IResettingEntitySystem
+    public class GodmodeSystem : EntitySystem
     {
         private readonly Dictionary<IEntity, OldEntityInformation> _entities = new();
 
-        public void Reset()
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
+
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _entities.Clear();
         }

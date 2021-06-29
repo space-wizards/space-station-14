@@ -28,7 +28,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;

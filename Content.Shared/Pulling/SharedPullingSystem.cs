@@ -20,7 +20,7 @@ using Robust.Shared.Players;
 namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
-    public abstract class SharedPullingSystem : EntitySystem, IResettingEntitySystem
+    public abstract class SharedPullingSystem : EntitySystem
     {
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
@@ -51,6 +51,7 @@ namespace Content.Shared.Pulling
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
             SubscribeLocalEvent<MoveEvent>(PullerMoved);
@@ -70,7 +71,7 @@ namespace Content.Shared.Pulling
             _stoppedMoving.Clear();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _pullers.Clear();
             _moving.Clear();
