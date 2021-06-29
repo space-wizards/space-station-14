@@ -20,7 +20,7 @@ namespace Content.Server.Actions.Spells
     public class GiveItemSpell : IInstantAction
     {
         [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
-        [ViewVariables] [DataField("coolDown")] public float CoolDown { get; set; } = 1f;
+        [ViewVariables] [DataField("coolown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
 
         [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = default!;
@@ -30,12 +30,11 @@ namespace Content.Server.Actions.Spells
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            if (!args.Performer.HasComponent<SharedActionsComponent>()) return;
             var caster = args.Performer;
-            var casterCoords = caster.Transform.Coordinates;
-            var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords);
+            var casterCoords = caster.Transform.MapPosition;
             //Checks if caster can perform the action
-            if (!caster.TryGetComponent<HandsComponent>(out var hands))
+            if (!caster.HasComponent<HandsComponent>())
             {
                 caster.PopupMessage("You don't have hands!");
                 return;
@@ -43,6 +42,8 @@ namespace Content.Server.Actions.Spells
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
             //Perfrom the action
             args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
+            //Spawn the item once it's validated
+            var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords); 
             if (CastMessage != null) caster.PopupMessageEveryone(CastMessage);
             caster.GetComponent<HandsComponent>().PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>(), true);
             if (CastSound != null)
