@@ -7,10 +7,17 @@ using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Server.Wires
 {
-    public class WireHackingSystem : EntitySystem, IResettingEntitySystem
+    public class WireHackingSystem : EntitySystem
     {
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =
             new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
 
         public bool TryGetLayout(string id, [NotNullWhen(true)] out WireLayout? layout)
         {
@@ -22,7 +29,7 @@ namespace Content.Server.Wires
             _layouts.Add(id, layout);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _layouts.Clear();
         }

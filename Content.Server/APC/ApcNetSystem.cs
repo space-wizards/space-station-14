@@ -9,11 +9,18 @@ using Robust.Shared.Timing;
 namespace Content.Server.APC
 {
     [UsedImplicitly]
-    internal sealed class ApcNetSystem : EntitySystem, IResettingEntitySystem
+    internal sealed class ApcNetSystem : EntitySystem
     {
         [Dependency] private readonly IPauseManager _pauseManager = default!;
 
         private HashSet<IApcNet> _apcNets = new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
 
         public override void Update(float frameTime)
         {
@@ -35,7 +42,7 @@ namespace Content.Server.APC
             _apcNets.Remove(apcNet);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             // NodeGroupSystem does not remake ApcNets affected during restarting until a frame later,
             // when their grid is invalid. So, we are clearing them on round restart.
