@@ -4,6 +4,8 @@
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:
+  - type: Transform
+    anchored: true
   - type: Physics
     bodyType: Static
     fixtures:
@@ -11,6 +13,7 @@
         !type:PhysShapeAabb {}
       mass: 50
       layer:
+      - Impassable
       - SmallImpassable
       mask:
       - VaultImpassable

@@ -1,5 +1,4 @@
 ﻿using Content.Server.Alert;
-using Content.Server.Standing;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Alert;
 using Content.Shared.MobState;
@@ -15,11 +14,6 @@ namespace Content.Server.MobState.States
         {
             base.EnterState(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
-            }
-
             if (entity.TryGetComponent(out ServerAlertsComponent? status))
             {
                 status.ShowAlert(AlertType.HumanDead);
@@ -29,8 +23,6 @@ namespace Content.Server.MobState.States
             {
                 stun.CancelAll();
             }
-
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
         }
     }
 }

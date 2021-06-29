@@ -50,6 +50,18 @@ namespace Content.Server.Hands
             CommandBinds.Unregister<HandsSystem>();
         }
 
+        protected override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
+        {
+            base.DropAllItemsInHands(entity, doMobChecks);
+
+            if (!entity.TryGetComponent(out IHandsComponent? hands)) return;
+
+            foreach (var heldItem in hands.GetAllHeldItems())
+            {
+                hands.Drop(heldItem.Owner, doMobChecks, intentional:false);
+            }
+        }
+
         //TODO: Actually shows all items/clothing/etc.
         private void HandleExamined(EntityUid uid, HandsComponent component, ExaminedEvent args)
         {
