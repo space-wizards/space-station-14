@@ -9,6 +9,7 @@ using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -36,7 +37,7 @@ namespace Content.Server.Actions.Spells
             //Checks if caster can perform the action
             if (!caster.HasComponent<HandsComponent>())
             {
-                caster.PopupMessage("You don't have hands!");
+                args.Performer.PopupMessage(Loc.GetString("spell-fail-no-hands"));
                 return;
             }
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
