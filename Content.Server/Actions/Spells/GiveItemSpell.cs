@@ -13,7 +13,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Actions
+namespace Content.Server.Actions.Spells
 {
     [UsedImplicitly]
     [DataDefinition]
