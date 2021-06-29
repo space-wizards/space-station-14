@@ -14,21 +14,33 @@ namespace Content.Shared.Damage.Container
     [Serializable, NetSerializable]
     public class DamageContainerPrototype : IPrototype, ISerializationHooks
     {
-        [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
-        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
-
-        // TODO NET 5 IReadOnlySet
-        [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
-
-        [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
+<<<<<<< refs/remotes/origin/master
+=======
+        private IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
+>>>>>>> update damagecomponent across shared and server
+        [DataField("supportAll")] private bool _supportAll;
+        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
+        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
+
+        // TODO NET 5 IReadOnlySet
+<<<<<<< refs/remotes/origin/master
+        [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
+
+        [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
+=======
+        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedDamageGroups => _supportedDamageGroups;
+        [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedDamageTypes => _supportedDamageTypes;
+>>>>>>> update damagecomponent across shared and server
+
         void ISerializationHooks.AfterDeserialization()
         {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
             if (_supportAll)
             {
                 _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());

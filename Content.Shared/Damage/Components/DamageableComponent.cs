@@ -25,8 +25,18 @@ namespace Content.Shared.Damage.Components
     [NetworkedComponent()]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
-        public override string Name => "Damageable";
 
+<<<<<<< refs/remotes/origin/master
+=======
+
+        public override string Name => "Damageable";
+        public override uint? NetID => ContentNetIDs.DAMAGEABLE;
+
+        private IPrototypeManager _prototypeManager = default!;
+
+        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
+
+>>>>>>> update damagecomponent across shared and server
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
@@ -46,9 +56,6 @@ namespace Content.Shared.Damage.Components
         [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
-
-        private readonly Dictionary<string, DamageTypePrototype> _damageTypeDict = default!;
-        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -70,6 +77,7 @@ namespace Content.Shared.Damage.Components
 
         public HashSet<DamageTypePrototype> SupportedTypes { get; } = new();
 
+<<<<<<< refs/remotes/origin/master
         public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
         {
             return SupportedGroups.Contains(damageGroup);
@@ -81,10 +89,13 @@ namespace Content.Shared.Damage.Components
             return SupportedTypes.Contains(type);
         }
 
+=======
+>>>>>>> update damagecomponent across shared and server
         protected override void Initialize()
         {
             base.Initialize();
 
+<<<<<<< refs/remotes/origin/master
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             // TODO DAMAGE Serialize damage done and resistance changes
@@ -93,6 +104,12 @@ namespace Content.Shared.Damage.Components
 <<<<<<< refs/remotes/origin/master
             SupportedClasses.Clear();
             SupportedTypes.Clear();
+=======
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            // TODO DAMAGE Serialize damage done and resistance changes
+            var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
+>>>>>>> update damagecomponent across shared and server
 
             DamageContainerId = damagePrototype.ID;
             SupportedClasses.UnionWith(damagePrototype.SupportedClasses);
@@ -106,8 +123,18 @@ namespace Content.Shared.Damage.Components
             SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 >>>>>>> Merge fixes
 
-            var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
+            var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
+        }
+
+        public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
+        {
+            return SupportedGroups.Contains(damageGroup);
+        }
+
+        public bool SupportsDamageType(DamageTypePrototype type)
+        {
+            return SupportedTypes.Contains(type);
         }
 
         protected override void Startup()
@@ -117,6 +144,19 @@ namespace Content.Shared.Damage.Components
             ForceHealthChangedEvent();
         }
 
+<<<<<<< refs/remotes/origin/master
+=======
+        public DamageTypePrototype GetDamageType(string ID)
+        {
+            return _prototypeManager.Index<DamageTypePrototype>(ID);
+        }
+
+        public DamageGroupPrototype GetDamageGroup(string ID)
+        {
+            return _prototypeManager.Index<DamageGroupPrototype>(ID);
+        }
+
+>>>>>>> update damagecomponent across shared and server
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new DamageableComponentState(_damageList);

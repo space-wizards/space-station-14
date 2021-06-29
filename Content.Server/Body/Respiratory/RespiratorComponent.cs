@@ -34,6 +34,12 @@ namespace Content.Server.Body.Respiratory
         private bool _isShivering;
         private bool _isSweating;
 
+<<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
+=======
+        [DataField("damageType", required: true)]
+        private readonly string _damageType = default!;
+
+>>>>>>> update damagecomponent across shared and server:Content.Server/Metabolism/MetabolismComponent.cs
         [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
@@ -349,7 +355,11 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
+<<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
             damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
+=======
+            damageable.ChangeDamage(damageable.GetDamageType(_damageType), _suffocationDamage, false);
+>>>>>>> update damagecomponent across shared and server:Content.Server/Metabolism/MetabolismComponent.cs
         }
 
         private void StopSuffocation()
@@ -358,7 +368,11 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
+<<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
                 damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
+=======
+                damageable.ChangeDamage(damageable.GetDamageType(_damageType), -_suffocationDamageRecovery, false);
+>>>>>>> update damagecomponent across shared and server:Content.Server/Metabolism/MetabolismComponent.cs
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

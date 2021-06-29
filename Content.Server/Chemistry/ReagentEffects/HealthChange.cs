@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -23,8 +24,8 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         /// Class of damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary>
-        [DataField("damageClass")]
-        public DamageClass DamageType { get; set; } =  DamageClass.Brute;
+        [DataField("damageClass", true)]
+        public string damageType { get; set; } = default!;
 
         private float _accumulatedHealth;
 
@@ -33,21 +34,26 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// </summary>
         public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
-            if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
+            if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
+<<<<<<< refs/remotes/origin/master:Content.Server/Chemistry/ReagentEffects/HealthChange.cs
                 health.ChangeDamage(DamageType, (int)AmountToChange, true);
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
+=======
+                damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), (int)HealthChange, true);
+                float decHealthChange = (float) (HealthChange - (int) HealthChange);
+>>>>>>> update damagecomponent across shared and server:Content.Server/Chemistry/Metabolism/HealthChangeMetabolism.cs
                 _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
-                    health.ChangeDamage(DamageType, 1, true);
+                    damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), 1, true);
                     _accumulatedHealth -= 1;
                 }
 
                 else if(_accumulatedHealth <= -1)
                 {
-                    health.ChangeDamage(DamageType, -1, true);
+                    damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), -1, true);
                     _accumulatedHealth += 1;
                 }
             }

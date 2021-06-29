@@ -22,11 +22,29 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
+<<<<<<< refs/remotes/origin/master
+=======
+        [DataField("coldDamageType",required: true)]
+        private readonly string coldDamageType = default!;
+        [DataField("hotDamageType",required: true)]
+        private readonly string hotDamageType = default!;
+        [DataField("heatDamageThreshold")]
+        private float _heatDamageThreshold = default;
+        [DataField("coldDamageThreshold")]
+        private float _coldDamageThreshold = default;
+        [DataField("tempDamageCoefficient")]
+        private float _tempDamageCoefficient = 1;
+        [DataField("currentTemperature")]
+        private float _currentTemperature = Atmospherics.T20C;
+        [DataField("specificHeat")]
+        private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
+>>>>>>> update damagecomponent across shared and server
+        [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
         [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
         [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
         [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;
+        [ViewVariables] public float SpecificHeat => _specificHeat;
         [ViewVariables] public float HeatCapacity {
             get
             {
@@ -39,22 +57,10 @@ namespace Content.Server.Temperature.Components
             }
         }
 
-        [ViewVariables] public float SpecificHeat => _specificHeat;
-
-        [DataField("heatDamageThreshold")]
-        private float _heatDamageThreshold = default;
-        [DataField("coldDamageThreshold")]
-        private float _coldDamageThreshold = default;
-        [DataField("tempDamageCoefficient")]
-        private float _tempDamageCoefficient = 1;
-        [DataField("currentTemperature")]
-        private float _currentTemperature = Atmospherics.T20C;
-        [DataField("specificHeat")]
-        private float _specificHeat = Atmospherics.MinimumHeatCapacity;
-
         public void Update()
         {
             var tempDamage = 0;
+<<<<<<< refs/remotes/origin/master
             DamageType? damageType = null;
             if (CurrentTemperature >= _heatDamageThreshold)
             {
@@ -66,6 +72,9 @@ namespace Content.Server.Temperature.Components
                 tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
                 damageType = DamageType.Cold;
             }
+=======
+            DamageTypePrototype? damageType = null;
+>>>>>>> update damagecomponent across shared and server
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
@@ -108,10 +117,28 @@ namespace Content.Server.Temperature.Components
                 }
             }
 
+<<<<<<< refs/remotes/origin/master
             if (!damageType.HasValue) return;
 
             if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
             component.ChangeDamage(damageType.Value, tempDamage, false);
+=======
+            if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
+
+            if (CurrentTemperature >= _heatDamageThreshold)
+            {
+                tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
+                damageType = component.GetDamageType(hotDamageType);
+            }
+            else if (CurrentTemperature <= _coldDamageThreshold)
+            {
+                tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
+                damageType = component.GetDamageType(coldDamageType);
+            }
+
+            if (damageType is null) return;
+            component.ChangeDamage(damageType, tempDamage, false);
+>>>>>>> update damagecomponent across shared and server
         }
 
         /// <summary>

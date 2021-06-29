@@ -9,6 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 
@@ -21,6 +22,9 @@ namespace Content.Server.Projectiles.Components
     public class HitscanComponent : Component
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        public override string Name => "Hitscan";
 
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
@@ -40,8 +44,15 @@ namespace Content.Server.Projectiles.Components
         private DamageType _damageType = DamageType.Heat;
         public float MaxLength => 20.0f;
 
+<<<<<<< refs/remotes/origin/master
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
+=======
+        [DataField("damageType", required: true)]
+        private string _damageTypeID = default!;
+
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+>>>>>>> update damagecomponent across shared and server
 
         public float ColorModifier { get; set; } = 1.0f;
         [DataField("spriteName")]
@@ -51,7 +62,25 @@ namespace Content.Server.Projectiles.Components
         [DataField("impactFlash")]
         private string? _impactFlash;
         [DataField("soundHitWall")]
+<<<<<<< refs/remotes/origin/master
         private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+=======
+        private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
+        [DataField("spriteName")]
+        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
+
+
+        public DamageTypePrototype DamageType => _damageType;
+
+        public float MaxLength => 20.0f;
+        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
+        public float ColorModifier { get; set; } = 1.0f;
+        public float Damage
+        {
+            get => _damage;
+            set => _damage = value;
+        }
+>>>>>>> update damagecomponent across shared and server
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {

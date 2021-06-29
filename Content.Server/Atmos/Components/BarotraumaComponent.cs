@@ -7,6 +7,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
+<<<<<<< refs/remotes/origin/master
+=======
+using Robust.Shared.Serialization.Manager.Attributes;
+using Dependency = Robust.Shared.IoC.DependencyAttribute;
+>>>>>>> update damagecomponent across shared and server
 
 namespace Content.Server.Atmos.Components
 {
@@ -18,6 +23,12 @@ namespace Content.Server.Atmos.Components
     {
         public override string Name => "Barotrauma";
 
+<<<<<<< refs/remotes/origin/master
+=======
+        [DataField("damageType", required: true)]
+        private readonly string _damageType = default!;
+
+>>>>>>> update damagecomponent across shared and server
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)
         {
@@ -66,7 +77,11 @@ namespace Content.Server.Atmos.Components
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
+<<<<<<< refs/remotes/origin/master
                     damageable.ChangeDamage(DamageType.Blunt, damage, false, Owner);
+=======
+                    damageable.ChangeDamage(damageable.GetDamageType(_damageType), damage, false, Owner);
+>>>>>>> update damagecomponent across shared and server
 
                     if (status == null) break;
 
