@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -9,28 +8,28 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Damage
 {
     /// <summary>
-    ///
+    /// A Group of DamageTypes.
     /// </summary>
     [Prototype("damageGroup")]
     [Serializable, NetSerializable]
-    public class DamageGroupPrototype : IPrototype, ISerializationHooks
+    public class DamageGroupPrototype : IPrototype
     {
-        [Dependency]
-        private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [DataField("id", required: true)] public string ID { get; } = default!;
 
         [DataField("damageTypes", required: true)]
         public List<string> TypeIds { get; } = default!;
 
-        public IEnumerable<DamageTypePrototype> DamageTypes = default!;
-
-        public void AfterSerialization()
+        public IEnumerable<DamageTypePrototype> DamageTypes
         {
-            foreach (var typeid in TypeIds)
+            get
             {
-                DamageTypes = DamageTypes.Concat(new []{_prototypeManager.Index<DamageTypePrototype>(typeid)});
+                foreach (var ID in TypeIds)
+                {
+                    var typeResolved = _prototypeManager.Index<DamageTypePrototype>(ID);
+                    yield return typeResolved;
+                }
             }
         }
     }
