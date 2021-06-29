@@ -43,13 +43,26 @@ namespace Content.Shared.Damage.Container
 
             if (_supportAll)
             {
+<<<<<<< refs/remotes/origin/master
                 _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());
                 _supportedTypes.UnionWith(Enum.GetValues<DamageType>());
+=======
+                foreach (var DamageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+                {
+                    _supportedDamageGroups.Add(DamageGroup);
+                    foreach (var SupportedDamageType in DamageGroup.DamageTypes)
+                    {
+                        _supportedDamageTypes.Add(SupportedDamageType);
+                    }
+                }
+
+>>>>>>> fix a few bugs
                 return;
             }
 
             foreach (var supportedClass in _supportedClasses)
             {
+<<<<<<< refs/remotes/origin/master
                 foreach (var supportedType in supportedClass.ToTypes())
                 {
                     _supportedTypes.Add(supportedType);
@@ -60,6 +73,16 @@ namespace Content.Shared.Damage.Container
             {
                 _supportedClasses.Add(originalType.ToClass());
             }
+=======
+                var DamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
+                _supportedDamageGroups.Add(DamageGroup);
+                foreach (var DamageType in DamageGroup.DamageTypes)
+                {
+                    _supportedDamageTypes.Add(DamageType);
+                }
+            }
+
+>>>>>>> fix a few bugs
         }
     }
 }

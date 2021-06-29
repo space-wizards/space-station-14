@@ -25,16 +25,18 @@ namespace Content.Shared.Damage.Components
     [NetworkedComponent()]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
+<<<<<<< refs/remotes/origin/master
 
 <<<<<<< refs/remotes/origin/master
 =======
 
+=======
+>>>>>>> fix a few bugs
         public override string Name => "Damageable";
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         private IPrototypeManager _prototypeManager = default!;
-
-        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
+        private Dictionary<DamageTypePrototype, int> _damageList = new();
 
 >>>>>>> update damagecomponent across shared and server
         // TODO define these in yaml?
@@ -47,15 +49,21 @@ namespace Content.Shared.Damage.Components
         [DataField("resistances")] public string ResistanceSetId = DefaultResistanceSet;
 =======
         [DataField("resistances")]
-        public string ResistanceSetId = DefaultResistanceSet;
+        public string ResistanceSetId { get; set; } = DefaultResistanceSet;
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 >>>>>>> Merge fixes
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
+<<<<<<< refs/remotes/origin/master
         [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
+=======
+        [ViewVariables]
+        [DataField("damageContainer")]
+        public string DamageContainerId { get; set; } = DefaultDamageContainer;
+>>>>>>> fix a few bugs
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
@@ -94,6 +102,7 @@ namespace Content.Shared.Damage.Components
         protected override void Initialize()
         {
             base.Initialize();
+<<<<<<< refs/remotes/origin/master
 
 <<<<<<< refs/remotes/origin/master
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -105,6 +114,8 @@ namespace Content.Shared.Damage.Components
             SupportedClasses.Clear();
             SupportedTypes.Clear();
 =======
+=======
+>>>>>>> fix a few bugs
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             // TODO DAMAGE Serialize damage done and resistance changes
@@ -122,6 +133,11 @@ namespace Content.Shared.Damage.Components
             SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
             SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 >>>>>>> Merge fixes
+
+            foreach (var DamageType in SupportedTypes)
+            {
+                _damageList.Add(DamageType,0);
+            }
 
             var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
