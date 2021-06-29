@@ -39,9 +39,6 @@ namespace Content.Shared.Damage.Container
 
             if (_supportAll)
             {
-                // _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());
-                //_supportedTypes.UnionWith(Enum.GetValues<DamageType>());
-
                 foreach (var DamageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
                     _supportedDamageGroups.Add(DamageGroup);
@@ -56,19 +53,14 @@ namespace Content.Shared.Damage.Container
 
             foreach (var supportedClassID in _supportedDamageGroupsButAsStrings)
             {
-                var resolvedDamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
-                foreach (var supportedType in resolvedDamageGroup.DamageTypes)
+                var DamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
+                _supportedDamageGroups.Add(DamageGroup);
+                foreach (var DamageType in DamageGroup.DamageTypes)
                 {
-                    _supportedDamageTypes.Add(supportedType);
+                    _supportedDamageTypes.Add(DamageType);
                 }
             }
 
-
-            //reverse link type to group because smug said so ask him
-            foreach (var originalType in _supportedDamageTypes)
-            {
-                _supportedDamageTypes.Add(originalType);
-            }
         }
     }
 }

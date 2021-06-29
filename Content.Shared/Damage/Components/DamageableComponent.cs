@@ -25,26 +25,24 @@ namespace Content.Shared.Damage.Components
     [ComponentReference(typeof(IDamageableComponent))]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
-
-
         public override string Name => "Damageable";
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         private IPrototypeManager _prototypeManager = default!;
-
-        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
+        private Dictionary<DamageTypePrototype, int> _damageList = new();
 
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
 
         [DataField("resistances")]
-        public string ResistanceSetId = DefaultResistanceSet;
+        public string ResistanceSetId { get; set; } = DefaultResistanceSet;
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
-        [ViewVariables] [DataField("damageContainer")]
+        [ViewVariables]
+        [DataField("damageContainer")]
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
         // TODO DAMAGE Cache this
@@ -59,7 +57,6 @@ namespace Content.Shared.Damage.Components
         protected override void Initialize()
         {
             base.Initialize();
-
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             // TODO DAMAGE Serialize damage done and resistance changes
@@ -71,6 +68,11 @@ namespace Content.Shared.Damage.Components
             DamageContainerId = damageContainerPrototype.ID;
             SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
             SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
+
+            foreach (var DamageType in SupportedTypes)
+            {
+                _damageList.Add(DamageType,0);
+            }
 
             var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
             Resistances = new ResistanceSet(resistancePrototype);
