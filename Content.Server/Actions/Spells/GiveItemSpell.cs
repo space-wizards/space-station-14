@@ -20,7 +20,7 @@ namespace Content.Server.Actions.Spells
     public class GiveItemSpell : IInstantAction
     {
         [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
-        [ViewVariables] [DataField("coolown")] public float CoolDown { get; set; } = 1f;
+        [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
 
         [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = default!;
