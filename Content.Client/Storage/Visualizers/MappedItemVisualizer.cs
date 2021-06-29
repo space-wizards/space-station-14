@@ -36,7 +36,7 @@ namespace Content.Client.Storage.Visualizers
 
         void ISerializationHooks.AfterDeserialization()
         {
-            if (_mapLayers is { Count: > 0 })
+            if (_mapLayers is {Count: > 0})
             {
                 foreach (var layerProp in _mapLayers)
                 {
@@ -49,25 +49,24 @@ namespace Content.Client.Storage.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent)
-                && _spriteLayers.Count > 0)
-            {
-                if (component.TryGetData(StorageMapVisuals.LayerChanged, out ShowEntityData layerData))
-                {
-                    foreach (var (entityUid, show) in layerData.QueuedEntities)
-                    {
-                        foreach (var (layerName, layerFilter) in _spriteLayers)
-                        {
-                            if (component.Owner.EntityManager.TryGetEntity(entityUid, out var entity)
-                                && layerFilter.Whitelist.IsValid(entity))
-                            {
-                                spriteComponent.LayerSetVisible(layerName, show);
-                            }
-                        }
-                    }
 
-                    layerData.QueuedEntities.Clear();
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent)
+                || _spriteLayers.Count <= 0
+                || !component.TryGetData(StorageMapVisuals.LayerChanged, out ShowEntityData layerData)) return;
+
+            foreach (var (layerName, layerFilter) in _spriteLayers)
+            {
+                var show = false;
+                foreach (var entityUid in layerData.QueuedEntities)
+                {
+                    if (component.Owner.EntityManager.TryGetEntity(entityUid, out var entity)
+                        && layerFilter.Whitelist.IsValid(entity))
+                    {
+                        show = true;
+                    }
                 }
+
+                spriteComponent.LayerSetVisible(layerName, show);
             }
         }
     }

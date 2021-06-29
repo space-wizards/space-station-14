@@ -1,11 +1,13 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Storage.ItemCounter
 {
     [UsedImplicitly]
-    public class ItemCounterSystem : EntitySystem
+    public abstract class ItemCounterSystem : EntitySystem
     {
         /// <inheritdoc />
         public override void Initialize()
@@ -18,28 +20,31 @@ namespace Content.Shared.Storage.ItemCounter
         private void HandleEntityRemoved(EntityUid uid, ItemCounterComponent _,
             EntRemovedFromContainerMessage args)
         {
-            UpdateSprite(args, false);
+            if (TryGetContainer(args, out var containerEntity, out var containedEntities))
+            {
+                UpdateSprite(containerEntity, containedEntities);
+            }
         }
 
         private void HandleEntityInsert(EntityUid uid, ItemCounterComponent _,
             EntInsertedIntoContainerMessage args)
         {
-            UpdateSprite(args, true);
-        }
-
-        private static void UpdateSprite(ContainerModifiedMessage args, bool show)
-        {
-            if (args.Container.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
+            if (TryGetContainer(args, out var containerEntity, out var containedEntities))
             {
-                var newData = new ShowEntityData();
-                if (appearanceComponent.TryGetData(StorageMapVisuals.LayerChanged, out ShowEntityData oldData))
-                {
-                    newData = new(oldData);
-                }
-
-                newData.QueuedEntities.Add((args.Entity.Uid, show));
-                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, newData);
+                UpdateSprite(containerEntity, containedEntities);
             }
         }
+
+        private void UpdateSprite(IEntity containerEntity, IReadOnlyList<EntityUid> uids)
+        {
+            if (containerEntity.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowEntityData(uids));
+            }
+        }
+
+        protected abstract bool TryGetContainer(ContainerModifiedMessage msg,
+            [NotNullWhen(true)] out IEntity? containerEntity, 
+            out IReadOnlyList<EntityUid> containedEntities);
     }
 }
