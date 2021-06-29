@@ -47,8 +47,6 @@ namespace Content.Server.Entry
                 factory.RegisterIgnore(ignoreName);
             }
 
-            factory.CalculateNetIds();
-
             ServerContentIoC.Register();
 
             foreach (var callback in TestingCallbacks)
@@ -58,6 +56,7 @@ namespace Content.Server.Entry
             }
 
             IoCManager.BuildGraph();
+            factory.GenerateNetIds();
 
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
