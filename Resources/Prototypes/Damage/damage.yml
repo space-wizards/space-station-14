@@ -62,22 +62,24 @@
   id: Genetic
   damageTypes:
     - Cellular
-#
-#- type: damageContainer
-#  id: allDamageContainer
-#  supportAll: true
-#
-#- type: damageContainer
-#  id: biologicalDamageContainer
-#  supportedClasses:
-#    - Brute
-#    - Burn
-#    - Toxin
-#    - Airloss
-#    - Genetic
-#
-#- type: damageContainer
-#  id: metallicDamageContainer
-#  supportedClasses:
-#    - Brute
-#    - Burn
+
+- type: damageContainer
+  id: allDamageContainer
+  supportAll: true
+
+- type: damageContainer
+  id: biologicalDamageContainer
+  supportedClasses:
+    - Brute
+    - Burn
+    - Toxin
+    - Airloss
+    - Genetic
+
+- type: damageContainer
+  id: metallicDamageContainer
+  supportedClasses:
+    - Brute
+    - Burn
+
+

@@ -25,9 +25,14 @@ namespace Content.Shared.Damage.Components
     [ComponentReference(typeof(IDamageableComponent))]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
-        public override string Name => "Damageable";
 
+
+        public override string Name => "Damageable";
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
+
+        private IPrototypeManager _prototypeManager = default!;
+
+        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
 
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
@@ -42,9 +47,6 @@ namespace Content.Shared.Damage.Components
         [ViewVariables] [DataField("damageContainer")]
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
-        private readonly Dictionary<string, DamageTypePrototype> _damageTypeDict = default!;
-        private readonly Dictionary<DamageTypePrototype, int> _damageList = default!;
-
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => damageListToDamageGroup(_damageList);
@@ -53,6 +55,26 @@ namespace Content.Shared.Damage.Components
         public HashSet<DamageGroupPrototype> SupportedGroups { get; } = new();
 
         public HashSet<DamageTypePrototype> SupportedTypes { get; } = new();
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            // TODO DAMAGE Serialize damage done and resistance changes
+            var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
+
+            SupportedGroups.Clear();
+            SupportedTypes.Clear();
+
+            DamageContainerId = damageContainerPrototype.ID;
+            SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
+            SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
+
+            var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
+            Resistances = new ResistanceSet(resistancePrototype);
+        }
 
         public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
         {
@@ -64,31 +86,6 @@ namespace Content.Shared.Damage.Components
             return SupportedTypes.Contains(type);
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            foreach (var damageType in prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
-            {
-                _damageTypeDict.Add(damageType.ID, damageType);
-            }
-
-            // TODO DAMAGE Serialize damage done and resistance changes
-            var damageContainerPrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
-
-            SupportedGroups.Clear();
-            SupportedTypes.Clear();
-
-            DamageContainerId = damageContainerPrototype.ID;
-            SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
-            SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
-
-            var resistancePrototype = prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
-            Resistances = new ResistanceSet(resistancePrototype);
-        }
-
         protected override void Startup()
         {
             base.Startup();
@@ -98,7 +95,12 @@ namespace Content.Shared.Damage.Components
 
         public DamageTypePrototype GetDamageType(string ID)
         {
-            return _damageTypeDict[ID];
+            return _prototypeManager.Index<DamageTypePrototype>(ID);
+        }
+
+        public DamageGroupPrototype GetDamageGroup(string ID)
+        {
+            return _prototypeManager.Index<DamageGroupPrototype>(ID);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

@@ -36,7 +36,7 @@ namespace Content.Server.Metabolism
         private bool _isSweating;
 
         [DataField("damageType", required: true)]
-        private readonly DamageTypePrototype _damageType = default!;
+        private readonly string _damageType = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
 
@@ -353,7 +353,7 @@ namespace Content.Server.Metabolism
                 return;
             }
 
-            damageable.ChangeDamage(_damageType, _suffocationDamage, false);
+            damageable.ChangeDamage(damageable.GetDamageType(_damageType), _suffocationDamage, false);
         }
 
         private void StopSuffocation()
@@ -362,7 +362,7 @@ namespace Content.Server.Metabolism
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.ChangeDamage(_damageType, -_suffocationDamageRecovery, false);
+                damageable.ChangeDamage(damageable.GetDamageType(_damageType), -_suffocationDamageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

@@ -14,20 +14,20 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public class DamageTypeTrigger : IThresholdTrigger
     {
-        [DataField("type")]
-        public DamageTypePrototype? Type { get; set; }
+        [DataField("damageType")]
+        public string? DamageType { get; set; }
 
         [DataField("damage")]
         public int Damage { get; set; }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
-            if (Type == null)
+            if (DamageType == null)
             {
                 return false;
             }
 
-            return damageable.TryGetDamage(Type, out var damageReceived) &&
+            return damageable.TryGetDamage(damageable.GetDamageType(DamageType), out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }

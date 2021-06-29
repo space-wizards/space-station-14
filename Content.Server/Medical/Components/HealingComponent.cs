@@ -18,7 +18,8 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
-        [DataField("heal")] public Dictionary<DamageTypePrototype, int> Heal { get; private set; } = new();
+        [DataField("heal", required: true )]
+        public Dictionary<string, int> Heal { get; private set; } = new();
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -50,7 +51,7 @@ namespace Content.Server.Medical.Components
 
             foreach (var (type, amount) in Heal)
             {
-                damageable.ChangeDamage(type, -amount, true);
+                damageable.ChangeDamage(damageable.GetDamageType(type), -amount, true);
             }
 
             return true;

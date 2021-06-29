@@ -14,8 +14,15 @@ namespace Content.Shared.Damage.Resistances
     ///     reduction value.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ResistanceSet : ISerializationHooks
+    public class ResistanceSet
     {
+
+        [ViewVariables]
+        public string? ID { get; } = string.Empty;
+
+        [ViewVariables]
+        public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; } = new();
+
         public ResistanceSet()
         {
         }
@@ -25,22 +32,6 @@ namespace Content.Shared.Damage.Resistances
             ID = data.ID;
             Resistances = data.Resistances;
         }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            foreach (var damageType in prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
-            {
-                Resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
-            }
-        }
-
-        [ViewVariables]
-        public string ID { get; } = string.Empty;
-
-        [ViewVariables]
-        public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; } = new();
 
         /// <summary>
         ///     Adjusts input damage with the resistance set values.
@@ -64,22 +55,6 @@ namespace Content.Shared.Damage.Resistances
             amount = (int) Math.Ceiling(amount * Resistances[damageType].Coefficient);
 
             return amount;
-        }
-    }
-
-    /// <summary>
-    ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public readonly struct ResistanceSetSettings
-    {
-        [ViewVariables] public readonly float Coefficient;
-        [ViewVariables] public readonly int FlatReduction;
-
-        public ResistanceSetSettings(float coefficient, int flatReduction)
-        {
-            Coefficient = coefficient;
-            FlatReduction = flatReduction;
         }
     }
 }

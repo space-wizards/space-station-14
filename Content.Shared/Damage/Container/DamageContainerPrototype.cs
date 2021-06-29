@@ -16,8 +16,11 @@ namespace Content.Shared.Damage.Container
     [Serializable, NetSerializable]
     public class DamageContainerPrototype : IPrototype, ISerializationHooks
     {
-        [Dependency]
-        private readonly IPrototypeManager _prototypeManager = default!;
+        private IPrototypeManager _prototypeManager = default!;
+
+        [ViewVariables]
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
 
         [DataField("supportAll")] private bool _supportAll;
         [DataField("supportedClasses")] private HashSet<string> _supportedDamageGroupsButAsStrings = new();
@@ -28,15 +31,12 @@ namespace Content.Shared.Damage.Container
 
         // TODO NET 5 IReadOnlySet
         [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedDamageGroups => _supportedDamageGroups;
-
         [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedDamageTypes => _supportedDamageTypes;
-
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
 
         void ISerializationHooks.AfterDeserialization()
         {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
             if (_supportAll)
             {
                 // _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());

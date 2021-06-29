@@ -12,7 +12,7 @@ namespace Content.Server.Damage.Components
         public override string Name => "DamageOtherOnHit";
 
         [DataField("damageType",required: true)]
-        private readonly DamageTypePrototype _damageType = default!;
+        private readonly string _damageType = default!;
 
         [DataField("amount")]
         private int _amount = 1;
@@ -24,7 +24,7 @@ namespace Content.Server.Damage.Components
         {
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
                 return;
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            damageable.ChangeDamage(damageable.GetDamageType(_damageType), _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }
