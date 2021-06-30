@@ -33,6 +33,13 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning
             };
 
+            // Load content resources, but not config and user data.
+            options.Options = new GameControllerOptions()
+            {
+                LoadContentResources = true,
+                LoadConfigAndUserData = false,
+            };
+
             options.ContentStart = true;
 
             options.ContentAssemblies = new[]
@@ -76,6 +83,13 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning
             };
 
+            // Load content resources, but not config and user data.
+            options.Options = new ServerOptions()
+            {
+                LoadConfigAndUserData = false,
+                LoadContentResources = true,
+            };
+
             options.ContentStart = true;
 
             options.ContentAssemblies = new[]
@@ -116,6 +130,13 @@ namespace Content.IntegrationTests
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
             options ??= new ServerIntegrationOptions();
+
+            // Load content resources, but not config and user data.
+            options.Options = new ServerOptions()
+            {
+                LoadConfigAndUserData = false,
+                LoadContentResources = true,
+            };
 
             // Dummy game ticker.
             options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
