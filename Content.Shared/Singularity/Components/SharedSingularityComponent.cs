@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Singularity.Components
 {
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public abstract class SharedSingularityComponent : Component
     {
         public override string Name => "Singularity";
@@ -36,7 +36,7 @@ namespace Content.Shared.Singularity.Components
     {
         public int Level { get; }
 
-        public SingularityComponentState(int level) : base(ContentNetIDs.SINGULARITY)
+        public SingularityComponentState(int level)
         {
             Level = level;
         }
