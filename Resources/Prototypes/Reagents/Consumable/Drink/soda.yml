@@ -14,3 +14,23 @@
       amount: 1
     - !type:AdjustHealth
       amount: 0.1
+
+- type: reagent
+  id: ThirteenLoko
+  name: Thirteen Loko
+  desc: A highly processed liquid substance barely-passing intergalatic health standarts for a soft drink.
+  physicalDesc: fizzy
+  color: "#deb928"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+    - !type:HealthChangeMetabolism 
+      healthChange: 2
+      damageClass: Toxin
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
