@@ -49,10 +49,10 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: HVPower
       wire:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: WireNet
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
@@ -91,7 +91,7 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: MVPower
       wire:
         !type:AdjacentNode
@@ -133,7 +133,7 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: Apc
       wire:
         !type:AdjacentNode

@@ -33,7 +33,7 @@
     examinable: true
     nodes:
       output:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000

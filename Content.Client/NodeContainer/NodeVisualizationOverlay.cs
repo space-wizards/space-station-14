@@ -88,6 +88,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"entity: {entity}\n");
             sb.Append($"group id: {group.GroupId}\n");
             sb.Append($"node: {node.Name}\n");
+            sb.Append($"type: {node.Type}\n");
             sb.Append($"grid pos: {gridTile}\n");
 
             args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());

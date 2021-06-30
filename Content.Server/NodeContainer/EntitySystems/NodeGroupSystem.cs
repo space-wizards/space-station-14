@@ -170,6 +170,9 @@ namespace Content.Server.NodeContainer.EntitySystems
             {
                 var node = _toReflood[i];
 
+                if (node.Deleting)
+                    continue;
+
                 ClearReachableIfNecessary(node);
 
                 if (node.NodeGroup?.Remaking == false)
@@ -231,7 +234,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             _toRemake.Clear();
             _toRemove.Clear();
 
-            _sawmill.Debug($"Updates node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroupCount} new groups {refloodCount} nodes processed.");
+            _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroupCount} new groups, {refloodCount} nodes processed.");
         }
 
         private void ClearReachableIfNecessary(Node node)
@@ -349,7 +352,8 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Name = n.Name,
                     NetId = n.NetId,
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
-                    Entity = n.Owner.Uid
+                    Entity = n.Owner.Uid,
+                    Type = n.GetType().Name
                 }).ToArray()
             };
         }

@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests
   - type: NodeContainer
     nodes:
       output:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
@@ -40,7 +40,7 @@ namespace Content.IntegrationTests.Tests
   - type: NodeContainer
     nodes:
       input:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
@@ -55,10 +55,10 @@ namespace Content.IntegrationTests.Tests
   - type: NodeContainer
     nodes:
       input:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: HVPower
       output:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
@@ -88,10 +88,10 @@ namespace Content.IntegrationTests.Tests
   - type: NodeContainer
     nodes:
       input:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: MVPower
       output:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: Apc
   - type: Transform
     anchored: true
@@ -109,7 +109,7 @@ namespace Content.IntegrationTests.Tests
   - type: NodeContainer
     nodes:
       apc:
-        !type:AdjacentNode
+        !type:WireNode
         nodeGroupID: Apc
       wire:
         !type:AdjacentNode

@@ -1,5 +1,4 @@
 ﻿- type: entity
-  abstract: true
   id: WireTerminal
   placement:
     mode: SnapgridCenter
@@ -7,6 +6,8 @@
     - type: Sprite
       sprite: Constructible/Power/wire_terminal.rsi
       state: term
+      netsync: false
+      drawdepth: BelowFloor
     - type: Icon
       sprite: Constructible/Power/wire_terminal.rsi
       state: term
@@ -20,9 +21,6 @@
             - Underplating
     - type: InteractionOutline
     - type: SnapGrid
-    - type: Sprite
-      netsync: false
-      drawdepth: BelowFloor
     - type: Damageable
       resistances: metallicResistances
     - type: Destructible
