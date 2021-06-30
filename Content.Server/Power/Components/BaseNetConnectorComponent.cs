@@ -23,6 +23,8 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         private bool _needsNet => _net != null;
 
+        [DataField("node")] [ViewVariables] public string? NodeId;
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -62,7 +64,7 @@ namespace Content.Server.Power.Components
             if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 var compatibleNet = container.Nodes.Values
-                    .Where(node => node.NodeGroupID == (NodeGroupID) Voltage)
+                    .Where(node => (NodeId == null || NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) Voltage)
                     .Select(node => node.NodeGroup)
                     .OfType<TNetType>()
                     .FirstOrDefault();

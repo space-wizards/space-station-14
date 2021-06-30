@@ -33,6 +33,7 @@
           nodeGroupID: HVPower
     - type: BatteryCharger
       voltage: High
+      node: terminalPort
 
     - type: BatteryDischarger
       voltage: High
@@ -42,7 +43,6 @@
       maxChargeRate: 5000
       supplyRampTolerance: 5000
       supplyRampRate: 1000
-      enabled: False # TODO: Fix the cycles on saltern
 
     - type: ClientEntitySpawner
       prototypes:
