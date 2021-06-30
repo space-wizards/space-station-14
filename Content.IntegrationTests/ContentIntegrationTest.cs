@@ -7,6 +7,8 @@ using Content.Server.IoC;
 using Content.Shared.CCVar;
 using Moq;
 using NUnit.Framework;
+using Robust.Client;
+using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
@@ -229,6 +231,12 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning;
             }
 
+            public override GameControllerOptions Options { get; set; } = new()
+            {
+                LoadContentResources = true,
+                LoadConfigAndUserData = false,
+            };
+
             public Action ContentBeforeIoC { get; set; }
         }
 
@@ -238,6 +246,12 @@ namespace Content.IntegrationTests
             {
                 FailureLogLevel = LogLevel.Warning;
             }
+
+            public override ServerOptions Options { get; set; } = new()
+            {
+                LoadContentResources = true,
+                LoadConfigAndUserData = false,
+            };
 
             public Action ContentBeforeIoC { get; set; }
         }
