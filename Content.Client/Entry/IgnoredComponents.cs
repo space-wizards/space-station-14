@@ -73,6 +73,7 @@ namespace Content.Client.Entry
             "StorageFill",
             "Mop",
             "Bucket",
+            "WireVis",
             "Puddle",
             "CanSpill",
             "SpeedLoader",

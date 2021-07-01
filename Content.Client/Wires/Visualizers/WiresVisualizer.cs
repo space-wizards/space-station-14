@@ -1,7 +1,7 @@
 using Robust.Client.GameObjects;
 using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Client.Wires
+namespace Content.Client.Wires.Visualizers
 {
     public class WiresVisualizer : AppearanceVisualizer
     {

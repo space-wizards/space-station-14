@@ -197,7 +197,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 }
             }
 
-            var newGroupCount = 0;
+            var newGroups = new List<BaseNodeGroup>();
 
             // Flood fill over nodes. Every node will only be flood filled once.
             foreach (var node in _toReflood)
@@ -211,8 +211,8 @@ namespace Content.Server.NodeContainer.EntitySystems
                 // Flood fill
                 var groupNodes = FloodFillNode(node);
 
-                InitGroup(node, groupNodes);
-                newGroupCount += 1;
+                var newGroup = InitGroup(node, groupNodes);
+                newGroups.Add(newGroup);
             }
 
             // Go over dead groups that need to be cleaned up.
@@ -234,7 +234,15 @@ namespace Content.Server.NodeContainer.EntitySystems
             _toRemake.Clear();
             _toRemove.Clear();
 
-            _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroupCount} new groups, {refloodCount} nodes processed.");
+            foreach (var group in newGroups)
+            {
+                foreach (var node in group.Nodes)
+                {
+                    node.OnPostRebuild();
+                }
+            }
+
+            _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroups.Count} new groups, {refloodCount} nodes processed.");
         }
 
         private void ClearReachableIfNecessary(Node node)
@@ -246,7 +254,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private void InitGroup(Node node, List<Node> groupNodes)
+        private BaseNodeGroup InitGroup(Node node, List<Node> groupNodes)
         {
             var newGroup = (BaseNodeGroup) _nodeGroupFactory.MakeNodeGroup(node.NodeGroupID);
             newGroup.Initialize(node);
@@ -263,6 +271,8 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             if (VisEnabled)
                 _visSends.Add(newGroup);
+
+            return newGroup;
         }
 
         private List<Node> FloodFillNode(Node rootNode)

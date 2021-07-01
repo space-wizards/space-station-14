@@ -82,6 +82,11 @@ namespace Content.Server.NodeContainer.Nodes
         {
         }
 
+        public virtual void OnPostRebuild()
+        {
+
+        }
+
         public virtual void OnContainerShutdown()
         {
             Deleting = true;
