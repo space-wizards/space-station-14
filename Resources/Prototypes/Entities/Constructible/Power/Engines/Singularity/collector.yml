@@ -36,7 +36,7 @@
     examinable: true
     nodes:
       input:
-        !type:WireDeviceNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: RadiationCollector
     # Note that this doesn't matter too much (see next comment)

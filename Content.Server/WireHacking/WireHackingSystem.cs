@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
-namespace Content.Server.Wires
+namespace Content.Server.WireHacking
 {
     public class WireHackingSystem : EntitySystem
     {

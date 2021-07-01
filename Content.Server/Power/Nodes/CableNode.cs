@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Wires.EntitySystems;
+using Content.Server.Power.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class WireNode : Node
+    public class CableNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
@@ -28,18 +28,18 @@ namespace Content.Server.Power.Nodes
 
             foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(compMgr, grid, gridIndex))
             {
-                if (node is WireNode && node != this)
+                if (node is CableNode && node != this)
                 {
                     nodeDirs.Add((dir, node));
                 }
 
-                if (node is WireDeviceNode && dir == Direction.Invalid)
+                if (node is CableDeviceNode && dir == Direction.Invalid)
                 {
                     // device on same tile
                     nodeDirs.Add((Direction.Invalid, node));
                 }
 
-                if (node is WireTerminalNode)
+                if (node is CableTerminalNode)
                 {
                     if (dir == Direction.Invalid)
                     {
@@ -73,7 +73,7 @@ namespace Content.Server.Power.Nodes
         {
             base.OnPostRebuild();
 
-            EntitySystem.Get<WireVisSystem>().QueueUpdate(Owner.Uid);
+            EntitySystem.Get<CableVisSystem>().QueueUpdate(Owner.Uid);
         }
     }
 }

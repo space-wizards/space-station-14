@@ -26,10 +26,10 @@
       examinable: true
       nodes:
         power:
-          !type:WireDeviceNode
+          !type:CableDeviceNode
           nodeGroupID: HVPower
         terminalPort:
-          !type:WireTerminalPortNode
+          !type:CableTerminalPortNode
           nodeGroupID: HVPower
     - type: BatteryCharger
       voltage: High

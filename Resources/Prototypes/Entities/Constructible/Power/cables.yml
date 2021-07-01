@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  id: WireBase
+  id: CableBase
   placement:
     mode: SnapgridCenter
   components:
@@ -28,13 +28,13 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
-  - type: WireVis
+  - type: CableVis
     node: power
 
 - type: entity
-  parent: WireBase
-  id: HVWire
-  name: HV Wire
+  parent: CableBase
+  id: HVCable
+  name: HV power cable
   description: An orange high voltage power cable.
   components:
   - type: Sprite
@@ -46,14 +46,14 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:WireNode
+        !type:CableNode
         nodeGroupID: HVPower
       wire:
-        !type:WireNode
+        !type:CableNode
         nodeGroupID: WireNet
-  - type: Wire
-    wireDroppedOnCutPrototype: HVWireStack1
-    wireType: HighVoltage
+  - type: Cable
+    cableDroppedOnCutPrototype: HVWireStack1
+    cableType: HighVoltage
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,9 +73,9 @@
       base: hvcable_
 
 - type: entity
-  parent: WireBase
-  id: MVWire
-  name: MV Wire
+  parent: CableBase
+  id: MVCable
+  name: MV power cable
   description: A medium voltage power cable.
   components:
   - type: Sprite
@@ -89,14 +89,14 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:WireNode
+        !type:CableNode
         nodeGroupID: MVPower
       wire:
         !type:AdjacentNode
         nodeGroupID: WireNet
-  - type: Wire
-    wireDroppedOnCutPrototype: MVWireStack1
-    wireType: MediumVoltage
+  - type: Cable
+    cableDroppedOnCutPrototype: MVWireStack1
+    cableType: MediumVoltage
   - type: Destructible
     thresholds:
     - trigger:
@@ -116,9 +116,9 @@
       base: mvcable_
 
 - type: entity
-  parent: WireBase
+  parent: CableBase
   id: ApcExtensionCable
-  name: LV Wire
+  name: LV power cable
   description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite
@@ -132,16 +132,16 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:WireNode
+        !type:CableNode
         nodeGroupID: Apc
       wire:
         !type:AdjacentNode
         nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
-  - type: Wire
-    wireDroppedOnCutPrototype: ApcExtensionCableStack1
-    wireType: Apc
+  - type: Cable
+    cableDroppedOnCutPrototype: ApcExtensionCableStack1
+    cableType: Apc
   - type: Destructible
     thresholds:
     - trigger:

@@ -2,35 +2,35 @@
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Server.Tools.Components;
+using Content.Server.WireHacking.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Stacks;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Wires.Components
+namespace Content.Server.Power.Components
 {
     /// <summary>
-    ///     Allows the attached entity to be destroyed by a cutting tool, dropping a piece of wire.
+    ///     Allows the attached entity to be destroyed by a cutting tool, dropping a piece of cable.
     /// </summary>
     [RegisterComponent]
-    public class WireComponent : Component, IInteractUsing
+    public class CableComponent : Component, IInteractUsing
     {
-        public override string Name => "Wire";
+        public override string Name => "Cable";
 
         [ViewVariables]
-        [DataField("wireDroppedOnCutPrototype")]
+        [DataField("cableDroppedOnCutPrototype")]
         private string? _wireDroppedOnCutPrototype = "HVWireStack1";
 
         /// <summary>
-        ///     Checked by <see cref="WirePlacerComponent"/> to determine if there is
+        ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is
         ///     already a wire of a type on a tile.
         /// </summary>
         [ViewVariables]
-        public WireType WireType => _wireType;
-        [DataField("wireType")]
-        private WireType _wireType = WireType.HighVoltage;
+        public CableType CableType => _cableType;
+        [DataField("cableType")]
+        private CableType _cableType = CableType.HighVoltage;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -51,7 +51,7 @@ namespace Content.Server.Wires.Components
         }
     }
 
-    public enum WireType
+    public enum CableType
     {
         HighVoltage,
         MediumVoltage,

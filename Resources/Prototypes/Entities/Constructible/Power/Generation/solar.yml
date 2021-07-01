@@ -29,7 +29,7 @@
     examinable: true
     nodes:
       output:
-        !type:WireDeviceNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRampTolerance: 500

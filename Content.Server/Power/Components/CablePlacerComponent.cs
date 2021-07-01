@@ -1,5 +1,6 @@
 #nullable enable
 using System.Threading.Tasks;
+using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -9,23 +10,23 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Wires.Components
+namespace Content.Server.WireHacking.Components
 {
     [RegisterComponent]
-    internal class WirePlacerComponent : Component, IAfterInteract
+    internal class CablePlacerComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <inheritdoc />
-        public override string Name => "WirePlacer";
+        public override string Name => "CablePlacer";
 
         [ViewVariables]
         [DataField("wirePrototypeID")]
-        private string? _wirePrototypeID = "HVWire";
+        private string? _wirePrototypeID = "HVCable";
 
         [ViewVariables]
         [DataField("blockingWireType")]
-        private WireType _blockingWireType = WireType.HighVoltage;
+        private CableType _blockingCableType = CableType.HighVoltage;
 
         /// <inheritdoc />
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -41,7 +42,7 @@ namespace Content.Server.Wires.Components
                 return true;
             foreach (var anchored in grid.GetAnchoredEntities(snapPos))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent<WireComponent>(anchored, out var wire) && wire.WireType == _blockingWireType)
+                if (Owner.EntityManager.ComponentManager.TryGetComponent<CableComponent>(anchored, out var wire) && wire.CableType == _blockingCableType)
                 {
                     return true;
                 }

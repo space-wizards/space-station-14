@@ -1,5 +1,6 @@
 ﻿- type: entity
-  id: WireTerminal
+  id: CableTerminal
+  name: cable terminal
   placement:
     mode: SnapgridCenter
   components:
@@ -35,10 +36,10 @@
     - type: NodeContainer
       nodes:
         # Just define nodes for both MV and HV. One will end up unused in 99% of cases
-        # but it means one wire terminal type.
+        # but it means one cable terminal type.
         powerHV:
-          !type:WireTerminalNode
+          !type:CableTerminalNode
           nodeGroupID: HVPower
         powerMV:
-          !type:WireTerminalNode
+          !type:CableTerminalNode
           nodeGroupID: MVPower

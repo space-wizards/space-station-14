@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;

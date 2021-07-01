@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;

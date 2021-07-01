@@ -10,7 +10,6 @@ using Content.Server.VendingMachines;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Tool;
 using Content.Shared.Wires;
@@ -27,7 +26,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Wires.Components
+namespace Content.Server.WireHacking
 {
     [RegisterComponent]
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit

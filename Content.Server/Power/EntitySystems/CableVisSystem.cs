@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
-using Content.Server.Wires.Components;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -10,10 +10,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Wires.EntitySystems
+namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class WireVisSystem : EntitySystem
+    public sealed class CableVisSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -38,13 +38,13 @@ namespace Content.Server.Wires.EntitySystems
             foreach (var uid in _toUpdate)
             {
                 if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                    || !ComponentManager.TryGetComponent(uid, out WireVisComponent? wireVis)
+                    || !ComponentManager.TryGetComponent(uid, out CableVisComponent? cableVis)
                     || !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 {
                     continue;
                 }
 
-                if (wireVis.Node == null)
+                if (cableVis.Node == null)
                     continue;
 
                 var mask = WireVisDirFlags.None;
@@ -52,11 +52,11 @@ namespace Content.Server.Wires.EntitySystems
                 var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
                 var grid = _mapManager.GetGrid(transform.GridID);
                 var tile = grid.TileIndicesFor(transform.Coordinates);
-                var node = nodeContainer.GetNode<WireNode>(wireVis.Node);
+                var node = nodeContainer.GetNode<CableNode>(cableVis.Node);
 
                 foreach (var reachable in node.ReachableNodes)
                 {
-                    if (reachable is not WireNode)
+                    if (reachable is not CableNode)
                         continue;
 
                     var otherTransform = reachable.Owner.Transform;

@@ -7,8 +7,11 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Power.Nodes
 {
+    /// <summary>
+    ///     Type of node that connects to a <see cref="CableNode"/> below it.
+    /// </summary>
     [DataDefinition]
-    public class WireTerminalPortNode : Node
+    public class CableDeviceNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
@@ -16,10 +19,9 @@ namespace Content.Server.Power.Nodes
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
-            var nodes = NodeHelpers.GetCardinalNeighborNodes(compMgr, grid, gridIndex, includeSameTile: false);
-            foreach (var (_, node) in nodes)
+            foreach (var node in NodeHelpers.GetNodesInTile(compMgr, grid, gridIndex))
             {
-                if (node is WireTerminalNode)
+                if (node is CableNode)
                     yield return node;
             }
         }

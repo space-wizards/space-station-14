@@ -16,7 +16,7 @@
       netsync: false
     - type: Item
       sprite: Objects/Tools/cable-coils.rsi
-    - type: WirePlacer
+    - type: CablePlacer
     - type: Clickable
 
 
@@ -33,9 +33,9 @@
     - type: Item
       size: 10
       HeldPrefix: coilhv
-    - type: WirePlacer
-      wirePrototypeID: HVWire
-      blockingWireType: HighVoltage
+    - type: CablePlacer
+      cablePrototypeID: HVCable
+      blockingCableType: HighVoltage
     - type: Appearance
       visuals:
         - type: StackVisualizer
@@ -69,9 +69,9 @@
     - type: Item
       size: 10
       HeldPrefix: coillv
-    - type: WirePlacer
-      wirePrototypeID: ApcExtensionCable
-      blockingWireType: Apc
+    - type: CablePlacer
+      cablePrototypeID: ApcExtensionCable
+      blockingCableType: Apc
     - type: Appearance
       visuals:
         - type: StackVisualizer
@@ -105,9 +105,9 @@
     - type: Item
       size: 10
       HeldPrefix: coilmv
-    - type: WirePlacer
-      wirePrototypeID: MVWire
-      blockingWireType: MediumVoltage
+    - type: CablePlacer
+      cablePrototypeID: MVCable
+      blockingCableType: MediumVoltage
     - type: Appearance
       visuals:
         - type: StackVisualizer

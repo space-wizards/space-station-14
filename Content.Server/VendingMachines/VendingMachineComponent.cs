@@ -7,7 +7,7 @@ using Content.Server.Advertise;
 using Content.Server.Notification;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Acts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;

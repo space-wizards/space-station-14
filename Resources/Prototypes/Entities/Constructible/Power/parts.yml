@@ -23,10 +23,10 @@
     examinable: true
     nodes:
       input:
-        !type:WireDeviceNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
       output:
-        !type:WireDeviceNode
+        !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: BatteryCharger
     voltage: High
@@ -72,10 +72,10 @@
     examinable: true
     nodes:
       input:
-        !type:WireDeviceNode
+        !type:CableDeviceNode
         nodeGroupID: MVPower
       output:
-        !type:WireDeviceNode
+        !type:CableDeviceNode
         nodeGroupID: Apc
   - type: BatteryCharger
     voltage: Medium

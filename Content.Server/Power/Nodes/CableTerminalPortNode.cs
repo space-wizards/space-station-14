@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public class WireTerminalNode : WireDeviceNode
+    public class CableTerminalPortNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
@@ -16,18 +16,11 @@ namespace Content.Server.Power.Nodes
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
-            var dir = Owner.Transform.LocalRotation.GetDir();
-            var targetIdx = gridIndex + NodeHelpers.TileOffsetForDir(dir);
-
-            foreach (var node in NodeHelpers.GetNodesInTile(compMgr, grid, targetIdx))
+            var nodes = NodeHelpers.GetCardinalNeighborNodes(compMgr, grid, gridIndex, includeSameTile: false);
+            foreach (var (_, node) in nodes)
             {
-                if (node is WireTerminalPortNode)
+                if (node is CableTerminalNode)
                     yield return node;
-            }
-
-            foreach (var node in base.GetReachableNodes())
-            {
-                yield return node;
             }
         }
     }
