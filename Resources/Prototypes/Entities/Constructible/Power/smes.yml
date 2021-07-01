@@ -25,18 +25,19 @@
     - type: NodeContainer
       examinable: true
       nodes:
-        power:
+        input:
           !type:CableDeviceNode
           nodeGroupID: HVPower
-        terminalPort:
+        output:
           !type:CableTerminalPortNode
           nodeGroupID: HVPower
     - type: BatteryCharger
       voltage: High
-      node: terminalPort
+      node: output
 
     - type: BatteryDischarger
       voltage: High
+      node: input
 
     - type: PowerNetworkBattery
       maxSupply: 150000
