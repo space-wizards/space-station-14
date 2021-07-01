@@ -259,7 +259,7 @@ namespace Content.IntegrationTests
                 LoadConfigAndUserData = false,
             };
 
-            public override Action? BeforeStart { get; set; } = null;
+            public override Action BeforeStart { get; set; } = null;
             public Action ContentBeforeIoC { get; set; }
         }
 
@@ -276,7 +276,7 @@ namespace Content.IntegrationTests
                 LoadConfigAndUserData = false,
             };
 
-            public override Action? BeforeStart { get; set; } = null;
+            public override Action BeforeStart { get; set; } = null;
             public Action ContentBeforeIoC { get; set; }
         }
     }
