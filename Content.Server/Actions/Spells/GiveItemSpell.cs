@@ -19,7 +19,7 @@ namespace Content.Server.Actions.Spells
     [UsedImplicitly]
     [DataDefinition]
     public class GiveItemSpell : IInstantAction
-    {
+    {   //TODO: Needs to be an EntityPrototype for proper validation
         [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
@@ -31,26 +31,25 @@ namespace Content.Server.Actions.Spells
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!args.Performer.HasComponent<SharedActionsComponent>()) return;
-            var caster = args.Performer;
-            var casterCoords = caster.Transform.MapPosition;
             //Checks if caster can perform the action
-            if (!caster.HasComponent<HandsComponent>())
+            if (!args.Performer.HasComponent<HandsComponent>())
             {
                 args.Performer.PopupMessage(Loc.GetString("spell-fail-no-hands"));
                 return;
             }
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
-            //Perform the action
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Performer)) return;
+            //UPON COMPLETING VALIDATION execute code related to the spell
             args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
-            //Spawn the item once it's validated
+            var caster = args.Performer; //From now on we'll reffer to args.Performer as caster to make it easier to read
+            var casterCoords = caster.Transform.MapPosition;
             var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords); 
             if (CastMessage != null) caster.PopupMessageEveryone(CastMessage);
-            caster.GetComponent<HandsComponent>().PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>(), true);
-            if (CastSound != null)
+            //Re-check that caster still has hands to hold the item
+            if (caster.TryGetComponent<HandsComponent>(out var handscomp)) 
             {
-                SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
+               handscomp.PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>(), true);
             }
+            if (CastSound != null) SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
         }
     } 
 }
