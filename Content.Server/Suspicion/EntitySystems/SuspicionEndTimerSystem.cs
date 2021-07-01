@@ -13,7 +13,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Suspicion.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class SuspicionEndTimerSystem : EntitySystem, IResettingEntitySystem
+    public sealed class SuspicionEndTimerSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = null!;
 
@@ -32,6 +32,8 @@ namespace Content.Server.Suspicion.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
@@ -69,7 +71,7 @@ namespace Content.Server.Suspicion.EntitySystems
             EntityManager.EntityNetManager?.SendSystemNetworkMessage(msg, player.ConnectedClient);
         }
 
-        void IResettingEntitySystem.Reset()
+        private void Reset(RoundRestartCleanupEvent ev)
         {
             EndTime = null;
         }
