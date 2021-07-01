@@ -9,9 +9,6 @@
       state: term
       netsync: false
       drawdepth: BelowFloor
-    - type: Icon
-      sprite: Constructible/Power/wire_terminal.rsi
-      state: term
     - type: Clickable
     - type: Physics
       fixtures:
