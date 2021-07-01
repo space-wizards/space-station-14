@@ -1,0 +1,30 @@
+- type: entity
+  parent: WallBase
+  id: WallSolid
+  name: solid wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    color: "#889192"
+    sprite: Constructible/Structures/Walls/solid.rsi
+  - type: Construction
+    graph: girder
+    node: wall
+  - type: Icon
+    sprite: Constructible/Structures/Walls/solid.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: IconSmooth
+    key: walls
+    base: solid

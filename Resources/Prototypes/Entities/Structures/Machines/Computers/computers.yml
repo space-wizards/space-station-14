@@ -1,108 +1,4 @@
 ﻿- type: entity
-  id: ComputerFrame
-  parent: BaseConstructible
-  name: computer frame
-  description: A computer under construction.
-  components:
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-      mass: 25
-      mask:
-        - MobImpassable
-      layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-        - VaultImpassable
-  - type: InteractionOutline
-  - type: Rotatable
-  - type: Anchorable
-  - type: Construction
-    graph: computer
-    node: frameUnsecured
-  - type: Sprite
-    sprite: "Constructible/Misc/stock_parts.rsi"
-    state: "0"
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: monitorBroken
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-
-- type: entity
-  parent: ComputerFrame
-  id: ComputerBroken
-  name: broken computer
-  description: This computer has seen better days.
-  components:
-  - type: Construction
-    graph: computer
-    node: monitorBroken
-  - type: Sprite
-    sprite: "Constructible/Power/computers.rsi"
-    state: "broken"
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
-- type: entity
-  abstract: true
-  parent: ComputerFrame
-  id: ComputerBase
-  name: computer
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Construction
-    graph: computer
-    node: computer
-  - type: Computer
-  - type: PowerReceiver
-  - type: Sprite
-    sprite: Constructible/Power/computers.rsi
-    layers:
-    - state: computer
-      map: ["enum.ComputerVisualizer+Layers.Body"]
-    - state: generic_key_off
-      map: ["enum.ComputerVisualizer+Layers.Keyboard"]
-    - state: generic
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.Screen"]
-    - state: generic_key
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.KeyboardOn"]
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: generic
-
-- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -241,3 +137,85 @@
       type: SolarControlConsoleBoundUserInterface
   - type: Computer
     board: SolarControlComputerCircuitboard
+
+- type: entity
+  id: ComputerSupplyOrdering
+  parent: ComputerBase
+  name: Cargo ordering computer
+  description: Used to order supplies, approve requests, and control the shuttle.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: supply
+  - type: CargoConsole
+  - type: CargoOrderDatabase
+  - type: GalacticMarket
+    products:
+      - EmergencyExplosive
+      - EmergencyFire
+      - EmergencyInternals
+      - EmergencyRadiation
+      - ArmorySmg
+      - ArmoryShotgun
+      - SecurityArmor
+      - SecurityRiot
+      - SecurityLaser
+      - SecurityHelmet
+      - SecuritySupplies
+      - SecurityNonLethal
+      - HydroponicsTools
+      - HydroponicsSeeds
+      - HydroponicsSeedsExotic
+      - ServiceJanitorial
+      - ServiceLightsReplacement
+      - EngineeringCableLv
+      - EngineeringCableMv
+      - EngineeringCableHv
+      - EngineeringCableBulk
+      - EngineAmeShielding
+      - EngineAmeJar
+      - EngineAmeControl
+      - EngineSolar
+      - FunPlushies
+      - FunArtSupplies
+      - FunInstruments
+      - MaterialSteel
+      - MaterialGlass
+      - MaterialPlastic
+      - MaterialPlasteel
+      - EngineSingularityEmitter
+      - EngineSingularityCollector
+      - EngineSingularityGenerator
+      - EngineSingularityContainment
+      - EngineParticleAccelerator
+      - AtmosphericsAir
+      - AtmosphericsOxygen
+      - AtmosphericsNitrogen
+      - AtmosphericsCarbonDioxide
+#      - AtmosphericsWaterVapor
+#      - AtmosphericsPlasma
+#      - AtmosphericsTritium
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Key
+      type: CargoConsoleBoundUserInterface
+  - type: Computer
+    board: SupplyComputerCircuitboard
+
+- type: entity
+  id: ComputerSupplyRequest
+  parent: ComputerSupplyOrdering
+  name: cargo request computer
+  description: Used to request supplies from cargo.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: request
+  - type: CargoConsole
+    requestOnly: true
+  - type: Computer
+    board: SupplyRequestComputerCircuitboard

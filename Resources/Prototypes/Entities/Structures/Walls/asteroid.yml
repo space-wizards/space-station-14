@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AsteroidRock
   parent: BaseConstructible
   name: asteroid rock

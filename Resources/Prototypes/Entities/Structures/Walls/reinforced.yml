@@ -1,0 +1,31 @@
+- type: entity
+  parent: WallBase
+  id: WallReinforced
+  name: reinforced wall
+  components:
+  - type: Sprite
+    color: "#889192"
+    sprite: Constructible/Structures/Walls/solid.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Walls/solid.rsi
+    state: rgeneric
+  - type: Construction
+    graph: girder
+    node: reinforcedWall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ReinforcedWall
+    key: walls
+    base: solid
+    reinforcedBase: reinf_over
+  - type: Appearance
+    visuals:
+      - type: ReinforcedWallVisualizer
