@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
-namespace Content.Client.APC
+namespace Content.Client.Power.APC
 {
     [UsedImplicitly]
     public class ApcBoundUserInterface : BoundUserInterface

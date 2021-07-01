@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.APC
+namespace Content.Client.Power.APC
 {
     public class ApcVisualizer : AppearanceVisualizer
     {
