@@ -66,8 +66,6 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: PowerConsumer
-  - type: BatteryStorage
   - type: Anchorable
 
 - type: entity
@@ -95,7 +93,6 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: PowerSupplier
   - type: BatteryDischarger
   - type: Anchorable
 

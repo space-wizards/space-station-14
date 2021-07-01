@@ -106,7 +106,6 @@ namespace Content.Client.Entry
             "PowerSupplier",
             "PowerConsumer",
             "Battery",
-            "BatteryStorage",
             "BatteryDischarger",
             "Apc",
             "PowerProvider",
