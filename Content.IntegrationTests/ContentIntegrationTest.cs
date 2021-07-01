@@ -121,8 +121,9 @@ namespace Content.IntegrationTests
             // Disable holidays as some of them might mess with the map at round start.
             options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
 
-            // Avoid loading a large map by default for integration tests.
-            options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
+            // Avoid loading a large map by default for integration tests if none has been specified.
+            if(!options.CVarOverrides.ContainsKey(CCVars.GameMap.Name))
+                options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
 
             return base.StartServer(options);
         }
