@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests
   - type: NodeContainer
     nodes:
       output:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000

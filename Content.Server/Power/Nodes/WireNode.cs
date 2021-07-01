@@ -32,6 +32,12 @@ namespace Content.Server.Power.Nodes
                     nodeDirs.Add((dir, node));
                 }
 
+                if (node is WireDeviceNode && dir == Direction.Invalid)
+                {
+                    // device on same tile
+                    nodeDirs.Add((Direction.Invalid, node));
+                }
+
                 if (node is WireTerminalNode)
                 {
                     if (dir == Direction.Invalid)

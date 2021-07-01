@@ -26,7 +26,7 @@
       examinable: true
       nodes:
         power:
-          !type:WireNode
+          !type:WireDeviceNode
           nodeGroupID: HVPower
         terminalPort:
           !type:WireTerminalPortNode
@@ -43,7 +43,3 @@
       maxChargeRate: 5000
       supplyRampTolerance: 5000
       supplyRampRate: 1000
-
-    - type: ClientEntitySpawner
-      prototypes:
-        - HVDummyWire

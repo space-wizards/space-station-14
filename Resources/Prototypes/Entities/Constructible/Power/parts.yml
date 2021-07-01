@@ -23,10 +23,10 @@
     examinable: true
     nodes:
       input:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: HVPower
       output:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: MVPower
   - type: BatteryCharger
     voltage: High
@@ -37,11 +37,6 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
-  - type: ClientEntitySpawner
-    prototypes:
-      - HVDummyWire
-      - MVDummyWire
-
 - type: entity
   abstract: true
   id: BaseApc
@@ -77,10 +72,10 @@
     examinable: true
     nodes:
       input:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: MVPower
       output:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: Apc
   - type: BatteryCharger
     voltage: Medium
@@ -95,10 +90,6 @@
   - type: Construction
     graph: apc
     node: apc
-  - type: ClientEntitySpawner
-    prototypes:
-    - MVDummyWire
-    - LVDummyWire
   - type: PowerNetworkBattery
     maxSupply: 10000
     maxChargeRate: 5000

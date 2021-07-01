@@ -25,7 +25,7 @@
   - type: NodeContainer
     nodes:
       input:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
@@ -64,7 +64,7 @@
   - type: NodeContainer
     nodes:
       input:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
@@ -93,7 +93,7 @@
   - type: NodeContainer
     nodes:
       input:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger

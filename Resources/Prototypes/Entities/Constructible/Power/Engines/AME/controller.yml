@@ -54,10 +54,10 @@
     examinable: true
     nodes:
       ame:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: AMEngine
       input:
-        !type:WireNode
+        !type:WireDeviceNode
         nodeGroupID: HVPower
   - type: PowerReceiver
   - type: PowerSupplier
