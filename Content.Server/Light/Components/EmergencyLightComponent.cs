@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
+using Content.Shared.Light.Component;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -109,28 +110,24 @@ namespace Content.Server.Light.Components
 
         private void TurnOff()
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "emergency_light_off");
-            }
-
             if (Owner.TryGetComponent(out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(EmergencyLightVisuals.On, false);
         }
 
         private void TurnOn()
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "emergency_light_on");
-            }
-
             if (Owner.TryGetComponent(out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(EmergencyLightVisuals.On, true);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
