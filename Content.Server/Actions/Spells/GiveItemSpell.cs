@@ -41,7 +41,7 @@ namespace Content.Server.Actions.Spells
                 return;
             }
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
-            //Perfrom the action
+            //Perform the action
             args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
             //Spawn the item once it's validated
             var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords); 
