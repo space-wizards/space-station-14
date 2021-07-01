@@ -69,7 +69,7 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: WireVisVisualizer
+    - type: CableVisualizer
       base: hvcable_
 
 - type: entity
@@ -112,7 +112,7 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: WireVisVisualizer
+    - type: CableVisualizer
       base: mvcable_
 
 - type: entity
@@ -157,5 +157,5 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
-    - type: WireVisVisualizer
+    - type: CableVisualizer
       base: lvcable_

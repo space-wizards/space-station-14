@@ -2,10 +2,10 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Wires.Visualizers
+namespace Content.Client.Power
 {
     [DataDefinition]
-    public sealed class WireVisVisualizer : AppearanceVisualizer
+    public sealed class CableVisualizer : AppearanceVisualizer
     {
         [DataField("base")]
         public string? StateBase;
