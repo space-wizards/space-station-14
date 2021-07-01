@@ -9,8 +9,11 @@ using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -31,25 +34,42 @@ namespace Content.Server.Actions.Spells
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            //Checks if caster can perform the action
-            if (!args.Performer.HasComponent<HandsComponent>())
+            var caster = args.Performer;
+
+            if (!caster.TryGetComponent(out HandsComponent? handsComponent))
             {
-                args.Performer.PopupMessage(Loc.GetString("spell-fail-no-hands"));
+                caster.PopupMessage(Loc.GetString("spell-fail-no-hands"));
                 return;
             }
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Performer)) return;
-            //UPON COMPLETING VALIDATION execute code related to the spell
-            args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
-            var caster = args.Performer; //From now on we'll reffer to args.Performer as caster to make it easier to read
-            var casterCoords = caster.Transform.MapPosition;
-            var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, casterCoords); 
-            if (CastMessage != null) caster.PopupMessageEveryone(CastMessage);
-            //Re-check that caster still has hands to hold the item
-            if (caster.TryGetComponent<HandsComponent>(out var handscomp)) 
+
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(caster)) return;
+
+            // TODO: Nix when we get EntityPrototype serializers
+            if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<EntityPrototype>(ItemProto))
             {
-               handscomp.PutInHandOrDrop(spawnedProto.GetComponent<ItemComponent>(), true);
+                Logger.Error($"Invalid prototype {ItemProto} supplied for {nameof(GiveItemSpell)}");
+                return;
             }
-            if (CastSound != null) SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
+
+            // TODO: Look this is shitty and ideally a test would do it
+            var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, caster.Transform.MapPosition);
+
+            if (!spawnedProto.TryGetComponent(out ItemComponent? itemComponent))
+            {
+                Logger.Error($"Tried to use {nameof(GiveItemSpell)} but prototype has no {nameof(ItemComponent)}?");
+                spawnedProto.Delete();
+                return;
+            }
+
+            args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(CoolDown));
+
+            if (CastMessage != null)
+                caster.PopupMessageEveryone(CastMessage);
+
+            handsComponent.PutInHandOrDrop(itemComponent);
+
+            if (CastSound != null)
+                SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
         }
-    } 
+    }
 }
