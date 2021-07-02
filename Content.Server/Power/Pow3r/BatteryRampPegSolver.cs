@@ -27,11 +27,17 @@ namespace Content.Server.Power.Pow3r
             // Clear loads and supplies.
             foreach (var load in state.Loads.Values)
             {
+                if (load.Paused)
+                    continue;
+
                 load.ReceivingPower = 0;
             }
 
             foreach (var supply in state.Supplies.Values)
             {
+                if (supply.Paused)
+                    continue;
+
                 supply.CurrentSupply = 0;
                 supply.SupplyRampTarget = 0;
             }
@@ -74,7 +80,7 @@ namespace Content.Server.Power.Pow3r
                 {
                     var load = state.Loads[loadId];
 
-                    if (!load.Enabled)
+                    if (!load.Enabled || load.Paused)
                         continue;
 
                     DebugTools.Assert(load.DesiredPower >= 0);
@@ -89,7 +95,7 @@ namespace Content.Server.Power.Pow3r
                 foreach (var batteryId in network.BatteriesCharging)
                 {
                     var battery = state.Batteries[batteryId];
-                    if (!battery.Enabled || !battery.CanCharge)
+                    if (!battery.Enabled || !battery.CanCharge || battery.Paused)
                         continue;
 
                     var batterySpace = (battery.Capacity - battery.CurrentStorage) * (1 / battery.Efficiency);
@@ -114,7 +120,7 @@ namespace Content.Server.Power.Pow3r
                 foreach (var supplyId in network.Supplies)
                 {
                     var supply = state.Supplies[supplyId];
-                    if (!supply.Enabled)
+                    if (!supply.Enabled || supply.Paused)
                         continue;
 
                     var rampMax = supply.SupplyRampPosition + supply.SupplyRampTolerance;
@@ -143,7 +149,7 @@ namespace Content.Server.Power.Pow3r
                 foreach (var batteryId in network.BatteriesDischarging)
                 {
                     var battery = state.Batteries[batteryId];
-                    if (!battery.Enabled || !battery.CanDischarge)
+                    if (!battery.Enabled || !battery.CanDischarge || battery.Paused)
                         continue;
 
                     var scaledSpace = battery.CurrentStorage / frameTime;
@@ -173,7 +179,7 @@ namespace Content.Server.Power.Pow3r
                     foreach (var loadId in network.Loads)
                     {
                         var load = state.Loads[loadId];
-                        if (!load.Enabled || load.DesiredPower == 0)
+                        if (!load.Enabled || load.DesiredPower == 0 || load.Paused)
                             continue;
 
                         var ratio = load.DesiredPower / demand;
@@ -185,7 +191,7 @@ namespace Content.Server.Power.Pow3r
                     {
                         var battery = state.Batteries[batteryId];
 
-                        if (!battery.Enabled || battery.DesiredPower == 0)
+                        if (!battery.Enabled || battery.DesiredPower == 0 || battery.Paused)
                             continue;
 
                         var ratio = battery.DesiredPower / demand;
@@ -202,7 +208,7 @@ namespace Content.Server.Power.Pow3r
                     foreach (var supplyId in network.Supplies)
                     {
                         var supply = state.Supplies[supplyId];
-                        if (!supply.Enabled || supply.EffectiveMaxSupply == 0)
+                        if (!supply.Enabled || supply.EffectiveMaxSupply == 0 || supply.Paused)
                             continue;
 
                         var ratio = supply.EffectiveMaxSupply / availableSupplySum;
@@ -224,7 +230,7 @@ namespace Content.Server.Power.Pow3r
                     foreach (var batteryId in network.BatteriesDischarging)
                     {
                         var battery = state.Batteries[batteryId];
-                        if (!battery.Enabled || battery.TempMaxSupply == 0)
+                        if (!battery.Enabled || battery.TempMaxSupply == 0 || battery.Paused)
                             continue;
 
                         var ratio = battery.TempMaxSupply / availableSupplySum;
@@ -248,6 +254,9 @@ namespace Content.Server.Power.Pow3r
             // Because we need this data while processing ramp-pegging, we can't clear it at the start.
             foreach (var battery in state.Batteries.Values)
             {
+                if (battery.Paused)
+                    continue;
+                
                 if (!battery.SupplyingMarked)
                     battery.CurrentSupply = 0;
 

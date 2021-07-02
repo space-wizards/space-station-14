@@ -31,12 +31,16 @@ namespace Content.Server.Power.EntitySystems
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentInit>(ApcPowerReceiverInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentShutdown>(ApcPowerReceiverShutdown);
+            SubscribeLocalEvent<ApcPowerReceiverComponent, EntityPausedEvent>(ApcPowerReceiverPaused);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentInit>(BatteryInit);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentShutdown>(BatteryShutdown);
+            SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
+            SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
             SubscribeLocalEvent<PowerSupplierComponent, ComponentInit>(PowerSupplierInit);
             SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
+            SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
         }
 
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
@@ -50,6 +54,14 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Loads.Remove(component.NetworkLoad.Id);
         }
 
+        private static void ApcPowerReceiverPaused(
+            EntityUid uid,
+            ApcPowerReceiverComponent component,
+            EntityPausedEvent args)
+        {
+            component.NetworkLoad.Paused = args.Paused;
+        }
+
         private void BatteryInit(EntityUid uid, PowerNetworkBatteryComponent component, ComponentInit args)
         {
             AllocBattery(component.NetworkBattery);
@@ -58,6 +70,11 @@ namespace Content.Server.Power.EntitySystems
         private void BatteryShutdown(EntityUid uid, PowerNetworkBatteryComponent component, ComponentShutdown args)
         {
             _powerState.Batteries.Remove(component.NetworkBattery.Id);
+        }
+
+        private static void BatteryPaused(EntityUid uid, PowerNetworkBatteryComponent component, EntityPausedEvent args)
+        {
+            component.NetworkBattery.Paused = args.Paused;
         }
 
         private void PowerConsumerInit(EntityUid uid, PowerConsumerComponent component, ComponentInit args)
@@ -70,6 +87,11 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Loads.Remove(component.NetworkLoad.Id);
         }
 
+        private static void PowerConsumerPaused(EntityUid uid, PowerConsumerComponent component, EntityPausedEvent args)
+        {
+            component.NetworkLoad.Paused = args.Paused;
+        }
+
         private void PowerSupplierInit(EntityUid uid, PowerSupplierComponent component, ComponentInit args)
         {
             AllocSupply(component.NetworkSupply);
@@ -78,6 +100,11 @@ namespace Content.Server.Power.EntitySystems
         private void PowerSupplierShutdown(EntityUid uid, PowerSupplierComponent component, ComponentShutdown args)
         {
             _powerState.Supplies.Remove(component.NetworkSupply.Id);
+        }
+
+        private static void PowerSupplierPaused(EntityUid uid, PowerSupplierComponent component, EntityPausedEvent args)
+        {
+            component.NetworkSupply.Paused = args.Paused;
         }
 
         public void InitPowerNet(PowerNet powerNet)

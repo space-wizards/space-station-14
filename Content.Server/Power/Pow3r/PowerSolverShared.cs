@@ -9,6 +9,9 @@ namespace Content.Server.Power.Pow3r
             // Update supplies to move their ramp position towards target, if necessary.
             foreach (var supply in state.Supplies.Values)
             {
+                if (supply.Paused)
+                    continue;
+
                 if (!supply.Enabled)
                 {
                     // If disabled, set ramp to 0.
@@ -46,6 +49,9 @@ namespace Content.Server.Power.Pow3r
             // Batteries too.
             foreach (var battery in state.Batteries.Values)
             {
+                if (battery.Paused)
+                    continue;
+
                 if (!battery.Enabled)
                 {
                     // If disabled, set ramp to 0.

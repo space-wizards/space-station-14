@@ -82,6 +82,7 @@ namespace Content.Server.Power.Pow3r
 
             // == Static parameters ==
             [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
 
             [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate;
@@ -115,6 +116,7 @@ namespace Content.Server.Power.Pow3r
 
             // == Static parameters ==
             [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
             [ViewVariables(VVAccess.ReadWrite)] public float DesiredPower;
 
             // == Runtime parameters ==
@@ -133,6 +135,7 @@ namespace Content.Server.Power.Pow3r
 
             // == Static parameters ==
             [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
+            [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
             [ViewVariables(VVAccess.ReadWrite)] public bool CanDischarge = true;
             [ViewVariables(VVAccess.ReadWrite)] public bool CanCharge = true;
             [ViewVariables(VVAccess.ReadWrite)] public float Capacity;

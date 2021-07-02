@@ -80,7 +80,7 @@ namespace Content.Server.Light.Components
 
         public void OnUpdate(float frameTime)
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery))
+            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery) || Owner.Paused)
             {
                 return;
             }
