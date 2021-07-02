@@ -8,6 +8,14 @@
     access: [["Service"]]
 
 - type: entity
+  parent: Airlock
+  id: AirlockTheatreLocked
+  suffix: Theatre, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
   suffix: External, Locked

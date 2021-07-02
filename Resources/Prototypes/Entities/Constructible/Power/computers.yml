@@ -1,8 +1,8 @@
 ﻿- type: entity
   id: ComputerFrame
-  parent: BaseConstructibleDynamic
+  parent: BaseConstructible
   name: computer frame
-  description: A computer under construction. It needs a circuit board.
+  description: A computer under construction.
   components:
   - type: Physics
     bodyType: Static
@@ -20,6 +20,7 @@
         - VaultImpassable
   - type: InteractionOutline
   - type: Rotatable
+  - type: Anchorable
   - type: Construction
     graph: computer
     node: frameUnsecured
