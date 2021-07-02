@@ -137,6 +137,17 @@ namespace Content.Server.Power.EntitySystems
             _apcNetReconnectQueue.Add(apcNet);
         }
 
+        public PowerStatistics GetStatistics()
+        {
+            return new()
+            {
+                CountBatteries = _powerState.Batteries.Count,
+                CountLoads = _powerState.Loads.Count,
+                CountNetworks = _powerState.Networks.Count,
+                CountSupplies = _powerState.Supplies.Count
+            };
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -328,5 +339,13 @@ namespace Content.Server.Power.EntitySystems
             ReceivedPower = receivedPower;
             DrawRate = drawRate;
         }
+    }
+
+    public struct PowerStatistics
+    {
+        public int CountNetworks;
+        public int CountLoads;
+        public int CountSupplies;
+        public int CountBatteries;
     }
 }
