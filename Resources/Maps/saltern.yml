@@ -5371,7 +5371,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 587
-  type: AirlockServiceLocked
+  type: AirlockTheatreLocked
   components:
   - name: Theatre
     type: MetaData
