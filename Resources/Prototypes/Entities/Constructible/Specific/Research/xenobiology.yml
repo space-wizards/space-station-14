@@ -1,0 +1,43 @@
+﻿- type: entity
+  id: XenobioSpecimenCell
+  parent: BaseConstructibleDynamic
+  name: "Specimen Cell"
+  description: 'No matter how many I cut, they are all girls!'
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/specimen_tube.rsi
+    state: tube-occupied
+    drawdepth: FloorTiles
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 25
+      mask:
+        - SmallImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+  - type: PowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: SpecimenContainmentComponent
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
