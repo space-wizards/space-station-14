@@ -30,7 +30,7 @@ namespace Content.Server.Xenobiology
         public bool IsOccupied => TubeContainer.ContainedEntity != null;
         [ViewVariables] public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        public void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             TubeContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "SpecimenContainer");
@@ -55,6 +55,27 @@ namespace Content.Server.Xenobiology
             protected override void Activate(IEntity user, SpecimenContainmentComponent component)
             {
                 component.InsertBody(user);
+            }
+        }
+
+        [Verb]
+        public sealed class EjectVerb : Verb<SpecimenContainmentComponent>
+        {
+            protected override void GetData(IEntity user, SpecimenContainmentComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("eject-verb-get-data-text");
+                data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
+            }
+
+            protected override void Activate(IEntity user, SpecimenContainmentComponent component)
+            {
+                component.EjectBody();
             }
         }
 
