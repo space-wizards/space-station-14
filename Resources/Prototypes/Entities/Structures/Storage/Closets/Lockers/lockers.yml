@@ -1,7 +1,7 @@
 - type: entity
   id: LockerBooze
-  parent: LockerSecureBase
-  name: "booze storage"
+  parent: LockerBase
+  name: booze storage
   description: This is where the bartender keeps the booze.
   components:
   - type: Appearance
@@ -14,8 +14,8 @@
 # Cargo
 - type: entity
   id: LockerQuarterMaster
-  parent: LockerSecureBase
-  name: "quartermaster's locker"
+  parent: LockerBase
+  name: quartermaster's locker
   components:
   - type: Appearance
     visuals:
@@ -27,8 +27,8 @@
 # Command
 - type: entity
   id: LockerCaptain
-  parent: LockerSecureBase
-  name: "captain's locker"
+  parent: LockerBase
+  name: captain's locker
   components:
   - type: Appearance
     visuals:
@@ -39,8 +39,8 @@
 
 - type: entity
   id: LockerHeadOfPersonnel
-  parent: LockerSecureBase
-  name: "head of personnel's locker"
+  parent: LockerBase
+  name: head of personnel's locker
   components:
   - type: Appearance
     visuals:
@@ -52,8 +52,8 @@
 # CE
 - type: entity
   id: LockerChiefEngineer
-  parent: LockerSecureBase
-  name: "chief engineer's locker"
+  parent: LockerBase
+  name: chief engineer's locker
   components:
   - type: Appearance
     visuals:
@@ -65,8 +65,8 @@
 # Electrical supplies
 - type: entity
   id: LockerElectricalSupplies
-  parent: LockerSecureBase
-  name: "electrical supplies locker"
+  parent: LockerBase
+  name: electrical supplies locker
   components:
   - type: Appearance
     visuals:
@@ -79,8 +79,8 @@
 # Welding supplies
 - type: entity
   id: LockerWeldingSupplies
-  parent: LockerSecureBase
-  name: "welding supplies locker"
+  parent: LockerBase
+  name: welding supplies locker
   components:
   - type: Appearance
     visuals:
@@ -93,8 +93,8 @@
 # Atmos tech
 - type: entity
   id: LockerAtmospherics
-  parent: LockerSecureBase
-  name: "atmospheric technician's locker"
+  parent: LockerBase
+  name: atmospheric technician's locker
   components:
   - type: Appearance
     visuals:
@@ -106,8 +106,8 @@
 # Engineer
 - type: entity
   id: LockerEngineer
-  parent: LockerSecureBase
-  name: "engineer's locker"
+  parent: LockerBase
+  name: engineer's locker
   components:
   - type: Appearance
     visuals:
@@ -119,8 +119,8 @@
 # Freezer
 - type: entity
   id: LockerFreezer
-  parent: LockerSecureBase
-  name: "freezer"
+  parent: LockerBase
+  name: freezer
   components:
   - type: Appearance
     visuals:
@@ -132,8 +132,8 @@
 # Botanist
 - type: entity
   id: LockerBotanist
-  parent: LockerSecureBase
-  name: "botanist's locker"
+  parent: LockerBase
+  name: botanist's locker
   components:
   - type: Appearance
     visuals:
@@ -145,9 +145,9 @@
 # Medicine
 - type: entity
   id: LockerMedicine
-  parent: LockerSecureBase
-  name: "medicine locker"
-  description: "Filled to the brim with medical junk."
+  parent: LockerBase
+  name: medicine locker
+  description: Filled to the brim with medical junk.
   components:
   - type: Appearance
     visuals:
@@ -159,8 +159,8 @@
 # Medical doctor
 - type: entity
   id: LockerMedical
-  parent: LockerSecureBase
-  name: "medical doctor's locker"
+  parent: LockerBase
+  name: medical doctor's locker
   components:
   - type: Appearance
     visuals:
@@ -172,8 +172,8 @@
 # Chemical
 - type: entity
   id: LockerChemistry
-  parent: LockerSecureBase
-  name: "chemical closet"
+  parent: LockerBase
+  name: chemical locker
   components:
   - type: Appearance
     visuals:
@@ -186,8 +186,8 @@
 # CMO
 - type: entity
   id: LockerChiefMedicalOfficer
-  parent: LockerSecureBase
-  name: "chief medical officer's locker"
+  parent: LockerBase
+  name: chief medical officer's locker
   components:
   - type: Appearance
     visuals:
@@ -200,8 +200,8 @@
 
 - type: entity
   id: LockerResearchDirector
-  parent: LockerSecureBase
-  name: "research director's locker"
+  parent: LockerBase
+  name: research director's locker
   components:
   - type: Appearance
     visuals:
@@ -212,8 +212,8 @@
 
 - type: entity
   id: LockerScientist
-  parent: LockerSecureBase
-  name: "scientist's locker"
+  parent: LockerBase
+  name: scientist's locker
   components:
     - type: Appearance
       visuals:
@@ -225,8 +225,8 @@
 # HoS
 - type: entity
   id: LockerHeadOfSecurity
-  parent: LockerSecureBase
-  name: "head of security's locker"
+  parent: LockerBase
+  name: head of security's locker
   components:
   - type: Appearance
     visuals:
@@ -238,8 +238,8 @@
 # Warden
 - type: entity
   id: LockerWarden
-  parent: LockerSecureBase
-  name: "warden's locker"
+  parent: LockerBase
+  name: warden's locker
   components:
   - type: Appearance
     visuals:
@@ -251,8 +251,8 @@
 # Security Officer
 - type: entity
   id: LockerSecurity
-  parent: LockerSecureBase
-  name: "security officer's locker"
+  parent: LockerBase
+  name: security officer's locker
   components:
   - type: Appearance
     visuals:
@@ -264,8 +264,8 @@
 # Detective
 - type: entity
   id: LockerDetective
-  parent: LockerSecureBase
-  name: "detective's cabinet"
+  parent: LockerBase
+  name: detective's cabinet
   components:
   - type: Appearance
     visuals:
@@ -279,7 +279,7 @@
 - type: entity
   id: LockerSyndicatePersonal
   name: armory closet
-  parent: LockerSecureBase
+  parent: LockerBase
   description: It's a personal storage unit for operative gear.
   components:
   - type: Appearance
