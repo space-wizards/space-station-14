@@ -1,7 +1,10 @@
 ﻿- type: entity
   id: GravityGenerator
+  parent: BaseMachinePowered
   name: gravity generator
   description: It's what keeps you to the floor.
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     netsync: false
@@ -17,6 +20,7 @@
   - type: PowerReceiver
     powerLoad: 500
   - type: Physics
+    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -26,10 +30,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Damageable
-    resistances: metallicResistances
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -54,6 +54,3 @@
         unpowered: "off"
         off: "off"
         on: "on"
-
-  placement:
-    mode: AlignTileAny

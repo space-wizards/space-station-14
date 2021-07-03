@@ -1,5 +1,5 @@
-﻿- type: entity
-  id: LockerGeneric
+- type: entity
+  id: ClosetBase
   parent: BaseConstructibleDynamic
   name: closet
   description: A standard-issue Nanotrasen storage unit.
@@ -58,3 +58,41 @@
       state_open: generic_open
       state_closed: generic_door
   - type: LoopingSound
+
+# Secure
+
+- type: entity
+  id: ClosetSecureBase
+  parent: ClosetBase
+  abstract: true
+  components:
+  - type: AccessReader
+  - type: SecureEntityStorage
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Structures/closet.rsi
+    layers:
+    - state: generic
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2

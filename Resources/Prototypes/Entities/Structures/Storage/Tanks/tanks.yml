@@ -1,3 +1,5 @@
+# Welding
+
 - type: entity
   id: WeldingFuelTank
   parent: StorageTank
@@ -26,4 +28,28 @@
     contents:
       reagents:
       - ReagentId: WeldingFuel
+        Quantity: 1500
+
+# Water
+
+- type: entity
+  id: WaterTank
+  parent: StorageTank
+  name: water tank
+  suffix: Empty
+  description: "A water tank. It is used to store high amounts of water."
+  components:
+  - type: Sprite
+    sprite: Constructible/Misc/tanks.rsi
+    state: watertank
+
+- type: entity
+  parent: WaterTank
+  id: WaterTankFull
+  suffix: Full
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Water
         Quantity: 1500
