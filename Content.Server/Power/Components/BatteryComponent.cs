@@ -20,7 +20,7 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
         [DataField("maxCharge")]
-        private int _maxCharge = 1000;
+        private int _maxCharge;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
@@ -28,7 +28,7 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
         [DataField("startingCharge")]
-        private float _currentCharge = 500;
+        private float _currentCharge;
 
         /// <summary>
         /// True if the battery is fully charged.
