@@ -18,9 +18,9 @@ namespace Content.Server.Power.Components
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
+        [ViewVariables(VVAccess.ReadWrite)] public float MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
         [DataField("maxCharge")]
-        private int _maxCharge;
+        private float _maxCharge;
 
         /// <summary>
         /// Current charge of the battery in joules (ie. watt seconds)
@@ -78,7 +78,7 @@ namespace Content.Server.Power.Components
 
         protected virtual void OnChargeChanged() { }
 
-        private void SetMaxCharge(int newMax)
+        private void SetMaxCharge(float newMax)
         {
             _maxCharge = Math.Max(newMax, 0);
             _currentCharge = Math.Min(_currentCharge, MaxCharge);
