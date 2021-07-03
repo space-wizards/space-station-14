@@ -66,13 +66,6 @@ namespace Content.IntegrationTests
                 });
             };
 
-            // Connecting to Discord is a massive waste of time.
-            // Basically just makes the CI logs a mess.
-            options.CVarOverrides[CVars.DiscordEnabled.Name] = "false";
-
-            // Avoid preloading textures in tests.
-            options.CVarOverrides.TryAdd(CVars.TexturePreloadingEnabled.Name, "false");
-
             return base.StartClient(options);
         }
 
