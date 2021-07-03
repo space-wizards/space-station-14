@@ -1,41 +1,7 @@
-﻿- type: entity
-  id: BaseLathe
-  name: "lathe"
-  abstract: true
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 25
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-  - type: SnapGrid
-  - type: Lathe
-  - type: MaterialStorage
-  - type: Anchorable
-  - type: Pullable
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-  - type: PowerReceiver
-
 - type: entity
-  parent: BaseLathe
+  parent: BaseMachinePowered
   id: Autolathe
-  name: "autolathe"
+  name: autolathe
   description: It produces items using metal and glass.
   components:
   - type: Sprite
@@ -50,11 +16,23 @@
       map: ["enum.AutolatheVisualLayers.AnimationLayer"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 25
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
   - type: Construction
     graph: machine
     node: machine
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -67,6 +45,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: AutolatheMachineCircuitboard
+  - type: MaterialStorage
   - type: Wires
     BoardName: "Autolathe"
     LayoutId: Autolathe
@@ -88,11 +67,18 @@
     visuals:
     - type: AutolatheVisualizer
     - type: WiresVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: SnapGrid
+  - type: Pullable
+  - type: Lathe
 
 - type: entity
-  parent: BaseLathe
+  parent: BaseMachinePowered
   id: Protolathe
-  name: "protolathe"
+  name: protolathe
   description: Converts raw materials into useful objects.
   components:
   - type: Sprite
@@ -107,12 +93,24 @@
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 25
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
   - type: ResearchClient
   - type: Construction
     graph: machine
     node: machine
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -129,6 +127,7 @@
     BoardName: "Protolathe"
     LayoutId: Protolathe
   - type: TechnologyDatabase
+  - type: MaterialStorage
   - type: ProtolatheDatabase
     protolatherecipes:
       - LightTube
@@ -174,7 +173,6 @@
       - KitchenKnife
       - ButchCleaver
       - FlashlightLantern
-
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -185,3 +183,6 @@
     visuals:
     - type: ProtolatheVisualizer
     - type: WiresVisualizer
+  - type: SnapGrid
+  - type: Pullable
+  - type: Lathe

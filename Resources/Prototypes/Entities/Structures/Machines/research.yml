@@ -1,31 +1,17 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
-  parent: BaseConstructibleDynamic
-  name: "R&D server"
-  description: 'Thats a R&D server.'
+  parent: BaseMachinePowered
+  name: R&D server
+  description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
   components:
   - type: Sprite
     sprite: Constructible/Power/server.rsi
     state: server
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      mass: 25
-      mask:
-        - SmallImpassable
-      layer:
-        - Opaque
-        - MobImpassable
   - type: ResearchServer
   - type: TechnologyDatabase
   - type: PowerReceiver
     powerLoad: 200
     priority: Low
-  - type: Damageable
-    resistances: metallicResistances
   - type: Destructible
     thresholds:
     - trigger:
@@ -44,7 +30,7 @@
 
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
-  parent: BaseConstructibleDynamic
+  parent: BaseMachinePowered
   name: "base R&D point source"
   # We should make this abstract once there are actual point sources.
   components:
@@ -55,18 +41,6 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      mass: 25
-      mask:
-        - SmallImpassable
-      layer:
-        - Opaque
-        - MobImpassable
   - type: ResearchPointSource
     pointspersecond: 100
     active: true
@@ -77,7 +51,6 @@
   - type: Appearance
     visuals:
     - type: PowerDeviceVisualizer
-  - type: PowerReceiver
   - type: Destructible
     thresholds:
     - trigger:

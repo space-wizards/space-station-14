@@ -1,10 +1,9 @@
 - type: entity
   id: KitchenReagentGrinder
+  parent: BaseMachinePowered
   name: reagent grinder
-  description: "From BlenderTech. Will It Blend? Let's find out!"
+  description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
-  placement:
-    mode: SnapgridCenter
   components:
   - type: SnapGrid
   - type: ReagentGrinder
@@ -15,9 +14,6 @@
   - type: Appearance
     visuals:
     - type: ReagentGrinderVisualizer
-  - type: Clickable
-  - type: InteractionOutline
-  - type: PowerReceiver
   - type: LoopingSound
   - type: Physics
     fixtures:
@@ -33,15 +29,3 @@
     sprite: Constructible/Power/juicer.rsi
     state: juicer0
     drawdepth: Items
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg

@@ -2,7 +2,7 @@
   id: cargoTelepad
   parent: BaseConstructibleDynamic
   name: cargo telepad
-  description: "Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!"
+  description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
   components:
   - type: InteractionOutline
   - type: Physics

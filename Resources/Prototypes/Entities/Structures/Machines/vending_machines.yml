@@ -1,11 +1,10 @@
 ﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
 - type: entity
   id: VendingMachine
-  parent: BaseConstructible
-  name: Vending machine
+  parent: BaseMachinePowered
+  name: vending machine
   abstract: true
   components:
-  - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
@@ -22,13 +21,12 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Damageable
-    resistances: metallicResistances
+      mass: 100
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
@@ -38,7 +36,6 @@
       type: VendingMachineBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-  - type: PowerReceiver
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending
