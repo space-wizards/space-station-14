@@ -91,6 +91,11 @@ namespace Content.Server.Nutrition.Components
 
         private void OpenedChanged()
         {
+            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(DrinkCanStateVisuals.Opened, Opened);
+            }
+
             if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? contents))
             {
                 return;
@@ -119,6 +124,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             }
 
+            appearance.SetData(DrinkCanStateVisuals.Opened, Opened);
             appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, contents.DrainAvailable.Float());
         }
 
