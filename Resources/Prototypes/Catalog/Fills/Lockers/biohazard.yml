@@ -6,17 +6,17 @@
  - type: entity
    id: ClosetL3VirologyFilled
    suffix: Filled, Virology
-  parent: ClosetL3Virology
+   parent: ClosetL3Virology
 
  - type: entity
    id: ClosetL3SecurityFilled
    suffix: Filled, Security
-  parent: ClosetL3Security
+   parent: ClosetL3Security
 
  - type: entity
    id: ClosetL3JanitorFilled
    suffix: Filled, Janitor
-  parent: ClosetL3Janitor
+   parent: ClosetL3Janitor
 
 # - type: entity
 #   id: ClosetL3ScienceFilled

@@ -1,5 +1,5 @@
 - type: entity
-  id: LockerToolFilled
+  id: ClosetToolFilled
   parent: ClosetTool
   suffix: Filled
   components:
