@@ -103,8 +103,10 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
-            var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            battery.NetworkBattery.LinkedNetworkCharging = default;
+            // Can be missing if the entity is being deleted, not a big deal.
+            if (discharger.Owner.TryGetComponent(out PowerNetworkBatteryComponent? battery))
+                battery.NetworkBattery.LinkedNetworkCharging = default;
+
             Dischargers.Remove(discharger);
             _powerNetSystem.QueueReconnectPowerNet(this);
         }
