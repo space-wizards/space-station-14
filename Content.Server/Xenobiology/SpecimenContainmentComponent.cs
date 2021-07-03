@@ -2,9 +2,11 @@ using Content.Server.CombatMode;
 using Content.Server.Interaction;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Verbs;
+using Content.Shared.Xenobiology;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -18,8 +20,7 @@ using YamlDotNet.Core.Tokens;
 namespace Content.Server.Xenobiology
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class SpecimenContainmentComponent : Component
+    public class SpecimenContainmentComponent : SharedXenoTubeComponent
     {
         public override string Name => "SpecimenContainmentComponent";
 
@@ -89,6 +90,15 @@ namespace Content.Server.Xenobiology
             var containedEntity = TubeContainer.ContainedEntity;
             if (containedEntity == null) return;
             TubeContainer.Remove(containedEntity);
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearancecomp))
+            {
+               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, Powered);
+               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity == null);
+            }
         }
 
 

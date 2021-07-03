@@ -1,13 +1,17 @@
 ﻿- type: entity
-  id: XenobioSpecimenCell
+  id: XenobioSpecimenTube
   parent: BaseConstructibleDynamic
   name: "Specimen Cell"
   description: 'No matter how many I cut, they are all girls!'
   components:
   - type: Sprite
+    netsync: false
+    state: tube-unpowered
     sprite: Constructible/Power/specimen_tube.rsi
-    state: tube-occupied
     drawdepth: FloorTiles
+  - type: Appearance
+    visuals:
+    - type: XenobioTubeVisualiser
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
