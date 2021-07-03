@@ -362,7 +362,7 @@
   parent: FoodBoxDonkpocket
   id: FoodBoxDonkpocketDink
   name: box of dink-pockets
-  description: 'Net Zero carbohydrates! No need for heating!'
+  description: Net Zero carbohydrates! No need for heating!
   components:
   - type: Sprite
     state: dink-box
