@@ -140,19 +140,19 @@
       state_closed: atmos_wardrobe_door
 
 - type: entity
-  id: LockerJanitor
+  id: ClosetJanitor
   parent: WardrobeMixed
   name: custodial closet
   description: It's a storage unit for janitorial clothes and gear.
 
 - type: entity
-  id: LockerFormal
+  id: WardrobeFormal
   parent: WardrobeBlack
   name: formal closet
   description: It's a storage unit for formal clothing.
 
 - type: entity
-  id: LockerChef
+  id: ClosetChef
   parent: WardrobeBlack
   name: chef's closet
   description: It's a storage unit for foodservice garments and mouse traps.
@@ -164,7 +164,7 @@
   description: It's a storage unit for Nanotrasen-approved religious attire.
 
 - type: entity
-  id: LockerLegal
+  id: ClosetLegal
   parent: WardrobeBlue
   name: legal closet
   description: It's a storage unit for courtroom apparel and items.

@@ -1,6 +1,6 @@
 - type: entity
   id: LockerToolFilled
-  parent: LockerTool
+  parent: ClosetTool
   suffix: Filled
   components:
   - type: StorageFill
@@ -91,8 +91,8 @@
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag
         prob: 0.15
-        
+
 - type: entity
-  id: LockerRadiationSuitFilled
-  parent: LockerRadiationSuit
+  id: ClosetRadiationSuitFilled
+  parent: ClosetRadiationSuit
   suffix: Filled
