@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Battery.Components;
 using Content.Server.PowerCell.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -21,7 +22,12 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption()
+            {
+                CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
+            };
+
+            var server = StartServerDummyTicker(options);
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
