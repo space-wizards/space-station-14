@@ -105,6 +105,14 @@ namespace Content.Server.Power.Components
             set => NetworkBattery.CanDischarge = value;
         }
 
+        [DataField("efficiency")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Efficiency
+        {
+            get => NetworkBattery.Efficiency;
+            set => NetworkBattery.Efficiency = value;
+        }
+
         [ViewVariables]
         public PowerState.Battery NetworkBattery { get; } = new();
     }
