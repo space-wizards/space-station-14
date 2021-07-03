@@ -130,7 +130,7 @@ namespace Content.IntegrationTests
 
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerIntegrationOptions();
+            options ??= new ServerContentIntegrationOption();
 
             // Load content resources, but not config and user data.
             options.Options = new ServerOptions()
@@ -259,7 +259,6 @@ namespace Content.IntegrationTests
                 LoadConfigAndUserData = false,
             };
 
-            public override Action BeforeStart { get; set; } = null;
             public Action ContentBeforeIoC { get; set; }
         }
 
@@ -276,7 +275,6 @@ namespace Content.IntegrationTests
                 LoadConfigAndUserData = false,
             };
 
-            public override Action BeforeStart { get; set; } = null;
             public Action ContentBeforeIoC { get; set; }
         }
     }
