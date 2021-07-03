@@ -16,11 +16,11 @@ namespace Content.Client.Cloning
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(XenoTubeStatus.Powered, out bool powered)) return;
             if (!component.TryGetData(XenoTubeStatus.Occupied, out bool occupied)) return;
-            if (powered == false) sprite.LayerSetState(0, "tube-unpowered");
-            if (powered == true)
+            if (!powered) sprite.LayerSetState(0, "tube-unpowered");
+            if (powered)
             {
-                if (occupied == false) sprite.LayerSetState(0, "tube-powered");
-                if (occupied == true) sprite.LayerSetState(0, "tube-occupied");
+                if (!occupied) sprite.LayerSetState(0, "tube-powered");
+                if (occupied) sprite.LayerSetState(0, "tube-occupied");
             }
         }
     }
