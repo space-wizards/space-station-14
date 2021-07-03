@@ -36,6 +36,7 @@ namespace Content.Server.Xenobiology
             base.Initialize();
             TubeContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "SpecimenContainer");
             //SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnInteractUsing);
+            UpdateAppearance();
         }
 
         [Verb]
@@ -83,6 +84,7 @@ namespace Content.Server.Xenobiology
         public void InsertBody(IEntity user)
         {
             TubeContainer.Insert(user);
+            UpdateAppearance();
         }
 
         public void EjectBody()
@@ -90,6 +92,7 @@ namespace Content.Server.Xenobiology
             var containedEntity = TubeContainer.ContainedEntity;
             if (containedEntity == null) return;
             TubeContainer.Remove(containedEntity);
+            UpdateAppearance();
         }
 
         private void UpdateAppearance()

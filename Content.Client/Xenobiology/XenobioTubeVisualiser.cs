@@ -14,9 +14,10 @@ namespace Content.Client.Cloning
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(XenoTubeStatus.Powered, out XenoTubeStatus powered)) return;
-            if (!component.TryGetData(XenoTubeStatus.Occupied, out XenoTubeStatus occupied)) return;
+            if (!component.TryGetData(XenoTubeStatus.Powered, out bool powered)) return;
+            if (!component.TryGetData(XenoTubeStatus.Occupied, out bool occupied)) return;
             if (powered.Equals(false)) sprite.LayerSetState(0, "tube-unpowered");
+            return;
             if (powered.Equals(true))
             {
                 if (occupied.Equals(false)) sprite.LayerSetState(0, "tube-powered");
