@@ -155,7 +155,7 @@ namespace Content.Server.Power.Pow3r
                     var scaledSpace = battery.CurrentStorage / frameTime;
                     var supplyCap = Math.Min(battery.MaxSupply,
                         battery.SupplyRampPosition + battery.SupplyRampTolerance);
-                    var supplyAndPassthrough = supplyCap + battery.CurrentReceiving;
+                    var supplyAndPassthrough = supplyCap + battery.CurrentReceiving * battery.Efficiency;
                     var tempSupply = Math.Min(scaledSpace, supplyAndPassthrough);
                     // Clamp final supply to the unmet demand, so that batteries refrain from taking power away from supplies.
                     var clampedSupply = Math.Min(unmet, tempSupply);
@@ -240,7 +240,7 @@ namespace Content.Server.Power.Pow3r
                             0,
                             battery.CurrentStorage - frameTime * battery.CurrentSupply);
 
-                        battery.SupplyRampTarget = battery.CurrentSupply - battery.CurrentReceiving;
+                        battery.SupplyRampTarget = battery.CurrentSupply - battery.CurrentReceiving * battery.Efficiency;
 
                         /*var maxSupplyRatio = supply.MaxSupply / maxSupplySum;
 
@@ -256,7 +256,7 @@ namespace Content.Server.Power.Pow3r
             {
                 if (battery.Paused)
                     continue;
-                
+
                 if (!battery.SupplyingMarked)
                     battery.CurrentSupply = 0;
 
