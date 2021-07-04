@@ -273,6 +273,9 @@ namespace Content.Client.Entry
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
+            "DeviceNetworkConnection",
+            "WiredNetworkConnection",
+            "WirelessNetworkConnection",
         };
     }
 }
