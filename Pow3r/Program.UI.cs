@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ImGuiNET;
 using Robust.Shared.Maths;
 using static ImGuiNET.ImGui;
@@ -12,6 +13,11 @@ namespace Pow3r
     internal sealed partial class Program
     {
         private bool _showDemo;
+
+        private Dictionary<NodeId, DisplayLoad> _displayLoads = new();
+        private Dictionary<NodeId, DisplayBattery> _displayBatteries = new();
+        private Dictionary<NodeId, DisplayNetwork> _displayNetworks = new();
+        private Dictionary<NodeId, DisplaySupply> _displaySupplies = new();
 
         private void DoUI(float frameTime)
         {
@@ -32,24 +38,28 @@ namespace Pow3r
             {
                 var id = AllocId();
                 _state.Supplies.Add(id, new Supply { Id = id });
+                _displaySupplies.Add(id, new DisplaySupply());
             }
 
             if (Button("Load"))
             {
                 var id = AllocId();
                 _state.Loads.Add(id, new Load { Id = id });
+                _displayLoads.Add(id, new DisplayLoad());
             }
 
             if (Button("Network"))
             {
                 var id = AllocId();
                 _state.Networks.Add(id, new Network { Id = id });
+                _displayNetworks.Add(id, new DisplayNetwork());
             }
 
             if (Button("Battery"))
             {
                 var id = AllocId();
                 _state.Batteries.Add(id, new Battery { Id = id });
+                _displayBatteries.Add(id, new DisplayBattery());
             }
 
             Checkbox("Paused", ref _paused);
@@ -91,11 +101,12 @@ namespace Pow3r
 
             foreach (var network in _state.Networks.Values)
             {
+                var displayNetwork = _displayNetworks[network.Id];
                 Begin($"Network {network.Id}##Gen{network.Id}");
 
                 Text($"Height: {network.Height}");
 
-                network.CurrentWindowPos = CalcWindowCenter();
+                displayNetwork.CurrentWindowPos = CalcWindowCenter();
 
                 if (Button("Delete"))
                 {
@@ -129,14 +140,16 @@ namespace Pow3r
 
             foreach (var load in _state.Loads.Values)
             {
+                var displayLoad = _displayLoads[load.Id];
+
                 Begin($"Load {load.Id}##Load{load.Id}");
 
                 Checkbox("Enabled", ref load.Enabled);
                 SliderFloat("Desired", ref load.DesiredPower, 0, 1000, "%.0f W");
 
-                load.CurrentWindowPos = CalcWindowCenter();
+                displayLoad.CurrentWindowPos = CalcWindowCenter();
 
-                PlotLines("", ref load.ReceivedPowerData[0], MaxTickData, _tickDataIdx + 1,
+                PlotLines("", ref displayLoad.ReceivedPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Receiving: {load.ReceivingPower:N1} W",
                     0,
                     load.DesiredPower, new Vector2(250, 150));
@@ -171,6 +184,7 @@ namespace Pow3r
 
             foreach (var supply in _state.Supplies.Values)
             {
+                var displaySupply = _displaySupplies[supply.Id];
                 Begin($"Generator {supply.Id}##Gen{supply.Id}");
 
                 Checkbox("Enabled", ref supply.Enabled);
@@ -178,11 +192,11 @@ namespace Pow3r
                 SliderFloat("Ramp", ref supply.SupplyRampRate, 0, 100, "%.0f W/s");
                 SliderFloat("Tolerance", ref supply.SupplyRampTolerance, 0, 100, "%.0f W");
 
-                supply.CurrentWindowPos = CalcWindowCenter();
+                displaySupply.CurrentWindowPos = CalcWindowCenter();
 
                 Text($"Ramp Position: {supply.SupplyRampPosition:N1}");
 
-                PlotLines("", ref supply.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
+                PlotLines("", ref displaySupply.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Supply: {supply.CurrentSupply:N1} W",
                     0, supply.MaxSupply, new Vector2(250, 150));
 
@@ -216,6 +230,8 @@ namespace Pow3r
 
             foreach (var battery in _state.Batteries.Values)
             {
+                var displayBattery = _displayBatteries[battery.Id];
+
                 Begin($"Battery {battery.Id}##Bat{battery.Id}");
 
                 Checkbox("Enabled", ref battery.Enabled);
@@ -228,19 +244,19 @@ namespace Pow3r
                 SliderFloat("Efficiency", ref percent, 0, 100, "%.0f %%");
                 battery.Efficiency = percent / 100;
 
-                battery.CurrentWindowPos = CalcWindowCenter();
+                displayBattery.CurrentWindowPos = CalcWindowCenter();
 
                 SliderFloat("Ramp position", ref battery.SupplyRampPosition, 0, battery.MaxSupply, "%.0f W");
 
-                PlotLines("", ref battery.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
+                PlotLines("", ref displayBattery.SuppliedPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"OUT: {battery.CurrentSupply:N1} W",
                     0, battery.MaxSupply + 1000, new Vector2(250, 75));
 
-                PlotLines("", ref battery.ReceivingPowerData[0], MaxTickData, _tickDataIdx + 1,
+                PlotLines("", ref displayBattery.ReceivingPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"IN: {battery.CurrentReceiving:N1} W",
                     0, battery.MaxChargeRate + 1000, new Vector2(250, 75));
 
-                PlotLines("", ref battery.StoredPowerData[0], MaxTickData, _tickDataIdx + 1,
+                PlotLines("", ref displayBattery.StoredPowerData[0], MaxTickData, _tickDataIdx + 1,
                     $"Charge: {battery.CurrentStorage:N1} J",
                     0, battery.Capacity, new Vector2(250, 75));
 
@@ -302,28 +318,29 @@ namespace Pow3r
 
             foreach (var network in _state.Networks.Values)
             {
+                var displayNet = _displayNetworks[network.Id];
                 foreach (var supplyId in network.Supplies)
                 {
-                    var supply = _state.Supplies[supplyId];
-                    DrawArrowLine(bgDrawList, network.CurrentWindowPos, supply.CurrentWindowPos, Color.LawnGreen);
+                    var supply = _displaySupplies[supplyId];
+                    DrawArrowLine(bgDrawList, displayNet.CurrentWindowPos, supply.CurrentWindowPos, Color.LawnGreen);
                 }
 
                 foreach (var loadId in network.Loads)
                 {
-                    var load = _state.Loads[loadId];
-                    DrawArrowLine(bgDrawList, load.CurrentWindowPos, network.CurrentWindowPos, Color.Red);
+                    var load = _displayLoads[loadId];
+                    DrawArrowLine(bgDrawList, load.CurrentWindowPos, displayNet.CurrentWindowPos, Color.Red);
                 }
 
                 foreach (var batteryId in network.BatteriesCharging)
                 {
-                    var battery = _state.Batteries[batteryId];
-                    DrawArrowLine(bgDrawList, battery.CurrentWindowPos, network.CurrentWindowPos, Color.Purple);
+                    var battery = _displayBatteries[batteryId];
+                    DrawArrowLine(bgDrawList, battery.CurrentWindowPos, displayNet.CurrentWindowPos, Color.Purple);
                 }
 
                 foreach (var batteryId in network.BatteriesDischarging)
                 {
-                    var battery = _state.Batteries[batteryId];
-                    DrawArrowLine(bgDrawList, network.CurrentWindowPos, battery.CurrentWindowPos, Color.Cyan);
+                    var battery = _displayBatteries[batteryId];
+                    DrawArrowLine(bgDrawList, displayNet.CurrentWindowPos, battery.CurrentWindowPos, Color.Cyan);
                 }
             }
 
@@ -339,23 +356,27 @@ namespace Pow3r
                 {
                     case Network n:
                         _state.Networks.Remove(n.Id);
+                        _displayNetworks.Remove(n.Id);
                         reLink = true;
                         break;
 
                     case Supply s:
                         _state.Supplies.Remove(s.Id);
                         _state.Networks.Values.ForEach(n => n.Supplies.Remove(s.Id));
+                        _displaySupplies.Remove(s.Id);
                         break;
 
                     case Load l:
                         _state.Loads.Remove(l.Id);
                         _state.Networks.Values.ForEach(n => n.Loads.Remove(l.Id));
+                        _displayLoads.Remove(l.Id);
                         break;
 
                     case Battery b:
                         _state.Batteries.Remove(b.Id);
                         _state.Networks.Values.ForEach(n => n.BatteriesCharging.Remove(b.Id));
                         _state.Networks.Values.ForEach(n => n.BatteriesDischarging.Remove(b.Id));
+                        _displayBatteries.Remove(b.Id);
                         break;
                 }
             }
@@ -408,6 +429,31 @@ namespace Pow3r
         private static Vector2 CvtVec(RobustVec2 vec)
         {
             return new Vector2(vec.X, vec.Y);
+        }
+
+        private sealed class DisplayNetwork
+        {
+            public Vector2 CurrentWindowPos;
+        }
+
+        private sealed class DisplayBattery
+        {
+            public Vector2 CurrentWindowPos;
+            public readonly float[] ReceivingPowerData = new float[MaxTickData];
+            public readonly float[] SuppliedPowerData = new float[MaxTickData];
+            public readonly float[] StoredPowerData = new float[MaxTickData];
+        }
+
+        private sealed class DisplayLoad
+        {
+            public Vector2 CurrentWindowPos;
+            public readonly float[] ReceivedPowerData = new float[MaxTickData];
+        }
+
+        private sealed class DisplaySupply
+        {
+            public Vector2 CurrentWindowPos;
+            public readonly float[] SuppliedPowerData = new float[MaxTickData];
         }
     }
 }

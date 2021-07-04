@@ -31,6 +31,11 @@ namespace Pow3r
                 Batteries = dat.Batteries.ToDictionary(b => b.Id, b => b)
             };
 
+            _displayLoads = dat.Loads.ToDictionary(n => n.Id, _ => new DisplayLoad());
+            _displaySupplies = dat.Supplies.ToDictionary(n => n.Id, _ => new DisplaySupply());
+            _displayBatteries = dat.Batteries.ToDictionary(n => n.Id, _ => new DisplayBattery());
+            _displayNetworks = dat.Networks.ToDictionary(n => n.Id, _ => new DisplayNetwork());
+
             RefreshLinks();
         }
 

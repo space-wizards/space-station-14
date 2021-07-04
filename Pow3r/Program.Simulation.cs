@@ -58,19 +58,22 @@ namespace Pow3r
             // Update tick history.
             foreach (var load in _state.Loads.Values)
             {
-                load.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
+                var displayLoad = _displayLoads[load.Id];
+                displayLoad.ReceivedPowerData[_tickDataIdx] = load.ReceivingPower;
             }
 
             foreach (var supply in _state.Supplies.Values)
             {
-                supply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
+                var displaySupply = _displaySupplies[supply.Id];
+                displaySupply.SuppliedPowerData[_tickDataIdx] = supply.CurrentSupply;
             }
 
             foreach (var battery in _state.Batteries.Values)
             {
-                battery.StoredPowerData[_tickDataIdx] = battery.CurrentStorage;
-                battery.ReceivingPowerData[_tickDataIdx] = battery.CurrentReceiving;
-                battery.SuppliedPowerData[_tickDataIdx] = battery.CurrentSupply;
+                var displayBattery = _displayBatteries[battery.Id];
+                displayBattery.StoredPowerData[_tickDataIdx] = battery.CurrentStorage;
+                displayBattery.ReceivingPowerData[_tickDataIdx] = battery.CurrentReceiving;
+                displayBattery.SuppliedPowerData[_tickDataIdx] = battery.CurrentSupply;
             }
 
             _simTickTimes[_tickDataIdx] = (float) _simStopwatch.Elapsed.TotalMilliseconds;

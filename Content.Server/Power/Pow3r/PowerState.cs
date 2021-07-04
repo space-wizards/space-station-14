@@ -104,10 +104,6 @@ namespace Content.Server.Power.Pow3r
 
             // In-tick max supply thanks to ramp. Used during calculations.
             [JsonIgnore] public float EffectiveMaxSupply;
-
-            // == Display ==
-            [JsonIgnore] public Vector2 CurrentWindowPos;
-            [JsonIgnore] public readonly float[] SuppliedPowerData = new float[MaxTickData];
         }
 
         public sealed class Load
@@ -123,10 +119,6 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] public float ReceivingPower;
 
             [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
-
-            // == Display ==
-            [JsonIgnore] public Vector2 CurrentWindowPos;
-            [JsonIgnore] public readonly float[] ReceivedPowerData = new float[MaxTickData];
         }
 
         public sealed class Battery
@@ -176,12 +168,6 @@ namespace Content.Server.Power.Pow3r
 
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public NodeId LinkedNetworkDischarging;
-
-            // == Display ==
-            [JsonIgnore] public Vector2 CurrentWindowPos;
-            [JsonIgnore] public readonly float[] ReceivingPowerData = new float[MaxTickData];
-            [JsonIgnore] public readonly float[] SuppliedPowerData = new float[MaxTickData];
-            [JsonIgnore] public readonly float[] StoredPowerData = new float[MaxTickData];
         }
 
         // Readonly breaks json serialization.
@@ -200,7 +186,8 @@ namespace Content.Server.Power.Pow3r
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             [ViewVariables] public List<NodeId> BatteriesDischarging = new();
 
-            // Calculation parameters
+            // Calculation parameters used by GraphWalkSolver.
+            // Unused by BatteryRampPegSolver.
             [JsonIgnore] public float LocalDemandTotal;
             [JsonIgnore] public float LocalDemandMet;
             [JsonIgnore] public float GroupDemandTotal;
@@ -215,8 +202,6 @@ namespace Content.Server.Power.Pow3r
             // Max theoretical supply assuming max ramp.
             [JsonIgnore] public float TheoreticalSupplyTotal;
             public float RemainingDemand => LocalDemandTotal - LocalDemandMet;
-
-            [JsonIgnore] public Vector2 CurrentWindowPos;
         }
     }
 }
