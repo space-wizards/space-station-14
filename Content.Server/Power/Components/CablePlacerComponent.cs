@@ -1,6 +1,5 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -10,7 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.WireHacking.Components
+namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     internal class CablePlacerComponent : Component, IAfterInteract
@@ -21,8 +20,8 @@ namespace Content.Server.WireHacking.Components
         public override string Name => "CablePlacer";
 
         [ViewVariables]
-        [DataField("wirePrototypeID")]
-        private string? _wirePrototypeID = "HVCable";
+        [DataField("cablePrototypeID")]
+        private string? _cablePrototypeID = "HVCable";
 
         [ViewVariables]
         [DataField("blockingWireType")]
@@ -31,7 +30,7 @@ namespace Content.Server.WireHacking.Components
         /// <inheritdoc />
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (_wirePrototypeID == null)
+            if (_cablePrototypeID == null)
                 return true;
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return true;
@@ -52,7 +51,7 @@ namespace Content.Server.WireHacking.Components
                 && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
                 return true;
 
-            Owner.EntityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
+            Owner.EntityManager.SpawnEntity(_cablePrototypeID, grid.GridTileToLocal(snapPos));
             return true;
         }
     }
