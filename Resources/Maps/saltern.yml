@@ -4366,7 +4366,7 @@ entities:
   type: RandomSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: -0.5,-22.5
+    pos: -0.5,-23.5
     parent: 853
     type: Transform
 - uid: 463
@@ -4422,7 +4422,7 @@ entities:
   type: RandomSpawner
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-6.5
+    pos: 0.5,-7.5
     parent: 853
     type: Transform
 - uid: 471

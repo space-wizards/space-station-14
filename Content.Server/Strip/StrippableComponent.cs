@@ -197,7 +197,7 @@ namespace Content.Server.Strip
                 NeedHand = true,
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(item!.Owner, false);
@@ -264,7 +264,7 @@ namespace Content.Server.Strip
                 NeedHand = true,
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
@@ -314,7 +314,7 @@ namespace Content.Server.Strip
                 BreakOnUserMove = true,
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
             var item = inventory.GetSlotItem(slot);
@@ -370,7 +370,7 @@ namespace Content.Server.Strip
                 BreakOnUserMove = true,
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
             var item = hands.GetItem(hand);
