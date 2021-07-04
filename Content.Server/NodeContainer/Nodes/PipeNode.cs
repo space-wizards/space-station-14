@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -13,9 +12,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
+namespace Content.Server.NodeContainer.Nodes
 {
     /// <summary>
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeDirection"/>
@@ -63,21 +63,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             set
             {
                 _connectionsEnabled = value;
-                RefreshNodeGroup();
+
+                if (NodeGroup != null)
+                    EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
             }
         }
+
+        [DataField("connectionsEnabled")]
+        private bool _connectionsEnabled = true;
 
         [DataField("rotationsEnabled")]
         public bool RotationsEnabled { get; set; } = true;
 
         /// <summary>
-        ///     The <see cref="IPipeNet"/> this pipe is a part of. Set to <see cref="PipeNet.NullNet"/> when not in an <see cref="IPipeNet"/>.
+        ///     The <see cref="IPipeNet"/> this pipe is a part of.
         /// </summary>
         [ViewVariables]
-        private IPipeNet _pipeNet = PipeNet.NullNet;
-
-        [DataField("connectionsEnabled")]
-        private bool _connectionsEnabled = true;
+        private IPipeNet? PipeNet => (IPipeNet?) NodeGroup;
 
         /// <summary>
         ///     Whether to ignore the pipenet and return the environment's air.
@@ -92,8 +94,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public GasMixture Air
         {
-            get => !EnvironmentalAir ? _pipeNet.Air : Owner.Transform.Coordinates.GetTileAir() ?? GasMixture.SpaceGas;
-            set => _pipeNet.Air = value;
+            get => (!EnvironmentalAir ? PipeNet?.Air : Owner.Transform.Coordinates.GetTileAir()) ?? GasMixture.SpaceGas;
+            set
+            {
+                DebugTools.Assert(PipeNet != null);
+                PipeNet!.Air = value;
+            }
         }
 
         public void AssumeAir(GasMixture giver)
@@ -105,7 +111,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 return;
             }
 
-            EntitySystem.Get<AtmosphereSystem>().Merge(_pipeNet.Air, giver);
+            EntitySystem.Get<AtmosphereSystem>().Merge(PipeNet!.Air, giver);
         }
 
         [ViewVariables]
@@ -128,13 +134,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void JoinPipeNet(IPipeNet pipeNet)
         {
-            _pipeNet = pipeNet;
-            OnConnectedDirectionsNeedsUpdating();
-        }
-
-        public void ClearPipeNet()
-        {
-            _pipeNet = PipeNet.NullNet;
             OnConnectedDirectionsNeedsUpdating();
         }
 
@@ -146,12 +145,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!RotationsEnabled) return;
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
-            RefreshNodeGroup();
             OnConnectedDirectionsNeedsUpdating();
             UpdateAppearance();
         }
 
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {

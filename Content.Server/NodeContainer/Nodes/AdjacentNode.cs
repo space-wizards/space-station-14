@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,29 +13,19 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public class AdjacentNode : Node
     {
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             if (!Owner.Transform.Anchored)
                 yield break;
 
+            var compMgr = IoCManager.Resolve<IComponentManager>();
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var coords = Owner.Transform.Coordinates;
-            foreach (var cell in grid.GetCardinalNeighborCells(coords))
+            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+
+            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(compMgr, grid, gridIndex))
             {
-                foreach (var entity in grid.GetLocal(Owner.EntityManager.GetEntity(cell).Transform.Coordinates))
-                {
-                    if (!Owner.EntityManager.GetEntity(entity).TryGetComponent<NodeContainerComponent>(out var container))
-                        continue;
-
-                    foreach (var node in container.Nodes.Values)
-                    {
-                        if (node != null && node != this)
-                        {
-                            yield return node;
-                        }
-                    }
-
-                }
+                if (node != this)
+                    yield return node;
             }
         }
     }

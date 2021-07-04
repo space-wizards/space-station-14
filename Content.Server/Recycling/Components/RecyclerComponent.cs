@@ -47,7 +47,7 @@ namespace Content.Server.Recycling.Components
         private float _efficiency = 0.25f;
 
         private bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
+            !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         private void Bloodstain()
@@ -97,7 +97,7 @@ namespace Content.Server.Recycling.Components
 
         public bool CanRun()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;

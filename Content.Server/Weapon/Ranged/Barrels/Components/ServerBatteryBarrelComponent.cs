@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Battery.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;

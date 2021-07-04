@@ -44,7 +44,7 @@ namespace Content.Server.Singularity.Components
         private PowerConsumerComponent _powerConsumer = default!;
 
         // whether the power switch is in "on"
-        [ViewVariables] private bool _isOn;
+        [ViewVariables] public bool IsOn { get; private set; }
         // Whether the power switch is on AND the machine has enough power (so is actively firing)
         [ViewVariables] private bool _isPowered;
         [ViewVariables] private bool _isLocked;
@@ -64,32 +64,6 @@ namespace Content.Server.Singularity.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.EnsureComponent<PowerConsumerComponent>(out _powerConsumer);
-
-            _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
-        }
-
-        private void OnReceivedPowerChanged(object? sender, ReceivedPowerChangedEventArgs e)
-        {
-            if (!_isOn)
-            {
-                return;
-            }
-
-            if (e.ReceivedPower < e.DrawRate)
-            {
-                PowerOff();
-            }
-            else
-            {
-                PowerOn();
-            }
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_isLocked)
@@ -100,7 +74,7 @@ namespace Content.Server.Singularity.Components
 
             if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
-                if (!_isOn)
+                if (!IsOn)
                 {
                     SwitchOn();
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
@@ -149,7 +123,7 @@ namespace Content.Server.Singularity.Components
 
         public void SwitchOff()
         {
-            _isOn = false;
+            IsOn = false;
             _powerConsumer.DrawRate = 0;
             PowerOff();
             UpdateAppearance();
@@ -157,14 +131,14 @@ namespace Content.Server.Singularity.Components
 
         public void SwitchOn()
         {
-            _isOn = true;
+            IsOn = true;
             _powerConsumer.DrawRate = _powerUseActive;
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
             UpdateAppearance();
         }
 
-        private void PowerOff()
+        public void PowerOff()
         {
             if (!_isPowered)
             {
@@ -180,7 +154,7 @@ namespace Content.Server.Singularity.Components
             UpdateAppearance();
         }
 
-        private void PowerOn()
+        public void PowerOn()
         {
             if (_isPowered)
             {
@@ -202,7 +176,7 @@ namespace Content.Server.Singularity.Components
             // Any power-off condition should result in the timer for this method being cancelled
             // and thus not firing
             DebugTools.Assert(_isPowered);
-            DebugTools.Assert(_isOn);
+            DebugTools.Assert(IsOn);
             DebugTools.Assert(_powerConsumer.DrawRate <= _powerConsumer.ReceivedPower);
 
             Fire();
@@ -269,7 +243,7 @@ namespace Content.Server.Singularity.Components
             {
                 state = EmitterVisualState.On;
             }
-            else if (_isOn)
+            else if (IsOn)
             {
                 state = EmitterVisualState.Underpowered;
             }
