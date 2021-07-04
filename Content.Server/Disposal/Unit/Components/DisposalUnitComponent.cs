@@ -196,7 +196,7 @@ namespace Content.Server.Disposal.Unit.Components
                     NeedHand = false,
                 };
 
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
+                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;
