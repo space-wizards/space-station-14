@@ -102,7 +102,7 @@ namespace Content.Server.Power.Pow3r
                     batterySpace = Math.Max(0, batterySpace);
                     var scaledSpace = batterySpace / frameTime;
 
-                    var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand;
+                    var chargeRate = battery.MaxChargeRate + battery.LoadingNetworkDemand / battery.Efficiency;
 
                     var batDemand = Math.Min(chargeRate, scaledSpace);
 
