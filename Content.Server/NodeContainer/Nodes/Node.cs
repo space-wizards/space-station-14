@@ -1,11 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -26,20 +23,14 @@ namespace Content.Server.NodeContainer.Nodes
         [DataField("nodeGroupID")]
         public NodeGroupID NodeGroupID { get; private set; } = NodeGroupID.Default;
 
-        [ViewVariables]
-        public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
-        private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
+        [ViewVariables] public INodeGroup? NodeGroup;
 
-        [ViewVariables]
-        public IEntity Owner { get; private set; } = default!;
-
-        [ViewVariables]
-        private bool _needsGroup = true;
+        [ViewVariables] public IEntity Owner { get; private set; } = default!;
 
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
         /// </summary>
-        public bool Connectable => !_deleting && Anchored;
+        public bool Connectable => !Deleting && Anchored;
 
         protected bool Anchored => !NeedAnchored || Owner.Transform.Anchored;
 
@@ -50,7 +41,15 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.
         /// </summary>
-        private bool _deleting;
+        public bool Deleting;
+
+        public readonly HashSet<Node> ReachableNodes = new();
+
+        internal int FloodGen;
+        internal int UndirectGen;
+        internal bool FlaggedForFlood;
+        internal int NetId;
+        public string Name = default!;
 
         public virtual void Initialize(IEntity owner)
         {
@@ -59,20 +58,23 @@ namespace Content.Server.NodeContainer.Nodes
 
         public virtual void OnContainerStartup()
         {
-            TryAssignGroupIfNeeded();
-            CombineGroupWithReachable();
+            EntitySystem.Get<NodeGroupSystem>().QueueReflood(this);
+        }
+
+        public void CreateSingleNetImmediate()
+        {
+            EntitySystem.Get<NodeGroupSystem>().CreateSingleNetImmediate(this);
         }
 
         public void AnchorUpdate()
         {
             if (Anchored)
             {
-                TryAssignGroupIfNeeded();
-                CombineGroupWithReachable();
+                EntitySystem.Get<NodeGroupSystem>().QueueReflood(this);
             }
             else
             {
-                RemoveSelfFromGroup();
+                EntitySystem.Get<NodeGroupSystem>().QueueNodeRemove(this);
             }
         }
 
@@ -80,107 +82,21 @@ namespace Content.Server.NodeContainer.Nodes
         {
         }
 
+        public virtual void OnPostRebuild()
+        {
+
+        }
+
         public virtual void OnContainerShutdown()
         {
-            _deleting = true;
-            NodeGroup.RemoveNode(this);
-        }
-
-        public bool TryAssignGroupIfNeeded()
-        {
-            if (!_needsGroup || !Connectable)
-            {
-                return false;
-            }
-            NodeGroup = GetReachableCompatibleGroups().FirstOrDefault() ?? MakeNewGroup();
-            return true;
-        }
-
-        public void SpreadGroup()
-        {
-            Debug.Assert(!_needsGroup);
-            foreach (var node in GetReachableCompatibleNodes())
-            {
-                if (node._needsGroup)
-                {
-                    node.NodeGroup = NodeGroup;
-                    node.SpreadGroup();
-                }
-            }
-        }
-
-        public void ClearNodeGroup()
-        {
-            _nodeGroup = BaseNodeGroup.NullGroup;
-            _needsGroup = true;
-        }
-
-        protected void RefreshNodeGroup()
-        {
-            RemoveSelfFromGroup();
-            TryAssignGroupIfNeeded();
-            CombineGroupWithReachable();
+            Deleting = true;
+            EntitySystem.Get<NodeGroupSystem>().QueueNodeRemove(this);
         }
 
         /// <summary>
         ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
         ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.
         /// </summary>
-        protected abstract IEnumerable<Node> GetReachableNodes();
-
-        private IEnumerable<Node> GetReachableCompatibleNodes()
-        {
-            foreach (var node in GetReachableNodes())
-            {
-                if (node.NodeGroupID == NodeGroupID && node.Connectable)
-                {
-                    yield return node;
-                }
-            }
-        }
-
-        private IEnumerable<INodeGroup> GetReachableCompatibleGroups()
-        {
-            foreach (var node in GetReachableCompatibleNodes())
-            {
-                if (!node._needsGroup)
-                {
-                    var group = node.NodeGroup;
-                    if (group != NodeGroup)
-                    {
-                        yield return group;
-                    }
-                }
-            }
-        }
-
-        private void CombineGroupWithReachable()
-        {
-            if (_needsGroup || !Connectable)
-                return;
-
-            foreach (var group in GetReachableCompatibleGroups())
-            {
-                NodeGroup.CombineGroup(group);
-            }
-        }
-
-        private void SetNodeGroup(INodeGroup newGroup)
-        {
-            _nodeGroup = newGroup;
-            NodeGroup.AddNode(this);
-            _needsGroup = false;
-        }
-
-        private INodeGroup MakeNewGroup()
-        {
-            return IoCManager.Resolve<INodeGroupFactory>().MakeNodeGroup(this);
-        }
-
-        private void RemoveSelfFromGroup()
-        {
-            NodeGroup.RemoveNode(this);
-            ClearNodeGroup();
-        }
+        public abstract IEnumerable<Node> GetReachableNodes();
     }
 }

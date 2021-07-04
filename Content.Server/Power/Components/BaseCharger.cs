@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.Battery.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
@@ -45,7 +44,7 @@ namespace Content.Server.Power.Components
         {
             base.Initialize();
 
-            Owner.EnsureComponent<PowerReceiverComponent>();
+            Owner.EnsureComponent<ApcPowerReceiverComponent>();
             _container = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powerCellContainer");
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
         }
@@ -191,7 +190,7 @@ namespace Content.Server.Power.Components
 
         private CellChargerStatus GetStatus()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return CellChargerStatus.Off;
@@ -234,7 +233,7 @@ namespace Content.Server.Power.Components
             // Not called UpdateAppearance just because it messes with the load
             var status = GetStatus();
             if (_status == status ||
-                !Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+                !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -279,7 +278,7 @@ namespace Content.Server.Power.Components
 
         private void TransferPower(float frameTime)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return;

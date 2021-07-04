@@ -50,7 +50,7 @@ namespace Content.Server.Engineering.EntitySystems
                     BreakOnStun = true,
                     PostCheck = IsTileClear,
                 };
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
+                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result != DoAfterStatus.Finished)
                     return;

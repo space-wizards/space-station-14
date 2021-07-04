@@ -122,7 +122,24 @@ namespace Content.IntegrationTests.Tests
                 two = reader.ReadToEnd();
             }
 
-            Assert.That(one, Is.EqualTo(two));
+            Assert.Multiple(() => {
+                Assert.That(two, Is.EqualTo(one));
+                var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
+                if (failed != null)
+                {
+                    var oneTmp = Path.GetTempFileName();
+                    var twoTmp = Path.GetTempFileName();
+
+                    File.WriteAllText(oneTmp, one);
+                    File.WriteAllText(twoTmp, two);
+
+                    TestContext.AddTestAttachment(oneTmp, "First save file");
+                    TestContext.AddTestAttachment(twoTmp, "Second save file");
+                    TestContext.Error.WriteLine("Complete output:");
+                    TestContext.Error.WriteLine(oneTmp);
+                    TestContext.Error.WriteLine(twoTmp);
+                }
+            });
         }
     }
 }
