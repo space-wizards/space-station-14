@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Power
 {
     [Parallelizable(ParallelScope.Fixtures)]
     [TestFixture]
