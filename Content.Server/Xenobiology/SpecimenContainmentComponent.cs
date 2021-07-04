@@ -2,6 +2,7 @@ using Content.Server.CombatMode;
 using Content.Server.Interaction;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -20,7 +21,7 @@ using YamlDotNet.Core.Tokens;
 namespace Content.Server.Xenobiology
 {
     [RegisterComponent]
-    public class SpecimenContainmentComponent : SharedXenoTubeComponent
+    public class SpecimenContainmentComponent : SharedXenoTubeComponent, IDestroyAct
     {
         public override string Name => "SpecimenContainmentComponent";
 
@@ -29,13 +30,18 @@ namespace Content.Server.Xenobiology
         [ViewVariables] public ContainerSlot TubeContainer = default!;
 
         public bool IsOccupied => TubeContainer.ContainedEntity != null;
-        [ViewVariables] public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] public bool IsPowered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         protected override void Initialize()
         {
             base.Initialize();
             TubeContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "SpecimenContainer");
             //SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnInteractUsing);
+            UpdateAppearance();
+        }
+
+        public void Update(float frameTime)
+        {
             UpdateAppearance();
         }
 
@@ -95,12 +101,18 @@ namespace Content.Server.Xenobiology
             UpdateAppearance();
         }
 
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            EjectBody();
+        }
+
         private void UpdateAppearance()
         {
+            //It doesn't work otherwise, lord singulo forgive me
             if (Owner.TryGetComponent(out AppearanceComponent? appearancecomp))
             {
-               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, Powered);
-               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity == null);
+               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, IsPowered);
+               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity != null);
             }
         }
 

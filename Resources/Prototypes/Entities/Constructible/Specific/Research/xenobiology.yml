@@ -2,11 +2,11 @@
   id: XenobioSpecimenTube
   parent: BaseConstructibleDynamic
   name: "Specimen Cell"
-  description: 'No matter how many I cut, they are all girls!'
+  description: 'Science was preoccupied with whether it could, not whether it should.'
   components:
   - type: Sprite
+    state: tube-powered
     netsync: false
-    state: tube-unpowered
     sprite: Constructible/Power/specimen_tube.rsi
     drawdepth: FloorTiles
   - type: Appearance

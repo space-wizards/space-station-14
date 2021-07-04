@@ -14,13 +14,13 @@ namespace Content.Client.Cloning
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(XenoTubeStatus.Powered, out bool powered)) return;
-            if (!component.TryGetData(XenoTubeStatus.Occupied, out bool occupied)) return;
+            if (!component.TryGetData(XenoTubeStatus.Powered, out bool powered)) ;// return;
+            if (!component.TryGetData(XenoTubeStatus.Occupied, out bool occupied)) ;// return;
             if (!powered) sprite.LayerSetState(0, "tube-unpowered");
-            if (powered)
+            else if (powered)
             {
                 if (!occupied) sprite.LayerSetState(0, "tube-powered");
-                if (occupied) sprite.LayerSetState(0, "tube-occupied");
+                else if (occupied) sprite.LayerSetState(0, "tube-occupied");
             }
         }
     }
