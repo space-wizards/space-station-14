@@ -69,16 +69,18 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            var netBattery = apc.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            netBattery.NetworkBattery.LinkedNetworkDischarging = default;
+            if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
+                netBattery.NetworkBattery.LinkedNetworkDischarging = default;
+
             _powerNetSystem.QueueReconnectApcNet(this);
             Apcs.Add(apc);
         }
 
         public void RemoveApc(ApcComponent apc)
         {
-            var netBattery = apc.Owner.GetComponent<PowerNetworkBatteryComponent>();
-            netBattery.NetworkBattery.LinkedNetworkDischarging = default;
+            if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
+                netBattery.NetworkBattery.LinkedNetworkDischarging = default;
+
             _powerNetSystem.QueueReconnectApcNet(this);
             Apcs.Remove(apc);
         }
