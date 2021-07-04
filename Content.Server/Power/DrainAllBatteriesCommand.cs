@@ -24,13 +24,7 @@ namespace Content.Server.Power
             }
 
             var comp = IoCManager.Resolve<IComponentManager>();
-            foreach (var VARIABLE in comp.EntityQuery<BatteryComponent>())
-            {
-
-            }
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var batteryComp in entityManager.ComponentManager.EntityQuery<BatteryComponent>())
+            foreach (var batteryComp in comp.EntityQuery<BatteryComponent>())
             {
                 batteryComp.CurrentCharge = 0;
             }
