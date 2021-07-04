@@ -1155,7 +1155,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -4650,7 +4650,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -4749,7 +4749,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -5095,7 +5095,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -12346,7 +12346,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -12369,7 +12369,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13594,7 +13594,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13675,7 +13675,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13699,7 +13699,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13723,7 +13723,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -13757,7 +13757,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14124,7 +14124,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14660,7 +14660,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 1191
@@ -14727,7 +14727,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14755,7 +14755,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14769,7 +14769,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14841,7 +14841,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14885,7 +14885,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -14899,7 +14899,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15006,7 +15006,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15034,7 +15034,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15048,7 +15048,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15062,7 +15062,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15233,7 +15233,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15247,7 +15247,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15261,7 +15261,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15275,7 +15275,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15289,7 +15289,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15309,7 +15309,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15342,7 +15342,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15394,7 +15394,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15453,7 +15453,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15467,7 +15467,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15481,7 +15481,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15495,7 +15495,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15509,7 +15509,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15521,7 +15521,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15535,7 +15535,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15597,7 +15597,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15622,7 +15622,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15665,7 +15665,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15679,7 +15679,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15693,7 +15693,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15726,7 +15726,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15740,7 +15740,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15754,7 +15754,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15819,7 +15819,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15833,7 +15833,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15847,7 +15847,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15880,7 +15880,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15894,7 +15894,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15908,7 +15908,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15932,7 +15932,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15988,7 +15988,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16002,7 +16002,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16092,7 +16092,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16106,7 +16106,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16180,7 +16180,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16230,7 +16230,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16274,7 +16274,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16295,7 +16295,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16309,7 +16309,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16358,7 +16358,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16379,7 +16379,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16393,7 +16393,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16426,7 +16426,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16485,7 +16485,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16499,7 +16499,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16513,7 +16513,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16570,7 +16570,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16584,7 +16584,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16615,7 +16615,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -16629,7 +16629,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -18309,7 +18309,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -18323,7 +18323,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -19787,7 +19787,7 @@ entities:
   - color: '#FFFFFFFF'
     type: PointLight
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -38767,7 +38767,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3884
@@ -38778,7 +38778,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3885
@@ -38789,7 +38789,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3886
@@ -38800,7 +38800,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3887
@@ -38811,7 +38811,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3888
@@ -38822,7 +38822,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3889
@@ -38833,7 +38833,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3890
@@ -38844,7 +38844,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3891
@@ -38855,7 +38855,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3892
@@ -38866,7 +38866,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3893
@@ -38877,7 +38877,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3894
@@ -38888,7 +38888,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3895
@@ -38899,7 +38899,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3896
@@ -38910,7 +38910,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3897
@@ -38921,7 +38921,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3898
@@ -38932,7 +38932,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3899
@@ -38943,7 +38943,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3900
@@ -38954,7 +38954,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3901
@@ -38965,7 +38965,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3902
@@ -38976,7 +38976,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3903
@@ -38987,7 +38987,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3904
@@ -39006,7 +39006,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3906
@@ -39017,7 +39017,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3907
@@ -39028,7 +39028,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3908
@@ -39039,7 +39039,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3909
@@ -39050,7 +39050,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3910
@@ -39061,7 +39061,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3911
@@ -39129,7 +39129,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -39155,7 +39155,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -39176,7 +39176,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3923
@@ -39187,7 +39187,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3924
@@ -39198,7 +39198,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3925
@@ -39209,7 +39209,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 1
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3926
@@ -40808,7 +40808,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -41677,7 +41677,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
@@ -41798,7 +41798,7 @@ entities:
     parent: 853
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer

@@ -85,7 +85,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   components:
   - type: DisposalUnit
   - type: Anchorable
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
 

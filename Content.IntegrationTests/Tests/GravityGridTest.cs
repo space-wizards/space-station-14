@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
   id: GravityGeneratorDummy
   components:
   - type: GravityGenerator
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
 ";
         [Test]
         public async Task Test()

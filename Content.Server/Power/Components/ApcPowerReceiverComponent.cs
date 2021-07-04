@@ -26,7 +26,7 @@ namespace Content.Server.Power.Components
     {
         [ViewVariables] [ComponentDependency] private readonly IPhysBody? _physicsComponent = null;
 
-        public override string Name => "PowerReceiver";
+        public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
         public bool Powered => (MathHelper.CloseTo(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;

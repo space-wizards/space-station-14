@@ -30,7 +30,7 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
 
 - type: entity
   parent: BaseLathe

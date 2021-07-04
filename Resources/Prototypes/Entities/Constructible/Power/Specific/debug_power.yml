@@ -130,5 +130,5 @@
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: wirelessmachine
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Anchorable

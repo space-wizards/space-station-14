@@ -109,7 +109,7 @@ namespace Content.Client.Entry
             "BatteryDischarger",
             "Apc",
             "PowerProvider",
-            "PowerReceiver",
+            "ApcPowerReceiver",
             "Cable",
             "StressTestMovement",
             "Toys",

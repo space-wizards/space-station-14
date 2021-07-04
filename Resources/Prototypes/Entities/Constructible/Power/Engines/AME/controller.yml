@@ -59,7 +59,7 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: PowerSupplier
     supplyRate: 0
 

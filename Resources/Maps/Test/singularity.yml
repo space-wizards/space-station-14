@@ -1248,7 +1248,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 250
-    type: PowerReceiver
+    type: ApcPowerReceiver
 - uid: 132
   type: ParticleAcceleratorEndCap
   components:
@@ -1992,7 +1992,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -2004,7 +2004,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
-    type: PowerReceiver
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer

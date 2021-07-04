@@ -14,7 +14,7 @@
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: BarSign
   - type: Destructible
     thresholds:
@@ -37,7 +37,7 @@
     drawdepth: WallTops
     sprite: Constructible/Misc/sylphs.rsi
     state: sylph
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: BarSign
 
 - type: entity

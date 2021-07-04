@@ -32,4 +32,4 @@
       state_clean: grinder-o1
       state_bloody: grinder-o1bld
   - type: Recycler
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
