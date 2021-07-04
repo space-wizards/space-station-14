@@ -90,90 +90,70 @@ namespace Content.IntegrationTests.Tests
   - type: BatteryCharger
     node: input
 
+- type: entity
+  id: SubstationDummy
+  components:
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatteryCharger
+    voltage: High
+  - type: BatteryDischarger
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxChargeRate: 1000
+    maxSupply: 1000
+    supplyRampTolerance: 1000
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Transform
+    anchored: true
 
-#- type: entity
-#  name: SubstationDummy
-#  id: SubstationDummy
-#  components:
-#  - type: Battery
-#    maxCharge: 1000
-#    startingCharge: 1000
-#  - type: NodeContainer
-#    nodes:
-#      input:
-#        !type:CableNode
-#        nodeGroupID: HVPower
-#      output:
-#        !type:CableNode
-#        nodeGroupID: MVPower
-#  - type: PowerConsumer
-#  - type: BatteryStorage
-#    activeDrawRate: 1500
-#  - type: PowerSupplier
-#    voltage: Medium
-#  - type: BatteryDischarger
-#    activeSupplyRate: 1000
-#  - type: Transform
-#    anchored: true
-#
-#- type: entity
-#  name: ApcDummy
-#  id: ApcDummy
-#  components:
-#  - type: Battery
-#    maxCharge: 10000
-#    startingCharge: 10000
-#  - type: BatteryStorage
-#    activeDrawRate: 1000
-#  - type: PowerProvider
-#    voltage: Apc
-#  - type: Apc
-#    voltage: Apc
-#  - type: PowerConsumer
-#    voltage: Medium
-#  - type: NodeContainer
-#    nodes:
-#      input:
-#        !type:CableNode
-#        nodeGroupID: MVPower
-#      output:
-#        !type:CableNode
-#        nodeGroupID: Apc
-#  - type: Transform
-#    anchored: true
-#  - type: UserInterface
-#    interfaces:
-#    - key: enum.ApcUiKey.Key
-#      type: ApcBoundUserInterface
-#  - type: AccessReader
-#    access: [['Engineering']]
-#
-#- type: entity
-#  name: ApcExtensionCableDummy
-#  id: ApcExtensionCableDummy
-#  components:
-#  - type: NodeContainer
-#    nodes:
-#      apc:
-#        !type:CableNode
-#        nodeGroupID: Apc
-#      wire:
-#        !type:AdjacentNode
-#        nodeGroupID: WireNet
-#  - type: PowerProvider
-#    voltage: Apc
-#  - type: Cable
-#    cableType: Apc
-#  - type: Transform
-#    anchored: true
-#
-#- type: entity
-#  name: PowerReceiverDummy
-#  id: PowerReceiverDummy
-#  components:
-#  - type: PowerReceiver
-#  - type: Transform
-#    anchored: true
+- type: entity
+  id: ApcDummy
+  components:
+  - type: Battery
+    maxCharge: 10000
+    startingCharge: 10000
+  - type: PowerNetworkBattery
+    maxChargeRate: 1000
+    maxSupply: 1000
+    supplyRampTolerance: 1000
+  - type: BatteryCharger
+    voltage: Medium
+  - type: BatteryDischarger
+    voltage: Apc
+  - type: Apc
+    voltage: Apc
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
+  - type: AccessReader
+    access: [['Engineering']]
+
+- type: entity
+  id: ApcPowerReceiverDummy
+  components:
+  - type: ApcPowerReceiver
+  - type: Transform
+    anchored: true
 ";
 
         private ServerIntegrationInstance _server = default!;
@@ -210,12 +190,9 @@ namespace Content.IntegrationTests.Tests
                 var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
-
                 for (var i = 0; i < 3; i++)
                 {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -267,12 +244,9 @@ namespace Content.IntegrationTests.Tests
                 var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
-
                 for (var i = 0; i < 3; i++)
                 {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -318,12 +292,9 @@ namespace Content.IntegrationTests.Tests
                 var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
-
                 for (var i = 0; i < 3; i++)
                 {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -391,12 +362,9 @@ namespace Content.IntegrationTests.Tests
                 var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
-
                 for (var i = 0; i < 3; i++)
                 {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -472,12 +440,9 @@ namespace Content.IntegrationTests.Tests
                 var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
-
                 for (var i = 0; i < 3; i++)
                 {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -525,10 +490,6 @@ namespace Content.IntegrationTests.Tests
                 for (var i = 0; i < 4; i++)
                 {
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
-                }
-
-                for (var i = 0; i < 4; i++)
-                {
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -597,10 +558,6 @@ namespace Content.IntegrationTests.Tests
                 for (var i = 0; i < 4; i++)
                 {
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
-                }
-
-                for (var i = 0; i < 4; i++)
-                {
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -824,7 +781,6 @@ namespace Content.IntegrationTests.Tests
             PowerConsumerComponent consumer = default!;
             PowerSupplierComponent supplier = default!;
             PowerNetworkBatteryComponent netBattery = default!;
-            BatteryComponent battery = default!;
 
             _server.Post(() =>
             {
@@ -835,10 +791,6 @@ namespace Content.IntegrationTests.Tests
                 for (var i = 0; i < 4; i++)
                 {
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
-                }
-
-                for (var i = 0; i < 4; i++)
-                {
                     _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
@@ -852,7 +804,7 @@ namespace Content.IntegrationTests.Tests
                 consumer = consumerEnt.GetComponent<PowerConsumerComponent>();
                 supplier = supplyEnt.GetComponent<PowerSupplierComponent>();
                 netBattery = batteryEnt.GetComponent<PowerNetworkBatteryComponent>();
-                battery = batteryEnt.GetComponent<BatteryComponent>();
+                var battery = batteryEnt.GetComponent<BatteryComponent>();
 
                 // Consumer needs 1000 W, supplier can only provide 800, battery fills in the remaining 200.
                 consumer.DrawRate = 1000;
@@ -948,89 +900,78 @@ namespace Content.IntegrationTests.Tests
             await _server.WaitIdleAsync();
         }
 
-        /*[Test]
+        [Test]
         public async Task ApcChargingTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
-
+            PowerNetworkBatteryComponent substationNetBattery = default!;
             BatteryComponent apcBattery = default!;
-            PowerSupplierComponent substationSupplier = default!;
 
-            server.Assert(() =>
+            _server.Assert(() =>
             {
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var _entityManager = IoCManager.Resolve<I_entityManagerager>();
-                mapMan.CreateMap(new MapId(1));
-                var grid = mapMan.CreateGrid(new MapId(1));
+                var map = _mapManager.CreateMap();
+                var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
+                for (var i = 0; i < 3; i++)
+                {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
+                }
 
-                var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
+                _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 0));
+                _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 1));
+                _entityManager.SpawnEntity("CableMV", grid.ToCoordinates(0, 1));
+                _entityManager.SpawnEntity("CableMV", grid.ToCoordinates(0, 2));
+
+                var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates(0, 0));
                 var substationEnt = _entityManager.SpawnEntity("SubstationDummy", grid.ToCoordinates(0, 1));
                 var apcEnt = _entityManager.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 2));
 
                 var generatorSupplier = generatorEnt.GetComponent<PowerSupplierComponent>();
-
-                substationSupplier = substationEnt.GetComponent<PowerSupplierComponent>();
-                var substationStorage = substationEnt.GetComponent<BatteryStorageComponent>();
-                var substationDischarger = substationEnt.GetComponent<BatteryDischargerComponent>();
-
+                substationNetBattery = substationEnt.GetComponent<PowerNetworkBatteryComponent>();
                 apcBattery = apcEnt.GetComponent<BatteryComponent>();
-                var apcStorage = apcEnt.GetComponent<BatteryStorageComponent>();
 
-                generatorSupplier.SupplyRate = 1000; //arbitrary nonzero amount of power
-                substationStorage.ActiveDrawRate = 1000; //arbitrary nonzero power draw
-                substationDischarger.ActiveSupplyRate =
-                    500; //arbitirary nonzero power supply less than substation storage draw
-                apcStorage.ActiveDrawRate = 500; //arbitrary nonzero power draw
-                apcBattery.MaxCharge = 100; //abbitrary nonzero amount of charge
-                apcBattery.CurrentCharge = 0; //no charge
+                generatorSupplier.MaxSupply = 1000;
+                generatorSupplier.SupplyRampTolerance = 1000;
+
+                apcBattery.CurrentCharge = 0;
             });
 
-            server.RunTicks(5); //let run a few ticks for PowerNets to reevaluate and start charging apc
+            _server.RunTicks(5); //let run a few ticks for PowerNets to reevaluate and start charging apc
 
-            server.Assert(() =>
+            _server.Assert(() =>
             {
-                Assert.That(substationSupplier.SupplyRate, Is.Not.EqualTo(0)); //substation should be providing power
-                Assert.That(apcBattery.CurrentCharge, Is.Not.EqualTo(0)); //apc battery should have gained charge
+                Assert.That(substationNetBattery.CurrentSupply, Is.GreaterThan(0)); //substation should be providing power
+                Assert.That(apcBattery.CurrentCharge, Is.GreaterThan(0)); //apc battery should have gained charge
             });
 
-            await server.WaitIdleAsync();
+            await _server.WaitIdleAsync();
         }
 
         [Test]
         public async Task ApcNetTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
-
+            PowerNetworkBatteryComponent apcNetBattery = default!;
             ApcPowerReceiverComponent receiver = default!;
 
-            server.Assert(() =>
+            _server.Assert(() =>
             {
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var _entityManager = IoCManager.Resolve<I_entityManagerager>();
-                var mapId = new MapId(1);
-                mapMan.CreateMap(mapId);
-                var grid = mapMan.CreateGrid(mapId);
+                var map = _mapManager.CreateMap();
+                var grid = _mapManager.CreateGrid(map);
 
                 // Power only works when anchored
-                grid.SetTile(new Vector2i(0, 0), new Tile(1));
-                grid.SetTile(new Vector2i(0, 1), new Tile(1));
-                grid.SetTile(new Vector2i(0, 2), new Tile(1));
+                for (var i = 0; i < 3; i++)
+                {
+                    grid.SetTile(new Vector2i(0, i), new Tile(1));
+                }
 
                 var apcEnt = _entityManager.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
-                var apcExtensionEnt = _entityManager.SpawnEntity("ApcExtensionCableDummy", grid.ToCoordinates(0, 1));
-                var powerReceiverEnt = _entityManager.SpawnEntity("PowerReceiverDummy", grid.ToCoordinates(0, 2));
+                var apcExtensionEnt = _entityManager.SpawnEntity("CableApcExtension", grid.ToCoordinates(0, 0));
+                var powerReceiverEnt = _entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, 2));
 
-                var apc = apcEnt.GetComponent<ApcComponent>();
                 var provider = apcExtensionEnt.GetComponent<ApcPowerProviderComponent>();
                 receiver = powerReceiverEnt.GetComponent<ApcPowerReceiverComponent>();
                 var battery = apcEnt.GetComponent<BatteryComponent>();
+                apcNetBattery = apcEnt.GetComponent<PowerNetworkBatteryComponent>();
 
                 provider.PowerTransferRange = 5; //arbitrary range to reach receiver
                 receiver.PowerReceptionRange = 5; //arbitrary range to reach provider
@@ -1041,14 +982,15 @@ namespace Content.IntegrationTests.Tests
                 receiver.Load = 1; //arbitrary small amount of power
             });
 
-            server.RunTicks(1); //let run a tick for ApcNet to process power
+            _server.RunTicks(1); //let run a tick for ApcNet to process power
 
-            server.Assert(() =>
+            _server.Assert(() =>
             {
                 Assert.That(receiver.Powered);
+                Assert.That(apcNetBattery.CurrentSupply, Is.EqualTo(1).Within(0.1));
             });
 
-            await server.WaitIdleAsync();
-        }*/
+            await _server.WaitIdleAsync();
+        }
     }
 }
