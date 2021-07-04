@@ -20,7 +20,7 @@ namespace Content.Server.Power.Components
 
         [ViewVariables]
         [DataField("cableDroppedOnCutPrototype")]
-        private string? _cableDroppedOnCutPrototype = "HVWireStack1";
+        private string? _cableDroppedOnCutPrototype = "CableHVStack1";
 
         /// <summary>
         ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is

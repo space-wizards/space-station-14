@@ -33,7 +33,7 @@
 
 - type: entity
   parent: CableBase
-  id: HVCable
+  id: CableHV
   name: HV power cable
   description: An orange high voltage power cable.
   components:
@@ -52,7 +52,7 @@
         !type:CableNode
         nodeGroupID: WireNet
   - type: Cable
-    cableDroppedOnCutPrototype: HVWireStack1
+    cableDroppedOnCutPrototype: CableHVStack1
     cableType: HighVoltage
   - type: Destructible
     thresholds:
@@ -62,7 +62,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          HVWireStack1:
+          CableHVStack1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -74,7 +74,7 @@
 
 - type: entity
   parent: CableBase
-  id: MVCable
+  id: CableMV
   name: MV power cable
   description: A medium voltage power cable.
   components:
@@ -95,7 +95,7 @@
         !type:AdjacentNode
         nodeGroupID: WireNet
   - type: Cable
-    cableDroppedOnCutPrototype: MVWireStack1
+    cableDroppedOnCutPrototype: CableMVStack1
     cableType: MediumVoltage
   - type: Destructible
     thresholds:
@@ -105,7 +105,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          MVWireStack1:
+          CableMVStack1:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -117,7 +117,7 @@
 
 - type: entity
   parent: CableBase
-  id: ApcExtensionCable
+  id: CableApcExtension
   name: LV power cable
   description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
@@ -140,7 +140,7 @@
   - type: PowerProvider
     voltage: Apc
   - type: Cable
-    cableDroppedOnCutPrototype: ApcExtensionCableStack1
+    cableDroppedOnCutPrototype: CableApcStack1
     cableType: Apc
   - type: Destructible
     thresholds:
@@ -150,7 +150,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          ApcExtensionCableStack1:
+          CableApcStack1:
             min: 1
             max: 1
       - !type:DoActsBehavior

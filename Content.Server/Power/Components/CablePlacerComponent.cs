@@ -21,7 +21,7 @@ namespace Content.Server.Power.Components
 
         [ViewVariables]
         [DataField("cablePrototypeID")]
-        private string? _cablePrototypeID = "HVCable";
+        private string? _cablePrototypeID = "CableHV";
 
         [ViewVariables]
         [DataField("blockingWireType")]

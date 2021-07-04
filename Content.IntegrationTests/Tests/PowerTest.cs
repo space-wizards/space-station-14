@@ -216,7 +216,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 3; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
@@ -273,7 +273,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 3; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
@@ -324,7 +324,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 3; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
@@ -397,7 +397,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 3; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var generatorEnt = _entityManager.SpawnEntity("DischargingBatteryDummy", grid.ToCoordinates());
@@ -478,7 +478,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 3; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var generatorEnt = _entityManager.SpawnEntity("GeneratorDummy", grid.ToCoordinates());
@@ -529,7 +529,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 4; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
@@ -601,7 +601,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 4; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
@@ -676,7 +676,7 @@ namespace Content.IntegrationTests.Tests
                 for (var i = 0; i < 5; i++)
                 {
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
@@ -763,7 +763,7 @@ namespace Content.IntegrationTests.Tests
                 for (var i = 0; i < 5; i++)
                 {
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 2));
@@ -839,7 +839,7 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < 4; i++)
                 {
-                    _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, i));
+                    _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, i));
                 }
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
@@ -916,10 +916,10 @@ namespace Content.IntegrationTests.Tests
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
                 }
 
-                var leftEnt = _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, 0));
-                _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, 1));
-                _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, 2));
-                var rightEnt = _entityManager.SpawnEntity("HVCable", grid.ToCoordinates(0, 3));
+                var leftEnt = _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 0));
+                _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 1));
+                _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 2));
+                var rightEnt = _entityManager.SpawnEntity("CableHV", grid.ToCoordinates(0, 3));
 
                 var terminal = _entityManager.SpawnEntity("CableTerminal", grid.ToCoordinates(0, 1));
                 terminal.Transform.LocalRotation = Angle.FromDegrees(180);
