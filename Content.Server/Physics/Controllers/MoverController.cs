@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -89,7 +90,7 @@ namespace Content.Server.Physics.Controllers
                 physics = gridEntity.AddComponent<PhysicsComponent>();
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.CanCollide = true;
-                physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
+                EntitySystem.Get<SharedBroadphaseSystem>().CreateFixture(physics, new Fixture(physics, new PhysShapeGrid(grid)));
             }
 
             // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.

@@ -72,7 +72,9 @@ namespace Content.IntegrationTests.Tests.Physics
                     CollisionMask = 1,
                     Hard = true
                 };
-                ground.AddFixture(horizontalFixture);
+
+                var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+                broadphase.CreateFixture(ground, horizontalFixture);
 
                 var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
                 var verticalFixture = new Fixture(ground, vertical)
@@ -81,7 +83,8 @@ namespace Content.IntegrationTests.Tests.Physics
                     CollisionMask = 1,
                     Hard = true
                 };
-                ground.AddFixture(verticalFixture);
+
+                broadphase.CreateFixture(ground, verticalFixture);
 
                 var xs = new[]
                 {
@@ -117,7 +120,8 @@ namespace Content.IntegrationTests.Tests.Physics
                             CollisionLayer = 1,
                             Hard = true,
                         };
-                        box.AddFixture(fixture);
+
+                        broadphase.CreateFixture(box, fixture);
 
                         bodies[j * rowCount + i] = box;
                     }
@@ -188,7 +192,9 @@ namespace Content.IntegrationTests.Tests.Physics
                     CollisionMask = 1,
                     Hard = true
                 };
-                ground.AddFixture(horizontalFixture);
+
+                var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+                broadphase.CreateFixture(ground, horizontalFixture);
 
                 var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
                 var verticalFixture = new Fixture(ground, vertical)
@@ -197,7 +203,8 @@ namespace Content.IntegrationTests.Tests.Physics
                     CollisionMask = 1,
                     Hard = true
                 };
-                ground.AddFixture(verticalFixture);
+
+                broadphase.CreateFixture(ground, verticalFixture);
 
                 var xs = new[]
                 {
@@ -225,7 +232,8 @@ namespace Content.IntegrationTests.Tests.Physics
                             CollisionLayer = 1,
                             Hard = true,
                         };
-                        circle.AddFixture(fixture);
+
+                        broadphase.CreateFixture(circle, fixture);
 
                         bodies[j * rowCount + i] = circle;
                     }

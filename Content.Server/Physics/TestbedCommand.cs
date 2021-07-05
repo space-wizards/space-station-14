@@ -128,7 +128,10 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(horizontalFixture);
+
+            var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+
+            broadphase.CreateFixture(ground, horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
             var verticalFixture = new Fixture(ground, vertical)
@@ -137,7 +140,8 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(verticalFixture);
+
+            broadphase.CreateFixture(ground, verticalFixture);
 
             var xs = new[]
             {
@@ -170,7 +174,8 @@ namespace Content.Server.Physics
                         CollisionLayer = (int) CollisionGroup.Impassable,
                         Hard = true,
                     };
-                    box.AddFixture(fixture);
+
+                    broadphase.CreateFixture(box, fixture);
                 }
             }
         }
@@ -188,7 +193,9 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(horizontalFixture);
+
+            var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+            broadphase.CreateFixture(ground, horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
             var verticalFixture = new Fixture(ground, vertical)
@@ -197,7 +204,8 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(verticalFixture);
+
+            broadphase.CreateFixture(ground, verticalFixture);
 
             var xs = new[]
             {
@@ -229,7 +237,8 @@ namespace Content.Server.Physics
                         CollisionLayer = (int) CollisionGroup.Impassable,
                         Hard = true,
                     };
-                    box.AddFixture(fixture);
+
+                    broadphase.CreateFixture(box, fixture);
                 }
             }
         }
@@ -250,7 +259,8 @@ namespace Content.Server.Physics
                 Hard = true
             };
 
-            ground.AddFixture(horizontalFixture);
+            var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+            broadphase.CreateFixture(ground, horizontalFixture);
 
             // Setup boxes
             float a = 0.5f;
@@ -271,13 +281,13 @@ namespace Content.Server.Physics
                     var box = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
                     box.BodyType = BodyType.Dynamic;
                     box.Owner.Transform.WorldPosition = y;
-                    box.AddFixture(
+                    broadphase.CreateFixture(box,
                         new Fixture(box, shape) {
-                            CollisionLayer = (int) CollisionGroup.Impassable,
-                            CollisionMask = (int) CollisionGroup.Impassable,
-                            Hard = true,
-                            Mass = 5.0f,
-                        });
+                        CollisionLayer = (int) CollisionGroup.Impassable,
+                        CollisionMask = (int) CollisionGroup.Impassable,
+                        Hard = true,
+                        Mass = 5.0f,
+                    });
                     y += deltaY;
                 }
 
