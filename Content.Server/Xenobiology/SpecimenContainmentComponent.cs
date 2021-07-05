@@ -30,7 +30,7 @@ namespace Content.Server.Xenobiology
         [ViewVariables] public ContainerSlot TubeContainer = default!;
 
         public bool IsOccupied => TubeContainer.ContainedEntity != null;
-        [ViewVariables] public bool IsPowered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         protected override void Initialize()
         {
@@ -108,10 +108,9 @@ namespace Content.Server.Xenobiology
 
         private void UpdateAppearance()
         {
-            //It doesn't work otherwise, lord singulo forgive me
             if (Owner.TryGetComponent(out AppearanceComponent? appearancecomp))
             {
-               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, IsPowered);
+               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, Powered);
                appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity != null);
             }
         }

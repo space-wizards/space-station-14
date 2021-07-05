@@ -24,7 +24,7 @@
       layer:
         - Opaque
         - MobImpassable
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
   - type: SpecimenContainmentComponent
