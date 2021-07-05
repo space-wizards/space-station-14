@@ -36,12 +36,13 @@ namespace Content.Server.Xenobiology
         {
             base.Initialize();
             TubeContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "SpecimenContainer");
-            //SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnInteractUsing);
+         //   SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnInteractUsing);
             UpdateAppearance();
         }
 
-        public void Update(float frameTime)
+        protected override void Startup()
         {
+            base.Startup();
             UpdateAppearance();
         }
 
