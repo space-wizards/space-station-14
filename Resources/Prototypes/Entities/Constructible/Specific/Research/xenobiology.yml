@@ -1,14 +1,13 @@
 ﻿- type: entity
   id: XenobioSpecimenTube
   parent: BaseConstructibleDynamic
-  name: "Specimen Cell"
+  name: "Specimen Chamber"
   description: 'Science was preoccupied with whether it could, not whether it should.'
   components:
   - type: Sprite
     state: tube-powered
     netsync: false
     sprite: Constructible/Power/specimen_tube.rsi
-    drawdepth: FloorTiles
   - type: Appearance
     visuals:
     - type: XenobioTubeVisualiser
