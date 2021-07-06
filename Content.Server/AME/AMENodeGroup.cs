@@ -41,64 +41,38 @@ namespace Content.Server.AME
         {
             base.LoadNodes(groupNodes);
 
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var grid = mapManager.GetGrid(GridId);
+
             foreach (var node in groupNodes)
             {
-                if (node.Owner.TryGetComponent(out AMEControllerComponent? controller))
+                var nodeOwner = node.Owner;
+                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
                 {
                     _masterController = controller;
                 }
-            }
-        }
 
-        public override void RemoveNode(Node node)
-        {
-            base.RemoveNode(node);
-
-            RefreshAMENodes(_masterController);
-            if (_masterController != null && _masterController?.Owner == node.Owner) { _masterController = null; }
-        }
-
-        public void RefreshAMENodes(AMEControllerComponent? controller)
-        {
-            if(_masterController == null && controller != null)
-            {
-                _masterController = controller;
-            }
-
-            foreach (AMEShieldComponent core in _cores)
-            {
-                core.UnsetCore();
-            }
-            _cores.Clear();
-
-            //Check each shield node to see if it meets core criteria
-            foreach (Node node in Nodes)
-            {
-                var nodeOwner = node.Owner;
-                if (!nodeOwner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
-
-                var grid = IoCManager.Resolve<IMapManager>().GetGrid(nodeOwner.Transform.GridID);
-                var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
-                    .Select(sgc => nodeOwner.EntityManager.GetEntity(sgc))
-                    .Where(entity => entity != nodeOwner)
-                    .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)
-                    .Where(adjshield => adjshield != null);
-
-                if (nodeNeighbors.Count() >= 8)
+                if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
                 {
-                    _cores.Add(shield);
-                }
-            }
+                    var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
+                        .Select(sgc => nodeOwner.EntityManager.GetEntity(sgc))
+                        .Where(entity => entity != nodeOwner && entity.HasComponent<AMEShieldComponent>());
 
-            foreach (AMEShieldComponent core in _cores)
-            {
-                core.SetCore();
+                    if (nodeNeighbors.Count() >= 8)
+                    {
+                        _cores.Add(shield);
+                        shield.SetCore();
+                    }
+                    else
+                    {
+                        shield.UnsetCore();
+                    }
+                }
             }
         }
 
         public void UpdateCoreVisuals(int injectionAmount, bool injecting)
         {
-
             var injectionStrength = CoreCount > 0 ? injectionAmount / CoreCount : 0;
 
             foreach (AMEShieldComponent core in _cores)

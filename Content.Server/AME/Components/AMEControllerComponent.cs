@@ -212,9 +212,6 @@ namespace Content.Server.AME.Components
                 case UiButton.DecreaseFuel:
                     InjectionAmount = InjectionAmount > 0 ? InjectionAmount -= 2 : 0;
                     break;
-                case UiButton.RefreshParts:
-                    RefreshParts();
-                    break;
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
@@ -275,12 +272,6 @@ namespace Content.Server.AME.Components
                 _appearance?.SetData(AMEControllerVisuals.DisplayState, newState);
             }
 
-        }
-
-        private void RefreshParts()
-        {
-            GetAMENodeGroup()?.RefreshAMENodes(this);
-            UpdateUserInterface();
         }
 
         private AMENodeGroup? GetAMENodeGroup()
