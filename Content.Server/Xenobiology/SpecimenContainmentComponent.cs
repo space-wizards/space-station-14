@@ -30,13 +30,13 @@ namespace Content.Server.Xenobiology
         [ViewVariables] public ContainerSlot TubeContainer = default!;
 
         public bool IsOccupied => TubeContainer.ContainedEntity != null;
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+
+        public bool Powered; //Set by the XenobiologyTubeSystem, OnPowerChanged() event to update in real-time
 
         protected override void Initialize()
         {
             base.Initialize();
             TubeContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "SpecimenContainer");
-         //   SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnInteractUsing);
             UpdateAppearance();
         }
 
@@ -107,12 +107,12 @@ namespace Content.Server.Xenobiology
             EjectBody();
         }
 
-        private void UpdateAppearance()
-        {
+        public void UpdateAppearance() //Communicates with the visualiser through a Shared component
+        { 
             if (Owner.TryGetComponent(out AppearanceComponent? appearancecomp))
             {
-               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, Powered);
-               appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity != null);
+                appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, Powered);
+                appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity != null);
             }
         }
 

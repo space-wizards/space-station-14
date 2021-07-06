@@ -13,6 +13,11 @@ namespace Content.Shared.Xenobiology
     {
         public override string Name => "XenoTube";
 
+        protected override void Initialize()
+        {
+            base.Initialize();
+        }
+
         [Serializable, NetSerializable]
         public enum XenoTubeStatus
         {
