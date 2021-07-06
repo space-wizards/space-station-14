@@ -93,9 +93,15 @@ namespace Content.Server.Physics.Controllers
             physics.BodyStatus = BodyStatus.InAir;
             physics.LinearDamping = 0.1f;
 
+            var shuttleSpeed = 0.2f;
+
             // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
-            physics.ApplyLinearImpulse(mover.VelocityDir.walking + mover.VelocityDir.sprinting);
-            mover.VelocityDir = (Vector2.Zero, Vector2.Zero);
+            physics.ApplyLinearImpulse(mover.VelocityDir.walking * shuttleSpeed + mover.VelocityDir.sprinting * shuttleSpeed);
+
+            if (physics.LinearVelocity.Length < 0.1f)
+            {
+                physics.LinearVelocity = Vector2.Zero;
+            }
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
