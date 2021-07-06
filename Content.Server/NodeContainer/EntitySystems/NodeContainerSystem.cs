@@ -4,6 +4,10 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.NodeContainer.EntitySystems
 {
+    /// <summary>
+    ///     Manages <see cref="NodeContainerComponent"/> events.
+    /// </summary>
+    /// <seealso cref="NodeGroupSystem"/>
     [UsedImplicitly]
     public class NodeContainerSystem : EntitySystem
     {
