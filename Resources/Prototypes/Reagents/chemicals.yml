@@ -241,8 +241,8 @@
       healthChange: 1.2
       damageClass: Toxin
     - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 1.3
-      sprintSpeedModifier: 1.3
+      walkSpeedModifier: 10.3
+      sprintSpeedModifier: 10.3
 
 - type: reagent
   id: Iodine

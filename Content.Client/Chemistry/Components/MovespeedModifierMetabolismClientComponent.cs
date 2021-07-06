@@ -1,17 +1,16 @@
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Threading;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
-    class MovespeedModifierMetabolismComponent : Component
+    class MovespeedModifierMetabolismClientComponent : Component
     {
         [ViewVariables]
-        public override string Name => "MovespeedModifierMetabolism";
+        public override string Name => "MovespeedModifierMetabolismClientComponent";
 
         [ViewVariables]
         public float WalkSpeedModifier { get; set; }
@@ -44,18 +43,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState is not StunnableComponentState state)
-            {
-                return;
-            }
+            //if (curState is not MovespeedModifierMetabolismComponentState state)
+            //{
+            //    return;
+            //}
 
 
-            WalkModifierOverride = state.WalkModifierOverride;
-            RunModifierOverride = state.RunModifierOverride;
+            //WalkSpeedModifier = state.WalkSpeedModifier;
+            //SprintSpeedModifier = state.SprintSpeedModifier;
 
             if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
                 movement.RefreshMovementSpeedModifiers();
             }
+
         }
+    }
 }

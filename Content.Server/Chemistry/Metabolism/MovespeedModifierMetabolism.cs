@@ -1,10 +1,9 @@
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Content.Server.GameObjects.Components.Chemistry;
-using System.Threading;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Chemistry.Metabolism
 {

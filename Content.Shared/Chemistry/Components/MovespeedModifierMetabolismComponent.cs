@@ -2,18 +2,19 @@ using Content.Shared.Movement.Components;
 using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Threading;
 
-namespace Content.Server.GameObjects.Components.Chemistry
+namespace Content.Shared.Chemistry.Components
 {
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
-    class MovespeedModifierMetabolismComponent : Component
+    public class MovespeedModifierMetabolismComponent : Component
     {
         [ViewVariables]
-        public override string Name => "MovespeedModifierMetabolism";
+        public override string Name => "MovespeedModifierMetabolismComponent";
 
         [ViewVariables]
         public float WalkSpeedModifier { get; set; }
@@ -33,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var movement = Owner.GetComponent<MovementSpeedModifierComponent>();
             movement.RefreshMovementSpeedModifiers();
             _cancellation?.Cancel();
+            Dirty();
         }
 
         public void ResetTimer()
@@ -44,14 +46,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new MovespeedModifierMetabolismComponentState();
+            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier);
         }
 
-        private class MovespeedModifierMetabolismComponentState : ComponentState
+        [Serializable, NetSerializable]
+        public class MovespeedModifierMetabolismComponentState : ComponentState
         {
-            public MovespeedModifierMetabolismComponentState(ContentNetIDs.METABOLISM_SPEEDCHANGE)
+            public float WalkSpeedModifier { get; }
+            public float SprintSpeedModifier { get; }
+            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier) : base(ContentNetIDs.METABOLISM_SPEEDCHANGE)
             {
+                WalkSpeedModifier = walkSpeedModifier;
+                SprintSpeedModifier = sprintSpeedModifier;
             }
         }
     }
 }
+
