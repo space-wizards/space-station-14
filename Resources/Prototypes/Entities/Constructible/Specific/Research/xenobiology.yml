@@ -1,0 +1,46 @@
+﻿- type: entity
+  id: XenobioSpecimenTube
+  parent: BaseConstructibleDynamic
+  name: "Specimen Chamber"
+  description: 'Science was preoccupied with whether it could, not whether it should.'
+  components:
+  - type: Sprite
+    state: tube-powered
+    netsync: false
+    sprite: Constructible/Power/specimen_tube.rsi
+  - type: Appearance
+    visuals:
+    - type: XenobioTubeVisualiser
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 25
+      mask:
+        - SmallImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: SpecimenContainmentComponent
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
