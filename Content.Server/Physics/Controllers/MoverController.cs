@@ -84,7 +84,8 @@ namespace Content.Server.Physics.Controllers
 
             if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
 
-            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
+            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics) ||
+                mover.VelocityDir.walking.LengthSquared <= 0.0f)
             {
                 return;
             }
@@ -92,11 +93,24 @@ namespace Content.Server.Physics.Controllers
             physics.BodyType = BodyType.Dynamic;
             physics.BodyStatus = BodyStatus.InAir;
             physics.LinearDamping = 0.1f;
+            physics.FixedRotation = false;
+            foreach (var fixture in physics.Fixtures)
+            {
+                fixture.Mass = 1000.0f;
+            }
 
-            var shuttleSpeed = 0.2f;
+            // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
+            // inputs will do different things.
+            var shuttleLinearSpeed = 200f;
+            var shuttleAngularSpeed = 0.02f;
+            // TODO: Do that
 
-            // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
-            physics.ApplyLinearImpulse(mover.VelocityDir.walking * shuttleSpeed + mover.VelocityDir.sprinting * shuttleSpeed);
+            physics.ApplyLinearImpulse(-physics.Owner.Transform.WorldRotation.ToVec() * mover.VelocityDir.walking.Y * shuttleLinearSpeed);
+
+            if (mover.VelocityDir.walking.X != 0.0f)
+            {
+                physics.ApplyAngularImpulse(mover.VelocityDir.walking.X * shuttleAngularSpeed);
+            }
 
             if (physics.LinearVelocity.Length < 0.1f)
             {
