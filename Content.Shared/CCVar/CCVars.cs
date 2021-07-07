@@ -327,6 +327,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> BanHardwareIds =
             CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
+
+        /*
+         * Shuttles
+         */
+        public static readonly CVarDef<float> ShuttleDockSpeedCap =
+            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY | CVar.ARCHIVE);
+
         /*
          * VIEWPORT
          */
