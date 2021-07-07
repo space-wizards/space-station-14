@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -10,7 +9,7 @@ namespace Content.Shared.Storage.ItemCounter
     [Serializable, NetSerializable]
     public enum StorageMapVisuals : sbyte
     {
-        AllLayers,
+        InitLayers,
         LayerChanged,
     }
 
@@ -19,25 +18,27 @@ namespace Content.Shared.Storage.ItemCounter
     public struct SharedMapLayerData
     {
         [DataField("layer")] public string Layer;
-        [DataField("whitelist", required: true)] public EntityWhitelist Whitelist { get; set; }
+
+        [DataField("whitelist", required: true)]
+        public EntityWhitelist Whitelist { get; set; }
     }
 
     [Serializable, NetSerializable]
-    public class ShowEntityData
+    public class ShowLayerData
     {
-        public IReadOnlyList<EntityUid> QueuedEntities { get; internal set; }
+        public IReadOnlyList<string> QueuedEntities { get; internal set; }
 
-        public ShowEntityData()
+        public ShowLayerData()
         {
-            QueuedEntities = new List<EntityUid>();
+            QueuedEntities = new List<string>();
         }
 
-        public ShowEntityData(IReadOnlyList<EntityUid> other)
+        public ShowLayerData(IReadOnlyList<string> other)
         {
             QueuedEntities = other;
         }
-        
-        public ShowEntityData(ShowEntityData other)
+
+        public ShowLayerData(ShowLayerData other)
         {
             QueuedEntities = other.QueuedEntities;
         }

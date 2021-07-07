@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -13,38 +12,42 @@ namespace Content.Shared.Storage.ItemCounter
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ItemCounterComponent, ComponentInit>(InitLayers);
             SubscribeLocalEvent<ItemCounterComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
             SubscribeLocalEvent<ItemCounterComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
         }
 
-        private void HandleEntityRemoved(EntityUid uid, ItemCounterComponent _,
+        private void InitLayers(EntityUid uid, ItemCounterComponent component, ComponentInit args)
+        {
+            if (component.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
+            {
+                var list = new List<string>(component.SpriteLayers.Keys);
+                appearanceComponent.SetData(StorageMapVisuals.InitLayers, new ShowLayerData(list));
+            }
+        }
+
+        private void HandleEntityRemoved(EntityUid uid, ItemCounterComponent itemCounter,
             EntRemovedFromContainerMessage args)
         {
-            if (TryGetContainer(args, out var containerEntity, out var containedEntities))
+            if (itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+                && TryGetContainer(args, itemCounter, out var containedLayers))
             {
-                UpdateSprite(containerEntity, containedEntities);
+                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
-        private void HandleEntityInsert(EntityUid uid, ItemCounterComponent _,
+        private void HandleEntityInsert(EntityUid uid, ItemCounterComponent itemCounter,
             EntInsertedIntoContainerMessage args)
         {
-            if (TryGetContainer(args, out var containerEntity, out var containedEntities))
+            if (itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+                && TryGetContainer(args, itemCounter, out var containedLayers))
             {
-                UpdateSprite(containerEntity, containedEntities);
-            }
-        }
-
-        private void UpdateSprite(IEntity containerEntity, IReadOnlyList<EntityUid> uids)
-        {
-            if (containerEntity.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
-            {
-                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowEntityData(uids));
+                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
         protected abstract bool TryGetContainer(ContainerModifiedMessage msg,
-            [NotNullWhen(true)] out IEntity? containerEntity, 
-            out IReadOnlyList<EntityUid> containedEntities);
+            ItemCounterComponent itemCounter,
+            out IReadOnlyList<string> containedLayers);
     }
 }

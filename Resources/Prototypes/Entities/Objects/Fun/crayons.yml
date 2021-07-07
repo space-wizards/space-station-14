@@ -204,35 +204,36 @@
     - id: CrayonPurple
     - id: CrayonBlack
   - type: ItemCounter
+    mapLayers:
+    - layer: red_box
+      whitelist:
+        tags:
+        - CrayonRed
+    - layer: orange_box
+      whitelist:
+        tags:
+        - CrayonOrange
+    - layer: yellow_box
+      whitelist:
+        tags:
+        - CrayonYellow
+    - layer: green_box
+      whitelist:
+        tags:
+        - CrayonGreen
+    - layer: blue_box
+      whitelist:
+        tags:
+        - CrayonBlue
+    - layer: purple_box
+      whitelist:
+        tags:
+        - CrayonPurple
+    - layer: black_box
+      whitelist:
+        tags:
+        - CrayonBlack
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
-      mapLayers:
-      - layer: red_box
-        whitelist:
-          tags:
-          - CrayonRed
-      - layer: orange_box
-        whitelist:
-          tags:
-          - CrayonOrange
-      - layer: yellow_box
-        whitelist:
-          tags:
-          - CrayonYellow
-      - layer: green_box
-        whitelist:
-          tags:
-          - CrayonGreen
-      - layer: blue_box
-        whitelist:
-          tags:
-          - CrayonBlue
-      - layer: purple_box
-        whitelist:
-          tags:
-          - CrayonPurple
-      - layer: black_box
-        whitelist:
-          tags:
-          - CrayonBlack
+

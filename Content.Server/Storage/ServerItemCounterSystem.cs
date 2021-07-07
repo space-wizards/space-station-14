@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Storage.Components;
-using Content.Shared.Storage;
 using Content.Shared.Storage.ItemCounter;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -13,26 +11,30 @@ namespace Content.Server.Storage
     public class ServerItemCounterSystem : ItemCounterSystem
     {
         protected override bool TryGetContainer(ContainerModifiedMessage msg,
-            [NotNullWhen(true)] out IEntity? containerEntity,
-            out IReadOnlyList<EntityUid> containedEntities)
+            ItemCounterComponent itemCounter,
+            out IReadOnlyList<string> showLayers)
         {
             if (msg.Container.Owner.TryGetComponent(out ServerStorageComponent? component))
             {
-                containerEntity = component.Owner;
-
-                var entities = component.StoredEntities ?? new List<IEntity>();
-                var uids = new List<EntityUid>(entities.Count);
-                foreach (var ent in entities)
+                var containedLayers = component.StoredEntities ?? new List<IEntity>();
+                var list = new List<string>();
+                foreach (var mapLayerData in itemCounter.SpriteLayers.Values)
                 {
-                    uids.Add(ent.Uid);
+                    foreach (var entity in containedLayers)
+                    {
+                        if (mapLayerData.Whitelist.IsValid(entity))
+                        {
+                            list.Add(mapLayerData.Layer);
+                            break;
+                        }
+                    }
                 }
 
-                containedEntities = uids;
+                showLayers = list;
                 return true;
             }
 
-            containerEntity = null;
-            containedEntities = new List<EntityUid>();
+            showLayers = new List<string>();
             return false;
         }
     }
