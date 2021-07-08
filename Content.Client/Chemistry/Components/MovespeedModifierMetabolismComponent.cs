@@ -23,7 +23,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             WalkSpeedModifier = state.WalkSpeedModifier;
             SprintSpeedModifier = state.SprintSpeedModifier;
-            cancellation = new CancellationTokenSource();
+
+            _cancellation = new CancellationTokenSource();
+
             Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
 
             Owner.TryGetComponent(out MovementSpeedModifierComponent? movement);
