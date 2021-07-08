@@ -229,6 +229,48 @@
       amount: 1
 
 - type: reagent
+  id: Meth
+  name: meth
+  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with dangerous side-effects if too much is consumed.
+  physicalDesc: translucent
+  color: "#c0e0ff20"
+  boilingPoint: 212.0 #Meth vape when? 
+  meltingPoint: 170.0
+  metabolism:
+    - !type:HealthChangeMetabolism
+      healthChange: 1.2
+      damageClass: Toxin
+    - !type:MovespeedModifierMetabolism
+      walkSpeedModifier: 10.3
+      sprintSpeedModifier: 10.3
+
+- type: reagent
+  id: Iodine
+  name: iodine
+  desc: Iodine is a dark purple element, and a potent dye.
+  physicalDesc: Dark Brown
+  color: "#331A00"
+  boilingPoint: 184.3  
+  meltingPoint: 113.7 
+  # don't know what effects it should have, didn't find any on the tg wiki.
+  
+- type: reagent
+  id: Ephedrine
+  name: ephedrine
+  desc: Ephedrine is a medication and stimulant and is a component of Methamphetamine.
+  physicalDesc: Bone white
+  color: "#FFFFE6"
+  boilingPoint: 255.0  
+  meltingPoint: 36.0 
+  metabolism: 
+    - !type:HealthChangeMetabolism
+      healthChange: 0.3
+      damageClass: Toxin
+    - !type:MovespeedModifierMetabolism
+      walkSpeedModifier: 1.1
+      sprintSpeedModifier: 1.1
+            
+- type: reagent
   id: Oil
   name: oil
   desc: Used by chefs to cook.
