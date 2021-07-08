@@ -10,8 +10,7 @@ using System.Threading;
 namespace Content.Shared.Chemistry.Components
 {
     //TODO: refactor movement modifier component because this is a pretty poor solution
-    [RegisterComponent]
-    public class MovespeedModifierMetabolismComponent : Component
+    public class SharedMovespeedModifierMetabolismComponent : Component
     {
         [ViewVariables]
         public override string Name => "MovespeedModifierMetabolismComponent";
@@ -27,7 +26,7 @@ namespace Content.Shared.Chemistry.Components
 
         private CancellationTokenSource? _cancellation;
 
-        private void ResetModifiers()
+        public void ResetModifiers()
         {
             WalkSpeedModifier = 1;
             SprintSpeedModifier = 1;
@@ -35,13 +34,6 @@ namespace Content.Shared.Chemistry.Components
             movement.RefreshMovementSpeedModifiers();
             _cancellation?.Cancel();
             Dirty();
-        }
-
-        public void ResetTimer()
-        {
-            _cancellation?.Cancel();
-            _cancellation = new CancellationTokenSource();
-            Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
