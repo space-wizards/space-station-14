@@ -20,7 +20,7 @@ namespace Content.Server.Shuttles
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ShuttleComponent, ComponentInit>(HandleShuttleInit);
+            SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(HandleShuttleInit);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(HandleShuttleShutdown);
 
             SubscribeLocalEvent<GridInitializeEvent>(HandleGridInit);
@@ -80,7 +80,7 @@ namespace Content.Server.Shuttles
             }
         }
 
-        private void HandleShuttleInit(EntityUid uid, ShuttleComponent component, ComponentInit args)
+        private void HandleShuttleInit(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
             if (!component.Owner.TryGetComponent(out IMapGridComponent? mapGridComp))
             {
@@ -93,21 +93,19 @@ namespace Content.Server.Shuttles
                 return;
             }
 
+            // TODO: Look there's fixtures on chunks now but ideally empty space wouldn't be counted so I still have this garbage.
             var mass = 0f;
 
-            // TODO: Ideally we'd have fixtures on each chunk and could just use those as they would be actively maintained
-            // instead of this garbage.
             foreach (var _ in mapGridComp.Grid.GetAllTiles())
             {
                 mass += TileMassMultiplier;
             }
 
-            // TODO: fixture per chunk or whatever. Need to mess around with MapChunk's collision box thing.
-            // Iterate each fixture and give it mass at the same time too
+            var fixtureCount = physicsComponent.FixtureCount;
+
             foreach (var fixture in physicsComponent.Fixtures)
             {
-                fixture.Mass = mass;
-                break;
+                fixture.Mass = mass / fixtureCount;
             }
 
             var ticker = Get<GameTicker>();
