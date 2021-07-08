@@ -2,7 +2,6 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using System.Threading;
-using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComponent;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -31,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var movement = Owner.GetComponent<MovementSpeedModifierComponent>();
             movement.RefreshMovementSpeedModifiers();
             _cancellation?.Cancel();
+            Dirty();
         }
 
         public void ResetTimer()
@@ -38,20 +38,21 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _cancellation?.Cancel();
             _cancellation = new CancellationTokenSource();
             Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
+            Dirty();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState is not MovespeedModifierMetabolismComponentState state)
-            {
-                return;
-            }
+            //if (curState is not MovespeedModifierMetabolismComponentState state)
+            //{
+            //    return;
+            //}
 
 
-            WalkSpeedModifier = state.WalkSpeedModifier;
-            SprintSpeedModifier = state.SprintSpeedModifier;
+            //WalkSpeedModifier = state.WalkSpeedModifier;
+            //SprintSpeedModifier = state.SprintSpeedModifier;
 
             if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
