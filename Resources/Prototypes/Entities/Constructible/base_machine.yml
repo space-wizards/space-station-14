@@ -29,10 +29,10 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
-        
+
 - type: entity
   abstract: true
   parent: BaseMachine
   id: BaseMachinePowered
   components:
-  - type: PowerReceiver
+  - type: ApcPowerReceiver

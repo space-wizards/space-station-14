@@ -356,3 +356,24 @@
   desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
   physicalDesc: skunky
   color: "#DAA520"
+  
+- type: reagent
+  id: Omnizine
+  name: Omnizine
+  desc: A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
+  physicalDesc: soothing
+  color: "#fcf7f9"
+  metabolism:
+    - !type:HealthChangeMetabolism 
+      healthChange: -2
+      damageClass: Burn
+    - !type:HealthChangeMetabolism 
+      healthChange: -2
+      damageClass: Toxin
+    - !type:HealthChangeMetabolism 
+      healthChange: -2
+      damageClass: Airloss
+    - !type:HealthChangeMetabolism 
+      healthChange: -2
+      damageClass: Brute
+

@@ -1,5 +1,6 @@
 using System;
 using Content.Client.Wires;
+using Content.Client.Wires.Visualizers;
 using Content.Shared.Audio;
 using Content.Shared.Doors;
 using JetBrains.Annotations;

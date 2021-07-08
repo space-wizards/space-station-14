@@ -11,7 +11,7 @@
     offset: "0, 0.8"
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/emergency_mask.png
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Battery
     maxCharge: 30000
     startingCharge: 0
@@ -20,6 +20,10 @@
     sprite: Constructible/Lighting/emergency_light.rsi
     layers:
     - state: emergency_light_off
+  - type: Appearance
+    visuals:
+    - type: EmergencyLightVisualizer
+
   placement:
     snap:
     - Wallmount

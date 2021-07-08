@@ -39,7 +39,7 @@
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

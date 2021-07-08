@@ -12,10 +12,6 @@
   - type: Battery
     maxCharge: 10000000
     startingCharge: 10000000
-  - type: BatteryStorage
-    activeDrawRate: 0
-  - type: BatteryDischarger
-    activeSupplyRate: 0
 
 - type: entity
   parent: BaseSubstation
@@ -24,10 +20,6 @@
   - type: Battery
     maxCharge: 4000000
     startingCharge: 4000000
-  - type: BatteryStorage
-    activeDrawRate: 8000
-  - type: BatteryDischarger
-    activeSupplyRate: 6000
 
 - type: entity
   parent: BaseApc
@@ -36,5 +28,3 @@
   - type: Battery
     maxCharge: 12000
     startingCharge: 2000
-  - type: BatteryStorage
-    activeDrawRate: 2000

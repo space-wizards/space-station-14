@@ -19,7 +19,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         /// <summary>
         ///     Returns a new <see cref="INodeGroup"/> instance.
         /// </summary>
-        INodeGroup MakeNodeGroup(Node sourceNode);
+        INodeGroup MakeNodeGroup(NodeGroupID id);
     }
 
     public class NodeGroupFactory : INodeGroupFactory
@@ -45,15 +45,14 @@ namespace Content.Server.NodeContainer.NodeGroups
             }
         }
 
-        public INodeGroup MakeNodeGroup(Node sourceNode)
+        public INodeGroup MakeNodeGroup(NodeGroupID id)
         {
-            if (_groupTypes.TryGetValue(sourceNode.NodeGroupID, out var type))
-            {
-                var nodeGroup = _typeFactory.CreateInstance<INodeGroup>(type);
-                nodeGroup.Initialize(sourceNode);
-                return nodeGroup;
-            }
-            throw new ArgumentException($"{sourceNode.NodeGroupID} did not have an associated {nameof(INodeGroup)}.");
+            if (!_groupTypes.TryGetValue(id, out var type))
+                throw new ArgumentException($"{id} did not have an associated {nameof(INodeGroup)} implementation.");
+
+            var instance = _typeFactory.CreateInstance<INodeGroup>(type);
+            instance.Create(id);
+            return instance;
         }
     }
 
