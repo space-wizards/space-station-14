@@ -100,12 +100,6 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            // Suss out this design.
-            if (mover.VelocityDir.walking.LengthSquared <= 0.0f)
-            {
-                return;
-            }
-
             // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
             // inputs will do different things.
             // TODO: Do that

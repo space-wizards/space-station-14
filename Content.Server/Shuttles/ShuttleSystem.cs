@@ -1,8 +1,13 @@
+using Content.Server.GameTicking;
+using Content.Shared.CCVar;
+using Microsoft.Extensions.Configuration;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles
 {
@@ -21,11 +26,27 @@ namespace Content.Server.Shuttles
             SubscribeLocalEvent<GridInitializeEvent>(HandleGridInit);
 
             _mapManager.TileChanged += HandleTileChange;
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.DefaultGridShuttle, _ =>
+            {
+                var ticker = Get<GameTicker>();
+                if (!EntityManager.TryGetEntity(_mapManager.GetGrid(ticker.DefaultGridId).GridEntityId,
+                    out var gridEnt) ||
+                    !gridEnt.TryGetComponent(out ShuttleComponent? shuttleComponent)) return;
+
+                Toggle(shuttleComponent);
+            });
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _mapManager.TileChanged -= HandleTileChange;
         }
 
         private void HandleGridInit(GridInitializeEvent ev)
         {
-            // TODO: TEMPORARY DEBUGGING
             EntityManager.GetEntity(ev.EntityUid).EnsureComponent<ShuttleComponent>();
         }
 
@@ -72,10 +93,6 @@ namespace Content.Server.Shuttles
                 return;
             }
 
-            physicsComponent.BodyType = BodyType.Dynamic;
-            physicsComponent.BodyStatus = BodyStatus.InAir;
-            physicsComponent.FixedRotation = false;
-
             var mass = 0f;
 
             // TODO: Ideally we'd have fixtures on each chunk and could just use those as they would be actively maintained
@@ -92,6 +109,56 @@ namespace Content.Server.Shuttles
                 fixture.Mass = mass;
                 break;
             }
+
+            var ticker = Get<GameTicker>();
+
+            if (mapGridComp.GridIndex == ticker.DefaultGridId)
+            {
+                var enabled = IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DefaultGridShuttle);
+
+                if (enabled != component.Enabled)
+                {
+                    component.Enabled = enabled;
+                }
+            }
+
+            if (component.Enabled)
+            {
+                Enable(physicsComponent);
+            }
+
+            // TODO: Something better than this
+            component.SpeedMultipler = mass / 40f;
+        }
+
+        public void Toggle(ShuttleComponent component)
+        {
+            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+            component.Enabled = !component.Enabled;
+
+            if (component.Enabled)
+            {
+                Enable(physicsComponent);
+            }
+            else
+            {
+                Disable(physicsComponent);
+            }
+        }
+
+        private void Enable(PhysicsComponent component)
+        {
+            component.BodyType = BodyType.Dynamic;
+            component.BodyStatus = BodyStatus.InAir;
+            component.FixedRotation = false;
+        }
+
+        private void Disable(PhysicsComponent component)
+        {
+            component.BodyType = BodyType.Static;
+            component.BodyStatus = BodyStatus.OnGround;
+            component.FixedRotation = true;
         }
 
         private void HandleShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
@@ -101,9 +168,7 @@ namespace Content.Server.Shuttles
                 return;
             }
 
-            physicsComponent.BodyType = BodyType.Static;
-            physicsComponent.BodyStatus = BodyStatus.OnGround;
-            physicsComponent.FixedRotation = true;
+            Disable(physicsComponent);
 
             foreach (var fixture in physicsComponent.Fixtures)
             {

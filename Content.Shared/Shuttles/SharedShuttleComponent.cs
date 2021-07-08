@@ -8,6 +8,12 @@ namespace Content.Shared.Shuttles
         public override string Name => "Shuttle";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        public bool Enabled { get; set; } = true;
+
+        /// <summary>
+        /// How much our linear impulse is multiplied by.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float SpeedMultipler { get; set; } = 200.0f;
 
         [ViewVariables]
