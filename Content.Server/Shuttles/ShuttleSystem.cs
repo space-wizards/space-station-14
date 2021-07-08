@@ -1,13 +1,12 @@
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using Microsoft.Extensions.Configuration;
+using Robust.Server.Physics;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles
 {
@@ -20,13 +19,14 @@ namespace Content.Server.Shuttles
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(HandleShuttleInit);
+            SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(HandleShuttleStartup);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(HandleShuttleShutdown);
 
             SubscribeLocalEvent<GridInitializeEvent>(HandleGridInit);
+            SubscribeLocalEvent<GridFixtureChangeEvent>(HandleGridFixtureChange);
 
-            _mapManager.TileChanged += HandleTileChange;
-
+            // TODO: Okay so this doesn't work but also I'd need to fuck around with GameTicker as DefaultGridId isn't set when the gridinitialize is being called.
+            // Just yell at me to do it later.
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.DefaultGridShuttle, _ =>
             {
@@ -39,10 +39,19 @@ namespace Content.Server.Shuttles
             });
         }
 
-        public override void Shutdown()
+        private void HandleGridFixtureChange(GridFixtureChangeEvent args)
         {
-            base.Shutdown();
-            _mapManager.TileChanged -= HandleTileChange;
+            var fixture = args.NewFixture;
+
+            if (fixture == null) return;
+
+            fixture.Mass = fixture.Area * TileMassMultiplier;
+
+            if (fixture.Body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
+            {
+                // TODO: Suss out something better than this.
+                shuttleComponent.SpeedMultipler = fixture.Body.Mass / 40f;
+            }
         }
 
         private void HandleGridInit(GridInitializeEvent ev)
@@ -50,37 +59,7 @@ namespace Content.Server.Shuttles
             EntityManager.GetEntity(ev.EntityUid).EnsureComponent<ShuttleComponent>();
         }
 
-        private void HandleTileChange(object? sender, TileChangedEventArgs e)
-        {
-            var oldSpace = e.OldTile.IsEmpty;
-            var newSpace = e.NewTile.Tile.IsEmpty;
-
-            if (oldSpace == newSpace) return;
-
-            if (!EntityManager.TryGetEntity(_mapManager.GetGrid(e.NewTile.GridIndex).GridEntityId,
-                out var gridEnt) ||
-                !gridEnt.HasComponent<ShuttleComponent>() ||
-                !gridEnt.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-
-            float mass;
-
-            if (oldSpace)
-            {
-                mass = TileMassMultiplier;
-            }
-            else
-            {
-                mass = -TileMassMultiplier;
-            }
-
-            foreach (var fixture in physicsComponent.Fixtures)
-            {
-                fixture.Mass += mass;
-                break;
-            }
-        }
-
-        private void HandleShuttleInit(EntityUid uid, ShuttleComponent component, ComponentStartup args)
+        private void HandleShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
             if (!component.Owner.TryGetComponent(out IMapGridComponent? mapGridComp))
             {
@@ -93,40 +72,16 @@ namespace Content.Server.Shuttles
                 return;
             }
 
-            // TODO: Look there's fixtures on chunks now but ideally empty space wouldn't be counted so I still have this garbage.
-            var mass = 0f;
-
-            foreach (var _ in mapGridComp.Grid.GetAllTiles())
-            {
-                mass += TileMassMultiplier;
-            }
-
-            var fixtureCount = physicsComponent.FixtureCount;
-
-            foreach (var fixture in physicsComponent.Fixtures)
-            {
-                fixture.Mass = mass / fixtureCount;
-            }
-
-            var ticker = Get<GameTicker>();
-
-            if (mapGridComp.GridIndex == ticker.DefaultGridId)
-            {
-                var enabled = IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DefaultGridShuttle);
-
-                if (enabled != component.Enabled)
-                {
-                    component.Enabled = enabled;
-                }
-            }
-
             if (component.Enabled)
             {
                 Enable(physicsComponent);
             }
 
-            // TODO: Something better than this
-            component.SpeedMultipler = mass / 40f;
+            if (component.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
+            {
+                // TODO: Suss out something better than this.
+                shuttleComponent.SpeedMultipler = physicsComponent.Mass / 40f;
+            }
         }
 
         public void Toggle(ShuttleComponent component)
@@ -149,7 +104,8 @@ namespace Content.Server.Shuttles
         {
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
-            component.FixedRotation = false;
+            //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
+            component.FixedRotation = true;
         }
 
         private void Disable(PhysicsComponent component)
@@ -171,7 +127,6 @@ namespace Content.Server.Shuttles
             foreach (var fixture in physicsComponent.Fixtures)
             {
                 fixture.Mass = 0f;
-                break;
             }
         }
     }
