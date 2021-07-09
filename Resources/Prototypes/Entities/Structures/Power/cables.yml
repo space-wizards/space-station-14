@@ -119,11 +119,7 @@
   parent: CableBase
   id: CableApcExtension
   name: LV power cable
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Power/cables.yml
   description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
-=======
-  description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
->>>>>>> b79457dde9d8108a1883b8c3df827a866a1caca1:Resources/Prototypes/Entities/Structures/Power/Generation/cables.yml
   components:
   - type: Sprite
     color: Green
@@ -144,11 +140,7 @@
   - type: PowerProvider
     voltage: Apc
   - type: Cable
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Power/cables.yml
-    wireDroppedOnCutPrototype: CableApcStack1
-=======
     cableDroppedOnCutPrototype: CableApcStack1
->>>>>>> b79457dde9d8108a1883b8c3df827a866a1caca1:Resources/Prototypes/Entities/Structures/Power/Generation/cables.yml
     cableType: Apc
   - type: Destructible
     thresholds:
