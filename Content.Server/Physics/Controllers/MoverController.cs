@@ -129,7 +129,6 @@ namespace Content.Server.Physics.Controllers
             }
             */
 
-            // TODO: CVAR for docking and cruise speeds
             // TODO: We should have some kind of speed curve where the first X % accelerates fast then it tapers off
             var velocity = physicsComponent.LinearVelocity;
 

@@ -109,7 +109,7 @@ namespace Content.Server.Shuttles
             component.BodyStatus = BodyStatus.InAir;
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = true;
-            component.LinearDamping = 0.1f;
+            component.LinearDamping = 0.05f;
         }
 
         private void Disable(PhysicsComponent component)

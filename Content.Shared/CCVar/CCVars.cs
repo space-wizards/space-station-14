@@ -332,7 +332,7 @@ namespace Content.Shared.CCVar
          * Shuttles
          */
         public static readonly CVarDef<float> ShuttleDockSpeedCap =
-            CVarDef.Create("shuttle.dock_speed_cap", 3f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
 
         /// <summary>
         /// Should the default grid (AKA the station) be driveable?
