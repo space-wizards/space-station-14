@@ -14,7 +14,10 @@ namespace Content.Server.Shuttles
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private const float TileMassMultiplier = 2f;
+        private const float TileMassMultiplier = 1f;
+
+        // TODO: Replace with thrusters
+        private const float SpeedRatio = 160.0f;
 
         public override void Initialize()
         {
@@ -50,7 +53,7 @@ namespace Content.Server.Shuttles
             if (fixture.Body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
             {
                 // TODO: Suss out something better than this.
-                shuttleComponent.SpeedMultipler = fixture.Body.Mass / 40f;
+                shuttleComponent.SpeedMultipler = fixture.Body.Mass / SpeedRatio;
             }
         }
 
@@ -80,7 +83,7 @@ namespace Content.Server.Shuttles
             if (component.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
             {
                 // TODO: Suss out something better than this.
-                shuttleComponent.SpeedMultipler = physicsComponent.Mass / 40f;
+                shuttleComponent.SpeedMultipler = physicsComponent.Mass / SpeedRatio;
             }
         }
 
@@ -106,6 +109,7 @@ namespace Content.Server.Shuttles
             component.BodyStatus = BodyStatus.InAir;
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = true;
+            component.LinearDamping = 0.1f;
         }
 
         private void Disable(PhysicsComponent component)

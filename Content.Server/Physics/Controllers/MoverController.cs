@@ -108,7 +108,9 @@ namespace Content.Server.Physics.Controllers
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
-                    physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler);
+                    if (mover.VelocityDir.walking.Length != 0f)
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler);
+
                     speedCap = _shuttleDockSpeedCap;
                     break;
                 default:
@@ -131,7 +133,7 @@ namespace Content.Server.Physics.Controllers
             // TODO: We should have some kind of speed curve where the first X % accelerates fast then it tapers off
             var velocity = physicsComponent.LinearVelocity;
 
-            if (velocity.Length < 0.01f)
+            if (velocity.Length < 0.1f && mover.VelocityDir.walking.Length == 0f)
             {
                 physicsComponent.LinearVelocity = Vector2.Zero;
                 return;
