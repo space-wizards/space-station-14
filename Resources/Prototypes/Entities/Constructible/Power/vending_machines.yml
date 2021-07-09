@@ -43,6 +43,7 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: TabletopDraggable
 
 - type: entity
   parent: VendingMachine
