@@ -10,7 +10,7 @@
     graph: computer
     node: computer
   - type: Computer
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:

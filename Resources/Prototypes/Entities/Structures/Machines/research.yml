@@ -9,7 +9,7 @@
     state: server
   - type: ResearchServer
   - type: TechnologyDatabase
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
   - type: Destructible

@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  id: WireBase
+  id: CableBase
   placement:
     mode: SnapgridCenter
   components:
@@ -32,9 +32,9 @@
   - type: SubFloorHide
 
 - type: entity
-  parent: WireBase
-  id: HVWire
-  name: HV Wire
+  parent: CableBase
+  id: CableHV
+  name: HV power cable
   description: An orange high voltage power cable.
   components:
   - type: Sprite
@@ -43,20 +43,17 @@
   - type: Icon
     sprite: Constructible/Power/Wires/hv_cable.rsi
     state: hvcable_4
-  - type: IconSmooth
-    base: hvcable_
-    key: hv_cables
   - type: NodeContainer
     nodes:
       power:
-        !type:AdjacentNode
+        !type:CableNode
         nodeGroupID: HVPower
       wire:
         !type:AdjacentNode
         nodeGroupID: WireNet
-  - type: Wire
-    wireDroppedOnCutPrototype: HVWireStack1
-    wireType: HighVoltage
+  - type: Cable
+    cableDroppedOnCutPrototype: CableHVStack1
+    cableType: HighVoltage
   - type: Destructible
     thresholds:
     - trigger:
@@ -65,16 +62,20 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          HVWireStack1:
+          CableHVStack1:
             min: 1
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: hvcable_
 
 - type: entity
-  parent: WireBase
-  id: MVWire
-  name: MV Wire
+  parent: CableBase
+  id: CableMV
+  name: MV power cable
   description: A medium voltage power cable.
   components:
   - type: Sprite
@@ -91,14 +92,14 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:AdjacentNode
+        !type:CableNode
         nodeGroupID: MVPower
       wire:
         !type:AdjacentNode
         nodeGroupID: WireNet
-  - type: Wire
-    wireDroppedOnCutPrototype: MVWireStack1
-    wireType: MediumVoltage
+  - type: Cable
+    cableDroppedOnCutPrototype: CableMVStack1
+    cableType: MediumVoltage
   - type: Destructible
     thresholds:
     - trigger:
@@ -107,17 +108,21 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          MVWireStack1:
+          CableMVStack1:
             min: 1
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: mvcable_
 
 - type: entity
-  parent: WireBase
-  id: ApcExtensionCable
-  name: LV Wire
-  description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
+  parent: CableBase
+  id: CableApcExtension
+  name: LV power cable
+  description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite
     color: Green
@@ -133,16 +138,16 @@
   - type: NodeContainer
     nodes:
       power:
-        !type:AdjacentNode
+        !type:CableNode
         nodeGroupID: Apc
       wire:
         !type:AdjacentNode
         nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
-  - type: Wire
-    wireDroppedOnCutPrototype: ApcExtensionCableStack1
-    wireType: Apc
+  - type: Cable
+    wireDroppedOnCutPrototype: CableApcStack1
+    cableType: Apc
   - type: Destructible
     thresholds:
     - trigger:
@@ -151,64 +156,12 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          ApcExtensionCableStack1:
+          CableApcStack1:
             min: 1
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-#Dummy wires
-
-- type: entity
-  abstract: true
-  id: BaseDummyWire
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: SnapGrid
-  - type: Sprite
-    drawdepth: BelowFloor
-  - type: IconSmooth
-    mode: CardinalFlags
-  - type: SubFloorHide
-
-- type: entity
-  abstract: true
-  parent: BaseDummyWire
-  id: HVDummyWire
-  name: HV Connector Wire
-  components:
-  - type: Sprite
-    sprite: Constructible/Power/Wires/hv_cable.rsi
-    state: hvcable_0
-  - type: IconSmooth
-    base: hvcable_
-    key: hv_cables
-
-- type: entity
-  abstract: true
-  parent: BaseDummyWire
-  id: MVDummyWire
-  name: MV Connector Wire
-  components:
-  - type: Sprite
-    sprite: Constructible/Power/Wires/mv_cable.rsi
-    state: mvcable_0
-    color: Yellow
-  - type: IconSmooth
-    base: mvcable_
-    key: mv_cables
-
-- type: entity
-  abstract: true
-  parent: BaseDummyWire
-  id: LVDummyWire
-  name: LV Connector Wire
-  components:
-  - type: Sprite
-    sprite: Constructible/Power/Wires/lv_cable.rsi
-    state: lvcable_0
-    color: Green
-  - type: IconSmooth
-    base: lvcable_
-    key: lv_cables
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: lvcable_

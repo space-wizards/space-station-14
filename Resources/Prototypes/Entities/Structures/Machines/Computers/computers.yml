@@ -54,7 +54,7 @@
       type: ResearchConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
     load: 200
     priority: Low
   - type: Computer

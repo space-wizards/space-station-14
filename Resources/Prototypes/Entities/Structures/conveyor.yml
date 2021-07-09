@@ -27,7 +27,7 @@
     drawdepth: FloorObjects
   - type: SignalReceiver
     maxTransmitters: 1
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Conveyor
   - type: Appearance
     visuals:

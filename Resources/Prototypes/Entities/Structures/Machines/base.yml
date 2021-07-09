@@ -35,4 +35,4 @@
   parent: BaseMachine
   id: BaseMachinePowered
   components:
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
