@@ -1,8 +1,8 @@
 #nullable enable
 using System;
-using Content.Server.Battery.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
+using Content.Server.Power.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;

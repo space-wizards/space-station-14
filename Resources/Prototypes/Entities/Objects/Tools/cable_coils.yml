@@ -16,26 +16,26 @@
       netsync: false
     - type: Item
       sprite: Objects/Tools/cable-coils.rsi
-    - type: WirePlacer
+    - type: CablePlacer
     - type: Clickable
 
 
 - type: entity
-  id: HVWireStack
+  id: CableHVStack
   parent: CableStack
   name: HV cable coil
   suffix: Full
   components:
     - type: Stack
-      stackType: HVCable
+      stackType: CableHV
     - type: Sprite
       state: coilhv-30
     - type: Item
       size: 10
       HeldPrefix: coilhv
-    - type: WirePlacer
-      wirePrototypeID: HVWire
-      blockingWireType: HighVoltage
+    - type: CablePlacer
+      cablePrototypeID: CableHV
+      blockingCableType: HighVoltage
     - type: Appearance
       visuals:
         - type: StackVisualizer
@@ -45,8 +45,8 @@
             - coilhv-30
 
 - type: entity
-  parent: HVWireStack
-  id: HVWireStack1
+  parent: CableHVStack
+  id: CableHVStack1
   suffix: 1
   components:
     - type: Sprite
@@ -54,12 +54,11 @@
     - type: Item
       size: 3
     - type: Stack
-      stackType: HVWireStack1
       count: 1
 
 - type: entity
   parent: CableStack
-  id: ApcExtensionCableStack
+  id: CableApcStack
   name: cable coil
   description: Low-Voltage stack of wires for connecting APCs to machines and other purposes.
   suffix: Full
@@ -69,9 +68,9 @@
     - type: Item
       size: 10
       HeldPrefix: coillv
-    - type: WirePlacer
-      wirePrototypeID: ApcExtensionCable
-      blockingWireType: Apc
+    - type: CablePlacer
+      cablePrototypeID: CableApcExtension
+      blockingCableType: Apc
     - type: Appearance
       visuals:
         - type: StackVisualizer
@@ -81,8 +80,8 @@
             - coillv-30
 
 - type: entity
-  parent: ApcExtensionCableStack
-  id: ApcExtensionCableStack1
+  parent: CableApcStack
+  id: CableApcStack1
   suffix: 1
   components:
     - type: Sprite
@@ -94,20 +93,20 @@
 
 - type: entity
   parent: CableStack
-  id: MVWireStack
+  id: CableMVStack
   name: MV cable coil
   suffix: Full
   components:
     - type: Stack
-      stackType: MVCable
+      stackType: CableMV
     - type: Sprite
       state: coilmv-30
     - type: Item
       size: 10
       HeldPrefix: coilmv
-    - type: WirePlacer
-      wirePrototypeID: MVWire
-      blockingWireType: MediumVoltage
+    - type: CablePlacer
+      cablePrototypeID: CableMV
+      blockingCableType: MediumVoltage
     - type: Appearance
       visuals:
         - type: StackVisualizer
@@ -117,8 +116,8 @@
             - coilmv-30
 
 - type: entity
-  parent: MVWireStack
-  id: MVWireStack1
+  parent: CableMVStack
+  id: CableMVStack1
   suffix: 1
   components:
     - type: Sprite
@@ -126,5 +125,4 @@
     - type: Item
       size: 3
     - type: Stack
-      stackType: MVWireStack1
       count: 1

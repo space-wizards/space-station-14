@@ -16,7 +16,6 @@ namespace Content.Client.AME.UI
         public Button ToggleInjection { get; set; }
         public Button IncreaseFuelButton { get; set; }
         public Button DecreaseFuelButton { get; set; }
-        public Button RefreshPartsButton { get; set; }
         public ProgressBar? FuelMeter { get; set; }
         public Label FuelAmount { get; set; }
         public Label InjectionAmount { get; set; }
@@ -85,7 +84,6 @@ namespace Content.Client.AME.UI
                         {
                             Children =
                             {
-                                (RefreshPartsButton = new Button {Text = Loc.GetString("ame-window-refresh-parts-button"), StyleClasses = {StyleBase.ButtonOpenBoth }, Disabled = true }),
                                  new Label { Text = Loc.GetString("ame-window-core-count-label")},
                                 (CoreCount = new Label { Text = "0"}),
                             }
@@ -158,8 +156,6 @@ namespace Content.Client.AME.UI
             {
                 InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label");
             }
-
-            RefreshPartsButton.Disabled = castState.Injecting;
 
             CoreCount.Text = $"{castState.CoreCount}";
             InjectionAmount.Text = $"{castState.InjectionAmount}";

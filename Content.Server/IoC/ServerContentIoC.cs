@@ -50,7 +50,6 @@ namespace Content.Server.IoC
             IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<IPowerNetManager, PowerNetManager>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IAccentManager, AccentManager>();

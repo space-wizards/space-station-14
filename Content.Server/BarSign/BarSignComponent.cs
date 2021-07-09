@@ -35,7 +35,7 @@ namespace Content.Server.BarSign
             }
         }
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private void UpdateSignInfo()
         {

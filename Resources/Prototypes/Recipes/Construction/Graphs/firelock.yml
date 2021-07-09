@@ -59,7 +59,7 @@
         - to: frame1
           completed:
             - !type:SpawnPrototype
-              prototype: ApcExtensionCableStack1
+              prototype: CableApcStack1
               amount: 2
           conditions:
             - !type:EntityAnchored

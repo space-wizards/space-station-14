@@ -38,25 +38,25 @@
   id: CableStack
   name: cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
-  result: ApcExtensionCableStack1
+  result: CableApcStack1
   completetime: 500
   materials:
     Steel: 100
 
 - type: latheRecipe
-  id: MVWireStack
+  id: CableMVStack
   name: MV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
-  result: MVWireStack1
+  result: CableMVStack1
   completetime: 500
   materials:
     Steel: 150
 
 - type: latheRecipe
-  id: HVWireStack
+  id: CableHVStack
   name: HV cable coil
   icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
-  result: HVWireStack1
+  result: CableHVStack1
   completetime: 500
   materials:
     Steel: 200

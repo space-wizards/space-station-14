@@ -24,7 +24,7 @@ namespace Content.Server.Computer
             // Let's ensure the container manager and container are here.
             Owner.EnsureContainer<Container>("board", out var _);
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? powerReceiver) &&
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? powerReceiver) &&
                 Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);

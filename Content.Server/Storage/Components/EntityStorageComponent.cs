@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
@@ -11,7 +12,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using Content.Shared.Storage;
@@ -25,6 +25,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -58,9 +59,6 @@ namespace Content.Server.Storage.Components
         [ViewVariables]
         [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
-
-        [ViewVariables]
-        protected IEntityQuery? EntityQuery;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -150,8 +148,6 @@ namespace Content.Server.Storage.Components
         {
             base.Initialize();
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
-            EntityQuery = new IntersectingEntityQuery(Owner);
-
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
@@ -198,13 +194,12 @@ namespace Content.Server.Storage.Components
         protected virtual void CloseStorage()
         {
             Open = false;
-            EntityQuery ??= new IntersectingEntityQuery(Owner);
-            var entities = Owner.EntityManager.GetEntities(EntityQuery);
+
             var count = 0;
-            foreach (var entity in entities)
+            foreach (var entity in DetermineCollidingEntities())
             {
                 // prevents taking items out of inventories, out of containers, and orphaning child entities
-                if(!entity.Transform.IsMapTransform)
+                if (entity.IsInContainer())
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
@@ -440,6 +435,12 @@ namespace Content.Server.Storage.Components
         {
             Open = true;
             EmptyContents();
+        }
+
+        protected IEnumerable<IEntity> DetermineCollidingEntities()
+        {
+            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            return entityLookup.GetEntitiesIntersecting(Owner);
         }
 
         [Verb]

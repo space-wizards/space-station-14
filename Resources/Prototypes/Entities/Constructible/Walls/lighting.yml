@@ -63,7 +63,7 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
@@ -135,7 +135,7 @@
       layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer

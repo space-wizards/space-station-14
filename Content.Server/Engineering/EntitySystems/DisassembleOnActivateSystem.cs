@@ -33,7 +33,7 @@ namespace Content.Server.Engineering.EntitySystems
                     BreakOnUserMove = true,
                     BreakOnStun = true,
                 };
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
+                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result != DoAfterStatus.Finished)
                     return;
