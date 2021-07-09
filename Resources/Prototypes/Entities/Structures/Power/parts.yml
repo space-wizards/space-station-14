@@ -96,7 +96,3 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
-<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Power/parts.yml
-=======
-
->>>>>>> b79457dde9d8108a1883b8c3df827a866a1caca1:Resources/Prototypes/Entities/Constructible/Power/parts.yml
