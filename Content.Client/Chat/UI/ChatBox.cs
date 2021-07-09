@@ -148,7 +148,7 @@ namespace Content.Client.Chat.UI
                                         {
                                             (_channelSelector = new ChannelSelectorButton
                                             {
-                                                StyleClasses = { StyleBase.ButtonOpenLeft },
+                                                StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton },
                                                 MinWidth = 75,
                                                 Text = Loc.GetString("hud-chatbox-ooc"),
                                                 ToggleMode = true
@@ -917,7 +917,7 @@ namespace Content.Client.Chat.UI
         public ChannelItemButton(ChatChannel channel)
         {
             Channel = channel;
-            AddStyleClass(StyleBase.ButtonOpenBoth);
+            AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
             Text = ChatBox.ChannelSelectorName(channel);
         }
     }

@@ -223,7 +223,7 @@ namespace Content.Client.Stylesheets
             chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
-            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
+            var chatFilterButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button_bordered.svg.96dpi.png");
             var chatFilterButton = new StyleBoxTexture
             {
                 Texture = chatFilterButtonTex,
