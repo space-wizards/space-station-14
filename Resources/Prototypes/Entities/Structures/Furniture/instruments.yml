@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   abstract: true
   components:
   - type: Instrument

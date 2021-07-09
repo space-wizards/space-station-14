@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseConstructible
+  parent: BaseStructure
   id: BaseMachine
   components:
   - type: InteractionOutline

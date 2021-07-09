@@ -1,6 +1,6 @@
 - type: entity
   id: TableBase
-  parent: BaseConstructible
+  parent: BaseStructure
   name: table
   description: A square piece of metal standing on four metal legs.
   abstract: true

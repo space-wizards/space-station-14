@@ -3,7 +3,7 @@
   id: GasCanister
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -332,7 +332,7 @@
 # Broke Entities
 
 - type: entity
-  parent: BaseConstructible
+  parent: BaseStructure
   id: GasCanisterBrokenBase
   name: broken gas canister
   description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.

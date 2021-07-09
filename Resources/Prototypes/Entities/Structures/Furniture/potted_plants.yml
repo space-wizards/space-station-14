@@ -1,6 +1,6 @@
 - type: entity
   id: PottedPlantBase
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   abstract: true
   components:
   - type: InteractionOutline

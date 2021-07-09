@@ -1,6 +1,6 @@
 - type: entity
   id: chem_master
-  parent: BaseConstructible
+  parent: BaseStructure
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
   placement:
@@ -52,7 +52,7 @@
 
 - type: entity
   id: chem_master_broken
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   name: ChemMaster 4000
   description: "An industrial grade chemical manipulator with pill and bottle production included. It's broken."
   abstract: true

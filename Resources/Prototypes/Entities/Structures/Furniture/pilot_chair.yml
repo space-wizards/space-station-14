@@ -1,6 +1,6 @@
 - type: entity
   id: PilotSeatChair
-  parent: BaseConstructible
+  parent: BaseStructure
   name: pilot seat
   description: The pilot seat of a prestigious battle cruiser.
   components:

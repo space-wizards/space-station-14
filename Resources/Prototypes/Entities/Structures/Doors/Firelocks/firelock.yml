@@ -1,6 +1,6 @@
 - type: entity
   id: Firelock
-  parent: BaseConstructible
+  parent: BaseStructure
   name: firelock
   description: Apply crowbar.
   components:

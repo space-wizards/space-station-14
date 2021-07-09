@@ -1,6 +1,6 @@
 - type: entity
   id: ComputerFrame
-  parent: BaseConstructible
+  parent: BaseStructure
   name: computer frame
   description: A computer under construction.
   components:

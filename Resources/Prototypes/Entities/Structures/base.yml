@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseConstructible
+  id: BaseStructure
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -22,8 +22,8 @@
 
 - type: entity
   # This means that it's not anchored on spawn.
-  id: BaseConstructibleDynamic
-  parent: BaseConstructible
+  id: BaseStructureDynamic
+  parent: BaseStructure
   abstract: true
   components:
 # These might/might not be a good idea

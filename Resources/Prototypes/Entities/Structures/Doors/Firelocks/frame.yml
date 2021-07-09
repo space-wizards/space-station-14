@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: FirelockFrame
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   name: Firelock Frame
   description: That is a firelock frame.
   components:

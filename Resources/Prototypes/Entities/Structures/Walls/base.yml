@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseConstructible
+  parent: BaseStructure
   id: WallBase
   name: basewall
   description: Keeps the air in and the greytide out.

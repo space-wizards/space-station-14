@@ -1,6 +1,6 @@
 - type: entity
   id: CarpetBase
-  parent: BaseConstructible
+  parent: BaseStructure
   description: "Fancy walking surface."
   abstract: true
   components:

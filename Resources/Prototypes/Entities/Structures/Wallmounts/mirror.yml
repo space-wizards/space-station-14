@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: Mirror
-  parent: BaseConstructible
+  parent: BaseStructure
   name: mirror
   description: 'Mirror mirror on the wall , who''s the most robust of them all?'
   components:

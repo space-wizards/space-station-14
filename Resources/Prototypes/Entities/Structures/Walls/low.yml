@@ -1,6 +1,6 @@
 - type: entity
   id: LowWall
-  parent: BaseConstructible
+  parent: BaseStructure
   name: low wall
   description: Goes up to about your waist.
   components:

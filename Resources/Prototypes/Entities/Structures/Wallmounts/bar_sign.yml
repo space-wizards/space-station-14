@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: BarSign
-  parent: BaseConstructible
+  parent: BaseStructure
   name: bar sign
   components:
   - type: Physics

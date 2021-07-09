@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: Window
-  parent: BaseConstructible
+  parent: BaseStructure
   name: window
   description: Don't smudge up the glass down there.
   placement:

@@ -1,6 +1,6 @@
 - type: entity
   id: AsteroidRock
-  parent: BaseConstructible
+  parent: BaseStructure
   name: asteroid rock
   description: That's an asteroid
   components:

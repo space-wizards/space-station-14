@@ -1,6 +1,6 @@
 - type: entity
   id: Girder
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:

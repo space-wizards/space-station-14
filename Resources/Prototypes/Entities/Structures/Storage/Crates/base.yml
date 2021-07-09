@@ -1,6 +1,6 @@
 - type: entity
   id: CrateGeneric
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   abstract: true
   name: crate
   description: A large container for items.

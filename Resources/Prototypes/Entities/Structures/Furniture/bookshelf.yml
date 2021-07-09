@@ -1,6 +1,6 @@
 - type: entity
   id: Bookshelf
-  parent: BaseConstructible
+  parent: BaseStructure
   name: "bookshelf"
   description: Mostly filled with erotica.
   components:
