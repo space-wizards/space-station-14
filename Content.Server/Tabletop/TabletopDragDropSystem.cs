@@ -17,7 +17,7 @@ namespace Content.Server.Tabletop
                 return;
             }
 
-            movedEntity.Transform.WorldPosition = msg.TargetPosition;
+            movedEntity.Transform.Coordinates = msg.Coordinates;
             movedEntity.Dirty();
         }
     }

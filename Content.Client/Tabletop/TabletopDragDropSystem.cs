@@ -18,14 +18,7 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
-        private DragState _state = DragState.NotDragging;
         private IEntity? _draggedEntity;
-
-        private enum DragState
-        {
-            NotDragging,
-            Dragging
-        }
 
         public override void Initialize()
         {
@@ -36,21 +29,12 @@ namespace Content.Client.Tabletop
 
         public override void Update(float frameTime)
         {
-            if (_state != DragState.Dragging || _draggedEntity == null)
-            {
-                return;
-            }
+            if (_draggedEntity == null) return;
 
             var worldPos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            EntityCoordinates coords = new(_mapManager.GetMapEntityId(worldPos.MapId), worldPos.Position);
 
-            if (!_mapManager.TryFindGridAt(worldPos, out var grid))
-            {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, GridId.Invalid, worldPos.Position));
-            }
-            else
-            {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, grid.Index, grid.MapToGrid(worldPos).Position));
-            }
+            RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, coords));
         }
 
         private bool OnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -75,7 +59,6 @@ namespace Content.Client.Tabletop
                 return false;
             }
 
-            _state = DragState.Dragging;
             _draggedEntity = entity;
 
             return true;

@@ -10,14 +10,12 @@ namespace Content.Shared.Tabletop
     public class TabletopMoveEvent : EntityEventArgs
     {
         public EntityUid MovedEntity { get; }
-        public GridId TargetGrid { get; }
-        public Vector2 TargetPosition { get; }
+        public EntityCoordinates Coordinates { get; }
 
-        public TabletopMoveEvent(EntityUid movedEntity, GridId targetGrid, Vector2 targetPosition)
+        public TabletopMoveEvent(EntityUid movedEntity, EntityCoordinates coordinates)
         {
-            TargetGrid = targetGrid;
-            TargetPosition = targetPosition;
             MovedEntity = movedEntity;
+            Coordinates = coordinates;
         }
     }
 }
