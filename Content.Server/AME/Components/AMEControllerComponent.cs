@@ -33,7 +33,7 @@ namespace Content.Server.AME.Components
         private AppearanceComponent? _appearance;
         private PowerSupplierComponent? _powerSupplier;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private int _stability = 100;
@@ -92,7 +92,7 @@ namespace Content.Server.AME.Components
             if(fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
-                _powerSupplier.SupplyRate = group.InjectFuel(availableInject, out var overloading);
+                _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
                 fuelJar.FuelAmount -= availableInject;
                 InjectSound(overloading);
                 UpdateUserInterface();
@@ -212,9 +212,6 @@ namespace Content.Server.AME.Components
                 case UiButton.DecreaseFuel:
                     InjectionAmount = InjectionAmount > 0 ? InjectionAmount -= 2 : 0;
                     break;
-                case UiButton.RefreshParts:
-                    RefreshParts();
-                    break;
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
@@ -252,7 +249,7 @@ namespace Content.Server.AME.Components
                 _appearance?.SetData(AMEControllerVisuals.DisplayState, "off");
                 if (_powerSupplier != null)
                 {
-                    _powerSupplier.SupplyRate = 0;
+                    _powerSupplier.MaxSupply = 0;
                 }
             }
             _injecting = !_injecting;
@@ -275,12 +272,6 @@ namespace Content.Server.AME.Components
                 _appearance?.SetData(AMEControllerVisuals.DisplayState, newState);
             }
 
-        }
-
-        private void RefreshParts()
-        {
-            GetAMENodeGroup()?.RefreshAMENodes(this);
-            UpdateUserInterface();
         }
 
         private AMENodeGroup? GetAMENodeGroup()

@@ -17,8 +17,6 @@
   - type: Sprite
     netsync: false
     drawdepth: BelowFloor
-  - type: IconSmooth
-    mode: CardinalFlags
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -30,6 +28,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: CableVis
+    node: power
 
 - type: entity
   parent: CableBase
@@ -86,9 +86,6 @@
     color: Yellow
     sprite: Constructible/Power/Wires/mv_cable.rsi
     state: mvcable_4
-  - type: IconSmooth
-    base: mvcable_
-    key: mv_cables
   - type: NodeContainer
     nodes:
       power:
@@ -122,7 +119,11 @@
   parent: CableBase
   id: CableApcExtension
   name: LV power cable
+<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Power/cables.yml
   description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
+=======
+  description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
+>>>>>>> b79457dde9d8108a1883b8c3df827a866a1caca1:Resources/Prototypes/Entities/Structures/Power/Generation/cables.yml
   components:
   - type: Sprite
     color: Green
@@ -132,9 +133,6 @@
     color: Green
     sprite: Constructible/Power/Wires/lv_cable.rsi
     state: lvcable_4
-  - type: IconSmooth
-    base: lvcable_
-    key: lv_cables
   - type: NodeContainer
     nodes:
       power:
@@ -146,7 +144,11 @@
   - type: PowerProvider
     voltage: Apc
   - type: Cable
+<<<<<<< HEAD:Resources/Prototypes/Entities/Structures/Power/cables.yml
     wireDroppedOnCutPrototype: CableApcStack1
+=======
+    cableDroppedOnCutPrototype: CableApcStack1
+>>>>>>> b79457dde9d8108a1883b8c3df827a866a1caca1:Resources/Prototypes/Entities/Structures/Power/Generation/cables.yml
     cableType: Apc
   - type: Destructible
     thresholds:

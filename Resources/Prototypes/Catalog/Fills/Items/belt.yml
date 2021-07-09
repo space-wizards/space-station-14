@@ -24,7 +24,7 @@
       - id: Crowbar
       - id: WelderExperimental
       - id: Multitool
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
 
 - type: entity
   id: ClothingBeltSecurityFilled
