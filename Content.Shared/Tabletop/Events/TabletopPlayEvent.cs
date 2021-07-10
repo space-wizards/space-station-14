@@ -7,6 +7,5 @@ namespace Content.Shared.Tabletop.Events
     [Serializable, NetSerializable]
     public class TabletopPlayEvent : EntityEventArgs
     {
-
     }
 }

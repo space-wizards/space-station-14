@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Tabletop;
+using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -37,9 +38,15 @@ namespace Content.Client.Tabletop
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopDragDropSystem>();
 
-            EntityManager.EventBus.SubscribeEvent<TabletopPlayEvent>(EventSource.Network, this, TabletopPlayHandler);
+            SubscribeNetworkEvent<TabletopPlayEvent>(TabletopPlayHandler);
         }
 
+        /**
+         * <summary>
+         * Runs when the player presses the "Play Game" verb on a tabletop game.
+         * Opens a viewport where they can then play the game.
+         * </summary>
+         */
         private void TabletopPlayHandler(TabletopPlayEvent msg)
         {
             Logger.Info("Game started");
@@ -47,16 +54,20 @@ namespace Content.Client.Tabletop
 
         public override void Update(float frameTime)
         {
+            // If no entity is being dragged, just return
             if (_draggedEntity == null) return;
 
+            // Map mouse position to EntityCoordinates
             var worldPos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
             EntityCoordinates coords = new(_mapManager.GetMapEntityId(worldPos.MapId), worldPos.Position);
 
             // Move the entity locally every update
             _draggedEntity.Transform.Coordinates = coords;
 
+            // Increment total time passed
             _timePassed += frameTime;
 
+            // Only send new position to server when Delay is reached
             if (_timePassed >= Delay)
             {
                 RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, coords));
@@ -81,11 +92,12 @@ namespace Content.Client.Tabletop
                 return false;
             }
 
-            if (!entity.GetAllComponents<ITabletopDraggable>().Any(x => x.CanStartDrag()))
+            if (!entity.GetAllComponents<TabletopDraggableComponent>().Any(x => x.CanStartDrag()))
             {
                 return false;
             }
 
+            // Set the dragged entity
             _draggedEntity = entity;
 
             return true;
@@ -93,6 +105,7 @@ namespace Content.Client.Tabletop
 
         private bool OnMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
+            // Unset the dragged entity
             _draggedEntity = null;
 
             return true;

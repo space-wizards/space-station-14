@@ -19,6 +19,9 @@ namespace Content.Server.Tabletop
                 return;
             }
 
+            // TODO: sanity checks; only allow moving the entity to within the tabletop space
+
+            // Move the entity and dirty it
             movedEntity.Transform.Coordinates = msg.Coordinates;
             movedEntity.Dirty();
         }
