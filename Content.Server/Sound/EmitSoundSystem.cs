@@ -1,68 +1,50 @@
-using Content.Shared.Audio;
-using Content.Shared.Interaction;
-using Content.Shared.Throwing;
 using Content.Server.Interaction.Components;
 using Content.Server.Sound.Components;
 using Content.Server.Throwing;
+using Content.Shared.Audio;
+using Content.Shared.Interaction;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Log;
+using Robust.Shared.Player;
 
 namespace Content.Server.Sound
 {
+    /// <summary>
+    /// Will play a sound on various events if the affected entity has a component derived from BaseEmitSoundComponent
+    /// </summary>
     [UsedImplicitly]
     public class EmitSoundSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>((eUI, comp, arg) => PlaySound(comp));
-            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>((eUI, comp, arg) => PlaySound(comp));
-            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>((eUI, comp, arg) => PlaySound(comp));
-            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>((eUI, comp, args) => PlaySound(comp));
+            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>((eUI, comp, arg) => HandleEmitSoundOn(comp));
+            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>((eUI, comp, arg) => HandleEmitSoundOn(comp));
+            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>((eUI, comp, arg) => HandleEmitSoundOn(comp));
+            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>((eUI, comp, args) => HandleEmitSoundOn(comp));
         }
 
-        private void PlaySound(BaseEmitSoundComponent component)
+        private void HandleEmitSoundOn(BaseEmitSoundComponent component)
         {
-            if (!string.IsNullOrWhiteSpace(component.SoundCollectionName))
-            {
-                PlayRandomSoundFromCollection(component);
-            }
-            else if (!string.IsNullOrWhiteSpace(component.SoundName))
-            {
-                PlaySingleSound(component.SoundName, component);
+            var soundName = component.Sound.GetSound();
+
+            if (!string.IsNullOrWhiteSpace(soundName))
+            { 
+                PlaySingleSound(soundName, component);
             }
             else
             {
-                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has neither {nameof(component.SoundCollectionName)} nor {nameof(component.SoundName)} to play.");
+                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has no {nameof(component.Sound)} to play.");
             }
-        }
-
-        private void PlayRandomSoundFromCollection(BaseEmitSoundComponent component)
-        {
-            var file = SelectRandomSoundFromSoundCollection(component.SoundCollectionName!);
-            PlaySingleSound(file, component);
-        }
-
-        private string SelectRandomSoundFromSoundCollection(string soundCollectionName)
-        {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
-            return _random.Pick(soundCollection.PickFiles);
         }
 
         private static void PlaySingleSound(string soundName, BaseEmitSoundComponent component)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                             AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
         }
     }
 }
