@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -65,10 +66,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Sounds
         [DataField("soundCycle")]
-        private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
+        private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
 
         [DataField("soundInsert")]
-        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
+        private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
 
         void IMapInit.MapInit()
         {
@@ -94,7 +95,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 chamber,
                 FireRateSelector,
                 count,
-                SoundGunshot);
+                SoundGunshot.GetSound());
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -189,9 +190,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (manual)
             {
-                if (!string.IsNullOrEmpty(_soundCycle))
+                if (_soundCycle.TryGetSound(out var sound))
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
             }
 
@@ -218,9 +219,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _spawnedAmmo.Push(eventArgs.Using);
                 Dirty();
                 UpdateAppearance();
-                if (_soundInsert != null)
+                if (_soundInsert.TryGetSound(out var soundInsert))
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
                 return true;
             }

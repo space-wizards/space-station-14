@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Portal.Components;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -28,8 +29,8 @@ namespace Content.Server.Portal.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("individual_cooldown")] private float _individualPortalCooldown = 2.1f;
         [ViewVariables] [DataField("overall_cooldown")] private float _overallPortalCooldown = 2.0f;
         [ViewVariables] private bool _onCooldown;
-        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
-        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
+        [ViewVariables] [DataField("departure_sound")] private SoundSpecifier _departureSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
+        [ViewVariables] [DataField("arrival_sound")] private SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
         public readonly List<IEntity> ImmuneEntities = new(); // K
         [ViewVariables(VVAccess.ReadWrite)] [DataField("alive_time")] private float _aliveTime = 10f;
 
@@ -143,9 +144,11 @@ namespace Content.Server.Portal.Components
 
             // Departure
             // Do we need to rate-limit sounds to stop ear BLAST?
-            SoundSystem.Play(Filter.Pvs(entity), _departureSound, entity.Transform.Coordinates);
+            if(_departureSound.TryGetSound(out var departureSound))
+                SoundSystem.Play(Filter.Pvs(entity), departureSound, entity.Transform.Coordinates);
             entity.Transform.Coordinates = position;
-            SoundSystem.Play(Filter.Pvs(entity), _arrivalSound, entity.Transform.Coordinates);
+            if(_arrivalSound.TryGetSound(out var arrivalSound))
+                SoundSystem.Play(Filter.Pvs(entity), arrivalSound, entity.Transform.Coordinates);
             TryChangeState(PortalState.RecentlyTeleported);
 
             // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal

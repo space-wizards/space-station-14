@@ -34,14 +34,17 @@ namespace Content.Server.Mining.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
-            if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent)) return false;
+            if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
+                return false;
 
             Owner.GetComponent<IDamageableComponent>().ChangeDamage(DamageType.Blunt, meleeWeaponComponent.Damage, false, item);
 
-            if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent)) return true;
-            if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))
+            if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
+                return true;
+
+            if (pickaxeComponent.MiningSound.TryGetSound(out var miningSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), pickaxeComponent.MiningSound, Owner, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(Owner), miningSound, Owner, AudioParams.Default);
             }
             return true;
         }

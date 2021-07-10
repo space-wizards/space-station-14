@@ -1,10 +1,9 @@
-using System;
 using Content.Shared.Audio;
-using Robust.Shared;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Sound
 {
@@ -12,6 +11,8 @@ namespace Content.Shared.Sound
     public abstract class SoundSpecifier
     {
         public abstract string GetSound();
+
+        public abstract bool TryGetSound([NotNullWhen(true)] out string? sound);
     }
 
     [DataDefinition]
@@ -19,7 +20,7 @@ namespace Content.Shared.Sound
     {
         public const string Node = "path";
 
-        [DataField(Node, customTypeSerializer:typeof(ResourcePathSerializer), required:true)]
+        [DataField(Node, customTypeSerializer: typeof(ResourcePathSerializer), required: true)]
         public ResourcePath? Path { get; }
 
         public SoundPathSpecifier()
@@ -40,6 +41,12 @@ namespace Content.Shared.Sound
         {
             return Path == null ? string.Empty : Path.ToString();
         }
+    
+        public override bool TryGetSound([NotNullWhen(true)] out string? sound)
+        {
+            sound = GetSound();
+            return !string.IsNullOrWhiteSpace(sound);
+        }
     }
 
     [DataDefinition]
@@ -47,7 +54,7 @@ namespace Content.Shared.Sound
     {
         public const string Node = "collection";
 
-        [DataField(Node, customTypeSerializer:typeof(PrototypeIdSerializer<SoundCollectionPrototype>), required:true)]
+        [DataField(Node, customTypeSerializer: typeof(PrototypeIdSerializer<SoundCollectionPrototype>), required: true)]
         public string? Collection { get; }
 
         public SoundCollectionSpecifier()
@@ -62,6 +69,12 @@ namespace Content.Shared.Sound
         public override string GetSound()
         {
             return Collection == null ? string.Empty : AudioHelpers.GetRandomFileFromSoundCollection(Collection);
+        }
+
+        public override bool TryGetSound([NotNullWhen(true)] out string? sound)
+        {
+            sound = GetSound();
+            return !string.IsNullOrWhiteSpace(sound);
         }
     }
 }

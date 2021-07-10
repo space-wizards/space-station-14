@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
@@ -145,6 +146,15 @@ namespace Content.Server.WireHacking
         [ViewVariables]
         [DataField("LayoutId")]
         private string? _layoutId = default;
+
+        [DataField("pulseSound")]
+        private SoundSpecifier _pulseSound = new SoundPathSpecifier("/Audio/Effects/multitool_pulse.ogg");
+
+        [DataField("screwdriverOpenSound")]
+        private SoundSpecifier _screwdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+
+        [DataField("screwdriverCloseSound")]
+        private SoundSpecifier _screwdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 
@@ -447,7 +457,8 @@ namespace Content.Server.WireHacking
                                 return;
                             }
 
-                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/multitool_pulse.ogg", Owner);
+                            if(_pulseSound.TryGetSound(out var pulseSound))
+                                SoundSystem.Play(Filter.Pvs(Owner), pulseSound, Owner);
                             break;
                     }
 
@@ -497,8 +508,21 @@ namespace Content.Server.WireHacking
             else if (await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
             {
                 IsPanelOpen = !IsPanelOpen;
-                SoundSystem.Play(Filter.Pvs(Owner), IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
-                        Owner);
+                if (IsPanelOpen)
+                {
+                    if(_screwdriverOpenSound.TryGetSound(out var openSound))
+                    {
+                        SoundSystem.Play(Filter.Pvs(Owner), openSound, Owner);
+                    }
+                }
+                else
+                {
+                    if (_screwdriverCloseSound.TryGetSound(out var closeSound))
+                    {
+                        SoundSystem.Play(Filter.Pvs(Owner), closeSound, Owner);
+                    }
+                }
+
                 return true;
             }
 

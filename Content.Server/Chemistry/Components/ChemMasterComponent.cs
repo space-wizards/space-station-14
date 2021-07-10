@@ -14,6 +14,7 @@ using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -21,6 +22,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Chemistry.Components
@@ -45,6 +47,8 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables] private readonly Solution BufferSolution = new();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
+
+        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
@@ -417,7 +421,8 @@ namespace Content.Server.Chemistry.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            if(_clickSound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         [Verb]

@@ -9,6 +9,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -97,10 +98,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Sounds
         [DataField("soundGunshot")]
-        public string? SoundGunshot { get; set; }
+        public SoundSpecifier SoundGunshot { get; set; } = default!;
 
         [DataField("soundEmpty")]
-        public string SoundEmpty { get; } = "/Audio/Weapons/Guns/Empty/empty.ogg";
+        public SoundSpecifier SoundEmpty { get; } = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
 
         void ISerializationHooks.BeforeSerialization()
         {
@@ -196,9 +197,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             if (ShotsLeft == 0)
             {
-                if (SoundEmpty != null)
+                if (SoundEmpty.TryGetSound(out var sound))
                 {
-                    SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Broadcast(), sound, Owner.Transform.Coordinates);
                 }
                 return;
             }
@@ -207,7 +208,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
+                if(SoundEmpty.TryGetSound(out var soundEmpty))
+                    SoundSystem.Play(Filter.Broadcast(), soundEmpty, Owner.Transform.Coordinates);
                 return;
             }
 
@@ -219,7 +221,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
-
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent? hitscan))
@@ -248,9 +249,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 throw new InvalidOperationException();
             }
 
-            if (!string.IsNullOrEmpty(SoundGunshot))
+            if (SoundGunshot.TryGetSound(out var soundGunshot))
             {
-                SoundSystem.Play(Filter.Broadcast(), SoundGunshot, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), soundGunshot, Owner.Transform.Coordinates);
             }
 
             _lastFire = _gameTiming.CurTime;
@@ -282,16 +283,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            if (ammo.SoundCollectionEject == null || !playSound)
+            if (ammo.SoundCollectionEject.TryGetSound(out var ejectSounds) && playSound)
             {
-                return;
-            }
-
-            prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
-
-            var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
-            var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-            SoundSystem.Play(Filter.Broadcast(), randomFile, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+                SoundSystem.Play(Filter.Broadcast(), ejectSounds, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+            }     
         }
 
         /// <summary>

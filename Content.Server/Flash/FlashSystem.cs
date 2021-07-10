@@ -1,4 +1,4 @@
-﻿using Content.Server.Flash.Components;
+using Content.Server.Flash.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -93,8 +93,8 @@ namespace Content.Server.Flash
                     });
                 }
 
-                SoundSystem.Play(Filter.Pvs(comp.Owner), "/Audio/Weapons/flash.ogg", comp.Owner.Transform.Coordinates,
-                    AudioParams.Default);
+                if(comp.Sound.TryGetSound(out var sound))
+                    SoundSystem.Play(Filter.Pvs(comp.Owner), sound, comp.Owner.Transform.Coordinates, AudioParams.Default);
 
                 return true;
             }

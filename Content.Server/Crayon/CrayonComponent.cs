@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -31,7 +32,7 @@ namespace Content.Server.Crayon
 
         //TODO: useSound
         [DataField("useSound")]
-        private string? _useSound = string.Empty;
+        private SoundSpecifier _useSound = default!;
 
         [ViewVariables]
         public Color Color { get; set; }
@@ -135,9 +136,9 @@ namespace Content.Server.Crayon
                 appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 
-            if (!string.IsNullOrEmpty(_useSound))
+            if (_useSound.TryGetSound(out var useSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _useSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), useSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             // Decrease "Ammo"

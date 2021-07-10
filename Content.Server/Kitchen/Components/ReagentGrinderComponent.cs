@@ -13,6 +13,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -67,6 +68,9 @@ namespace Content.Server.Kitchen.Components
         //YAML serialization vars
         [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")] private int _storageCap = 16;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")] private int _workTime = 3500; //3.5 seconds, completely arbitrary for now.
+        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        [DataField("grindSound")] private SoundSpecifier _grindSound = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
+        [DataField("juiceSound")] private SoundSpecifier _juiceSound = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
 
         protected override void Initialize()
         {
@@ -163,7 +167,8 @@ namespace Content.Server.Kitchen.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            if(_clickSound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void SetAppearance()
@@ -327,7 +332,8 @@ namespace Content.Server.Kitchen.Components
             switch (program)
             {
                 case GrinderProgram.Grind:
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/blender.ogg", Owner, AudioParams.Default);
+                    if(_grindSound.TryGetSound(out var grindSound))
+                        SoundSystem.Play(Filter.Pvs(Owner), grindSound, Owner, AudioParams.Default);
                     //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
                     Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
@@ -348,7 +354,8 @@ namespace Content.Server.Kitchen.Components
                     break;
 
                 case GrinderProgram.Juice:
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/juicer.ogg", Owner, AudioParams.Default);
+                    if(_juiceSound.TryGetSound(out var juiceSound))
+                        SoundSystem.Play(Filter.Pvs(Owner), juiceSound, Owner, AudioParams.Default);
                     Owner.SpawnTimer(_workTime, (Action) (() =>
                     {
                         foreach (var item in _chamber.ContainedEntities.ToList())

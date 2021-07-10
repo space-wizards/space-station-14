@@ -9,6 +9,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -154,38 +155,37 @@ namespace Content.Server.Physics.Controllers
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
-            string? soundCollectionName = null;
+            string? soundToPlay = null;
             foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep) &&
+                    footstep._soundCollection.TryGetSound(out var footstepSound))
                 {
-                    soundCollectionName = footstep._soundCollectionName;
+                    soundToPlay = footstepSound;
                     break;
                 }
             }
             // if there is no FootstepModifierComponent, determine sound based on tiles
-            if (soundCollectionName == null)
+            if (soundToPlay == null)
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                if (string.IsNullOrEmpty(def.FootstepSounds))
+                if (def.FootstepSounds.TryGetSound(out var footstepSound))
                 {
-                    // Nothing to play, oh well.
+                    soundToPlay = footstepSound;
                     return;
-                }
-
-                soundCollectionName = def.FootstepSounds;
+                }                
             }
 
-            if (!_prototypeManager.TryIndex(soundCollectionName, out SoundCollectionPrototype? soundCollection))
+            if (string.IsNullOrWhiteSpace(soundToPlay))
             {
-                Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
+                Logger.ErrorS("sound", $"Unable to find sound in {nameof(PlayFootstepSound)}");
                 return;
             }
 
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
-                _robustRandom.Pick(soundCollection.PickFiles),
+                soundToPlay,
                 mover.Transform.Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }

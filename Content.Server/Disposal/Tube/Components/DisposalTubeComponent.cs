@@ -8,6 +8,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Movement;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -37,7 +38,7 @@ namespace Content.Server.Disposal.Tube.Components
         private bool _connected;
         private bool _broken;
         [DataField("clangSound")]
-        private string _clangSound = "/Audio/Effects/clang.ogg";
+        private SoundSpecifier _clangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
         ///     Container of entities that are currently inside this tube
@@ -266,7 +267,8 @@ namespace Content.Server.Disposal.Tube.Components
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    SoundSystem.Play(Filter.Pvs(Owner), _clangSound, Owner.Transform.Coordinates);
+                    if(_clangSound.TryGetSound(out var clangSound))
+                        SoundSystem.Play(Filter.Pvs(Owner), clangSound, Owner.Transform.Coordinates);
                     break;
             }
         }

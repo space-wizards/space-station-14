@@ -106,9 +106,9 @@ namespace Content.Server.Light.Components
                             loopingSound.Play(LoopedSound, LoopedSoundParams);
                         }
 
-                        if (LitSound != string.Empty)
+                        if (LitSound.TryGetSound(out var litSound))
                         {
-                            SoundSystem.Play(Filter.Pvs(Owner), LitSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), litSound, Owner);
                         }
 
                         if (IconStateLit != string.Empty)
@@ -126,9 +126,9 @@ namespace Content.Server.Light.Components
                     default:
                     case ExpendableLightState.Dead:
 
-                        if (DieSound != string.Empty)
+                        if (DieSound.TryGetSound(out var dieSound))
                         {
-                            SoundSystem.Play(Filter.Pvs(Owner), DieSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), dieSound, Owner);
                         }
 
                         if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopSound))

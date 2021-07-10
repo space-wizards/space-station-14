@@ -8,6 +8,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
 using Content.Server.Items;
 using Content.Server.Notification;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
@@ -16,6 +17,7 @@ using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Temperature;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
@@ -58,8 +60,17 @@ namespace Content.Server.Tools.Components
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
-        [DataField("weldSoundCollection")]
-        public string? WeldSoundCollection { get; set; }
+        [DataField("weldSounds")]
+        private SoundSpecifier WeldSounds { get; set; } = default!;
+
+        [DataField("welderOffSounds")]
+        private SoundSpecifier WelderOffSounds { get; set; } = new SoundCollectionSpecifier("WelderOff");
+
+        [DataField("welderOnSounds")]
+        private SoundSpecifier WelderOnSounds { get; set; } = new SoundCollectionSpecifier("WelderOn");
+
+        [DataField("welderRefill")]
+        private SoundSpecifier WelderRefill { get; set; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
         [ViewVariables]
         public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
@@ -160,9 +171,9 @@ namespace Content.Server.Tools.Components
 
             var succeeded = _solutionComponent.TryRemoveReagent("WeldingFuel", ReagentUnit.New(value));
 
-            if (succeeded && !silent)
+            if (succeeded && !silent && WeldSounds.TryGetSound(out var weldSounds))
             {
-                PlaySoundCollection(WeldSoundCollection);
+                PlaySound(weldSounds);
             }
             return succeeded;
         }
@@ -193,7 +204,8 @@ namespace Content.Server.Tools.Components
 
                 if (_pointLightComponent != null) _pointLightComponent.Enabled = false;
 
-                PlaySoundCollection("WelderOff", -5);
+                if(WelderOffSounds.TryGetSound(out var welderOffSOunds))
+                    PlaySound(welderOffSOunds, -5);
                 _welderSystem.Unsubscribe(this);
                 return true;
             }
@@ -210,7 +222,8 @@ namespace Content.Server.Tools.Components
 
             if (_pointLightComponent != null) _pointLightComponent.Enabled = true;
 
-            PlaySoundCollection("WelderOn", -5);
+            if (WelderOnSounds.TryGetSound(out var welderOnSOunds))
+                PlaySound(welderOnSOunds, -5);
             _welderSystem.Subscribe(this);
 
             Owner.Transform.Coordinates
@@ -272,7 +285,8 @@ namespace Content.Server.Tools.Components
 
             if (TryWeld(5, victim, silent: true))
             {
-                PlaySoundCollection(WeldSoundCollection);
+                if(WeldSounds.TryGetSound(out var weldSound))
+                    PlaySound(weldSound);
 
                 othersMessage =
                     Loc.GetString("welder-component-suicide-lit-others-message",
@@ -325,13 +339,18 @@ namespace Content.Server.Tools.Components
                 {
                     var drained = targetSolution.Drain(trans);
                     _solutionComponent.TryAddSolution(drained);
-
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
+                    if(WelderRefill.TryGetSound(out var welderRefillSound))
+                        SoundSystem.Play(Filter.Pvs(Owner), welderRefillSound, Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
             }
 
             return true;
+        }
+
+        private void PlaySound(string soundName, float volume = -5f)
+        {
+            SoundSystem.Play(Filter.Pvs(Owner), soundName, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
     }
 }

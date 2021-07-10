@@ -20,6 +20,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -77,6 +78,8 @@ namespace Content.Server.Disposal.Unit.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("flushDelay")]
         private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
+
+        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         /// <summary>
         ///     Delay from trying to enter disposals ourselves.
@@ -377,7 +380,8 @@ namespace Content.Server.Disposal.Unit.Components
                     break;
                 case UiButton.Power:
                     TogglePower();
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    if(_clickSound.TryGetSound(out var clickSound))
+                        SoundSystem.Play(Filter.Pvs(Owner), clickSound, Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -8,6 +8,7 @@ using Content.Shared.Acts;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -36,6 +37,7 @@ namespace Content.Server.Explosion
         /// </summary>
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
+        private static SoundSpecifier _explosionSound = new SoundPathSpecifier("/Audio/Effects/explosion.ogg");
 
         private static bool IgnoreExplosivePassable(IEntity e) => e.HasTag("ExplosivePassable");
 
@@ -311,7 +313,8 @@ namespace Content.Server.Explosion
             var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange),
                 epicenterMapPos + new Vector2(maxRange, maxRange));
 
-            SoundSystem.Play(Filter.Broadcast(), "/Audio/Effects/explosion.ogg", epicenter);
+            if(_explosionSound.TryGetSound(out var explosionSound))
+                SoundSystem.Play(Filter.Broadcast(), explosionSound, epicenter);
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
             var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);

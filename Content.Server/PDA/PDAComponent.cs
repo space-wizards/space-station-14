@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.PDA;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -58,6 +59,10 @@ namespace Content.Server.PDA
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
+
+        [DataField("insertIdSound")] private SoundSpecifier _insertIdSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
+        [DataField("toggleFlashlightSound")] private SoundSpecifier _toggleFlashlightSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
+        [DataField("ejectIdSound")] private SoundSpecifier _ejectIdSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
 
         public PDAComponent()
         {
@@ -301,7 +306,8 @@ namespace Content.Server.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg", Owner);
+            if(_insertIdSound.TryGetSound(out var insertIdSound))
+                SoundSystem.Play(Filter.Pvs(Owner), insertIdSound, Owner);
         }
 
         /// <summary>
@@ -330,7 +336,8 @@ namespace Content.Server.PDA
 
             _lightOn = !_lightOn;
             light.Enabled = _lightOn;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/flashlight_toggle.ogg", Owner);
+            if(_toggleFlashlightSound.TryGetSound(out var toggleFlashlightSound))
+                SoundSystem.Play(Filter.Pvs(Owner), toggleFlashlightSound, Owner);
             UpdatePDAUserInterface();
         }
 
@@ -349,7 +356,8 @@ namespace Content.Server.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/id_swipe.ogg", Owner);
+            if(_ejectIdSound.TryGetSound(out var ejectIdSound))
+                SoundSystem.Play(Filter.Pvs(Owner), ejectIdSound, Owner);
             UpdatePDAUserInterface();
         }
 

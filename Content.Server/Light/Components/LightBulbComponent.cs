@@ -2,6 +2,7 @@
 using System;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -71,6 +72,9 @@ namespace Content.Server.Light.Components
         private int _powerUse = 40;
         public int PowerUse => _powerUse;
 
+        [DataField("breakSound")]
+        private SoundSpecifier _breakSound = new SoundCollectionSpecifier("GlassBreak");
+
         /// <summary>
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
         ///     It also updates the bulb's sprite accordingly.
@@ -129,10 +133,8 @@ namespace Content.Server.Light.Components
 
         public void PlayBreakSound()
         {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
-            var file = _random.Pick(soundCollection.PickFiles);
-
-            SoundSystem.Play(Filter.Pvs(Owner), file, Owner);
+            if(_breakSound.TryGetSound(out var breakSound))
+                SoundSystem.Play(Filter.Pvs(Owner), breakSound, Owner);
         }
     }
 }

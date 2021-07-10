@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision;
@@ -33,9 +34,7 @@ namespace Content.Server.Projectiles.Components
 
         // Get that juicy FPS hit sound
         [DataField("soundHit")]
-        private string? _soundHit = default;
-        [DataField("soundHitSpecies")]
-        private string? _soundHitSpecies = default;
+        private SoundSpecifier _soundHit = default!;
 
         private bool _damagedEntity;
 
@@ -64,13 +63,9 @@ namespace Content.Server.Projectiles.Components
 
             var coordinates = otherFixture.Body.Owner.Transform.Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
-            if (otherFixture.Body.Owner.TryGetComponent(out IDamageableComponent? damage) && _soundHitSpecies != null)
+            if (otherFixture.Body.Owner.TryGetComponent(out IDamageableComponent? damage) && _soundHit.TryGetSound(out var soundHit))
             {
-                SoundSystem.Play(playerFilter, _soundHitSpecies, coordinates);
-            }
-            else if (_soundHit != null)
-            {
-                SoundSystem.Play(playerFilter, _soundHit, coordinates);
+                SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
             if (damage != null)

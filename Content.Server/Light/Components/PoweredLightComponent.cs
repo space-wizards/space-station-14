@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -48,6 +49,12 @@ namespace Content.Server.Light.Components
 
         private TimeSpan _lastThunk;
         private TimeSpan? _lastGhostBlink;
+
+        [DataField("burnHandSound")]
+        private SoundSpecifier _burnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+        [DataField("turnOnSound")]
+        private SoundSpecifier _turnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
 
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
@@ -119,7 +126,8 @@ namespace Content.Server.Light.Components
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
+                if(_burnHandSound.TryGetSound(out var burnHandSound))
+                    SoundSystem.Play(Filter.Pvs(Owner), burnHandSound, Owner);
             }
 
             void Eject()
@@ -221,7 +229,8 @@ namespace Content.Server.Light.Components
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            if(_turnOnSound.TryGetSound(out var turnOnSound))
+                                SoundSystem.Play(Filter.Pvs(Owner), turnOnSound, Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

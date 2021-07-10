@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Slippery;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -71,7 +72,7 @@ namespace Content.Server.Fluids.Components
         public float EvaporateTime { get; private set; } = 5f;
 
         [DataField("spill_sound")]
-        private string _spillSound = "/Audio/Effects/Fluids/splat.ogg";
+        private SoundSpecifier _spillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         /// <summary>
         /// Whether or not this puddle is currently overflowing onto its neighbors
@@ -189,7 +190,8 @@ namespace Content.Server.Fluids.Components
                 return true;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _spillSound, Owner.Transform.Coordinates);
+            if(_spillSound.TryGetSound(out var spillSound))
+                SoundSystem.Play(Filter.Pvs(Owner), spillSound, Owner.Transform.Coordinates);
             return true;
         }
 

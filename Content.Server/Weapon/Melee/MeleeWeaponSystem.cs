@@ -91,12 +91,14 @@ namespace Content.Server.Weapon.Melee
                         damageableComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
                     }
 
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, target);
+                    if(comp.HitSound.TryGetSound(out var hitSound))
+                        SoundSystem.Play(Filter.Pvs(owner), hitSound, target);
                 }
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User);
+                if(comp.MissSound.TryGetSound(out var missSound))
+                    SoundSystem.Play(Filter.Pvs(owner), missSound, args.User);
                 return;
             }
 
@@ -146,11 +148,13 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, entities.First().Transform.Coordinates);
+                    if(comp.HitSound.TryGetSound(out var hitSound))
+                        SoundSystem.Play(Filter.Pvs(owner), hitSound, entities.First().Transform.Coordinates);
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User.Transform.Coordinates);
+                    if(comp.MissSound.TryGetSound(out var missSound))
+                        SoundSystem.Play(Filter.Pvs(owner), missSound, args.User.Transform.Coordinates);
                 }
 
                 foreach (var entity in hitEntities)

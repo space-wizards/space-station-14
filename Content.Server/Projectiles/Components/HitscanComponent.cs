@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -50,7 +51,7 @@ namespace Content.Server.Projectiles.Components
         [DataField("impactFlash")]
         private string? _impactFlash;
         [DataField("soundHitWall")]
-        private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
+        private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {
@@ -85,7 +86,8 @@ namespace Content.Server.Projectiles.Components
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
                 var coordinates = user.Transform.Coordinates.Offset(offset);
-                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall, coordinates);
+                if(_soundHitWall.TryGetSound(out var soundHitWall))
+                    SoundSystem.Play(Filter.Pvs(coordinates), soundHitWall, coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>

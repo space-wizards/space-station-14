@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Flash;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -31,7 +32,7 @@ namespace Content.Server.Flash.Components
             return new FlashComponentState(_duration, _lastFlash);
         }
 
-        public static void FlashAreaHelper(IEntity source, float range, float duration, string? sound = null)
+        public static void FlashAreaHelper(IEntity source, float range, float duration, SoundSpecifier? sound = null)
         {
             foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(source.Transform.Coordinates, range))
             {
@@ -41,9 +42,9 @@ namespace Content.Server.Flash.Components
                 flashable.Flash(duration);
             }
 
-            if (!string.IsNullOrEmpty(sound))
+            if (sound != null && sound.TryGetSound(out var soundName))
             {
-                SoundSystem.Play(Filter.Pvs(source), sound, source.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(source), soundName, source.Transform.Coordinates);
             }
         }
     }

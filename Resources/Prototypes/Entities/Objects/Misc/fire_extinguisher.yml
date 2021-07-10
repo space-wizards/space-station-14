@@ -21,7 +21,8 @@
             Quantity: 100
     - type: ItemCooldown
     - type: Spray
-      spraySound: /Audio/Effects/extinguish.ogg
+      spraySound:
+        path: /Audio/Effects/extinguish.ogg
       sprayedPrototype: ExtinguisherSpray
       hasSafety: true
       vaporAmount: 3

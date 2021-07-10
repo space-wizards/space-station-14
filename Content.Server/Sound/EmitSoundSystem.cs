@@ -30,21 +30,14 @@ namespace Content.Server.Sound
 
         private void HandleEmitSoundOn(BaseEmitSoundComponent component)
         {
-            var soundName = component.Sound.GetSound();
-
-            if (!string.IsNullOrWhiteSpace(soundName))
-            { 
-                PlaySingleSound(soundName, component);
+            if (component.Sound.TryGetSound(out var soundName))
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
             }
             else
             {
                 Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has no {nameof(component.Sound)} to play.");
             }
-        }
-
-        private static void PlaySingleSound(string soundName, BaseEmitSoundComponent component)
-        {
-            SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
         }
     }
 }

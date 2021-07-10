@@ -21,7 +21,8 @@
   - type: Spray
     transferAmount: 10
     sprayVelocity: 2
-    spraySound: /Audio/Effects/spray2.ogg
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
 
 - type: entity
   name: spray bottle

@@ -8,6 +8,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Sound;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -38,6 +39,13 @@ namespace Content.Server.Arcade.Components
         [ViewVariables] private bool _playerInvincibilityFlag;
         [ViewVariables] private bool _enemyInvincibilityFlag;
         [ViewVariables] private SpaceVillainGame _game = null!;
+
+        [DataField("newGameSound")] private SoundSpecifier _newGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
+        [DataField("playerAttackSound")] private SoundSpecifier _playerAttackSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_attack.ogg");
+        [DataField("playerHealSound")] private SoundSpecifier _playerHealSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_heal.ogg");
+        [DataField("playerChargeSound")] private SoundSpecifier _playerChargeSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_charge.ogg");
+        [DataField("winSound")] private SoundSpecifier _winSound = new SoundPathSpecifier("/Audio/Effects/Arcade/win.ogg");
+        [DataField("gameOverSound")] private SoundSpecifier _gameOverSound = new SoundPathSpecifier("/Audio/Effects/Arcade/gameover.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleFightVerbs")] private List<string> _possibleFightVerbs = new List<string>()
             {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"};
@@ -124,7 +132,9 @@ namespace Content.Server.Arcade.Components
                     _game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/Arcade/newgame.ogg", Owner, AudioParams.Default.WithVolume(-4f));
+                    if(_newGameSound.TryGetSound(out var sound))
+                        SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default.WithVolume(-4f));
+
                     _game = new SpaceVillainGame(this);
                     UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
                     break;
@@ -292,8 +302,10 @@ namespace Content.Server.Arcade.Components
                         _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-attack-message",
                                                                    ("enemyName", _enemyName),
                                                                    ("attackAmount", attackAmount));
-                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_attack.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if(!_owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
+                        if(_owner._playerAttackSound.TryGetSound(out var playerAttackSound))
+                            SoundSystem.Play(Filter.Pvs(_owner.Owner), playerAttackSound, _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        if(!_owner._enemyInvincibilityFlag)
+                            _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
                     case PlayerAction.Heal:
@@ -302,15 +314,18 @@ namespace Content.Server.Arcade.Components
                         _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-heal-message",
                                                                     ("magicPointAmount", pointAmount),
                                                                     ("healAmount", healAmount));
-                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_heal.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        if(!_owner._playerInvincibilityFlag) _playerMp -= pointAmount;
+                        if(_owner._playerHealSound.TryGetSound(out var playerHealSound))
+                            SoundSystem.Play(Filter.Pvs(_owner.Owner), playerHealSound, _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        if(!_owner._playerInvincibilityFlag)
+                            _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
                         break;
                     case PlayerAction.Recharge:
                         var chargeAmount = _random.Next(4, 7);
                         _latestPlayerActionMessage = Loc.GetString("space-villain-game-player-recharge-message",("regainedPoints", chargeAmount));
-                        SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/player_charge.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                        if(_owner._playerChargeSound.TryGetSound(out var playerChargeSound))
+                            SoundSystem.Play(Filter.Pvs(_owner.Owner), playerChargeSound, _owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += chargeAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -344,7 +359,8 @@ namespace Content.Server.Arcade.Components
                     UpdateUi(Loc.GetString("space-villain-game-player-wins-message"),
                              Loc.GetString("space-villain-game-enemy-dies-message",("enemyName", _enemyName)),
                              true);
-                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/win.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    if(_owner._winSound.TryGetSound(out var winSound))
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), winSound, _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     _owner.ProcessWin();
                     return false;
                 }
@@ -357,7 +373,8 @@ namespace Content.Server.Arcade.Components
                     UpdateUi(Loc.GetString("space-villain-game-player-loses-message"),
                              Loc.GetString("space-villain-game-enemy-cheers-message",("enemyName", _enemyName)),
                              true);
-                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    if(_owner._gameOverSound.TryGetSound(out var gameOverSound))
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), gameOverSound, _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if (_enemyHp <= 0 || _enemyMp <= 0)
@@ -366,7 +383,8 @@ namespace Content.Server.Arcade.Components
                     UpdateUi(Loc.GetString("space-villain-game-player-loses-message"),
                              Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", _enemyName)),
                              true);
-                    SoundSystem.Play(Filter.Pvs(_owner.Owner), "/Audio/Effects/Arcade/gameover.ogg", _owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    if (_owner._gameOverSound.TryGetSound(out var gameOverSound))
+                        SoundSystem.Play(Filter.Pvs(_owner.Owner), gameOverSound, _owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
 

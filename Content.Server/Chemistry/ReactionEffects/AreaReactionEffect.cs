@@ -4,6 +4,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -80,7 +81,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// Sound that will get played when this reaction effect occurs.
         /// </summary>
-        [DataField("sound")] private string? _sound;
+        [DataField("sound")] private SoundSpecifier _sound = default!;
 
         protected AreaReactionEffect()
         {
@@ -136,9 +137,9 @@ namespace Content.Server.Chemistry.ReactionEffects
             areaEffectComponent.TryAddSolution(solution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            if (!string.IsNullOrEmpty(_sound))
+            if (_sound.TryGetSound(out var sound))
             {
-                SoundSystem.Play(Filter.Pvs(solutionEntity), _sound, solutionEntity, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(solutionEntity), sound, solutionEntity, AudioHelpers.WithVariation(0.125f));
             }
         }
 

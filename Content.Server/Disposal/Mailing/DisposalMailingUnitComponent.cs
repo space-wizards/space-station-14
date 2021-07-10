@@ -24,6 +24,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -87,6 +88,9 @@ namespace Content.Server.Disposal.Mailing
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("entryDelay")]
         private float _entryDelay = 0.5f;
+
+        [DataField("receivedMessageSound")]
+        private SoundSpecifier _receivedMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -432,8 +436,8 @@ namespace Content.Server.Disposal.Mailing
                         break;
                     case UiButton.Power:
                         TogglePower();
-                        SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
-
+                        if(_receivedMessageSound.TryGetSound(out var sound))
+                            SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default.WithVolume(-2f));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

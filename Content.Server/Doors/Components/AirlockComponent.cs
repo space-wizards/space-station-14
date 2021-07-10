@@ -8,12 +8,14 @@ using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
@@ -91,6 +93,10 @@ namespace Content.Server.Doors.Components
                 UpdateBoltLightStatus();
             }
         }
+
+        [DataField("setBoltsDownSound")] private SoundSpecifier _setBoltsDownSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
+
+        [DataField("setBoltsUpSound")] private SoundSpecifier _setBoltsUpSound = new SoundPathSpecifier("/Audio/Machines/boltsup.ogg");
 
         private static readonly TimeSpan AutoCloseDelayFast = TimeSpan.FromSeconds(1);
 
@@ -456,7 +462,16 @@ namespace Content.Server.Doors.Components
 
             BoltsDown = newBolts;
 
-            SoundSystem.Play(Filter.Broadcast(), newBolts ? "/Audio/Machines/boltsdown.ogg" : "/Audio/Machines/boltsup.ogg", Owner);
+            if (newBolts)
+            {
+                if (_setBoltsDownSound.TryGetSound(out var boltsDownSound))
+                    SoundSystem.Play(Filter.Broadcast(), boltsDownSound, Owner);
+            }
+            else
+            {
+                if (_setBoltsUpSound.TryGetSound(out var boltsUpSound))
+                    SoundSystem.Play(Filter.Broadcast(), boltsUpSound, Owner);
+            }
         }
     }
 }

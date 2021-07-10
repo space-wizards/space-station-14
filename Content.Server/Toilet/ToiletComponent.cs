@@ -13,6 +13,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Toilet;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
@@ -22,6 +23,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -41,6 +43,8 @@ namespace Content.Server.Toilet
         [ViewVariables] public bool IsSeatUp { get; private set; }
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
+
+        [DataField("toggleSound")] SoundSpecifier _toggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
 
         protected override void Initialize()
         {
@@ -127,7 +131,8 @@ namespace Content.Server.Toilet
         public void ToggleToiletSeat()
         {
             IsSeatUp = !IsSeatUp;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+            if(_toggleSound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite();
         }

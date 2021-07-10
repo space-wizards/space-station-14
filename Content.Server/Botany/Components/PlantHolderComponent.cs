@@ -724,9 +724,9 @@ namespace Content.Server.Botany.Components
                     sprayed = true;
                     amount = ReagentUnit.New(1);
 
-                    if (!string.IsNullOrEmpty(spray.SpraySound))
+                    if (spray.SpraySound.TryGetSound(out var spraySound))
                     {
-                        SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
+                        SoundSystem.Play(Filter.Pvs(usingItem), spraySound, usingItem, AudioHelpers.WithVariation(0.125f));
                     }
                 }
 

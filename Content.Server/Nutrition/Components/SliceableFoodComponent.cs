@@ -5,6 +5,7 @@ using Content.Server.Items;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -27,7 +28,7 @@ namespace Content.Server.Nutrition.Components
         private string _slice = string.Empty;
 
         [DataField("sound")] [ViewVariables(VVAccess.ReadWrite)]
-        private string _sound = "/Audio/Items/Culinary/chop.ogg";
+        private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Items/Culinary/chop.ogg");
 
         [DataField("count")] [ViewVariables(VVAccess.ReadWrite)]
         private ushort _totalCount = 5;
@@ -66,8 +67,9 @@ namespace Content.Server.Nutrition.Components
                 }
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _sound, Owner.Transform.Coordinates,
-                AudioParams.Default.WithVolume(-2));
+            if(_sound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates,
+                    AudioParams.Default.WithVolume(-2));
 
             Count--;
             if (Count < 1)

@@ -242,7 +242,10 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound, Owner);
+            if(strap.BuckleSound.TryGetSound(out var buckleSound))
+            {
+                SoundSystem.Play(Filter.Pvs(Owner), buckleSound, Owner);
+            }       
 
             if (!strap.TryAdd(this))
             {
@@ -350,8 +353,11 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound, Owner);
-
+            if (oldBuckledTo.UnbuckleSound.TryGetSound(out var unbuckleSound))
+            {
+                SoundSystem.Play(Filter.Pvs(Owner), unbuckleSound, Owner);
+            }
+            
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
             return true;

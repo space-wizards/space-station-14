@@ -10,6 +10,7 @@ using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -35,8 +36,6 @@ namespace Content.Server.Fluids.Components
 
         [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(10);
-        [DataField("spraySound")]
-        private string? _spraySound;
         [DataField("sprayVelocity")]
         private float _sprayVelocity = 1.5f;
         [DataField("sprayAliveTime")]
@@ -78,7 +77,8 @@ namespace Content.Server.Fluids.Components
             set => _sprayVelocity = value;
         }
 
-        public string? SpraySound => _spraySound;
+        [DataField("spraySound")]
+        public SoundSpecifier SpraySound { get; } = default!;
 
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
@@ -172,9 +172,9 @@ namespace Content.Server.Fluids.Components
             }
 
             //Play sound
-            if (!string.IsNullOrEmpty(_spraySound))
+            if (SpraySound.TryGetSound(out var spraySound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _spraySound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), spraySound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             _lastUseTime = curTime;

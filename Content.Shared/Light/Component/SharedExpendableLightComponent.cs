@@ -1,5 +1,6 @@
-﻿#nullable enable
+#nullable enable
 using System;
+using Content.Shared.Sound;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -62,14 +63,14 @@ namespace Content.Shared.Light.Component
 
         [ViewVariables]
         [DataField("litSound")]
-        protected string LitSound { get; set; } = string.Empty;
+        protected SoundSpecifier LitSound { get; set; } = default!;
 
         [ViewVariables]
         [DataField("loopedSound")]
-        protected string LoopedSound { get; set; } = string.Empty;
+        protected string LoopedSound { get; set; } = default!;
 
         [ViewVariables]
         [DataField("dieSound")]
-        protected string DieSound { get; set; } = string.Empty;
+        protected SoundSpecifier DieSound { get; set; } = default!;
     }
 }

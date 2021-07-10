@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Camera;
 using Content.Shared.Gravity;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -108,7 +109,7 @@ namespace Content.Server.Gravity.EntitySystems
             comp.Enabled = true;
 
             var gridId = comp.Owner.Transform.GridID;
-            ScheduleGridToShake(gridId, ShakeTimes);
+            ScheduleGridToShake(gridId, ShakeTimes, comp);
 
             var message = new GravityChangedMessage(gridId, true);
             RaiseLocalEvent(message);
@@ -120,13 +121,13 @@ namespace Content.Server.Gravity.EntitySystems
             comp.Enabled = false;
 
             var gridId = comp.Owner.Transform.GridID;
-            ScheduleGridToShake(gridId, ShakeTimes);
+            ScheduleGridToShake(gridId, ShakeTimes, comp);
 
             var message = new GravityChangedMessage(gridId, false);
             RaiseLocalEvent(message);
         }
 
-        private void ScheduleGridToShake(GridId gridId, uint shakeTimes)
+        private void ScheduleGridToShake(GridId gridId, uint shakeTimes, GravityComponent comp)
         {
             if (!_gridsToShake.Keys.Contains(gridId))
             {
@@ -140,8 +141,11 @@ namespace Content.Server.Gravity.EntitySystems
             foreach (var player in _playerManager.GetAllPlayers())
             {
                 if (player.AttachedEntity == null
-                    || player.AttachedEntity.Transform.GridID != gridId) continue;
-                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), "/Audio/Effects/alert.ogg", player.AttachedEntity);
+                    || player.AttachedEntity.Transform.GridID != gridId)
+                    continue;
+
+                if(comp.GravityShakeSound.TryGetSound(out var gravityShakeSound))
+                    SoundSystem.Play(Filter.Pvs(player.AttachedEntity), gravityShakeSound, player.AttachedEntity);
             }
         }
 

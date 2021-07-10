@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
+using Content.Shared.Sound;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -30,7 +31,7 @@ namespace Content.Server.Light.Components
         /// <summary>
         /// Sound played when you ignite the matchstick.
         /// </summary>
-        [DataField("igniteSound")] private string? _igniteSound;
+        [DataField("igniteSound")] private SoundSpecifier _igniteSound = default!;
 
         /// <summary>
         /// Point light component. Gives matches a glow in dark effect.
@@ -69,9 +70,9 @@ namespace Content.Server.Light.Components
         public void Ignite(IEntity user)
         {
             // Play Sound
-            if (!string.IsNullOrEmpty(_igniteSound))
+            if (_igniteSound.TryGetSound(out var igniteSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _igniteSound, Owner,
+                SoundSystem.Play(Filter.Pvs(Owner), igniteSound, Owner,
                     AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
             }
 

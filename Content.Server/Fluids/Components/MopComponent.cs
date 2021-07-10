@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -54,7 +55,7 @@ namespace Content.Server.Fluids.Components
         public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
         [DataField("pickup_sound")]
-        private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
+        private SoundSpecifier _pickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
         /// <summary>
         ///     Multiplier for the do_after delay for how fast the mop works.
@@ -163,9 +164,9 @@ namespace Content.Server.Fluids.Components
                 contents.SplitSolution(transferAmount);
             }
 
-            if (!string.IsNullOrWhiteSpace(_pickupSound))
+            if (_pickupSound.TryGetSound(out var pickupSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _pickupSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), pickupSound, Owner);
             }
 
             return true;

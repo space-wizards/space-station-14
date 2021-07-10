@@ -9,6 +9,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -56,14 +57,14 @@ namespace Content.Server.Buckle.Components
         /// </summary>
         [ViewVariables]
         [DataField("buckleSound")]
-        public string BuckleSound { get; } = "/Audio/Effects/buckle.ogg";
+        public SoundSpecifier BuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/buckle.ogg");
 
         /// <summary>
         /// The sound to be played when a mob is unbuckled
         /// </summary>
         [ViewVariables]
         [DataField("unbuckleSound")]
-        public string UnbuckleSound { get; } = "/Audio/Effects/unbuckle.ogg";
+        public SoundSpecifier UnbuckleSound { get; } = new SoundPathSpecifier("/Audio/Effects/unbuckle.ogg");
 
         /// <summary>
         /// ID of the alert to show when buckled

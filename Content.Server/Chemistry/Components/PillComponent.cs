@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -23,7 +24,7 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables]
         [DataField("useSound")]
-        protected override string? UseSound { get; set; } = default;
+        protected override SoundSpecifier UseSound { get; set; } = default!;
 
         [ViewVariables]
         [DataField("trash")]
@@ -98,9 +99,9 @@ namespace Content.Server.Chemistry.Components
 
             firstStomach.TryTransferSolution(split);
 
-            if (UseSound != null)
+            if (UseSound.TryGetSound(out var sound))
             {
-                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(trueTarget), sound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
             trueTarget.PopupMessage(user, Loc.GetString("pill-component-swallow-success-message"));

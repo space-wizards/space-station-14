@@ -15,6 +15,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -59,7 +60,7 @@ namespace Content.Server.Storage.Components
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
-        public string? StorageSoundCollection { get; set; }
+        public SoundSpecifier StorageSoundCollection { get; set; } = default!;
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -150,7 +151,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            PlaySoundCollection(StorageSoundCollection);
+            PlaySoundCollection();
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
@@ -246,7 +247,7 @@ namespace Content.Server.Storage.Components
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
-            PlaySoundCollection(StorageSoundCollection);
+            PlaySoundCollection();
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<ActorComponent>().PlayerSession;
@@ -546,7 +547,7 @@ namespace Content.Server.Storage.Components
                 // If we picked up atleast one thing, play a sound and do a cool animation!
                 if (successfullyInserted.Count>0)
                 {
-                    PlaySoundCollection(StorageSoundCollection);
+                    PlaySoundCollection();
                     SendNetworkMessage(
                         new AnimateInsertingEntitiesMessage(
                             successfullyInserted,
@@ -617,15 +618,10 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        protected void PlaySoundCollection(string? name)
+        private void PlaySoundCollection()
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                return;
-            }
-
-            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
+            if(StorageSoundCollection.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default);
         }
     }
 }

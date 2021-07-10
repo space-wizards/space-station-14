@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -26,6 +27,9 @@ namespace Content.Server.Chemistry.Components
         [DataField("TransferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+
+        [DataField("InjectSound")]
+        private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solution = default!;
 
@@ -68,7 +72,8 @@ namespace Content.Server.Chemistry.Components
                 meleeSys.SendLunge(angle, user);
             }
 
-            SoundSystem.Play(Filter.Pvs(user), "/Audio/Items/hypospray.ogg", user);
+            if(_injectSound.TryGetSound(out var injectSound))
+                SoundSystem.Play(Filter.Pvs(user), injectSound, user);
 
             var targetSolution = target.GetComponent<SolutionContainerComponent>();
 

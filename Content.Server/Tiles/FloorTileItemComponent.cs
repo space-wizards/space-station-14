@@ -5,6 +5,7 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -24,6 +25,8 @@ namespace Content.Server.Tiles
         public override string Name => "FloorTile";
         [DataField("outputs", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
+
+        [DataField("placeTileSound")] SoundSpecifier _placeTileSound = new SoundPathSpecifier("/Audio/Items/genhit.ogg");
 
         protected override void Initialize()
         {
@@ -46,8 +49,9 @@ namespace Content.Server.Tiles
 
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
-            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Robust.Shared.Map.Tile(tileId));
-            SoundSystem.Play(Filter.Pvs(location), "/Audio/Items/genhit.ogg", location, AudioHelpers.WithVariation(0.125f));
+            mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
+            if(_placeTileSound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(location), sound, location, AudioHelpers.WithVariation(0.125f));
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

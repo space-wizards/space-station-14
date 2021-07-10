@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Items;
 using Content.Server.PowerCell.Components;
 using Content.Server.Stunnable.Components;
@@ -119,7 +119,8 @@ namespace Content.Server.Stunnable
         {
             if (!entity.TryGetComponent(out StunnableComponent? stunnable) || !comp.Activated) return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), "/Audio/Weapons/egloves.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            if(comp.StunSound.TryGetSound(out var stunSound))
+                SoundSystem.Play(Filter.Pvs(comp.Owner), stunSound, comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             if(!stunnable.SlowedDown)
             {
                 if(_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
@@ -136,9 +137,11 @@ namespace Content.Server.Stunnable
             }
 
 
-            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse)) return;
+            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+                return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            if(comp.SparksSound.TryGetSound(out var sparksSound))
+                SoundSystem.Play(Filter.Pvs(comp.Owner), sparksSound, comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
         }
 
@@ -152,7 +155,8 @@ namespace Content.Server.Stunnable
             if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
                 !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            if(comp.SparksSound.TryGetSound(out var sparksSound))
+                SoundSystem.Play(Filter.Pvs(comp.Owner), sparksSound, comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
             // TODO stunbaton visualizer
             sprite.LayerSetState(0, "stunbaton_off");
@@ -167,7 +171,8 @@ namespace Content.Server.Stunnable
             }
 
             if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
-                !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
+                !comp.Owner.TryGetComponent<ItemComponent>(out var item))
+                return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
             if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot))
@@ -175,19 +180,22 @@ namespace Content.Server.Stunnable
 
             if (slot.Cell == null)
             {
-                SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+                if(comp.TurnOnFailSound.TryGetSound(out var turnOnFailSound))
+                    SoundSystem.Play(playerFilter, turnOnFailSound, comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-missing-cell"));
                 return;
             }
 
             if (slot.Cell != null && slot.Cell.CurrentCharge < comp.EnergyPerUse)
             {
-                SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+                if(comp.TurnOnFailSound.TryGetSound(out var turnOnFailSound))
+                    SoundSystem.Play(playerFilter, turnOnFailSound, comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-dead-cell"));
                 return;
             }
 
-            SoundSystem.Play(playerFilter, AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            if(comp.SparksSound.TryGetSound(out var sparksSound))
+                SoundSystem.Play(playerFilter, sparksSound, comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");

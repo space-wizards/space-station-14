@@ -9,6 +9,7 @@ using Content.Server.Suspicion.Roles;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
+using Content.Shared.Sound;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -16,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -33,6 +35,8 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
+        [DataField("addedSound")] private SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
+
         private readonly CancellationTokenSource _checkTimerCancel = new();
         private TimeSpan _endTime;
 
@@ -49,7 +53,9 @@ namespace Content.Server.GameTicking.Rules
 
             var filter = Filter.Empty()
                 .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
-            SoundSystem.Play(filter, "/Audio/Misc/tatoralert.ogg", AudioParams.Default);
+
+            if(_addedSound.TryGetSound(out var addedSound))
+                SoundSystem.Play(filter, addedSound, AudioParams.Default);
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;

@@ -9,6 +9,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Rounding;
+using Content.Shared.Sound;
 using Content.Shared.Window;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -36,6 +37,9 @@ namespace Content.Server.Window
 
         [DataField("rateLimitedKnocking")]
         [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
+
+        [DataField("knockSound")]
+        private SoundSpecifier _knockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -130,8 +134,9 @@ namespace Content.Server.Window
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(eventArgs.Target), "/Audio/Effects/glass_knock.ogg",
-                eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
+            if(_knockSound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(eventArgs.Target), sound,
+                    eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

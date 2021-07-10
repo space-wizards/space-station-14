@@ -161,8 +161,8 @@ namespace Content.Server.Kitchen.Components
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             victim.Delete();
 
-            if (SpikeSound != null)
-                SoundSystem.Play(Filter.Pvs(Owner), SpikeSound, Owner);
+            if (SpikeSound.TryGetSound(out var spikeSound))
+                SoundSystem.Play(Filter.Pvs(Owner), spikeSound, Owner);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

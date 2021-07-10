@@ -232,13 +232,13 @@ namespace Content.Server.Cuffs.Components
 
             if (isOwner)
             {
-                if (cuff.StartBreakoutSound != null)
-                    SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound, Owner);
+                if (cuff.StartBreakoutSound.TryGetSound(out var startBreakoutSound))
+                    SoundSystem.Play(Filter.Pvs(Owner), startBreakoutSound, Owner);
             }
             else
             {
-                if (cuff.StartUncuffSound != null)
-                    SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound, Owner);
+                if (cuff.StartUncuffSound.TryGetSound(out var startUncuffSound))
+                    SoundSystem.Play(Filter.Pvs(Owner), startUncuffSound, Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
@@ -259,8 +259,8 @@ namespace Content.Server.Cuffs.Components
 
             if (result != DoAfterStatus.Cancelled)
             {
-                if (cuff.EndUncuffSound != null)
-                    SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound, Owner);
+                if (cuff.EndUncuffSound.TryGetSound(out var endUncuffSound))
+                    SoundSystem.Play(Filter.Pvs(Owner), endUncuffSound, Owner);
 
                 Container.ForceRemove(cuffsToRemove);
                 cuffsToRemove.Transform.AttachToGridOrMap();

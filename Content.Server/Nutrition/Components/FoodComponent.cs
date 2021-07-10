@@ -13,6 +13,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -30,7 +31,7 @@ namespace Content.Server.Nutrition.Components
     {
         public override string Name => "Food";
 
-        [ViewVariables] [DataField("useSound")] protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+        [ViewVariables] [DataField("useSound")] protected virtual SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
         [ViewVariables] [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] protected virtual string? TrashPrototype { get; set; }
 
@@ -160,9 +161,9 @@ namespace Content.Server.Nutrition.Components
 
             firstStomach.TryTransferSolution(split);
 
-            if (UseSound != null)
+            if (UseSound.TryGetSound(out var useSound))
             {
-                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(trueTarget), useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             }
 
             trueTarget.PopupMessage(user, Loc.GetString("food-nom"));

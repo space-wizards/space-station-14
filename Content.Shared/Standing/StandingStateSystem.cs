@@ -62,12 +62,9 @@ namespace Content.Shared.Standing
             }
 
             // Currently shit is only downed by server but when it's predicted we can probably only play this on server / client
-            var sound = component.DownSoundCollection;
-
-            if (playSound && !string.IsNullOrEmpty(sound))
+            if (playSound && component.DownSoundCollection.TryGetSound(out var sound))
             {
-                var file = AudioHelpers.GetRandomFileFromSoundCollection(sound);
-                SoundSystem.Play(Filter.Pvs(entity), file, entity, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(Filter.Pvs(entity), sound, entity, AudioHelpers.WithVariation(0.25f));
             }
         }
 

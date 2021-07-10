@@ -11,6 +11,7 @@ using Content.Server.WireHacking;
 using Content.Shared.Acts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -46,10 +47,10 @@ namespace Content.Server.VendingMachines
 
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        private string _soundVend = "/Audio/Machines/machine_vend.ogg";
+        private SoundSpecifier _soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        private string _soundDeny = "/Audio/Machines/custom_deny.ogg";
+        private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
@@ -202,7 +203,8 @@ namespace Content.Server.VendingMachines
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundVend, Owner, AudioParams.Default.WithVolume(-2f));
+            if(_soundVend.TryGetSound(out var soundVend))
+                SoundSystem.Play(Filter.Pvs(Owner), soundVend, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void TryEject(string id, IEntity? sender)
@@ -221,7 +223,8 @@ namespace Content.Server.VendingMachines
 
         private void Deny()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+            if(_soundDeny.TryGetSound(out var soundDeny))
+                SoundSystem.Play(Filter.Pvs(Owner), soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
 
             // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);

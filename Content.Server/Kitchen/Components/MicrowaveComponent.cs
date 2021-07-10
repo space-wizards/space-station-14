@@ -24,6 +24,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Power;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -50,12 +51,14 @@ namespace Content.Server.Kitchen.Components
         [DataField("failureResult")]
         private string _badRecipeName = "FoodBadRecipe";
         [DataField("beginCookingSound")]
-        private string _startCookingSound = "/Audio/Machines/microwave_start_beep.ogg";
+        private SoundSpecifier _startCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
         [DataField("foodDoneSound")]
-        private string _cookingCompleteSound = "/Audio/Machines/microwave_done_beep.ogg";
-#endregion
+        private SoundSpecifier _cookingCompleteSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
+        [DataField("clickSound")]
+        private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        #endregion YAMLSERIALIZE
 
-[ViewVariables]
+        [ViewVariables]
         private bool _busy = false;
         private bool _broken;
 
@@ -335,7 +338,8 @@ namespace Content.Server.Kitchen.Components
             }
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound, Owner, AudioParams.Default);
+            if(_startCookingSound.TryGetSound(out var startCookingSound))
+                SoundSystem.Play(Filter.Pvs(Owner), startCookingSound, Owner, AudioParams.Default);
             Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
             {
                 if (_lostPower)
@@ -362,7 +366,9 @@ namespace Content.Server.Kitchen.Components
                         Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
                     }
                 }
-                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
+
+                if(_cookingCompleteSound.TryGetSound(out var cookingCompleteSound))
+                    SoundSystem.Play(Filter.Pvs(Owner), cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
 
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
@@ -495,7 +501,8 @@ namespace Content.Server.Kitchen.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            if(_clickSound.TryGetSound(out var clickSound))
+                SoundSystem.Play(Filter.Pvs(Owner), clickSound, Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

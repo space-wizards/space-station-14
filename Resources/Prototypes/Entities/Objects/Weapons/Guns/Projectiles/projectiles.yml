@@ -102,7 +102,8 @@
     ammoVelocity: 20
     caliber: Energy
   - type: Projectile
-    soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
   - type: StunnableProjectile

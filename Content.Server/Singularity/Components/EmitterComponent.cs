@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -56,7 +57,7 @@ namespace Content.Server.Singularity.Components
 
         [ViewVariables(VVAccess.ReadWrite)] private int _fireShotCounter;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireSound")] private string _fireSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("fireSound")] private SoundSpecifier _fireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
         [ViewVariables(VVAccess.ReadWrite)] [DataField("boltType")] private string _boltType = "EmitterBolt";
         [ViewVariables(VVAccess.ReadWrite)] [DataField("powerUseActive")] private int _powerUseActive = 500;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstSize")] private int _fireBurstSize = 3;
@@ -227,8 +228,9 @@ namespace Content.Server.Singularity.Components
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
 
-            SoundSystem.Play(Filter.Pvs(Owner), _fireSound, Owner,
-                AudioHelpers.WithVariation(Variation).WithVolume(Volume).WithMaxDistance(Distance));
+            if(_fireSound.TryGetSound(out var fireSound))
+                SoundSystem.Play(Filter.Pvs(Owner), fireSound, Owner,
+                    AudioHelpers.WithVariation(Variation).WithVolume(Volume).WithMaxDistance(Distance));
         }
 
         private void UpdateAppearance()

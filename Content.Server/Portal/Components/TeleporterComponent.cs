@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Interaction;
 using Content.Shared.Portal.Components;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -38,9 +39,9 @@ namespace Content.Server.Portal.Components
         [ViewVariables] private ItemTeleporterState _state;
         [DataField("teleporter_type")]
         [ViewVariables] private TeleporterType _teleporterType = TeleporterType.Random;
-        [ViewVariables] [DataField("departure_sound")] private string _departureSound = "/Audio/Effects/teleport_departure.ogg";
-        [ViewVariables] [DataField("arrival_sound")] private string _arrivalSound = "/Audio/Effects/teleport_arrival.ogg";
-        [ViewVariables] [DataField("cooldown_sound")] private string? _cooldownSound = default;
+        [ViewVariables] [DataField("departure_sound")] private SoundSpecifier _departureSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
+        [ViewVariables] [DataField("arrival_sound")] private SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
+        [ViewVariables] [DataField("cooldown_sound")] private SoundSpecifier _cooldownSound = default!;
         // If the direct OR random teleport will try to avoid hitting collidables
         [DataField("avoid_walls")] [ViewVariables]
         private bool _avoidCollidable = true;
@@ -124,9 +125,9 @@ namespace Content.Server.Portal.Components
         {
             SetState(ItemTeleporterState.Cooldown);
             Owner.SpawnTimer(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
-            if (_cooldownSound != null)
+            if (_cooldownSound.TryGetSound(out var cooldownSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _cooldownSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cooldownSound, Owner);
             }
         }
 
@@ -229,12 +230,14 @@ namespace Content.Server.Portal.Components
             else
             {
                 // Departure
-                SoundSystem.Play(Filter.Pvs(user), _departureSound, user.Transform.Coordinates);
+                if(_departureSound.TryGetSound(out var departureSound))
+                    SoundSystem.Play(Filter.Pvs(user), departureSound, user.Transform.Coordinates);
 
                 // Arrival
                 user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
-                SoundSystem.Play(Filter.Pvs(user), _arrivalSound, user.Transform.Coordinates);
+                if(_arrivalSound.TryGetSound(out var arrivalSound))
+                    SoundSystem.Play(Filter.Pvs(user), arrivalSound, user.Transform.Coordinates);
             }
         }
     }

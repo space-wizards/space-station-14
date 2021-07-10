@@ -14,6 +14,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -42,6 +43,9 @@ namespace Content.Server.Doors.Components
         [ViewVariables]
         [DataField("board")]
         private string? _boardPrototype;
+
+        [DataField("tryOpenDoorSound")]
+        private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
         public override DoorState State
         {
@@ -235,10 +239,10 @@ namespace Content.Server.Doors.Components
             {
                 Open();
 
-                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
+                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0
+                    && _tryOpenDoorSound.TryGetSound(out var tryOpenDoorSound))
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/bang.ogg", Owner,
-                                                                   AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), tryOpenDoorSound, Owner, AudioParams.Default.WithVolume(-2));
                 }
             }
             else

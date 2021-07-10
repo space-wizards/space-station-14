@@ -1,6 +1,4 @@
 #nullable enable
-using System;
-using System.Linq;
 using Content.Server.Act;
 using Content.Server.Interaction;
 using Content.Server.Notification;
@@ -11,9 +9,9 @@ using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -24,6 +22,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
+using System;
+using System.Linq;
 
 namespace Content.Server.Actions.Actions
 {
@@ -34,6 +35,14 @@ namespace Content.Server.Actions.Actions
         [DataField("failProb")] private float _failProb = 0.4f;
         [DataField("pushProb")] private float _pushProb = 0.4f;
         [DataField("cooldown")] private float _cooldown = 1.5f;
+
+        [ViewVariables]
+        [DataField("punchMissSound")]
+        private SoundSpecifier PunchMissSound { get; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
+
+        [ViewVariables]
+        [DataField("disarmSuccessSound")]
+        private SoundSpecifier DisarmSuccessSound { get; } = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         public void DoTargetEntityAction(TargetEntityActionEventArgs args)
         {
@@ -70,8 +79,9 @@ namespace Content.Server.Actions.Actions
 
             if (random.Prob(_failProb))
             {
-                SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Weapons/punchmiss.ogg", args.Performer,
-                    AudioHelpers.WithVariation(0.025f));
+                if(PunchMissSound.TryGetSound(out var punchMissSound))
+                    SoundSystem.Play(Filter.Pvs(args.Performer), punchMissSound, args.Performer, AudioHelpers.WithVariation(0.025f));
+
                 args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
                                                                       ("performerName", args.Performer.Name),
                                                                       ("targetName", args.Target.Name)));
@@ -94,8 +104,8 @@ namespace Content.Server.Actions.Actions
                     return;
             }
 
-            SoundSystem.Play(Filter.Pvs(args.Performer), "/Audio/Effects/thudswoosh.ogg", args.Performer.Transform.Coordinates,
-                AudioHelpers.WithVariation(0.025f));
+            if(DisarmSuccessSound.TryGetSound(out var disarmSuccessSound))
+                SoundSystem.Play(Filter.Pvs(args.Performer), disarmSuccessSound, args.Performer.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
         }
     }
 }

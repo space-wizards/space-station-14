@@ -1,8 +1,8 @@
 using Content.Server.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -24,6 +24,9 @@ namespace Content.Server.Storage.Components
         public override string Name => "SecureEntityStorage";
         [DataField("locked")]
         private bool _locked = true;
+
+        [DataField("unlockSound")] private SoundSpecifier _unlockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg");
+        [DataField("lockSound")] private SoundSpecifier _lockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked
@@ -100,7 +103,8 @@ namespace Content.Server.Storage.Components
             if (!CheckAccess(user)) return;
 
             Locked = false;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            if(_unlockSound.TryGetSound(out var unlockSound))
+                SoundSystem.Play(Filter.Pvs(Owner), unlockSound, Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private void DoLock(IEntity user)
@@ -108,7 +112,8 @@ namespace Content.Server.Storage.Components
             if (!CheckAccess(user)) return;
 
             Locked = true;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            if(_lockSound.TryGetSound(out var lockSound))
+                SoundSystem.Play(Filter.Pvs(Owner), lockSound, Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private bool CheckAccess(IEntity user)

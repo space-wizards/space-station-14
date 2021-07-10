@@ -1,6 +1,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Shared.Audio;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -19,10 +20,13 @@ namespace Content.Server.Nutrition.Components
         [DataField("paralyzeTime")]
         public float ParalyzeTime { get; set; } = 1f;
 
+        [DataField("sound")]
+        private SoundSpecifier _sound = new SoundCollectionSpecifier("desacration");
+
         public void PlaySound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("desecration"), Owner,
-                AudioHelpers.WithVariation(0.125f));
+            if(_sound.TryGetSound(out var sound))
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioHelpers.WithVariation(0.125f));
         }
 
         void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)

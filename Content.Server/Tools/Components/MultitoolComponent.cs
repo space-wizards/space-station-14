@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -32,13 +33,10 @@ namespace Content.Server.Tools.Components
             public string Sprite { get; } = string.Empty;
 
             [DataField("useSound")]
-            public string Sound { get; } = string.Empty;
-
-            [DataField("useSoundCollection")]
-            public string SoundCollection { get; } = string.Empty;
+            public SoundSpecifier Sound { get; } = default!;
 
             [DataField("changeSound")]
-            public string ChangeSound { get; } = string.Empty;
+            public SoundSpecifier ChangeSound { get; } = default!;
         }
 
         public override string Name => "MultiTool";
@@ -62,8 +60,8 @@ namespace Content.Server.Tools.Components
             _currentTool = (_currentTool + 1) % _tools.Count;
             SetTool();
             var current = _tools[_currentTool];
-            if(!string.IsNullOrEmpty(current.ChangeSound))
-                SoundSystem.Play(Filter.Pvs(Owner), current.ChangeSound, Owner);
+            if(current.ChangeSound.TryGetSound(out var changeSound))
+                SoundSystem.Play(Filter.Pvs(Owner), changeSound, Owner);
         }
 
         private void SetTool()
@@ -73,7 +71,6 @@ namespace Content.Server.Tools.Components
             var current = _tools[_currentTool];
 
             _tool.UseSound = current.Sound;
-            _tool.UseSoundCollection = current.SoundCollection;
             _tool.Qualities = current.Behavior;
 
             if (_sprite == null) return;

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -32,7 +33,7 @@ namespace Content.Server.Damage.Components
         [DataField("factor")]
         public float Factor { get; set; } = 1f;
         [DataField("soundHit")]
-        public string SoundHit { get; set; } = "";
+        public SoundSpecifier SoundHit { get; set; } = default!;
         [DataField("stunChance")]
         public float StunChance { get; set; } = 0.25f;
         [DataField("stunMinimumDamage")]
@@ -51,8 +52,8 @@ namespace Content.Server.Damage.Components
 
             if (speed < MinimumSpeed) return;
 
-            if (!string.IsNullOrEmpty(SoundHit))
-                SoundSystem.Play(Filter.Pvs(otherFixture.Body.Owner), SoundHit, otherFixture.Body.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            if (SoundHit.TryGetSound(out var soundHit))
+                SoundSystem.Play(Filter.Pvs(otherFixture.Body.Owner), soundHit, otherFixture.Body.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             if ((_gameTiming.CurTime - _lastHit).TotalSeconds < DamageCooldown)
                 return;

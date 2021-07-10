@@ -6,6 +6,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -63,7 +64,7 @@ namespace Content.Server.PowerCell.Components
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cellRemoveSound")]
-        public string? CellRemoveSound { get; set; } = "/Audio/Items/pistol_magin.ogg";
+        public SoundSpecifier CellRemoveSound { get; set; } = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");
 
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
@@ -71,7 +72,7 @@ namespace Content.Server.PowerCell.Components
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cellInsertSound")]
-        public string? CellInsertSound { get; set; } = "/Audio/Items/pistol_magout.ogg";
+        public SoundSpecifier CellInsertSound { get; set; } = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -144,9 +145,9 @@ namespace Content.Server.PowerCell.Components
                 cell.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
 
-            if (playSound && CellRemoveSound != null)
+            if (playSound && CellRemoveSound.TryGetSound(out var cellRemoveSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), cellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
@@ -167,9 +168,9 @@ namespace Content.Server.PowerCell.Components
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
             //Dirty();
-            if (playSound && CellInsertSound != null)
+            if (playSound && CellInsertSound.TryGetSound(out var cellInsertSound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), cellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);

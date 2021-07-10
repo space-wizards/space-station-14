@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Server.Explosion;
 using Content.Shared.Pointing.Components;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -40,6 +41,9 @@ namespace Content.Server.Pointing.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("chasingTime")]
         private float _chasingTime = 1;
+
+        [DataField("explosionSound")]
+        private SoundSpecifier _explosionSound = new SoundPathSpecifier("/Audio/Effects/explosion.ogg");
 
         private IEntity? RandomNearbyPlayer()
         {
@@ -120,7 +124,8 @@ namespace Content.Server.Pointing.Components
             }
 
             Owner.SpawnExplosion(0, 2, 1, 1);
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/explosion.ogg", Owner);
+            if(_explosionSound.TryGetSound(out var explosionSound))
+                SoundSystem.Play(Filter.Pvs(Owner), explosionSound, Owner);
 
             Owner.Delete();
         }

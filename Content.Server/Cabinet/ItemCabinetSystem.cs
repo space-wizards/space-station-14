@@ -1,4 +1,4 @@
-﻿using Content.Server.Hands.Components;
+using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Audio;
 using Content.Shared.Cabinet;
@@ -146,8 +146,10 @@ namespace Content.Server.Cabinet
 
         private static void ClickLatchSound(ItemCabinetComponent comp)
         {
-            if (comp.DoorSound == null) return;
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DoorSound, comp.Owner, AudioHelpers.WithVariation(0.15f));
+            if(comp.DoorSound.TryGetSound(out var doorSound))
+            {
+                SoundSystem.Play(Filter.Pvs(comp.Owner), doorSound, comp.Owner, AudioHelpers.WithVariation(0.15f));
+            }   
         }
     }
 

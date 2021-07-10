@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Cargo.Components
 {
@@ -21,6 +23,7 @@ namespace Content.Server.Cargo.Components
         private const float TeleportDelay = 15f;
         private List<CargoProductPrototype> _teleportQueue = new List<CargoProductPrototype>();
         private CargoTelepadState _currentState = CargoTelepadState.Unpowered;
+        [DataField("teleportSound")] private SoundSpecifier _teleportSound = new SoundPathSpecifier("/Audio/Machines/phasein.ogg");
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -72,7 +75,8 @@ namespace Content.Server.Cargo.Components
                         {
                             if (!Deleted && !Owner.Deleted && _currentState == CargoTelepadState.Teleporting && _teleportQueue.Count > 0)
                             {
-                                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/phasein.ogg", Owner, AudioParams.Default.WithVolume(-8f));
+                                if (_teleportSound.TryGetSound(out var teleportSound))
+                                    SoundSystem.Play(Filter.Pvs(Owner), teleportSound, Owner, AudioParams.Default.WithVolume(-8f));
                                 Owner.EntityManager.SpawnEntity(_teleportQueue[0].Product, Owner.Transform.Coordinates);
                                 _teleportQueue.RemoveAt(0);
                                 if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)

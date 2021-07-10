@@ -1,6 +1,7 @@
 using Content.Server.Flash.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Acts;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -22,7 +23,7 @@ namespace Content.Server.Explosion.Components
         [DataField("duration")]
         private float _duration = 8.0f;
         [DataField("sound")]
-        private string _sound = "/Audio/Effects/flash_bang.ogg";
+        private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
         [DataField("deleteOnFlash")]
         private bool _deleteOnFlash = true;
 
@@ -35,9 +36,9 @@ namespace Content.Server.Explosion.Components
                 FlashableComponent.FlashAreaHelper(Owner, _range, _duration);
             }
 
-            if (_sound != null)
+            if (_sound.TryGetSound(out var sound))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _sound, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates);
             }
 
             if (_deleteOnFlash && !Owner.Deleted)

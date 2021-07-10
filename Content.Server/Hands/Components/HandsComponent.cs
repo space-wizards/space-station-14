@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -23,6 +24,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Hands.Components
 {
@@ -33,6 +35,8 @@ namespace Content.Server.Hands.Components
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
+        [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
 
@@ -175,8 +179,8 @@ namespace Content.Server.Hands.Components
 
             if (source != null)
             {
-                SoundSystem.Play(Filter.Pvs(source), "/Audio/Effects/thudswoosh.ogg", source,
-                    AudioHelpers.WithVariation(0.025f));
+                if(_disarmedSound.TryGetSound(out var disarmedSound))
+                    SoundSystem.Play(Filter.Pvs(source), disarmedSound, source, AudioHelpers.WithVariation(0.025f));
 
                 if (target != null)
                 {

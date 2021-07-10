@@ -6,6 +6,7 @@ using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Components;
 using Content.Shared.Cooldown;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -27,7 +28,7 @@ namespace Content.Server.Actions.Spells
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
 
-        [ViewVariables] [DataField("castSound")] public string? CastSound { get; set; } = default!;
+        [ViewVariables] [DataField("castSound")] public SoundSpecifier CastSound { get; set; } = default!;
 
         //Rubber-band snapping items into player's hands, originally was a workaround, later found it works quite well with stuns
         //Not sure if needs fixing
@@ -68,8 +69,8 @@ namespace Content.Server.Actions.Spells
 
             handsComponent.PutInHandOrDrop(itemComponent);
 
-            if (CastSound != null)
-                SoundSystem.Play(Filter.Pvs(caster), CastSound, caster);
+            if (CastSound.TryGetSound(out var castSound))
+                SoundSystem.Play(Filter.Pvs(caster), castSound, caster);
         }
     }
 }
