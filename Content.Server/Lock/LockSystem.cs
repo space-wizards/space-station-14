@@ -13,6 +13,9 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Lock
 {
+    /// <summary>
+    /// Handles (un)locking and examining of Lock components
+    /// </summary>
     [UsedImplicitly]
     public class LockSystem : EntitySystem
     {
@@ -35,19 +38,6 @@ namespace Content.Server.Lock
 
         private void OnActivated(EntityUid eUI, LockComponent lockComp, ActivateInWorldEvent args)
         {
-            if (lockComp.VerbOverride == LockComponentStateVerbOverride.DoLock)
-            {
-                DoLock(lockComp, args);
-                lockComp.VerbOverride = LockComponentStateVerbOverride.None;
-                return;
-            }
-            else if (lockComp.VerbOverride == LockComponentStateVerbOverride.DoUnlock)
-            {
-                DoUnlock(lockComp, args);
-                lockComp.VerbOverride = LockComponentStateVerbOverride.None;
-                return;
-            }
-
             // Only attempt an unlock by default on Activate
             if (lockComp.Locked)
             {
@@ -64,7 +54,7 @@ namespace Content.Server.Lock
                                                ("entityName", lockComp.Owner.Name)));
         }
 
-        private void DoLock(LockComponent lockComp, ActivateInWorldEvent args)
+        public void DoLock(LockComponent lockComp, ActivateInWorldEvent args)
         {
             if (!HasUserAccess(lockComp, args.User))
             {
@@ -74,14 +64,15 @@ namespace Content.Server.Lock
             lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
             lockComp.Locked = true;
             SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound, lockComp.Owner, AudioParams.Default.WithVolume(-5));
-            args.Handled = true;
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, true);
             }
+
+            args.Handled = true;
         }
 
-        private void DoUnlock(LockComponent lockComp, ActivateInWorldEvent args)
+        public void DoUnlock(LockComponent lockComp, ActivateInWorldEvent args )
         {
             if (!HasUserAccess(lockComp, args.User))
             {
@@ -90,16 +81,17 @@ namespace Content.Server.Lock
 
             lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
             lockComp.Locked = false;
-            // To stop EntityStorageComponent from opening right after the container gets unlocked
-            args.Handled = true;
             SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound, lockComp.Owner, AudioParams.Default.WithVolume(-5));
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, false);
             }
+
+            // To stop EntityStorageComponent from opening right after the container gets unlocked
+            args.Handled = true;
         }
 
-        private bool HasUserAccess(LockComponent lockComp, IEntity user)
+        private static bool HasUserAccess(LockComponent lockComp, IEntity user)
         {
             if (lockComp.Owner.TryGetComponent(out AccessReader? reader))
             {

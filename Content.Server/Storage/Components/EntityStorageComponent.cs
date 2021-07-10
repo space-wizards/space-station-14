@@ -25,7 +25,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -475,7 +474,7 @@ namespace Content.Server.Storage.Components
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                (component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked)) // HACK extra check, until EntityStorage gets refactored
+                component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked) // HACK extra check, until EntityStorage gets refactored
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
