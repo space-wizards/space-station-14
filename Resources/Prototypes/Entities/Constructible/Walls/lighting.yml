@@ -30,8 +30,6 @@
     offset: "0, -0.5"
   - type: SignalReceiver
     inputs:
-      - name: state
-        type: bool
       - name: toggle
   - type: UserInterface
     interfaces:

@@ -26,7 +26,10 @@
     state: conveyor_started_cw
     drawdepth: FloorObjects
   - type: SignalReceiver
-    maxTransmitters: 1
+    inputs:
+      - name: state
+        type: bool
+        maxConnections: 1
   - type: ApcPowerReceiver
   - type: Conveyor
   - type: Appearance

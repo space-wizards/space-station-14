@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
@@ -11,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.MachineLinking
 {
@@ -27,9 +30,55 @@ namespace Content.Server.MachineLinking
 
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(TransmitterStartupHandler);
             SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(TransmitterInteractUsingHandler);
+            SubscribeLocalEvent<SignalTransmitterComponent, InvokePortEvent>(OnTransmitterInvokePort);
 
             SubscribeLocalEvent<SignalReceiverComponent, ComponentStartup>(OnReceiverStartup);
             SubscribeLocalEvent<SignalReceiverComponent, InteractUsingEvent>(OnReceiverInteractUsing);
+
+            SubscribeLocalEvent<SignalReceiverComponent, ComponentRemove>(OnReceiverRemoved);
+            SubscribeLocalEvent<SignalTransmitterComponent, ComponentRemove>(OnTransmitterRemoved);
+        }
+
+        private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent component, ComponentRemove args)
+        {
+            foreach (var (receiver, port, ourPort) in component.Connections)
+            {
+                Disconnect(component, ourPort, receiver, port);
+            }
+        }
+
+        private void OnReceiverRemoved(EntityUid uid, SignalReceiverComponent component, ComponentRemove args)
+        {
+            foreach (var (transmitter, port, ourPort) in component.Connections)
+            {
+                Disconnect(transmitter, port, component, ourPort);
+            }
+        }
+
+        private void OnTransmitterInvokePort(EntityUid uid, SignalTransmitterComponent component, InvokePortEvent args)
+        {
+            if (!component.Outputs.TryGetPort(args.Port, out var port))
+                throw new PortNotFoundException();
+
+            if (args.Value == null)
+            {
+                if (port.Type == null || !port.Type.IsNullable())
+                    throw new InvalidPortValueException();
+            }
+            else
+            {
+                if (port.Type == null || args.Value.GetType().IsAssignableTo(port.Type))
+                    throw new InvalidPortValueException();
+            }
+
+            port.Signal = args.Value;
+
+            foreach (var (receiver, receiverPort, ourPort) in component.Connections)
+            {
+                if (ourPort != port.Name) continue;
+
+                RaiseLocalEvent(receiver.Owner.Uid, new SignalReceivedEvent(receiverPort,args.Value));
+            }
         }
 
         private void OnReceiverInteractUsing(EntityUid uid, SignalReceiverComponent component, InteractUsingEvent args)
@@ -52,13 +101,41 @@ namespace Content.Server.MachineLinking
 
         private void OnReceiverUIMessage(EntityUid uid, SignalReceiverComponent component, ServerBoundUserInterfaceMessage msg)
         {
-            throw new System.NotImplementedException();
+            switch (msg.Message)
+            {
+                case SignalPortSelected portSelected:
+                    if (msg.Session.AttachedEntity == null ||
+                        !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
+                        !hands.TryGetActiveHeldEntity(out var heldEntity) ||
+                        !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner) ||
+                        !signalLinkerComponent.Port.HasValue ||
+                        !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port.Value.port) ||
+                        !component.Inputs.ContainsPort(portSelected.Port))
+                        return;
+                    Connect(signalLinkerComponent.Port.Value.transmitter, signalLinkerComponent.Port.Value.port, component, portSelected.Port);
+                    break;
+            }
         }
 
         private void TransmitterStartupHandler(EntityUid uid, SignalTransmitterComponent component, ComponentStartup args)
         {
             if(component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key) is {} ui)
                 ui.OnReceiveMessage += msg => OnTransmitterUIMessage(uid, component, msg);
+
+            foreach (var portPrototype in component.Outputs)
+            {
+                if (portPrototype.Type == null)
+                    continue;
+
+                var valueRequest = new SignalValueRequestedEvent(portPrototype.Name, portPrototype.Type);
+                RaiseLocalEvent(uid, valueRequest, false);
+
+                if (!valueRequest.Handled)
+                    throw new NoSignalValueProvidedException();
+
+                portPrototype.Signal = valueRequest.Signal;
+            }
         }
 
         private void OnTransmitterUIMessage(EntityUid uid, SignalTransmitterComponent component, ServerBoundUserInterfaceMessage msg)
@@ -111,6 +188,26 @@ namespace Content.Server.MachineLinking
             if (bui == null) return;
             bui.Open(actor.PlayerSession);
             bui.SetState(new SignalPortsState(component.Outputs.GetPortStrings().ToArray()));
+        }
+
+        private void Connect(SignalTransmitterComponent transmitter, string transmitterPort,
+            SignalReceiverComponent receiver, string receiverPort)
+        {
+            if (!transmitter.Outputs.ContainsPort(transmitterPort) || !receiver.Inputs.ContainsPort(receiverPort))
+                throw new PortNotFoundException();
+
+            receiver.Connections.Add((transmitter, transmitterPort, receiverPort));
+            transmitter.Connections.Add((receiver, receiverPort, transmitterPort));
+        }
+
+        private void Disconnect(SignalTransmitterComponent transmitter, string transmitterPort,
+            SignalReceiverComponent receiver, string receiverPort)
+        {
+            if (!transmitter.Outputs.ContainsPort(transmitterPort) || !receiver.Inputs.ContainsPort(receiverPort))
+                throw new PortNotFoundException();
+
+            receiver.Connections.Remove((transmitter, transmitterPort, receiverPort));
+            transmitter.Connections.Add((receiver, receiverPort, transmitterPort));
         }
 
         /*todo paul oldcode

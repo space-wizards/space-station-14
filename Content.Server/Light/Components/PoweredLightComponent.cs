@@ -291,17 +291,11 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-        public void TriggerSignal(bool signal)
-        {
-            _on = signal;
-            UpdateLight();
-        }
-
-        /* todo paul public void TriggerSignal(ToggleSignal signal)
+        public void ToggleLight()
         {
             _on = !_on;
             UpdateLight();
-        }*/
+        }
 
         public void ToggleBlinkingLight(bool isNowBlinking)
         {

@@ -1,0 +1,22 @@
+using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.Events;
+using Content.Shared.Interaction;
+using Robust.Shared.GameObjects;
+
+namespace Content.Server.MachineLinking
+{
+    public class SignalButtonSystem : EntitySystem
+    {
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<SignalButtonComponent, InteractHandEvent>(OnInteractHand);
+        }
+
+        private void OnInteractHand(EntityUid uid, SignalButtonComponent component, InteractHandEvent args)
+        {
+            RaiseLocalEvent(uid, new InvokePortEvent("pressed"), false);
+        }
+    }
+}
