@@ -53,7 +53,7 @@
         - state: extinguish
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Physics
-      bodyType: KinematicController
+      bodyType: Dynamic
       fixtures:
       - shape:
           !type:PhysShapeAabb

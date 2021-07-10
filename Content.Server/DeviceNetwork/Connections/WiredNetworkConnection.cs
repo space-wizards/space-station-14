@@ -26,7 +26,7 @@ namespace Content.Server.DeviceNetwork.Connections
                 return false;
             }
 
-            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (_owner.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var ownNet)
                 && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
             {
@@ -44,7 +44,7 @@ namespace Content.Server.DeviceNetwork.Connections
                 return new Metadata();
             }
 
-            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (_owner.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var net))
             {
                 var metadata = new Metadata
@@ -63,16 +63,16 @@ namespace Content.Server.DeviceNetwork.Connections
             return payload;
         }
 
-        private bool TryGetWireNet(PowerReceiverComponent powerReceiver, [NotNullWhen(true)] out INodeGroup? net)
+        private bool TryGetWireNet(ApcPowerReceiverComponent apcPowerReceiver, [NotNullWhen(true)] out INodeGroup? net)
         {
-            if (powerReceiver.Provider is PowerProviderComponent provider &&
-                provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            var provider = apcPowerReceiver.Provider;
+            if (provider != null && provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
             {
                 var nodes = nodeContainer.Nodes;
 
                 foreach (var node in nodes.Values)
                 {
-                    if (node.NodeGroupID == NodeGroupID.WireNet)
+                    if (node.NodeGroupID == NodeGroupID.WireNet && node.NodeGroup != null)
                     {
                         net = node.NodeGroup;
                         return true;

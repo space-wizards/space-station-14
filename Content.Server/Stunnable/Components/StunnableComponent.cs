@@ -1,11 +1,10 @@
 #nullable enable
 using Content.Server.Act;
 using Content.Server.Notification;
-using Content.Server.Standing;
 using Content.Shared.Audio;
 using Content.Shared.MobState;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -28,7 +27,7 @@ namespace Content.Server.Stunnable.Components
         protected override void OnKnockdownEnd()
         {
             if(Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
         }
 
         public void CancelAll()
@@ -46,7 +45,7 @@ namespace Content.Server.Stunnable.Components
             if (KnockedDown &&
                 Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
             {
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
             KnockdownTimer = null;

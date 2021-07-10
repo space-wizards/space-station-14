@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
@@ -28,7 +28,7 @@ namespace Content.Server.Arcade.Components
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 
-        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
         [ComponentDependency] private readonly WiresComponent? _wiresComponent = default!;
 
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;

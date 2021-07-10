@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AI.Components;
@@ -58,7 +58,7 @@ namespace Content.Server.AI.Utils
         public static IEnumerable<IEntity> GetEntitiesInRange(EntityCoordinates grid, Type component, float range)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var entity in entityManager.GetEntities(new TypeEntityQuery(component)))
+            foreach (var entity in entityManager.ComponentManager.GetAllComponents(component).Select(c => c.Owner))
             {
                 if (entity.Transform.Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
                 {

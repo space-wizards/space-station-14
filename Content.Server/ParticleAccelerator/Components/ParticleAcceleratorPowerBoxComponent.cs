@@ -17,12 +17,6 @@ namespace Content.Server.ParticleAccelerator.Components
             base.Initialize();
 
             PowerConsumerComponent = Owner.EnsureComponentWarn<PowerConsumerComponent>();
-            PowerConsumerComponent.OnReceivedPowerChanged += PowerReceivedChanged;
-        }
-
-        private void PowerReceivedChanged(object? sender, ReceivedPowerChangedEventArgs e)
-        {
-            Master?.PowerBoxReceivedChanged(sender, e);
         }
     }
 }

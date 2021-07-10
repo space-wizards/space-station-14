@@ -1,8 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
@@ -23,8 +24,7 @@ namespace Content.Server.Administration.Commands
 
             var id = args[0].ToLower();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var query = new PredicateEntityQuery(e => e.Prototype?.ID.ToLower() == id);
-            var entities = entityManager.GetEntities(query);
+            var entities = entityManager.GetEntities().Where(e => e.Prototype?.ID.ToLower() == id);
             var i = 0;
 
             foreach (var entity in entities)

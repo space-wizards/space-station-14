@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
@@ -11,7 +12,6 @@ using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -158,7 +158,7 @@ namespace Content.Server.GameTicking.Presets
             // On failure, the returned target is the location that we're already at.
             var bestTargetDistanceFromNearest = -1.0f;
             // Need the random shuffle or it stuffs the first person into Atmospherics pretty reliably
-            var ents = new List<IEntity>(_entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))));
+            var ents = _entityManager.ComponentManager.EntityQuery<SpawnPointComponent>().Select(x => x.Owner).ToList();
             _robustRandom.Shuffle(ents);
             var foundATarget = false;
             bestTarget = EntityCoordinates.Invalid;
@@ -215,9 +215,8 @@ namespace Content.Server.GameTicking.Presets
         {
             var lines = new List<string>();
             lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(PDAComponent))))
+            foreach (var pda in _entityManager.ComponentManager.EntityQuery<PDAComponent>())
             {
-                var pda = entity.GetComponent<PDAComponent>();
                 var uplink = pda.SyndicateUplinkAccount;
                 if (uplink != null && _allOriginalNames.ContainsKey(uplink))
                 {

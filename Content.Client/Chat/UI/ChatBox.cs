@@ -185,10 +185,10 @@ namespace Content.Client.Chat.UI
                             {
                                 Children =
                                 {
-                                    new Control{MinSize = (10,0)},
+                                    new Control{MinSize = (4,0)},
                                     (_filterVBox = new VBoxContainer
                                     {
-                                        SeparationOverride = 10
+                                        SeparationOverride = 4
                                     })
                                 }
                             }
@@ -203,7 +203,7 @@ namespace Content.Client.Chat.UI
                 {
                     (_channelSelectorHBox = new HBoxContainer
                     {
-                        SeparationOverride = 4
+                        SeparationOverride = 1
                     })
                 }
             };

@@ -17,7 +17,7 @@
     - type: ReagentGrinderVisualizer
   - type: Clickable
   - type: InteractionOutline
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: LoopingSound
   - type: Physics
     fixtures:

@@ -1,4 +1,7 @@
-﻿#nullable enable
+﻿using Content.Shared.Standing;
+using Robust.Shared.GameObjects;
+
+#nullable enable
 
 namespace Content.Shared.MobState.State
 {
@@ -8,6 +11,17 @@ namespace Content.Shared.MobState.State
     public abstract class SharedNormalMobState : BaseMobState
     {
         protected override DamageState DamageState => DamageState.Alive;
+
+        public override void EnterState(IEntity entity)
+        {
+            base.EnterState(entity);
+            EntitySystem.Get<StandingStateSystem>().Stand(entity);
+
+            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
+            }
+        }
 
         public override bool CanInteract()
         {

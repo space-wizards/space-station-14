@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using Content.Client.Actions.UI;
 using Content.Client.Examine;

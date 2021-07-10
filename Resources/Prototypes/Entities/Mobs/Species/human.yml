@@ -237,7 +237,7 @@
   - type: Grammar
     attributes:
       proper: true
-
+  - type: StandingState
 
 - type: entity
   save: false
