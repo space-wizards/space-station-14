@@ -1,8 +1,8 @@
 ﻿- type: entity
   id: ComputerFrame
-  parent: BaseConstructibleDynamic
+  parent: BaseConstructible
   name: computer frame
-  description: A computer under construction. It needs a circuit board.
+  description: A computer under construction.
   components:
   - type: Physics
     bodyType: Static
@@ -20,6 +20,7 @@
         - VaultImpassable
   - type: InteractionOutline
   - type: Rotatable
+  - type: Anchorable
   - type: Construction
     graph: computer
     node: frameUnsecured
@@ -81,7 +82,7 @@
     graph: computer
     node: computer
   - type: Computer
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:
@@ -157,7 +158,7 @@
       type: ResearchConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
     load: 200
     priority: Low
   - type: Computer

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Content.Server.AI.Components;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
@@ -39,13 +40,6 @@ namespace Content.Server.AI.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
             SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            UnsubscribeLocalEvent<SleepAiMessage>();
-            UnsubscribeLocalEvent<MobStateChangedMessage>();
         }
 
         /// <inheritdoc />

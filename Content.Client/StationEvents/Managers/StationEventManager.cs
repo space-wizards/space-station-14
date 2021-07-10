@@ -16,8 +16,8 @@ namespace Content.Client.StationEvents.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgRequestStationEvents>(nameof(MsgRequestStationEvents));
-            _netManager.RegisterNetMessage<MsgStationEvents>(nameof(MsgStationEvents), RxStationEvents);
+            _netManager.RegisterNetMessage<MsgRequestStationEvents>();
+            _netManager.RegisterNetMessage<MsgStationEvents>(RxStationEvents);
             _netManager.Disconnect += OnNetManagerOnDisconnect;
         }
 

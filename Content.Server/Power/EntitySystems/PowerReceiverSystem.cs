@@ -9,19 +9,12 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PowerReceiverComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<PowerReceiverComponent, PhysicsBodyTypeChangedEvent>();
+            SubscribeLocalEvent<ApcPowerReceiverComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
         private static void BodyTypeChanged(
             EntityUid uid,
-            PowerReceiverComponent component,
+            ApcPowerReceiverComponent component,
             PhysicsBodyTypeChangedEvent args)
         {
             component.AnchorUpdate();

@@ -23,7 +23,7 @@ namespace Content.Server.Paper
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

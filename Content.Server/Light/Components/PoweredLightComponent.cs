@@ -14,6 +14,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -116,7 +117,7 @@ namespace Content.Server.Light.Components
 
             void Burn()
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You burn your hand!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
@@ -197,7 +198,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateLight()
         {
-            var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            var powerReceiver = Owner.GetComponent<ApcPowerReceiverComponent>();
 
             if (LightBulb == null) // No light bulb.
             {
@@ -240,7 +241,7 @@ namespace Content.Server.Light.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

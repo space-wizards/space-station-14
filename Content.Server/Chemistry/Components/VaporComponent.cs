@@ -34,7 +34,7 @@ namespace Content.Server.Chemistry.Components
         private bool _running;
         private float _aliveTime;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

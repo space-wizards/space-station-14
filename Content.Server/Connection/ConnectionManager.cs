@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;

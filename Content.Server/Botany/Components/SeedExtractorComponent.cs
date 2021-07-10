@@ -1,8 +1,9 @@
-﻿#nullable enable
+#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -13,7 +14,7 @@ namespace Content.Server.Botany.Components
     [RegisterComponent]
     public class SeedExtractorComponent : Component, IInteractUsing
     {
-        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiver = default!;
+        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiver = default!;
 
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -30,7 +31,7 @@ namespace Content.Server.Botany.Components
 
             if (eventArgs.Using.TryGetComponent(out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("You extract some seeds from the {0}.", eventArgs.Using.Name));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", eventArgs.Using.Name)));
 
                 eventArgs.Using.QueueDelete();
 

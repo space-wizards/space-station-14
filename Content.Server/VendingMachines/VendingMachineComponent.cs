@@ -7,7 +7,7 @@ using Content.Server.Advertise;
 using Content.Server.Notification;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Acts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -41,7 +41,7 @@ namespace Content.Server.VendingMachines
         private string? _description;
         private string _spriteName = "";
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         [DataField("soundVend")]
@@ -99,7 +99,7 @@ namespace Content.Server.VendingMachines
             Inventory = inventory;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -108,7 +108,7 @@ namespace Content.Server.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
@@ -178,14 +178,14 @@ namespace Content.Server.VendingMachines
             var entry = Inventory.Find(x => x.ID == id);
             if (entry == null)
             {
-                Owner.PopupMessageEveryone(Loc.GetString("Invalid item"));
+                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
                 Deny();
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                Owner.PopupMessageEveryone(Loc.GetString("Out of stock"));
+                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
                 Deny();
                 return;
             }
@@ -211,7 +211,7 @@ namespace Content.Server.VendingMachines
             {
                 if (sender == null || !accessReader.IsAllowed(sender))
                 {
-                    Owner.PopupMessageEveryone(Loc.GetString("Access denied"));
+                    Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();
                     return;
                 }

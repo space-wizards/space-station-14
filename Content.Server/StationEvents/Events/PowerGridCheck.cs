@@ -19,10 +19,8 @@ namespace Content.Server.StationEvents.Events
         public override string Name => "PowerGridCheck";
         public override float Weight => WeightNormal;
         public override int? MaxOccurrences => 3;
-        public override string StartAnnouncement => Loc.GetString(
-            "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
-        protected override string EndAnnouncement => Loc.GetString(
-            "Power has been restored to the station. We apologize for the inconvenience.");
+        public override string StartAnnouncement => Loc.GetString("station-event-power-grid-check-start-announcement");
+        protected override string EndAnnouncement => Loc.GetString("station-event-power-grid-check-end-announcement");
         public override string? StartAudio => "/Audio/Announcements/power_off.ogg";
 
         // If you need EndAudio it's down below. Not set here because we can't play it at the normal time without spamming sounds.
@@ -43,7 +41,7 @@ namespace Content.Server.StationEvents.Events
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>(true))
+            foreach (var component in componentManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
                 component.PowerDisabled = true;
                 _powered.Add(component.Owner);
@@ -58,7 +56,7 @@ namespace Content.Server.StationEvents.Events
             {
                 if (entity.Deleted) continue;
 
-                if (entity.TryGetComponent(out PowerReceiverComponent? powerReceiverComponent))
+                if (entity.TryGetComponent(out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }

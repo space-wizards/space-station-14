@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
+using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Resistances;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -10,11 +12,18 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Damage
 {
     [UsedImplicitly]
-    public class GodmodeSystem : EntitySystem, IResettingEntitySystem
+    public class GodmodeSystem : EntitySystem
     {
         private readonly Dictionary<IEntity, OldEntityInformation> _entities = new();
 
-        public void Reset()
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
+
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _entities.Clear();
         }
@@ -35,7 +44,8 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.AddFlag(DamageFlag.Invulnerable);
+                damageable.SupportedTypes.Clear();
+                damageable.SupportedClasses.Clear();
             }
 
             return true;
@@ -60,7 +70,15 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.RemoveFlag(DamageFlag.Invulnerable);
+                if (old.SupportedTypes != null)
+                {
+                    damageable.SupportedTypes.UnionWith(old.SupportedTypes);
+                }
+
+                if (old.SupportedClasses != null)
+                {
+                    damageable.SupportedClasses.UnionWith(old.SupportedClasses);
+                }
             }
 
             return true;
@@ -91,10 +109,21 @@ namespace Content.Server.Damage
             {
                 Entity = entity;
                 MovedByPressure = entity.IsMovedByPressure();
+
+                if (entity.TryGetComponent(out IDamageableComponent? damageable))
+                {
+                    SupportedTypes = damageable.SupportedTypes.ToHashSet();
+                    SupportedClasses = damageable.SupportedClasses.ToHashSet();
+                }
             }
 
             public IEntity Entity { get; }
+
             public bool MovedByPressure { get; }
+
+            public HashSet<DamageType>? SupportedTypes { get; }
+
+            public HashSet<DamageClass>? SupportedClasses { get; }
         }
     }
 }

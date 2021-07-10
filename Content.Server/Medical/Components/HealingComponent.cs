@@ -5,7 +5,9 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -30,7 +32,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return true;
             }
@@ -41,13 +43,9 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (Owner.HasComponent<StackComponent>())
+            if (Owner.TryGetComponent<SharedStackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
             {
-                var stackUse = new StackUseEvent() {Amount = 1};
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, stackUse);
-
-                if(!stackUse.Result)
-                    return true;
+                return true;
             }
 
             foreach (var (type, amount) in Heal)

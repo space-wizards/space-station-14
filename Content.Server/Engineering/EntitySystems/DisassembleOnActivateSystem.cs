@@ -19,13 +19,6 @@ namespace Content.Server.Engineering.EntitySystems
             SubscribeLocalEvent<DisassembleOnActivateComponent, ActivateInWorldEvent>(HandleActivateInWorld);
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            UnsubscribeLocalEvent<DisassembleOnActivateComponent, ActivateInWorldEvent>(HandleActivateInWorld);
-        }
-
         private async void HandleActivateInWorld(EntityUid uid, DisassembleOnActivateComponent component, ActivateInWorldEvent args)
         {
             if (string.IsNullOrEmpty(component.Prototype))
@@ -40,7 +33,7 @@ namespace Content.Server.Engineering.EntitySystems
                     BreakOnUserMove = true,
                     BreakOnStun = true,
                 };
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
+                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result != DoAfterStatus.Finished)
                     return;

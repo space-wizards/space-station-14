@@ -100,7 +100,7 @@
             - !type:EntityAnchored { }
           completed:
             - !type:SpawnPrototype
-              prototype: ApcExtensionCableStack1
+              prototype: CableApcStack1
               amount: 5
           steps:
             - tool: Cutting

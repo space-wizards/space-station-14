@@ -9,7 +9,8 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -32,7 +33,7 @@ namespace Content.Server.AME.Components
         private AppearanceComponent? _appearance;
         private PowerSupplierComponent? _powerSupplier;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private int _stability = 100;
@@ -40,7 +41,7 @@ namespace Content.Server.AME.Components
         private ContainerSlot _jarSlot = default!;
         [ViewVariables] private bool HasJar => _jarSlot.ContainedEntity != null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -91,7 +92,7 @@ namespace Content.Server.AME.Components
             if(fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
-                _powerSupplier.SupplyRate = group.InjectFuel(availableInject, out var overloading);
+                _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
                 fuelJar.FuelAmount -= availableInject;
                 InjectSound(overloading);
                 UpdateUserInterface();
@@ -118,7 +119,7 @@ namespace Content.Server.AME.Components
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-no-hands-text"));
                 return;
             }
 
@@ -156,8 +157,11 @@ namespace Content.Server.AME.Components
             //Need player entity to check if they are still able to use the dispenser
             if (playerEntity == null)
                 return false;
+
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -208,9 +212,6 @@ namespace Content.Server.AME.Components
                 case UiButton.DecreaseFuel:
                     InjectionAmount = InjectionAmount > 0 ? InjectionAmount -= 2 : 0;
                     break;
-                case UiButton.RefreshParts:
-                    RefreshParts();
-                    break;
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
@@ -248,7 +249,7 @@ namespace Content.Server.AME.Components
                 _appearance?.SetData(AMEControllerVisuals.DisplayState, "off");
                 if (_powerSupplier != null)
                 {
-                    _powerSupplier.SupplyRate = 0;
+                    _powerSupplier.MaxSupply = 0;
                 }
             }
             _injecting = !_injecting;
@@ -271,12 +272,6 @@ namespace Content.Server.AME.Components
                 _appearance?.SetData(AMEControllerVisuals.DisplayState, newState);
             }
 
-        }
-
-        private void RefreshParts()
-        {
-            GetAMENodeGroup()?.RefreshAMENodes(this);
-            UpdateUserInterface();
         }
 
         private AMENodeGroup? GetAMENodeGroup()
@@ -329,13 +324,13 @@ namespace Content.Server.AME.Components
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-no-hands-text"));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You have nothing on your hand."));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 
@@ -344,19 +339,19 @@ namespace Content.Server.AME.Components
             {
                 if (HasJar)
                 {
-                    Owner.PopupMessage(args.User, Loc.GetString("The controller already has a jar loaded."));
+                    Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-already-has-jar"));
                 }
 
                 else
                 {
                     _jarSlot.Insert(activeHandEntity);
-                    Owner.PopupMessage(args.User, Loc.GetString("You insert the jar into the fuel slot."));
+                    Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-success"));
                     UpdateUserInterface();
                 }
             }
             else
             {
-                Owner.PopupMessage(args.User, Loc.GetString("You can't put that in the controller..."));
+                Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-fail"));
             }
 
             return true;

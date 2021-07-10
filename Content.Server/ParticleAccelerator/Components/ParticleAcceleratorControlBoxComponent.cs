@@ -6,11 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Content.Server.Notification;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -46,7 +48,7 @@ namespace Content.Server.ParticleAccelerator.Components
         /// <summary>
         ///     Power receiver for the control console itself.
         /// </summary>
-        [ViewVariables] private PowerReceiverComponent _powerReceiverComponent = default!;
+        [ViewVariables] private ApcPowerReceiverComponent _apcPowerReceiverComponent = default!;
 
         [ViewVariables] private ParticleAcceleratorFuelChamberComponent? _partFuelChamber;
         [ViewVariables] private ParticleAcceleratorEndCapComponent? _partEndCap;
@@ -87,7 +89,7 @@ namespace Content.Server.ParticleAccelerator.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawBase")] private int _powerDrawBase = 500;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("powerDrawMult")] private int _powerDrawMult = 1500;
 
-        [ViewVariables] private bool ConsolePowered => _powerReceiverComponent?.Powered ?? true;
+        [ViewVariables] private bool ConsolePowered => _apcPowerReceiverComponent?.Powered ?? true;
 
         public ParticleAcceleratorControlBoxComponent()
         {
@@ -98,7 +100,7 @@ namespace Content.Server.ParticleAccelerator.Components
             ? ParticleAcceleratorPowerState.Level3
             : ParticleAcceleratorPowerState.Level2;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)
@@ -106,9 +108,9 @@ namespace Content.Server.ParticleAccelerator.Components
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            Owner.EnsureComponent(out _powerReceiverComponent);
+            Owner.EnsureComponent(out _apcPowerReceiverComponent);
 
-            _powerReceiverComponent!.Load = 250;
+            _apcPowerReceiverComponent!.Load = 250;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -150,7 +152,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
 
             if (obj.Session.AttachedEntity == null ||
-                !ActionBlockerSystem.CanInteract(obj.Session.AttachedEntity))
+                !EntitySystem.Get<ActionBlockerSystem>().CanInteract(obj.Session.AttachedEntity))
             {
                 return;
             }
@@ -188,8 +190,8 @@ namespace Content.Server.ParticleAccelerator.Components
 
         public void UpdateUI()
         {
-            var draw = 0;
-            var receive = 0;
+            var draw = 0f;
+            var receive = 0f;
 
             if (_isEnabled)
             {
@@ -201,8 +203,8 @@ namespace Content.Server.ParticleAccelerator.Components
                 _isAssembled,
                 _isEnabled,
                 _selectedStrength,
-                draw,
-                receive,
+                (int) draw,
+                (int) receive,
                 _partEmitterLeft != null,
                 _partEmitterCenter != null,
                 _partEmitterRight != null,
@@ -239,7 +241,7 @@ namespace Content.Server.ParticleAccelerator.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             UserInterface?.CloseAll();
             base.OnRemove();
@@ -308,7 +310,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 case ParticleAcceleratorControlBoxWires.Limiter:
                     if (args.Action == WiresAction.Pulse)
                     {
-                        Owner.PopupMessageEveryone(Loc.GetString("The control box makes a whirring noise."));
+                        Owner.PopupMessageEveryone(Loc.GetString("particle-accelerator-control-box-component-wires-update-limiter-on-pulse"));
                     }
                     else
                     {
@@ -576,7 +578,7 @@ namespace Content.Server.ParticleAccelerator.Components
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(ParticleAcceleratorVisuals.VisualState,
-                    _powerReceiverComponent!.Powered
+                    _apcPowerReceiverComponent!.Powered
                         ? (ParticleAcceleratorVisualState) _selectedStrength
                         : ParticleAcceleratorVisualState.Unpowered);
             }
@@ -644,7 +646,7 @@ namespace Content.Server.ParticleAccelerator.Components
             } * _powerDrawMult + _powerDrawBase;
         }
 
-        public void PowerBoxReceivedChanged(object? sender, ReceivedPowerChangedEventArgs eventArgs)
+        public void PowerBoxReceivedChanged(PowerConsumerReceivedChanged eventArgs)
         {
             DebugTools.Assert(_isAssembled);
 

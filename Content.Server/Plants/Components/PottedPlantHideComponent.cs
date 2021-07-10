@@ -3,6 +3,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -18,7 +19,7 @@ namespace Content.Server.Plants.Components
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             _secretStash = Owner.EnsureComponent<SecretStashComponent>();
@@ -37,7 +38,7 @@ namespace Content.Server.Plants.Components
             var gotItem = _secretStash.TryGetItem(eventArgs.User);
             if (!gotItem)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You root around in the roots."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message"));
             }
 
             return gotItem;

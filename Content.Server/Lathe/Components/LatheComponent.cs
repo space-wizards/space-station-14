@@ -42,13 +42,13 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

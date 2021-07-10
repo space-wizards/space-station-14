@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
@@ -81,7 +81,7 @@ namespace Content.Client.Chemistry.UI
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Amount")},
+                            new Label {Text = Loc.GetString("reagent-dispenser-window-amount-to-dispense-label")},
                             //Padding
                             new Control {MinSize = (20, 0)},
                             (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenRight }}),
@@ -108,9 +108,9 @@ namespace Content.Client.Chemistry.UI
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("Container: ")},
-                            (ClearButton = new Button {Text = Loc.GetString("Clear"), StyleClasses = {StyleBase.ButtonOpenRight}}),
-                            (EjectButton = new Button {Text = Loc.GetString("Eject"), StyleClasses = {StyleBase.ButtonOpenLeft}})
+                            new Label {Text = Loc.GetString("reagent-dispenser-window-container-label") + " "},
+                            (ClearButton = new Button {Text = Loc.GetString("reagent-dispenser-window-clear-button"), StyleClasses = {StyleBase.ButtonOpenRight}}),
+                            (EjectButton = new Button {Text = Loc.GetString("reagent-dispenser-window-eject-button"), StyleClasses = {StyleBase.ButtonOpenLeft}})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
@@ -133,7 +133,7 @@ namespace Content.Client.Chemistry.UI
                                 {
                                     new Label
                                     {
-                                        Text = Loc.GetString("No container loaded.")
+                                        Text = Loc.GetString("reagent-dispenser-window-no-container-loaded-text")
                                     }
                                 }
                             }),
@@ -163,7 +163,7 @@ namespace Content.Client.Chemistry.UI
                 }
                 else
                 {
-                    ChemicalList.AddChild(new Button {Text = Loc.GetString("Reagent name not found")});
+                    ChemicalList.AddChild(new Button {Text = Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text") });
                 }
             }
         }
@@ -259,7 +259,7 @@ namespace Content.Client.Chemistry.UI
 
             if (!state.HasBeaker)
             {
-                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("No container loaded.")});
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("reagent-dispenser-window-no-container-loaded-text") });
                 return;
             }
 
@@ -283,7 +283,7 @@ namespace Content.Client.Chemistry.UI
 
             foreach (var reagent in state.ContainerReagents)
             {
-                var name = Loc.GetString("Unknown reagent");
+                var name = Loc.GetString("reagent-dispenser-window-unknown-reagent-text");
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
@@ -304,7 +304,7 @@ namespace Content.Client.Chemistry.UI
                             },
                             new Label
                             {
-                                Text = $"{reagent.Quantity}u",
+                                Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
                                 StyleClasses = {StyleNano.StyleClassPowerStateGood}
                             }
                         }
@@ -319,7 +319,7 @@ namespace Content.Client.Chemistry.UI
                             new Label {Text = $"{name}: "},
                             new Label
                             {
-                                Text = $"{reagent.Quantity}u",
+                                Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
                                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             }
                         }

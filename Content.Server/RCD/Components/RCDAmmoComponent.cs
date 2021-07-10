@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -22,7 +23,7 @@ namespace Content.Server.RCD.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It holds {0} charges.", refillAmmo));
+            message.AddMarkup(Loc.GetString("rcd-ammo-component-on-examine-text",("ammo", refillAmmo)));
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -36,12 +37,12 @@ namespace Content.Server.RCD.Components
 
             if (rcdComponent.MaxAmmo - rcdComponent._ammo < refillAmmo)
             {
-                rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is full!"));
+                rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-ammo-component-after-interact-full-text"));
                 return true;
             }
 
             rcdComponent._ammo = Math.Min(rcdComponent.MaxAmmo, rcdComponent._ammo + refillAmmo);
-            rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("You refill the RCD."));
+            rcdComponent.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-ammo-component-after-interact-refilled-text"));
 
             //Deleting a held item causes a lot of errors
             hands.Drop(Owner, false);

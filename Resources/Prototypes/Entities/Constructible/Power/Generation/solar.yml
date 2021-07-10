@@ -29,9 +29,11 @@
     examinable: true
     nodes:
       output:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
+    supplyRampTolerance: 500
+    supplyRampRate: 500
   - type: SolarPanel
     supply: 1500
   - type: SnapGrid
@@ -47,9 +49,6 @@
         acts: ["Breakage"]
   - type: Anchorable
   - type: Pullable
-  - type: ClientEntitySpawner
-    prototypes:
-    - HVDummyWire
   - type: Construction
     graph: solarpanel
     node: solarpanel

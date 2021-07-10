@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.Battery.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
+using Content.Shared.Light.Component;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -60,7 +60,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateState()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -80,7 +80,7 @@ namespace Content.Server.Light.Components
 
         public void OnUpdate(float frameTime)
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery))
+            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery) || Owner.Paused)
             {
                 return;
             }
@@ -96,9 +96,9 @@ namespace Content.Server.Light.Components
             else
             {
                 battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
-                if (battery.BatteryState == BatteryState.Full)
+                if (battery.IsFullyCharged)
                 {
-                    if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+                    if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
                     {
                         receiver.Load = 1;
                     }
@@ -110,28 +110,24 @@ namespace Content.Server.Light.Components
 
         private void TurnOff()
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "emergency_light_off");
-            }
-
             if (Owner.TryGetComponent(out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(EmergencyLightVisuals.On, false);
         }
 
         private void TurnOn()
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "emergency_light_on");
-            }
-
             if (Owner.TryGetComponent(out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(EmergencyLightVisuals.On, true);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -147,7 +143,7 @@ namespace Content.Server.Light.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString($"The battery indicator displays: {BatteryStateText[State]}."));
+            message.AddMarkup(Loc.GetString("emergency-light-component-on-examine",("batteryStateText", BatteryStateText[State])));
         }
 
         public enum EmergencyLightState
@@ -160,10 +156,10 @@ namespace Content.Server.Light.Components
 
         public Dictionary<EmergencyLightState, string> BatteryStateText = new()
         {
-            { EmergencyLightState.Full, "[color=darkgreen]Full[/color]"},
-            { EmergencyLightState.Empty, "[color=darkred]Empty[/color]"},
-            { EmergencyLightState.Charging, "[color=darkorange]Charging[/color]"},
-            { EmergencyLightState.On, "[color=darkorange]Discharging[/color]"}
+            { EmergencyLightState.Full, "emergency-light-component-light-state-full" },
+            { EmergencyLightState.Empty, "emergency-light-component-light-state-empty" },
+            { EmergencyLightState.Charging, "emergency-light-component-light-state-charging" },
+            { EmergencyLightState.On, "emergency-light-component-light-state-on" }
         };
     }
 

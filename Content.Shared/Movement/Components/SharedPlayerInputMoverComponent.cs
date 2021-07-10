@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.CCVar;
 using Content.Shared.NetIDs;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -113,7 +114,7 @@ namespace Content.Shared.Movement.Components
         public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
 
         /// <inheritdoc />
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();

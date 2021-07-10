@@ -1,23 +1,25 @@
 using System;
 using System.Threading.Tasks;
-using Content.Client;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
-using Content.Server;
 using Content.Server.GameTicking;
 using Content.Server.IoC;
-using Content.Shared;
+using Content.Shared.CCVar;
+using Moq;
 using NUnit.Framework;
+using Robust.Client;
+using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using EntryPoint = Content.Client.EntryPoint.EntryPoint;
+using EntryPoint = Content.Client.Entry.EntryPoint;
 
 namespace Content.IntegrationTests
 {
@@ -31,11 +33,18 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning
             };
 
+            // Load content resources, but not config and user data.
+            options.Options = new GameControllerOptions()
+            {
+                LoadContentResources = true,
+                LoadConfigAndUserData = false,
+            };
+
             options.ContentStart = true;
 
             options.ContentAssemblies = new[]
             {
-                typeof(Shared.EntryPoint).Assembly,
+                typeof(Shared.Entry.EntryPoint).Assembly,
                 typeof(EntryPoint).Assembly,
                 typeof(ContentIntegrationTest).Assembly
             };
@@ -57,13 +66,6 @@ namespace Content.IntegrationTests
                 });
             };
 
-            // Connecting to Discord is a massive waste of time.
-            // Basically just makes the CI logs a mess.
-            options.CVarOverrides["discord.enabled"] = "false";
-
-            // Avoid preloading textures in tests.
-            options.CVarOverrides.TryAdd(CVars.TexturePreloadingEnabled.Name, "false");
-
             return base.StartClient(options);
         }
 
@@ -74,12 +76,19 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning
             };
 
+            // Load content resources, but not config and user data.
+            options.Options = new ServerOptions()
+            {
+                LoadConfigAndUserData = false,
+                LoadContentResources = true,
+            };
+
             options.ContentStart = true;
 
             options.ContentAssemblies = new[]
             {
-                typeof(Shared.EntryPoint).Assembly,
-                typeof(Server.EntryPoint.EntryPoint).Assembly,
+                typeof(Shared.Entry.EntryPoint).Assembly,
+                typeof(Server.Entry.EntryPoint).Assembly,
                 typeof(ContentIntegrationTest).Assembly
             };
 
@@ -105,25 +114,26 @@ namespace Content.IntegrationTests
             // Disable holidays as some of them might mess with the map at round start.
             options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
 
-            // Avoid loading a large map by default for integration tests.
-            options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
+            // Avoid loading a large map by default for integration tests if none has been specified.
+            if(!options.CVarOverrides.ContainsKey(CCVars.GameMap.Name))
+                options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
 
             return base.StartServer(options);
         }
 
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerIntegrationOptions();
-            options.BeforeStart += () =>
+            options ??= new ServerContentIntegrationOption();
+
+            // Load content resources, but not config and user data.
+            options.Options = new ServerOptions()
             {
-                IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ServerModuleTestingCallbacks
-                {
-                    ServerBeforeIoC = () =>
-                    {
-                        IoCManager.Register<IGameTicker, DummyGameTicker>(true);
-                    }
-                });
+                LoadConfigAndUserData = false,
+                LoadContentResources = true,
             };
+
+            // Dummy game ticker.
+            options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
 
             return StartServer(options);
         }
@@ -236,6 +246,12 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning;
             }
 
+            public override GameControllerOptions Options { get; set; } = new()
+            {
+                LoadContentResources = true,
+                LoadConfigAndUserData = false,
+            };
+
             public Action ContentBeforeIoC { get; set; }
         }
 
@@ -245,6 +261,12 @@ namespace Content.IntegrationTests
             {
                 FailureLogLevel = LogLevel.Warning;
             }
+
+            public override ServerOptions Options { get; set; } = new()
+            {
+                LoadContentResources = true,
+                LoadConfigAndUserData = false,
+            };
 
             public Action ContentBeforeIoC { get; set; }
         }

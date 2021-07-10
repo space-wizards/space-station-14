@@ -12,17 +12,11 @@ namespace Content.Server.ParticleAccelerator.Components
         public override string Name => "ParticleAcceleratorPowerBox";
         [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
             PowerConsumerComponent = Owner.EnsureComponentWarn<PowerConsumerComponent>();
-            PowerConsumerComponent.OnReceivedPowerChanged += PowerReceivedChanged;
-        }
-
-        private void PowerReceivedChanged(object? sender, ReceivedPowerChangedEventArgs e)
-        {
-            Master?.PowerBoxReceivedChanged(sender, e);
         }
     }
 }

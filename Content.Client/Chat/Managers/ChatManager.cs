@@ -127,8 +127,8 @@ namespace Content.Client.Chat.Managers
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, OnChatMessage);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, OnMaxLengthReceived);
+            _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
@@ -357,7 +357,7 @@ namespace Content.Client.Chat.Managers
             var messageText = FormattedMessage.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
-                messageText = string.Format(message.MessageWrap, messageText);
+               messageText = string.Format(message.MessageWrap, messageText);
             }
 
             if (message.MessageColorOverride != Color.Transparent)
@@ -585,6 +585,10 @@ namespace Content.Client.Chat.Managers
 
         private void EnqueueSpeechBubble(IEntity entity, string contents, SpeechBubble.SpeechType speechType)
         {
+            // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
+            if (entity.Transform.MapID != _eyeManager.CurrentMap)
+                return;
+
             if (!_queuedSpeechBubbles.TryGetValue(entity.Uid, out var queueData))
             {
                 queueData = new SpeechBubbleQueueData();
@@ -600,8 +604,7 @@ namespace Content.Client.Chat.Managers
 
         private void CreateSpeechBubble(IEntity entity, SpeechBubbleData speechData)
         {
-            var bubble =
-                SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
+            var bubble = SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
 
             if (_activeSpeechBubbles.TryGetValue(entity.Uid, out var existing))
             {

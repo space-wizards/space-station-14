@@ -19,7 +19,7 @@ namespace Content.Server.AME.Components
         private AppearanceComponent? _appearance;
         private PointLightComponent? _pointLight;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Owner.TryGetComponent(out _appearance);

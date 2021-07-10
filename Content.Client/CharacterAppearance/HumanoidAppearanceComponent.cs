@@ -52,7 +52,7 @@ namespace Content.Client.CharacterAppearance
                 return;
             }
 
-            if (Owner.TryGetComponent(out IBody? body))
+            if (Owner.TryGetComponent(out SharedBodyComponent? body))
             {
                 foreach (var (part, _) in body.Parts)
                 {
@@ -115,7 +115,7 @@ namespace Content.Client.CharacterAppearance
                 return;
             }
 
-            if (!args.Part.Owner.TryGetComponent(out SpriteComponent? partSprite))
+            if (!args.Part.Owner.HasComponent<SpriteComponent>())
             {
                 return;
             }
@@ -138,7 +138,7 @@ namespace Content.Client.CharacterAppearance
                 return;
             }
 
-            if (!args.Part.Owner.TryGetComponent(out SpriteComponent? partSprite))
+            if (!args.Part.Owner.HasComponent<SpriteComponent>())
             {
                 return;
             }

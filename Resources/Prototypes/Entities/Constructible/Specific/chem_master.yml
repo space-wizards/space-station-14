@@ -16,7 +16,7 @@
     sprite: Constructible/Power/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: InteractionOutline
   - type: Anchorable
   - type: Physics
@@ -53,9 +53,10 @@
 - type: entity
   id: chem_master_broken
   parent: BaseConstructibleDynamic
-  name: ChemMaster 4000 [Broken]
+  name: ChemMaster 4000
   description: "An industrial grade chemical manipulator with pill and bottle production included. It's broken."
   abstract: true
+  suffix: Broken
   components:
   - type: Sprite
     sprite: Constructible/Power/mixer.rsi

@@ -36,7 +36,7 @@ namespace Content.Client.Storage
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -44,7 +44,7 @@ namespace Content.Client.Storage
             ChangeStorageVisualization(SharedBagState.Close);
         }
 
-        public override void OnAdd()
+        protected override void OnAdd()
         {
             base.OnAdd();
 
@@ -53,7 +53,7 @@ namespace Content.Client.Storage
             _window.EntityList.ItemPressed += Interact;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             _window?.Dispose();
             base.OnRemove();

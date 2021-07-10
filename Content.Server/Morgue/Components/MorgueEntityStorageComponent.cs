@@ -1,5 +1,4 @@
 #nullable enable
-using Content.Server.Standing;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Directions;
@@ -7,8 +6,9 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
-using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -47,12 +47,11 @@ namespace Content.Server.Morgue.Components
         [ViewVariables]
         [ComponentDependency] protected readonly AppearanceComponent? Appearance = null;
 
-
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             Appearance?.SetData(MorgueVisuals.Open, false);
-            TrayContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "morgue_tray", out _);
+            TrayContainer = Owner.EnsureContainer<ContainerSlot>("morgue_tray", out _);
         }
 
         public override Vector2 ContentsDumpPosition()
@@ -63,7 +62,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<IBody>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
             return base.AddToContents(entity);
         }
 
@@ -74,7 +73,7 @@ namespace Content.Server.Morgue.Components
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("There's no room for the tray to extend!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("morgue-entity-storage-component-cannot-open-no-space"));
                 return false;
             }
 
@@ -93,7 +92,6 @@ namespace Content.Server.Morgue.Components
                 _tray = Owner.EntityManager.SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
                 var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
-                EntityQuery = new IntersectingEntityQuery(_tray);
             }
             else
             {
@@ -114,7 +112,7 @@ namespace Content.Server.Morgue.Components
             foreach (var entity in Contents.ContainedEntities)
             {
                 count++;
-                if (!hasMob && entity.HasComponent<IBody>()) hasMob = true;
+                if (!hasMob && entity.HasComponent<SharedBodyComponent>()) hasMob = true;
                 if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null) hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
@@ -152,18 +150,18 @@ namespace Content.Server.Morgue.Components
             {
                 if (Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=green]green[/color], this body might still be saved!"));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
                 }
                 else if (Appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=red]red[/color], there's a dead body in here! Oh wait..."));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
                 }
                 else if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
                 {
-                    message.AddMarkup(Loc.GetString("The content light is [color=yellow]yellow[/color], there's something in here."));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
                 } else
                 {
-                    message.AddMarkup(Loc.GetString("The content light is off, there's nothing in here."));
+                    message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
                 }
             }
         }

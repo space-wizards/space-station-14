@@ -15,8 +15,9 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -97,7 +98,7 @@ namespace Content.Server.Construction
 
             if (existed)
             {
-                user.PopupMessageCursor(Loc.GetString("You can't start another construction now!"));
+                user.PopupMessageCursor(Loc.GetString("construction-system-construct-cannot-start-another-construction"));
                 return null;
             }
 
@@ -170,19 +171,17 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = new StackSplitEvent()
-                                {Amount = materialStep.Amount, SpawnPosition = user.ToCoordinates()};
-                            RaiseLocalEvent(entity.Uid, splitStack);
+                            var splitStack = Get<StackSystem>().Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
 
-                            if (splitStack.Result == null)
+                            if (splitStack == null)
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack.Result))
+                                if (!container.Insert(splitStack))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Result))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack))
                                     continue;
 
                             handled = true;
@@ -223,7 +222,7 @@ namespace Content.Server.Construction
 
             if (failed)
             {
-                user.PopupMessageCursor(Loc.GetString("You don't have the materials to build that!"));
+                user.PopupMessageCursor(Loc.GetString("construction-system-construct-no-materials"));
                 FailCleanup();
                 return null;
             }
@@ -239,7 +238,7 @@ namespace Content.Server.Construction
                 NeedHand = false,
             };
 
-            if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;
@@ -306,7 +305,7 @@ namespace Content.Server.Construction
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
+            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user)) return;
 
             if (!user.TryGetComponent(out HandsComponent? hands)) return;
 
@@ -375,7 +374,7 @@ namespace Content.Server.Construction
             {
                 if (!set.Add(ev.Ack))
                 {
-                    user.PopupMessageCursor(Loc.GetString("You are already building that!"));
+                    user.PopupMessageCursor(Loc.GetString("construction-system-already-building"));
                     return;
                 }
             }
@@ -400,7 +399,7 @@ namespace Content.Server.Construction
             }
 
             if (user == null
-                || !ActionBlockerSystem.CanInteract(user)
+                || !Get<ActionBlockerSystem>().CanInteract(user)
                 || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
@@ -458,8 +457,15 @@ namespace Content.Server.Construction
                 return;
             }
 
+            // We do this to be able to move the construction to its proper position in case it's anchored...
+            // Oh wow transform anchoring is amazing wow I love it!!!!
+            var wasAnchored = structure.Transform.Anchored;
+            structure.Transform.Anchored = false;
+
             structure.Transform.Coordinates = ev.Location;
             structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+
+            structure.Transform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

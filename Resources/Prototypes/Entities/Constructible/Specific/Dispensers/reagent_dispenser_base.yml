@@ -14,18 +14,14 @@
           bounds: "-0.3,-0.4,0.3,0.4"
       mass: 25
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: SnapGrid
-  - type: ReagentDispenser
-  - type: PowerReceiver
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+  - type: ApcPowerReceiver
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key
@@ -33,3 +29,15 @@
   - type: LoopingSound
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg

@@ -59,12 +59,12 @@ namespace Content.Server.Cargo.Components
         [DataField("requestOnly")]
         private bool _requestOnly = false;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -80,7 +80,7 @@ namespace Content.Server.Cargo.Components
             BankAccount = _cargoConsoleSystem.StationAccount;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             if (UserInterface != null)
             {
@@ -171,7 +171,7 @@ namespace Content.Server.Cargo.Components
                     {
                         foreach (IEntity entity in enumerator)
                         {
-                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
                             {
                                 cargoTelepad = entity;
                                 break;

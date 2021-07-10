@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
@@ -8,6 +8,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -24,31 +25,30 @@ namespace Content.Server.Body.Part
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]
-    [ComponentReference(typeof(IBodyPart))]
     public class BodyPartComponent : SharedBodyPartComponent, IAfterInteract
     {
         private readonly Dictionary<int, object> _optionsCache = new();
-        private IBody? _owningBodyCache;
+        private SharedBodyComponent? _owningBodyCache;
         private int _idHash;
         private IEntity? _surgeonCache;
         private Container _mechanismContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
-        public override bool CanAddMechanism(IMechanism mechanism)
+        public override bool CanAddMechanism(SharedMechanismComponent mechanism)
         {
             return base.CanAddMechanism(mechanism) &&
                    _mechanismContainer.CanInsert(mechanism.Owner);
         }
 
-        protected override void OnAddMechanism(IMechanism mechanism)
+        protected override void OnAddMechanism(SharedMechanismComponent mechanism)
         {
             base.OnAddMechanism(mechanism);
 
             _mechanismContainer.Insert(mechanism.Owner);
         }
 
-        protected override void OnRemoveMechanism(IMechanism mechanism)
+        protected override void OnRemoveMechanism(SharedMechanismComponent mechanism)
         {
             base.OnRemoveMechanism(mechanism);
 
@@ -56,7 +56,7 @@ namespace Content.Server.Body.Part
             mechanism.Owner.RandomOffset(0.25f);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -69,9 +69,9 @@ namespace Content.Server.Body.Part
             {
                 var entity = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
 
-                if (!entity.TryGetComponent(out IMechanism? mechanism))
+                if (!entity.TryGetComponent(out SharedMechanismComponent? mechanism))
                 {
-                    Logger.Error($"Entity {mechanismId} does not have a {nameof(IMechanism)} component.");
+                    Logger.Error($"Entity {mechanismId} does not have a {nameof(SharedMechanismComponent)} component.");
                     continue;
                 }
 
@@ -107,7 +107,7 @@ namespace Content.Server.Body.Part
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out IBody? body))
+            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
             {
                 SendSlots(eventArgs, body);
             }
@@ -115,7 +115,7 @@ namespace Content.Server.Body.Part
             return true;
         }
 
-        private void SendSlots(AfterInteractEventArgs eventArgs, IBody body)
+        private void SendSlots(AfterInteractEventArgs eventArgs, SharedBodyComponent body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
@@ -153,7 +153,7 @@ namespace Content.Server.Body.Part
             else // If surgery cannot be performed, show message saying so.
             {
                 eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("You see no way to install {0:theName}.", Owner));
+                    Loc.GetString("bodypart-component-no-way-to-install-message", ("partName", Owner)));
             }
         }
 
@@ -180,13 +180,13 @@ namespace Content.Server.Body.Part
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
                 _owningBodyCache.Owner.PopupMessage(_surgeonCache,
-                    Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
+                    Loc.GetString("bodypart-component-no-way-to-attach-message", ("partName", Owner)));
             }
 
             var target = (string) targetObject!;
             var message = _owningBodyCache.TryAddPart(target, this)
-                ? Loc.GetString("You attach {0:theName}.", Owner)
-                : Loc.GetString("You can't attach {0:theName}!", Owner);
+                ? Loc.GetString("bodypart-component-attach-success-message",("partName", Owner))
+                : Loc.GetString("bodypart-component-attach-fail-message",("partName", Owner));
 
             _owningBodyCache.Owner.PopupMessage(_surgeonCache, message);
         }
@@ -245,7 +245,7 @@ namespace Content.Server.Body.Part
                     return;
                 }
 
-                if (!user.TryGetComponent(out IBody? body))
+                if (!user.TryGetComponent(out SharedBodyComponent? body))
                 {
                     return;
                 }
@@ -256,12 +256,12 @@ namespace Content.Server.Body.Part
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("Attach Body Part");
+                data.Text = Loc.GetString("attach-bodypart-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, BodyPartComponent component)
             {
-                if (!user.TryGetComponent(out IBody? body))
+                if (!user.TryGetComponent(out SharedBodyComponent? body))
                 {
                     return;
                 }

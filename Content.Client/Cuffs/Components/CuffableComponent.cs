@@ -9,6 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Cuffs.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedCuffableComponent))]
     public class CuffableComponent : SharedCuffableComponent
     {
         [ViewVariables]
@@ -49,7 +50,7 @@ namespace Content.Client.Cuffs.Components
             }
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             base.OnRemove();
 

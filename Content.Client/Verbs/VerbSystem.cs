@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
@@ -28,7 +28,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -47,6 +47,7 @@ namespace Content.Client.Verbs
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
@@ -63,15 +64,12 @@ namespace Content.Client.Verbs
         {
             base.Shutdown();
 
-            UnsubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>();
-            UnsubscribeNetworkEvent<PlayerContainerVisibilityMessage>();
-            UnsubscribeLocalEvent<MoveEvent>();
             _contextMenuPresenter?.Dispose();
 
             CommandBinds.Unregister<VerbSystem>();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             ToggleContainerVisibility?.Invoke(this, false);
         }
@@ -109,7 +107,7 @@ namespace Content.Client.Verbs
 
             if (!entity.Uid.IsClientSide())
             {
-                _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("Waiting on Server...") });
+                _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
                 RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
             }
 
@@ -254,7 +252,7 @@ namespace Content.Client.Verbs
             else
             {
                 var panel = new PanelContainer();
-                panel.AddChild(new Label { Text = Loc.GetString("No verbs!") });
+                panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
                 vBox.AddChild(panel);
             }
         }

@@ -4,6 +4,7 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Interaction;
 using Content.Shared.NetIDs;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -101,7 +102,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -207,7 +208,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (ammoComponent.Caliber != _caliber)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Wrong caliber"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-wrong-caliber"));
                 return false;
             }
 
@@ -224,7 +225,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return true;
             }
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("No room"));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-no-room"));
 
             return false;
         }
@@ -244,7 +245,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", _caliber));
+            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine",("caliber", _caliber)));
         }
     }
 }

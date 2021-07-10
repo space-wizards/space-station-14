@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -355,7 +356,7 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -521,7 +522,7 @@ namespace Content.Server.Storage.Components
                         BreakOnUserMove = true,
                         NeedHand = true,
                     };
-                    var result = await doAfterSystem.DoAfter(doAfterArgs);
+                    var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
                     if (result != DoAfterStatus.Finished) return true;
                 }
 

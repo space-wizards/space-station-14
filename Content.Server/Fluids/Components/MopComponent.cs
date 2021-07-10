@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -62,7 +63,7 @@ namespace Content.Server.Fluids.Components
         [DataField("speed")]
         private float _mopSpeed = 1;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -109,7 +110,7 @@ namespace Content.Server.Fluids.Components
 
             if (currentVolume <= 0)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Mop needs to be wet!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-dry-message"));
                 return false;
             }
 
@@ -122,7 +123,7 @@ namespace Content.Server.Fluids.Components
                 BreakOnStun = true,
                 BreakOnDamage = true,
             };
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterArgs);
 
             Mopping = false;
 

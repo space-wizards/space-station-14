@@ -67,11 +67,11 @@ namespace Content.Server.Solar.Components
         {
             if (Owner.TryGetComponent<PowerSupplierComponent>(out var supplier))
             {
-                supplier.SupplyRate = (int) (_maxSupply * _coverage);
+                supplier.MaxSupply = (int) (_maxSupply * _coverage);
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

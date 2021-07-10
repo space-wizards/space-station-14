@@ -35,7 +35,7 @@ namespace Content.Server.BarSign
             }
         }
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private void UpdateSignInfo()
         {
@@ -70,13 +70,13 @@ namespace Content.Server.BarSign
             }
             else
             {
-                Owner.Name = Loc.GetString("bar sign");
+                Owner.Name = Loc.GetString("barsign-component-name");
             }
 
             Owner.Description = prototype.Description;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

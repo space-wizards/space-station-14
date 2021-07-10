@@ -29,7 +29,7 @@ namespace Content.Client.Construction
 
         private int _nextId;
 
-        private bool CraftingEnabled { get; set; }
+        public bool CraftingEnabled { get; private set; }
 
         /// <inheritdoc />
         public override void Initialize()
@@ -51,9 +51,6 @@ namespace Content.Client.Construction
         public override void Shutdown()
         {
             base.Shutdown();
-
-            UnsubscribeLocalEvent<PlayerAttachSysMessage>();
-            UnsubscribeNetworkEvent<AckStructureConstructionMessage>();
 
             CommandBinds.Unregister<ConstructionSystem>();
         }

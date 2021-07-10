@@ -5,6 +5,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -342,7 +343,7 @@ namespace Content.Client.DragDrop
 
             if (outOfRange)
             {
-                _playerManager.LocalPlayer?.ControlledEntity?.PopupMessage(Loc.GetString("You can't reach there!"));
+                _playerManager.LocalPlayer?.ControlledEntity?.PopupMessage(Loc.GetString("drag-drop-system-out-of-range-text"));
             }
 
             _dragDropHelper.EndDrag();

@@ -28,6 +28,7 @@ using Content.Shared.Alert;
 using Content.Shared.Kitchen;
 using Content.Shared.Module;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Shared.IoC;
 
 namespace Content.Server.IoC
@@ -38,7 +39,6 @@ namespace Content.Server.IoC
         {
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
-            IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
@@ -50,7 +50,6 @@ namespace Content.Server.IoC
             IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<IPowerNetManager, PowerNetManager>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IAccentManager, AccentManager>();

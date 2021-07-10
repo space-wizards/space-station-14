@@ -14,7 +14,9 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.MobState;
+using Content.Shared.Movement;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -46,13 +48,13 @@ namespace Content.Server.Medical.Components
         private readonly Vector2 _ejectOffset = new(0f, 0f);
 
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
 
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -79,7 +81,7 @@ namespace Content.Server.Medical.Components
             {
                 case RelayMovementEntityMessage msg:
                 {
-                    if (ActionBlockerSystem.CanInteract(msg.Entity))
+                    if (EntitySystem.Get<ActionBlockerSystem>().CanInteract(msg.Entity))
                     {
                         if (_gameTiming.CurTime <
                             _lastInternalOpenAttempt + InternalOpenAttemptDelay)
@@ -208,13 +210,13 @@ namespace Content.Server.Medical.Components
         {
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Enter");
+                data.Text = Loc.GetString("enter-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -229,13 +231,13 @@ namespace Content.Server.Medical.Components
         {
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject");
+                data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

@@ -1,6 +1,5 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
-    xmlns:cc="clr-namespace:Content.Client.UserInterface.AdminMenu.CustomControls"
     Title="{Loc Ban}" MinSize="425 162">
     <VBoxContainer>
         <HBoxContainer>

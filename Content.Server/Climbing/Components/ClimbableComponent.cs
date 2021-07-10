@@ -6,8 +6,9 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -29,7 +30,7 @@ namespace Content.Server.Climbing.Components
         [DataField("delay")]
         private float _climbDelay = 0.8f;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -67,14 +68,14 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity target, out string reason)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
             }
 
             if (!user.HasComponent<ClimbingComponent>() ||
-                !user.TryGetComponent(out IBody? body))
+                !user.TryGetComponent(out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -107,7 +108,7 @@ namespace Content.Server.Climbing.Components
         /// <returns></returns>
         private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
         {
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 reason = Loc.GetString("comp-climbable-cant-interact");
                 return false;
@@ -156,7 +157,7 @@ namespace Content.Server.Climbing.Components
                 BreakOnStun = true
             };
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
@@ -203,7 +204,7 @@ namespace Content.Server.Climbing.Components
                 BreakOnStun = true
             };
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {

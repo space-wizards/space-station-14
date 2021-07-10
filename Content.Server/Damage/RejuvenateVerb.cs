@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Damage.Components;
@@ -23,7 +23,7 @@ namespace Content.Server.Damage
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
-            data.Text = Loc.GetString("Rejuvenate");
+            data.Text = Loc.GetString("rejuvenate-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
             data.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";

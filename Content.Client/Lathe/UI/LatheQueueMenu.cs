@@ -91,7 +91,7 @@ namespace Content.Client.Lathe.UI
         {
             _icon.Texture = Texture.Transparent;
             _nameLabel.Text = "-------";
-            _description.Text = "Not producing anything.";
+            _description.Text = Loc.GetString("lathequeue-menu-not-producing-text");
         }
 
         public void PopulateList()

@@ -28,7 +28,7 @@ namespace Content.Shared.Inventory
         [DataField("Template")]
         private string _templateName = "HumanInventory"; //stored for serialization purposes
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

@@ -3,10 +3,11 @@ using System;
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -35,7 +36,7 @@ namespace Content.Server.Doors.Components
         private readonly SharedAppearanceComponent? _appearanceComponent = null;
 
         [ComponentDependency]
-        private readonly PowerReceiverComponent? _receiverComponent = null;
+        private readonly ApcPowerReceiverComponent? _receiverComponent = null;
 
         [ComponentDependency]
         private readonly WiresComponent? _wiresComponent = null;
@@ -102,7 +103,7 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _safety = true;
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -168,12 +169,12 @@ namespace Content.Server.Doors.Components
         {
             if (IsBolted())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The airlock's bolts prevent it from being forced!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message "));
                 return false;
             }
             if (IsPowered())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 return false;
             }
             return true;

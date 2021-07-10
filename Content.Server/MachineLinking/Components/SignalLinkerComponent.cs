@@ -11,7 +11,7 @@ namespace Content.Server.MachineLinking.Components
         [ViewVariables]
         public SignalTransmitterComponent? Link { get; set; }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 

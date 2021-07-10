@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.Alert;
+using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
@@ -20,13 +21,20 @@ namespace Content.Shared.MobState.State
             {
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
+
+            EntitySystem.Get<StandingStateSystem>().Down(entity);
+
+            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
+            }
         }
 
         public override void ExitState(IEntity entity)
         {
             base.ExitState(entity);
 
-            EntitySystem.Get<SharedStandingStateSystem>().Standing(entity);
+            EntitySystem.Get<StandingStateSystem>().Stand(entity);
         }
 
         public override bool CanInteract()

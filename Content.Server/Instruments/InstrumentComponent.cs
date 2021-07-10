@@ -1,7 +1,6 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Linq;
-using Content.Server.Standing;
 using Content.Server.Stunnable.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -9,7 +8,8 @@ using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
+using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -161,7 +161,7 @@ namespace Content.Server.Instruments
             Clean();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -203,11 +203,11 @@ namespace Content.Server.Instruments
                             if (_laggedBatches == (int) (maxMidiLaggedBatches * (1 / 3d) + 1))
                             {
                                 InstrumentPlayer.AttachedEntity?.PopupMessage(
-                                    Loc.GetString("Your fingers are beginning to a cramp a little!"));
+                                    Loc.GetString("instrument-component-finger-cramps-light-message"));
                             } else if (_laggedBatches == (int) (maxMidiLaggedBatches * (2 / 3d) + 1))
                             {
                                 InstrumentPlayer.AttachedEntity?.PopupMessage(
-                                    Loc.GetString("Your fingers are seriously cramping up!"));
+                                    Loc.GetString("instrument-component-finger-cramps-serious-message"));
                             }
                         }
 
@@ -292,24 +292,28 @@ namespace Content.Server.Instruments
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (Handheld || !eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            if (Handheld)
+                return;
 
-            if (InstrumentPlayer != null) return;
-
-            InstrumentPlayer = actor.PlayerSession;
-            OpenUserInterface(actor.PlayerSession);
+            InteractInstrument(eventArgs.User);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
-
-            if (InstrumentPlayer == actor.PlayerSession)
-            {
-                OpenUserInterface(actor.PlayerSession);
-            }
-
+            InteractInstrument(eventArgs.User);
             return false;
+        }
+
+        private void InteractInstrument(IEntity user)
+        {
+            if (!user.TryGetComponent(out ActorComponent? actor)) return;
+
+            if (InstrumentPlayer != null || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+
+            InstrumentPlayer = actor.PlayerSession;
+            OpenUserInterface(InstrumentPlayer);
+
+            return;
         }
 
         private void UserInterfaceOnClosed(IPlayerSession player)
@@ -333,7 +337,9 @@ namespace Content.Server.Instruments
             var maxMidiLaggedBatches = _instrumentSystem.MaxMidiLaggedBatches;
             var maxMidiBatchDropped = _instrumentSystem.MaxMidiBatchesDropped;
 
-            if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
+            if (_instrumentPlayer != null
+                && (_instrumentPlayer.AttachedEntity == null
+                    || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(_instrumentPlayer.AttachedEntity)))
             {
                 InstrumentPlayer = null;
                 Clean();
@@ -354,7 +360,7 @@ namespace Content.Server.Instruments
                 if (mob != null)
                 {
                     if (Handheld)
-                        EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
+                        EntitySystem.Get<StandingStateSystem>().Down(mob, false);
 
                     if (mob.TryGetComponent(out StunnableComponent? stun))
                     {
@@ -362,7 +368,7 @@ namespace Content.Server.Instruments
                         Clean();
                     }
 
-                    Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
+                    Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }
 
                 InstrumentPlayer = null;

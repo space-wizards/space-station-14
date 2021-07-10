@@ -7,6 +7,7 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.NetIDs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -26,7 +27,7 @@ namespace Content.Server.Arcade.Components
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
 
-        [ComponentDependency] private readonly PowerReceiverComponent? _powerReceiverComponent = default!;
+        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
 
         private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
@@ -49,15 +50,11 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
+            if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return;
-            }
-            if (!Powered)
-            {
+
+            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
-            }
-            if(!ActionBlockerSystem.CanInteract(actor.PlayerSession.AttachedEntity)) return;
 
             UserInterface?.Toggle(actor.PlayerSession);
             RegisterPlayerSession(actor.PlayerSession);
@@ -107,7 +104,7 @@ namespace Content.Server.Arcade.Components
             UserInterface?.SendMessage(new BlockGameMessages.BlockGameUserStatusMessage(_player == session), session);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)
@@ -134,7 +131,8 @@ namespace Content.Server.Arcade.Components
                 case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
                     if (obj.Session != _player) break;
 
-                    if (!ActionBlockerSystem.CanInteract(Owner))
+                    // TODO: Should this check if the Owner can interact...?
+                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
                     {
                         DeactivePlayer(obj.Session);
                         break;

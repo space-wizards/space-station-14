@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.MobState;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -132,7 +133,7 @@ namespace Content.Server.Kitchen.Components
 
             _beingButchered.Add(victimUid);
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
             _beingButchered.Remove(victimUid);
 

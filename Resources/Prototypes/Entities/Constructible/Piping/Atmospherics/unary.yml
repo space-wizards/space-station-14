@@ -1,0 +1,152 @@
+- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasUnaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasVentPump
+  name: air vent
+  description: Has a valve and a pump attached to it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/vent.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: vent_off
+          map: ["enum.VentVisualLayers.Vent"]
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: VentPumpVisualizer
+    - type: GasVentPump
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasPassiveVent
+  name: passive vent
+  description: It is an open vent.
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS: Find sprite for this.
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/vent.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: vent_off
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasPassiveVent
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasVentScrubber
+  name: air scrubber
+  description: Has a valve and pump attached to it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/scrubber.rsi
+      layers:
+        - sprite: Constructible/Atmos/pipe.rsi
+          state: pipeHalf
+        - state: scrub_off
+          map: ["enum.ScrubberVisualLayers.Scrubber"]
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: ScrubberVisualizer
+    - type: AtmosDevice
+    - type: GasVentScrubber
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasOutletInjector
+  name: air injector
+  description: Has a valve and pump attached to it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasOutletInjector
+    # TODO ATMOS: Actual sprite for this.
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/pipe.rsi
+      state: pipeHalf
+
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasThermoMachineBase
+  name: thermomachine
+  description: Heats or cools gas in connected pipes.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Atmos/thermomachine.rsi
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasThermoMachine
+
+- type: entity
+  parent: GasThermoMachineBase
+  id: GasThermoMachineFreezer
+  name: freezer
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: freezer_off
+        - state: pipe
+    - type: Appearance
+      visuals:
+        - type: ThermoMachineVisualizer
+          enabledState: freezer_on
+    - type: GasThermoMachine
+      mode: Freezer
+      minTemperature: 73.15
+
+- type: entity
+  parent: GasThermoMachineBase
+  id: GasThermoMachineHeater
+  name: heater
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: heater_off
+        - state: pipe
+    - type: Appearance
+      visuals:
+        - type: ThermoMachineVisualizer
+          enabledState: heater_on
+    - type: GasThermoMachine
+      mode: Heater
+      maxTemperature: 573.15 # This is changed when parts are refreshed.
+

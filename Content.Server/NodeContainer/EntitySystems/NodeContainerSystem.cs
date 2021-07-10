@@ -4,6 +4,10 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.NodeContainer.EntitySystems
 {
+    /// <summary>
+    ///     Manages <see cref="NodeContainerComponent"/> events.
+    /// </summary>
+    /// <seealso cref="NodeGroupSystem"/>
     [UsedImplicitly]
     public class NodeContainerSystem : EntitySystem
     {
@@ -11,25 +15,51 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<NodeContainerComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
+            SubscribeLocalEvent<NodeContainerComponent, ComponentInit>(OnInitEvent);
+            SubscribeLocalEvent<NodeContainerComponent, ComponentStartup>(OnStartupEvent);
+            SubscribeLocalEvent<NodeContainerComponent, ComponentShutdown>(OnShutdownEvent);
+            SubscribeLocalEvent<NodeContainerComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
         }
 
-        public override void Shutdown()
+        private static void OnInitEvent(EntityUid uid, NodeContainerComponent component, ComponentInit args)
         {
-            base.Shutdown();
-
-
-            UnsubscribeLocalEvent<NodeContainerComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
-            UnsubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
+            foreach (var (key, node) in component.Nodes)
+            {
+                node.Name = key;
+                node.Initialize(component.Owner);
+            }
         }
 
-        private void OnBodyTypeChanged(EntityUid uid, NodeContainerComponent component, PhysicsBodyTypeChangedEvent args)
+        private static void OnStartupEvent(EntityUid uid, NodeContainerComponent component, ComponentStartup args)
         {
-            component.AnchorUpdate();
+            foreach (var node in component.Nodes.Values)
+            {
+                node.OnContainerStartup();
+            }
         }
 
-        private void OnRotateEvent(EntityUid uid, NodeContainerComponent container, RotateEvent ev)
+        private static void OnShutdownEvent(EntityUid uid, NodeContainerComponent component, ComponentShutdown args)
+        {
+            foreach (var node in component.Nodes.Values)
+            {
+                node.OnContainerShutdown();
+            }
+        }
+
+        private static void OnAnchorStateChanged(
+            EntityUid uid,
+            NodeContainerComponent component,
+            AnchorStateChangedEvent args)
+        {
+            foreach (var node in component.Nodes.Values)
+            {
+                node.AnchorUpdate();
+                node.AnchorStateChanged();
+            }
+        }
+
+        private static void OnRotateEvent(EntityUid uid, NodeContainerComponent container, RotateEvent ev)
         {
             if (ev.NewRotation == ev.OldRotation)
             {

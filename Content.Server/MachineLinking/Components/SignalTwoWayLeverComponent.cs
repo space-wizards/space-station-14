@@ -1,7 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -46,7 +47,7 @@ namespace Content.Server.MachineLinking.Components
 
             if (!TransmitSignal(State))
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                Owner.PopupMessage(user, Loc.GetString("signal-two-way-lever-component-next-state-no-receivers-connected"));
             }
         }
 

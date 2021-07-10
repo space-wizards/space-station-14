@@ -122,7 +122,7 @@ namespace Content.Server.Body.Commands
                 }
             }
 
-            if (!entity.TryGetComponent(out IBody? body))
+            if (!entity.TryGetComponent(out SharedBodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -131,9 +131,9 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!hand.TryGetComponent(out IBodyPart? part))
+            if (!hand.TryGetComponent(out SharedBodyPartComponent? part))
             {
-                shell.WriteLine($"Hand entity {hand} does not have a {nameof(IBodyPart)} component.");
+                shell.WriteLine($"Hand entity {hand} does not have a {nameof(SharedBodyPartComponent)} component.");
                 return;
             }
 

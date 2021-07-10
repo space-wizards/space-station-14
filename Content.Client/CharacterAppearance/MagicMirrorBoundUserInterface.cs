@@ -327,7 +327,7 @@ namespace Content.Client.CharacterAppearance
         public MagicMirrorWindow(MagicMirrorBoundUserInterface owner)
         {
             SetSize = MinSize = (500, 360);
-            Title = Loc.GetString("Magic Mirror");
+            Title = Loc.GetString("magic-mirror-window-title");
 
             _hairStylePicker = new HairStylePicker {HorizontalExpand = true};
             _hairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, false);

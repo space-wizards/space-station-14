@@ -25,7 +25,7 @@ namespace Content.Server.Communications
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
 
@@ -35,7 +35,7 @@ namespace Content.Server.Communications
         public TimeSpan AnnounceCooldown { get; } = TimeSpan.FromSeconds(90);
         private CancellationTokenSource _announceCooldownEndedTokenSource = new();
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
@@ -76,7 +76,7 @@ namespace Content.Server.Communications
             return _gameTiming.CurTime >= LastAnnounceTime + AnnounceCooldown;
         }
 
-        public override void OnRemove()
+        protected override void OnRemove()
         {
             RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
             RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;

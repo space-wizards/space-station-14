@@ -207,6 +207,7 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
+    - type: HandsVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -236,7 +237,7 @@
   - type: Grammar
     attributes:
       proper: true
-
+  - type: StandingState
 
 - type: entity
   save: false

@@ -8,6 +8,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -49,7 +50,7 @@ namespace Content.Server.Crayon
             Color = Color.FromName(_color);
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             if (UserInterface != null)
@@ -120,7 +121,7 @@ namespace Content.Server.Crayon
 
             if (Charges <= 0)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("Not enough left."));
+                eventArgs.User.PopupMessage(Loc.GetString("crayon-interact-not-enough-left-text"));
                 return true;
             }
 

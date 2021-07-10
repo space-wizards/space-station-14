@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using Content.Client.Administration.UI.Tabs;
 using Content.Client.HUD;
@@ -25,15 +25,15 @@ namespace Content.Client.Administration.UI
         public AdminMenuWindow()
         {
             MinSize = SetSize = (500, 250);
-            Title = Loc.GetString("Admin Menu");
+            Title = Loc.GetString("admin-menu-title");
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            MasterTabContainer.SetTabTitle(0, Loc.GetString("Admin"));
-            MasterTabContainer.SetTabTitle(1, Loc.GetString("Adminbus"));
-            MasterTabContainer.SetTabTitle(2, Loc.GetString("Atmos"));
-            MasterTabContainer.SetTabTitle(3, Loc.GetString("Round"));
-            MasterTabContainer.SetTabTitle(4, Loc.GetString("Server"));
-            MasterTabContainer.SetTabTitle(5, Loc.GetString("Players"));
+            MasterTabContainer.SetTabTitle(0, Loc.GetString("admin-menu-admin-tab"));
+            MasterTabContainer.SetTabTitle(1, Loc.GetString("admin-menu-adminbus-tab"));
+            MasterTabContainer.SetTabTitle(2, Loc.GetString("admin-menu-atmos-tab"));
+            MasterTabContainer.SetTabTitle(3, Loc.GetString("admin-menu-round-tab"));
+            MasterTabContainer.SetTabTitle(4, Loc.GetString("admin-menu-server-tab"));
+            MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-players-tab"));
         }
 
         protected override void EnteredTree()
