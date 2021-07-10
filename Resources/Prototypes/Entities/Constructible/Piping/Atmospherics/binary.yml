@@ -31,10 +31,12 @@
     layers:
     - sprite: Constructible/Atmos/pipe.rsi
       state: pipeStraight
+      map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: pumpPressure
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
+    - type: PipeColorVisualizer
     - type: PressurePumpVisualizer
       enabledState: pumpPressureOn
   - type: GasPressurePump
@@ -53,10 +55,8 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeStraight
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
-    - type: Appearance
-      visuals:
-        - type: PipeConnectorVisualizer
     - type: GasVolumePump
 
 - type: entity
@@ -73,10 +73,8 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeStraight
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
-    - type: Appearance
-      visuals:
-        - type: PipeConnectorVisualizer
     - type: GasPassiveGate
 
 - type: entity
@@ -94,10 +92,8 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeStraight
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
-    - type: Appearance
-      visuals:
-        - type: PipeConnectorVisualizer
     - type: GasValve
     - type: NodeContainer
       nodes:
@@ -120,10 +116,8 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeHalf
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasCanisterPort
-    - type: Appearance
-      visuals:
-        - type: PipeConnectorVisualizer
     - type: GasPort
     - type: NodeContainer
       nodes:

@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Atmos.Piping
+namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
     public abstract class EnabledAtmosDeviceVisualizer : AppearanceVisualizer

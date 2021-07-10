@@ -36,10 +36,8 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeTJunction
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter
-    - type: Appearance
-      visuals:
-        - type: PipeConnectorVisualizer
     - type: GasFilter
 
 - type: entity
@@ -57,10 +55,8 @@
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeTJunction
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter
-    - type: Appearance
-      visuals:
-        - type: PipeConnectorVisualizer
     - type: GasMixer
       inletOne: inlet
       inletTwo: filter
