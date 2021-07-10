@@ -55,7 +55,6 @@ namespace Content.Shared.AME
             ToggleInjection,
             IncreaseFuel,
             DecreaseFuel,
-            RefreshParts
         }
 
         [Serializable, NetSerializable]

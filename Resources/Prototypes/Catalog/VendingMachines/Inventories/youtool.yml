@@ -5,7 +5,7 @@
   animationDuration: 1.1
   spriteName: youtool
   startingInventory:
-    ApcExtensionCableStack1: 10
+    CableApcStack1: 10
     Crowbar: 5
     Welder: 3
     Wirecutter: 5

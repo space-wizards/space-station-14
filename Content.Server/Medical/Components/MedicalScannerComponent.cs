@@ -48,7 +48,7 @@ namespace Content.Server.Medical.Components
         private readonly Vector2 _ejectOffset = new(0f, 0f);
 
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
 
@@ -237,7 +237,7 @@ namespace Content.Server.Medical.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("eject-verb-get-data-text");
+                data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

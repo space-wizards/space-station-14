@@ -9,7 +9,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.2, 0.5, 0.2"
+          bounds: "-0.2, -0.2, 0.2, 0.2"
       mass: 25
       mask:
         - MobImpassable

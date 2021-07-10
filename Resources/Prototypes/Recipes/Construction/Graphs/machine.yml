@@ -63,7 +63,7 @@
             - !type:EntityAnchored {}
           completed:
             - !type:SpawnPrototype
-              prototype: ApcExtensionCableStack1
+              prototype: CableApcStack1
           steps:
             - tool: Prying
               doAfter: 2

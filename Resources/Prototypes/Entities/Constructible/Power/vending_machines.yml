@@ -38,7 +38,7 @@
       type: VendingMachineBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending

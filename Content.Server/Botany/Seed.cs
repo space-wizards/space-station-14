@@ -265,7 +265,7 @@ namespace Content.Server.Botany
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
             }
 
-            seed.Name = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNount", SeedNoun));
+            seed.Name = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNoun", SeedNoun));
 
             return seed;
         }

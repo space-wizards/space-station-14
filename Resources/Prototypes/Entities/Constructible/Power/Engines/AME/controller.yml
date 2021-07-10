@@ -54,12 +54,12 @@
     examinable: true
     nodes:
       ame:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: AMEngine
       input:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: PowerSupplier
     supplyRate: 0
 
