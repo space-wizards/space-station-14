@@ -118,6 +118,7 @@
       - Prying
     useSound: /Audio/Items/crowbar.ogg
   - type: TilePrying
+  - type: TabletopDraggable
 
 - type: entity
   name: multitool
