@@ -1,9 +1,11 @@
-﻿using Content.Shared.Tabletop;
+﻿using Content.Shared.Tabletop.Events;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Tabletop
 {
-    public class TabletopDragDropSystem : EntitySystem
+    [UsedImplicitly]
+    public class ServerTabletopSystem : EntitySystem
     {
         public override void Initialize()
         {

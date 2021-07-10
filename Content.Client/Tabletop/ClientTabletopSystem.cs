@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Tabletop;
+using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -36,6 +36,13 @@ namespace Content.Client.Tabletop
             CommandBinds.Builder
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopDragDropSystem>();
+
+            EntityManager.EventBus.SubscribeEvent<TabletopPlayEvent>(EventSource.Network, this, TabletopPlayHandler);
+        }
+
+        private void TabletopPlayHandler(TabletopPlayEvent msg)
+        {
+            Logger.Info("Game started");
         }
 
         public override void Update(float frameTime)
@@ -90,5 +97,6 @@ namespace Content.Client.Tabletop
 
             return true;
         }
+
     }
 }

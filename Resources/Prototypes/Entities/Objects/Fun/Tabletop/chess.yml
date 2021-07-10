@@ -1,0 +1,9 @@
+﻿- type: entity
+  id: ChessBoard
+  name: game of chess
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess.rsi
+    state: chessboard
+  - type: TabletopGame

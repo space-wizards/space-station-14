@@ -1,10 +1,9 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Tabletop
+namespace Content.Shared.Tabletop.Events
 {
     [Serializable, NetSerializable]
     public class TabletopMoveEvent : EntityEventArgs

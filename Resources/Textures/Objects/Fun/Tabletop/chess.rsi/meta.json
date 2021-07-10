@@ -1,0 +1,12 @@
+﻿{
+    "version": 1,
+    "size": {
+        "x": 16,
+        "y": 16
+    },
+    "states": [
+        {
+            "name": "chessboard"
+        }
+    ]
+}
