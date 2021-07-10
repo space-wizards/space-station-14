@@ -57,7 +57,6 @@
   name: "vapor"
   abstract: true
   components:
-  - type: SnapGrid
   - type: SolutionContainer
     maxVol: 50
   - type: Vapor
@@ -69,7 +68,7 @@
       - state: chempuff
         map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
-    bodyType: KinematicController
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb

@@ -13,7 +13,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.RoundEnd
 {
-    public class RoundEndSystem : EntitySystem, IResettingEntitySystem
+    public class RoundEndSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -30,6 +30,7 @@ namespace Content.Server.RoundEnd
 
         public TimeSpan CallCooldown { get; } = TimeSpan.FromSeconds(30);
 
+        // TODO: Make these regular eventbus events...
         public delegate void RoundEndCountdownStarted();
         public event RoundEndCountdownStarted? OnRoundEndCountdownStarted;
 
@@ -42,7 +43,14 @@ namespace Content.Server.RoundEnd
         public delegate void CallCooldownEnded();
         public event CallCooldownEnded? OnCallCooldownEnded;
 
-        void IResettingEntitySystem.Reset()
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
+
+        void Reset(RoundRestartCleanupEvent ev)
         {
             IsRoundEndCountdownStarted = false;
             _roundEndCancellationTokenSource.Cancel();

@@ -1,6 +1,6 @@
-﻿using Content.Client.Standing;
-using Content.Shared.MobState;
+﻿using Content.Shared.MobState;
 using Content.Shared.MobState.State;
+using Content.Shared.Standing;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
@@ -15,25 +15,6 @@ namespace Content.Client.MobState.States
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
-            }
-
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics.CanCollide = false;
-            }
-        }
-
-        public override void ExitState(IEntity entity)
-        {
-            base.ExitState(entity);
-
-            EntitySystem.Get<StandingStateSystem>().Standing(entity);
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics.CanCollide = true;
             }
         }
     }

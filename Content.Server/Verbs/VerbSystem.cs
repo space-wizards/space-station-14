@@ -12,7 +12,7 @@ using static Content.Shared.Verbs.VerbSystemMessages;
 
 namespace Content.Server.Verbs
 {
-    public class VerbSystem : SharedVerbSystem, IResettingEntitySystem
+    public class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -24,6 +24,7 @@ namespace Content.Server.Verbs
 
             IoCManager.InjectDependencies(this);
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<RequestVerbsMessage>(RequestVerbs);
             SubscribeNetworkEvent<UseVerbMessage>(UseVerb);
 
@@ -38,7 +39,7 @@ namespace Content.Server.Verbs
             }
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _seesThroughContainers.Clear();
         }

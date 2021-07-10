@@ -1,4 +1,6 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Shared.Hands;
+using Content.Shared.Standing;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.State
 {
@@ -11,6 +13,18 @@ namespace Content.Shared.MobState.State
             base.EnterState(entity);
             var wake = entity.EnsureComponent<CollisionWakeComponent>();
             wake.Enabled = true;
+            var standingState = EntitySystem.Get<StandingStateSystem>();
+            standingState.Down(entity);
+
+            if (standingState.IsDown(entity) && entity.TryGetComponent(out PhysicsComponent? physics))
+            {
+                physics.CanCollide = false;
+            }
+
+            if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
+            }
         }
 
         public override void ExitState(IEntity entity)
@@ -19,6 +33,14 @@ namespace Content.Shared.MobState.State
             if (entity.HasComponent<CollisionWakeComponent>())
             {
                 entity.RemoveComponent<CollisionWakeComponent>();
+            }
+
+            var standingState = EntitySystem.Get<StandingStateSystem>();
+            standingState.Stand(entity);
+
+            if (!standingState.IsDown(entity) && entity.TryGetComponent(out PhysicsComponent? physics))
+            {
+                physics.CanCollide = true;
             }
         }
 
