@@ -5,7 +5,7 @@ chem-master-component-interact-using-no-hands = You have no hands.
 chem-master-component-interact-using-nothing-in-hands = You have nothing in your hand!
 chem-master-component-has-beaker-already-message = This ChemMaster already has a container in it.
 chem-master-component-container-too-large-message = The {$container} is too large for the ChemMaster!
-chem-master-component-cannot-put-entity-message = You can't put {entity} in the ChemMaster!
+chem-master-component-cannot-put-entity-message = You can't put {$entity} in the ChemMaster!
 
 ## Bound UI
 chem-master-bound-user-interface-title = ChemMaster 4000

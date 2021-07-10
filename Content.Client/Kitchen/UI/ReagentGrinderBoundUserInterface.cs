@@ -153,7 +153,7 @@ namespace Content.Client.Kitchen.UI
                 for (var i = 0; i < reagents.Count; i++)
                 {
                     var goodIndex = _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto);
-                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto!.Name}") : Loc.GetString("???");
+                    var reagentName = goodIndex ? Loc.GetString($"{reagents[i].Quantity} {proto!.Name}") : "???";
                     var reagentAdded = _menu.BeakerContentBox.BoxContents.AddItem(reagentName);
                     var reagentIndex = _menu.BeakerContentBox.BoxContents.IndexOf(reagentAdded);
                     _beakerVisualContents.Add(reagentIndex, reagents[i]);
