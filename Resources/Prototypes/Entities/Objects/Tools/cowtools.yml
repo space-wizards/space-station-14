@@ -92,7 +92,7 @@
     - type: Tool
       qualities:
         - Multitool
-    - type: SignalLinker todo
+    - type: SignalLinker
 
 - type: entity
   name: cowelding tool

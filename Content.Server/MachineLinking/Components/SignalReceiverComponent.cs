@@ -6,14 +6,15 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.MachineLinking.Components
 {
+    [RegisterComponent]
     public class SignalReceiverComponent : Component
     {
         public override string Name => "SignalReceiver";
 
         [DataField("inputs")]
-        private Dictionary<string, Type> _inputs = new();
+        private List<PortPrototype> _inputs = new();
 
         [ViewVariables]
-        public IReadOnlyDictionary<string, Type> Inputs => _inputs;
+        public IReadOnlyList<PortPrototype> Inputs => _inputs;
     }
 }

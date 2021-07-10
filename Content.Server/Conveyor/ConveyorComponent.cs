@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>
+    public class ConveyorComponent : Component//todo paul, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>
     {
         public override string Name => "Conveyor";
 

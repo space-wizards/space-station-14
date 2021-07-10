@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.MachineLinking.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
+using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Network;
-using Robust.Shared.Players;
+using Robust.Shared.Localization;
 
 namespace Content.Server.MachineLinking
 {
     public class SignalLinkerSystem : EntitySystem
     {
-        [Dependency] private ComponentManager _componentManager = default!;
+        [Dependency] private IComponentManager _componentManager = default!;
         private InteractionSystem _interaction = default!;
 
         public override void Initialize()
@@ -31,6 +27,32 @@ namespace Content.Server.MachineLinking
 
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(TransmitterStartupHandler);
             SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(TransmitterInteractUsingHandler);
+
+            SubscribeLocalEvent<SignalReceiverComponent, ComponentStartup>(OnReceiverStartup);
+            SubscribeLocalEvent<SignalReceiverComponent, InteractUsingEvent>(OnReceiverInteractUsing);
+        }
+
+        private void OnReceiverInteractUsing(EntityUid uid, SignalReceiverComponent component, InteractUsingEvent args)
+        {
+            if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !linker.Port.HasValue || !args.User.TryGetComponent(out ActorComponent? actor) || !linker.Port.Value.transmitter.Outputs.TryGetPort(linker.Port.Value.port, out var port))
+                return;
+
+            var bui = component.Owner.GetUIOrNull(SignalReceiverUiKey.Key);
+            if (bui == null) return;
+
+            bui.Open(actor.PlayerSession);
+            bui.SetState(new SignalPortsState(new Dictionary<string, bool>(component.Inputs.GetValidatedPorts(port.Type))));
+        }
+
+        private void OnReceiverStartup(EntityUid uid, SignalReceiverComponent component, ComponentStartup args)
+        {
+            if(component.Owner.GetUIOrNull(SignalReceiverUiKey.Key) is {} ui)
+                ui.OnReceiveMessage += msg => OnReceiverUIMessage(uid, component, msg);
+        }
+
+        private void OnReceiverUIMessage(EntityUid uid, SignalReceiverComponent component, ServerBoundUserInterfaceMessage msg)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void TransmitterStartupHandler(EntityUid uid, SignalTransmitterComponent component, ComponentStartup args)
@@ -43,28 +65,55 @@ namespace Content.Server.MachineLinking
         {
             switch (msg.Message)
             {
-                case SignalTransmitterPortSelected portSelected:
+                case SignalPortSelected portSelected:
                     if (msg.Session.AttachedEntity == null ||
                         !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !component.Outputs.ContainsKey(portSelected.Port) ||
                         !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner))
                         return;
-                    signalLinkerComponent.Port = (component, portSelected.Port);
+                    if (SavePortInSignalLinker(signalLinkerComponent, component, portSelected.Port))
+                    {
+                        msg.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("signal-linker-component-saved-port",
+                            ("port", portSelected.Port),
+                            ("machine", component.Owner)));
+                    }
                     break;
             }
         }
 
-        private void TransmitterInteractUsingHandler(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
+        private bool SavePortInSignalLinker(SignalLinkerComponent linker, SignalTransmitterComponent transmitter,
+            string port)
         {
-            if (!_componentManager.HasComponent<SignalLinkerComponent>(uid) || !args.User.TryGetComponent(out ActorComponent? actor))
-                return;
-
-            component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key)?.Open(actor.PlayerSession);
+            if (!transmitter.Outputs.ContainsPort(port)) return false;
+            linker.Port = (transmitter, port);
+            return true;
         }
 
-        //todo paul oldcode
+        private void TransmitterInteractUsingHandler(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
+        {
+            if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            if(component.Outputs.Count == 1)
+            {
+                var port = component.Outputs.First();
+                if (SavePortInSignalLinker(linker, component, port.Name))
+                {
+                    args.User.PopupMessageCursor(Loc.GetString("signal-linker-component-saved-port",
+                        ("port", port.Name),
+                        ("machine", component.Owner)));
+                }
+                return;
+            }
+
+            var bui = component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key);
+            if (bui == null) return;
+            bui.Open(actor.PlayerSession);
+            bui.SetState(new SignalPortsState(component.Outputs.GetPortStrings().ToArray()));
+        }
+
+        /*todo paul oldcode
 
         private readonly Dictionary<NetUserId, SignalTransmitterComponent?> _transmitters = new();
 
@@ -141,6 +190,6 @@ namespace Content.Server.MachineLinking
             }
 
             return false;
-        }
+        }*/
     }
 }

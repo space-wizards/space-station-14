@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.Ghost;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Signals;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Actions.Behaviors;
@@ -13,7 +11,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -32,7 +29,7 @@ namespace Content.Server.Light.Components
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, IGhostBooAffected //todo paul ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>,
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -300,11 +297,11 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-        public void TriggerSignal(ToggleSignal signal)
+        /* todo paul public void TriggerSignal(ToggleSignal signal)
         {
             _on = !_on;
             UpdateLight();
-        }
+        }*/
 
         public void ToggleBlinkingLight(bool isNowBlinking)
         {

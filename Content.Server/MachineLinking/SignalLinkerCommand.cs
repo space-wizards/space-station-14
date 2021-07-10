@@ -49,8 +49,8 @@ namespace Content.Server.MachineLinking
                 return;
             }
 
-            var ret = system.SignalLinkerKeybind(player.UserId, enable);
-            shell.WriteLine(ret ? "Enabled" : "Disabled");
+            //var ret = system.SignalLinkerKeybind(player.UserId, enable);
+            //shell.WriteLine(ret ? "Enabled" : "Disabled");
         }
     }
 }
