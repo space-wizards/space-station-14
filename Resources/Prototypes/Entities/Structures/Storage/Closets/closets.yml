@@ -1,0 +1,105 @@
+# Tool closet
+- type: entity
+  id: ClosetTool
+  name: tool closet
+  parent: ClosetBase
+  description: It's a storage unit for tools.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_closed: eng_tool_door
+
+# Radiation suit closet
+- type: entity
+  id: ClosetRadiationSuit
+  name: radiation suit closet
+  parent: ClosetBase
+  description: It's a storage unit for rad-protective suits.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_closed: eng_rad_door
+
+# Emergency closet
+- type: entity
+  id: ClosetEmergency
+  name: emergency closet
+  parent: ClosetBase
+  description: It's a storage unit for emergency breath masks and O2 tanks.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: emergency
+
+# Fire safety closet
+- type: entity
+  id: ClosetFire
+  name: fire-safety closet
+  parent: ClosetBase
+  description: It's a storage unit for fire-fighting supplies.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: fire
+
+# EOD closet
+- type: entity
+  id: ClosetBomb
+  name: EOD closet
+  parent: ClosetBase
+  description: It's a storage unit for explosion-protective suits.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bomb
+
+# Biohazard
+
+# Base level 3 bio hazard closet
+- type: entity
+  id: ClosetL3
+  parent: ClosetBase
+  name: level 3 biohazard gear closet
+  description: It's a storage unit for level 3 biohazard gear.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio
+
+# Virology variant
+- type: entity
+  id: ClosetL3Virology
+  parent: ClosetL3
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio_viro
+
+# Security variant
+- type: entity
+  id: ClosetL3Security
+  parent: ClosetL3
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio_sec
+
+# Janitor variant
+- type: entity
+  id: ClosetL3Janitor
+  parent: ClosetL3
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio_jan

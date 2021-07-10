@@ -1,0 +1,221 @@
+﻿- type: entity
+  parent: ComputerBase
+  id: ComputerAlert
+  name: alerts computer
+  description: Used to access the station's automated alert system.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: atmos_key
+      screen: "alert-2"
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerPowerMonitoring
+  name: power monitoring computer
+  description: It monitors power levels across the station.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: power_key
+      screen: power_monitor
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerMedicalRecords
+  name: medical records computer
+  description: This can be used to check medical records.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: med_key
+      screen: medcomp
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerResearchAndDevelopment
+  name: R&D computer
+  description: A computer used to interface with R&D tools.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: rd_key
+      screen: rdcomp
+  - type: ResearchClient
+  - type: ResearchConsole
+  - type: TechnologyDatabase
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchConsoleUiKey.Key
+      type: ResearchConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: ApcPowerReceiver
+    load: 200
+    priority: Low
+  - type: Computer
+    board: ResearchComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerId
+  name: ID card computer
+  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+  - type: IdCardConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.IdCardConsoleUiKey.Key
+      type: IdCardConsoleBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: id_key
+      screen: id
+  - type: Computer
+    board: IDComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: computerBodyScanner
+  name: body scanner computer
+  description: That's a body scanner.
+  components:
+  - type: BodyScanner
+  - type: UserInterface
+    interfaces:
+    - key: enum.BodyScannerUiKey.Key
+      type: BodyScannerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: generic
+  - type: Computer
+    board: BodyScannerComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerComms
+  name: communications computer
+  description: This can be used for various important functions. Still under development.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: comm
+  - type: CommunicationsConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.CommunicationsConsoleUiKey.Key
+      type: CommunicationsConsoleBoundUserInterface
+  - type: Computer
+    board: CommsComputerCircuitboard
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerSolarControl
+  name: solar control computer
+  description: A controller for solar panel arrays.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: solar_screen
+  - type: SolarControlConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.SolarControlConsoleUiKey.Key
+      type: SolarControlConsoleBoundUserInterface
+  - type: Computer
+    board: SolarControlComputerCircuitboard
+
+- type: entity
+  id: ComputerSupplyOrdering
+  parent: ComputerBase
+  name: Cargo ordering computer
+  description: Used to order supplies, approve requests, and control the shuttle.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: supply
+  - type: CargoConsole
+  - type: CargoOrderDatabase
+  - type: GalacticMarket
+    products:
+      - EmergencyExplosive
+      - EmergencyFire
+      - EmergencyInternals
+      - EmergencyRadiation
+      - ArmorySmg
+      - ArmoryShotgun
+      - SecurityArmor
+      - SecurityRiot
+      - SecurityLaser
+      - SecurityHelmet
+      - SecuritySupplies
+      - SecurityNonLethal
+      - HydroponicsTools
+      - HydroponicsSeeds
+      - HydroponicsSeedsExotic
+      - ServiceJanitorial
+      - ServiceLightsReplacement
+      - EngineeringCableLv
+      - EngineeringCableMv
+      - EngineeringCableHv
+      - EngineeringCableBulk
+      - EngineAmeShielding
+      - EngineAmeJar
+      - EngineAmeControl
+      - EngineSolar
+      - FunPlushies
+      - FunArtSupplies
+      - FunInstruments
+      - MaterialSteel
+      - MaterialGlass
+      - MaterialPlastic
+      - MaterialPlasteel
+      - EngineSingularityEmitter
+      - EngineSingularityCollector
+      - EngineSingularityGenerator
+      - EngineSingularityContainment
+      - EngineParticleAccelerator
+      - AtmosphericsAir
+      - AtmosphericsOxygen
+      - AtmosphericsNitrogen
+      - AtmosphericsCarbonDioxide
+#      - AtmosphericsWaterVapor
+#      - AtmosphericsPlasma
+#      - AtmosphericsTritium
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Key
+      type: CargoConsoleBoundUserInterface
+  - type: Computer
+    board: SupplyComputerCircuitboard
+
+- type: entity
+  id: ComputerSupplyRequest
+  parent: ComputerSupplyOrdering
+  name: cargo request computer
+  description: Used to request supplies from cargo.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: request
+  - type: CargoConsole
+    requestOnly: true
+  - type: Computer
+    board: SupplyRequestComputerCircuitboard
