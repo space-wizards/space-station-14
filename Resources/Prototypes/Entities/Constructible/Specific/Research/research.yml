@@ -21,7 +21,7 @@
         - MobImpassable
   - type: ResearchServer
   - type: TechnologyDatabase
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
   - type: Damageable
@@ -77,7 +77,7 @@
   - type: Appearance
     visuals:
     - type: PowerDeviceVisualizer
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Destructible
     thresholds:
     - trigger:

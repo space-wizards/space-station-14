@@ -107,7 +107,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables]
         public bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
+            !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         [ViewVariables]
@@ -196,7 +196,7 @@ namespace Content.Server.Disposal.Unit.Components
                     NeedHand = false,
                 };
 
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
+                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;
@@ -314,7 +314,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         private void TogglePower()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }

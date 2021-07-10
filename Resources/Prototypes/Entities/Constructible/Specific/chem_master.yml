@@ -16,7 +16,7 @@
     sprite: Constructible/Power/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: InteractionOutline
   - type: Anchorable
   - type: Physics

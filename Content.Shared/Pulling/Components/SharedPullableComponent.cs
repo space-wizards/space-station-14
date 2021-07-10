@@ -204,6 +204,11 @@ namespace Content.Shared.Pulling.Components
                 return false;
             }
 
+            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller, Owner))
+            {
+                return false;
+            }
+
             if (_physics == null)
             {
                 return false;

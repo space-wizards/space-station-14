@@ -1,6 +1,7 @@
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -24,15 +25,16 @@ namespace Content.Server.Dice
 
         public override string Name => "Dice";
 
-        [DataField("step")]
-        private int _step = 1;
         private int _sides = 20;
-        private int _currentSide = 20;
+
         [ViewVariables]
-        [DataField("diceSoundCollection")]
-        public string _soundCollectionName = "dice";
+        [DataField("sound")]
+        private readonly SoundSpecifier _sound = new SoundCollectionSpecifier("Dice");
+
         [ViewVariables]
-        public int Step => _step;
+        [DataField("step")]
+        public int Step { get; } = 1;
+
         [ViewVariables]
         [DataField("sides")]
         public int Sides
@@ -41,29 +43,28 @@ namespace Content.Server.Dice
             set
             {
                 _sides = value;
-                _currentSide = value;
+                CurrentSide = value;
             }
         }
 
         [ViewVariables]
-        public int CurrentSide => _currentSide;
+        public int CurrentSide { get; private set; } = 20;
 
         public void Roll()
         {
-            _currentSide = _random.Next(1, (_sides/_step)+1) * _step;
-            if (!Owner.TryGetComponent(out SpriteComponent? sprite)) return;
-            sprite.LayerSetState(0, $"d{_sides}{_currentSide}");
+            CurrentSide = _random.Next(1, (_sides/Step)+1) * Step;
+
             PlayDiceEffect();
+
+            if (!Owner.TryGetComponent(out SpriteComponent? sprite))
+                return;
+
+            sprite.LayerSetState(0, $"d{_sides}{CurrentSide}");
         }
 
         public void PlayDiceEffect()
         {
-            if (!string.IsNullOrWhiteSpace(_soundCollectionName))
-            {
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
-                var file = _random.Pick(soundCollection.PickFiles);
-                SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner, AudioParams.Default);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -89,7 +90,7 @@ namespace Content.Server.Dice
                                             ("sidesAmount", _sides))
                               + "\n" +
                               Loc.GetString("dice-component-on-examine-message-part-2",
-                                            ("currentSide", _currentSide)));
+                                            ("currentSide", CurrentSide)));
         }
     }
 }

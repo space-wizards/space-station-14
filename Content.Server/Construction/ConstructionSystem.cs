@@ -238,7 +238,7 @@ namespace Content.Server.Construction
                 NeedHand = false,
             };
 
-            if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;
@@ -457,8 +457,15 @@ namespace Content.Server.Construction
                 return;
             }
 
+            // We do this to be able to move the construction to its proper position in case it's anchored...
+            // Oh wow transform anchoring is amazing wow I love it!!!!
+            var wasAnchored = structure.Transform.Anchored;
+            structure.Transform.Anchored = false;
+
             structure.Transform.Coordinates = ev.Location;
             structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+
+            structure.Transform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

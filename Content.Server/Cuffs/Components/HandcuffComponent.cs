@@ -214,7 +214,7 @@ namespace Content.Server.Cuffs.Components
 
             _cuffing = true;
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             _cuffing = false;
 

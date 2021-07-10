@@ -4,9 +4,9 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
@@ -62,7 +62,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // Create a pipenet if we don't have one already.
-            portNode.TryAssignGroupIfNeeded();
+            portNode.CreateSingleNetImmediate();
             Get<AtmosphereSystem>().Merge(portNode.Air, canister.InitialMixture);
             portNode.Air.Temperature = canister.InitialMixture.Temperature;
             portNode.Volume = canister.InitialMixture.Volume;
@@ -90,7 +90,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             ui.SetState(new GasCanisterBoundUserInterfaceState(metadata.EntityName, portNode.Air.Pressure,
-                portNode.NodeGroup.Nodes.Count > 1, tankLabel, tankPressure,
+                portNode.NodeGroup!.Nodes.Count > 1, tankLabel, tankPressure,
                 canister.ReleasePressure, canister.ReleaseValve,
                 canister.MinReleasePressure, canister.MaxReleasePressure));
         }

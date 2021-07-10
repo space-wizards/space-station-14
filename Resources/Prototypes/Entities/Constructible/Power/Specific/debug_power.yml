@@ -25,7 +25,7 @@
   - type: NodeContainer
     nodes:
       input:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
@@ -64,10 +64,8 @@
   - type: NodeContainer
     nodes:
       input:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: PowerConsumer
-  - type: BatteryStorage
   - type: Anchorable
 
 - type: entity
@@ -93,9 +91,8 @@
   - type: NodeContainer
     nodes:
       input:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
-  - type: PowerSupplier
   - type: BatteryDischarger
   - type: Anchorable
 
@@ -133,5 +130,5 @@
   - type: Sprite
     sprite: Constructible/Power/power.rsi
     state: wirelessmachine
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Anchorable

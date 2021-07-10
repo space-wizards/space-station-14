@@ -157,7 +157,7 @@ namespace Content.Server.Climbing.Components
                 BreakOnStun = true
             };
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
@@ -204,7 +204,7 @@ namespace Content.Server.Climbing.Components
                 BreakOnStun = true
             };
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {

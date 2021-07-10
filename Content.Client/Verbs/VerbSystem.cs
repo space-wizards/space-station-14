@@ -28,7 +28,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -47,6 +47,7 @@ namespace Content.Client.Verbs
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
@@ -68,7 +69,7 @@ namespace Content.Client.Verbs
             CommandBinds.Unregister<VerbSystem>();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             ToggleContainerVisibility?.Invoke(this, false);
         }
