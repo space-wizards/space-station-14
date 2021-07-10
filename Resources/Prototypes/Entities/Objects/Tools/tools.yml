@@ -140,7 +140,7 @@
   - type: Tool
     qualities:
       - Multitool
-  - type: SignalLinker
+  - type: SignalLinker todo
 
 - type: entity
   name: power drill

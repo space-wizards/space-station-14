@@ -1,9 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.MachineLinking.Components;
+using Content.Server.UserInterface;
+using Content.Shared.Interaction;
+using Content.Shared.MachineLinking;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -12,6 +20,52 @@ namespace Content.Server.MachineLinking
 {
     public class SignalLinkerSystem : EntitySystem
     {
+        [Dependency] private ComponentManager _componentManager = default!;
+        private InteractionSystem _interaction = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _interaction = Get<InteractionSystem>();
+
+            SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(TransmitterStartupHandler);
+            SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(TransmitterInteractUsingHandler);
+        }
+
+        private void TransmitterStartupHandler(EntityUid uid, SignalTransmitterComponent component, ComponentStartup args)
+        {
+            if(component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key) is {} ui)
+                ui.OnReceiveMessage += msg => OnTransmitterUIMessage(uid, component, msg);
+        }
+
+        private void OnTransmitterUIMessage(EntityUid uid, SignalTransmitterComponent component, ServerBoundUserInterfaceMessage msg)
+        {
+            switch (msg.Message)
+            {
+                case SignalTransmitterPortSelected portSelected:
+                    if (msg.Session.AttachedEntity == null ||
+                        !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
+                        !hands.TryGetActiveHeldEntity(out var heldEntity) ||
+                        !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
+                        !component.Outputs.ContainsKey(portSelected.Port) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner))
+                        return;
+                    signalLinkerComponent.Port = (component, portSelected.Port);
+                    break;
+            }
+        }
+
+        private void TransmitterInteractUsingHandler(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
+        {
+            if (!_componentManager.HasComponent<SignalLinkerComponent>(uid) || !args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            component.Owner.GetUIOrNull(SignalTransmitterUiKey.Key)?.Open(actor.PlayerSession);
+        }
+
+        //todo paul oldcode
+
         private readonly Dictionary<NetUserId, SignalTransmitterComponent?> _transmitters = new();
 
         public bool SignalLinkerKeybind(NetUserId id, bool? enable)

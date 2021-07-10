@@ -28,7 +28,7 @@
     energy: 1.4
     softness: 1.1
     offset: "0, -0.5"
-  - type: SignalReceiver
+  - type: SignalReceiver todo
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
