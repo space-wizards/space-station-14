@@ -1,45 +1,5 @@
 - type: entity
   abstract: true
-  id: BaseSmes
-  parent: BaseMachine
-  name: SMES
-  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Constructible/Power/smes.rsi
-    layers:
-    - state: smes
-    - state: smes-display
-      shader: unshaded
-  - type: Smes
-  - type: Appearance
-    visuals:
-    - type: SmesVisualizer
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
-  - type: ExaminableBattery
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      power:
-        !type:AdjacentNode
-        nodeGroupID: HVPower
-  - type: PowerConsumer
-  - type: BatteryStorage
-    activeDrawRate: 1500
-  - type: PowerSupplier
-  - type: BatteryDischarger
-    activeSupplyRate: 1000
-  - type: ClientEntitySpawner
-    prototypes:
-    - HVDummyWire
-
-- type: entity
-  abstract: true
   id: BaseSubstation
   parent: BaseMachine
   name: substation
@@ -63,23 +23,20 @@
     examinable: true
     nodes:
       input:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
       output:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: MVPower
-  - type: PowerConsumer
-  - type: BatteryStorage
-    activeDrawRate: 1500
-  - type: PowerSupplier
-    voltage: Medium
+  - type: BatteryCharger
+    voltage: High
   - type: BatteryDischarger
-    activeSupplyRate: 1000
-  - type: ClientEntitySpawner
-    prototypes:
-    - HVDummyWire
-    - MVDummyWire
-
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
 - type: entity
   abstract: true
   id: BaseApc
@@ -115,15 +72,13 @@
     examinable: true
     nodes:
       input:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: MVPower
       output:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: Apc
-  - type: PowerConsumer
+  - type: BatteryCharger
     voltage: Medium
-  - type: BatteryStorage
-    activeDrawRate: 1000
   - type: PowerProvider
     voltage: Apc
   - type: Apc
@@ -135,7 +90,9 @@
   - type: Construction
     graph: apc
     node: apc
-  - type: ClientEntitySpawner
-    prototypes:
-    - MVDummyWire
-    - LVDummyWire
+  - type: PowerNetworkBattery
+    maxSupply: 10000
+    maxChargeRate: 5000
+    supplyRampTolerance: 1000
+    supplyRampRate: 500
+

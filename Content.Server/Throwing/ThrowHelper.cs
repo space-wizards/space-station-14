@@ -54,7 +54,13 @@ namespace Content.Server.Throwing
             // Give thrower an impulse in the other direction
             if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
             {
-                body.ApplyLinearImpulse(-direction * pushbackRatio);
+                var msg = new ThrowPushbackAttemptEvent();
+                body.Owner.EntityManager.EventBus.RaiseLocalEvent(body.Owner.Uid, msg);
+
+                if (!msg.Cancelled)
+                {
+                    body.ApplyLinearImpulse(-direction * pushbackRatio);
+                }
             }
         }
     }

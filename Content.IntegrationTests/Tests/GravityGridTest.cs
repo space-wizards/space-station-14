@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
   id: GravityGeneratorDummy
   components:
   - type: GravityGenerator
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
 ";
         [Test]
         public async Task Test()
@@ -48,9 +48,9 @@ namespace Content.IntegrationTests.Tests
 
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
-                Assert.That(generator.HasComponent<PowerReceiverComponent>());
+                Assert.That(generator.HasComponent<ApcPowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
-                var powerComponent = generator.GetComponent<PowerReceiverComponent>();
+                var powerComponent = generator.GetComponent<ApcPowerReceiverComponent>();
                 Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.Unpowered));
                 powerComponent.NeedsPower = false;
             });

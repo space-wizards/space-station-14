@@ -10,7 +10,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Body.Surgery.Components
 {
     [UsedImplicitly]
-    public class SurgeryToolSystem : EntitySystem, IResettingEntitySystem
+    public class SurgeryToolSystem : EntitySystem
     {
         private readonly HashSet<SurgeryToolComponent> _openSurgeryUIs = new();
 
@@ -18,11 +18,12 @@ namespace Content.Server.Body.Surgery.Components
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SurgeryWindowOpenMessage>(OnSurgeryWindowOpen);
             SubscribeLocalEvent<SurgeryWindowCloseMessage>(OnSurgeryWindowClose);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _openSurgeryUIs.Clear();
         }

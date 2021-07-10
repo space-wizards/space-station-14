@@ -1,5 +1,5 @@
 - type: soundCollection
-  id: dice
+  id: Dice
   files:
   - /Audio/Items/Dice/dice1.ogg
   - /Audio/Items/Dice/dice2.ogg

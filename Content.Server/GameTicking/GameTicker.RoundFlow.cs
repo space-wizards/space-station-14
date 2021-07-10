@@ -11,6 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -296,13 +297,12 @@ namespace Content.Server.GameTicking
 
             _gameRules.Clear();
 
-            foreach (var system in _entitySystemManager.AllSystems)
-            {
-                if (system is IResettingEntitySystem resetting)
-                {
-                    resetting.Reset();
-                }
-            }
+            // Round restart cleanup event, so entity systems can reset.
+            var ev = new RoundRestartCleanupEvent();
+            RaiseLocalEvent(ev);
+
+            // So clients' entity systems can clean up too...
+            RaiseNetworkEvent(ev, Filter.Broadcast());
 
             _spawnedPositions.Clear();
             _manifest.Clear();

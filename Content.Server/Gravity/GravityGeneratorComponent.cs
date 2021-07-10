@@ -26,7 +26,7 @@ namespace Content.Server.Gravity
 
         private GravityGeneratorStatus _status;
 
-        public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         public bool SwitchedOn => _switchedOn;
 

@@ -81,6 +81,36 @@ namespace Content.Server.DoAfter
         /// </summary>
         public Func<bool>? ExtraCheck { get; set; }
 
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public EntityEventArgs? UserCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public EntityEventArgs? UserFinishedEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public EntityEventArgs? TargetCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public EntityEventArgs? TargetFinishedEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be broadcast when the DoAfter is cancelled.
+        /// </summary>
+        public object? BroadcastCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be broadcast when the DoAfter is finished successfully.
+        /// </summary>
+        public object? BroadcastFinishedEvent { get; set; }
+
         public DoAfterEventArgs(
             IEntity user,
             float delay,

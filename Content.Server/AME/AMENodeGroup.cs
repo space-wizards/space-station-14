@@ -8,6 +8,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -36,64 +37,42 @@ namespace Content.Server.AME
 
         public int CoreCount => _cores.Count;
 
-        protected override void OnAddNode(Node node)
+        public override void LoadNodes(List<Node> groupNodes)
         {
-            base.OnAddNode(node);
-            if (_masterController == null)
-            {
-                node.Owner.TryGetComponent<AMEControllerComponent>(out var controller);
-                _masterController = controller;
-            }
-        }
+            base.LoadNodes(groupNodes);
 
-        protected override void OnRemoveNode(Node node)
-        {
-            base.OnRemoveNode(node);
-            RefreshAMENodes(_masterController);
-            if (_masterController != null && _masterController?.Owner == node.Owner) { _masterController = null; }
-        }
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var grid = mapManager.GetGrid(GridId);
 
-        public void RefreshAMENodes(AMEControllerComponent? controller)
-        {
-            if(_masterController == null && controller != null)
-            {
-                _masterController = controller;
-            }
-
-            foreach (AMEShieldComponent core in _cores)
-            {
-                core.UnsetCore();
-            }
-            _cores.Clear();
-
-            //Check each shield node to see if it meets core criteria
-            foreach (Node node in Nodes)
+            foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (!nodeOwner.TryGetComponent<AMEShieldComponent>(out var shield)) { continue; }
-
-                var grid = IoCManager.Resolve<IMapManager>().GetGrid(nodeOwner.Transform.GridID);
-                var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
-                    .Select(sgc => nodeOwner.EntityManager.GetEntity(sgc))
-                    .Where(entity => entity != nodeOwner)
-                    .Select(entity => entity.TryGetComponent<AMEShieldComponent>(out var adjshield) ? adjshield : null)
-                    .Where(adjshield => adjshield != null);
-
-                if (nodeNeighbors.Count() >= 8)
+                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
                 {
-                    _cores.Add(shield);
+                    _masterController = controller;
                 }
-            }
 
-            foreach (AMEShieldComponent core in _cores)
-            {
-                core.SetCore();
+                if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
+                {
+                    var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
+                        .Select(sgc => nodeOwner.EntityManager.GetEntity(sgc))
+                        .Where(entity => entity != nodeOwner && entity.HasComponent<AMEShieldComponent>());
+
+                    if (nodeNeighbors.Count() >= 8)
+                    {
+                        _cores.Add(shield);
+                        shield.SetCore();
+                    }
+                    else
+                    {
+                        shield.UnsetCore();
+                    }
+                }
             }
         }
 
         public void UpdateCoreVisuals(int injectionAmount, bool injecting)
         {
-
             var injectionStrength = CoreCount > 0 ? injectionAmount / CoreCount : 0;
 
             foreach (AMEShieldComponent core in _cores)
@@ -119,7 +98,7 @@ namespace Content.Server.AME
                     // fuel > safeFuelLimit: Slow damage. Can safely run at this level for burst periods if the engine is small and someone is keeping an eye on it.
                     if (_random.Prob(0.5f))
                         instability = 1;
-                    // overloadVsSizeResult > 5: 
+                    // overloadVsSizeResult > 5:
                     if (overloadVsSizeResult > 5)
                         instability = 5;
                     // overloadVsSizeResult > 10: This will explode in at most 5 injections.

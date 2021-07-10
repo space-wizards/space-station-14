@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Stunnable.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -16,7 +17,7 @@ namespace Content.Server.DoAfter
 
         private TaskCompletionSource<DoAfterStatus> Tcs { get; }
 
-        public DoAfterEventArgs EventArgs;
+        public readonly DoAfterEventArgs EventArgs;
 
         public TimeSpan StartTime { get; }
 

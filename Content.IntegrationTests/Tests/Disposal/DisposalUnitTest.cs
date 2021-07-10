@@ -85,7 +85,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   components:
   - type: DisposalUnit
   - type: Anchorable
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
 
@@ -155,7 +155,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Flush(unit, false, human, wrench);
 
                 // Remove power need
-                Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent? power));
+                Assert.True(disposalUnit.TryGetComponent(out ApcPowerReceiverComponent? power));
                 power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 

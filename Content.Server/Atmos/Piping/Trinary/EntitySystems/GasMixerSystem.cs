@@ -1,8 +1,8 @@
 using System;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
