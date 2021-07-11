@@ -78,19 +78,12 @@ namespace Content.Server.NodeContainer.Nodes
         private IPipeNet? PipeNet => (IPipeNet?) NodeGroup;
 
         /// <summary>
-        ///     Whether to ignore the pipenet and return the environment's air.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("environmentalAir")]
-        public bool EnvironmentalAir { get; set; } = false;
-
-        /// <summary>
         ///     The gases in this pipe.
         /// </summary>
         [ViewVariables]
         public GasMixture Air
         {
-            get => (!EnvironmentalAir ? PipeNet?.Air : Owner.Transform.Coordinates.GetTileAir()) ?? GasMixture.SpaceGas;
+            get => PipeNet?.Air ?? GasMixture.SpaceGas;
             set
             {
                 DebugTools.Assert(PipeNet != null);
@@ -100,14 +93,8 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void AssumeAir(GasMixture giver)
         {
-            if (EnvironmentalAir)
-            {
-                var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
-                tileAtmosphere?.AssumeAir(giver);
-                return;
-            }
-
-            EntitySystem.Get<AtmosphereSystem>().Merge(PipeNet!.Air, giver);
+            if(PipeNet != null)
+                EntitySystem.Get<AtmosphereSystem>().Merge(PipeNet.Air, giver);
         }
 
         [ViewVariables]
@@ -169,17 +156,6 @@ namespace Content.Server.NodeContainer.Nodes
             if (!Anchored)
                 yield break;
 
-            if (pipeDir is PipeDirection.Port or PipeDirection.Connector)
-            {
-                foreach (var pipe in PipesInTile())
-                {
-                    if (pipe.Anchored && pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
-                        yield return pipe;
-                }
-
-                yield break;
-            }
-
             foreach (var pipe in PipesInDirection(pipeDir))
             {
                 if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
@@ -190,7 +166,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes from entities on the tile adjacent in a direction.
         /// </summary>
-        private IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
+        protected IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
             if (!Owner.Transform.Anchored)
                 yield break;
@@ -211,9 +187,9 @@ namespace Content.Server.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     Gets the pipes from entities on the tile adjacent in a direction.
+        ///     Gets the pipes from entities on the same tile.
         /// </summary>
-        private IEnumerable<PipeNode> PipesInTile()
+        protected IEnumerable<PipeNode> PipesInTile()
         {
             if (!Owner.Transform.Anchored)
                 yield break;

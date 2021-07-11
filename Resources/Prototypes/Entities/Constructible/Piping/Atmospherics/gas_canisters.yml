@@ -64,13 +64,10 @@
   - type: NodeContainer
     nodes:
       port:
-        !type:PipeNode
+        !type:PortablePipeNode
         nodeGroupID: Pipe
-        pipeDirection: Connector
-        connectionsEnabled: false
-        needAnchored: false
         rotationsEnabled: false
-        volume: 1000
+        volume: 1
   - type: GasPortable
   - type: GasCanister
 
