@@ -22,6 +22,9 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        [DataField("damageType", required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
+
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -183,7 +186,7 @@ namespace Content.Server.Nutrition.Components
 
             if (!mobState.IsDead())
             {
-                damageable.ChangeDamage(DamageType.Blunt, 2, true);
+                damageable.ChangeDamage(_damageType, 2, true);
             }
         }
 

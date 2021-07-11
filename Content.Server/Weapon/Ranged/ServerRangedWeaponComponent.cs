@@ -167,8 +167,8 @@ namespace Content.Server.Weapon.Ranged
 
                 if (user.TryGetComponent(out IDamageableComponent? health))
                 {
-                    health.ChangeDamage(DamageType.Blunt, 10, false, user);
-                    health.ChangeDamage(DamageType.Heat, 5, false, user);
+                    health.ChangeDamage(health.GetDamageType("Blunt"), 10, false, user);
+                    health.ChangeDamage(health.GetDamageType("Heat"), 5, false, user);
                 }
 
                 if (user.TryGetComponent(out StunnableComponent? stun))

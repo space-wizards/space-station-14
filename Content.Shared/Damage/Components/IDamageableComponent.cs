@@ -14,27 +14,33 @@ namespace Content.Shared.Damage.Components
         int TotalDamage { get; }
 
         /// <summary>
-        ///     The amount of damage mapped by <see cref="DamageClass"/>.
+        ///     The amount of damage mapped by <see cref="DamageGroupPrototype"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageClass, int> DamageClasses { get; }
+        IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses { get; }
 
         /// <summary>
-        ///     The amount of damage mapped by <see cref="DamageType"/>.
+        ///     The amount of damage mapped by <see cref="DamageTypePrototype"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageType, int> DamageTypes { get; }
+        IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes { get; }
 
-        HashSet<DamageType> SupportedTypes { get; }
+        HashSet<DamageTypePrototype> SupportedTypes { get; }
 
-        HashSet<DamageClass> SupportedClasses { get; }
+        HashSet<DamageGroupPrototype> SupportedGroups { get; }
 
         /// <summary>
         ///     The resistances of this component.
         /// </summary>
         ResistanceSet Resistances { get; }
 
-        bool SupportsDamageClass(DamageClass @class);
+        /// <summary>
+        ///  Get a specific DamageType Prototype via an ID.
+        /// </summary>
+        /// <param name="ID"></param>
+        DamageTypePrototype GetDamageType(string ID);
 
-        bool SupportsDamageType(DamageType type);
+        bool SupportsDamageClass(DamageGroupPrototype damageGroup);
+
+        bool SupportsDamageType(DamageTypePrototype type);
 
         /// <summary>
         ///     Gets the amount of damage of a type.
@@ -44,7 +50,7 @@ namespace Content.Shared.Damage.Components
         /// <returns>
         ///     True if the given <see cref="type"/> is supported, false otherwise.
         /// </returns>
-        bool TryGetDamage(DamageType type, out int damage);
+        bool TryGetDamage(DamageTypePrototype type, out int damage);
 
         /// <summary>
         ///     Gets the amount of damage of a class.
@@ -54,10 +60,10 @@ namespace Content.Shared.Damage.Components
         /// <returns>
         ///     True if the given <see cref="@class"/> is supported, false otherwise.
         /// </returns>
-        bool TryGetDamage(DamageClass @class, out int damage);
+        bool TryGetDamage(DamageGroupPrototype damageGroup, out int damage);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageType"/>, applying
+        ///     Changes the specified <see cref="DamageTypePrototype"/>, applying
         ///     resistance values only if it is damage.
         /// </summary>
         /// <param name="type">Type of damage being changed.</param>
@@ -79,16 +85,16 @@ namespace Content.Shared.Damage.Components
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(
-            DamageType type,
+            DamageTypePrototype type,
             int amount,
             bool ignoreResistances,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageClass"/>, applying
+        ///     Changes the specified <see cref="DamageClassPrototype"/>, applying
         ///     resistance values only if it is damage.
-        ///     Spreads amount evenly between the <see cref="DamageType"></see>s
+        ///     Spreads amount evenly between the <see cref="DamageTypePrototype"></see>s
         ///     represented by that class.
         /// </summary>
         /// <param name="class">Class of damage being changed.</param>
@@ -109,14 +115,14 @@ namespace Content.Shared.Damage.Components
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(
-            DamageClass @class,
+            DamageGroupPrototype damageGroup,
             int amount,
             bool ignoreResistances,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Forcefully sets the specified <see cref="DamageType"/> to the given
+        ///     Forcefully sets the specified <see cref="DamageTypePrototype"/> to the given
         ///     value, ignoring resistance values.
         /// </summary>
         /// <param name="type">Type of damage being changed.</param>
@@ -131,7 +137,7 @@ namespace Content.Shared.Damage.Components
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool SetDamage(
-            DamageType type,
+            DamageTypePrototype type,
             int newValue,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);

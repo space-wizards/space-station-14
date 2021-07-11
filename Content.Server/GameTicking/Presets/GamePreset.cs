@@ -17,6 +17,8 @@ namespace Content.Server.GameTicking.Presets
     /// </summary>
     public abstract class GamePreset
     {
+
+
         public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
@@ -65,7 +67,8 @@ namespace Content.Server.GameTicking.Presets
                     if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
-                        damageable.SetDamage(DamageType.Asphyxiation, 200, playerEntity);
+                        //cry deeply
+                        damageable.SetDamage(damageable.GetDamageType("Asphyxiation"), 200, playerEntity);
                     }
                 }
             }

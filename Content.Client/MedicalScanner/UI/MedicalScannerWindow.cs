@@ -49,11 +49,11 @@ namespace Content.Client.MedicalScanner.UI
             {
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
-                foreach (var (@class, classAmount) in state.DamageClasses)
+                foreach (var (damageGroup, damageAmount) in state.DamageGroup)
                 {
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", @class), ("amount", classAmount))}");
+                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", damageGroup), ("amount", damageAmount))}");
 
-                    foreach (var type in @class.ToTypes())
+                    foreach (var type in damageGroup.DamageTypes)
                     {
                         if (!state.DamageTypes.TryGetValue(type, out var typeAmount))
                         {

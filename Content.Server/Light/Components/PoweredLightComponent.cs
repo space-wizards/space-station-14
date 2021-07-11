@@ -52,6 +52,9 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
+        [DataField("damageType", required: true)]
+        private readonly DamageTypePrototype _damageType = default!;
+
         [ViewVariables] [DataField("on")]
         private bool _on = true;
 
@@ -118,7 +121,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
+                damageableComponent.ChangeDamage(_damageType, 20, false, Owner);
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
 

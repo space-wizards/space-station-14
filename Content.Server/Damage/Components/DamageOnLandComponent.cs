@@ -11,8 +11,8 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnLand";
 
-        [DataField("damageType")]
-        private DamageType _damageType = DamageType.Blunt;
+        [DataField("damageType", required: true)]
+        private DamageTypePrototype _damageType = default!;
 
         [DataField("amount")]
         private int _amount = 1;
@@ -22,8 +22,8 @@ namespace Content.Server.Damage.Components
 
         void ILand.Land(LandEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
-
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
+                return;
             damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
         }
     }

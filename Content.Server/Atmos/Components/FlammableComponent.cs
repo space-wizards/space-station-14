@@ -30,6 +30,9 @@ namespace Content.Server.Atmos.Components
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
 
+        [DataField("damageType", required:true)]
+        private readonly DamageTypePrototype _damageType = default!;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; private set; }
 
@@ -104,7 +107,7 @@ namespace Content.Server.Atmos.Components
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
-                    damageable.ChangeDamage(DamageClass.Burn, damage, false);
+                    damageable.ChangeDamage(_damageType, damage, false);
                 }
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));

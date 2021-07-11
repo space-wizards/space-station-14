@@ -11,18 +11,20 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOtherOnHit";
 
-        [DataField("damageType")]
-        private DamageType _damageType = DamageType.Blunt;
+        [DataField("damageType",required: true)]
+        private readonly string _damageType = default!;
+
         [DataField("amount")]
         private int _amount = 1;
+
         [DataField("ignoreResistances")]
         private bool _ignoreResistances;
 
         void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
         {
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable)) return;
-
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
+                return;
+            damageable.ChangeDamage(damageable.GetDamageType(_damageType), _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }

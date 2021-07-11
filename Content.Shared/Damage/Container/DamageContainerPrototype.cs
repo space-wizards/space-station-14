@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,40 +16,51 @@ namespace Content.Shared.Damage.Container
     [Serializable, NetSerializable]
     public class DamageContainerPrototype : IPrototype, ISerializationHooks
     {
-        [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<DamageClass> _supportedClasses = new();
-        [DataField("supportedTypes")] private HashSet<DamageType> _supportedTypes = new();
-
-        // TODO NET 5 IReadOnlySet
-        [ViewVariables] public IReadOnlyCollection<DamageClass> SupportedClasses => _supportedClasses;
-
-        [ViewVariables] public IReadOnlyCollection<DamageType> SupportedTypes => _supportedTypes;
+        private IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
+        [DataField("supportAll")] private bool _supportAll;
+        [DataField("supportedClasses")] private HashSet<string> _supportedDamageGroupsButAsStrings = new();
+        [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypesButAsStrings = new();
+
+        private HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
+        private HashSet<DamageTypePrototype> _supportedDamageTypes = new();
+
+        // TODO NET 5 IReadOnlySet
+        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedDamageGroups => _supportedDamageGroups;
+        [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedDamageTypes => _supportedDamageTypes;
+
         void ISerializationHooks.AfterDeserialization()
         {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
             if (_supportAll)
             {
-                _supportedClasses.UnionWith(Enum.GetValues<DamageClass>());
-                _supportedTypes.UnionWith(Enum.GetValues<DamageType>());
+                foreach (var DamageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+                {
+                    _supportedDamageGroups.Add(DamageGroup);
+                    foreach (var SupportedDamageType in DamageGroup.DamageTypes)
+                    {
+                        _supportedDamageTypes.Add(SupportedDamageType);
+                    }
+                }
+
                 return;
             }
 
-            foreach (var supportedClass in _supportedClasses)
+            foreach (var supportedClassID in _supportedDamageGroupsButAsStrings)
             {
-                foreach (var supportedType in supportedClass.ToTypes())
+                var DamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
+                _supportedDamageGroups.Add(DamageGroup);
+                foreach (var DamageType in DamageGroup.DamageTypes)
                 {
-                    _supportedTypes.Add(supportedType);
+                    _supportedDamageTypes.Add(DamageType);
                 }
             }
 
-            foreach (var originalType in _supportedTypes)
-            {
-                _supportedClasses.Add(originalType.ToClass());
-            }
         }
     }
 }

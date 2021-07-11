@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Destructible
@@ -30,6 +31,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
+            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
 
             IEntity sDestructibleEntity = null;
             IDamageableComponent sDamageableComponent = null;
@@ -49,10 +51,11 @@ namespace Content.IntegrationTests.Tests.Destructible
             await server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
+                var BruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("Brute");
 
                 Assert.DoesNotThrow(() =>
                 {
-                    Assert.True(sDamageableComponent.ChangeDamage(DamageClass.Brute, 50, true));
+                    Assert.True(sDamageableComponent.ChangeDamage(BruteDamageGroup, 50, true));
                 });
 
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
