@@ -34,10 +34,6 @@ namespace Content.Server.NodeContainer.Nodes
         [DataField("pipeDirection")]
         public PipeDirection PipeDirection { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("connectToContainedEntities")]
-        public bool ConnectToContainedEntities { get; set; } = false;
-
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
         ///     Used by <see cref="PipeVisualState"/>.
@@ -161,24 +157,6 @@ namespace Content.Server.NodeContainer.Nodes
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
                 {
                     yield return pipe;
-                }
-            }
-
-            if (!ConnectionsEnabled || !ConnectToContainedEntities || !Owner.TryGetComponent(out ContainerManagerComponent? containerManager))
-                yield break;
-
-            // TODO ATMOS Kill it with fire.
-            foreach (var container in containerManager.GetAllContainers())
-            {
-                foreach (var entity in container.ContainedEntities)
-                {
-                    if (!entity.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                        continue;
-
-                    foreach (var node in nodeContainer.Nodes.Values)
-                    {
-                        yield return node;
-                    }
                 }
             }
         }
