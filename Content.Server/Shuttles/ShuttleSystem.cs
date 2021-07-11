@@ -12,8 +12,6 @@ namespace Content.Server.Shuttles
 {
     internal sealed class ShuttleSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         private const float TileMassMultiplier = 1f;
 
         // TODO: Replace with thrusters
@@ -27,19 +25,6 @@ namespace Content.Server.Shuttles
 
             SubscribeLocalEvent<GridInitializeEvent>(HandleGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(HandleGridFixtureChange);
-
-            // TODO: Okay so this doesn't work but also I'd need to fuck around with GameTicker as DefaultGridId isn't set when the gridinitialize is being called.
-            // Just yell at me to do it later.
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.DefaultGridShuttle, _ =>
-            {
-                var ticker = Get<GameTicker>();
-                if (!EntityManager.TryGetEntity(_mapManager.GetGrid(ticker.DefaultGridId).GridEntityId,
-                    out var gridEnt) ||
-                    !gridEnt.TryGetComponent(out ShuttleComponent? shuttleComponent)) return;
-
-                Toggle(shuttleComponent);
-            });
         }
 
         private void HandleGridFixtureChange(GridFixtureChangeEvent args)
