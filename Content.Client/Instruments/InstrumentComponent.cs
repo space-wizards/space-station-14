@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Instruments;
 using Content.Shared.Physics;
+using Robust.Client;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
@@ -255,7 +256,7 @@ namespace Content.Client.Instruments
             _renderer = null;
             _midiEventBuffer.Clear();
 
-            if (!fromStateChange)
+            if (!fromStateChange && IoCManager.Resolve<INetManager>().IsConnected)
             {
                 SendNetworkMessage(new InstrumentStopMidiMessage());
             }
