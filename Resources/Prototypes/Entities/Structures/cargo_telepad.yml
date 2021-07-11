@@ -15,7 +15,7 @@
       layer:
       - Passable
   - type: Sprite
-    sprite: Constructible/Specific/Cargo/teleporter.rsi
+    sprite: Structures/cargo_telepad.rsi
     state: offline
     drawdepth: FloorObjects
   - type: Damageable
