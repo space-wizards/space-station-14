@@ -179,15 +179,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             canister.LastPressure = canister.Air.Pressure;
 
-            if (portNode.Air.Pressure < 10)
+            if (canister.Air.Pressure < 10)
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 0);
             }
-            else if (portNode.Air.Pressure < Atmospherics.OneAtmosphere)
+            else if (canister.Air.Pressure < Atmospherics.OneAtmosphere)
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 1);
             }
-            else if (portNode.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
+            else if (canister.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 2);
             }
