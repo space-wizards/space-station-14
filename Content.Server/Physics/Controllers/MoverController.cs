@@ -104,6 +104,7 @@ namespace Content.Server.Physics.Controllers
             // inputs will do different things.
             // TODO: Do that
             float speedCap;
+            var angularSpeed = 20000f;
 
             switch (shuttleComponent.Mode)
             {
@@ -111,6 +112,16 @@ namespace Content.Server.Physics.Controllers
                     if (mover.VelocityDir.walking.Length != 0f)
                         physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler);
 
+                    speedCap = _shuttleDockSpeedCap;
+                    break;
+                case ShuttleMode.Cruise:
+                    if (mover.VelocityDir.walking.Length != 0.0f)
+                    {
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * 10 * mover.VelocityDir.walking.Y);
+                        physicsComponent.ApplyAngularImpulse(mover.VelocityDir.walking.X * angularSpeed);
+                    }
+
+                    // TODO WHEN THIS ACTUALLY WORKS
                     speedCap = _shuttleDockSpeedCap;
                     break;
                 default:

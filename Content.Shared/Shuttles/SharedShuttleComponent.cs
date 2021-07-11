@@ -23,5 +23,6 @@ namespace Content.Shared.Shuttles
     public enum ShuttleMode : byte
     {
         Docking,
+        Cruise,
     }
 }
