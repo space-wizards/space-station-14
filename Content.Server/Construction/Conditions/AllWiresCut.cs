@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

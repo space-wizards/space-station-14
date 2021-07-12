@@ -9,12 +9,12 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PowerReceiverComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
+            SubscribeLocalEvent<ApcPowerReceiverComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
         private static void BodyTypeChanged(
             EntityUid uid,
-            PowerReceiverComponent component,
+            ApcPowerReceiverComponent component,
             PhysicsBodyTypeChangedEvent args)
         {
             component.AnchorUpdate();

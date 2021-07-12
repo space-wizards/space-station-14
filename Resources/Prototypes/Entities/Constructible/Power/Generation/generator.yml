@@ -33,12 +33,11 @@
     examinable: true
     nodes:
       output:
-        !type:AdjacentNode
+        !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
+    supplyRampRate: 500
+    supplyRampTolerance: 500
   - type: Anchorable
   - type: Pullable
-  - type: ClientEntitySpawner
-    prototypes:
-    - HVDummyWire

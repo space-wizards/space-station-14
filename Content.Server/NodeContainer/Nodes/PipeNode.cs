@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -13,9 +12,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
+namespace Content.Server.NodeContainer.Nodes
 {
     /// <summary>
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeDirection"/>
@@ -33,10 +33,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         [DataField("pipeDirection")]
         public PipeDirection PipeDirection { get; private set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("connectToContainedEntities")]
-        public bool ConnectToContainedEntities { get; set; } = false;
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
@@ -63,28 +59,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             set
             {
                 _connectionsEnabled = value;
-                RefreshNodeGroup();
+
+                if (NodeGroup != null)
+                    EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
             }
         }
+
+        [DataField("connectionsEnabled")]
+        private bool _connectionsEnabled = true;
 
         [DataField("rotationsEnabled")]
         public bool RotationsEnabled { get; set; } = true;
 
         /// <summary>
-        ///     The <see cref="IPipeNet"/> this pipe is a part of. Set to <see cref="PipeNet.NullNet"/> when not in an <see cref="IPipeNet"/>.
+        ///     The <see cref="IPipeNet"/> this pipe is a part of.
         /// </summary>
         [ViewVariables]
-        private IPipeNet _pipeNet = PipeNet.NullNet;
-
-        [DataField("connectionsEnabled")]
-        private bool _connectionsEnabled = true;
-
-        /// <summary>
-        ///     Whether to ignore the pipenet and return the environment's air.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("environmentalAir")]
-        public bool EnvironmentalAir { get; set; } = false;
+        private IPipeNet? PipeNet => (IPipeNet?) NodeGroup;
 
         /// <summary>
         ///     The gases in this pipe.
@@ -92,20 +83,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public GasMixture Air
         {
-            get => !EnvironmentalAir ? _pipeNet.Air : Owner.Transform.Coordinates.GetTileAir() ?? GasMixture.SpaceGas;
-            set => _pipeNet.Air = value;
+            get => PipeNet?.Air ?? GasMixture.SpaceGas;
+            set
+            {
+                DebugTools.Assert(PipeNet != null);
+                PipeNet!.Air = value;
+            }
         }
 
         public void AssumeAir(GasMixture giver)
         {
-            if (EnvironmentalAir)
-            {
-                var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
-                tileAtmosphere?.AssumeAir(giver);
-                return;
-            }
-
-            EntitySystem.Get<AtmosphereSystem>().Merge(_pipeNet.Air, giver);
+            if(PipeNet != null)
+                EntitySystem.Get<AtmosphereSystem>().Merge(PipeNet.Air, giver);
         }
 
         [ViewVariables]
@@ -128,13 +117,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void JoinPipeNet(IPipeNet pipeNet)
         {
-            _pipeNet = pipeNet;
-            OnConnectedDirectionsNeedsUpdating();
-        }
-
-        public void ClearPipeNet()
-        {
-            _pipeNet = PipeNet.NullNet;
             OnConnectedDirectionsNeedsUpdating();
         }
 
@@ -146,12 +128,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             if (!RotationsEnabled) return;
             var diff = ev.NewRotation - ev.OldRotation;
             PipeDirection = PipeDirection.RotatePipeDirection(diff);
-            RefreshNodeGroup();
             OnConnectedDirectionsNeedsUpdating();
             UpdateAppearance();
         }
 
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
             {
@@ -165,24 +146,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     yield return pipe;
                 }
             }
-
-            if (!ConnectionsEnabled || !ConnectToContainedEntities || !Owner.TryGetComponent(out ContainerManagerComponent? containerManager))
-                yield break;
-
-            // TODO ATMOS Kill it with fire.
-            foreach (var container in containerManager.GetAllContainers())
-            {
-                foreach (var entity in container.ContainedEntities)
-                {
-                    if (!entity.TryGetComponent(out NodeContainerComponent? nodeContainer))
-                        continue;
-
-                    foreach (var node in nodeContainer.Nodes.Values)
-                    {
-                        yield return node;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -192,17 +155,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             if (!Anchored)
                 yield break;
-
-            if (pipeDir is PipeDirection.Port or PipeDirection.Connector)
-            {
-                foreach (var pipe in PipesInTile())
-                {
-                    if (pipe.Anchored && pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
-                        yield return pipe;
-                }
-
-                yield break;
-            }
 
             foreach (var pipe in PipesInDirection(pipeDir))
             {
@@ -214,7 +166,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes from entities on the tile adjacent in a direction.
         /// </summary>
-        private IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
+        protected IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
             if (!Owner.Transform.Anchored)
                 yield break;
@@ -235,9 +187,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     Gets the pipes from entities on the tile adjacent in a direction.
+        ///     Gets the pipes from entities on the same tile.
         /// </summary>
-        private IEnumerable<PipeNode> PipesInTile()
+        protected IEnumerable<PipeNode> PipesInTile()
         {
             if (!Owner.Transform.Anchored)
                 yield break;

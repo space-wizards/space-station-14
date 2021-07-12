@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Components;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -32,6 +33,8 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            UpdatesAfter.Add(typeof(NodeGroupSystem));
 
             InitializeGases();
             InitializeCVars();

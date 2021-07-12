@@ -82,7 +82,7 @@ namespace Content.Server.Fluids.Components
                 BreakOnStun = true,
                 BreakOnDamage = true,
             };
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterArgs);
 
             _currentlyUsing.Remove(eventArgs.Using.Uid);
 

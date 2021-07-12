@@ -21,7 +21,7 @@
         - Opaque
         - MobImpassable
         - SmallImpassable
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key

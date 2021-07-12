@@ -24,7 +24,7 @@
       examinable: true
       nodes:
         input:
-          !type:AdjacentNode
+          !type:CableDeviceNode
           nodeGroupID: HVPower
     - type: Construction
       graph: particleAcceleratorPowerBox

@@ -61,11 +61,11 @@ namespace Content.Server.Research.Components
             }
         }
 
-        /// <remarks>If no <see cref="PowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
+        /// <remarks>If no <see cref="ApcPowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
         [ViewVariables]
         public bool CanRun => _powerReceiver is null || _powerReceiver.Powered;
 
-        private PowerReceiverComponent? _powerReceiver;
+        private ApcPowerReceiverComponent? _powerReceiver;
 
         protected override void Initialize()
         {

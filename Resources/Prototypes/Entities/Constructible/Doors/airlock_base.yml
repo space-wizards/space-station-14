@@ -46,7 +46,7 @@
       close_sound: /Audio/Machines/airlock_close.ogg
       deny_sound: /Audio/Machines/airlock_deny.ogg
     - type: WiresVisualizer
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock

@@ -357,3 +357,19 @@
     contents:
       - id: FoodDonkpocketHonk
         amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketDink
+  name: box of dink-pockets
+  description: Net Zero carbohydrates! No need for heating!
+  components:
+  - type: Sprite
+    state: dink-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: green
+  - type: StorageFill
+    contents:
+      - id: FoodDonkpocketDink
+        amount: 6
