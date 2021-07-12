@@ -2,12 +2,14 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -49,6 +51,21 @@ namespace Content.Server.Chemistry.Components
         [DataField("maxTransferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit MaximumTransferAmount { get; set; } = ReagentUnit.New(50);
+
+        /// <summary>
+        ///     Subjectively, which transfer amount would be best for most activities given the maximum
+        ///     transfer amount.
+        /// </summary>
+        public ReagentUnit SubjectiveBestTransferAmount() =>
+            MaximumTransferAmount.Int() switch
+            {
+                <= 5 => ReagentUnit.New(1),
+                (> 5) and (<= 25) => ReagentUnit.New(5),
+                (> 25) and (<= 50) => ReagentUnit.New(10),
+                (> 50) and (<= 100) => ReagentUnit.New(20),
+                (> 100) and (<= 500) => ReagentUnit.New(50),
+                (> 500) => ReagentUnit.New(100)
+            };
 
         /// <summary>
         ///     Can this entity take reagent from reagent tanks?
@@ -178,6 +195,114 @@ namespace Content.Server.Chemistry.Components
             target.Refill(solution);
 
             return actualAmount;
+        }
+
+
+        [Verb]
+        public sealed class MinimumTransferVerb : Verb<SolutionTransferComponent>
+        {
+            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-min",
+                    ("amount", component.MinimumTransferAmount.Int()));
+                data.CategoryData = VerbCategories.SetTransferAmount;
+            }
+
+            protected override void Activate(IEntity user, SolutionTransferComponent component)
+            {
+                component.TransferAmount = component.MinimumTransferAmount;
+                user.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount",
+                    ("amount", component.TransferAmount.Int())));
+            }
+        }
+
+        [Verb]
+        public sealed class DefaultTransferVerb : Verb<SolutionTransferComponent>
+        {
+            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                var amt = component.SubjectiveBestTransferAmount();
+                if (amt > component.MinimumTransferAmount && amt < component.MaximumTransferAmount)
+                {
+                    data.Visibility = VerbVisibility.Visible;
+                    data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-ideal",
+                        ("amount", amt.Int()));
+                    data.CategoryData = VerbCategories.SetTransferAmount;
+                }
+                else
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                }
+            }
+
+            protected override void Activate(IEntity user, SolutionTransferComponent component)
+            {
+                component.TransferAmount = component.SubjectiveBestTransferAmount();
+                user.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", component.TransferAmount.Int())));
+            }
+        }
+
+        [Verb]
+        public sealed class MaximumTransferVerb : Verb<SolutionTransferComponent>
+        {
+            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-max",
+                    ("amount", component.MaximumTransferAmount));
+                data.CategoryData = VerbCategories.SetTransferAmount;
+            }
+
+            protected override void Activate(IEntity user, SolutionTransferComponent component)
+            {
+                component.TransferAmount = component.MaximumTransferAmount;
+                user.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", component.TransferAmount.Int())));
+            }
+        }
+
+        [Verb]
+        public sealed class CustomTransferVerb : Verb<SolutionTransferComponent>
+        {
+            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("comp-solution-transfer-verb-transfer-amount-custom");
+                data.CategoryData = VerbCategories.SetTransferAmount;
+            }
+
+            protected override void Activate(IEntity user, SolutionTransferComponent component)
+            {
+                if (!user.TryGetComponent<ActorComponent>(out var actor))
+                {
+                    return;
+                }
+                component.UserInterface?.Open(actor.PlayerSession);
+            }
         }
     }
 }
