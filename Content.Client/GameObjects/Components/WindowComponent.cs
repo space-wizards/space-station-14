@@ -18,13 +18,7 @@ namespace Content.Client.GameObjects.Components
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [DataField("base")]
-        private string _stateBase = "window";
-
-        [DataField("overlayRsi")]
-        private string _overlayRsiPath = "/Textures/Constructible/Structures/Walls/low_wall.rsi";
-
-        [DataField("cracksRsi")]
-        private string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
+        private string? _stateBase;
 
         private ISpriteComponent? _sprite;
 
@@ -45,7 +39,7 @@ namespace Content.Client.GameObjects.Components
             if (_sprite != null)
             {
                 var state0 = $"{_stateBase}0";
-                const string defaultOverlayState0 = "metal_over_0"; // Overriden when placed with an actual low wall, so doesn't matter what it is
+                const string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
                 _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
                 _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
                 _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
@@ -68,16 +62,6 @@ namespace Content.Client.GameObjects.Components
                 _sprite.LayerMapSet(WindowDamageLayers.DamageSW, _sprite.AddLayerState("0_1", cracksRSIPath));
                 _sprite.LayerSetDirOffset(WindowDamageLayers.DamageSW, SpriteComponent.DirectionOffset.Clockwise);
                 _sprite.LayerSetVisible(WindowDamageLayers.DamageSW, false);
-
-                // Wall overlay layers
-                _sprite.LayerMapSet(OverlayCornerLayers.SE, _sprite.AddLayerState(defaultOverlayState0, _overlayRsiPath));
-                _sprite.LayerSetDirOffset(OverlayCornerLayers.SE, SpriteComponent.DirectionOffset.None);
-                _sprite.LayerMapSet(OverlayCornerLayers.NE, _sprite.AddLayerState(defaultOverlayState0, _overlayRsiPath));
-                _sprite.LayerSetDirOffset(OverlayCornerLayers.NE, SpriteComponent.DirectionOffset.CounterClockwise);
-                _sprite.LayerMapSet(OverlayCornerLayers.NW, _sprite.AddLayerState(defaultOverlayState0, _overlayRsiPath));
-                _sprite.LayerSetDirOffset(OverlayCornerLayers.NW, SpriteComponent.DirectionOffset.Flip);
-                _sprite.LayerMapSet(OverlayCornerLayers.SW, _sprite.AddLayerState(defaultOverlayState0, _overlayRsiPath));
-                _sprite.LayerSetDirOffset(OverlayCornerLayers.SW, SpriteComponent.DirectionOffset.Clockwise);
             }
         }
 
@@ -94,23 +78,12 @@ namespace Content.Client.GameObjects.Components
                 return;
             }
 
-            if (_sprite != null && lowWall.Owner.TryGetComponent<SpriteComponent>(out var wallSprite))
+            if (_sprite != null)
             {
-                // How the window actually looks
-                _sprite.LayerSetState(CornerLayers.NE, $"{_stateBase}{(int) lowWall.LastWallCornerNE}");
-                _sprite.LayerSetState(CornerLayers.SE, $"{_stateBase}{(int) lowWall.LastWallCornerSE}");
-                _sprite.LayerSetState(CornerLayers.SW, $"{_stateBase}{(int) lowWall.LastWallCornerSW}");
-                _sprite.LayerSetState(CornerLayers.NW, $"{_stateBase}{(int) lowWall.LastWallCornerNW}");
-
-                // The low wall overlays on top of the window, rendered to add depth
-                _sprite.LayerSetState(OverlayCornerLayers.NE, $"{lowWall.StateBase}over_{(int) lowWall.LastOverlayCornerNE}", _overlayRsiPath);
-                _sprite.LayerSetState(OverlayCornerLayers.SE, $"{lowWall.StateBase}over_{(int) lowWall.LastOverlayCornerSE}", _overlayRsiPath);
-                _sprite.LayerSetState(OverlayCornerLayers.SW, $"{lowWall.StateBase}over_{(int) lowWall.LastOverlayCornerSW}", _overlayRsiPath);
-                _sprite.LayerSetState(OverlayCornerLayers.NW, $"{lowWall.StateBase}over_{(int) lowWall.LastOverlayCornerNW}", _overlayRsiPath);
-                _sprite.LayerSetColor(OverlayCornerLayers.NE, wallSprite.Color);
-                _sprite.LayerSetColor(OverlayCornerLayers.SE, wallSprite.Color);
-                _sprite.LayerSetColor(OverlayCornerLayers.SW, wallSprite.Color);
-                _sprite.LayerSetColor(OverlayCornerLayers.NW, wallSprite.Color);
+                _sprite.LayerSetState(CornerLayers.NE, $"{_stateBase}{(int) lowWall.LastCornerNE}");
+                _sprite.LayerSetState(CornerLayers.SE, $"{_stateBase}{(int) lowWall.LastCornerSE}");
+                _sprite.LayerSetState(CornerLayers.SW, $"{_stateBase}{(int) lowWall.LastCornerSW}");
+                _sprite.LayerSetState(CornerLayers.NW, $"{_stateBase}{(int) lowWall.LastCornerNW}");
             }
         }
 
@@ -140,14 +113,5 @@ namespace Content.Client.GameObjects.Components
         DamageNE,
         DamageNW,
         DamageSW
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum OverlayCornerLayers : byte
-    {
-        SE,
-        NE,
-        NW,
-        SW,
     }
 }
