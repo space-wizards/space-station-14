@@ -51,7 +51,7 @@ namespace Content.Server.Physics
     public class TestbedCommand : IConsoleCommand
     {
         public string Command => "testbed";
-        public string Description => "Loads a physics testbed and teleports your player there";
+        public string Description => "Loads a physics testbed on the specified map.";
         public string Help => $"{Command} <mapid> <test>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -162,7 +162,6 @@ namespace Content.Server.Physics
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
-                    box.SleepingAllowed = false;
                     shape = new PolygonShape();
                     shape.SetAsBox(0.5f, 0.5f);
                     box.FixedRotation = false;
@@ -226,7 +225,6 @@ namespace Content.Server.Physics
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
-                    box.SleepingAllowed = false;
                     shape = new PhysShapeCircle {Radius = 0.5f};
                     box.FixedRotation = false;
                     // TODO: Need to detect shape and work out if we need to use fixedrotation
