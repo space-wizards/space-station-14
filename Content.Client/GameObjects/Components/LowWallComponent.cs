@@ -104,7 +104,7 @@ namespace Content.Client.GameObjects.Components
                 cornerNE |= CornerFill.CounterClockwise;
                 cornerNW |= CornerFill.Clockwise;
 
-                if (!nl)
+                if (!nl && !e && !w)
                 {
                     lowCornerNE |= CornerFill.CounterClockwise;
                     lowCornerNW |= CornerFill.Clockwise;
