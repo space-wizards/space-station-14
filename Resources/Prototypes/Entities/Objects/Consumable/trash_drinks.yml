@@ -14,10 +14,6 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: Drink
     isOpen: true
   - type: Spillable
