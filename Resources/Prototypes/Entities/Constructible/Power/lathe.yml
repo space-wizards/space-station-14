@@ -30,7 +30,7 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
 
 - type: entity
   parent: BaseLathe
@@ -138,8 +138,8 @@
       - SheetRGlass
       - SheetPlastic
       - CableStack
-      - MVWireStack
-      - HVWireStack
+      - CableMVStack
+      - CableHVStack
       - ConveyorAssembly
       - RCD
       - RCDAmmo

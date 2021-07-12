@@ -27,11 +27,11 @@
         prob: 0.05
       - id: ClothingHeadHatHardhatRed
         prob: 0.4
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
         prob: 0.3
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
         prob: 0.3
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
         prob: 0.3
 
 - type: entity
@@ -47,9 +47,9 @@
         prob: 0.05
       - id: APCElectronics
         prob: 0.1
-      - id: MVWireStack
+      - id: CableMVStack
         prob: 0.2
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
         prob: 0.3
 
 - type: entity
@@ -91,7 +91,7 @@
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag
         prob: 0.15
-        
+
 - type: entity
   id: LockerRadiationSuitFilled
   parent: LockerRadiationSuit

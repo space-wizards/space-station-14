@@ -1,6 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.Chemistry.Components;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
 {

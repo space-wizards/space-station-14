@@ -1,10 +1,10 @@
 using System.Linq;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.PDA;
+using Content.Server.Access.Components;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Shared.Access;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
@@ -17,15 +17,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Sandbox
 {
-    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
+    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager, IEntityEventSubscriber
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
-        [Dependency] private readonly IGameTicker _gameTicker = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -46,14 +45,14 @@ namespace Content.Server.Sandbox
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus));
-            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn), SandboxRespawnReceived);
-            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessReceived);
-            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost), SandboxGiveAghostReceived);
-            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide), SandboxSuicideReceived);
+            _netManager.RegisterNetMessage<MsgSandboxStatus>();
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>(SandboxRespawnReceived);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(SandboxGiveAccessReceived);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(SandboxGiveAghostReceived);
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>(SandboxSuicideReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            _gameTicker.OnRunLevelChanged += GameTickerOnOnRunLevelChanged;
+            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, GameTickerOnOnRunLevelChanged);
 
             _placementManager.AllowPlacementFunc = placement =>
             {
@@ -74,10 +73,10 @@ namespace Content.Server.Sandbox
             };
         }
 
-        private void GameTickerOnOnRunLevelChanged(GameRunLevelChangedEventArgs obj)
+        private void GameTickerOnOnRunLevelChanged(GameRunLevelChangedEvent obj)
         {
             // Automatically clear sandbox state when round resets.
-            if (obj.NewRunLevel == GameRunLevel.PreRoundLobby)
+            if (obj.New == GameRunLevel.PreRoundLobby)
             {
                 IsSandboxEnabled = false;
             }
@@ -103,7 +102,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _gameTicker.Respawn(player);
+            EntitySystem.Get<GameTicker>().Respawn(player);
         }
 
         private void SandboxGiveAccessReceived(MsgSandboxGiveAccess message)

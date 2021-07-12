@@ -5,7 +5,7 @@
   name: arcade
   parent: ComputerBase
   components:
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:

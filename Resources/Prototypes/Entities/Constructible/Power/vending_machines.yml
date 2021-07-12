@@ -38,7 +38,7 @@
       type: VendingMachineBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending
@@ -54,8 +54,6 @@
     pack: AmmoVendInventory
   - type: Advertise
     pack: AmmoVendAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/ammo.rsi
@@ -84,8 +82,6 @@
     pack: BoozeOMatInventory
   - type: Advertise
     pack: BoozeOMatAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
@@ -116,8 +112,6 @@
     pack: BarDrobe
   - type: Advertise
     pack: BarDrobeAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/bardrobe.rsi
     layers:
@@ -174,8 +168,6 @@
     pack: CigaretteMachineInventory
   - type: Advertise
     pack: CigaretteMachineAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cigs.rsi
@@ -206,8 +198,6 @@
     pack: ClothesMateInventory
   - type: Advertise
     pack: ClothesMateAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/clothing.rsi
@@ -237,8 +227,6 @@
     pack: HotDrinksMachineInventory
   - type: Advertise
     pack: HotDrinksMachineAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/coffee.rsi
@@ -273,8 +261,6 @@
     pack: RobustSoftdrinksInventory
   - type: Advertise
     pack: RobustSoftdrinksAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cola.rsi
@@ -305,8 +291,6 @@
     pack: DinnerwareInventory
   - type: Advertise
     pack: DinnerwareAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
     layers:
@@ -336,8 +320,6 @@
     pack: DiscountDansInventory
   - type: Advertise
     pack: DiscountDansAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/discount.rsi
@@ -395,8 +377,6 @@
     pack: NanoMedPlusInventory
   - type: Advertise
     pack: NanoMedAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/medical.rsi
     layers:
@@ -428,8 +408,6 @@
     pack: NutriMaxInventory
   - type: Advertise
     pack: NutriMaxAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/nutri.rsi
     layers:
@@ -460,8 +438,6 @@
     pack: SecTechInventory
   - type: Advertise
     pack: SecTechAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sec.rsi
     layers:
@@ -491,8 +467,6 @@
     pack: MegaSeedServitorInventory
   - type: Advertise
     pack: MegaSeedAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/seeds.rsi
     layers:
@@ -522,8 +496,6 @@
     pack: SmartFridgeInventory
   - type: Advertise
     pack: SmartFridgeAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
@@ -551,8 +523,6 @@
     pack: GetmoreChocolateCorpInventory
   - type: Advertise
     pack: GetmoreChocolateCorpAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
@@ -582,8 +552,6 @@
     pack: BodaInventory
   - type: Advertise
     pack: BodaAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
@@ -613,8 +581,6 @@
     pack: AutoDrobeInventory
   - type: Advertise
     pack: AutoDrobeAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/theater.rsi
@@ -648,8 +614,6 @@
     pack: VendomatInventory
   - type: Advertise
     pack: VendomatAds
-    minWait: 480 # 8 minutes
-    maxWait: 600 # 10 minutes
   - type: Speech
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vendomat.rsi

@@ -1,9 +1,10 @@
 ﻿#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Unit.Components;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Disposal;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Power.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -84,7 +85,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   components:
   - type: DisposalUnit
   - type: Anchorable
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
 
@@ -154,7 +155,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Flush(unit, false, human, wrench);
 
                 // Remove power need
-                Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent? power));
+                Assert.True(disposalUnit.TryGetComponent(out ApcPowerReceiverComponent? power));
                 power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 

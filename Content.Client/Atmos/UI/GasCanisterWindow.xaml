@@ -1,0 +1,52 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            MinSize="480 400" Title="Canister">
+    <VBoxContainer Margin="5 5 5 5" SeparationOverride="10">
+        <VBoxContainer VerticalExpand="True">
+            <Label Text="{Loc comp-gas-canister-ui-canister-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <HBoxContainer>
+                <Label Text="{Loc comp-gas-canister-ui-canister-pressure}"/>
+                <Label Name="CanisterPressureLabel" Align="Center" HorizontalExpand="True"/>
+            </HBoxContainer>
+            <HBoxContainer>
+                <Label Text="{Loc comp-gas-canister-ui-port-status}"/>
+                <Label Name="PortStatusLabel" Align="Center" HorizontalExpand="True"/>
+            </HBoxContainer>
+        </VBoxContainer>
+
+        <VBoxContainer VerticalExpand="True">
+            <Label Text="{Loc comp-gas-canister-ui-holding-tank-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <HBoxContainer>
+                <Label Text="{Loc comp-gas-canister-ui-holding-tank-label}"/>
+                <Label Name="TankLabelLabel" Text="{Loc comp-gas-canister-ui-holding-tank-label-empty}" Align="Center" HorizontalExpand="True"/>
+                <Button Name="TankEjectButton" Text="{Loc comp-gas-canister-ui-holding-tank-eject}"/>
+            </HBoxContainer>
+            <HBoxContainer>
+                <Label Text="{Loc comp-gas-canister-ui-holding-tank-pressure}"/>
+                <Label Name="TankPressureLabel" Align="Center" HorizontalExpand="True"/>
+            </HBoxContainer>
+        </VBoxContainer>
+
+        <VBoxContainer VerticalExpand="True">
+            <Label Text="{Loc comp-gas-canister-ui-release-valve-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <HBoxContainer>
+                <VBoxContainer>
+                    <Label Text="{Loc comp-gas-canister-ui-release-pressure}"/>
+                    <Control VerticalExpand="True"/>
+                </VBoxContainer>
+                <VBoxContainer HorizontalExpand="True" Margin="15 0 0 15" SeparationOverride="5">
+                    <Slider Name="ReleasePressureSlider" HorizontalExpand="True"/>
+                    <Label Name="ReleasePressureLabel" Align="Center" HorizontalExpand="True"/>
+                </VBoxContainer>
+            </HBoxContainer>
+            <HBoxContainer>
+                <Label Text="{Loc comp-gas-canister-ui-release-valve}"/>
+                <Control HorizontalExpand="True"/>
+                <Button Name="ReleaseValveOpenButton" Text="{Loc comp-gas-canister-ui-release-valve-open}" ToggleMode="True"/>
+                <Button Name="ReleaseValveCloseButton" Text="{Loc comp-gas-canister-ui-release-valve-close}" ToggleMode="True"/>
+                <Control HorizontalExpand="True"/>
+            </HBoxContainer>
+        </VBoxContainer>
+    </VBoxContainer>
+</SS14Window>

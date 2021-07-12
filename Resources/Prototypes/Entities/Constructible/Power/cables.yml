@@ -1,0 +1,161 @@
+﻿- type: entity
+  abstract: true
+  id: CableBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Physics
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5, -0.5, 0.5, 0.5"
+        layer:
+        - Underplating
+  - type: InteractionOutline
+  - type: SnapGrid
+  - type: Sprite
+    netsync: false
+    drawdepth: BelowFloor
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: SubFloorHide
+  - type: CableVis
+    node: power
+
+- type: entity
+  parent: CableBase
+  id: CableHV
+  name: HV power cable
+  description: An orange high voltage power cable.
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/Wires/hv_cable.rsi
+    state: hvcable_0
+  - type: Icon
+    sprite: Constructible/Power/Wires/hv_cable.rsi
+    state: hvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: HVPower
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
+  - type: Cable
+    cableDroppedOnCutPrototype: CableHVStack1
+    cableType: HighVoltage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableHVStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: hvcable_
+
+- type: entity
+  parent: CableBase
+  id: CableMV
+  name: MV power cable
+  description: A medium voltage power cable.
+  components:
+  - type: Sprite
+    color: Yellow
+    sprite: Constructible/Power/Wires/mv_cable.rsi
+    state: mvcable_0
+  - type: Icon
+    color: Yellow
+    sprite: Constructible/Power/Wires/mv_cable.rsi
+    state: mvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: MVPower
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
+  - type: Cable
+    cableDroppedOnCutPrototype: CableMVStack1
+    cableType: MediumVoltage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableMVStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: mvcable_
+
+- type: entity
+  parent: CableBase
+  id: CableApcExtension
+  name: LV power cable
+  description: A cable used to connect machines to an APC. #ACPs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Constructible/Power/Wires/lv_cable.rsi
+    state: lvcable_0
+  - type: Icon
+    color: Green
+    sprite: Constructible/Power/Wires/lv_cable.rsi
+    state: lvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: Apc
+      wire:
+        !type:AdjacentNode
+        nodeGroupID: WireNet
+  - type: PowerProvider
+    voltage: Apc
+  - type: Cable
+    cableDroppedOnCutPrototype: CableApcStack1
+    cableType: Apc
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableApcStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: lvcable_

@@ -21,6 +21,7 @@
 # Donkpocket
 
 # Warm gives +5 nutriment.
+# Warm ones contain a small amount of Omnizine.
 
 - type: entity
   name: donk-pocket
@@ -68,6 +69,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 4
 
 - type: entity
   name: spicy-pocket
@@ -80,7 +83,7 @@
 
 - type: entity
   name: warm spicy-pocket
-  parent: FoodDonkpocketDank
+  parent: FoodDonkpocketSpicy
   id: FoodDonkpocketSpicyWarm
   description: The classic snack food, now maybe a bit too spicy.
   components:
@@ -89,6 +92,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 2
   - type: Sprite
     state: spicy
 
@@ -112,6 +117,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 2
 
 - type: entity
   name: pizza-pocket
@@ -131,13 +138,15 @@
   name: warm pizza-pocket
   parent: FoodDonkpocketPizza
   id: FoodDonkpocketPizzaWarm
-  description: An East Asian take on the classic stationside snack, now steamy and warm.
+  description: Cheese filling really hits the spot when warm.
   components:
   - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
+      - ReagentId: Omnizine
+        Quantity: 2
 
 - type: entity
   name: honk-pocket
@@ -150,6 +159,7 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 5
+      - ReagentId: Omnizine
   - type: Sprite
     state: banana
 
@@ -164,6 +174,8 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 2
 
 - type: entity
   name: berry-pocket
@@ -190,6 +202,10 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 2
+      - ReagentId: Glucose
+        Quantity: 2
 
 - type: entity
   name: gondola-pocket
@@ -215,3 +231,19 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 10
+      - ReagentId: Omnizine
+        Quantity: 2
+        
+- type: entity
+  name: dink-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketDink
+  description: An off-brand lizard donk-pocket, filled with pickled carrot and wrapped with seaweed. Best eaten cold, or even better, not eaten at all.
+  components:
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 2
+  - type: Sprite
+    state: dink

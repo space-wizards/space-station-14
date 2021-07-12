@@ -45,3 +45,19 @@
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
     prefix: inhand
+
+- type: entity
+  name: claymore
+  parent: BaseItem
+  id: Claymore
+  description: An ancient war blade.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage: 25
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    prefix: inhand

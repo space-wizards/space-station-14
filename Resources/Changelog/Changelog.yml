@@ -1267,3 +1267,117 @@ Entries:
   - {message: Disposal mailing units for now, type: Remove}
   id: 223
   time: '2021-06-04T00:26:08.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: added several simple (and probably unbalanced) medicines., type: Add}
+  id: 224
+  time: '2021-06-05T06:23:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Dead bodies can be pulled again, type: Fix}
+  id: 225
+  time: '2021-06-05T07:23:24.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Added error messages to cloning pod and medical scanner., type: Add}
+  - {message: Cloning pod is no longer pure network spam., type: Fix}
+  id: 226
+  time: '2021-06-05T17:33:00.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Oil, type: Add}
+  id: 227
+  time: '2021-06-05T17:53:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Interaction outlines removed from full-tile objects like walls, type: Tweak}
+  id: 228
+  time: '2021-06-05T18:19:06.0000000+00:00'
+- author: SethLafuente
+  changes:
+  - {message: Synaptizine damage per unit nerfed from 15 to 6, type: Tweak}
+  id: 229
+  time: '2021-06-06T18:14:46.0000000+00:00'
+- author: Timrod
+  changes:
+  - {message: Adds more starting equipment to Chemistry, type: Tweak}
+  id: 230
+  time: '2021-06-07T01:35:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Examining dead/catatonic people looks normal again, type: Fix}
+  id: 231
+  time: '2021-06-08T20:59:32.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fire extinguisher cabinets have been mapped in around the station.,
+    type: Add}
+  id: 232
+  time: '2021-06-09T02:10:29.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: claymore as a melee weapon, type: Add}
+  - {message: 'fixed the combat knife, laser gun and machete sprites', type: Fix}
+  id: 233
+  time: '2021-06-09T05:21:09.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: You can now see what players have on their hands with shift-click(examine),
+    type: Add}
+  id: 234
+  time: '2021-06-09T08:39:31.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Made windows and walls immune to punches and low damaging tools, type: Tweak}
+  - {message: Made reinforced and plasma windows stronger, type: Tweak}
+  id: 235
+  time: '2021-06-11T23:53:51.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Made RCDs unable to destroy reinforced walls and airlocks., type: Tweak}
+  id: 236
+  time: '2021-06-16T03:36:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix uncuffing yourself, type: Fix}
+  - {message: Can no longer break pulling when cuffed, type: Fix}
+  id: 237
+  time: '2021-06-16T14:37:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Solar control computers UI scale properly, better prediction, unusable
+      by ghosts', type: Fix}
+  id: 238
+  time: '2021-06-16T14:49:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Lights have been dimmed around the station for budgetary purposes.
+      Also, our incandescents are actually incandescents now.', type: Tweak}
+  id: 239
+  time: '2021-06-16T22:55:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Removes Warden, type: Remove}
+  id: 240
+  time: '2021-06-17T22:35:37.577392+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed ghosts not being able to warp to players., type: Fix}
+  id: 241
+  time: '2021-06-18T07:56:23.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Gas canisters and their UI have been reworked completely., type: Tweak}
+  - {message: You can now insert gas tanks in gas canisters., type: Add}
+  id: 242
+  time: '2021-06-19T11:25:05.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added a vox plushie., type: Add}
+  id: 243
+  time: '2021-06-19T18:12:55.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: More machines and station equipment is destructible, type: Tweak}
+  id: 244
+  time: '2021-06-19T19:34:01.0000000+00:00'
