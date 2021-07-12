@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Movement;
+﻿using Content.Server.Shuttle;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization.Manager.Attributes;

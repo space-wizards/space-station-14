@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.PDA;
-using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Access.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;

@@ -1,5 +1,6 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -29,10 +30,10 @@ namespace Content.Server.Construction.Conditions
             switch (Open)
             {
                 case true when !wires.IsPanelOpen:
-                    message.AddMarkup(Loc.GetString("First, open the maintenance panel.\n"));
+                    message.AddMarkup(Loc.GetString("construction-condition-wire-panel-open") + "\n");
                     return true;
                 case false when wires.IsPanelOpen:
-                    message.AddMarkup(Loc.GetString("First, close the maintenance panel.\n"));
+                    message.AddMarkup(Loc.GetString("construction-condition-wire-panel-close") + "\n");
                     return true;
             }
 

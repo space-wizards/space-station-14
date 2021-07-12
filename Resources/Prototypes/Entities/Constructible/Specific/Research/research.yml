@@ -21,9 +21,26 @@
         - MobImpassable
   - type: ResearchServer
   - type: TechnologyDatabase
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
 
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
@@ -60,4 +77,19 @@
   - type: Appearance
     visuals:
     - type: PowerDeviceVisualizer
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1

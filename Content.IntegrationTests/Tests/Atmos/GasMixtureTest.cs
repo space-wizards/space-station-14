@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using NUnit.Framework;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Atmos
 {
@@ -13,6 +15,10 @@ namespace Content.IntegrationTests.Tests.Atmos
         public async Task TestMerge()
         {
             var server = StartServerDummyTicker();
+
+            await server.WaitIdleAsync();
+
+            var atmosphereSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
 
             server.Assert(() =>
             {
@@ -30,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 Assert.That(b.TotalMoles, Is.EqualTo(50));
                 Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
 
-                b.Merge(a);
+                atmosphereSystem.Merge(b, a);
 
                 // b now has its contents and the contents of a
                 Assert.That(b.TotalMoles, Is.EqualTo(100));

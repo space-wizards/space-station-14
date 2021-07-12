@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
-using ContextMenuView = Content.Client.UserInterface.ContextMenu.ContextMenuView;
+using ContextMenuView = Content.Client.ContextMenu.UI.ContextMenuView;
 
 namespace Content.Client.Commands
 {

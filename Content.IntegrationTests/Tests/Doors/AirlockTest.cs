@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Doors;
-using Content.Shared.GameObjects.Components.Doors;
+using Content.Server.Doors.Components;
+using Content.Shared.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

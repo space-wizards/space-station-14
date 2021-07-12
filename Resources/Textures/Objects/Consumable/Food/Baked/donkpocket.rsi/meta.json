@@ -52,6 +52,12 @@
     {
       "name": "teriyaki-box"
     },
+	{
+      "name": "dink-box"
+    },
+	{
+      "name": "dink"
+    },
     {
       "name": "inhand-left",
       "directions": 4

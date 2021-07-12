@@ -16,7 +16,7 @@
 
 - type: technology
   name: "cleaning technology"
-  id: MopBucket 
+  id: MopBucket
   description: Start to a shiny clean station
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -44,7 +44,7 @@
   unlockedRecipes:
     - Scythe
     - Hatchet
-    - KitchenKnife  
+    - KitchenKnife
 
 - type: technology
   name: "advanced botany"
@@ -234,8 +234,8 @@
     - BasicResearch
   unlockedRecipes:
     - CableStack
-    - MVWireStack
-    - HVWireStack
+    - CableMVStack
+    - CableHVStack
     - LightBulb
     - LightTube
     - FirelockElectronics
