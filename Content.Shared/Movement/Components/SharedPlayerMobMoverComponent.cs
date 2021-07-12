@@ -1,7 +1,7 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -16,10 +16,10 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
+    [NetworkedComponent()]
     public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
         public override string Name => "PlayerMobMover";
-        public override uint? NetID => ContentNetIDs.PLAYER_MOB_MOVER;
 
         private float _stepSoundDistance;
         [DataField("grabRange")]
@@ -112,7 +112,7 @@ namespace Content.Shared.Movement.Components
             public float PushStrength;
             public float WeightlessStrength;
 
-            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength) : base(ContentNetIDs.PLAYER_MOB_MOVER)
+            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength)
             {
                 GrabRange = grabRange;
                 PushStrength = pushStrength;

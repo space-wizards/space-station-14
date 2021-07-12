@@ -1,16 +1,16 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Projectiles
 {
+    [NetworkedComponent()]
     public abstract class SharedProjectileComponent : Component
     {
         private bool _ignoreShooter = true;
         public override string Name => "Projectile";
-        public override uint? NetID => ContentNetIDs.PROJECTILE;
 
         public EntityUid Shooter { get; protected set; }
 
@@ -29,7 +29,7 @@ namespace Content.Shared.Projectiles
         [NetSerializable, Serializable]
         protected class ProjectileComponentState : ComponentState
         {
-            public ProjectileComponentState(EntityUid shooter, bool ignoreShooter) : base(ContentNetIDs.PROJECTILE)
+            public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {
                 Shooter = shooter;
                 IgnoreShooter = ignoreShooter;

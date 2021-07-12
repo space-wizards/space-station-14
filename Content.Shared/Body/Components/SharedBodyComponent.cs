@@ -12,9 +12,9 @@ using Content.Shared.Body.Template;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -26,13 +26,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
+
+    [NetworkedComponent()]
     public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Body";
-
-        public override uint? NetID => ContentNetIDs.BODY;
 
         [ViewVariables]
         [DataField("template", required: true)]
@@ -711,7 +711,7 @@ namespace Content.Shared.Body.Components
 
         public readonly (string slot, EntityUid partId)[] PartIds;
 
-        public BodyComponentState((string slot, EntityUid partId)[] partIds) : base(ContentNetIDs.BODY)
+        public BodyComponentState((string slot, EntityUid partId)[] partIds)
         {
             PartIds = partIds;
         }

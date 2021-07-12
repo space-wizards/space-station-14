@@ -4,19 +4,18 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Buckle.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
     {
         public sealed override string Name => "Buckle";
-
-        public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
@@ -64,7 +63,7 @@ namespace Content.Shared.Buckle.Components
     [Serializable, NetSerializable]
     public sealed class BuckleComponentState : ComponentState
     {
-        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide) : base(ContentNetIDs.BUCKLE)
+        public BuckleComponentState(bool buckled, int? drawDepth, EntityUid? lastEntityBuckledTo, bool dontCollide)
         {
             Buckled = buckled;
             DrawDepth = drawDepth;

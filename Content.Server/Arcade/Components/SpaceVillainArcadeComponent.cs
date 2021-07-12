@@ -7,7 +7,6 @@ using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

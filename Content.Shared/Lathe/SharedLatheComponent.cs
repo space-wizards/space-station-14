@@ -1,21 +1,21 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe
 {
+    [NetworkedComponent()]
     public class SharedLatheComponent : Component
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
         public override string Name => "Lathe";
-        public override uint? NetID => ContentNetIDs.LATHE;
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {

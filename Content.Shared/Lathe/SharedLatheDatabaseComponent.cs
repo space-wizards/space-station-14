@@ -2,9 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,10 +12,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Lathe
 {
+    [NetworkedComponent()]
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         public override string Name => "LatheDatabase";
-        public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
 
         [DataField("recipes")] private List<string> _recipeIds = new();
 
@@ -127,7 +127,7 @@ namespace Content.Shared.Lathe
     public class LatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
-        public LatheDatabaseState(List<string> recipes) : base(ContentNetIDs.LATHE_DATABASE)
+        public LatheDatabaseState(List<string> recipes)
         {
             Recipes = recipes;
         }

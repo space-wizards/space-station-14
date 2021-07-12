@@ -4,11 +4,11 @@ using Content.Client.Items.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Content.Shared.NetIDs;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -18,12 +18,12 @@ namespace Content.Client.Clothing
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
     [ComponentReference(typeof(ItemComponent))]
+    [NetworkedComponent()]
     public class ClothingComponent : ItemComponent
     {
         [DataField("femaleMask")]
         private FemaleClothingMask _femaleMask = FemaleClothingMask.UniformFull;
         public override string Name => "Clothing";
-        public override uint? NetID => ContentNetIDs.CLOTHING;
 
         private string? _clothingEquippedPrefix;
 

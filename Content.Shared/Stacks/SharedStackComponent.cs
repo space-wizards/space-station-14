@@ -1,6 +1,6 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,10 +9,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
+    [NetworkedComponent()]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         public sealed override string Name => "Stack";
-        public sealed override uint? NetID => ContentNetIDs.STACK;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
@@ -48,7 +48,7 @@ namespace Content.Shared.Stacks
         public int Count { get; }
         public int MaxCount { get; }
 
-        public StackComponentState(int count, int maxCount) : base(ContentNetIDs.STACK)
+        public StackComponentState(int count, int maxCount)
         {
             Count = count;
             MaxCount = maxCount;

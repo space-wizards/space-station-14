@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -19,11 +19,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
-
-        public sealed override uint? NetID => ContentNetIDs.HANDS;
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
 
@@ -867,7 +866,7 @@ namespace Content.Shared.Hands.Components
         public HandState[] Hands { get; }
         public string? ActiveHand { get; }
 
-        public HandsComponentState(HandState[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(HandState[] hands, string? activeHand = null)
         {
             Hands = hands;
             ActiveHand = activeHand;
