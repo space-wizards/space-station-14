@@ -1,13 +1,10 @@
-﻿using System;
-using Content.Client.Eui;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.Components.Observer;
+﻿using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.Chemistry.UI
 {
     [UsedImplicitly]
     public class TransferAmountBoundUserInterface : BoundUserInterface
