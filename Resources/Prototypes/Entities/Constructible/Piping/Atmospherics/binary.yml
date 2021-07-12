@@ -122,6 +122,6 @@
     - type: NodeContainer
       nodes:
         connected:
-          !type:PipeNode
+          !type:PortPipeNode
           nodeGroupID: Pipe
-          pipeDirection: SPBend
+          pipeDirection: South

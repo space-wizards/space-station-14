@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
@@ -6,6 +7,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -54,18 +56,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 containerManager.MakeContainer<ContainerSlot>(canister.ContainerName);
             }
-
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode))
-                return;
-
-            // Create a pipenet if we don't have one already.
-            portNode.CreateSingleNetImmediate();
-            Get<AtmosphereSystem>().Merge(portNode.Air, canister.InitialMixture);
-            portNode.Air.Temperature = canister.InitialMixture.Temperature;
-            portNode.Volume = canister.InitialMixture.Volume;
         }
 
         private void DirtyUI(EntityUid uid)
@@ -81,7 +71,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             string? tankLabel = null;
             var tankPressure = 0f;
 
-            if (ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) && containerManager.TryGetContainer(canister.ContainerName, out var tankContainer) && tankContainer.ContainedEntities.Count > 0)
+            if (ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
+                && containerManager.TryGetContainer(canister.ContainerName, out var tankContainer)
+                && tankContainer.ContainedEntities.Count > 0)
             {
                 var tank = tankContainer.ContainedEntities[0];
                 var tankComponent = tank.GetComponent<GasTankComponent>();
@@ -89,8 +81,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 tankPressure = tankComponent.Air.Pressure;
             }
 
-            ui.SetState(new GasCanisterBoundUserInterfaceState(metadata.EntityName, portNode.Air.Pressure,
-                portNode.NodeGroup!.Nodes.Count > 1, tankLabel, tankPressure,
+            ui.SetState(new GasCanisterBoundUserInterfaceState(metadata.EntityName, canister.Air.Pressure,
+                portNode.NodeGroup?.Nodes.Count > 1, tankLabel, tankPressure,
                 canister.ReleasePressure, canister.ReleaseValve,
                 canister.MinReleasePressure, canister.MaxReleasePressure));
         }
@@ -136,8 +128,28 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 || !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            if (!nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode))
+            if (!nodeContainer.TryGetNode(canister.PortName, out PortablePipeNode? portNode))
                 return;
+
+            var atmosphereSystem = Get<AtmosphereSystem>();
+
+            atmosphereSystem.React(canister.Air, portNode);
+
+            if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
+            {
+                var buffer = new GasMixture(net.Air.Volume + canister.Air.Volume);
+
+                atmosphereSystem.Merge(buffer, net.Air);
+                atmosphereSystem.Merge(buffer, canister.Air);
+
+                net.Air.Clear();
+                atmosphereSystem.Merge(net.Air, buffer);
+                net.Air.Multiply(net.Air.Volume / buffer.Volume);
+
+                canister.Air.Clear();
+                atmosphereSystem.Merge(canister.Air, buffer);
+                canister.Air.Multiply(canister.Air.Volume / buffer.Volume);
+            }
 
             // Release valve is open, release gas.
             if (canister.ReleaseValve)
@@ -146,38 +158,36 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                     return;
 
-                var atmosphereSystem = Get<AtmosphereSystem>();
-
                 if (container.ContainedEntities.Count > 0)
                 {
                     var gasTank = container.ContainedEntities[0].GetComponent<GasTankComponent>();
-                    atmosphereSystem.ReleaseGasTo(portNode.Air, gasTank.Air, canister.ReleasePressure);
+                    atmosphereSystem.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
                 }
                 else
                 {
                     var tileAtmosphere = canister.Owner.Transform.Coordinates.GetTileAtmosphere();
-                    atmosphereSystem.ReleaseGasTo(portNode.Air, tileAtmosphere?.Air, canister.ReleasePressure);
+                    atmosphereSystem.ReleaseGasTo(canister.Air, tileAtmosphere?.Air, canister.ReleasePressure);
                     tileAtmosphere?.Invalidate();
                 }
             }
 
             DirtyUI(uid);
 
-            // Nothing to do here.
-            if (MathHelper.CloseTo(portNode.Air.Pressure, canister.LastPressure))
+            // If last pressure is very close to the current pressure, do nothing.
+            if (MathHelper.CloseTo(canister.Air.Pressure, canister.LastPressure))
                 return;
 
-            canister.LastPressure = portNode.Air.Pressure;
+            canister.LastPressure = canister.Air.Pressure;
 
-            if (portNode.Air.Pressure < 10)
+            if (canister.Air.Pressure < 10)
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 0);
             }
-            else if (portNode.Air.Pressure < Atmospherics.OneAtmosphere)
+            else if (canister.Air.Pressure < Atmospherics.OneAtmosphere)
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 1);
             }
-            else if (portNode.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
+            else if (canister.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
             {
                 appearance.SetData(GasCanisterVisuals.PressureState, 2);
             }

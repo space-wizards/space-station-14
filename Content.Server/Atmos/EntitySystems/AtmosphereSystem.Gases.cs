@@ -263,7 +263,7 @@ namespace Content.Server.Atmos.EntitySystems
             Merge(destination, buffer);
         }
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
