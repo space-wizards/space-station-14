@@ -50,9 +50,9 @@ namespace Content.Server.Sound
 
         private static void TryEmitSound(BaseEmitSoundComponent component)
         {
-            if (!string.IsNullOrWhiteSpace(component.Sound.GetSound()))
+            if (component.Sound.TryGetSound(out var sound))
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(component.Owner), sound, component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
             }
             else
             {
