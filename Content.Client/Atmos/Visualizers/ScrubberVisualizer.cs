@@ -1,9 +1,8 @@
 using Content.Shared.Atmos.Piping.Unary.Visuals;
-using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Atmos.Piping
+namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
     public class ScrubberVisualizer : AppearanceVisualizer

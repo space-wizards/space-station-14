@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -8,10 +9,11 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Client.Atmos.Piping
+namespace Content.Client.Atmos.Visualizers
 {
     [UsedImplicitly]
     public class PipeConnectorVisualizer : AppearanceVisualizer, ISerializationHooks
@@ -62,6 +64,9 @@ namespace Content.Client.Atmos.Piping
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
                 return;
 
+            if (!component.TryGetData(PipeColorVisuals.Color, out Color color))
+                color = Color.White;
+
             if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState state))
                 return;
 
@@ -72,6 +77,7 @@ namespace Content.Client.Atmos.Piping
 
                 var layer = sprite.LayerMapGet(layerKey);
                 sprite.LayerSetVisible(layer, layerVisible);
+                sprite.LayerSetColor(layer, color);
             }
         }
 
