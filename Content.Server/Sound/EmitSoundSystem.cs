@@ -22,13 +22,33 @@ namespace Content.Server.Sound
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>((eUI, comp, arg) => HandleEmitSoundOn(comp));
-            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>((eUI, comp, arg) => HandleEmitSoundOn(comp));
-            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>((eUI, comp, arg) => HandleEmitSoundOn(comp));
-            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>((eUI, comp, args) => HandleEmitSoundOn(comp));
+            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>(HandleEmitSoundOnLand);
+            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>(HandleEmitSoundOnUseInHand);
+            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(HandleEmitSoundOnThrown);
+            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
         }
 
-        private void HandleEmitSoundOn(BaseEmitSoundComponent component)
+        private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
+        {
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
+        {
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnThrown(EntityUid eUI, BaseEmitSoundComponent component, ThrownEvent arg)
+        {
+            TryEmitSound(component);
+        }
+
+        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
+        {
+            TryEmitSound(component);
+        }
+
+        private static void TryEmitSound(BaseEmitSoundComponent component)
         {
             if (component.Sound.TryGetSound(out var soundName))
             {
