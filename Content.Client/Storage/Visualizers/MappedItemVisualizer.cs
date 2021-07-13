@@ -1,0 +1,71 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Storage.ItemCounter;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
+
+namespace Content.Client.Storage.Visualizers
+{
+    [UsedImplicitly]
+    public class MappedItemVisualizer : AppearanceVisualizer
+    {
+        [DataField("sprite")] private ResourcePath? _rsiPath;
+        private List<string> _spriteLayers = new();
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+
+            if (entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            {
+                _rsiPath ??= spriteComponent.BaseRSI!.Path!;
+            }
+        }
+
+
+        public override void OnChangeData(AppearanceComponent component)
+        {
+            base.OnChangeData(component);
+            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            {
+                if (_spriteLayers.Count == 0)
+                {
+                    InitLayers(spriteComponent, component);
+                }
+                EnableLayers(spriteComponent, component);
+                
+            }
+        }
+
+        private void InitLayers(ISpriteComponent spriteComponent, AppearanceComponent component)
+        {
+            if (!component.TryGetData<ShowLayerData>(StorageMapVisuals.InitLayers, out var wrapper))
+                return;
+
+            _spriteLayers.AddRange(wrapper.QueuedEntities);
+
+            foreach (var sprite in _spriteLayers)
+            {
+                spriteComponent.LayerMapReserveBlank(sprite);
+                spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(_rsiPath!, sprite));
+                spriteComponent.LayerSetVisible(sprite, false);
+            }
+        }
+
+        private void EnableLayers(ISpriteComponent spriteComponent, AppearanceComponent component)
+        {
+            if (!component.TryGetData<ShowLayerData>(StorageMapVisuals.LayerChanged, out var wrapper))
+                return;
+
+
+            foreach (var layerName in _spriteLayers)
+            {
+                var show = wrapper.QueuedEntities.Contains(layerName);
+                spriteComponent.LayerSetVisible(layerName, show);
+            }
+        }
+    }
+}
