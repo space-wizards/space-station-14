@@ -77,11 +77,6 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - fixtures:
-    - shape:
-        !type:PhysShapeGrid
-          grid: 0
-    type: Physics
   - uniqueMixes:
     - volume: 2500
       moles:

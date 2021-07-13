@@ -58,10 +58,6 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - fixtures:
-    - shape: !type:PhysShapeGrid
-        grid: 0
-    type: Physics
   - tiles:
       -1,-1: 0
       0,-1: 0
