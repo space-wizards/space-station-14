@@ -1,6 +1,6 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Items;
-using Content.Server.Sound;
+using Content.Server.Sound.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
