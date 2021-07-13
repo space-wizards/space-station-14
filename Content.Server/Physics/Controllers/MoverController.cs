@@ -1,22 +1,28 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttle;
+using Content.Server.Shuttles;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Shuttles;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -38,12 +44,17 @@ namespace Content.Server.Physics.Controllers
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
+        private float _shuttleDockSpeedCap;
+
         private HashSet<EntityUid> _excludedMobs = new();
 
         public override void Initialize()
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.ShuttleDockSpeedCap, value => _shuttleDockSpeedCap = value, true);
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -83,18 +94,65 @@ namespace Content.Server.Physics.Controllers
 
             if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
 
-            //TODO: Switch to shuttle component
-            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
+            if (!gridEntity.TryGetComponent(out ShuttleComponent? shuttleComponent) ||
+                !gridEntity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                physics = gridEntity.AddComponent<PhysicsComponent>();
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.CanCollide = true;
-                physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
+                return;
             }
 
-            // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
-            physics.ApplyForce(mover.VelocityDir.walking + mover.VelocityDir.sprinting);
-            mover.VelocityDir = (Vector2.Zero, Vector2.Zero);
+            // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
+            // inputs will do different things.
+            // TODO: Do that
+            float speedCap;
+            var angularSpeed = 20000f;
+
+            switch (shuttleComponent.Mode)
+            {
+                case ShuttleMode.Docking:
+                    if (mover.VelocityDir.walking.Length != 0f)
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler);
+
+                    speedCap = _shuttleDockSpeedCap;
+                    break;
+                case ShuttleMode.Cruise:
+                    if (mover.VelocityDir.walking.Length != 0.0f)
+                    {
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * 10 * mover.VelocityDir.walking.Y);
+                        physicsComponent.ApplyAngularImpulse(mover.VelocityDir.walking.X * angularSpeed);
+                    }
+
+                    // TODO WHEN THIS ACTUALLY WORKS
+                    speedCap = _shuttleDockSpeedCap;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // Look don't my ride ass on this stuff most of the PR was just getting the thing working, we can
+            // ideaguys the shit out of it later.
+
+            /*
+            physics.ApplyLinearImpulse(-physics.Owner.Transform.WorldRotation.ToVec() * mover.VelocityDir.walking.Y * shuttleLinearSpeed);
+
+            if (mover.VelocityDir.walking.X != 0.0f)
+            {
+                physics.ApplyAngularImpulse(mover.VelocityDir.walking.X * shuttleAngularSpeed);
+            }
+            */
+
+            // TODO: We should have some kind of speed curve where the first X % accelerates fast then it tapers off
+            var velocity = physicsComponent.LinearVelocity;
+
+            if (velocity.Length < 0.1f && mover.VelocityDir.walking.Length == 0f)
+            {
+                physicsComponent.LinearVelocity = Vector2.Zero;
+                return;
+            }
+
+            if (velocity.Length > speedCap)
+            {
+                physicsComponent.LinearVelocity = velocity.Normalized * speedCap;
+            }
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)

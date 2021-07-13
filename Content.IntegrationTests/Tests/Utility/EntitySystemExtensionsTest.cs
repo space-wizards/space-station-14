@@ -5,6 +5,7 @@ using Content.Shared.Spawning;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 
 namespace Content.IntegrationTests.Tests.Utility
@@ -39,7 +40,7 @@ namespace Content.IntegrationTests.Tests.Utility
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
-            var broady = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedBroadPhaseSystem>();
+            var broady = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedBroadphaseSystem>();
 
             await server.WaitAssertion(() =>
             {

@@ -366,7 +366,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 // FIXME: Work around issue where inserting and removing an entity from a container,
                 // then setting its linear velocity in the same tick resets velocity back to zero.
-                // See SharedBroadPhaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
+                // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
                 projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
                 {
                     projectile
@@ -402,7 +402,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
-            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physicsManager = EntitySystem.Get<SharedBroadphaseSystem>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)
