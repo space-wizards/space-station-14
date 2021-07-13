@@ -14,6 +14,7 @@ using Content.Server.Interfaces;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
@@ -42,7 +43,7 @@ namespace Content.Server.Disposal.Unit.Components
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder, IDestroyAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -304,7 +305,7 @@ namespace Content.Server.Disposal.Unit.Components
             return true;
         }
 
-        private void TryEjectContents()
+        public void TryEjectContents()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
@@ -689,6 +690,11 @@ namespace Content.Server.Disposal.Unit.Components
                 component.Engaged = true;
                 component.TryFlush();
             }
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            TryEjectContents();
         }
     }
 }
