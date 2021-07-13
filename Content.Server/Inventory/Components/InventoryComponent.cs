@@ -404,6 +404,8 @@ namespace Content.Server.Inventory.Components
 
             OnItemChanged?.Invoke();
 
+            UpdateMovementSpeed();
+
             Dirty();
         }
 
