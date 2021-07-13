@@ -442,15 +442,22 @@ namespace Content.Shared.Hands.Components
             var origin = Owner.Transform.MapPosition;
             var other = targetCoords.ToMap(Owner.EntityManager);
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
-            dropLength = MathF.Min(dropLength, SharedInteractionSystem.InteractionRange);
+            var dropVector = other.Position - origin.Position;
+            var requestedDropDistance = (dropVector.Length);
 
-            var dropVector = origin.Position - other.Position;
-            var diff = dropVector.Length - dropLength;
+            if (dropVector.Length > SharedInteractionSystem.InteractionRange)
+            {
+                dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
+                other = new MapCoordinates(origin.Position + dropVector, other.MapId);
+            }
+
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
+
+            var diff = requestedDropDistance - dropLength;
 
             // If we come up short then offset the drop location.
             if (diff > 0)
-                return targetCoords.Offset(dropVector.Normalized * diff);
+                return targetCoords.Offset(-dropVector.Normalized * diff);
 
             return targetCoords;
         }
