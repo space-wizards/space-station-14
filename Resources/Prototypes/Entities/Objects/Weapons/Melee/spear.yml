@@ -27,6 +27,7 @@
     caps: Refillable
     maxVol: 5
   - type: SolutionTransfer
+    maxTransferAmount: 5
 
 - type: MeleeWeaponAnimation
   id: spear

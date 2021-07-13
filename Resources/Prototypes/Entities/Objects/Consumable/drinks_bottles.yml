@@ -8,7 +8,11 @@
   - type: SolutionContainer
     maxVol: 100
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
   - type: DamageOnLand

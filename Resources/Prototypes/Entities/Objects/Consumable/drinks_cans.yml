@@ -14,7 +14,12 @@
       - ReagentId: Cola
         Quantity: 20
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
+    maxTransferAmount: 10
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
 
