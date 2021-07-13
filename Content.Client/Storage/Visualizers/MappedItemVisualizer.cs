@@ -35,10 +35,8 @@ namespace Content.Client.Storage.Visualizers
                 {
                     InitLayers(spriteComponent, component);
                 }
-                else
-                {
-                    EnableLayers(spriteComponent, component);
-                }
+                EnableLayers(spriteComponent, component);
+                
             }
         }
 

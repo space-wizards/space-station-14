@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Storage
 {
     [UsedImplicitly]
-    public class ServerItemCounterSystem : ItemCounterSystem
+    public class ItemCounterSystem : SharedItemCounterSystem
     {
         protected override bool TryGetContainer(ContainerModifiedMessage msg,
             ItemCounterComponent itemCounter,

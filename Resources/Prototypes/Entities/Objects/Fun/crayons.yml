@@ -2,28 +2,28 @@
   id: Crayon
 
 - type: Tag
-  id: CrayonRed
-
-- type: Tag
-  id: CrayonOrange
-
-- type: Tag
-  id: CrayonYellow
-
-- type: Tag
-  id: CrayonGreen
+  id: CrayonBlack
 
 - type: Tag
   id: CrayonBlue
 
 - type: Tag
+  id: CrayonGreen
+
+- type: Tag
+  id: CrayonOrange
+
+- type: Tag
   id: CrayonPurple
 
 - type: Tag
-  id: CrayonBlack
+  id: CrayonRed
 
 - type: Tag
   id: CrayonWhite
+
+- type: Tag
+  id: CrayonYellow
 
 - type: entity
   abstract: true
@@ -205,34 +205,34 @@
     - id: CrayonBlack
   - type: ItemCounter
     mapLayers:
-    - layer: red_box
-      whitelist:
-        tags:
-        - CrayonRed
-    - layer: orange_box
-      whitelist:
-        tags:
-        - CrayonOrange
-    - layer: yellow_box
-      whitelist:
-        tags:
-        - CrayonYellow
-    - layer: green_box
-      whitelist:
-        tags:
-        - CrayonGreen
-    - layer: blue_box
-      whitelist:
-        tags:
-        - CrayonBlue
-    - layer: purple_box
-      whitelist:
-        tags:
-        - CrayonPurple
     - layer: black_box
       whitelist:
         tags:
         - CrayonBlack
+    - layer: blue_box
+      whitelist:
+        tags:
+        - CrayonBlue
+    - layer: green_box
+      whitelist:
+        tags:
+        - CrayonGreen
+    - layer: orange_box
+      whitelist:
+        tags:
+        - CrayonOrange
+    - layer: purple_box
+      whitelist:
+        tags:
+        - CrayonPurple
+    - layer: red_box
+      whitelist:
+        tags:
+        - CrayonRed
+    - layer: yellow_box
+      whitelist:
+        tags:
+        - CrayonYellow
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer

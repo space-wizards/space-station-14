@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.Storage.ItemCounter
 {
     [UsedImplicitly]
-    public abstract class ItemCounterSystem : EntitySystem
+    public abstract class SharedItemCounterSystem : EntitySystem
     {
         /// <inheritdoc />
         public override void Initialize()
