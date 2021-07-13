@@ -1,4 +1,4 @@
-using Content.Server.Sound;
+using Content.Server.Sound.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Throwing

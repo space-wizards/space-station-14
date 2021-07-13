@@ -12,6 +12,7 @@
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/skub.ogg
+    sound:
+      path: /Audio/Items/skub.ogg
   - type: UseDelay
     delay: 2.0

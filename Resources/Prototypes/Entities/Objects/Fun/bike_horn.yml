@@ -14,7 +14,8 @@
     QuickEquip: false
   - type: ItemCooldown
   - type: EmitSoundOnUse
-    sound: /Audio/Items/bikehorn.ogg
+    sound: 
+      path: /Audio/Items/bikehorn.ogg
     semitoneVariation: 6
   - type: UseDelay
     delay: 0.5
