@@ -10,9 +10,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
-
             SubscribeLocalEvent<DisposalUnitComponent, AnchoredEvent>(OnAnchored);
-            SubscribeLocalEvent<DisposalUnitComponent, UnanchoredEvent>(OnUnanchored)
+            SubscribeLocalEvent<DisposalUnitComponent, UnanchoredEvent>(OnUnanchored);
         }
 
         private static void OnAnchored(EntityUid uid, DisposalUnitComponent component, AnchoredEvent args)
