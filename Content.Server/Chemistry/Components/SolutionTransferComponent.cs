@@ -197,6 +197,7 @@ namespace Content.Server.Chemistry.Components
             return actualAmount;
         }
 
+        // TODO refactor when dynamic verbs are a thing
 
         [Verb]
         public sealed class MinimumTransferVerb : Verb<SolutionTransferComponent>

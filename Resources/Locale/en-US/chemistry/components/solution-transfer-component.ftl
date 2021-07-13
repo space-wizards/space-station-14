@@ -9,9 +9,9 @@ comp-solution-transfer-is-empty = {THE($target)} is empty!
 comp-solution-transfer-is-full = {THE($target)} is full!
 
 ## Displayed in change transfer amount verb's name
-comp-solution-transfer-verb-transfer-amount-min = {$amount}u (Minimum)
-comp-solution-transfer-verb-transfer-amount-max = {$amount}u (Maximum)
-comp-solution-transfer-verb-transfer-amount-ideal = {$amount}u (Ideal)
+comp-solution-transfer-verb-transfer-amount-min = {$amount}u
+comp-solution-transfer-verb-transfer-amount-max = {$amount}u
+comp-solution-transfer-verb-transfer-amount-ideal = {$amount}u
 comp-solution-transfer-verb-transfer-amount-custom = Custom
 
 ## Displayed after you successfully change a solution's amount using the BUI
