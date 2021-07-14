@@ -5,7 +5,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      sprite: Structures/Power/wire_terminal.rsi
+      sprite: Structures/Power/cable_terminal.rsi
       state: term
       netsync: false
       drawdepth: BelowFloor
