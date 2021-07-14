@@ -43,7 +43,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Sprite
-      sprite: "Constructible/Misc/stock_parts.rsi"
+      sprite: Structures/Machines/parts.rsi
       state: "box_0"
 
 - type: entity
@@ -92,7 +92,7 @@
     - type: MachineFrame
     - type: Sprite
       netsync: false
-      sprite: "Constructible/Misc/stock_parts.rsi"
+      sprite: Structures/Machines/parts.rsi
       state: "box_1"
     - type: Appearance
       visuals:
