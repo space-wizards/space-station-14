@@ -25,6 +25,7 @@ namespace Content.Shared.Storage.ItemCounter
                         Logger.Warning($"Already added layer with name = `${layerProp.Layer}` skipping over");
                     }
                 }
+                _mapLayers.Clear();
             }
         }
     }
