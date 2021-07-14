@@ -83,18 +83,7 @@ namespace Content.Server.Physics.Controllers
 
             if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
 
-            //TODO: Switch to shuttle component
-            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                physics = gridEntity.AddComponent<PhysicsComponent>();
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.CanCollide = true;
-                physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
-            }
-
-            // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
-            physics.ApplyForce(mover.VelocityDir.walking + mover.VelocityDir.sprinting);
-            mover.VelocityDir = (Vector2.Zero, Vector2.Zero);
+            // This is on shuttle branch trust me
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)

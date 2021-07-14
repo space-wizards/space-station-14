@@ -8285,10 +8285,6 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - fixtures:
-    - shape: !type:PhysShapeGrid
-        grid: 0
-    type: Physics
   - tiles:
       -16,-16: 0
       -16,-15: 0
