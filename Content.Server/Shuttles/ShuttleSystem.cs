@@ -51,7 +51,6 @@ namespace Content.Server.Shuttles
         {
             if (!component.Owner.TryGetComponent(out IMapGridComponent? mapGridComp))
             {
-                Logger.Error($"Tried to initialize {nameof(ShuttleComponent)} on {component.Owner} which doesn't have a mapgrid?");
                 return;
             }
 
