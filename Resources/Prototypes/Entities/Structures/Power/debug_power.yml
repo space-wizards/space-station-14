@@ -20,7 +20,7 @@
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
-    sprite: Constructible/Power/power.rsi
+    sprite: Structures/Power/power.rsi
     state: wiredmachine
   - type: NodeContainer
     nodes:
@@ -58,7 +58,7 @@
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
-    sprite: Constructible/Power/power.rsi
+    sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
   - type: NodeContainer
@@ -85,7 +85,7 @@
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
-    sprite: Constructible/Power/power.rsi
+    sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
   - type: NodeContainer
@@ -128,7 +128,7 @@
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
-    sprite: Constructible/Power/power.rsi
+    sprite: Structures/Power/power.rsi
     state: wirelessmachine
   - type: ApcPowerReceiver
   - type: Anchorable

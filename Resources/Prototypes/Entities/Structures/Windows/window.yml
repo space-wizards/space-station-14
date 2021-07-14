@@ -13,9 +13,9 @@
     color: "#DDDDDD"
     netsync: false
     drawdepth: WallTops
-    sprite: Constructible/Structures/Windows/window.rsi
+    sprite: Structures/Windows/window.rsi
   - type: Icon
-    sprite: Constructible/Structures/Windows/window.rsi
+    sprite: Structures/Windows/window.rsi
     state: full
   - type: Physics
     bodyType: Static

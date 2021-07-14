@@ -5,9 +5,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/brick.rsi
+    sprite: Structures/Walls/brick.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/brick.rsi
+    sprite: Structures/Walls/brick.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -32,9 +32,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/clock.rsi
+    sprite: Structures/Walls/clock.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/clock.rsi
+    sprite: Structures/Walls/clock.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -59,9 +59,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/clown.rsi
+    sprite: Structures/Walls/clown.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/clown.rsi
+    sprite: Structures/Walls/clown.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -87,9 +87,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/cult.rsi
+    sprite: Structures/Walls/cult.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/cult.rsi
+    sprite: Structures/Walls/cult.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -114,9 +114,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/debug.rsi
+    sprite: Structures/Walls/debug.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/debug.rsi
+    sprite: Structures/Walls/debug.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -141,9 +141,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/diamond.rsi
+    sprite: Structures/Walls/diamond.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/diamond.rsi
+    sprite: Structures/Walls/diamond.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -168,9 +168,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/gold.rsi
+    sprite: Structures/Walls/gold.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/gold.rsi
+    sprite: Structures/Walls/gold.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -195,9 +195,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/ice.rsi
+    sprite: Structures/Walls/ice.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/ice.rsi
+    sprite: Structures/Walls/ice.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -222,9 +222,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/metal.rsi
+    sprite: Structures/Walls/metal.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/metal.rsi
+    sprite: Structures/Walls/metal.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -249,9 +249,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/plasma.rsi
+    sprite: Structures/Walls/plasma.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/plasma.rsi
+    sprite: Structures/Walls/plasma.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -276,9 +276,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/plastic.rsi
+    sprite: Structures/Walls/plastic.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/plastic.rsi
+    sprite: Structures/Walls/plastic.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -303,9 +303,9 @@
   components:
   - type: Sprite
     color: "#889192"
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
     state: rgeneric
   - type: Construction
     graph: girder
@@ -336,9 +336,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/riveted.rsi
+    sprite: Structures/Walls/riveted.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/riveted.rsi
+    sprite: Structures/Walls/riveted.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -363,9 +363,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/sandstone.rsi
+    sprite: Structures/Walls/sandstone.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/sandstone.rsi
+    sprite: Structures/Walls/sandstone.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -390,9 +390,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/silver.rsi
+    sprite: Structures/Walls/silver.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/silver.rsi
+    sprite: Structures/Walls/silver.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -418,12 +418,12 @@
   - type: RCDDeconstructWhitelist
   - type: Sprite
     color: "#889192"
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
   - type: Construction
     graph: girder
     node: wall
   - type: Icon
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -447,9 +447,9 @@
   name: uranium wall
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Walls/uranium.rsi
+    sprite: Structures/Walls/uranium.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/uranium.rsi
+    sprite: Structures/Walls/uranium.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -474,9 +474,9 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    sprite: Constructible/Structures/Walls/wood.rsi
+    sprite: Structures/Walls/wood.rsi
   - type: Icon
-    sprite: Constructible/Structures/Walls/wood.rsi
+    sprite: Structures/Walls/wood.rsi
   - type: Destructible
     thresholds:
     - trigger:

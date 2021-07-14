@@ -8,7 +8,7 @@
     graph: barricade
     node: barricadewooden
   - type: Sprite
-    sprite: Constructible/Structures/barricades.rsi
+    sprite: Structures/barricades.rsi
     state: barricadewooden
   - type: Physics
     fixtures:

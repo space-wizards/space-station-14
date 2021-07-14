@@ -35,7 +35,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    sprite: Constructible/Hydroponics/misc.rsi
+    sprite: Structures/Hydroponics/misc.rsi
     state: soil
     drawdepth: FloorObjects
   - type: PlantHolder

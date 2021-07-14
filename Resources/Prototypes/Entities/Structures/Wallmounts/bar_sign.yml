@@ -12,7 +12,7 @@
       - Passable
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Misc/barsign.rsi
+    sprite: Structures/Misc/barsign.rsi
     state: empty
   - type: ApcPowerReceiver
   - type: BarSign
@@ -35,7 +35,7 @@
   - type: Physics
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Misc/sylphs.rsi
+    sprite: Structures/Misc/sylphs.rsi
     state: sylph
   - type: ApcPowerReceiver
   - type: BarSign

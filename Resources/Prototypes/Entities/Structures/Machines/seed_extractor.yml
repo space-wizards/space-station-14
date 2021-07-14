@@ -5,7 +5,7 @@
   description: Extracts seeds from produce.
   components:
   - type: Sprite
-    sprite: Constructible/Hydroponics/machines.rsi
+    sprite: Structures/Hydroponics/machines.rsi
     layers:
     - state: seedextractor-off
     - state: seedextractor-unlit

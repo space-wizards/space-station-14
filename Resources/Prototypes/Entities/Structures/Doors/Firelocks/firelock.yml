@@ -18,7 +18,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs # They're on the same layer as mobs, perspective.
-      sprite: Constructible/Structures/Doors/Standard/firelock.rsi
+      sprite: Structures/Doors/Standard/firelock.rsi
       layers:
         - state: closed
           map: ["enum.DoorVisualLayers.Base"]
@@ -89,7 +89,7 @@
     - type: Occluder
       enabled: false
     - type: Sprite
-      sprite: Constructible/Structures/Doors/Glass/firelock.rsi
+      sprite: Structures/Doors/Glass/firelock.rsi
 
 - type: entity
   id: FirelockEdge
@@ -100,7 +100,7 @@
       occludes: false
       inhibitCrush: false
     - type: Sprite
-      sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
+      sprite: Structures/Doors/edge_door_hazard.rsi
     - type: Airtight
       fixVacuum: true
       noAirWhenFullyAirBlocked: false

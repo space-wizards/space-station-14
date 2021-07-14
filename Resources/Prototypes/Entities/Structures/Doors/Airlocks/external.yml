@@ -7,7 +7,7 @@
   - type: Door
     bumpOpen: false
   - type: Sprite
-    sprite: Constructible/Structures/Doors/Standard/external.rsi
+    sprite: Structures/Doors/Standard/external.rsi
   - type: Appearance
     visuals:
     - type: AirlockVisualizer

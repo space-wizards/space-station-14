@@ -27,9 +27,9 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Constructible/Atmos/pump.rsi
+    sprite: Structures/Atmos/pump.rsi
     layers:
-    - sprite: Constructible/Atmos/pipe.rsi
+    - sprite: Structures/Atmos/pipe.rsi
       state: pipeStraight
       map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: pumpPressure
@@ -51,9 +51,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/pump.rsi
+      sprite: Structures/Atmos/pump.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
@@ -69,9 +69,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/pump.rsi
+      sprite: Structures/Atmos/pump.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
@@ -88,9 +88,9 @@
     # TODO ATMOS: Give unique sprite.
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/pump.rsi
+      sprite: Structures/Atmos/pump.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
@@ -112,9 +112,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/gascanisterport.rsi
+      sprite: Structures/Atmos/gascanisterport.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasCanisterPort

@@ -22,7 +22,7 @@
     graph: girder
     node: girder
   - type: Sprite
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
     state: wall_girder
   - type: Tag
     tags:

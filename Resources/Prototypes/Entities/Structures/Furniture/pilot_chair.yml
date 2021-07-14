@@ -5,7 +5,7 @@
   description: The pilot seat of a prestigious battle cruiser.
   components:
   - type: Sprite
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Misc/furniture.rsi
     state: shuttle_chair
   - type: Physics
     bodyType: Static

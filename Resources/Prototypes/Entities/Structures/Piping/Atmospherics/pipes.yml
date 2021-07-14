@@ -23,7 +23,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    sprite: Constructible/Atmos/pipe.rsi
+    sprite: Structures/Atmos/pipe.rsi
     drawdepth: BelowFloor
     netsync: false
   - type: Appearance

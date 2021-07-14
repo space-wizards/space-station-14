@@ -15,7 +15,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Sprite
-    sprite: Constructible/Hydroponics/containers.rsi
+    sprite: Structures/Hydroponics/containers.rsi
     state: hydrotray3
     drawdepth: FloorObjects
   - type: PlantHolder

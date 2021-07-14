@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Constructible/Storage/Crates/generic.rsi
+    sprite: Structures/Storage/Crates/generic.rsi
     layers:
     - state: crate
     - state: crate_door

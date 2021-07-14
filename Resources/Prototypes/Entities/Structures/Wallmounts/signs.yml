@@ -23,7 +23,7 @@
         acts: ["Destruction"]
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Misc/decals.rsi
+    sprite: Structures/Misc/decals.rsi
 
 # These signs would not have collision otherwise, they simply
 # need collision in order for them to be destructible. Once the

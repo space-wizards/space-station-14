@@ -8,7 +8,7 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Atmos/canister.rsi
     state: grey
   - type: Appearance
     visuals:

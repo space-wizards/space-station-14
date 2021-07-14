@@ -9,7 +9,7 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Power/smes.rsi
+      sprite: Structures/Power/smes.rsi
       layers:
         - state: smes
         - state: smes-display

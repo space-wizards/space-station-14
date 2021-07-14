@@ -7,7 +7,7 @@
   - type: InteractionOutline
   - type: Physics
   - type: Sprite
-    sprite: Constructible/Power/switch.rsi
+    sprite: Structures/Power/switch.rsi
     state: on
   - type: SignalSwitch
   - type: Rotatable
@@ -25,7 +25,7 @@
   - type: InteractionOutline
   - type: Physics
   - type: Sprite
-    sprite: Constructible/Power/switch.rsi
+    sprite: Structures/Power/switch.rsi
     state: dead
   - type: SignalButton
   - type: Rotatable

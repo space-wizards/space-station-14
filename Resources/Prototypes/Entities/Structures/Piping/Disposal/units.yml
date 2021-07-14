@@ -10,7 +10,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     layers:
     - state: condisposal
       map: ["enum.DisposalUnitVisualLayers.Base"]

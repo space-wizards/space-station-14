@@ -5,7 +5,7 @@
   description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
   components:
   - type: Sprite
-    sprite: Constructible/Power/server.rsi
+    sprite: Structures/Power/server.rsi
     state: server
   - type: ResearchServer
   - type: TechnologyDatabase
@@ -35,7 +35,7 @@
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
-    sprite: Constructible/Power/rndpointsource.rsi
+    sprite: Structures/Power/rndpointsource.rsi
     layers:
     - state: rndpointsource-off
     - state: rndpointsource

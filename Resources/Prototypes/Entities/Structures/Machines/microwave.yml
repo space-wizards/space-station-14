@@ -29,7 +29,7 @@
       - MobMask
   - type: Sprite
     netsync: false
-    sprite: Constructible/Power/microwave.rsi
+    sprite: Structures/Power/microwave.rsi
     drawdepth: WallMountedItems
     layers:
     - state: mw0

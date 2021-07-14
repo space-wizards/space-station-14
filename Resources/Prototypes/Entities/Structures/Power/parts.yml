@@ -8,7 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Constructible/Power/substation.rsi
+    sprite: Structures/Power/substation.rsi
     layers:
     - state: substation
     - state: screen

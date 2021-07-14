@@ -281,7 +281,7 @@
       resistances: metallicResistances
     - type: InteractionOutline
     - type: Sprite
-      sprite: Constructible/Atmos/canister.rsi
+      sprite: Structures/Atmos/canister.rsi
       state: grey-1
     - type: Physics
       bodyType: Dynamic

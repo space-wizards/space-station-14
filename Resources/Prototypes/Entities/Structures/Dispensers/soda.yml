@@ -5,7 +5,7 @@
   description: A beverage dispenser with a selection of soda and several other common beverages. Has a single fill slot for containers.
   components:
   - type: Sprite
-    sprite: Constructible/Power/dispensers.rsi
+    sprite: Structures/Power/dispensers.rsi
     state: soda_dispenser
   - type: ReagentDispenser
     pack: SodaDispenserInventory

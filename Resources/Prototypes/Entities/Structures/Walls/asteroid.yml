@@ -7,7 +7,7 @@
   - type: AsteroidRock
   - type: InteractionOutline
   - type: Sprite
-    sprite: Constructible/Structures/Walls/asteroid_rock.rsi
+    sprite: Structures/Walls/asteroid_rock.rsi
     state: 0
   - type: Damageable
     resistances: metallicResistances

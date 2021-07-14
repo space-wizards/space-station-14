@@ -27,7 +27,7 @@
       - SmallImpassable
   - type: SnapGrid
   - type: Sprite
-    sprite: Constructible/Power/power.rsi
+    sprite: Structures/Power/power.rsi
     state: generator
   - type: NodeContainer
     examinable: true

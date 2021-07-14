@@ -32,9 +32,9 @@
     # TODO ATMOS Improve this sprite and appearance...
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/gasfilter.rsi
+      sprite: Structures/Atmos/gasfilter.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeTJunction
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter
@@ -51,9 +51,9 @@
     # TODO ATMOS Give this its actual sprite...
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/gasfilter.rsi
+      sprite: Structures/Atmos/gasfilter.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeTJunction
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter

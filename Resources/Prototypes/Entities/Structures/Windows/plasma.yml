@@ -5,9 +5,9 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/plasma_window.rsi
   - type: Icon
-    sprite: Constructible/Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
     resistances: glassResistances
   - type: Destructible

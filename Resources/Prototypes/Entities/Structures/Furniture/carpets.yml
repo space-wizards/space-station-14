@@ -34,9 +34,9 @@
   name: "carpet"
   components:
   - type: Sprite
-    sprite: Constructible/Carpets/red_carpet.rsi
+    sprite: Structures/Carpets/red_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/red_carpet.rsi
+    sprite: Structures/Carpets/red_carpet.rsi
 
 - type: entity
   id: CarpetBlack
@@ -45,9 +45,9 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/black_carpet.rsi
+    sprite: Structures/Carpets/black_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/black_carpet.rsi
+    sprite: Structures/Carpets/black_carpet.rsi
 
 - type: entity
   id: CarpetGay
@@ -56,9 +56,9 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/gay_carpet.rsi
+    sprite: Structures/Carpets/gay_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/gay_carpet.rsi
+    sprite: Structures/Carpets/gay_carpet.rsi
 
 - type: entity
   id: CarpetBlue
@@ -67,9 +67,9 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/blue_carpet.rsi
+    sprite: Structures/Carpets/blue_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/blue_carpet.rsi
+    sprite: Structures/Carpets/blue_carpet.rsi
 
 - type: entity
   id: CarpetGreen
@@ -78,9 +78,9 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/green_carpet.rsi
+    sprite: Structures/Carpets/green_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/green_carpet.rsi
+    sprite: Structures/Carpets/green_carpet.rsi
 
 - type: entity
   id: CarpetOrange
@@ -89,9 +89,9 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/orange_carpet.rsi
+    sprite: Structures/Carpets/orange_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/orange_carpet.rsi
+    sprite: Structures/Carpets/orange_carpet.rsi
 
 - type: entity
   id: CarpetSBlue
@@ -100,9 +100,9 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/skyblue_carpet.rsi
+    sprite: Structures/Carpets/skyblue_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/skyblue_carpet.rsi
+    sprite: Structures/Carpets/skyblue_carpet.rsi
 
 - type: entity
   id: CarpetPurple
@@ -111,6 +111,6 @@
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Constructible/Carpets/purple_carpet.rsi
+    sprite: Structures/Carpets/purple_carpet.rsi
   - type: Icon
-    sprite: Constructible/Carpets/purple_carpet.rsi
+    sprite: Structures/Carpets/purple_carpet.rsi

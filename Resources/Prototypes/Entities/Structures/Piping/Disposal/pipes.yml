@@ -44,7 +44,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-s
   - type: DisposalTransit
   - type: Appearance
@@ -68,7 +68,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-tagger
   - type: DisposalTagger
   - type: Appearance
@@ -96,7 +96,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-t
   - type: DisposalEntry
   - type: Appearance
@@ -120,7 +120,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-j1s
   - type: DisposalRouter
     degrees:
@@ -153,7 +153,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-j2s
   - type: DisposalRouter
     degrees:
@@ -183,7 +183,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-j1
   - type: DisposalJunction
     degrees:
@@ -212,7 +212,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-j2
   - type: DisposalJunction
     degrees:
@@ -242,7 +242,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-y
   - type: DisposalJunction
     degrees:
@@ -270,7 +270,7 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Constructible/Power/disposal.rsi
+    sprite: Structures/Power/disposal.rsi
     state: conpipe-c
   - type: DisposalBend
   - type: Appearance

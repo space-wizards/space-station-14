@@ -8,7 +8,7 @@
   - type: Sprite
     netsync: false
     drawdepth: Mobs
-    sprite: Constructible/Structures/Doors/Standard/basic.rsi
+    sprite: Structures/Doors/Standard/basic.rsi
     state: "assembly"
   - type: Physics
     fixtures:

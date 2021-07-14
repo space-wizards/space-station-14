@@ -23,9 +23,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/vent.rsi
+      sprite: Structures/Atmos/vent.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
@@ -48,9 +48,9 @@
     # TODO ATMOS: Find sprite for this.
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/vent.rsi
+      sprite: Structures/Atmos/vent.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
@@ -70,9 +70,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/scrubber.rsi
+      sprite: Structures/Atmos/scrubber.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Atmos/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
@@ -99,7 +99,7 @@
       netsync: false
       layers:
         - state: pipeHalf
-          sprite: Constructible/Atmos/pipe.rsi
+          sprite: Structures/Atmos/pipe.rsi
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
 
 - type: entity
@@ -113,7 +113,7 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/thermomachine.rsi
+      sprite: Structures/Atmos/thermomachine.rsi
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
