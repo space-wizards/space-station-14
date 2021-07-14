@@ -21,7 +21,7 @@ namespace Content.Shared.Storage.ItemCounter
         {
             if (component.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
             {
-                var list = new List<string>(component.SpriteLayers.Keys);
+                var list = new List<string>(component.MapLayers.Keys);
                 appearanceComponent.SetData(StorageMapVisuals.InitLayers, new ShowLayerData(list));
             }
         }

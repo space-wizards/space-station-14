@@ -15,12 +15,12 @@ namespace Content.Shared.Storage.ItemCounter
 
     [Serializable]
     [DataDefinition]
-    public struct SharedMapLayerData
+    public class SharedMapLayerData
     {
-        [DataField("layer")] public string Layer;
+        public string Layer = string.Empty;
 
         [DataField("whitelist", required: true)]
-        public EntityWhitelist Whitelist { get; set; }
+        public EntityWhitelist Whitelist { get; set; } = new();
     }
 
     [Serializable, NetSerializable]

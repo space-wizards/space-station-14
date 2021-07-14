@@ -18,7 +18,7 @@ namespace Content.Server.Storage
             {
                 var containedLayers = component.StoredEntities ?? new List<IEntity>();
                 var list = new List<string>();
-                foreach (var mapLayerData in itemCounter.SpriteLayers.Values)
+                foreach (var mapLayerData in itemCounter.MapLayers.Values)
                 {
                     foreach (var entity in containedLayers)
                     {
