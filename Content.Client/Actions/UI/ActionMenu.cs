@@ -87,7 +87,7 @@ namespace Content.Client.Actions.UI
                             }),
                             (_filterButton = new MultiselectOptionButton<string>()
                             {
-                                Label = Loc.GetString("ui-actionmenu-filter-buttonr")
+                                Label = Loc.GetString("ui-actionmenu-filter-button")
                             })
                         }
                     },

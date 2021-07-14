@@ -29,8 +29,10 @@
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
+    - type: PipeColorVisualizer
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
+  - type: AtmosPipeColor
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -46,7 +48,9 @@
         nodeGroupID: Pipe
         pipeDirection: South
   - type: Sprite
-    state: pipeHalf
+    layers:
+      - state: pipeHalf
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
 
 - type: entity
   parent: GasPipeBase
@@ -60,7 +64,9 @@
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
   - type: Sprite
-    state: pipeStraight
+    layers:
+      - state: pipeStraight
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
 
 - type: entity
   parent: GasPipeBase
@@ -74,7 +80,9 @@
         nodeGroupID: Pipe
         pipeDirection: SWBend
   - type: Sprite
-    state: pipeBend
+    layers:
+      - state: pipeBend
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
 
 - type: entity
   parent: GasPipeBase
@@ -88,7 +96,9 @@
         nodeGroupID: Pipe
         pipeDirection: TSouth
   - type: Sprite
-    state: pipeTJunction
+    layers:
+      - state: pipeTJunction
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
 
 - type: entity
   parent: GasPipeBase
@@ -102,4 +112,6 @@
         nodeGroupID: Pipe
         pipeDirection: Fourway
   - type: Sprite
-    state: pipeFourway
+    layers:
+      - state: pipeFourway
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]

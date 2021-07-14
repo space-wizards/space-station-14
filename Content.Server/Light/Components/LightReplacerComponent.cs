@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Storage.Components;
-using Content.Shared.NetIDs;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -27,7 +25,6 @@ namespace Content.Server.Light.Components
     public class LightReplacerComponent : Component
     {
         public override string Name => "LightReplacer";
-        public override uint? NetID => ContentNetIDs.LIGHT_REPLACER;
 
         [DataField("sound")] private string _sound = "/Audio/Weapons/click.ogg";
 

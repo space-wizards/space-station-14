@@ -1,17 +1,17 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Content.Shared.Targeting;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.CombatMode
 {
+    [NetworkedComponent()]
     public abstract class SharedCombatModeComponent : Component
     {
-        public sealed override uint? NetID => ContentNetIDs.COMBATMODE;
         public override string Name => "CombatMode";
 
         private bool _isInCombatMode;
@@ -78,7 +78,6 @@ namespace Content.Shared.CombatMode
             public TargetingZone TargetingZone { get; }
 
             public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
-                : base(ContentNetIDs.COMBATMODE)
             {
                 IsInCombatMode = isInCombatMode;
                 TargetingZone = targetingZone;

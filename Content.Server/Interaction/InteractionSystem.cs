@@ -305,7 +305,7 @@ namespace Content.Server.Interaction
                 if (!await InteractUsingRanged(user, item, target, coordinates, inRangeUnobstructed) &&
                     !inRangeUnobstructed)
                 {
-                    var message = Loc.GetString("You can't reach there!");
+                    var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
                     user.PopupMessage(message);
                 }
 

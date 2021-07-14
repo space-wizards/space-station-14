@@ -66,7 +66,7 @@ namespace Content.Client.Stack
         ///
         /// <list type="bullet">
         /// <item>
-        /// <description>false: they are opaque and mutually exclusive (e.g. sprites in a wire coil). <b>Default value</b></description>
+        /// <description>false: they are opaque and mutually exclusive (e.g. sprites in a cable coil). <b>Default value</b></description>
         /// </item>
         /// <item>
         /// <description>true: they are transparent and thus layered one over another in ascending order first</description>

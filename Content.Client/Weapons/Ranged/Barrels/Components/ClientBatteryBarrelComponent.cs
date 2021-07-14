@@ -1,22 +1,22 @@
-﻿using System;
+using System;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
     public class ClientBatteryBarrelComponent : Component, IItemStatus
     {
         public override string Name => "BatteryBarrel";
-        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         private StatusControl? _statusControl;
 

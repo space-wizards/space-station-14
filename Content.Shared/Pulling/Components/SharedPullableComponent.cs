@@ -1,13 +1,13 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -17,10 +17,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedPullableComponent : Component, IRelayMoveInput
     {
         public override string Name => "Pullable";
-        public override uint? NetID => ContentNetIDs.PULLABLE;
 
         [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
 
@@ -381,7 +381,7 @@ namespace Content.Shared.Pulling.Components
     {
         public readonly EntityUid? Puller;
 
-        public PullableComponentState(EntityUid? puller) : base(ContentNetIDs.PULLABLE)
+        public PullableComponentState(EntityUid? puller)
         {
             Puller = puller;
         }

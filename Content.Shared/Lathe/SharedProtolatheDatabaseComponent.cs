@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,13 +12,12 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Lathe
 {
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
+    [NetworkedComponent()]
     public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "ProtolatheDatabase";
-
-        public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
 
         [DataField("protolatherecipes")] private List<string> _recipeIds = new();
 
@@ -41,7 +40,7 @@ namespace Content.Shared.Lathe
     public class ProtolatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
-        public ProtolatheDatabaseState(List<string> recipes) : base(ContentNetIDs.PROTOLATHE_DATABASE)
+        public ProtolatheDatabaseState(List<string> recipes)
         {
             Recipes = recipes;
         }

@@ -10,7 +10,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
@@ -53,7 +52,7 @@ namespace Content.Server.Kitchen.Components
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentGrinderUiKey.Key);
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         /// <summary>
         /// Should the BoundUI be told to update?

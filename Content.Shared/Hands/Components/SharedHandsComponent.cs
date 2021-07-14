@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -19,11 +19,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
-
-        public sealed override uint? NetID => ContentNetIDs.HANDS;
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
 
@@ -442,15 +441,22 @@ namespace Content.Shared.Hands.Components
             var origin = Owner.Transform.MapPosition;
             var other = targetCoords.ToMap(Owner.EntityManager);
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
-            dropLength = MathF.Min(dropLength, SharedInteractionSystem.InteractionRange);
+            var dropVector = other.Position - origin.Position;
+            var requestedDropDistance = (dropVector.Length);
 
-            var dropVector = origin.Position - other.Position;
-            var diff = dropVector.Length - dropLength;
+            if (dropVector.Length > SharedInteractionSystem.InteractionRange)
+            {
+                dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
+                other = new MapCoordinates(origin.Position + dropVector, other.MapId);
+            }
+
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
+
+            var diff = requestedDropDistance - dropLength;
 
             // If we come up short then offset the drop location.
             if (diff > 0)
-                return targetCoords.Offset(dropVector.Normalized * diff);
+                return targetCoords.Offset(-dropVector.Normalized * diff);
 
             return targetCoords;
         }
@@ -870,7 +876,7 @@ namespace Content.Shared.Hands.Components
         public HandState[] Hands { get; }
         public string? ActiveHand { get; }
 
-        public HandsComponentState(HandState[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(HandState[] hands, string? activeHand = null)
         {
             Hands = hands;
             ActiveHand = activeHand;

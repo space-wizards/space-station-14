@@ -1,7 +1,7 @@
 using System;
 using Content.Shared.EffectBlocker;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,11 +10,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Standing
 {
     [RegisterComponent]
+    [NetworkedComponent]
     public sealed class StandingStateComponent : Component, IEffectBlocker
     {
         public override string Name => "StandingState";
-
-        public override uint? NetID => ContentNetIDs.STANDING_STATE;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("downSoundCollection")]
@@ -45,7 +44,7 @@ namespace Content.Shared.Standing
         {
             public bool Standing { get; }
 
-            public StandingComponentState(bool standing) : base(ContentNetIDs.STANDING_STATE)
+            public StandingComponentState(bool standing)
             {
                 Standing = standing;
             }

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,8 +8,8 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Surgery;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -20,11 +20,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Part
 {
+    [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
     {
         public override string Name => "BodyPart";
-
-        public override uint? NetID => ContentNetIDs.BODY_PART;
 
         private SharedBodyComponent? _body;
 
@@ -384,7 +383,7 @@ namespace Content.Shared.Body.Part
 
         public readonly EntityUid[] MechanismIds;
 
-        public BodyPartComponentState(EntityUid[] mechanismIds) : base(ContentNetIDs.BODY_PART)
+        public BodyPartComponentState(EntityUid[] mechanismIds)
         {
             MechanismIds = mechanismIds;
         }

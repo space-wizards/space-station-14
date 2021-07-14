@@ -105,6 +105,7 @@ namespace Content.Client.Entry
             }
 
             IoCManager.BuildGraph();
+            factory.GenerateNetIds();
 
             IoCManager.Resolve<IClientAdminManager>().Initialize();
             IoCManager.Resolve<IParallaxManager>().LoadParallax();

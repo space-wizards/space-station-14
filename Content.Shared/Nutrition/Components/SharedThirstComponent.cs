@@ -1,18 +1,17 @@
 #nullable enable
 using System;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedThirstComponent : Component, IMoveSpeedModifier
     {
         public sealed override string Name => "Thirst";
-
-        public sealed override uint? NetID => ContentNetIDs.THIRST;
 
         [ViewVariables]
         public abstract ThirstThreshold CurrentThirstThreshold { get; }
@@ -45,7 +44,7 @@ namespace Content.Shared.Nutrition.Components
         {
             public ThirstThreshold CurrentThreshold { get; }
 
-            public ThirstComponentState(ThirstThreshold currentThreshold) : base(ContentNetIDs.THIRST)
+            public ThirstComponentState(ThirstThreshold currentThreshold)
             {
                 CurrentThreshold = currentThreshold;
             }

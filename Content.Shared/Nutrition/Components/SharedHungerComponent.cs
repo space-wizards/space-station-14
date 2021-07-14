@@ -1,18 +1,17 @@
 #nullable enable
 using System;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedHungerComponent : Component, IMoveSpeedModifier
     {
         public sealed override string Name => "Hunger";
-
-        public sealed override uint? NetID => ContentNetIDs.HUNGER;
 
         [ViewVariables]
         public abstract HungerThreshold CurrentHungerThreshold { get; }
@@ -46,7 +45,7 @@ namespace Content.Shared.Nutrition.Components
         {
             public HungerThreshold CurrentThreshold { get; }
 
-            public HungerComponentState(HungerThreshold currentThreshold) : base(ContentNetIDs.HUNGER)
+            public HungerComponentState(HungerThreshold currentThreshold)
             {
                 CurrentThreshold = currentThreshold;
             }

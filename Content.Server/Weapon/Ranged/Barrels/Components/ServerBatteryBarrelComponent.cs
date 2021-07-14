@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Battery.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -26,10 +26,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";
-        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
         [DataField("lowerChargeLimit")]

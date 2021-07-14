@@ -2,11 +2,11 @@ using System;
 using Content.Client.Items.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Tool;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -14,10 +14,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
+
     public class WelderComponent : SharedToolComponent, IItemStatus
     {
         public override string Name => "Welder";
-        public override uint? NetID => ContentNetIDs.WELDER;
 
         private ToolQuality _behavior;
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;

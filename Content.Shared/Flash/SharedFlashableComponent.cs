@@ -1,15 +1,15 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash
 {
+    [NetworkedComponent()]
     public class SharedFlashableComponent : Component
     {
         public override string Name => "Flashable";
-        public override uint? NetID => ContentNetIDs.FLASHABLE;
     }
 
     [Serializable, NetSerializable]
@@ -18,7 +18,7 @@ namespace Content.Shared.Flash
         public double Duration { get; }
         public TimeSpan Time { get; }
 
-        public FlashComponentState(double duration, TimeSpan time) : base(ContentNetIDs.FLASHABLE)
+        public FlashComponentState(double duration, TimeSpan time)
         {
             Duration = duration;
             Time = time;

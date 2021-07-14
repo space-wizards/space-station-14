@@ -1,15 +1,15 @@
-﻿#nullable enable
+#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Suspicion
 {
+    [NetworkedComponent()]
     public abstract class SharedSuspicionRoleComponent : Component
     {
         public sealed override string Name => "SuspicionRole";
-        public sealed override uint? NetID => ContentNetIDs.SUSPICION_ROLE;
     }
 
     [Serializable, NetSerializable]
@@ -19,7 +19,7 @@ namespace Content.Shared.Suspicion
         public readonly bool? Antagonist;
         public readonly (string name, EntityUid)[] Allies;
 
-        public SuspicionRoleComponentState(string? role, bool? antagonist, (string name, EntityUid)[] allies) : base(ContentNetIDs.SUSPICION_ROLE)
+        public SuspicionRoleComponentState(string? role, bool? antagonist, (string name, EntityUid)[] allies)
         {
             Role = role;
             Antagonist = antagonist;

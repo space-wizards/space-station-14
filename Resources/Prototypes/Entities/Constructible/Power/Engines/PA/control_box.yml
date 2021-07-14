@@ -17,7 +17,7 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
-    - type: PowerReceiver
+    - type: ApcPowerReceiver
     - type: ParticleAcceleratorControlBox
     - type: Construction
       graph: particleAcceleratorControlBox

@@ -27,12 +27,12 @@ namespace Content.Client.Cargo.UI
             gridContainer.AddChild(requesterLabel);
             gridContainer.AddChild(Requester);
 
-            var reasonLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-reason-label:") };
+            var reasonLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-reason-label") };
             Reason = new LineEdit();
             gridContainer.AddChild(reasonLabel);
             gridContainer.AddChild(Reason);
 
-            var amountLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-amount-label:") };
+            var amountLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-amount-label") };
             Amount = new SpinBox
             {
                 HorizontalExpand = true,

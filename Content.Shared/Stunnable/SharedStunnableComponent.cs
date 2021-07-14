@@ -5,8 +5,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -16,12 +16,12 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stunnable
 {
+    [NetworkedComponent()]
     public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public sealed override string Name => "Stunnable";
-        public override uint? NetID => ContentNetIDs.STUNNABLE;
 
         public (TimeSpan Start, TimeSpan End)? StunnedTimer { get; protected set; }
         public (TimeSpan Start, TimeSpan End)? KnockdownTimer { get; protected set; }
@@ -368,7 +368,7 @@ namespace Content.Shared.Stunnable
 
             public StunnableComponentState(
                 (TimeSpan Start, TimeSpan End)? stunnedTimer, (TimeSpan Start, TimeSpan End)? knockdownTimer,
-                (TimeSpan Start, TimeSpan End)? slowdownTimer, float walkModifierOverride, float runModifierOverride) : base(ContentNetIDs.STUNNABLE)
+                (TimeSpan Start, TimeSpan End)? slowdownTimer, float walkModifierOverride, float runModifierOverride)
             {
                 StunnedTimer = stunnedTimer;
                 KnockdownTimer = knockdownTimer;

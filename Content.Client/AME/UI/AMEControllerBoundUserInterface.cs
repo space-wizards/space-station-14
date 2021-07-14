@@ -27,7 +27,6 @@ namespace Content.Client.AME.UI
             _window.ToggleInjection.OnPressed += _ => ButtonPressed(UiButton.ToggleInjection);
             _window.IncreaseFuelButton.OnPressed += _ => ButtonPressed(UiButton.IncreaseFuel);
             _window.DecreaseFuelButton.OnPressed += _ => ButtonPressed(UiButton.DecreaseFuel);
-            _window.RefreshPartsButton.OnPressed += _ => ButtonPressed(UiButton.RefreshParts);
         }
 
         /// <summary>

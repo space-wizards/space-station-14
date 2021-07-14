@@ -1,15 +1,13 @@
-﻿#nullable enable
+#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Arcade
 {
-    public class SharedSpaceVillainArcadeComponent : Component
+    public abstract class SharedSpaceVillainArcadeComponent : Component
     {
         public override string Name => "SpaceVillainArcade";
-        public override uint? NetID => ContentNetIDs.SPACE_VILLAIN_ARCADE;
 
         [Serializable, NetSerializable]
         public enum Indicators

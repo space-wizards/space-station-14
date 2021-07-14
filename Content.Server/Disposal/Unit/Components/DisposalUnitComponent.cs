@@ -107,7 +107,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables]
         public bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
+            !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         [ViewVariables]
@@ -314,7 +314,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         private void TogglePower()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }

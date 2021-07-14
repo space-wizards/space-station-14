@@ -3,17 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Content.Shared.Materials;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Lathe
 {
+    [NetworkedComponent()]
     public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
         public override string Name => "MaterialStorage";
-        public sealed override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
 
         [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; } = new();
@@ -72,7 +72,7 @@ namespace Content.Shared.Lathe
     public class MaterialStorageState : ComponentState
     {
         public readonly Dictionary<string, int> Storage;
-        public MaterialStorageState(Dictionary<string, int> storage) : base(ContentNetIDs.MATERIAL_STORAGE)
+        public MaterialStorageState(Dictionary<string, int> storage)
         {
             Storage = storage;
         }

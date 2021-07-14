@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
@@ -56,6 +56,7 @@ namespace Content.Server.Entry
             }
 
             IoCManager.BuildGraph();
+            factory.GenerateNetIds();
 
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
