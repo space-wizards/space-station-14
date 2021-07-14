@@ -1,8 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
@@ -15,13 +15,13 @@ namespace Content.Shared.Alert
     /// Handles the icons on the right side of the screen.
     /// Should only be used for player-controlled entities.
     /// </summary>
+    [NetworkedComponent()]
     public abstract class SharedAlertsComponent : Component
     {
         [Dependency]
         protected readonly AlertManager AlertManager = default!;
 
         public override string Name => "Alerts";
-        public override uint? NetID => ContentNetIDs.ALERTS;
 
         [ViewVariables] private Dictionary<AlertKey, AlertState> _alerts = new();
 
@@ -169,7 +169,7 @@ namespace Content.Shared.Alert
     {
         public Dictionary<AlertKey, AlertState> Alerts;
 
-        public AlertsComponentState(Dictionary<AlertKey, AlertState> alerts) : base(ContentNetIDs.ALERTS)
+        public AlertsComponentState(Dictionary<AlertKey, AlertState> alerts)
         {
             Alerts = alerts;
         }

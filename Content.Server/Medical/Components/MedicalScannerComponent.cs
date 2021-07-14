@@ -237,7 +237,7 @@ namespace Content.Server.Medical.Components
                     return;
                 }
 
-                data.Text = Loc.GetString("eject-verb-get-data-text");
+                data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 

@@ -1,19 +1,19 @@
-﻿#nullable enable
+#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedRangedWeaponComponent : Component
     {
         // Each RangedWeapon should have a RangedWeapon component +
         // some kind of RangedBarrelComponent (this dictates what ammo is retrieved).
         public override string Name => "RangedWeapon";
-        public override uint? NetID => ContentNetIDs.RANGED_WEAPON;
     }
 
     [Serializable, NetSerializable]
@@ -23,7 +23,7 @@ namespace Content.Shared.Weapons.Ranged.Components
 
         public RangedWeaponComponentState(
             FireRateSelector fireRateSelector
-            ) : base(ContentNetIDs.RANGED_WEAPON)
+            )
         {
             FireRateSelector = fireRateSelector;
         }

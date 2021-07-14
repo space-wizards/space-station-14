@@ -5,18 +5,18 @@ using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
 {
+    [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
         public override string Name => "Storage";
-        public override uint? NetID => ContentNetIDs.INVENTORY;
 
         public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
 
@@ -65,7 +65,7 @@ namespace Content.Shared.Storage
     {
         public readonly EntityUid[] StoredEntities;
 
-        public StorageComponentState(EntityUid[] storedEntities) : base(ContentNetIDs.INVENTORY)
+        public StorageComponentState(EntityUid[] storedEntities)
         {
             StoredEntities = storedEntities;
         }

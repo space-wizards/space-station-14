@@ -3,7 +3,7 @@
   id: GasCanister
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
-  parent: BaseStructureDynamic
+  parent: BaseConstructibleDynamic
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -64,12 +64,9 @@
   - type: NodeContainer
     nodes:
       port:
-        !type:PipeNode
+        !type:PortablePipeNode
         nodeGroupID: Pipe
-        pipeDirection: Connector
-        connectionsEnabled: false
-        needAnchored: false
         rotationsEnabled: false
-        volume: 1000
+        volume: 1
   - type: GasPortable
   - type: GasCanister

@@ -1,15 +1,15 @@
 #nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radiation
 {
+    [NetworkedComponent()]
     public abstract class SharedRadiationPulseComponent : Component
     {
         public override string Name => "RadiationPulse";
-        public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
 
         public virtual float RadsPerSecond { get; set; }
 
@@ -36,7 +36,7 @@ namespace Content.Shared.Radiation
         public readonly bool Decay;
         public readonly TimeSpan EndTime;
 
-        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
+        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime)
         {
             RadsPerSecond = radsPerSecond;
             Range = range;
