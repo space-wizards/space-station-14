@@ -19,7 +19,7 @@
       - VaultImpassable
       - SmallImpassable
   - type: Sprite
-    sprite: Structures/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
   - type: Strap
     position: Stand
   - type: Pullable

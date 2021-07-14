@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/empty.rsi
+    sprite: Structures/Machines/VendingMachines/empty.rsi
     netsync: false
   - type: Physics
     bodyType: Static
@@ -53,7 +53,7 @@
     pack: AmmoVendAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/ammo.rsi
+    sprite: Structures/Machines/VendingMachines/ammo.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -81,7 +81,7 @@
     pack: BoozeOMatAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/boozeomat.rsi
+    sprite: Structures/Machines/VendingMachines/boozeomat.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -110,7 +110,7 @@
   - type: Advertise
     pack: BarDrobeAds
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/bardrobe.rsi
+    sprite: Structures/Machines/VendingMachines/bardrobe.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -137,7 +137,7 @@
   - type: VendingMachine
     pack: PTechInventory
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/cart.rsi
+    sprite: Structures/Machines/VendingMachines/cart.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -167,7 +167,7 @@
     pack: CigaretteMachineAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/cigs.rsi
+    sprite: Structures/Machines/VendingMachines/cigs.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -197,7 +197,7 @@
     pack: ClothesMateAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/clothing.rsi
+    sprite: Structures/Machines/VendingMachines/clothing.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -226,7 +226,7 @@
     pack: HotDrinksMachineAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/coffee.rsi
+    sprite: Structures/Machines/VendingMachines/coffee.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -260,7 +260,7 @@
     pack: RobustSoftdrinksAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/cola.rsi
+    sprite: Structures/Machines/VendingMachines/cola.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -289,7 +289,7 @@
   - type: Advertise
     pack: DinnerwareAds
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/dinnerware.rsi
+    sprite: Structures/Machines/VendingMachines/dinnerware.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -319,7 +319,7 @@
     pack: DiscountDansAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/discount.rsi
+    sprite: Structures/Machines/VendingMachines/discount.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -344,7 +344,7 @@
   - type: VendingMachine
     pack: EngiVendInventory
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/engivend.rsi
+    sprite: Structures/Machines/VendingMachines/engivend.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -375,7 +375,7 @@
   - type: Advertise
     pack: NanoMedAds
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/medical.rsi
+    sprite: Structures/Machines/VendingMachines/medical.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -406,7 +406,7 @@
   - type: Advertise
     pack: NutriMaxAds
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/nutri.rsi
+    sprite: Structures/Machines/VendingMachines/nutri.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -436,7 +436,7 @@
   - type: Advertise
     pack: SecTechAds
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/sec.rsi
+    sprite: Structures/Machines/VendingMachines/sec.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -465,7 +465,7 @@
   - type: Advertise
     pack: MegaSeedAds
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/seeds.rsi
+    sprite: Structures/Machines/VendingMachines/seeds.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -495,7 +495,7 @@
     pack: SmartFridgeAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/smartfridge.rsi
+    sprite: Structures/Machines/VendingMachines/smartfridge.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -522,7 +522,7 @@
     pack: GetmoreChocolateCorpAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/snack.rsi
+    sprite: Structures/Machines/VendingMachines/snack.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -551,7 +551,7 @@
     pack: BodaAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/sovietsoda.rsi
+    sprite: Structures/Machines/VendingMachines/sovietsoda.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -580,7 +580,7 @@
     pack: AutoDrobeAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/theater.rsi
+    sprite: Structures/Machines/VendingMachines/theater.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -613,7 +613,7 @@
     pack: VendomatAds
   - type: Speech
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/vendomat.rsi
+    sprite: Structures/Machines/VendingMachines/vendomat.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -640,7 +640,7 @@
   - type: VendingMachine
     pack: NanoMedInventory
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/wallmed.rsi
+    sprite: Structures/Machines/VendingMachines/wallmed.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -667,7 +667,7 @@
   - type: VendingMachine
     pack: YouToolInventory
   - type: Sprite
-    sprite: Structures/Power/VendingMachines/youtool.rsi
+    sprite: Structures/Machines/VendingMachines/youtool.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]

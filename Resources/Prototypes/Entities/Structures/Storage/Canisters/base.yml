@@ -8,7 +8,7 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    sprite: Structures/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: grey
   - type: Appearance
     visuals:

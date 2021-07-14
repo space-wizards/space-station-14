@@ -7,7 +7,7 @@
   components:
   - type: Anchorable
   - type: Sprite
-    sprite: Structures/Watercloset/toilet.rsi
+    sprite: Structures/Furniture/toilet.rsi
     state: closed_toilet_seat_up
     netsync: false
   - type: Toilet

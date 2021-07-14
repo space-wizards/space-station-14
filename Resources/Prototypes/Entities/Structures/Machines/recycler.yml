@@ -18,7 +18,7 @@
   - type: SnapGrid
   - type: Sprite
     netsync: false
-    sprite: Structures/Power/recycling.rsi
+    sprite: Structures/Machines/recycling.rsi
     layers:
     - state: grinder-o1
       map: ["enum.RecyclerVisualLayers.Bloody"]

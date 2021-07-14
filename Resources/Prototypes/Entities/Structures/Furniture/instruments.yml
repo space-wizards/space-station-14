@@ -10,7 +10,7 @@
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    sprite: Structures/Furniture/instruments.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

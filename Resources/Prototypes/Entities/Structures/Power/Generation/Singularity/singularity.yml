@@ -23,10 +23,10 @@
     range: 15
     decay: false
   - type: Sprite
-    sprite: Structures/Power/Singularity/singularity_1.rsi
+    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
   - type: Icon
-    sprite: Structures/Power/Singularity/singularity_1.rsi
+    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
     drawdepth: Items
   - type: Appearance

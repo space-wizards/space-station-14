@@ -21,7 +21,7 @@
               acts: ["Destruction"]
     - type: Sprite
       netsync: false
-      sprite: Structures/Atmos/miners.rsi
+      sprite: Structures/Piping/Atmospherics/miners.rsi
       state: miner
     - type: AtmosDevice
     - type: GasMiner

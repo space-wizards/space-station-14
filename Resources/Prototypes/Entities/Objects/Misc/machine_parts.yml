@@ -7,7 +7,7 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Structures/Machines/parts.rsi
+      sprite: Objects/Misc/stock_parts.rsi
     - type: MachinePart
       rating: 1
 

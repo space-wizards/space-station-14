@@ -17,7 +17,7 @@
     startingCharge: 0
   - type: EmergencyLight
   - type: Sprite
-    sprite: Structures/Lighting/emergency_light.rsi
+    sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
     layers:
     - state: emergency_light_off
   - type: Appearance

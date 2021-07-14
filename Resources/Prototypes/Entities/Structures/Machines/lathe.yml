@@ -5,7 +5,7 @@
   description: It produces items using metal and glass.
   components:
   - type: Sprite
-    sprite: Structures/Power/autolathe.rsi
+    sprite: Structures/Machines/autolathe.rsi
     layers:
     - state: icon
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -82,7 +82,7 @@
   description: Converts raw materials into useful objects.
   components:
   - type: Sprite
-    sprite: Structures/Power/protolathe.rsi
+    sprite: Structures/Machines/protolathe.rsi
     layers:
     - state: icon
       map: ["enum.ProtolatheVisualLayers.Base"]

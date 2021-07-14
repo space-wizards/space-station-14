@@ -25,7 +25,7 @@
       - VaultImpassable
   - type: SnapGrid
   - type: Sprite
-    sprite: Structures/Power/Singularity/emitter.rsi
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
     layers:
     - state: emitter2
     - state: beam

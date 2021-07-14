@@ -6,7 +6,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Power/Singularity/generator.rsi
+    sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
   - type: SingularityGenerator
   - type: InteractionOutline

@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Structures/closet.rsi
+    sprite: Structures/Storage/closet.rsi
     layers:
     - state: generic
     - state: generic_door

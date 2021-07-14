@@ -5,9 +5,9 @@
   description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
-    sprite: Structures/Tables/frame.rsi
+    sprite: Structures/Furniture/Tables/frame.rsi
   - type: Icon
-    sprite: Structures/Tables/frame.rsi
+    sprite: Structures/Furniture/Tables/frame.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -36,9 +36,9 @@
   description: A square piece of metal standing on four metal legs.
   components:
   - type: Sprite
-    sprite: Structures/Tables/generic.rsi
+    sprite: Structures/Furniture/Tables/generic.rsi
   - type: Icon
-    sprite: Structures/Tables/generic.rsi
+    sprite: Structures/Furniture/Tables/generic.rsi
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -67,9 +67,9 @@
   description: Fancy table. Perfect for serving drinks.
   components:
   - type: Sprite
-    sprite: Structures/Tables/bar.rsi
+    sprite: Structures/Furniture/Tables/bar.rsi
   - type: Icon
-    sprite: Structures/Tables/bar.rsi
+    sprite: Structures/Furniture/Tables/bar.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -99,9 +99,9 @@
   description: Just a metal table.
   components:
   - type: Sprite
-    sprite: Structures/Tables/metal.rsi
+    sprite: Structures/Furniture/Tables/metal.rsi
   - type: Icon
-    sprite: Structures/Tables/metal.rsi
+    sprite: Structures/Furniture/Tables/metal.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -125,9 +125,9 @@
   description: A square piece of metal standing on four metal legs. Extra robust.
   components:
   - type: Sprite
-    sprite: Structures/Tables/reinforced.rsi
+    sprite: Structures/Furniture/Tables/reinforced.rsi
   - type: Icon
-    sprite: Structures/Tables/reinforced.rsi
+    sprite: Structures/Furniture/Tables/reinforced.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -154,9 +154,9 @@
   description: A square piece of glass, standing on four metal legs.
   components:
   - type: Sprite
-    sprite: Structures/Tables/glass.rsi
+    sprite: Structures/Furniture/Tables/glass.rsi
   - type: Icon
-    sprite: Structures/Tables/glass.rsi
+    sprite: Structures/Furniture/Tables/glass.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -183,9 +183,9 @@
   description: A square piece of glass, standing on four metal legs. Extra robust.
   components:
   - type: Sprite
-    sprite: Structures/Tables/r_glass.rsi
+    sprite: Structures/Furniture/Tables/r_glass.rsi
   - type: Icon
-    sprite: Structures/Tables/r_glass.rsi
+    sprite: Structures/Furniture/Tables/r_glass.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -215,9 +215,9 @@
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
   - type: Sprite
-    sprite: Structures/Tables/wood.rsi
+    sprite: Structures/Furniture/Tables/wood.rsi
   - type: Icon
-    sprite: Structures/Tables/wood.rsi
+    sprite: Structures/Furniture/Tables/wood.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -244,9 +244,9 @@
   description: Play em' cowboy.
   components:
   - type: Sprite
-    sprite: Structures/Tables/carpet.rsi
+    sprite: Structures/Furniture/Tables/carpet.rsi
   - type: Icon
-    sprite: Structures/Tables/carpet.rsi
+    sprite: Structures/Furniture/Tables/carpet.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -276,9 +276,9 @@
   description: Literally the sturdiest thing you have ever seen.
   components:
   - type: Sprite
-    sprite: Structures/Tables/stone.rsi
+    sprite: Structures/Furniture/Tables/stone.rsi
   - type: Icon
-    sprite: Structures/Tables/stone.rsi
+    sprite: Structures/Furniture/Tables/stone.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -298,9 +298,9 @@
   suffix: DEBUG
   components:
   - type: Sprite
-    sprite: Structures/Tables/debug.rsi
+    sprite: Structures/Furniture/Tables/debug.rsi
   - type: Icon
-    sprite: Structures/Tables/debug.rsi
+    sprite: Structures/Furniture/Tables/debug.rsi
   - type: Destructible
     thresholds:
     - trigger:

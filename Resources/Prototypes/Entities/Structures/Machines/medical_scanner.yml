@@ -8,7 +8,7 @@
   - type: Sprite
     netsync: false
     noRot: true
-    sprite: Structures/Specific/Medical/scanner.rsi
+    sprite: Structures/Machines/scanner.rsi
     layers:
     - state: open
       map: ["enum.MedicalScannerVisualLayers.Machine"]

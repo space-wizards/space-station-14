@@ -15,10 +15,10 @@
         layer: [ Passable ]
   - type: Sprite
     netsync: false
-    sprite: Structures/Tiles/catwalk.rsi
+    sprite: Structures/catwalk.rsi
     drawdepth: FloorTiles
   - type: Icon
-    sprite: Structures/Tiles/catwalk.rsi
+    sprite: Structures/catwalk.rsi
     state: catwalk_preview
   - type: SnapGrid
   - type: IconSmooth

@@ -5,7 +5,7 @@
   description: This controls the density of the particles.
   components:
     - type: Sprite
-      sprite: Structures/Specific/Engines/PA/control_box.rsi
+      sprite: Structures/Power/Generation/PA/control_box.rsi
       layers:
         - state: boxc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
@@ -44,7 +44,7 @@
     - type: Physics
       bodyType: Dynamic
     - type: Sprite
-      sprite: Structures/Specific/Engines/PA/control_box.rsi
+      sprite: Structures/Power/Generation/PA/control_box.rsi
       state: box
     - type: Construction
       graph: particleAcceleratorControlBox

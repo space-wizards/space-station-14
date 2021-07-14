@@ -26,7 +26,7 @@
     node: frameUnsecured
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
-    state: "0"
+    state: 0
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -52,8 +52,8 @@
     graph: computer
     node: monitorBroken
   - type: Sprite
-    sprite: "Constructible/Power/computers.rsi"
-    state: "broken"
+    sprite: Structures/Machines/computers.rsi
+    state: broken
   - type: Destructible
     thresholds:
     - trigger:

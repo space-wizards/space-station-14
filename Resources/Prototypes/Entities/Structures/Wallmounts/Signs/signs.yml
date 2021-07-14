@@ -1,30 +1,3 @@
-- type: entity
-  id: BaseSign
-  name: base sign
-  abstract: true
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-  - type: Damageable
-    resistances: metallicResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Misc/decals.rsi
-
 # These signs would not have collision otherwise, they simply
 # need collision in order for them to be destructible. Once the
 # SmallImpassable etc. stuff actually gets implemented in this

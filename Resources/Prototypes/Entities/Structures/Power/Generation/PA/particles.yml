@@ -6,7 +6,7 @@
   components:
     - type: Sprite
       layers:
-      - sprite: Structures/Specific/Engines/PA/particle.rsi
+      - sprite: Structures/Power/Generation/PA/particle.rsi
         state: particle0
         shader: unshaded
     - type: Projectile
@@ -28,4 +28,3 @@
     - type: ParticleProjectile
     - type: SinguloFood
       # Energy is setup by the PA particle fire function.
-

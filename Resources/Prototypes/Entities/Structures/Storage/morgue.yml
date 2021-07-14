@@ -5,7 +5,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    sprite: Structures/Storage/morgue.rsi
     layers:
     - state: morgue_closed
       map: ["enum.MorgueVisualLayers.Base"]
@@ -56,7 +56,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    sprite: Structures/Storage/morgue.rsi
     state: morgue_tray
   - type: Clickable
   - type: InteractionOutline
@@ -70,7 +70,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    sprite: Structures/Storage/morgue.rsi
     layers:
     - state: crema_closed
       map: ["enum.CrematoriumVisualLayers.Base"]
@@ -122,5 +122,5 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Specific/Medical/Morgue/morgue.rsi
+    sprite: Structures/Storage/morgue.rsi
     state: crema_tray

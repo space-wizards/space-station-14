@@ -5,7 +5,7 @@
   parent: ReagentDispenserBase
   components:
   - type: Sprite
-    sprite: Structures/Power/dispensers.rsi
+    sprite: Structures/dispensers.rsi
     state: booze_dispenser
   - type: ReagentDispenser
     pack: BoozeDispenserInventory

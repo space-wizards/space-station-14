@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
   name: machine frame
-  description: "A machine under construction. Needs more parts."
+  description: A machine under construction. Needs more parts.
   suffix: Unfinished
   placement:
     mode: SnapgridCenter
@@ -44,7 +44,7 @@
           acts: ["Destruction"]
     - type: Sprite
       sprite: Structures/Machines/parts.rsi
-      state: "box_0"
+      state: box_0
 
 - type: entity
   id: MachineFrame
@@ -93,7 +93,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Machines/parts.rsi
-      state: "box_1"
+      state: box_1
     - type: Appearance
       visuals:
       - type: MachineFrameVisualizer

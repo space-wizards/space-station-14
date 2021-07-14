@@ -18,7 +18,7 @@
       mask:
       - SmallImpassable
   - type: Sprite
-    sprite: Structures/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: bed
   - type: Strap
     position: Down

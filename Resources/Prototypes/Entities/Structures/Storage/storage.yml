@@ -9,7 +9,7 @@
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
-    sprite: Structures/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: rack
     drawdepth: FloorObjects
   - type: Physics

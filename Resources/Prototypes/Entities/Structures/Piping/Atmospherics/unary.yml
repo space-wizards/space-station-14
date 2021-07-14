@@ -23,9 +23,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Structures/Atmos/vent.rsi
+      sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
-        - sprite: Structures/Atmos/pipe.rsi
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
@@ -48,9 +48,9 @@
     # TODO ATMOS: Find sprite for this.
     - type: Sprite
       netsync: false
-      sprite: Structures/Atmos/vent.rsi
+      sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
-        - sprite: Structures/Atmos/pipe.rsi
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
@@ -70,9 +70,9 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Structures/Atmos/scrubber.rsi
+      sprite: Structures/Piping/Atmospherics/scrubber.rsi
       layers:
-        - sprite: Structures/Atmos/pipe.rsi
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
@@ -99,7 +99,7 @@
       netsync: false
       layers:
         - state: pipeHalf
-          sprite: Structures/Atmos/pipe.rsi
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
 
 - type: entity
@@ -113,7 +113,7 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Structures/Atmos/thermomachine.rsi
+      sprite: Structures/Piping/Atmospherics/thermomachine.rsi
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
@@ -158,4 +158,3 @@
     - type: GasThermoMachine
       mode: Heater
       maxTemperature: 573.15 # This is changed when parts are refreshed.
-

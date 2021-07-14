@@ -5,7 +5,7 @@
   description: Formally known as the Particle Focusing EM Lens. This uses electromagnetic waves to focus the Alpha-Particles.
   components:
     - type: Sprite
-      sprite: Structures/Specific/Engines/PA/power_box.rsi
+      sprite: Structures/Power/Generation/PA/power_box.rsi
       layers:
         - state: boxc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
@@ -40,7 +40,7 @@
     - type: Physics
       bodyType: Dynamic
     - type: Sprite
-      sprite: Structures/Specific/Engines/PA/power_box.rsi
+      sprite: Structures/Power/Generation/PA/power_box.rsi
       state: box
     - type: Construction
       graph: particleAcceleratorPowerBox

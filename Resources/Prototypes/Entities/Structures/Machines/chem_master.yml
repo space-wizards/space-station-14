@@ -7,13 +7,13 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Power/mixer.rsi
+    sprite: Structures/Machines/mixer.rsi
     layers:
     - state: mixer_empty
     - state: mixer_screens
       shader: unshaded
   - type: Icon
-    sprite: Structures/Power/mixer.rsi
+    sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
   - type: ApcPowerReceiver
@@ -59,13 +59,13 @@
   suffix: Broken
   components:
   - type: Sprite
-    sprite: Structures/Power/mixer.rsi
+    sprite: Structures/Machines/mixer.rsi
     layers:
     - state: mixer_empty
     - state: mixer_screen_broken
       shader: unshaded
   - type: Icon
-    sprite: Structures/Power/mixer.rsi
+    sprite: Structures/Machines/mixer.rsi
     state: mixer_broken
   - type: InteractionOutline
   - type: Physics

@@ -23,7 +23,7 @@
       - VaultImpassable
       - SmallImpassable
   - type: Sprite
-    sprite: Structures/Power/solar_panel.rsi
+    sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
   - type: NodeContainer
     examinable: true
@@ -73,7 +73,7 @@
       layer:
       - VaultImpassable
   - type: Sprite
-    sprite: Structures/Power/solar_panel.rsi
+    sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
   - type: SnapGrid
   - type: Damageable
@@ -117,7 +117,7 @@
       - VaultImpassable
       - SmallImpassable
   - type: Sprite
-    sprite: Structures/Power/solar_panel.rsi
+    sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
   - type: SnapGrid
   - type: Damageable

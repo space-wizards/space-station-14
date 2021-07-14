@@ -7,7 +7,7 @@
   - type: CloningPod
   - type: Sprite
     netsync: false
-    sprite: Structures/Specific/Medical/cloning.rsi
+    sprite: Structures/Machines/cloning.rsi
     layers:
       - state: pod_0
         map: ["enum.CloningPodVisualLayers.Machine"]

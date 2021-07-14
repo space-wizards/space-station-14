@@ -5,7 +5,7 @@
   description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds.
   components:
     - type: Sprite
-      sprite: Structures/Specific/Engines/PA/fuel_chamber.rsi
+      sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
       layers:
         - state: chamberc
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
@@ -34,7 +34,7 @@
     - type: Physics
       bodyType: Dynamic
     - type: Sprite
-      sprite: Structures/Specific/Engines/PA/fuel_chamber.rsi
+      sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
       state: chamber
     - type: Construction
       graph: particleAcceleratorFuelChamber

@@ -6,9 +6,9 @@
   components:
   - type: Sprite
     layers:
-      - sprite: Objects/Misc/traitordm.rsi
+      - sprite: Structures/Machines/traitordm.rsi
         state: redemption
-      - sprite: Objects/Misc/traitordm.rsi
+      - sprite: Structures/Machines/traitordm.rsi
         state: redemption-unshaded
         shader: unshaded
   - type: Physics
