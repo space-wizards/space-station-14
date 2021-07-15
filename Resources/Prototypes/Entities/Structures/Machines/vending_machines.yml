@@ -236,7 +236,7 @@
     - state: "screen"
       map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -296,7 +296,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -326,7 +326,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -413,7 +413,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -472,7 +472,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -502,7 +502,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
@@ -647,7 +647,7 @@
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:

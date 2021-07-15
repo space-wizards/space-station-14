@@ -58,4 +58,4 @@
   - type: Instrument
     program: 20
   - type: Sprite
-    state: church_organ
+    state: church-organ

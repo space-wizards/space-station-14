@@ -12,7 +12,7 @@
   suffix: Engineering
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Airlocks/Standard/engineering.rsi
+    sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
 
 - type: entity
   parent: Airlock

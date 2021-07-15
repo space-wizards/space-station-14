@@ -87,7 +87,7 @@ namespace Content.Server.VendingMachines
             if (!string.IsNullOrEmpty(_spriteName))
             {
                 var spriteComponent = Owner.GetComponent<SpriteComponent>();
-                const string vendingMachineRSIPath = "Constructible/Power/VendingMachines/{0}.rsi";
+                const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
 

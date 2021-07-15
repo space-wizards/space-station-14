@@ -227,7 +227,7 @@
   id: ElectromagneticTheory
   description: Try not to fry yourself.
   icon:
-    sprite: Constructible/Power/apc.rsi
+    sprite: Structures/Power/apc.rsi
     state: apcewires
   requiredPoints: 10000
   requiredTechnologies:

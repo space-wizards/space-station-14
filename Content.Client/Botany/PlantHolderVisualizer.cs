@@ -22,7 +22,7 @@ namespace Content.Client.Botany
             sprite.LayerMapReserveBlank(PlantHolderLayers.AlertLight);
             sprite.LayerMapReserveBlank(PlantHolderLayers.HarvestLight);
 
-            var hydroTools = new ResourcePath("Constructible/Hydroponics/overlays.rsi");
+            var hydroTools = new ResourcePath("Structures/Hydroponics/overlays.rsi");
 
             sprite.LayerSetSprite(PlantHolderLayers.HealthLight,
                 new SpriteSpecifier.Rsi(hydroTools, "lowhealth3"));
