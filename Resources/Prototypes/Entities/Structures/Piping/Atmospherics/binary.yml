@@ -136,7 +136,7 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Constructible/Atmos/vent.rsi
+      sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
         - sprite: Constructible/Atmos/pipe.rsi
           state: pipeStraight
