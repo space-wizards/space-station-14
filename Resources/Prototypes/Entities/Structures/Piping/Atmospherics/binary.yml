@@ -138,7 +138,7 @@
       netsync: false
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
-        - sprite: Constructible/Atmos/pipe.rsi
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
