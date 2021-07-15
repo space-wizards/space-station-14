@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Movement.Components;
-using Content.Server.Shuttle;
 using Content.Server.Shuttles;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
@@ -68,8 +67,9 @@ namespace Content.Server.Physics.Controllers
                 HandleMobMovement(mover, physics, mobMover);
             }
 
-            foreach (var mover in ComponentManager.EntityQuery<ShuttleControllerComponent>())
+            foreach (var (pilot, mover) in ComponentManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
+                if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleShuttleMovement(mover);
             }
@@ -88,7 +88,7 @@ namespace Content.Server.Physics.Controllers
          * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
          * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
          */
-        private void HandleShuttleMovement(ShuttleControllerComponent mover)
+        private void HandleShuttleMovement(SharedPlayerInputMoverComponent mover)
         {
             var gridId = mover.Owner.Transform.GridID;
 
@@ -107,21 +107,22 @@ namespace Content.Server.Physics.Controllers
             var angularSpeed = 20000f;
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
+            var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
 
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
-                    if (mover.VelocityDir.walking.Length != 0f)
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
+                    if (movement.Length != 0f)
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
 
                     speedCap = _shuttleDockSpeedCap;
                     break;
                 case ShuttleMode.Cruise:
-                    if (mover.VelocityDir.walking.Length != 0.0f)
+                    if (movement.Length != 0.0f)
                     {
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * physicsComponent.Mass * mover.VelocityDir.walking.Y);
-                        physicsComponent.ApplyAngularImpulse(mover.VelocityDir.walking.X * angularSpeed);
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * physicsComponent.Mass * movement.Y);
+                        physicsComponent.ApplyAngularImpulse(movement.X * angularSpeed);
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS
@@ -146,7 +147,7 @@ namespace Content.Server.Physics.Controllers
             // TODO: We should have some kind of speed curve where the first X % accelerates fast then it tapers off
             var velocity = physicsComponent.LinearVelocity;
 
-            if (velocity.Length < 0.1f && mover.VelocityDir.walking.Length == 0f)
+            if (velocity.Length < 0.1f && movement.Length == 0f)
             {
                 physicsComponent.LinearVelocity = Vector2.Zero;
                 return;
