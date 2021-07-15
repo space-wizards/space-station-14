@@ -106,18 +106,21 @@ namespace Content.Server.Physics.Controllers
             float speedCap;
             var angularSpeed = 20000f;
 
+            // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
+
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
                     if (mover.VelocityDir.walking.Length != 0f)
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler);
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(mover.VelocityDir.walking) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
 
                     speedCap = _shuttleDockSpeedCap;
                     break;
                 case ShuttleMode.Cruise:
                     if (mover.VelocityDir.walking.Length != 0.0f)
                     {
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * 10 * mover.VelocityDir.walking.Y);
+                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * physicsComponent.Mass * mover.VelocityDir.walking.Y);
                         physicsComponent.ApplyAngularImpulse(mover.VelocityDir.walking.X * angularSpeed);
                     }
 
