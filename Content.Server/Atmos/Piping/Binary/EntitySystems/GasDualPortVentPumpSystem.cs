@@ -57,10 +57,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Out);
                 var pressureDelta = 10000f;
 
-                if (vent.PressureChecks.HasFlag(DualPortVentPressureBound.ExternalBound))
+                if ((vent.PressureChecks & DualPortVentPressureBound.ExternalBound) != 0)
                     pressureDelta = MathF.Min(pressureDelta, (vent.ExternalPressureBound - environment.Air.Pressure));
 
-                if (vent.PressureChecks.HasFlag(DualPortVentPressureBound.InputMinimum))
+                if ((vent.PressureChecks & DualPortVentPressureBound.InputMinimum) != 0)
                     pressureDelta = MathF.Min(pressureDelta, (inlet.Air.Pressure - vent.InputPressureMin));
 
                 if (pressureDelta > 0 && inlet.Air.Temperature > 0)
@@ -76,12 +76,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 var ourMultiplier = outlet.Air.Volume / environment.Air.Temperature * Atmospherics.R;
                 var molesDelta = 10000 * ourMultiplier;
 
-                if (vent.PressureChecks.HasFlag(DualPortVentPressureBound.ExternalBound))
+                if ((vent.PressureChecks & DualPortVentPressureBound.ExternalBound) != 0)
                     molesDelta =
                         MathF.Min(molesDelta,
                             (environment.Air.Pressure - vent.OutputPressureMax) * environment.Air.Volume / (environment.Air.Temperature * Atmospherics.R));
 
-                if (vent.PressureChecks.HasFlag(DualPortVentPressureBound.InputMinimum))
+                if ((vent.PressureChecks &DualPortVentPressureBound.InputMinimum) != 0)
                     molesDelta = MathF.Min(molesDelta, (vent.InputPressureMin - outlet.Air.Pressure) * ourMultiplier);
 
                 if (molesDelta > 0)
