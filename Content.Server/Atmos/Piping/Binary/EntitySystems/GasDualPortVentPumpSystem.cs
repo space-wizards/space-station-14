@@ -96,6 +96,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnGasDualPortVentPumpDisabled(EntityUid uid, GasDualPortVentPumpComponent vent, AtmosDeviceDisabledEvent args)
         {
+            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            {
+                appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
+            }
         }
     }
 }
