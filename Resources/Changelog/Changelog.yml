@@ -1381,3 +1381,94 @@ Entries:
   - {message: More machines and station equipment is destructible, type: Tweak}
   id: 244
   time: '2021-06-19T19:34:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add cvar to specify discrete gas overlay thresholds, type: Add}
+  id: 245
+  time: '2021-06-21T07:08:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Throw no longer pushes you back if you are buckled, type: Fix}
+  id: 246
+  time: '2021-06-28T04:17:09.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: You can no longer start pulling something while incapacitated., type: Fix}
+  id: 247
+  time: '2021-06-28T12:17:37.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Thirteen Loko added to dispenser and now hazardous to your health, type: Add}
+  id: 248
+  time: '2021-06-30T14:35:19.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Theatre is again accessible by clowns and mimes, type: Fix}
+  id: 249
+  time: '2021-07-01T11:07:19.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: added an item-spawning spell template, type: Add}
+  - {message: added a pie-spawning spell. Honk!, type: Add}
+  id: 250
+  time: '2021-07-01T11:26:44.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Added omnizine. A reagent which heals any type of damage when ingested.,
+    type: Add}
+  - {message: A small amount of Omnizine can be found in warm donk pockets., type: Add}
+  id: 251
+  time: '2021-07-03T01:16:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduce potted plant bounding box, type: Tweak}
+  id: 252
+  time: '2021-07-04T12:35:09.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Rewrote most of the power system., type: Tweak}
+  - {message: 'All power supplying objects now have a built-in ramping system. If
+      a large amount of extra power is suddenly needed, engines and batteries on the
+      grid need a bit of time to "ramp up" to match.', type: Add}
+  - {message: 'Power is passed through batteries immediately. This means that APCs
+      are basically on standby until engine power or such cuts out. When the engine
+      cuts out, heavy electrical grids will be underpowered for a second or two until
+      backup batteries can spin up to fill the gap.', type: Add}
+  id: 253
+  time: '2021-07-04T16:11:52.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Changed chatbox UI to be more consistent with SS14's UI, type: Tweak}
+  id: 254
+  time: '2021-07-09T07:10:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Airlocks & low walls near arrivals don't look weird anymore, type: Fix}
+  id: 255
+  time: '2021-07-13T04:10:03.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: AME jars and parts now show inhand sprites, type: Fix}
+  id: 256
+  time: '2021-07-15T07:45:11.671231+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where constructing walls and windows would place them in the
+      bar., type: Fix}
+  id: 257
+  time: '2021-07-15T07:45:11.671976+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix being able to play instruments while incapacitated., type: Fix}
+  id: 258
+  time: '2021-07-15T07:45:11.672684+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix crash when MIDI stops playing., type: Fix}
+  id: 259
+  time: '2021-07-15T07:45:11.673363+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes spray puff and fire extinguisher cloud not moving., type: Fix}
+  id: 260
+  time: '2021-07-15T07:45:11.674114+00:00'
