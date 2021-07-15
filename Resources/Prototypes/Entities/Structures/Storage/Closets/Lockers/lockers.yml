@@ -1,0 +1,288 @@
+- type: entity
+  id: LockerBooze
+  parent: LockerBase
+  name: booze storage
+  description: This is where the bartender keeps the booze.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cabinet
+  - type: AccessReader
+    access: [["Bar"]]
+
+# Cargo
+- type: entity
+  id: LockerQuarterMaster
+  parent: LockerBase
+  name: quartermaster's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: qm
+  - type: AccessReader
+    access: [["Cargo"]] # TODO access [["Quartermaster"]]
+
+# Command
+- type: entity
+  id: LockerCaptain
+  parent: LockerBase
+  name: captain's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cap
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  id: LockerHeadOfPersonnel
+  parent: LockerBase
+  name: head of personnel's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hop
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+# CE
+- type: entity
+  id: LockerChiefEngineer
+  parent: LockerBase
+  name: chief engineer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: ce
+  - type: AccessReader
+    access: [ [ "Engineering", "Command" ] ]
+
+# Electrical supplies
+- type: entity
+  id: LockerElectricalSupplies
+  parent: LockerBase
+  name: electrical supplies locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_closed: eng_elec_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Welding supplies
+- type: entity
+  id: LockerWeldingSupplies
+  parent: LockerBase
+  name: welding supplies locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_closed: eng_weld_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Atmos tech
+- type: entity
+  id: LockerAtmospherics
+  parent: LockerBase
+  name: atmospheric technician's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: atmos
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Engineer
+- type: entity
+  id: LockerEngineer
+  parent: LockerBase
+  name: engineer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng_secure
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Freezer
+- type: entity
+  id: LockerFreezer
+  parent: LockerBase
+  name: freezer
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: freezer
+  - type: AccessReader
+    access: [ [ "Service" ] ]
+
+# Botanist
+- type: entity
+  id: LockerBotanist
+  parent: LockerBase
+  name: botanist's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hydro
+  - type: AccessReader
+    access: [ [ "Service" ] ]
+
+# Medicine
+- type: entity
+  id: LockerMedicine
+  parent: LockerBase
+  name: medicine locker
+  description: Filled to the brim with medical junk.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+# Medical doctor
+- type: entity
+  id: LockerMedical
+  parent: LockerBase
+  name: medical doctor's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med_secure
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+# Chemical
+- type: entity
+  id: LockerChemistry
+  parent: LockerBase
+  name: chemical locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med
+      state_closed: chemical_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+# CMO
+- type: entity
+  id: LockerChiefMedicalOfficer
+  parent: LockerBase
+  name: chief medical officer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cmo
+  - type: AccessReader
+    access: [ [ "Medical", "Command" ] ]
+
+# Science
+
+- type: entity
+  id: LockerResearchDirector
+  parent: LockerBase
+  name: research director's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: rd
+  - type: AccessReader
+    access: [ [ "Research", "Command" ] ]
+
+- type: entity
+  id: LockerScientist
+  parent: LockerBase
+  name: scientist's locker
+  components:
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: science
+    - type: AccessReader
+      access: [ [ "Research" ] ]
+
+# HoS
+- type: entity
+  id: LockerHeadOfSecurity
+  parent: LockerBase
+  name: head of security's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hos
+  - type: AccessReader
+    access: [["Security", "Command"]]
+
+# Warden
+- type: entity
+  id: LockerWarden
+  parent: LockerBase
+  name: warden's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: warden
+  - type: AccessReader
+    access: [["Security"]] # TODO access [["Brig"]]
+
+# Security Officer
+- type: entity
+  id: LockerSecurity
+  parent: LockerBase
+  name: security officer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: sec
+  - type: AccessReader
+    access: [["Security"]]
+
+# Detective
+- type: entity
+  id: LockerDetective
+  parent: LockerBase
+  name: detective's cabinet
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cabinet
+  - type: AccessReader
+    access: [["Service"]] # TODO access [["Detective"]]
+
+# Syndicate
+
+- type: entity
+  id: LockerSyndicatePersonal
+  name: armory closet
+  parent: LockerBase
+  description: It's a personal storage unit for operative gear.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: syndicate

@@ -8,7 +8,7 @@
   components:
     - type: ComputerBoard
     - type: Sprite
-      sprite: Constructible/Misc/module.rsi
+      sprite: Objects/Misc/module.rsi
       state: id_mod
 
 - type: entity

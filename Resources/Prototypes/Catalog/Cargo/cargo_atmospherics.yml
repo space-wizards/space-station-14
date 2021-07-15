@@ -3,7 +3,7 @@
   id: AtmosphericsAir
   description: "Air canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
   cost: 1000
@@ -15,7 +15,7 @@
   id: AtmosphericsOxygen
   description: "Oxygen canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
   cost: 1000
@@ -27,7 +27,7 @@
   id: AtmosphericsNitrogen
   description: "Nitrogen canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
   cost: 1000
@@ -39,7 +39,7 @@
   id: AtmosphericsCarbonDioxide
   description: "Carbon dioxide canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
   cost: 1000
@@ -51,7 +51,7 @@
   id: AtmosphericsWaterVapor
   description: "Water vapor canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: water_vapor
   product: WaterVaporCanister
   cost: 1000
@@ -63,7 +63,7 @@
   id: AtmosphericsPlasma
   description: "Plasma canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
   cost: 2000
@@ -75,7 +75,7 @@
   id: AtmosphericsTritium
   description: "Tritium canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: green
   product: TritiumCanister
   cost: 2000

@@ -7246,7 +7246,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 760
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-21.5
@@ -7268,7 +7268,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 762
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -23.5,11.5
@@ -7281,7 +7281,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 763
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,13.5
@@ -7314,7 +7314,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 766
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,30.5
@@ -7327,7 +7327,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 767
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,30.5
@@ -7362,7 +7362,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 770
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - pos: 0.5,14.5
     parent: 853
@@ -7392,7 +7392,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 773
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -37.5,-6.5
@@ -7405,7 +7405,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 774
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-11.5
@@ -7424,7 +7424,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 776
-  type: LockerBombFilled
+  type: ClosetBombFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,21.5
@@ -7437,7 +7437,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 777
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 13.5,21.5
@@ -7450,7 +7450,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 778
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,21.5
@@ -7463,7 +7463,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 779
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,12.5
@@ -7476,7 +7476,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 780
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,9.5
@@ -7489,7 +7489,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 781
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 44.5,9.5
@@ -7502,7 +7502,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 782
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,0.5
@@ -7515,7 +7515,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 783
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 8.5,-18.5
@@ -7528,7 +7528,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 784
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,-18.5
@@ -7541,7 +7541,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 785
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-17.5
@@ -7554,7 +7554,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 786
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -7.5,-25.5
@@ -7567,7 +7567,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 787
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 26.5,12.5
@@ -7580,7 +7580,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 788
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 23.5,1.5
@@ -7593,7 +7593,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 789
-  type: LockerFireFilled
+  type: ClosetFireFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-17.5
@@ -7606,7 +7606,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 790
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-10.5
@@ -7619,7 +7619,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 791
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -37.5,-7.5
@@ -7632,7 +7632,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 792
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -39.5,2.5
@@ -7645,7 +7645,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 793
-  type: LockerEmergencyFilledRandom
+  type: ClosetEmergencyFilledRandom
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -34.5,10.5
@@ -7712,7 +7712,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 800
-  type: LockerChefFilled
+  type: ClosetChefFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,1.5
@@ -7725,7 +7725,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 801
-  type: LockerJanitorFilled
+  type: ClosetJanitorFilled
   components:
   - pos: -19.5,10.5
     parent: 853
@@ -7807,7 +7807,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 808
-  type: LockerL3SecurityFilled
+  type: ClosetL3SecurityFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,21.5
@@ -7973,7 +7973,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 823
-  type: LockerGeneric
+  type: ClosetBase
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,-12.5
@@ -15340,7 +15340,7 @@ entities:
         ent: 3179
     type: ContainerContainer
 - uid: 1223
-  type: LockerToolFilled
+  type: ClosetToolFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,-0.5
@@ -15359,7 +15359,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1225
-  type: LockerToolFilled
+  type: ClosetToolFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 35.5,0.5
@@ -15454,7 +15454,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1233
-  type: LockerToolFilled
+  type: ClosetToolFilled
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -27.5,11.5
@@ -24369,7 +24369,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2414
-  type: LockerGeneric
+  type: ClosetBase
   components:
   - pos: -8.5,-25.5
     parent: 853
@@ -42937,7 +42937,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4143
-  type: LockerGeneric
+  type: ClosetBase
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,8.5
@@ -42950,7 +42950,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4144
-  type: LockerGeneric
+  type: ClosetBase
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -0.5,8.5

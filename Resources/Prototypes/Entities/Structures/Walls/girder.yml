@@ -1,0 +1,44 @@
+- type: entity
+  id: Girder
+  parent: BaseStructureDynamic
+  name: girder
+  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 50
+      layer:
+      - Impassable
+      - SmallImpassable
+      mask:
+      - VaultImpassable
+  - type: InteractionOutline
+  - type: Construction
+    graph: girder
+    node: girder
+  - type: Sprite
+    sprite: Structures/Walls/solid.rsi
+    state: wall_girder
+  - type: Tag
+    tags:
+    - ExplosivePassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

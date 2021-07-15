@@ -1,7 +1,7 @@
 ﻿- type: latheRecipe
   id: ConveyorAssembly
   icon:
-    sprite: Constructible/Power/conveyor.rsi
+    sprite: Structures/conveyor.rsi
     state: conveyor_loose
   result: ConveyorBeltAssembly
   completetime: 1000

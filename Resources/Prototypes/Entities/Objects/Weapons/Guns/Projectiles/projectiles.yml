@@ -117,7 +117,7 @@
   components:
   - type: Sprite
     color: "#ffff33"
-    sprite: Constructible/Power/Singularity/emitter.rsi
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: 'projectile'
   - type: Physics
     fixtures:

@@ -1,0 +1,94 @@
+- type: entity
+  abstract: true
+  id: DisposalUnitBase
+  parent: BaseMachinePowered
+  description: A pneumatic waste disposal unit.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/disposal.rsi
+    layers:
+    - state: condisposal
+      map: ["enum.DisposalUnitVisualLayers.Base"]
+    - state: dispover-handle
+      map: ["enum.DisposalUnitVisualLayers.Handle"]
+    - state: dispover-ready
+      map: ["enum.DisposalUnitVisualLayers.Light"]
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.25,0.4,0.25"
+      mass: 30
+      mask:
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: Appearance
+    visuals:
+    - type: DisposalUnitVisualizer
+      state_unanchored: condisposal
+      state_anchored: disposal
+      state_charging: disposal-charging
+      overlay_charging: dispover-charge
+      overlay_ready: dispover-ready
+      overlay_full: dispover-full
+      overlay_engaged: dispover-handle
+      state_flush: disposal-flush
+      flush_sound: /Audio/Machines/disposalflush.ogg
+      flush_time: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+
+- type: entity
+  id: DisposalUnit
+  parent: DisposalUnitBase
+  name: disposal unit
+  components:
+  - type: DisposalUnit
+    flushTime: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+
+# - type: entity
+#   parent: DisposalUnitBase
+#   id: DisposalMailingUnit
+#   name: disposal mailing unit
+#   components:
+#   - type: Configuration
+#     keys:
+#     - Tag
+#   - type: DisposalMailingUnit
+#     flushTime: 2
+#   - type: UserInterface
+#     interfaces:
+#     - key: enum.DisposalMailingUnitUiKey.Key
+#       type: DisposalMailingUnitBoundUserInterface
+#     - key: enum.ConfigurationUiKey.Key
+#       type: ConfigurationBoundUserInterface
