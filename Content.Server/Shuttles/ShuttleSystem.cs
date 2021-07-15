@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Shuttles;
+using JetBrains.Annotations;
 using Robust.Server.Physics;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -8,6 +9,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles
 {
+    [UsedImplicitly]
     internal sealed class ShuttleSystem : EntitySystem
     {
         private const float TileMassMultiplier = 1f;
