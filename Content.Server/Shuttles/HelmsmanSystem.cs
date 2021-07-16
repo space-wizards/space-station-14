@@ -1,4 +1,5 @@
 using Content.Server.Alert;
+using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Interaction;
@@ -17,18 +18,48 @@ namespace Content.Server.Shuttles
             SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
             SubscribeLocalEvent<HelmsmanConsoleComponent, ActivateInWorldEvent>(HandleHelmsmanInteract);
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
+            SubscribeLocalEvent<HelmsmanConsoleComponent, PowerChangedEvent>(HandlePowerChange);
         }
 
+        /// <summary>
+        /// Console requires power to operate.
+        /// </summary>
+        private void HandlePowerChange(EntityUid uid, HelmsmanConsoleComponent component, PowerChangedEvent args)
+        {
+            if (!args.Powered)
+            {
+                component.Enabled = false;
+
+                ClearPilots(component);
+            }
+            else
+            {
+                component.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// If pilot is moved then we'll stop them from piloting.
+        /// </summary>
         private void HandlePilotMove(EntityUid uid, PilotComponent component, MoveEvent args)
         {
             if (component.Console == null) return;
             RemovePilot(component);
         }
 
+        /// <summary>
+        /// For now pilots just interact with the console and can start piloting with wasd.
+        /// </summary>
         private void HandleHelmsmanInteract(EntityUid uid, HelmsmanConsoleComponent component, ActivateInWorldEvent args)
         {
             if (!args.User.TryGetComponent(out PilotComponent? pilotComponent))
             {
+                return;
+            }
+
+            if (!component.Enabled)
+            {
+                args.User.PopupMessage($"Console is not powered.");
                 return;
             }
 

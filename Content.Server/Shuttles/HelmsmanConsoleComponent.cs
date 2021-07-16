@@ -11,5 +11,11 @@ namespace Content.Server.Shuttles
     {
         [ViewVariables]
         public List<PilotComponent> SubscribedPilots = new();
+
+        /// <summary>
+        /// Whether the console can be used to pilot. Toggled whenever it gets powered / unpowered.
+        /// </summary>
+        [ViewVariables]
+        public bool Enabled { get; set; } = false;
     }
 }
