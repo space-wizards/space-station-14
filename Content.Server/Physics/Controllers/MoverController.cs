@@ -135,16 +135,6 @@ namespace Content.Server.Physics.Controllers
             // Look don't my ride ass on this stuff most of the PR was just getting the thing working, we can
             // ideaguys the shit out of it later.
 
-            /*
-            physics.ApplyLinearImpulse(-physics.Owner.Transform.WorldRotation.ToVec() * mover.VelocityDir.walking.Y * shuttleLinearSpeed);
-
-            if (mover.VelocityDir.walking.X != 0.0f)
-            {
-                physics.ApplyAngularImpulse(mover.VelocityDir.walking.X * shuttleAngularSpeed);
-            }
-            */
-
-            // TODO: We should have some kind of speed curve where the first X % accelerates fast then it tapers off
             var velocity = physicsComponent.LinearVelocity;
 
             if (velocity.Length < 0.1f && movement.Length == 0f)
