@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var movement = Owner.GetComponent<MovementSpeedModifierComponent>();
             movement.RefreshMovementSpeedModifiers();
             _cancellation?.Cancel();
+            Dirty();
         }
 
         public void ResetTimer()
@@ -37,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _cancellation?.Cancel();
             _cancellation = new CancellationTokenSource();
             Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
+            Dirty();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
