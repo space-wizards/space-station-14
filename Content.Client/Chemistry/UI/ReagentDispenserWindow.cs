@@ -268,8 +268,9 @@ namespace Content.Client.Chemistry.UI
                 return;
             }
 
-            ContainerInfo.Children.Add(new HBoxContainer // Name of the container and its fill status (Ex: 44/100u)
+            ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label {Text = $"{state.ContainerName}: "},
