@@ -6,6 +6,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.Configurable.SharedConfigurationComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Configurable.UI
 {
@@ -13,8 +14,7 @@ namespace Content.Client.Configurable.UI
     {
         public ConfigurationBoundUserInterface Owner { get; }
 
-        private readonly VBoxContainer _baseContainer;
-        private readonly VBoxContainer _column;
+        private readonly BoxContainer _column;
         private readonly HBoxContainer _row;
 
         private readonly List<(string  name, LineEdit input)> _inputs;
@@ -28,14 +28,16 @@ namespace Content.Client.Configurable.UI
 
             Title = Loc.GetString("configuration-menu-device-title");
 
-            _baseContainer = new VBoxContainer
+            BoxContainer baseContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 HorizontalExpand = true
             };
 
-            _column = new VBoxContainer
+            _column = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(8),
                 SeparationOverride = 16,
             };
@@ -63,9 +65,9 @@ namespace Content.Client.Configurable.UI
             };
 
             outerColumn.AddChild(_column);
-            _baseContainer.AddChild(outerColumn);
-            _baseContainer.AddChild(confirmButton);
-            Contents.AddChild(_baseContainer);
+            baseContainer.AddChild(outerColumn);
+            baseContainer.AddChild(confirmButton);
+            Contents.AddChild(baseContainer);
         }
 
         public void Populate(ConfigurationBoundUserInterfaceState state)

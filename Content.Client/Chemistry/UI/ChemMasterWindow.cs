@@ -14,6 +14,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -25,11 +26,11 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
-        private readonly VBoxContainer ContainerInfo;
+        private readonly BoxContainer ContainerInfo;
 
-        private readonly VBoxContainer BufferInfo;
+        private readonly BoxContainer BufferInfo;
 
-        private readonly VBoxContainer PackagingInfo;
+        private readonly BoxContainer PackagingInfo;
 
         /// <summary>Ejects the reagent container from the dispenser.</summary>
         public Button EjectButton { get; }
@@ -57,8 +58,9 @@ namespace Content.Client.Chemistry.UI
             MinSize = SetSize = (400, 525);
             IoCManager.InjectDependencies(this);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     //Container
@@ -84,8 +86,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Currently empty, when server sends state data this will have container contents and fill volume.
-                            (ContainerInfo = new VBoxContainer
+                            (ContainerInfo = new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -126,8 +129,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Buffer reagent list
-                            (BufferInfo = new VBoxContainer
+                            (BufferInfo = new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -165,8 +169,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Packaging options
-                            (PackagingInfo = new VBoxContainer
+                            (PackagingInfo = new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                             }),
 

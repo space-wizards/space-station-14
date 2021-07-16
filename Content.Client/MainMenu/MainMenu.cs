@@ -14,6 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
 
 namespace Content.Client.MainMenu
@@ -221,8 +222,9 @@ namespace Content.Client.MainMenu
                 var layout = new LayoutContainer();
                 AddChild(layout);
 
-                var vBox = new VBoxContainer
+                var vBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     StyleIdentifier = "mainMenuVBox"
                 };
 

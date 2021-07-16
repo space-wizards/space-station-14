@@ -16,6 +16,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.LateJoin
 {
@@ -27,7 +28,7 @@ namespace Content.Client.LateJoin
         public event Action<string>? SelectedId;
 
         private readonly Dictionary<string, JobButton> _jobButtons = new();
-        private readonly Dictionary<string, VBoxContainer> _jobCategories = new();
+        private readonly Dictionary<string, BoxContainer> _jobCategories = new();
 
         public LateJoinGui()
         {
@@ -39,8 +40,9 @@ namespace Content.Client.LateJoin
 
 
             var jobList = new VBoxContainer();
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -64,8 +66,9 @@ namespace Content.Client.LateJoin
                 {
                     if (!_jobCategories.TryGetValue(department, out var category))
                     {
-                        category = new VBoxContainer
+                        category = new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Vertical,
                             Name = department,
                             ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
                                                     ("departmentName", department))

@@ -12,6 +12,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Chemistry.Dispenser.SharedReagentDispenserComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -23,7 +24,7 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
-        private readonly VBoxContainer ContainerInfo;
+        private readonly BoxContainer ContainerInfo;
 
         /// <summary>Sets the dispense amount to 1 when pressed.</summary>
         public Button DispenseButton1 { get; }
@@ -72,8 +73,9 @@ namespace Content.Client.Chemistry.UI
 
             var dispenseAmountGroup = new ButtonGroup();
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     //First, our dispense amount buttons
@@ -126,8 +128,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Currently empty, when server sends state data this will have container contents and fill volume.
-                            (ContainerInfo = new VBoxContainer
+                            (ContainerInfo = new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {

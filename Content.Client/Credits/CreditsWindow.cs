@@ -155,8 +155,9 @@ namespace Content.Client.Credits
         {
             Button contributeButton;
 
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 

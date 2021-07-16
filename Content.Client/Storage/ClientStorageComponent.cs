@@ -16,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Storage
 {
@@ -177,7 +178,7 @@ namespace Content.Client.Storage
         private class StorageWindow : SS14Window
         {
             private Control VSplitContainer;
-            private readonly VBoxContainer _entityList;
+            private readonly BoxContainer _entityList;
             private readonly Label _information;
             public ClientStorageComponent StorageEntity;
 
@@ -232,8 +233,9 @@ namespace Content.Client.Storage
                     HScrollEnabled = false,
                     VScrollEnabled = true,
                 };
-                _entityList = new VBoxContainer
+                _entityList = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     HorizontalExpand = true
                 };
                 listScrollContainer.AddChild(_entityList);

@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Arcade
 {
@@ -152,8 +153,9 @@ namespace Content.Client.Arcade
 
             _menuRootContainer.AddChild(pauseMenuInnerPanel);
 
-            var pauseMenuContainer = new VBoxContainer
+            var pauseMenuContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -224,8 +226,9 @@ namespace Content.Client.Arcade
 
             _gameOverRootContainer.AddChild(gameOverMenuInnerPanel);
 
-            var gameOverMenuContainer = new VBoxContainer
+            var gameOverMenuContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };

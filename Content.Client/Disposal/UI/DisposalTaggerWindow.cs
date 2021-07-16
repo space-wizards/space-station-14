@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Disposal.UI
 {
@@ -20,8 +21,9 @@ namespace Content.Client.Disposal.UI
             MinSize = SetSize = (500, 110);
             Title = Loc.GetString("disposal-tagger-window-title");
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new Label {Text = Loc.GetString("disposal-tagger-window-tag-input-label")},

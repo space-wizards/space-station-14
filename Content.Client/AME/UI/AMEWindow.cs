@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.AME.SharedAMEControllerComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.AME.UI
 {
@@ -32,7 +33,7 @@ namespace Content.Client.AME.UI
 
             Contents.AddChild(new BoxContainer
             {
-	            Orientation = Orientation = LayoutOrientation.Vertical,
+	            Orientation = LayoutOrientation.Vertical,
                 Children =
                     {
                         new HBoxContainer

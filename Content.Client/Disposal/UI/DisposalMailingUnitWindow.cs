@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.Disposal.Components.SharedDisposalMailingUnitComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Disposal.UI
 {
@@ -34,8 +35,9 @@ namespace Content.Client.Disposal.UI
             {
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         HorizontalExpand = true,
                         Margin = new Thickness(8, 0),
                         Children =
@@ -123,8 +125,9 @@ namespace Content.Client.Disposal.UI
                             }
                         }
                     },
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(12, 0, 8, 0),
                         Children =
                         {
@@ -165,8 +168,9 @@ namespace Content.Client.Disposal.UI
                             {
                                 Children =
                                 {
-                                    new VBoxContainer
+                                    new BoxContainer
                                     {
+                                    	Orientation = LayoutOrientation.Vertical,
                                         Children =
                                         {
                                             new HBoxContainer

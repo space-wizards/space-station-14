@@ -21,6 +21,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Hands
 {
@@ -59,8 +60,9 @@ namespace Content.Client.Hands
                 HorizontalAlignment = HAlignment.Center,
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),

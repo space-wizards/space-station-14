@@ -25,6 +25,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.Input.Keyboard.Key;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Control = Robust.Client.UserInterface.Control;
 using LC = Robust.Client.UserInterface.Controls.LayoutContainer;
 
@@ -105,8 +106,8 @@ namespace Content.Client.HUD
         private TopButton _buttonSandboxMenu = default!;
         private InfoWindow _infoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
-        private VBoxContainer _combatPanelContainer = default!;
-        private VBoxContainer _topNotificationContainer = default!;
+        private BoxContainer _combatPanelContainer = default!;
+        private BoxContainer _topNotificationContainer = default!;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -307,8 +308,9 @@ namespace Content.Client.HUD
                 InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
 
 
-            _combatPanelContainer = new VBoxContainer
+            _combatPanelContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = Control.HAlignment.Left,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
@@ -324,8 +326,9 @@ namespace Content.Client.HUD
 
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            var centerBottomContainer = new VBoxContainer
+            var centerBottomContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 5,
                 HorizontalAlignment = Control.HAlignment.Center
             };
@@ -396,8 +399,9 @@ namespace Content.Client.HUD
             LC.SetGrowHorizontal(SuspicionContainer, LC.GrowDirection.End);
             LC.SetGrowVertical(SuspicionContainer, LC.GrowDirection.Begin);
 
-            _topNotificationContainer = new VBoxContainer
+            _topNotificationContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 MinSize = (600, 0)
             };
             RootControl.AddChild(_topNotificationContainer);
@@ -564,8 +568,9 @@ namespace Content.Client.HUD
                 TooltipDelay = CustomTooltipDelay;
 
                 AddChild(
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (_textureRect = new TextureRect

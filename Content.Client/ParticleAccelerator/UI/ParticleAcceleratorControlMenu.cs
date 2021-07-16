@@ -15,6 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.ParticleAccelerator.UI
 {
@@ -32,7 +33,7 @@ namespace Content.Client.ParticleAccelerator.UI
         private readonly Label _statusLabel;
         private readonly SpinBox _stateSpinBox;
 
-        private readonly VBoxContainer _alarmControl;
+        private readonly BoxContainer _alarmControl;
         private readonly Animation _alarmControlAnimation;
 
         private readonly PASegmentControl _endCapTexture;
@@ -138,8 +139,9 @@ namespace Content.Client.ParticleAccelerator.UI
             };
             _drawLabel = new Label();
             var imgSize = new Vector2(32, 32);
-            AddChild(new VBoxContainer
+            AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new Control
@@ -171,8 +173,9 @@ namespace Content.Client.ParticleAccelerator.UI
                         VerticalExpand = true,
                         Children =
                         {
-                            new VBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 Margin = new Thickness(4, 0, 0, 0),
                                 HorizontalExpand = true,
                                 Children =
@@ -213,8 +216,9 @@ namespace Content.Client.ParticleAccelerator.UI
                                     {
                                         VerticalExpand = true,
                                     },
-                                    (_alarmControl = new VBoxContainer
+                                    (_alarmControl = new BoxContainer
                                     {
+                                    	Orientation = LayoutOrientation.Vertical,
                                         Children =
                                         {
                                             new Label
@@ -228,8 +232,9 @@ namespace Content.Client.ParticleAccelerator.UI
                                     }),
                                 }
                             },
-                            new VBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 MinSize = (186, 0),
                                 Children =
                                 {

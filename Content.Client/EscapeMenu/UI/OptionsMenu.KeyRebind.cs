@@ -12,6 +12,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.EscapeMenu.UI
 {
@@ -40,9 +41,14 @@ namespace Content.Client.EscapeMenu.UI
                 IoCManager.InjectDependencies(this);
 
                 Button resetAllButton;
-                var vBox = new VBoxContainer {Margin = new Thickness(2, 0, 0, 0)};
-                AddChild(new VBoxContainer
+                var vBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
+                    Margin = new Thickness(2, 0, 0, 0)
+                };
+                AddChild(new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new ScrollContainer

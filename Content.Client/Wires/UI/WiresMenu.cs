@@ -15,6 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.Wires.SharedWiresComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
 {
@@ -123,8 +124,9 @@ namespace Content.Client.Wires.UI
             LayoutContainer.SetAnchorPreset(bottomWrap, LayoutContainer.LayoutPreset.VerticalCenterWide);
             LayoutContainer.SetGrowHorizontal(bottomWrap, LayoutContainer.GrowDirection.Both);
 
-            var topContainerWrap = new VBoxContainer
+            var topContainerWrap = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (_topContainer = new VBoxContainer()),

@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
 {
@@ -73,7 +74,7 @@ namespace Content.Client.Actions.UI
 
             Contents.AddChild(new BoxContainer
             {
-	            Orientation = Orientation = LayoutOrientation.Vertical,
+	            Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new HBoxContainer

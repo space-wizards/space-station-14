@@ -11,6 +11,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Chemistry.Solution.Solution;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -240,8 +241,9 @@ namespace Content.Client.Kitchen.UI
 
                 var hSplit = new HBoxContainer();
 
-                var vBoxGrindJuiceButtonPanel = new VBoxContainer
+                var vBoxGrindJuiceButtonPanel = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     VerticalAlignment = VAlignment.Center
                 };
 

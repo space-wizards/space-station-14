@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Atmos.GasTank
 {
@@ -68,8 +69,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             LayoutContainer.SetGrowHorizontal(bottomWrap, LayoutContainer.GrowDirection.Both);
 
 
-            var topContainerWrap = new VBoxContainer
+            var topContainerWrap = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (_topContainer = new VBoxContainer()),
@@ -111,8 +113,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
                 Children =
                 {
-                    (_contentContainer = new VBoxContainer
+                    (_contentContainer = new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(8, 4),
                     })
                 }

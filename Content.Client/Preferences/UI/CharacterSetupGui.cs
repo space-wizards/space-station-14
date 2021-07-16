@@ -17,6 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Preferences.UI
 {
@@ -62,7 +63,11 @@ namespace Content.Client.Preferences.UI
 
             margin.AddChild(panel);
 
-            var vBox = new VBoxContainer {SeparationOverride = 0};
+            var vBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 0
+            };
 
             margin.AddChild(vBox);
 

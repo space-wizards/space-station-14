@@ -12,6 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Items.UI
 {
@@ -47,8 +48,9 @@ namespace Content.Client.Items.UI
                 ModulateSelfOverride = Color.White.WithAlpha(0.9f),
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         SeparationOverride = 0,
                         Children =
                         {

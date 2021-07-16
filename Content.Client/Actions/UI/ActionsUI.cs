@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
 {
@@ -110,7 +111,7 @@ namespace Content.Client.Actions.UI
 
             var hotbarContainer = new BoxContainer
             {
-	            Orientation = Orientation = LayoutOrientation.Vertical,
+	            Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 3,
                 HorizontalAlignment = HAlignment.Left
             };

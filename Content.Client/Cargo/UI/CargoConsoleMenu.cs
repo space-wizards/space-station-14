@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cargo.UI
 {
@@ -29,7 +30,7 @@ namespace Content.Client.Cargo.UI
         private Label _shuttleStatusLabel { get; set; }
         private Label _shuttleCapacityLabel { get; set; }
         private VBoxContainer _requests { get; set; }
-        private VBoxContainer _orders { get; set; }
+        private BoxContainer _orders { get; set; }
         private OptionButton _categories { get; set; }
         private LineEdit _searchBar { get; set; }
 
@@ -173,8 +174,9 @@ namespace Content.Client.Cargo.UI
                 SizeFlagsStretchRatio = 1,
             };
             var ordersLabel = new Label { Text = Loc.GetString("cargo-console-menu-orders-label") };
-            _orders = new VBoxContainer
+            _orders = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 StyleClasses = { "transparentItemList" },
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
@@ -445,8 +447,9 @@ namespace Content.Client.Cargo.UI
             };
             hBox.AddChild(Icon);
 
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };

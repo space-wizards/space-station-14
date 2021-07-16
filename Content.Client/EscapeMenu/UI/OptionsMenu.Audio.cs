@@ -9,6 +9,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.EscapeMenu.UI
 {
@@ -33,8 +34,9 @@ namespace Content.Client.EscapeMenu.UI
 
                 var vBox = new VBoxContainer();
 
-                var contents = new VBoxContainer
+                var contents = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Margin = new Thickness(2, 2, 2, 0),
                     VerticalExpand = true,
                 };
@@ -108,7 +110,7 @@ namespace Content.Client.EscapeMenu.UI
                     {
                         new HBoxContainer
                         {
-                            Align = BoxContainer.AlignMode.End,
+                            Align = AlignMode.End,
                             HorizontalExpand = true,
                             VerticalExpand = true,
                             Children =

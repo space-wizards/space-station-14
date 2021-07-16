@@ -73,8 +73,9 @@ namespace Content.Client.CharacterInfo.Components
                     Children =
                     {
                         (SpriteView = new SpriteView { Scale = (2, 2)}),
-                        new VBoxContainer
+                        new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Vertical,
                             VerticalAlignment = VAlignment.Top,
                             Children =
                             {
@@ -116,8 +117,9 @@ namespace Content.Client.CharacterInfo.Components
                 ObjectivesContainer.RemoveAllChildren();
                 foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
                 {
-                    var vbox = new VBoxContainer
+                    var vbox = new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         Modulate = Color.Gray
                     };
 
@@ -140,8 +142,9 @@ namespace Content.Client.CharacterInfo.Components
                         {
                             MinSize = (10,0)
                         });
-                        hbox.AddChild(new VBoxContainer
+                        hbox.AddChild(new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Vertical,
                                 Children =
                                 {
                                     new Label{Text = objectiveCondition.Title},

@@ -9,6 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using static Content.Shared.Cloning.SharedCloningPodComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cloning.UI
 {
@@ -35,8 +36,9 @@ namespace Content.Client.Cloning.UI
 
             Title = Loc.GetString("cloning-pod-window-title");
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -48,8 +50,9 @@ namespace Content.Client.Cloning.UI
                             (_scanList = new VBoxContainer())
                         }
                     },
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (CloneButton = new Button

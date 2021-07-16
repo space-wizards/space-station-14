@@ -14,6 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Content.Shared.Administration.PermissionsEuiMsg;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Administration.UI
 {
@@ -316,15 +317,17 @@ namespace Content.Client.Administration.UI
                 };
 
                 AdminsList = new GridContainer {Columns = 5, VerticalExpand = true};
-                var adminVBox = new VBoxContainer
+                var adminVBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Children = {AdminsList, AddAdminButton},
                 };
                 TabContainer.SetTabTitle(adminVBox, Loc.GetString("permissions-eui-menu-admins-tab-title"));
 
                 AdminRanksList = new GridContainer {Columns = 3};
-                var rankVBox = new VBoxContainer
+                var rankVBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Children = { AdminRanksList, AddAdminRankButton}
                 };
                 TabContainer.SetTabTitle(rankVBox, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
@@ -461,8 +464,9 @@ namespace Content.Client.Administration.UI
 
                 bottomButtons.AddChild(SaveButton);
 
-                Contents.AddChild(new VBoxContainer
+                Contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new HBoxContainer
@@ -470,8 +474,9 @@ namespace Content.Client.Administration.UI
                             SeparationOverride = 2,
                             Children =
                             {
-                                new VBoxContainer
+                                new BoxContainer
                                 {
+                                	Orientation = LayoutOrientation.Vertical,
                                     HorizontalExpand = true,
                                     Children =
                                     {
@@ -575,8 +580,9 @@ namespace Content.Client.Administration.UI
 
                 bottomButtons.AddChild(SaveButton);
 
-                Contents.AddChild(new VBoxContainer
+                Contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         NameEdit,

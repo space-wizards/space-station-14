@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Preferences.UI
 {
@@ -52,7 +53,7 @@ namespace Content.Client.Preferences.UI
 
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
-        private readonly Dictionary<string, VBoxContainer> _jobCategories;
+        private readonly Dictionary<string, BoxContainer> _jobCategories;
 
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
@@ -80,7 +81,11 @@ namespace Content.Client.Preferences.UI
 
             #region Left
 
-            var vBox = new VBoxContainer {Margin = new Thickness(10)};
+            var vBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(10)
+            };
             hbox.AddChild(vBox);
 
             var middleContainer = new HBoxContainer
@@ -138,8 +143,9 @@ namespace Content.Client.Preferences.UI
 
             var appearanceList = new VBoxContainer();
 
-            var appearanceVBox = new VBoxContainer
+            var appearanceVBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -391,8 +397,9 @@ namespace Content.Client.Preferences.UI
 
             var jobList = new VBoxContainer();
 
-                var jobVBox = new VBoxContainer
+                var jobVBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         (_preferenceUnavailableButton = new OptionButton()),
@@ -428,7 +435,7 @@ namespace Content.Client.Preferences.UI
             };
 
             _jobPriorities = new List<JobPrioritySelector>();
-            _jobCategories = new Dictionary<string, VBoxContainer>();
+            _jobCategories = new Dictionary<string, BoxContainer>();
 
             var firstCategory = true;
 
@@ -438,8 +445,9 @@ namespace Content.Client.Preferences.UI
                 {
                     if (!_jobCategories.TryGetValue(department, out var category))
                     {
-                        category = new VBoxContainer
+                        category = new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Vertical,
                             Name = department,
                             ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
                                                     ("departmentName", department))
@@ -511,8 +519,9 @@ namespace Content.Client.Preferences.UI
 
             var antagList = new VBoxContainer();
 
-                var antagVBox = new VBoxContainer
+                var antagVBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new ScrollContainer

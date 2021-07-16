@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
@@ -79,8 +80,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 _parent = parent;
                 HorizontalExpand = true;
                 VerticalAlignment = VAlignment.Center;
-                AddChild(new VBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     HorizontalExpand = true,
                     VerticalAlignment = VAlignment.Center,
                     SeparationOverride = 0,

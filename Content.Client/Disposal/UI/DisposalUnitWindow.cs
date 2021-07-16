@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Disposal.UI
 {
@@ -27,8 +28,9 @@ namespace Content.Client.Disposal.UI
             IoCManager.InjectDependencies(this);
             MinSize = SetSize = (300, 140);
             Resizable = false;
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new HBoxContainer
