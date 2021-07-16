@@ -23,6 +23,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Verbs
@@ -326,13 +327,16 @@ namespace Content.Client.Verbs
 
         private sealed class VerbPopup : Popup
         {
-            public VBoxContainer List { get; }
+            public BoxContainer List { get; }
 
             public VerbPopup()
             {
                 AddChild(new PanelContainer
                 {
-                    Children = {(List = new VBoxContainer())},
+                    Children = {(List = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    })},
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
                 });
             }

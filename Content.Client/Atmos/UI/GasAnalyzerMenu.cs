@@ -67,7 +67,10 @@ namespace Content.Client.Atmos.UI
             	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    (_topContainer = new VBoxContainer()),
+                    (_topContainer = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }),
                     new Control {MinSize = (0, 110)}
                 }
             };

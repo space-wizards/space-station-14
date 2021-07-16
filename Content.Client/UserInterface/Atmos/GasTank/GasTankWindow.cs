@@ -19,7 +19,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
     {
         private GasTankBoundUserInterface _owner;
         private readonly Label _lblName;
-        private readonly VBoxContainer _topContainer;
+        private readonly BoxContainer _topContainer;
         private readonly Control _contentContainer;
 
 
@@ -74,7 +74,10 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    (_topContainer = new VBoxContainer()),
+                    (_topContainer = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }),
                     new Control {MinSize = (0, 110)}
                 }
             };

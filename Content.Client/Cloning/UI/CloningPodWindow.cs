@@ -17,7 +17,7 @@ namespace Content.Client.Cloning.UI
     {
         private Dictionary<int, string?> _scanManager;
 
-        private readonly VBoxContainer _scanList;
+        private readonly BoxContainer _scanList;
         public readonly Button CloneButton;
         public readonly Button EjectButton;
         private CloningScanButton? _selectedButton;
@@ -47,7 +47,10 @@ namespace Content.Client.Cloning.UI
                         VerticalExpand = true,
                         Children =
                         {
-                            (_scanList = new VBoxContainer())
+                            (_scanList = new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Vertical
+                            })
                         }
                     },
                     new BoxContainer

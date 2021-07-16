@@ -192,8 +192,9 @@ namespace Content.Client.Cargo.UI
                 Orientation = LayoutOrientation.Vertical
             };
             var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
-            _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added
+            _requests = new BoxContainer // replace with scroll box so that approval buttons can be added
             {
+                Orientation = LayoutOrientation.Vertical,
                 StyleClasses = { "transparentItemList" },
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,

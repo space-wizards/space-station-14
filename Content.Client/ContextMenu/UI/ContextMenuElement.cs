@@ -183,7 +183,7 @@ namespace Content.Client.ContextMenu.UI
         private const int MaxItemsBeforeScroll = 10;
         private const int MarginSizeBetweenElements = 2;
 
-        public VBoxContainer List { get; }
+        public BoxContainer List { get; }
         public int Depth { get; }
 
         public ContextMenuPopup(int depth = 0)
@@ -194,7 +194,10 @@ namespace Content.Client.ContextMenu.UI
                 HScrollEnabled = false,
                 Children = { new PanelContainer
                 {
-                    Children = { (List = new VBoxContainer()) },
+                    Children = { (List = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }) },
                     PanelOverride = new StyleBoxFlat {  BackgroundColor = MarginColor }
                 }}
             });
