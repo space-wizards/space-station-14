@@ -50,7 +50,7 @@ namespace Content.Client.Lobby.UI
     public class LobbyPlayerList : Control
     {
         private readonly ScrollContainer _scroll;
-        private readonly VBoxContainer _vBox;
+        private readonly BoxContainer _vBox;
 
         public LobbyPlayerList()
         {
@@ -58,7 +58,10 @@ namespace Content.Client.Lobby.UI
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202028")},
             };
-            _vBox = new VBoxContainer();
+            _vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             _scroll = new ScrollContainer();
             _scroll.AddChild(_vBox);
             panel.AddChild(_scroll);

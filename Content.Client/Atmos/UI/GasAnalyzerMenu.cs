@@ -182,8 +182,14 @@ namespace Content.Client.Atmos.UI
             });
 
             // Add a table with all the gases
-            var tableKey = new VBoxContainer();
-            var tableVal = new VBoxContainer();
+            var tableKey = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
+            var tableVal = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             _statusContainer.AddChild(new BoxContainer
             {
             	Orientation = LayoutOrientation.Horizontal,

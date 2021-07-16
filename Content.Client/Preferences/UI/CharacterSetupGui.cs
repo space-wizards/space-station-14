@@ -23,7 +23,7 @@ namespace Content.Client.Preferences.UI
 {
     public class CharacterSetupGui : Control
     {
-        private readonly VBoxContainer _charactersVBox;
+        private readonly BoxContainer _charactersVBox;
         private readonly Button _createNewCharacterButton;
         private readonly IEntityManager _entityManager;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
@@ -118,7 +118,10 @@ namespace Content.Client.Preferences.UI
             };
             vBox.AddChild(hBox);
 
-            _charactersVBox = new VBoxContainer();
+            _charactersVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
             hBox.AddChild(new ScrollContainer
             {

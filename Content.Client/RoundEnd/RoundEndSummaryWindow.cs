@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using static Content.Shared.GameTicking.SharedGameTicker;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.RoundEnd
 {
@@ -70,7 +71,10 @@ namespace Content.Client.RoundEnd
             {
                 VerticalExpand = true
             };
-            var innerScrollContainer = new VBoxContainer();
+            var innerScrollContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
             //Put observers at the bottom of the list. Put antags on top.
             var manifestSortedList = info.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);

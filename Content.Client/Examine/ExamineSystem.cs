@@ -78,7 +78,10 @@ namespace Content.Client.Examine
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
             //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             panel.AddChild(vBox);
             var hBox = new BoxContainer
             {

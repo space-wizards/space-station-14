@@ -29,7 +29,7 @@ namespace Content.Client.Arcade
 
         private readonly PanelContainer _mainPanel;
 
-        private VBoxContainer _gameRootContainer;
+        private BoxContainer _gameRootContainer;
         private GridContainer _gameGrid = default!;
         private GridContainer _nextBlockGrid = default!;
         private GridContainer _holdBlockGrid = default!;
@@ -69,7 +69,10 @@ namespace Content.Client.Arcade
 
             #region Game Menu
             // building the game container
-            _gameRootContainer = new VBoxContainer();
+            _gameRootContainer = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Vertical,
+            };
 
             _levelLabel = new Label
             {

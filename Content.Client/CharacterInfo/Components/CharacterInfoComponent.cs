@@ -62,7 +62,7 @@ namespace Content.Client.CharacterInfo.Components
             public Label NameLabel { get; }
             public Label SubText { get; }
 
-            public VBoxContainer ObjectivesContainer { get; }
+            public BoxContainer ObjectivesContainer { get; }
 
             public CharacterInfoControl(IResourceCache resourceCache)
             {
@@ -102,7 +102,10 @@ namespace Content.Client.CharacterInfo.Components
                     Text = Loc.GetString("character-info-objectives-label"),
                     HorizontalAlignment = HAlignment.Center
                 });
-                ObjectivesContainer = new VBoxContainer();
+                ObjectivesContainer = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Vertical,
+                };
                 AddChild(ObjectivesContainer);
 
                 AddChild(new Placeholder()

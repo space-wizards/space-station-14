@@ -547,7 +547,10 @@ namespace Content.Client.Administration.UI
                     HorizontalAlignment = HAlignment.Right,
                     HorizontalExpand = true
                 };
-                var flagsBox = new VBoxContainer();
+                var flagsBox = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Vertical,
+                };
 
                 foreach (var flag in AdminFlagsHelper.AllFlags)
                 {

@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lathe.UI
 {
@@ -24,7 +25,10 @@ namespace Content.Client.Lathe.UI
             SetSize = MinSize = (300, 450);
             Title = Loc.GetString("lathequeue-menu-title");
 
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
             var hBox = new HBoxContainer()
             {

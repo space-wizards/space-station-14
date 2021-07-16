@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Power.APC
 {
@@ -143,7 +144,10 @@ namespace Content.Client.Power.APC
             public ApcWindow()
             {
                 Title = "APC";
-                var rows = new VBoxContainer();
+                var rows = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                };
 
                 var statusHeader = new Label {Text = "Power Status: "};
                 rows.AddChild(statusHeader);

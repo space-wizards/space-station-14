@@ -39,7 +39,10 @@ namespace Content.Client.LateJoin
             Title = Loc.GetString("late-join-gui-title");
 
 
-            var jobList = new VBoxContainer();
+            var jobList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             var vBox = new BoxContainer
             {
             	Orientation = LayoutOrientation.Vertical,

@@ -32,7 +32,10 @@ namespace Content.Client.EscapeMenu.UI
                 _cfg = cfg;
                 _clydeAudio = clydeAudio;
 
-                var vBox = new VBoxContainer();
+                var vBox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                };
 
                 var contents = new BoxContainer
                 {

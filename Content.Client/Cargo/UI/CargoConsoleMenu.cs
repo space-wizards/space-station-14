@@ -51,7 +51,10 @@ namespace Content.Client.Cargo.UI
             else
                 Title = Loc.GetString("cargo-console-menu-title");
 
-            var rows = new VBoxContainer();
+            var rows = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
             var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
@@ -165,7 +168,10 @@ namespace Content.Client.Cargo.UI
             {
                 VerticalExpand = true
             };
-            var rAndOVBox = new VBoxContainer();
+            var rAndOVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
             _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added
             {

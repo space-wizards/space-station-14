@@ -52,7 +52,10 @@ namespace Content.Client.Lobby.UI
             var viewWest = MakeSpriteView(_previewDummy, Direction.West);
             var viewEast = MakeSpriteView(_previewDummy, Direction.East);
 
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
             vBox.AddChild(header);
 

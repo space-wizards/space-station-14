@@ -95,7 +95,10 @@ namespace Content.Client.Changelog
                         var upArrow =
                             _resourceCache.GetTexture("/Textures/Interface/Changelog/up_arrow.svg.192dpi.png");
 
-                        var readDivider = new VBoxContainer();
+                        var readDivider = new BoxContainer
+                        {
+                            Orientation = LayoutOrientation.Vertical,
+                        };
 
                         var hBox = new BoxContainer
                         {

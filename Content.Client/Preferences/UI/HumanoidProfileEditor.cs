@@ -95,7 +95,10 @@ namespace Content.Client.Preferences.UI
             };
             vBox.AddChild(middleContainer);
 
-            var leftColumn = new VBoxContainer();
+            var leftColumn = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             middleContainer.AddChild(leftColumn);
 
             #region Randomize
@@ -143,7 +146,10 @@ namespace Content.Client.Preferences.UI
 
             #region Appearance
 
-            var appearanceList = new VBoxContainer();
+            var appearanceList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
             var appearanceVBox = new BoxContainer
             {
@@ -373,7 +379,10 @@ namespace Content.Client.Preferences.UI
             #region Eyes
 
             var eyesPanel = HighlightedContainer();
-            var eyesVBox = new VBoxContainer();
+            var eyesVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             var eyesLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-eyes-label") };
 
             _eyesPicker = new EyeColorPicker();
@@ -398,7 +407,10 @@ namespace Content.Client.Preferences.UI
 
             #region Jobs
 
-            var jobList = new VBoxContainer();
+            var jobList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
                 var jobVBox = new BoxContainer
                 {
@@ -520,7 +532,10 @@ namespace Content.Client.Preferences.UI
 
             #region Antags
 
-            var antagList = new VBoxContainer();
+            var antagList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
 
                 var antagVBox = new BoxContainer
                 {
@@ -564,7 +579,10 @@ namespace Content.Client.Preferences.UI
 
             #endregion Antags
 
-            var rightColumn = new VBoxContainer();
+            var rightColumn = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             middleContainer.AddChild(rightColumn);
 
             #region Import/Export

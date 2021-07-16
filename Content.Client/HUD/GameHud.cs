@@ -411,7 +411,10 @@ namespace Content.Client.HUD
             LC.SetGrowHorizontal(_topNotificationContainer, LC.GrowDirection.Both);
             LC.SetGrowVertical(_topNotificationContainer, LC.GrowDirection.End);
 
-            VoteContainer = new VBoxContainer();
+            VoteContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
             RootControl.AddChild(VoteContainer);
             LC.SetAnchorPreset(VoteContainer, LC.LayoutPreset.TopLeft);
             LC.SetMarginLeft(VoteContainer, 180);
