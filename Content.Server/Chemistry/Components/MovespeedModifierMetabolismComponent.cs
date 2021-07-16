@@ -1,11 +1,11 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
-using System.Threading;
 
-namespace Content.Shared.Chemistry.Components
+namespace Content.Server.Chemistry.Components
 {
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
+    [ComponentReference(typeof(SharedMovespeedModifierMetabolismComponent))]
     public class MovespeedModifierMetabolismComponent : SharedMovespeedModifierMetabolismComponent
     {
 

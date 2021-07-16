@@ -12,7 +12,7 @@ using System.Threading;
 namespace Content.Shared.Chemistry.Components
 {
     //TODO: refactor movement modifier component because this is a pretty poor solution
-    public class SharedMovespeedModifierMetabolismComponent : Component
+    public class SharedMovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public int EffectTime { get; set; }
 
-        private (TimeSpan Start, TimeSpan End)? _modifierTimer;
+        public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
 
         public void ResetModifiers()
         {
@@ -36,12 +36,12 @@ namespace Content.Shared.Chemistry.Components
             SprintSpeedModifier = 1;
             var movement = Owner.GetComponent<MovementSpeedModifierComponent>();
             movement.RefreshMovementSpeedModifiers();
-            _modifierTimer = null;
+            ModifierTimer = null;
             Dirty();
         }
         public void ResetTimer()
         {
-            _modifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime)));
+            ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime/1000)));
             Dirty();
         }
 
@@ -49,11 +49,11 @@ namespace Content.Shared.Chemistry.Components
         {
             var curTime = _gameTiming.CurTime;
 
-            if (_modifierTimer != null)
+            if (ModifierTimer != null)
             {
-                if (_modifierTimer.Value.End <= curTime)
+                if (ModifierTimer.Value.End <= curTime)
                 {
-                    _modifierTimer = null;
+                    ModifierTimer = null;
                     ResetModifiers();
                     Dirty();
                 }
@@ -62,7 +62,7 @@ namespace Content.Shared.Chemistry.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier);
+            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier, ModifierTimer);
         }
 
         [Serializable, NetSerializable]
@@ -70,10 +70,13 @@ namespace Content.Shared.Chemistry.Components
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }
-            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier) : base(ContentNetIDs.METABOLISM_SPEEDCHANGE)
+            public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
+
+            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, (TimeSpan Start, TimeSpan End)? modifierTimer): base(ContentNetIDs.METABOLISM_SPEEDCHANGE)
             {
                 WalkSpeedModifier = walkSpeedModifier;
                 SprintSpeedModifier = sprintSpeedModifier;
+                ModifierTimer = modifierTimer;
             }
         }
 

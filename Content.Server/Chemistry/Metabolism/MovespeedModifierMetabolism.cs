@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
-using Content.Shared.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 
 namespace Content.Server.Chemistry.Metabolism
 {
