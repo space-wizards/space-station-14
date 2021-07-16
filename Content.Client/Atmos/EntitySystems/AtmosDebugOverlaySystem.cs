@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;

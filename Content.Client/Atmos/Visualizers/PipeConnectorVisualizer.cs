@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;

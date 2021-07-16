@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

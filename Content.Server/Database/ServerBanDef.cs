@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Net;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.Database
 {

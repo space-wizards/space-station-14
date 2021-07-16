@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Actions.Behaviors;
 
 namespace Content.Server.Ghost

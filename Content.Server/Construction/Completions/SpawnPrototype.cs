@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Prototypes;

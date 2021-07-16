@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.ActionBlocker;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;

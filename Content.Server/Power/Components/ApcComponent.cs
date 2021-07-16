@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Access.Components;
 using Content.Server.Power.NodeGroups;

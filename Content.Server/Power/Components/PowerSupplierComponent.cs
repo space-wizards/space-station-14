@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Robust.Shared.GameObjects;

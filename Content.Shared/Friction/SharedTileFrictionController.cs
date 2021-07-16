@@ -11,7 +11,6 @@ using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 
-#nullable enable
 
 namespace Content.Shared.Friction
 {

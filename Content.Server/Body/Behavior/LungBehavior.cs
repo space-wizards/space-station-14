@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
