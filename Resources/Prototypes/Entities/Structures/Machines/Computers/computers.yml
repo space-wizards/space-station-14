@@ -12,6 +12,30 @@
 
 - type: entity
   parent: ComputerBase
+  id: ComputerShuttle
+  name: shuttle console
+  description: Used to pilot a shuttle.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: shuttle
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerShuttleSyndie
+  name: syndicate shuttle console
+  description: Used to pilot a syndicate shuttle.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: syndie_key
+      screen: syndishuttle
+
+- type: entity
+  parent: ComputerBase
   id: ComputerPowerMonitoring
   name: power monitoring computer
   description: It monitors power levels across the station.
