@@ -8,7 +8,7 @@
   id: BasicResearch
   description: Nanotrasen basic research technologies.
   icon:
-    sprite: Constructible/Power/server.rsi
+    sprite: Structures/Machines/server.rsi
     state: server-on
   requiredPoints: 2500
 
@@ -36,7 +36,7 @@
   id: BiologicalTechnology
   description: Investigations into the natural world.
   icon:
-    sprite: Constructible/Misc/potted_plants.rsi
+    sprite: Structures/Furniture/potted_plants.rsi
     state: applebush
   requiredPoints: 10000
   requiredTechnologies:
@@ -194,7 +194,7 @@
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
   icon:
-    sprite: Constructible/Power/protolathe.rsi
+    sprite: Structures/Machines/protolathe.rsi
     state: icon
   requiredPoints: 10000
   requiredTechnologies:
@@ -227,7 +227,7 @@
   id: ElectromagneticTheory
   description: Try not to fry yourself.
   icon:
-    sprite: Constructible/Power/apc.rsi
+    sprite: Structures/Power/apc.rsi
     state: apcewires
   requiredPoints: 10000
   requiredTechnologies:

@@ -1,0 +1,116 @@
+- type: entity
+  id: CarpetBase
+  parent: BaseStructure
+  description: "Fancy walking surface."
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+  - type: Icon
+    state: full
+  - type: IconSmooth
+    key: full
+    base: carpet_
+  - type: Physics
+    canCollide: false
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - Passable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  id: Carpet
+  parent: CarpetBase
+  name: "carpet"
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+
+- type: entity
+  id: CarpetBlack
+  parent: CarpetBase
+  name: "black carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/black_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/black_carpet.rsi
+
+- type: entity
+  id: CarpetGay
+  parent: CarpetBase
+  name: "pink carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/gay_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/gay_carpet.rsi
+
+- type: entity
+  id: CarpetBlue
+  parent: CarpetBase
+  name: "blue carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/blue_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/blue_carpet.rsi
+
+- type: entity
+  id: CarpetGreen
+  parent: CarpetBase
+  name: "green carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/green_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/green_carpet.rsi
+
+- type: entity
+  id: CarpetOrange
+  parent: CarpetBase
+  name: "orange carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/orange_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/orange_carpet.rsi
+
+- type: entity
+  id: CarpetSBlue
+  parent: CarpetBase
+  name: "skyblue carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
+
+- type: entity
+  id: CarpetPurple
+  parent: CarpetBase
+  name: "purple carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/purple_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/purple_carpet.rsi

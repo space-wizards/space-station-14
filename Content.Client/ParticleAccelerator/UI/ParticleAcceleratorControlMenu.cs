@@ -465,7 +465,7 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 _menu = menu;
                 _baseState = name;
-                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Specific/Engines/PA/{name}.rsi").RSI;
+                _rsi = cache.GetResource<RSIResource>($"/Textures/Structures/Power/Generation/PA/{name}.rsi").RSI;
 
                 AddChild(_base = new TextureRect {Texture = _rsi[$"{state}"].Frame0});
                 AddChild(_unlit = new TextureRect());

@@ -26,7 +26,7 @@
               store: board
               name: any computer circuit board
               icon:
-                sprite: "Constructible/Misc/module.rsi"
+                sprite: "Objects/Misc/module.rsi"
                 state: "id_mod"
 
         - to: start

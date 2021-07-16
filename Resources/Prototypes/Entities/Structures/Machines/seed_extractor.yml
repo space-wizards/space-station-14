@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: SeedExtractor
+  name: seed extractor
+  parent: BaseMachinePowered
+  description: Extracts seeds from produce.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/seed_extractor.rsi
+    layers:
+    - state: seedextractor-off
+    - state: seedextractor-unlit
+      shader: unshaded
+    netsync: false
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.25,0.4,0.25"
+      mass: 25
+      layer:
+      - MobMask
+      - Opaque
+      mask:
+      - MobMask
+  - type: SeedExtractor
