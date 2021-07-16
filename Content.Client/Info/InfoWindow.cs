@@ -134,8 +134,9 @@ namespace Content.Client.Info
 
             AddSection(Loc.GetString("ui-info-header-intro"), "Intro.txt");
 
-            vBox.AddChild(new HBoxContainer
+            vBox.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 10),
                 Children =
                 {
@@ -143,8 +144,9 @@ namespace Content.Client.Info
                 }
             });
 
-            vBox.AddChild(new HBoxContainer
+            vBox.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5,
                 Children =
                 {

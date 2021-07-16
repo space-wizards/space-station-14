@@ -77,8 +77,9 @@ namespace Content.Client.Actions.UI
 	            Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (_searchBar = new LineEdit

@@ -63,8 +63,9 @@ namespace Content.Client.EscapeMenu.UI
                             HasMargins = false,
                             Children =
                             {
-                                new HBoxContainer
+                                new BoxContainer
                                 {
+                                	Orientation = LayoutOrientation.Horizontal,
                                     Children =
                                     {
                                         new Control {MinSize = (2, 0)},

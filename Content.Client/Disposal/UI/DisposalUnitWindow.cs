@@ -33,8 +33,9 @@ namespace Content.Client.Disposal.UI
             	Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 4,
                         Children =
                         {
@@ -43,8 +44,9 @@ namespace Content.Client.Disposal.UI
                         }
                     },
                     new Control {MinSize = (0, 5)},
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 4,
                         Children =
                         {
@@ -61,8 +63,9 @@ namespace Content.Client.Disposal.UI
                         }
                     },
                     new Control {MinSize = (0, 10)},
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (Engage = new Button

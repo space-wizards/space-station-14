@@ -54,8 +54,9 @@ namespace Content.Client.Hands
             IoCManager.InjectDependencies(this);
             _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
 
-            AddChild(new HBoxContainer
+            AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 0,
                 HorizontalAlignment = HAlignment.Center,
                 Children =

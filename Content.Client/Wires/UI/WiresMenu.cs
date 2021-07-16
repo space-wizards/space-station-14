@@ -67,8 +67,9 @@ namespace Content.Client.Wires.UI
                 MouseFilter = MouseFilterMode.Pass
             };
 
-            var shadow = new HBoxContainer
+            var shadow = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new PanelContainer
@@ -92,7 +93,12 @@ namespace Content.Client.Wires.UI
             };
 
             var wrappingHBox = new HBoxContainer();
-            _wiresHBox = new HBoxContainer {SeparationOverride = 4, VerticalAlignment = VAlignment.Bottom};
+            _wiresHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal,
+                SeparationOverride = 4,
+                VerticalAlignment = VAlignment.Bottom
+            };
 
             wrappingHBox.AddChild(new Control {MinSize = (20, 0)});
             wrappingHBox.AddChild(_wiresHBox);
@@ -142,8 +148,9 @@ namespace Content.Client.Wires.UI
             var fontSmall = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
             Button helpButton;
-            var topRow = new HBoxContainer
+            var topRow = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
@@ -190,8 +197,9 @@ namespace Content.Client.Wires.UI
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
                 Children =
                 {
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (_statusContainer = new GridContainer
@@ -555,7 +563,11 @@ namespace Content.Client.Wires.UI
 
                 var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 12);
 
-                var hBox = new HBoxContainer {SeparationOverride = 4};
+                var hBox = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal,
+                    SeparationOverride = 4
+                };
                 hBox.AddChild(new Label
                 {
                     Text = data.Text,

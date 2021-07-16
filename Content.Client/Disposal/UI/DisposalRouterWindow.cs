@@ -28,8 +28,9 @@ namespace Content.Client.Disposal.UI
                 {
                     new Label {Text = Loc.GetString("disposal-router-window-tags-label")},
                     new Control {MinSize = (0, 10)},
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (TagInput = new LineEdit

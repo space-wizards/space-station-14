@@ -56,8 +56,9 @@ namespace Content.Client.EscapeMenu.UI
                     Align = Label.AlignMode.Right
                 };
 
-                contents.AddChild(new HBoxContainer
+                contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Control {MinSize = (4, 0)},
@@ -108,8 +109,9 @@ namespace Content.Client.EscapeMenu.UI
                     HasMargins = false,
                     Children =
                     {
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Horizontal,
                             Align = AlignMode.End,
                             HorizontalExpand = true,
                             VerticalExpand = true,

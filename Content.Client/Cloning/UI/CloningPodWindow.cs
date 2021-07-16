@@ -77,8 +77,9 @@ namespace Content.Client.Cloning.UI
                     {
                         Text = Loc.GetString("cloning-pod-eject-body-button")
                     }),
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label()
@@ -222,8 +223,9 @@ namespace Content.Client.Cloning.UI
                     ToggleMode = true,
                 });
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (EntityTextureRect = new TextureRect

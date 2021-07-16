@@ -42,8 +42,8 @@ namespace Content.Client.Chemistry.UI
 
         public event Action<ButtonEventArgs, ChemButton>? OnChemButtonPressed;
 
-        public HBoxContainer PillInfo { get; set; }
-        public HBoxContainer BottleInfo { get; set; }
+        public BoxContainer PillInfo { get; set; }
+        public BoxContainer BottleInfo { get; set; }
         public SpinBox PillAmount { get; set; }
         public SpinBox BottleAmount { get; set; }
         public Button CreatePills { get; }
@@ -64,8 +64,9 @@ namespace Content.Client.Chemistry.UI
                 Children =
                 {
                     //Container
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("chem-master-window-container-label")},
@@ -105,8 +106,9 @@ namespace Content.Client.Chemistry.UI
                     new Control {MinSize = (0.0f, 10.0f)},
 
                     //Buffer
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("chem-master-window-buffer-text")},
@@ -148,8 +150,9 @@ namespace Content.Client.Chemistry.UI
                     new Control {MinSize = (0.0f, 10.0f)},
 
                     //Packaging
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{Loc.GetString("chem-master-window-packaging-text")} "},
@@ -181,8 +184,9 @@ namespace Content.Client.Chemistry.UI
             });
 
             //Pills
-            PillInfo = new HBoxContainer
+            PillInfo = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label
@@ -218,8 +222,9 @@ namespace Content.Client.Chemistry.UI
             PillInfo.AddChild(CreatePills);
 
             //Bottles
-            BottleInfo = new HBoxContainer
+            BottleInfo = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label
@@ -344,8 +349,9 @@ namespace Content.Client.Chemistry.UI
 
                 if (proto != null)
                 {
-                    ContainerInfo.Children.Add(new HBoxContainer
+                    ContainerInfo.Children.Add(new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{name}: "},
@@ -399,8 +405,9 @@ namespace Content.Client.Chemistry.UI
 
                 if (proto != null)
                 {
-                    BufferInfo.Children.Add(new HBoxContainer
+                    BufferInfo.Children.Add(new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         //SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Children =
                         {

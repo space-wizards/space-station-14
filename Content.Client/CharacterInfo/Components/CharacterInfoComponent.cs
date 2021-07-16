@@ -68,8 +68,9 @@ namespace Content.Client.CharacterInfo.Components
             {
                 IoCManager.InjectDependencies(this);
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (SpriteView = new SpriteView { Scale = (2, 2)}),

@@ -388,8 +388,9 @@ namespace Content.Client.Cargo.UI
             };
             AddChild(MainButton);
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
 
@@ -435,8 +436,9 @@ namespace Content.Client.Cargo.UI
         {
             HorizontalExpand = true;
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
 

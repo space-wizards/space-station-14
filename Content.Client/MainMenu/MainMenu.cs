@@ -242,7 +242,11 @@ namespace Content.Client.MainMenu
                 };
                 vBox.AddChild(logo);
 
-                var userNameHBox = new HBoxContainer {SeparationOverride = 4};
+                var userNameHBox = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal,
+                    SeparationOverride = 4
+                };
                 vBox.AddChild(userNameHBox);
                 userNameHBox.AddChild(new Label {Text = Loc.GetString("main-menu-username-label") });
 

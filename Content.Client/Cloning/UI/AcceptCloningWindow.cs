@@ -30,8 +30,9 @@ namespace Content.Client.Cloning.UI
                             {
                                 Text = Loc.GetString("accept-cloning-window-prompt-text-part")
                             }),
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 Align  = AlignMode.Center,
                                 Children =
                                 {

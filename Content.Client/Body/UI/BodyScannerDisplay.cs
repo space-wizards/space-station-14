@@ -26,8 +26,9 @@ namespace Content.Client.Body.UI
             Owner = owner;
             Title = Loc.GetString("body-scanner-display-title");
 
-            var hSplit = new HBoxContainer
+            var hSplit = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     // Left half
@@ -54,8 +55,9 @@ namespace Content.Client.Body.UI
                                 Children =
                                 {
                                     (BodyPartLabel = new Label()),
-                                    new HBoxContainer
+                                    new BoxContainer
                                     {
+                                    	Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label

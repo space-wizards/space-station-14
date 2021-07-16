@@ -15,6 +15,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Content.Client.Changelog.ChangelogManager;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Changelog
 {
@@ -96,8 +97,9 @@ namespace Content.Client.Changelog
 
                         var readDivider = new VBoxContainer();
 
-                        var hBox = new HBoxContainer
+                        var hBox = new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Horizontal,
                             HorizontalAlignment = HAlignment.Center,
                             Children =
                             {
@@ -148,8 +150,9 @@ namespace Content.Client.Changelog
                     {
                         var text = new RichTextLabel();
                         text.SetMessage(FormattedMessage.FromMarkup(change.Message));
-                        ChangelogBody.AddChild(new HBoxContainer
+                        ChangelogBody.AddChild(new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Horizontal,
                             Margin = new Thickness(14, 1, 10, 2),
                             Children =
                             {

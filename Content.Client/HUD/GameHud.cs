@@ -95,7 +95,7 @@ namespace Content.Client.HUD
 
     internal sealed class GameHud : IGameHud
     {
-        private HBoxContainer _topButtonsContainer = default!;
+        private BoxContainer _topButtonsContainer = default!;
         private TopButton _buttonEscapeMenu = default!;
         private TopButton _buttonInfo = default!;
         private TopButton _buttonCharacterMenu = default!;
@@ -184,8 +184,9 @@ namespace Content.Client.HUD
             var infoTexture = _resourceCache.GetTexture("/Textures/Interface/info.svg.192dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
-            _topButtonsContainer = new HBoxContainer
+            _topButtonsContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 8
             };
 
@@ -379,8 +380,9 @@ namespace Content.Client.HUD
                 HorizontalAlignment = Control.HAlignment.Center
             };
 
-            var rightBottomContainer = new HBoxContainer
+            var rightBottomContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5
             };
             LC.SetAnchorAndMarginPreset(rightBottomContainer, LC.LayoutPreset.BottomRight);

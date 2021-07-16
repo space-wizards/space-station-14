@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
@@ -67,8 +68,9 @@ namespace Content.Client.Lobby.UI
         // Adds a row
         public void AddItem(string name, string status)
         {
-            var hbox = new HBoxContainer
+            var hbox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
 

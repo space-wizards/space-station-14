@@ -85,8 +85,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
-            var topRow = new HBoxContainer
+            var topRow = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
@@ -144,8 +145,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             _btnInternals = new Button {Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
 
             _contentContainer.AddChild(
-                new HBoxContainer
+                new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Margin = new Thickness(0, 7, 0, 0),
                     Children = {_lblInternals, _btnInternals}
                 });

@@ -79,8 +79,9 @@ namespace Content.Client.Chemistry.UI
                 Children =
                 {
                     //First, our dispense amount buttons
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("reagent-dispenser-window-amount-to-dispense-label")},
@@ -106,8 +107,9 @@ namespace Content.Client.Chemistry.UI
                     }),
                     //Padding
                     new Control {MinSize = (0.0f, 10.0f)},
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("reagent-dispenser-window-container-label") + " "},
@@ -296,8 +298,9 @@ namespace Content.Client.Chemistry.UI
                 //Check if the reagent is being moused over. If so, color it green.
                 if (proto != null && proto.ID == highlightedReagentId)
                 {
-                    ContainerInfo.Children.Add(new HBoxContainer
+                    ContainerInfo.Children.Add(new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label
@@ -315,8 +318,9 @@ namespace Content.Client.Chemistry.UI
                 }
                 else //Otherwise, color it the normal colors.
                 {
-                    ContainerInfo.Children.Add(new HBoxContainer
+                    ContainerInfo.Children.Add(new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{name}: "},

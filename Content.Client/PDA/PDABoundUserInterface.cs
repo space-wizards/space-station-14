@@ -312,8 +312,9 @@ namespace Content.Client.PDA
                     VerticalAlignment = VAlignment.Center
                 };
 
-                var innerHBoxContainer = new HBoxContainer
+                var innerHBoxContainer = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         IDInfoLabel,
@@ -501,14 +502,16 @@ namespace Content.Client.PDA
                 };
 
                 //Padding for the price lable.
-                var pricePadding = new HBoxContainer
+                var pricePadding = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     MinSize = (32, 1),
                 };
 
                 //Contains the name of the item and its price. Used for spacing item name and price.
-                var listingButtonHbox = new HBoxContainer
+                var listingButtonHbox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         itemLabel,

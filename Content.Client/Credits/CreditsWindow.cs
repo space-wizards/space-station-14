@@ -161,8 +161,9 @@ namespace Content.Client.Credits
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
-            vBox.AddChild(new HBoxContainer
+            vBox.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalAlignment = HAlignment.Center,
                 SeparationOverride = 20,
                 Children =

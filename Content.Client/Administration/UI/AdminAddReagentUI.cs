@@ -90,8 +90,9 @@ namespace Content.Client.Administration.UI
                             HorizontalExpand = true,
                             VerticalExpand = true
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (_errorLabel = new Label

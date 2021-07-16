@@ -71,8 +71,9 @@ namespace Content.Client.Preferences.UI
 
             margin.AddChild(vBox);
 
-            var topHBox = new HBoxContainer
+            var topHBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 40),
                 Children =
                 {
@@ -109,8 +110,9 @@ namespace Content.Client.Preferences.UI
                 }
             });
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true,
                 SeparationOverride = 0
             };
@@ -276,8 +278,9 @@ namespace Content.Client.Preferences.UI
                     preferencesManager.DeleteCharacter(profile);
                 };
 
-                var internalHBox = new HBoxContainer
+                var internalHBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     SeparationOverride = 0,
                     Children =

@@ -72,8 +72,9 @@ namespace Content.Client.EscapeMenu.UI
                 LightingPresetOption.AddItem(Loc.GetString("ui-options-lighting-high"));
                 LightingPresetOption.OnItemSelected += OnLightingQualityChanged;
 
-                contents.AddChild(new HBoxContainer
+                contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Label {Text = Loc.GetString("ui-options-lighting-label")},
@@ -99,8 +100,9 @@ namespace Content.Client.EscapeMenu.UI
                 _uiScaleOption.AddItem(Loc.GetString("ui-options-scale-200"));
                 _uiScaleOption.OnItemSelected += OnUIScaleChanged;
 
-                contents.AddChild(new HBoxContainer
+                contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Label {Text = Loc.GetString("ui-options-scale-label")},
@@ -116,8 +118,9 @@ namespace Content.Client.EscapeMenu.UI
                 }
                 _hudThemeOption.OnItemSelected += OnHudThemeChanged;
 
-                contents.AddChild(new HBoxContainer
+                contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Label {Text = Loc.GetString("ui-options-hud-theme")},
@@ -154,13 +157,15 @@ namespace Content.Client.EscapeMenu.UI
                 _viewportLowResCheckBox = new CheckBox { Text = Loc.GetString("ui-options-vp-low-res")};
                 _viewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
 
-                contents.AddChild(new HBoxContainer
+                contents.AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         _viewportStretchCheckBox,
-                        (_viewportScaleBox = new HBoxContainer
+                        (_viewportScaleBox = new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (_viewportScaleText = new Label

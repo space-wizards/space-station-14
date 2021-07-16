@@ -104,8 +104,9 @@ namespace Content.Client.LateJoin
 
                     var jobButton = new JobButton(job.ID);
 
-                    var jobSelector = new HBoxContainer
+                    var jobSelector = new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         HorizontalExpand = true
                     };
 

@@ -31,8 +31,9 @@ namespace Content.Client.Disposal.UI
         {
             MinSize = SetSize = (460, 230);
             TargetList = new List<string>();
-            Contents.AddChild(new HBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new BoxContainer
@@ -42,8 +43,9 @@ namespace Content.Client.Disposal.UI
                         Margin = new Thickness(8, 0),
                         Children =
                         {
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     new Label {Text = $"{Loc.GetString("disposal-mailing-unit-window-state-label")} "},
@@ -52,8 +54,9 @@ namespace Content.Client.Disposal.UI
                                 }
                             },
                             new Control {MinSize = (0, 10)},
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -75,8 +78,9 @@ namespace Content.Client.Disposal.UI
                                 }
                             },
                             new Control {MinSize = (0, 10)},
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -96,8 +100,9 @@ namespace Content.Client.Disposal.UI
                                 }
                             },
                             new Control {MinSize = (0, 10)},
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -116,8 +121,9 @@ namespace Content.Client.Disposal.UI
                                 }
                             },
                             new Control {MinSize = (0, 10)},
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     (Power = new CheckButton {Text = Loc.GetString("disposal-mailing-unit-power-button")}),
@@ -131,8 +137,9 @@ namespace Content.Client.Disposal.UI
                         Margin = new Thickness(12, 0, 8, 0),
                         Children =
                         {
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     new Label
@@ -142,8 +149,9 @@ namespace Content.Client.Disposal.UI
                                 }
                             },
                             new Control {MinSize = new Vector2(0, 8)},
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 VerticalExpand = true,
                                 Children =
                                 {
@@ -164,8 +172,9 @@ namespace Content.Client.Disposal.UI
                                 HorizontalExpand = true,
                                 MinSize = new Vector2(0, 1),
                             },
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     new BoxContainer
@@ -173,8 +182,9 @@ namespace Content.Client.Disposal.UI
                                     	Orientation = LayoutOrientation.Vertical,
                                         Children =
                                         {
-                                            new HBoxContainer
+                                            new BoxContainer
                                             {
+                                            	Orientation = LayoutOrientation.Horizontal,
                                                 Margin = new Thickness(4, 0, 0, 0),
                                                 Children =
                                                 {

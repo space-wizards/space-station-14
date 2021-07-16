@@ -469,8 +469,9 @@ namespace Content.Client.Administration.UI
                 	Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                        	Orientation = LayoutOrientation.Horizontal,
                             SeparationOverride = 2,
                             Children =
                             {

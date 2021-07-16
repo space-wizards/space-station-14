@@ -15,7 +15,7 @@ namespace Content.Client.Configurable.UI
         public ConfigurationBoundUserInterface Owner { get; }
 
         private readonly BoxContainer _column;
-        private readonly HBoxContainer _row;
+        private readonly BoxContainer _row;
 
         private readonly List<(string  name, LineEdit input)> _inputs;
 
@@ -42,8 +42,9 @@ namespace Content.Client.Configurable.UI
                 SeparationOverride = 16,
             };
 
-            _row = new HBoxContainer
+            _row = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 16,
                 HorizontalExpand = true
             };

@@ -88,8 +88,9 @@ namespace Content.Client.Preferences.UI
             };
             hbox.AddChild(vBox);
 
-            var middleContainer = new HBoxContainer
+            var middleContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 10
             };
             vBox.AddChild(middleContainer);
@@ -113,8 +114,9 @@ namespace Content.Client.Preferences.UI
             #region Name
 
             var namePanel = HighlightedContainer();
-            var nameHBox = new HBoxContainer
+            var nameHBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true
             };
             var nameLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-name-label") };
@@ -161,8 +163,9 @@ namespace Content.Client.Preferences.UI
             tabContainer.AddChild(appearanceVBox);
             tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
-            var sexAndAgeRow = new HBoxContainer
+            var sexAndAgeRow = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 10
             };
 

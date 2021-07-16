@@ -168,8 +168,9 @@ namespace Content.Client.ParticleAccelerator.UI
                         MinSize = (0, 4)
                     },
 
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         VerticalExpand = true,
                         Children =
                         {
@@ -180,8 +181,9 @@ namespace Content.Client.ParticleAccelerator.UI
                                 HorizontalExpand = true,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    new BoxContainer
                                     {
+                                    	Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label
@@ -194,8 +196,9 @@ namespace Content.Client.ParticleAccelerator.UI
                                             _onButton
                                         }
                                     },
-                                    new HBoxContainer
+                                    new BoxContainer
                                     {
+                                    	Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label
@@ -297,8 +300,9 @@ namespace Content.Client.ParticleAccelerator.UI
                             }
                         }
                     },
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Margin = new Thickness(12, 0, 0, 0),
                         Children =
                         {

@@ -79,7 +79,7 @@ namespace Content.Client.Chat.UI
 
         private readonly Popup _channelSelectorPopup;
         private readonly Button _channelSelector;
-        private readonly HBoxContainer _channelSelectorHBox;
+        private readonly BoxContainer _channelSelectorHBox;
         private readonly FilterButton _filterButton;
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
@@ -142,8 +142,9 @@ namespace Content.Client.Chat.UI
                                 HorizontalExpand = true,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    new BoxContainer
                                     {
+                                    	Orientation = LayoutOrientation.Horizontal,
                                         HorizontalExpand = true,
                                         SeparationOverride = 4,
                                         Children =
@@ -183,8 +184,9 @@ namespace Content.Client.Chat.UI
                         StyleClasses = {StyleNano.StyleClassBorderedWindowPanel},
                         Children =
                         {
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                            	Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     new Control{MinSize = (4,0)},
@@ -204,8 +206,9 @@ namespace Content.Client.Chat.UI
             {
                 Children =
                 {
-                    (_channelSelectorHBox = new HBoxContainer
+                    (_channelSelectorHBox = new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 1
                     })
                 }

@@ -43,7 +43,7 @@ namespace Content.Client.Actions.UI
         private readonly Label _loadoutNumber;
         private readonly Texture _lockTexture;
         private readonly Texture _unlockTexture;
-        private readonly HBoxContainer _loadoutContainer;
+        private readonly BoxContainer _loadoutContainer;
 
         private readonly TextureRect _dragShadow;
 
@@ -117,8 +117,9 @@ namespace Content.Client.Actions.UI
             };
             panelContainer.AddChild(hotbarContainer);
 
-            var settingsContainer = new HBoxContainer
+            var settingsContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
             hotbarContainer.AddChild(settingsContainer);
@@ -158,8 +159,9 @@ namespace Content.Client.Actions.UI
             };
             hotbarContainer.AddChild(_slotContainer);
 
-            _loadoutContainer = new HBoxContainer
+            _loadoutContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 MouseFilter = MouseFilterMode.Stop
             };

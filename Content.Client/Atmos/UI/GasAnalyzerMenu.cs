@@ -80,8 +80,9 @@ namespace Content.Client.Atmos.UI
             var fontSmall = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
             Button refreshButton;
-            var topRow = new HBoxContainer
+            var topRow = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 4, 12, 2),
                 Children =
                 {
@@ -183,8 +184,9 @@ namespace Content.Client.Atmos.UI
             // Add a table with all the gases
             var tableKey = new VBoxContainer();
             var tableVal = new VBoxContainer();
-            _statusContainer.AddChild(new HBoxContainer
+            _statusContainer.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     tableKey,
@@ -198,8 +200,9 @@ namespace Content.Client.Atmos.UI
             // This is the gas bar thingy
             var height = 30;
             var minSize = 24; // This basically allows gases which are too small, to be shown properly
-            var gasBar = new HBoxContainer
+            var gasBar = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 MinSize = new Vector2(0, height)
             };
