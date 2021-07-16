@@ -361,8 +361,9 @@ namespace Content.Client.Verbs
 
             public VerbButton()
             {
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (_icon = new TextureRect
@@ -421,8 +422,9 @@ namespace Content.Client.Verbs
 
                 MouseFilter = MouseFilterMode.Stop;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (_icon = new TextureRect

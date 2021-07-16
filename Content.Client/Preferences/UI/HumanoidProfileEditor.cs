@@ -980,8 +980,9 @@ namespace Content.Client.Preferences.UI
                     icon.Texture = specifier.Frame0();
                 }
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         icon,
@@ -1023,8 +1024,9 @@ namespace Content.Client.Preferences.UI
                 _checkBox = new CheckBox {Text = $"{antag.Name}"};
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         _checkBox

@@ -65,8 +65,9 @@ namespace Content.Client.ContextMenu.UI
             OutlineComponent = ContextEntity.GetComponentOrNull<InteractionOutlineComponent>();
 
             AddChild(
-                new HBoxContainer
+                new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new LayoutContainer

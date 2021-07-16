@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Administration.UI.Tabs
 {
@@ -41,8 +42,9 @@ namespace Content.Client.Administration.UI.Tabs
             var altColor = Color.FromHex("#292B38");
             var defaultColor = Color.FromHex("#2F2F3B");
 
-            var header = new HBoxContainer
+            var header = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 SeparationOverride = 4,
                 Children =
@@ -85,8 +87,9 @@ namespace Content.Client.Administration.UI.Tabs
             var useAltColor = false;
             foreach (var player in players)
             {
-                var hBox = new HBoxContainer
+                var hBox = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     SeparationOverride = 4,
                     Children =

@@ -420,8 +420,9 @@ namespace Content.Client.EscapeMenu.UI
                     BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
                     ResetButton = new Button {Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = {StyleBase.ButtonCaution}};
 
-                    var hBox = new HBoxContainer
+                    var hBox = new BoxContainer
                     {
+                    	Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Control {MinSize = (5, 0)},

@@ -45,8 +45,9 @@ namespace Content.Client.Ghost
             _ghostRoles.OnPressed += _ => IoCManager.Resolve<IClientConsoleHost>()
                 .RemoteExecuteCommand(null, "ghostroles");
 
-            AddChild(new HBoxContainer
+            AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _returnToBody,

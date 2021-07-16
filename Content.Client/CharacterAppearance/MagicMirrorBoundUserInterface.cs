@@ -108,8 +108,9 @@ namespace Content.Client.CharacterAppearance
                 MinSize = (50, 0)
             };
 
-            AddChild(new HBoxContainer
+            AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _slider,
@@ -350,8 +351,9 @@ namespace Content.Client.CharacterAppearance
             _eyeColorPicker = new EyeColorPicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
             _eyeColorPicker.OnEyeColorPicked += newColor => owner.EyeColorSelected(newColor);
 
-            Contents.AddChild(new HBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 8,
                 Children = {_hairStylePicker, _facialHairStylePicker, _eyeColorPicker}
             });
