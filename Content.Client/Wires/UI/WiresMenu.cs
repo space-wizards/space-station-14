@@ -92,7 +92,10 @@ namespace Content.Client.Wires.UI
                 }
             };
 
-            var wrappingHBox = new HBoxContainer();
+            var wrappingHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             _wiresHBox = new BoxContainer
             {
             	Orientation = LayoutOrientation.Horizontal,

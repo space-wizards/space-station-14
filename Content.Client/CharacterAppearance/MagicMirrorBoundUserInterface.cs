@@ -207,13 +207,13 @@ namespace Content.Client.CharacterAppearance
 
             var vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             AddChild(vBox);
 
             _colorContainer = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             vBox.AddChild(_colorContainer);
             _colorContainer.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
@@ -298,7 +298,7 @@ namespace Content.Client.CharacterAppearance
         {
             var vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             AddChild(vBox);
 

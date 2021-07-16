@@ -54,7 +54,7 @@ namespace Content.Client.Lobby.UI
 
             var vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
             vBox.AddChild(header);
@@ -70,7 +70,10 @@ namespace Content.Client.Lobby.UI
             _loaded.AddChild(CharacterSetupButton);
             _loaded.AddChild(_summaryLabel);
 
-            var hBox = new HBoxContainer();
+            var hBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             hBox.AddChild(viewSouth);
             hBox.AddChild(viewNorth);
             hBox.AddChild(viewWest);

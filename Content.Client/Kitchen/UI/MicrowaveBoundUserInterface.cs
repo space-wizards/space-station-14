@@ -189,7 +189,10 @@ namespace Content.Client.Kitchen.UI
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.60f)},
                 };
 
-                var hSplit = new HBoxContainer();
+                var hSplit = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
 
                 IngredientsListReagents = new ItemList
                 {

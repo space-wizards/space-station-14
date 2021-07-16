@@ -30,7 +30,7 @@ namespace Content.Client.Crayon.UI
 
             var vbox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             Contents.AddChild(vbox);
 

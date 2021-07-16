@@ -60,7 +60,7 @@ namespace Content.Client.Lobby.UI
             };
             _vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             _scroll = new ScrollContainer();
             _scroll.AddChild(_vBox);

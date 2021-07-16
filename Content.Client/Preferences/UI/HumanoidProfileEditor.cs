@@ -76,7 +76,10 @@ namespace Content.Client.Preferences.UI
 
             _preferencesManager = preferencesManager;
 
-            var hbox = new HBoxContainer();
+            var hbox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             AddChild(hbox);
 
             #region Left
@@ -97,7 +100,7 @@ namespace Content.Client.Preferences.UI
 
             var leftColumn = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             middleContainer.AddChild(leftColumn);
 
@@ -148,7 +151,7 @@ namespace Content.Client.Preferences.UI
 
             var appearanceList = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
             var appearanceVBox = new BoxContainer
@@ -180,7 +183,10 @@ namespace Content.Client.Preferences.UI
             #region Sex
 
             var sexPanel = HighlightedContainer();
-            var sexHBox = new HBoxContainer();
+            var sexHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var sexLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-sex-label") };
 
             var sexButtonGroup = new ButtonGroup();
@@ -227,7 +233,10 @@ namespace Content.Client.Preferences.UI
             #region Age
 
             var agePanel = HighlightedContainer();
-            var ageHBox = new HBoxContainer();
+            var ageHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var ageLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-age-label") };
             _ageEdit = new LineEdit { MinSize = (40, 0) };
             _ageEdit.OnTextChanged += args =>
@@ -246,7 +255,10 @@ namespace Content.Client.Preferences.UI
             #region Gender
 
             var genderPanel = HighlightedContainer();
-            var genderHBox = new HBoxContainer();
+            var genderHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var genderLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-pronouns-label") };
 
             _genderButton = new OptionButton();
@@ -272,7 +284,10 @@ namespace Content.Client.Preferences.UI
             #region Hair
 
             var hairPanel = HighlightedContainer();
-            var hairHBox = new HBoxContainer();
+            var hairHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
 
             _hairPicker = new HairStylePicker
             {
@@ -330,7 +345,10 @@ namespace Content.Client.Preferences.UI
             #region Clothing
 
             var clothingPanel = HighlightedContainer();
-            var clothingHBox = new HBoxContainer();
+            var clothingHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var clothingLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-clothing-label") };
 
             _clothingButton = new OptionButton();
@@ -354,7 +372,10 @@ namespace Content.Client.Preferences.UI
             #region Backpack
 
             var backpackPanel = HighlightedContainer();
-            var backpackHBox = new HBoxContainer();
+            var backpackHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var backpackLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-backpack-label") };
 
             _backpackButton = new OptionButton();
@@ -381,7 +402,7 @@ namespace Content.Client.Preferences.UI
             var eyesPanel = HighlightedContainer();
             var eyesVBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             var eyesLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-eyes-label") };
 
@@ -409,7 +430,7 @@ namespace Content.Client.Preferences.UI
 
             var jobList = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
                 var jobVBox = new BoxContainer
@@ -534,7 +555,7 @@ namespace Content.Client.Preferences.UI
 
             var antagList = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
                 var antagVBox = new BoxContainer
@@ -581,14 +602,17 @@ namespace Content.Client.Preferences.UI
 
             var rightColumn = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             middleContainer.AddChild(rightColumn);
 
             #region Import/Export
 
             var importExportPanelContainer = HighlightedContainer();
-            var importExportHBox = new HBoxContainer();
+            var importExportHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var importButton = new Button
             {
                 Text = Loc.GetString("humanoid-profile-editor-import-button"),

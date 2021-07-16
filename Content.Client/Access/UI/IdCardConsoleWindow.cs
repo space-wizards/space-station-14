@@ -41,7 +41,7 @@ namespace Content.Client.Access.UI
             _owner = owner;
             var vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
             vBox.AddChild(new GridContainer

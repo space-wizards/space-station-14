@@ -358,7 +358,7 @@ namespace Content.Client.PDA
                 //Uplink Tab
                 CategoryListContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                	Orientation = LayoutOrientation.Vertical
                 };
 
                 BalanceInfo = new RichTextLabel

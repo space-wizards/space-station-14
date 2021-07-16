@@ -16,7 +16,7 @@ namespace Content.Client.Paper.UI
             MinSize = SetSize = (300, 300);
             var container = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             _label = new RichTextLabel();
             Input = new LineEdit {Visible = false};

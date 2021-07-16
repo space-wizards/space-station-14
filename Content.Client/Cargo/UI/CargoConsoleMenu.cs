@@ -53,10 +53,13 @@ namespace Content.Client.Cargo.UI
 
             var rows = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
-            var accountName = new HBoxContainer();
+            var accountName = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var accountNameLabel = new Label {
                 Text = Loc.GetString("cargo-console-menu-account-name-label") + " ",
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
@@ -68,7 +71,10 @@ namespace Content.Client.Cargo.UI
             accountName.AddChild(_accountNameLabel);
             rows.AddChild(accountName);
 
-            var points = new HBoxContainer();
+            var points = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var pointsLabel = new Label
             {
                 Text = Loc.GetString("cargo-console-menu-points-label") + " ",
@@ -82,7 +88,10 @@ namespace Content.Client.Cargo.UI
             points.AddChild(_pointsLabel);
             rows.AddChild(points);
 
-            var shuttleStatus = new HBoxContainer();
+            var shuttleStatus = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var shuttleStatusLabel = new Label
             {
                 Text = Loc.GetString("cargo-console-menu-shuttle-status-label") + " ",
@@ -96,7 +105,10 @@ namespace Content.Client.Cargo.UI
             shuttleStatus.AddChild(_shuttleStatusLabel);
             rows.AddChild(shuttleStatus);
 
-            var shuttleCapacity = new HBoxContainer();
+            var shuttleCapacity = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             var shuttleCapacityLabel = new Label
             {
                 Text = Loc.GetString("cargo-console-menu-order-capacity-label") + " ",
@@ -110,7 +122,10 @@ namespace Content.Client.Cargo.UI
             shuttleCapacity.AddChild(_shuttleCapacityLabel);
             rows.AddChild(shuttleCapacity);
 
-            var buttons = new HBoxContainer();
+            var buttons = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             CallShuttleButton = new Button()
             {
                 //Text = Loc.GetString("Call Shuttle"),
@@ -127,7 +142,10 @@ namespace Content.Client.Cargo.UI
             buttons.AddChild(PermissionsButton);
             rows.AddChild(buttons);
 
-            var category = new HBoxContainer();
+            var category = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             _categories = new OptionButton
             {
                 Prefix = Loc.GetString("cargo-console-menu-categories-label") + " ",
@@ -170,7 +188,7 @@ namespace Content.Client.Cargo.UI
             };
             var rAndOVBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
             _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added

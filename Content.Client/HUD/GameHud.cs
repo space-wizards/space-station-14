@@ -413,7 +413,7 @@ namespace Content.Client.HUD
 
             VoteContainer = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             RootControl.AddChild(VoteContainer);
             LC.SetAnchorPreset(VoteContainer, LC.LayoutPreset.TopLeft);

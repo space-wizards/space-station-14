@@ -50,7 +50,7 @@ namespace Content.Client.EscapeMenu.UI
                 _prototypeManager = proMan;
                 var vBox = new BoxContainer
                 {
-                    Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical
                 };
 
                 var contents = new BoxContainer

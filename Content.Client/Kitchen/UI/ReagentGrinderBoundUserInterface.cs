@@ -239,7 +239,10 @@ namespace Content.Client.Kitchen.UI
                 Owner = owner;
                 Title = Loc.GetString("grinder-menu-title");
 
-                var hSplit = new HBoxContainer();
+                var hSplit = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
 
                 var vBoxGrindJuiceButtonPanel = new BoxContainer
                 {

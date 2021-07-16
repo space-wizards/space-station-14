@@ -348,7 +348,10 @@ namespace Content.Client.Storage
                 };
                 AddChild(ActualButton);
 
-                var hBoxContainer = new HBoxContainer();
+                var hBoxContainer = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 EntitySpriteView = new SpriteView
                 {
                     MinSize = new Vector2(32.0f, 32.0f),

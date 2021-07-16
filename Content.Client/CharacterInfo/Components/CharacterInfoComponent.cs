@@ -104,7 +104,7 @@ namespace Content.Client.CharacterInfo.Components
                 });
                 ObjectivesContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                	Orientation = LayoutOrientation.Vertical
                 };
                 AddChild(ObjectivesContainer);
 
@@ -135,7 +135,10 @@ namespace Content.Client.CharacterInfo.Components
 
                     foreach (var objectiveCondition in objectiveConditions)
                     {
-                        var hbox = new HBoxContainer();
+                        var hbox = new BoxContainer
+                        {
+                        	Orientation = LayoutOrientation.Horizontal
+                        };
                         hbox.AddChild(new ProgressTextureRect
                         {
                             Texture = objectiveCondition.SpriteSpecifier.Frame0(),

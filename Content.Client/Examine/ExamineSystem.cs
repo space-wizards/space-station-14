@@ -80,7 +80,7 @@ namespace Content.Client.Examine
             //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             panel.AddChild(vBox);
             var hBox = new BoxContainer

@@ -73,7 +73,7 @@ namespace Content.Client.RoundEnd
             };
             var innerScrollContainer = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
             //Put observers at the bottom of the list. Put antags on top.

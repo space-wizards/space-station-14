@@ -120,7 +120,7 @@ namespace Content.Client.Preferences.UI
 
             _charactersVBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
             hBox.AddChild(new ScrollContainer

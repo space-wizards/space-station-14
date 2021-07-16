@@ -97,7 +97,7 @@ namespace Content.Client.Changelog
 
                         var readDivider = new BoxContainer
                         {
-                            Orientation = LayoutOrientation.Vertical,
+                            Orientation = LayoutOrientation.Vertical
                         };
 
                         var hBox = new BoxContainer

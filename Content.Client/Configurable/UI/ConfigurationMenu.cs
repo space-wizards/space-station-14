@@ -100,7 +100,10 @@ namespace Content.Client.Configurable.UI
 
                 _inputs.Add((field.Key, input));
 
-                var row = new HBoxContainer();
+                var row = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 CopyProperties(_row, row);
 
                 row.AddChild(label);

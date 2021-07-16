@@ -22,7 +22,7 @@ namespace Content.Client.Cargo.UI
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+            	Orientation = LayoutOrientation.Vertical
             };
             var gridContainer = new GridContainer { Columns = 2 };
 

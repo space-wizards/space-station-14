@@ -120,7 +120,7 @@ namespace Content.Client.CharacterInterface
 
                 _contentsVBox = new BoxContainer
                 {
-                    Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical
                 };
                 Contents.AddChild(_contentsVBox);
 

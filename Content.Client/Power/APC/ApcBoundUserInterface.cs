@@ -146,20 +146,26 @@ namespace Content.Client.Power.APC
                 Title = "APC";
                 var rows = new BoxContainer
                 {
-                    Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical
                 };
 
                 var statusHeader = new Label {Text = "Power Status: "};
                 rows.AddChild(statusHeader);
 
-                var breaker = new HBoxContainer();
+                var breaker = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 var breakerLabel = new Label {Text = "Main Breaker: "};
                 BreakerButton = new CheckButton {Text = "Toggle"};
                 breaker.AddChild(breakerLabel);
                 breaker.AddChild(BreakerButton);
                 rows.AddChild(breaker);
 
-                var externalStatus = new HBoxContainer();
+                var externalStatus = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 var externalStatusLabel = new Label {Text = "External Power: "};
                 ExternalPowerStateLabel = new Label {Text = "Good"};
                 ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
@@ -167,7 +173,10 @@ namespace Content.Client.Power.APC
                 externalStatus.AddChild(ExternalPowerStateLabel);
                 rows.AddChild(externalStatus);
 
-                var charge = new HBoxContainer();
+                var charge = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 var chargeLabel = new Label {Text = "Charge:"};
                 ChargeBar = new ProgressBar
                 {

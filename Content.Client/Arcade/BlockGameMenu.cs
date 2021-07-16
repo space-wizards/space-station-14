@@ -71,7 +71,7 @@ namespace Content.Client.Arcade
             // building the game container
             _gameRootContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+            	Orientation = LayoutOrientation.Vertical
             };
 
             _levelLabel = new Label
@@ -96,7 +96,10 @@ namespace Content.Client.Arcade
                 MinSize = new Vector2(1,10)
             });
 
-            var gameBox = new HBoxContainer();
+            var gameBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             gameBox.AddChild(SetupHoldBox(backgroundTexture));
             gameBox.AddChild(new Control
             {
@@ -297,7 +300,10 @@ namespace Content.Client.Arcade
             menuContainer.AddChild(new Label{Text = Loc.GetString("blockgame-menu-label-highscores")});
             menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
-            var highScoreBox = new HBoxContainer();
+            var highScoreBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
 
             _localHighscoresLabel = new Label
             {

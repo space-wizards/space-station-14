@@ -454,7 +454,10 @@ namespace Content.Client.Administration.UI
                     FlagButtons.Add(flag, (inherit, sub, plus));
                 }
 
-                var bottomButtons = new HBoxContainer();
+                var bottomButtons = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 if (data != null)
                 {
                     // show remove button.
@@ -549,7 +552,7 @@ namespace Content.Client.Administration.UI
                 };
                 var flagsBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                	Orientation = LayoutOrientation.Vertical
                 };
 
                 foreach (var flag in AdminFlagsHelper.AllFlags)
@@ -574,7 +577,10 @@ namespace Content.Client.Administration.UI
                     flagsBox.AddChild(checkBox);
                 }
 
-                var bottomButtons = new HBoxContainer();
+                var bottomButtons = new BoxContainer
+                {
+                	Orientation = LayoutOrientation.Horizontal
+                };
                 if (data != null)
                 {
                     // show remove button.

@@ -27,7 +27,7 @@ namespace Content.Client.Lathe.UI
 
             var vBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
 
             var hBox = new HBoxContainer()

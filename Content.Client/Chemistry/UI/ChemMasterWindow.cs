@@ -382,7 +382,10 @@ namespace Content.Client.Chemistry.UI
                 return;
             }
 
-            var bufferHBox = new HBoxContainer();
+            var bufferHBox = new BoxContainer
+            {
+            	Orientation = LayoutOrientation.Horizontal
+            };
             BufferInfo.AddChild(bufferHBox);
 
             var bufferLabel = new Label { Text = $"{Loc.GetString("chem-master-window-buffer-label")} " };

@@ -41,7 +41,7 @@ namespace Content.Client.LateJoin
 
             var jobList = new BoxContainer
             {
-                Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical
             };
             var vBox = new BoxContainer
             {
