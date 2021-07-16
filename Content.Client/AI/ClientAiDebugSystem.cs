@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.AI
 {
@@ -169,8 +170,9 @@ namespace Content.Client.AI
                     MouseFilter = Control.MouseFilterMode.Ignore,
                 };
 
-                var vBox = new VBoxContainer()
+                var vBox = new BoxContainer()
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     SeparationOverride = 15,
                     Children = {actionLabel, pathfindingLabel},
                 };

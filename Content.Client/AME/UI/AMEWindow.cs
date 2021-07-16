@@ -30,8 +30,9 @@ namespace Content.Client.AME.UI
 
             MinSize = SetSize = (250, 250);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+	            Orientation = Orientation = LayoutOrientation.Vertical,
                 Children =
                     {
                         new HBoxContainer

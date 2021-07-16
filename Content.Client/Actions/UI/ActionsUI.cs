@@ -108,8 +108,9 @@ namespace Content.Client.Actions.UI
             };
             AddChild(panelContainer);
 
-            var hotbarContainer = new VBoxContainer
+            var hotbarContainer = new BoxContainer
             {
+	            Orientation = Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 3,
                 HorizontalAlignment = HAlignment.Left
             };

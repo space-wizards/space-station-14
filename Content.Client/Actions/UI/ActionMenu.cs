@@ -71,8 +71,9 @@ namespace Content.Client.Actions.UI
             Title = Loc.GetString("ui-actionmenu-title");
             MinSize = (300, 300);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+	            Orientation = Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new HBoxContainer

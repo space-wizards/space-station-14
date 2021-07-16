@@ -65,8 +65,9 @@ namespace Content.Client.Administration.UI
 
                 Title = Loc.GetString("admin-add-reagent-eui-title");
 
-                Contents.AddChild(new VBoxContainer
+                Contents.AddChild(new BoxContainer
                 {
+	                Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new GridContainer
