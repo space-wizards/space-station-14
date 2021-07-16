@@ -13,8 +13,8 @@ namespace Content.Client.RoundEnd
 {
     public sealed class RoundEndSummaryWindow : SS14Window
     {
-        private VBoxContainer RoundEndSummaryTab { get; }
-        private VBoxContainer PlayerManifestoTab { get; }
+        private BoxContainer RoundEndSummaryTab { get; }
+        private BoxContainer PlayerManifestoTab { get; }
         private TabContainer RoundEndWindowTabs { get; }
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
@@ -28,14 +28,16 @@ namespace Content.Client.RoundEnd
             //This tab would be a good place for things like: "x many people died.",
             //"clown slipped the crew x times.", "x shots were fired this round.", etc.
             //Also good for serious info.
-            RoundEndSummaryTab = new VBoxContainer()
+            RoundEndSummaryTab = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-round-end-summary-tab-title")
             };
 
             //Tab for listing  unique info per player.
-            PlayerManifestoTab = new VBoxContainer()
+            PlayerManifestoTab = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
             };
 

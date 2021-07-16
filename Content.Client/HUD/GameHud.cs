@@ -344,24 +344,28 @@ namespace Content.Client.HUD
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Center
             };
-            BottomRightInventoryQuickButtonContainer = new HBoxContainer()
+            BottomRightInventoryQuickButtonContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Right
             };
-            BottomLeftInventoryQuickButtonContainer = new HBoxContainer()
+            BottomLeftInventoryQuickButtonContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Left
             };
-            TopInventoryQuickButtonContainer = new HBoxContainer()
+            TopInventoryQuickButtonContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 Visible = false,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Center
             };
-            var bottomRow = new HBoxContainer()
+            var bottomRow = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalAlignment = Control.HAlignment.Center
 
             };

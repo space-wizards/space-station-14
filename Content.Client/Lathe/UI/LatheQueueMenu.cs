@@ -30,8 +30,9 @@ namespace Content.Client.Lathe.UI
                 Orientation = LayoutOrientation.Vertical
             };
 
-            var hBox = new HBoxContainer()
+            var hBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 2,
             };
@@ -42,8 +43,9 @@ namespace Content.Client.Lathe.UI
                 SizeFlagsStretchRatio = 2,
             };
 
-            var vBoxInfo = new VBoxContainer()
+            var vBoxInfo = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };

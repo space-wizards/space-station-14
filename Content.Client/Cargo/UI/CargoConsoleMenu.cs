@@ -29,12 +29,12 @@ namespace Content.Client.Cargo.UI
         private Label _pointsLabel { get; set; }
         private Label _shuttleStatusLabel { get; set; }
         private Label _shuttleCapacityLabel { get; set; }
-        private VBoxContainer _requests { get; set; }
+        private BoxContainer _requests { get; set; }
         private BoxContainer _orders { get; set; }
         private OptionButton _categories { get; set; }
         private LineEdit _searchBar { get; set; }
 
-        public VBoxContainer Products { get; set; }
+        public BoxContainer Products { get; set; }
         public Button CallShuttleButton { get; set; }
         public Button PermissionsButton { get; set; }
 
@@ -168,8 +168,9 @@ namespace Content.Client.Cargo.UI
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 6
             };
-            Products = new VBoxContainer()
+            Products = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };

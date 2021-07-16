@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Ghost
 {
@@ -77,7 +78,7 @@ namespace Content.Client.Ghost
         private readonly GhostComponent _owner;
         private readonly IEntityNetworkManager _netManager;
 
-        private readonly VBoxContainer _buttonContainer;
+        private readonly BoxContainer _buttonContainer;
 
         public List<string> Locations { get; set; } = new();
 
@@ -90,8 +91,9 @@ namespace Content.Client.Ghost
             _owner = owner;
             _netManager = netManager;
 
-            _buttonContainer = new VBoxContainer()
+            _buttonContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SeparationOverride = 5,
 

@@ -291,8 +291,9 @@ namespace Content.Client.Arcade
 
             _highscoresRootContainer.AddChild(menuInnerPanel);
 
-            var menuContainer = new VBoxContainer()
+            var menuContainer = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };

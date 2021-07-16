@@ -652,8 +652,9 @@ namespace Content.Client.Preferences.UI
 
             #region Right
 
-            vBox = new VBoxContainer()
+            vBox = new BoxContainer
             {
+            	Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 HorizontalExpand = true,
             };

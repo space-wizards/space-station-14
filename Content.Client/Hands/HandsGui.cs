@@ -37,7 +37,7 @@ namespace Content.Client.Hands
 
         private ItemStatusPanel StatusPanel { get; }
 
-        private HBoxContainer HandsContainer { get; }
+        private BoxContainer HandsContainer { get; }
 
         [ViewVariables]
         public IReadOnlyList<GuiHand> Hands => _hands;
@@ -67,7 +67,11 @@ namespace Content.Client.Hands
                         Children =
                         {
                             (StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            (HandsContainer = new HBoxContainer() { HorizontalAlignment = HAlignment.Center } ),
+                            (HandsContainer = new BoxContainer
+                            {
+                            	Orientation = LayoutOrientation.Horizontal,
+                                HorizontalAlignment = HAlignment.Center
+                            }),
                         }
                     },
                 }

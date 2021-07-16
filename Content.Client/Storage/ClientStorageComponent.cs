@@ -214,8 +214,9 @@ namespace Content.Client.Storage
                     }
                 };
 
-                VSplitContainer = new VBoxContainer()
+                VSplitContainer = new BoxContainer
                 {
+                	Orientation = LayoutOrientation.Vertical,
                     MouseFilter = MouseFilterMode.Ignore,
                 };
                 containerButton.AddChild(VSplitContainer);

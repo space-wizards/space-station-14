@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.ContextMenu.UI
@@ -130,14 +131,16 @@ namespace Content.Client.ContextMenu.UI
              LayoutContainer.SetGrowVertical(_label, LayoutContainer.GrowDirection.Begin);
 
              AddChild(
-                 new HBoxContainer()
+                 new BoxContainer
                  {
+                 	Orientation = LayoutOrientation.Horizontal,
                      SeparationOverride = 6,
                      Children =
                      {
                          new LayoutContainer { Children = { _spriteView, _label } },
-                         new HBoxContainer()
+                         new BoxContainer
                          {
+                         	Orientation = LayoutOrientation.Horizontal,
                              SeparationOverride = 6,
                              Children =
                              {
