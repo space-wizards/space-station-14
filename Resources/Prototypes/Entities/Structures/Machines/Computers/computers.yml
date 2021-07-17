@@ -15,13 +15,14 @@
   id: ComputerShuttleBase
   name: shuttle console
   description: Used to pilot a shuttle.
+  abstract: true
   components:
   - type: HelmsmanConsole
   - type: ApcPowerReceiver
     powerLoad: 200
 
 - type: entity
-  parent: ComputerBase
+  parent: ComputerShuttleBase
   id: ComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -33,7 +34,7 @@
       screen: shuttle
 
 - type: entity
-  parent: ComputerBase
+  parent: ComputerShuttleBase
   id: ComputerShuttleSyndie
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
