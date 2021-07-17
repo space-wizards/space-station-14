@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
 using Content.Shared.MobState;

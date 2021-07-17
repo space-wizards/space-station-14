@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Administration;
 using Content.Server.AI.Components;
 using Content.Server.Mind.Components;

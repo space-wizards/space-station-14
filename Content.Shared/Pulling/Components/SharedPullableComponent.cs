@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;

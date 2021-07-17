@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;

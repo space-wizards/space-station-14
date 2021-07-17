@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Tag;

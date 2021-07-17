@@ -43,3 +43,4 @@
     color: "#889192"
     drawdepth: WallMountedItems
     sprite: Structures/Walls/low_wall.rsi
+  - type: HideContextMenu

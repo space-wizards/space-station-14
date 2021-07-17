@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;

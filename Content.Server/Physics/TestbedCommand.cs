@@ -35,7 +35,6 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
-#nullable enable
 
 namespace Content.Server.Physics
 {

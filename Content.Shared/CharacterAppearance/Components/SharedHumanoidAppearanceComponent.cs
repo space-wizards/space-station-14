@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;

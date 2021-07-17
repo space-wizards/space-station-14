@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Body.Behavior;
+﻿using Content.Shared.Body.Behavior;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Coordinates.Helpers;
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;

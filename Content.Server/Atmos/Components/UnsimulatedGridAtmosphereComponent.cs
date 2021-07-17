@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;

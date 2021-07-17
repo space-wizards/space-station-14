@@ -181,7 +181,7 @@
 #   id: DataTheory
 #   description: Just like regular data, but in space!
 #   icon:
-#     sprite: Constructible/Power/computers.rsi
+#     sprite: Structures/Machines/computers.rsi
 #     state: computer-datatheory
 #   requiredPoints: 10000
 #   requiredTechnologies:

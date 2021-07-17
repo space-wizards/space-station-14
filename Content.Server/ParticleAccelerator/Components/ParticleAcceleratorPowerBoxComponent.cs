@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 

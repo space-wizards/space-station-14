@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;

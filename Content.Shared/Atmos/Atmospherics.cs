@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System;

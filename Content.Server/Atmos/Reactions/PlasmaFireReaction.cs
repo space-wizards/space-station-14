@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Coordinates.Helpers;

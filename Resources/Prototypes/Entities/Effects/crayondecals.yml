@@ -8,7 +8,7 @@
   - type: InteractionOutline
   - type: Physics
   - type: Sprite
-    sprite: Constructible/Misc/crayondecals.rsi
+    sprite: Effects/crayondecals.rsi
     state: corgi
   - type: Cleanable
   - type: Appearance

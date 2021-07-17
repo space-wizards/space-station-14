@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Solar;
 using Content.Server.Solar.EntitySystems;
 using Content.Server.GameObjects.Components;

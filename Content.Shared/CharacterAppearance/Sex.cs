@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.Dataset;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.Inventory;
 using Content.Client.Items.Components;
 using Content.Shared.Clothing;

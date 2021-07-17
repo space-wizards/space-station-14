@@ -1,4 +1,3 @@
-#nullable enable
 using Lidgren.Network;
 using Robust.Shared.Network;
 

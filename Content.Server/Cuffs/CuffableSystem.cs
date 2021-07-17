@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Cuffs.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.Hands.Components;
