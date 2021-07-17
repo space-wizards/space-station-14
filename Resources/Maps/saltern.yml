@@ -1993,8 +1993,7 @@ entities:
 - uid: 218
   type: Recycler
   components:
-  - anchored: True
-    pos: -21.5,-13.5
+  - pos: -21.5,-13.5
     parent: 853
     type: Transform
 - uid: 219
@@ -12775,8 +12774,7 @@ entities:
 - uid: 873
   type: Autolathe
   components:
-  - anchored: True
-    pos: 29.5,-2.5
+  - pos: 29.5,-2.5
     parent: 853
     type: Transform
   - containers:
@@ -12796,8 +12794,7 @@ entities:
 - uid: 875
   type: Protolathe
   components:
-  - anchored: True
-    pos: 29.5,-1.5
+  - pos: 29.5,-1.5
     parent: 853
     type: Transform
   - containers:
@@ -12904,8 +12901,7 @@ entities:
 - uid: 889
   type: GravityGenerator
   components:
-  - anchored: True
-    rot: 4.371139006309477E-08 rad
+  - rot: 4.371139006309477E-08 rad
     pos: 49.5,-4.5
     parent: 853
     type: Transform
@@ -12958,8 +12954,7 @@ entities:
 - uid: 894
   type: KitchenMicrowave
   components:
-  - anchored: True
-    rot: 4.371139006309477E-08 rad
+  - rot: 4.371139006309477E-08 rad
     pos: -14.5,-1.5
     parent: 853
     type: Transform
@@ -14076,8 +14071,7 @@ entities:
 - uid: 1043
   type: Autolathe
   components:
-  - anchored: True
-    pos: -5.5,-12.5
+  - pos: -5.5,-12.5
     parent: 853
     type: Transform
   - containers:
@@ -14089,8 +14083,7 @@ entities:
 - uid: 1044
   type: Protolathe
   components:
-  - anchored: True
-    pos: -3.5,-12.5
+  - pos: -3.5,-12.5
     parent: 853
     type: Transform
   - containers:
@@ -27962,6 +27955,16 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2743
+  type: ComputerShuttle
+  components:
+  - pos: 2.5,32.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2744
   type: CableApcExtension
   components:
@@ -42689,8 +42692,7 @@ entities:
 - uid: 4182
   type: KitchenReagentGrinder
   components:
-  - anchored: True
-    rot: 4.371139006309477E-08 rad
+  - rot: 4.371139006309477E-08 rad
     pos: -14.5,-0.5
     parent: 853
     type: Transform
@@ -43186,8 +43188,7 @@ entities:
 - uid: 4247
   type: KitchenMicrowave
   components:
-  - anchored: True
-    pos: -7.5,-28.5
+  - pos: -7.5,-28.5
     parent: 853
     type: Transform
   - containers:
@@ -48854,8 +48855,7 @@ entities:
 - uid: 4909
   type: KitchenReagentGrinder
   components:
-  - anchored: True
-    pos: 18.5,1.5
+  - pos: 18.5,1.5
     parent: 853
     type: Transform
   - containers:
@@ -49220,4 +49220,11 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 4960
+  type: ChairPilotSeat
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,31.5
+    parent: 853
+    type: Transform
 ...
