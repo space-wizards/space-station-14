@@ -10,7 +10,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-#nullable enable
 namespace Content.Server.StationEvents.Events
 {
     internal sealed class GasLeak : StationEvent

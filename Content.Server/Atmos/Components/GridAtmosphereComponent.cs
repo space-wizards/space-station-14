@@ -1,4 +1,3 @@
-#nullable enable
 // ReSharper disable once RedundantUsingDirective
 using System;
 using System.Collections;

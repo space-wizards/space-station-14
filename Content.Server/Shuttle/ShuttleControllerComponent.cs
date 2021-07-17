@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Alert;
+﻿using Content.Server.Alert;
 using Content.Server.Buckle.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Alert;

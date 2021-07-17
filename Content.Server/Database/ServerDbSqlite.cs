@@ -16,7 +16,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.Database
 {

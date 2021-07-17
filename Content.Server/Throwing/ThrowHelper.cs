@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Shared.MobState;

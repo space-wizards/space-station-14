@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;

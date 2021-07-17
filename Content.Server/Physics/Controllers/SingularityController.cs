@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;

@@ -23,7 +23,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-#nullable enable
 
 namespace Content.Server.Administration.Managers
 {

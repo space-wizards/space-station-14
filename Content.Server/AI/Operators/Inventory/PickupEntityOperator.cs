@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Items;

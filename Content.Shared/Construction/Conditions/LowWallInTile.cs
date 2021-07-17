@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

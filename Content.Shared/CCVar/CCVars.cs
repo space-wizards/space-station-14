@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared;
 using Robust.Shared.Configuration;
 

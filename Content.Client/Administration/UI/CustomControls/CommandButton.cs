@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Client.Console;
+﻿using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 

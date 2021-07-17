@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;

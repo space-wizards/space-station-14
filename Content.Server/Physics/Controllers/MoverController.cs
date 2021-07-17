@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;

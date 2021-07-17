@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.UserInterface;
+﻿using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
