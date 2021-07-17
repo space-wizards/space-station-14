@@ -16,7 +16,7 @@ namespace Content.Shared.Shuttles
     public sealed class PilotComponent : Component
     {
         public override string Name => "Pilot";
-        [ViewVariables] public SharedHelmsmanConsoleComponent? Console { get; set; }
+        [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -30,13 +30,13 @@ namespace Content.Shared.Shuttles
             }
 
             if (!Owner.EntityManager.TryGetEntity(state.Console.Value, out var consoleEnt) ||
-                !consoleEnt.TryGetComponent(out SharedHelmsmanConsoleComponent? helmsmanConsoleComponent))
+                !consoleEnt.TryGetComponent(out SharedShuttleConsoleComponent? shuttleConsoleComponent))
             {
                 Logger.Warning($"Unable to set Helmsman console to {state.Console.Value}");
                 return;
             }
 
-            Console = helmsmanConsoleComponent;
+            Console = shuttleConsoleComponent;
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

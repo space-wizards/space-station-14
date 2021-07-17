@@ -6,8 +6,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Shuttles
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedHelmsmanConsoleComponent))]
-    internal sealed class HelmsmanConsoleComponent : SharedHelmsmanConsoleComponent
+    [ComponentReference(typeof(SharedShuttleConsoleComponent))]
+    internal sealed class ShuttleConsoleComponent : SharedShuttleConsoleComponent
     {
         [ViewVariables]
         public List<PilotComponent> SubscribedPilots = new();

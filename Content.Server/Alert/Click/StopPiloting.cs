@@ -19,7 +19,7 @@ namespace Content.Server.Alert.Click
             if (args.Player.TryGetComponent(out PilotComponent? pilotComponent) &&
                 pilotComponent.Console != null)
             {
-                EntitySystem.Get<HelmsmanSystem>().RemovePilot(pilotComponent);
+                EntitySystem.Get<ShuttleConsoleSystem>().RemovePilot(pilotComponent);
             }
         }
     }

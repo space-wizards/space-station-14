@@ -6,25 +6,26 @@ using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Shuttles;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Shuttles
 {
-    internal sealed class HelmsmanSystem : SharedHelmsmanSystem
+    internal sealed class ShuttleConsoleSystem : SharedHelmsmanSystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<HelmsmanConsoleComponent, ComponentShutdown>(HandleHelmsmanShutdown);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleHelmsmanShutdown);
             SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
-            SubscribeLocalEvent<HelmsmanConsoleComponent, ActivateInWorldEvent>(HandleHelmsmanInteract);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleHelmsmanInteract);
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
-            SubscribeLocalEvent<HelmsmanConsoleComponent, PowerChangedEvent>(HandlePowerChange);
+            SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
         }
 
         /// <summary>
         /// Console requires power to operate.
         /// </summary>
-        private void HandlePowerChange(EntityUid uid, HelmsmanConsoleComponent component, PowerChangedEvent args)
+        private void HandlePowerChange(EntityUid uid, ShuttleConsoleComponent component, PowerChangedEvent args)
         {
             if (!args.Powered)
             {
@@ -50,7 +51,7 @@ namespace Content.Server.Shuttles
         /// <summary>
         /// For now pilots just interact with the console and can start piloting with wasd.
         /// </summary>
-        private void HandleHelmsmanInteract(EntityUid uid, HelmsmanConsoleComponent component, ActivateInWorldEvent args)
+        private void HandleHelmsmanInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
         {
             if (!args.User.TryGetComponent(out PilotComponent? pilotComponent))
             {
@@ -84,12 +85,12 @@ namespace Content.Server.Shuttles
             RemovePilot(component);
         }
 
-        private void HandleHelmsmanShutdown(EntityUid uid, HelmsmanConsoleComponent component, ComponentShutdown args)
+        private void HandleHelmsmanShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)
         {
             ClearPilots(component);
         }
 
-        public void AddPilot(IEntity entity, HelmsmanConsoleComponent component)
+        public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
         {
             if (!Get<ActionBlockerSystem>().CanInteract(entity) ||
                 !entity.TryGetComponent(out PilotComponent? pilotComponent) ||
@@ -105,18 +106,16 @@ namespace Content.Server.Shuttles
                 alertsComponent.ShowAlert(AlertType.PilotingShuttle);
             }
 
-            // TODO: LOC.
-            entity.PopupMessage("Piloting ship");
+            entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
             pilotComponent.Dirty();
-            //ComponentManager.AddComponent<ShuttleControllerComponent>(entity);
         }
 
         public void RemovePilot(PilotComponent pilotComponent)
         {
             var console = pilotComponent.Console;
 
-            if (console is not HelmsmanConsoleComponent helmsman)
+            if (console is not ShuttleConsoleComponent helmsman)
             {
                 return;
             }
@@ -134,8 +133,7 @@ namespace Content.Server.Shuttles
             }
 
             pilotComponent.Dirty();
-            pilotComponent.Owner.PopupMessage("Stopped piloting");
-            //ComponentManager.RemoveComponent<ShuttleControllerComponent>(pilotComponent.Owner.Uid);
+            pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
         }
 
         public void RemovePilot(IEntity entity)
@@ -145,7 +143,7 @@ namespace Content.Server.Shuttles
             RemovePilot(pilotComponent);
         }
 
-        public void ClearPilots(HelmsmanConsoleComponent component)
+        public void ClearPilots(ShuttleConsoleComponent component)
         {
             foreach (var pilot in component.SubscribedPilots)
             {
