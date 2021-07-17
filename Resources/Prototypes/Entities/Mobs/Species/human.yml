@@ -8,6 +8,7 @@
   components:
   - type: Tag
     tags:
+    - CanPilot
     - Teleportable
     - FootstepSound
   - type: Reactive
@@ -214,7 +215,6 @@
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
-  - type: Pilot
   - type: UnarmedCombat
     range: 0.8
     arcwidth: 30

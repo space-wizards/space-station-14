@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Shuttles
 {
-    public abstract class SharedHelmsmanSystem : EntitySystem
+    public abstract class SharedShuttleConsoleSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Alert;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
@@ -5,21 +6,36 @@ using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Shuttles;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Shuttles
 {
-    internal sealed class ShuttleConsoleSystem : SharedHelmsmanSystem
+    internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleHelmsmanShutdown);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleConsoleShutdown);
             SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
-            SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleHelmsmanInteract);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleConsoleInteract);
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var comp in ComponentManager.EntityQuery<PilotComponent>().ToArray())
+            {
+                if (comp.Console == null) continue;
+
+                if (!Get<ActionBlockerSystem>().CanInteract(comp.Owner))
+                {
+                    RemovePilot(comp);
+                }
+            }
         }
 
         /// <summary>
@@ -51,12 +67,14 @@ namespace Content.Server.Shuttles
         /// <summary>
         /// For now pilots just interact with the console and can start piloting with wasd.
         /// </summary>
-        private void HandleHelmsmanInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
+        private void HandleConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
         {
-            if (!args.User.TryGetComponent(out PilotComponent? pilotComponent))
+            if (!args.User.HasTag("CanPilot"))
             {
                 return;
             }
+
+            var pilotComponent = args.User.EnsureComponent<PilotComponent>();
 
             if (!component.Enabled)
             {
@@ -85,7 +103,7 @@ namespace Content.Server.Shuttles
             RemovePilot(component);
         }
 
-        private void HandleHelmsmanShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)
+        private void HandleConsoleShutdown(EntityUid uid, ShuttleConsoleComponent component, ComponentShutdown args)
         {
             ClearPilots(component);
         }
@@ -115,25 +133,19 @@ namespace Content.Server.Shuttles
         {
             var console = pilotComponent.Console;
 
-            if (console is not ShuttleConsoleComponent helmsman)
-            {
-                return;
-            }
+            if (console is not ShuttleConsoleComponent helmsman) return;
 
             pilotComponent.Console = null;
 
-            if (!helmsman.SubscribedPilots.Remove(pilotComponent))
-            {
-                return;
-            }
+            if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
             if (pilotComponent.Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ClearAlert(AlertType.PilotingShuttle);
             }
 
-            pilotComponent.Dirty();
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
+            ComponentManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
         }
 
         public void RemovePilot(IEntity entity)

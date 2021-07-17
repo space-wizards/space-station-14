@@ -2,6 +2,9 @@
   id: BotanySharp
 
 - type: Tag
+  id: CanPilot
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag

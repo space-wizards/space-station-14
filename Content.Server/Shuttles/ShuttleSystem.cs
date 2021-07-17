@@ -14,9 +14,6 @@ namespace Content.Server.Shuttles
     {
         private const float TileMassMultiplier = 1f;
 
-        // TODO: Replace with thrusters
-        private const float SpeedRatio = 160.0f;
-
         public override void Initialize()
         {
             base.Initialize();
