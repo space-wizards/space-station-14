@@ -12,6 +12,16 @@
 
 - type: entity
   parent: ComputerBase
+  id: ComputerShuttleBase
+  name: shuttle console
+  description: Used to pilot a shuttle.
+  components:
+  - type: HelmsmanConsole
+  - type: ApcPowerReceiver
+    powerLoad: 200
+
+- type: entity
+  parent: ComputerBase
   id: ComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -79,7 +89,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    load: 200
+    powerLoad: 200
     priority: Low
   - type: Computer
     board: ResearchComputerCircuitboard
