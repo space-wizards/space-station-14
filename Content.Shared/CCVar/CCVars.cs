@@ -345,5 +345,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * CHAT
+         */
+
+        public static readonly CVarDef<int> ChatMaxMessageLength =
+            CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
     }
 }
