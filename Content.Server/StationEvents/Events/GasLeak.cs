@@ -146,21 +146,21 @@ namespace Content.Server.StationEvents.Events
 
         private void Spark()
         {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             if (robustRandom.NextFloat() <= SparkChance)
             {
                 if (!_foundTile ||
                     _targetGrid == null ||
                     _targetGrid.Deleted ||
-                    !_targetGrid.TryGetComponent(out GridAtmosphereComponent? gridAtmos))
+                    !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
                 {
                     return;
                 }
-
-                var atmos = gridAtmos.GetTile(_targetTile);
+                
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                atmos?.HotspotExpose(700f, 50f, true);
+                atmosphereSystem.HotspotExpose(_targetGrid.Transform.GridID, _targetTile, 700f, 50f, true);
                 SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
             }
         }
