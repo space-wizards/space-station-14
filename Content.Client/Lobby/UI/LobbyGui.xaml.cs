@@ -22,7 +22,7 @@ namespace Content.Client.Lobby.UI
         public Button OptionsButton => COptionsButton;
         public Button LeaveButton => CLeaveButton;
         public ChatBox Chat => CChat;
-        public VBoxContainer VoteContainer => CVoteContainer;
+        public BoxContainer VoteContainer => CVoteContainer;
         public LobbyPlayerList OnlinePlayerList => COnlinePlayerList;
         public ServerInfo ServerInfo => CServerInfo;
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
