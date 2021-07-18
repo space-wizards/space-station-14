@@ -307,6 +307,61 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Tile Airblocked
+
+        /// <summary>
+        ///     Returns if the tile in question is "air-blocked" in a certain direction or not.
+        ///     This could be due to a number of reasons, such as walls, doors, etc.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <param name="direction">Directions to check.</param>
+        /// <returns>Whether the tile is blocked in the directions specified.</returns>
+        public bool IsTileAirBlocked(MapCoordinates coordinates, AtmosDirection direction = AtmosDirection.All)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return IsTileAirBlocked(tuple.Value.Grid, tuple.Value.Tile, direction);
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Returns if the tile in question is "air-blocked" in a certain direction or not.
+        ///     This could be due to a number of reasons, such as walls, doors, etc.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <param name="direction">Directions to check.</param>
+        /// <returns>Whether the tile is blocked in the directions specified.</returns>
+        public bool IsTileAirBlocked(EntityCoordinates coordinates, AtmosDirection direction = AtmosDirection.All)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return IsTileAirBlocked(tuple.Value.Grid, tuple.Value.Tile, direction);
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Returns if the tile in question is "air-blocked" in a certain direction or not.
+        ///     This could be due to a number of reasons, such as walls, doors, etc.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <param name="direction">Directions to check.</param>
+        /// <returns>Whether the tile is blocked in the directions specified.</returns>
+        public bool IsTileAirBlocked(GridId grid, Vector2i tile, AtmosDirection direction = AtmosDirection.All)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return false;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                return gridAtmosphere.IsAirBlocked(tile, direction);
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #region Update Adjacent
 
         /// <summary>
