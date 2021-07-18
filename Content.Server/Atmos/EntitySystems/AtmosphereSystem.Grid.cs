@@ -307,6 +307,47 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Update Adjacent
+
+        /// <summary>
+        ///     Immediately updates a tile's blocked air directions.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        public void UpdateAdjacent(MapCoordinates coordinates)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                UpdateAdjacent(tuple.Value.Grid, tuple.Value.Tile);
+        }
+
+        /// <summary>
+        ///     Immediately updates a tile's blocked air directions.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        public void UpdateAdjacent(EntityCoordinates coordinates)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                UpdateAdjacent(tuple.Value.Grid, tuple.Value.Tile);
+        }
+
+        /// <summary>
+        ///     Immediately updates a tile's blocked air directions.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        public void UpdateAdjacent(GridId grid, Vector2i tile)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                gridAtmosphere.UpdateAdjacentBits(tile);
+                return;
+            }
+        }
+
+        #endregion
+
         #region Hotspots
 
         /// <summary>
