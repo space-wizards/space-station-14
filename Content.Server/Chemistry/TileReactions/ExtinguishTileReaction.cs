@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.TileReactions
                         environment.Temperature / _coolingTemperature), Atmospherics.TCMB);
 
             atmosphereSystem.React(tile.GridIndex, tile.GridIndices);
-            atmosphereSystem.ExtinguishHotspot(tile.GridIndex, tile.GridIndices);
+            atmosphereSystem.HotspotExtinguish(tile.GridIndex, tile.GridIndices);
 
             return ReagentUnit.Zero;
         }

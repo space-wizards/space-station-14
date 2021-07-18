@@ -403,7 +403,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
-        #region Hotspots
+        #region Hotspot Expose
 
         /// <summary>
         ///     Exposes temperature to a tile, creating a hotspot (fire) if the conditions are ideal.
@@ -455,24 +455,28 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        #endregion
+
+        #region Hotspot Extinguish
+
         /// <summary>
         ///     Extinguishes a hotspot (fire) on a certain tile, if any. Also invalidates the tile.
         /// </summary>
         /// <param name="coordinates">Coordinates where to get the tile.</param>
-        public void ExtinguishHotspot(MapCoordinates coordinates)
+        public void HotspotExtinguish(MapCoordinates coordinates)
         {
             if(TryGetGridAndTile(coordinates, out var tuple))
-                ExtinguishHotspot(tuple.Value.Grid, tuple.Value.Tile);
+                HotspotExtinguish(tuple.Value.Grid, tuple.Value.Tile);
         }
 
         /// <summary>
         ///     Extinguishes a hotspot (fire) on a certain tile, if any. Also invalidates the tile.
         /// </summary>
         /// <param name="coordinates">Coordinates where to get the tile.</param>
-        public void ExtinguishHotspot(EntityCoordinates coordinates)
+        public void HotspotExtinguish(EntityCoordinates coordinates)
         {
             if(TryGetGridAndTile(coordinates, out var tuple))
-                ExtinguishHotspot(tuple.Value.Grid, tuple.Value.Tile);
+                HotspotExtinguish(tuple.Value.Grid, tuple.Value.Tile);
         }
 
         /// <summary>
@@ -480,7 +484,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
-        public void ExtinguishHotspot(GridId grid, Vector2i tile)
+        public void HotspotExtinguish(GridId grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -498,6 +502,10 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
         }
+
+        #endregion
+
+        #region Is Hotspot Active
 
         /// <summary>
         ///     Returns whether there's an active hotspot (fire) on a certain tile.
