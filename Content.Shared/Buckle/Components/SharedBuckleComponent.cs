@@ -1,5 +1,5 @@
+#nullable enable
 using System;
-using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Buckle.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
+    public abstract class SharedBuckleComponent : Component, IEffectBlocker, IDraggable
     {
         public sealed override string Name => "Buckle";
 
@@ -34,17 +34,7 @@ namespace Content.Shared.Buckle.Components
 
         public bool DontCollide { get; set; }
 
-        public abstract bool TryBuckle(IEntity? user, IEntity to);
-
-        bool IActionBlocker.CanMove()
-        {
-            return !Buckled;
-        }
-
-        bool IActionBlocker.CanChangeDirection()
-        {
-            return !Buckled;
-        }
+        public abstract bool TryBuckle(IEntity? user, IEntity to, bool check_range = true, float? range = null);
 
         bool IEffectBlocker.CanFall() => !Buckled;
 
@@ -83,7 +73,31 @@ namespace Content.Shared.Buckle.Components
     }
 
     [Serializable, NetSerializable]
-    public abstract class BuckleChangeMessage : ComponentMessage
+    public class BuckleAttemptEvent : CancellableEntityEventArgs
+    {
+        public IEntity Entity { get; }
+        public IEntity User { get; }
+        public BuckleAttemptEvent(IEntity entity, IEntity user)
+        {
+            Entity = entity;
+            User = user;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class UnbuckleAttemptEvent : CancellableEntityEventArgs
+    {
+        public IEntity Entity { get; }
+        public IEntity User { get; }
+        public UnbuckleAttemptEvent(IEntity entity, IEntity user)
+        {
+            Entity = entity;
+            User = user;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public abstract class BuckleChangeMessage : EntityEventArgs
     {
         /// <summary>
         ///     Constructs a new instance of <see cref="BuckleChangeMessage"/>

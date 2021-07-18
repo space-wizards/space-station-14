@@ -1,4 +1,5 @@
-﻿using Content.Shared.Buckle.Components;
+#nullable enable
+using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
@@ -13,7 +14,7 @@ namespace Content.Client.Buckle
 
         public override bool Buckled => _buckled;
 
-        public override bool TryBuckle(IEntity? user, IEntity to)
+        public override bool TryBuckle(IEntity? user, IEntity to, bool check_range, float? range)
         {
             // TODO: Prediction
             return false;

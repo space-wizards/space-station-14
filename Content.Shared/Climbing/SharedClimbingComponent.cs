@@ -1,5 +1,5 @@
+#nullable enable
 using System;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Climbing
 {
     [NetworkedComponent()]
-    public abstract class SharedClimbingComponent : Component, IActionBlocker
+    public abstract class SharedClimbingComponent : Component
     {
         public sealed override string Name => "Climbing";
 
@@ -28,8 +28,6 @@ namespace Content.Shared.Climbing
                 return false;
             }
         }
-
-        bool IActionBlocker.CanMove() => !OwnerIsTransitioning;
 
         [ViewVariables]
         protected virtual bool OwnerIsTransitioning
@@ -75,6 +73,8 @@ namespace Content.Shared.Climbing
         }
 
         protected bool _isClimbing;
+
+        public bool GetIsTransitioning() => OwnerIsTransitioning;
 
         // TODO: Layers need a re-work
         private void ToggleSmallPassable(bool value)

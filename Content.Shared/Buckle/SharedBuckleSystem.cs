@@ -1,6 +1,8 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.Standing;
+using Content.Shared.Movement;
 using Content.Shared.Throwing;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 
@@ -14,6 +16,8 @@ namespace Content.Shared.Buckle
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
             SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
+            SubscribeLocalEvent<SharedBuckleComponent, MovementAttemptEvent>(HandleMove);
+            SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(HandleChangeDirection);
             SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
         }
 
@@ -31,6 +35,18 @@ namespace Content.Shared.Buckle
             {
                 args.Cancel();
             }
+        }
+
+        private void HandleMove(EntityUid uid, SharedBuckleComponent component, MovementAttemptEvent args)
+        {
+            if (!component.Buckled) return;
+            args.Cancel();
+        }
+
+        private void HandleChangeDirection(EntityUid uid, SharedBuckleComponent component, ChangeDirectionAttemptEvent args)
+        {
+            if (!component.Buckled) return;
+            args.Cancel();
         }
 
         private void HandleThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackAttemptEvent args)

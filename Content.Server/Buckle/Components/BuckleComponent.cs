@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Alert;
@@ -8,6 +9,7 @@ using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Standing;
@@ -150,7 +152,7 @@ namespace Content.Server.Buckle.Components
             }
         }
 
-        private bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
+        private bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap, bool check_range = true, float? range = null)
         {
             strap = null;
 
@@ -170,12 +172,17 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            var component = strap;
-            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
-
-            if (!Owner.InRangeUnobstructed(strap, Range, predicate: Ignored, popup: true))
+            if (check_range)
             {
-                return false;
+                var component = strap;
+                bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
+
+                if (range == null) range = Range;
+
+                if (!Owner.InRangeUnobstructed(strap, (float) range, predicate: Ignored, popup: true))
+                {
+                    return false;
+                }
             }
 
             // If in a container
@@ -234,12 +241,16 @@ namespace Content.Server.Buckle.Components
             return true;
         }
 
-        public override bool TryBuckle(IEntity? user, IEntity to)
+        public override bool TryBuckle(IEntity? user, IEntity to, bool check_range = true, float? range = null)
         {
-            if (user == null || !CanBuckle(user, to, out var strap))
+            if (user == null || !CanBuckle(user, to, out var strap, check_range, range))
             {
                 return false;
             }
+
+            var buckleAttemptMsg = new BuckleAttemptEvent(user, Owner);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(strap.Owner.Uid, buckleAttemptMsg);
+            if (buckleAttemptMsg.Cancelled) return false;
 
             SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound, Owner);
 
@@ -262,7 +273,7 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
-            SendMessage(new BuckleMessage(Owner, to));
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new BuckleMessage(Owner, to));
 
             if (Owner.TryGetComponent(out PullableComponent? ownerPullable))
             {
@@ -307,6 +318,11 @@ namespace Content.Server.Buckle.Components
 
             if (!force)
             {
+                // Send message to entity to which mob is buckled to
+                var unbuckleAttemptMsg = new UnbuckleAttemptEvent(user, Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(BuckledTo.Owner.Uid, unbuckleAttemptMsg);
+                if (unbuckleAttemptMsg.Cancelled) return false;
+
                 if (_gameTiming.CurTime < _buckleTime + _unbuckleDelay)
                 {
                     return false;
@@ -351,7 +367,7 @@ namespace Content.Server.Buckle.Components
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound, Owner);
 
-            SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
             return true;
         }

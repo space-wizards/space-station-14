@@ -1,4 +1,5 @@
-﻿using System;
+#nullable enable
+using System;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;
@@ -49,19 +50,6 @@ namespace Content.Server.Climbing.Components
                 if (value == base.OwnerIsTransitioning) return;
                 base.OwnerIsTransitioning = value;
                 Dirty();
-            }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case BuckleMessage msg:
-                    if (msg.Buckled)
-                        IsClimbing = false;
-
-                    break;
             }
         }
 
