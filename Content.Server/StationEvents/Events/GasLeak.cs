@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
@@ -113,19 +114,20 @@ namespace Content.Server.StationEvents.Events
             if (_timeUntilLeak > 0f) return;
             _timeUntilLeak += LeakCooldown;
 
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
             if (!_foundTile ||
                 _targetGrid == null ||
                 _targetGrid.Deleted ||
-                !_targetGrid.TryGetComponent(out GridAtmosphereComponent? gridAtmos))
+                !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
             {
                 Running = false;
                 return;
             }
 
-            var atmos = gridAtmos.GetTile(_targetTile);
+            var environment = atmosphereSystem.GetTileMixture(_targetGrid.Transform.GridID, _targetTile, true);
 
-            atmos?.Air?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
-            atmos?.Invalidate();
+            environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
 
         public override void Shutdown()
