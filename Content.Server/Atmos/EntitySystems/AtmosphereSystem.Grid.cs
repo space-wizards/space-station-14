@@ -362,6 +362,55 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Tile Space
+
+        /// <summary>
+        ///     Returns whether the specified tile is a space tile or not.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to check the tile.</param>
+        /// <returns>Whether the tile is space or not.</returns>
+        public bool IsTileSpace(MapCoordinates coordinates)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return IsTileSpace(tuple.Value.Grid, tuple.Value.Tile);
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Returns whether the specified tile is a space tile or not.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to check the tile.</param>
+        /// <returns>Whether the tile is space or not.</returns>
+        public bool IsTileSpace(EntityCoordinates coordinates)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return IsTileSpace(tuple.Value.Grid, tuple.Value.Tile);
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Returns whether the specified tile is a space tile or not.
+        /// </summary>
+        /// <param name="grid">Grid where to check the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <returns>Whether the tile is space or not.</returns>
+        public bool IsTileSpace(GridId grid, Vector2i tile)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return true;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                return gridAtmosphere.IsSpace(tile);
+            }
+
+            return true;
+        }
+
+        #endregion
+
         #region Update Adjacent
 
         /// <summary>
@@ -505,7 +554,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
-        #region Is Hotspot Active
+        #region Hotspot Active
 
         /// <summary>
         ///     Returns whether there's an active hotspot (fire) on a certain tile.
