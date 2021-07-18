@@ -1477,3 +1477,13 @@ Entries:
   - {message: Added the dual-port air vent., type: Add}
   id: 261
   time: '2021-07-15T13:24:45.0000000+00:00'
+- author: Fogapod
+  changes:
+  - {message: Added missing space in Spanish accent., type: Fix}
+  id: 262
+  time: '2021-07-17T21:04:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes handheld instruments not working., type: Fix}
+  id: 263
+  time: '2021-07-18T13:00:50.345009+00:00'
