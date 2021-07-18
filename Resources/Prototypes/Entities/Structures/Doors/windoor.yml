@@ -1,0 +1,44 @@
+﻿- type: entity
+  id: Windoor
+  parent: BaseStructure
+  name: windoor
+  description: It's a window and a sliding door. Wow!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    sprite: Structures/Doors/windoor.rsi
+    state: left
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5, -0.5, -0.3, 0.5" # i don't understand why these bounds work but they do
+      mass: 100
+      mask:
+      - MobImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: ApcPowerReceiver
+  - type: Damageable
+    resistances: glassResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

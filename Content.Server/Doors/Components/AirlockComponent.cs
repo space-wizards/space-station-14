@@ -169,7 +169,7 @@ namespace Content.Server.Doors.Components
         {
             if (IsBolted())
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message "));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message"));
                 return false;
             }
             if (IsPowered())
