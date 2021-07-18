@@ -103,6 +103,7 @@ namespace Content.Server.Physics.Controllers
             // inputs will do different things.
             // TODO: Do that
             float speedCap;
+            // This is comically fast for debugging
             var angularSpeed = 20000f;
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
@@ -120,12 +121,16 @@ namespace Content.Server.Physics.Controllers
                     if (movement.Length != 0.0f)
                     {
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
-                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.ToVec() * shuttleComponent.SpeedMultipler * physicsComponent.Mass * movement.Y);
+                        physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
+                                                            shuttleComponent.SpeedMultipler *
+                                                            physicsComponent.Mass *
+                                                            movement.Y *
+                                                            10);
                         physicsComponent.ApplyAngularImpulse(movement.X * angularSpeed);
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS
-                    speedCap = _shuttleDockSpeedCap;
+                    speedCap = _shuttleDockSpeedCap * 10;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
