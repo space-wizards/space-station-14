@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
