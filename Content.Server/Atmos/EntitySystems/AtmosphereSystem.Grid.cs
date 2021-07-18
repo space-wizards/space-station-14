@@ -120,6 +120,89 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Active Tiles
+
+        /// <summary>
+        ///     Makes a tile become active and start processing.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        public void AddActiveTile(MapCoordinates coordinates)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                AddActiveTile(tuple.Value.Grid, tuple.Value.Tile);
+        }
+
+        /// <summary>
+        ///     Makes a tile become active and start processing.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        public void AddActiveTile(EntityCoordinates coordinates)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                AddActiveTile(tuple.Value.Grid, tuple.Value.Tile);
+        }
+
+        /// <summary>
+        ///     Makes a tile become active and start processing.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile to be activated.</param>
+        public void AddActiveTile(GridId grid, Vector2i tile)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                var tileAtmosphere = gridAtmosphere.GetTile(tile)!;
+                gridAtmosphere.AddActiveTile(tileAtmosphere);
+                return;
+            }
+        }
+
+        /// <summary>
+        ///     Makes a tile become inactive and stop processing.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
+        public void RemoveActiveTile(MapCoordinates coordinates, bool disposeExcitedGroup = false)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                RemoveActiveTile(tuple.Value.Grid, tuple.Value.Tile, disposeExcitedGroup);
+        }
+
+        /// <summary>
+        ///     Makes a tile become inactive and stop processing.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
+        public void RemoveActiveTile(EntityCoordinates coordinates, bool disposeExcitedGroup = false)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                RemoveActiveTile(tuple.Value.Grid, tuple.Value.Tile, disposeExcitedGroup);
+        }
+
+        /// <summary>
+        ///     Makes a tile become inactive and stop processing.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile to be activated.</param>
+        /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
+        public void RemoveActiveTile(GridId grid, Vector2i tile, bool disposeExcitedGroup = false)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                var tileAtmosphere = gridAtmosphere.GetTile(tile)!;
+                gridAtmosphere.RemoveActiveTile(tileAtmosphere, disposeExcitedGroup);
+                return;
+            }
+        }
+
+        #endregion
+
         #region Tile Mixture
 
         /// <summary>
