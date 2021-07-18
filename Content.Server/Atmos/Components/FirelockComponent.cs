@@ -96,15 +96,15 @@ namespace Content.Server.Atmos.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
+            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates) == null)
                 return false;
 
-            if (tileAtmos.Hotspot.Valid)
+            if (atmosphereSystem.IsHotspotActive(Owner.Transform.Coordinates))
                 return true;
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
 
-            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(Owner.Transform.Coordinates))
             {
                 if (adjacent.Hotspot.Valid)
                     return true;
