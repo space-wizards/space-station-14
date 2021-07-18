@@ -7,13 +7,11 @@ using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Voting;
 using Content.Shared.Chat;
-using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -44,7 +42,16 @@ namespace Content.Client.Viewport
         {
             base.Startup();
 
-            _gameChat = new ChatBox {PreferredChannel = ChatSelectChannel.Local};
+            _gameChat = new HudChatBox {PreferredChannel = ChatSelectChannel.Local};
+
+            UserInterfaceManager.StateRoot.AddChild(_gameChat);
+            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+            LayoutContainer.SetMarginLeft(_gameChat, -475);
+            LayoutContainer.SetMarginBottom(_gameChat, HudChatBox.InitialChatBottom);
+
+            _chatManager.ChatBoxOnResized(new ChatResizedEventArgs(HudChatBox.InitialChatBottom));
+
             Viewport = new MainViewport
             {
                 Viewport =
