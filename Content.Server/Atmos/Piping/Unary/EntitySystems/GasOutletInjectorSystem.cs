@@ -1,3 +1,4 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer;
@@ -31,9 +32,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
                 return;
 
-            var environment = args.Atmosphere.GetTile(injector.Owner.Transform.Coordinates)!;
+            var atmosphereSystem = Get<AtmosphereSystem>();
+            var environment = atmosphereSystem.GetTileMixture(injector.Owner.Transform.Coordinates, true);
 
-            if (environment.Air == null)
+            if (environment == null)
                 return;
 
             if (inlet.Air.Temperature > 0)
@@ -42,8 +44,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 var removed = inlet.Air.Remove(transferMoles);
 
-                environment.AssumeAir(removed);
-                environment.Invalidate();
+                atmosphereSystem.Merge(environment, removed);
             }
         }
     }
