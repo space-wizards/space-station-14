@@ -241,6 +241,8 @@ namespace Content.Client.Chat.UI
                 newCheckBox.OnToggled += OnFilterCheckboxToggled;
                 _filterVBox.AddChild(newCheckBox);
             }
+
+            UpdateChannelSelectButton();
         }
 
         private void UpdateUnreadMessageCounts()
@@ -451,14 +453,23 @@ namespace Content.Client.Chat.UI
             var prefixChar = text.Span[0];
             var channel = GetChannelFromPrefix(prefixChar);
 
-            if (channel != 0)
-                // Cut off prefix.
+            if (IsValidPrefixChannel(channel))
+                // Cut off prefix if it's valid and we can use the channel in question.
                 text = text[1..];
+            else
+                channel = 0;
 
             channel = MapLocalIfGhost(channel);
 
             // Trim from start again to cut out any whitespace between the prefix and message, if any.
             return (channel, text.TrimStart());
+        }
+
+        private bool IsValidPrefixChannel(ChatSelectChannel channel)
+        {
+            // Console is always "selectable" for the purposes of adding a prefix.
+            // Despite not being selectable as a permanent one.
+            return (ChatMgr.SelectableChannels & channel) != 0 || channel == ChatSelectChannel.Console;
         }
 
         private void InputOnTextChanged(LineEdit.LineEditEventArgs obj)
@@ -540,8 +551,7 @@ namespace Content.Client.Chat.UI
                 channel = MapLocalIfGhost(channel.Value);
 
                 // Channel not selectable, just do NOTHING (not even focus).
-                // Console is always "selectable" for the purposes of adding a prefix.
-                if ((ChatMgr.SelectableChannels & channel.Value) == 0 && channel != ChatSelectChannel.Console)
+                if (!IsValidPrefixChannel(channel.Value))
                     return;
 
                 var (_, text) = SplitInputContents();
