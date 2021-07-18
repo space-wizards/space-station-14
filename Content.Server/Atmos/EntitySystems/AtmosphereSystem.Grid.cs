@@ -66,14 +66,53 @@ namespace Content.Server.Atmos.EntitySystems
                 return true;
             }
 
-            if (_mapManager.GetMapEntity(coordinates.MapId).TryGetComponent(out IGridAtmosphereComponent? atmosMap)
-                && atmosMap.Simulated)
-            {
-                atmosphere = atmosMap;
-                return true;
-            }
-
             atmosphere = null;
+            return false;
+        }
+
+        #endregion
+
+        #region Grid Is Simulated
+
+        /// <summary>
+        ///     Returns whether a grid has a simulated atmosphere.
+        /// </summary>
+        /// <param name="coordinates">Coordinates to be checked.</param>
+        /// <returns>Whether the grid has a simulated atmosphere.</returns>
+        public bool IsSimulatedGrid(MapCoordinates coordinates)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return IsSimulatedGrid(tuple.Value.Grid);
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Returns whether a grid has a simulated atmosphere.
+        /// </summary>
+        /// <param name="coordinates">Coordinates to be checked.</param>
+        /// <returns>Whether the grid has a simulated atmosphere.</returns>
+        public bool IsSimulatedGrid(EntityCoordinates coordinates)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return IsSimulatedGrid(tuple.Value.Grid);
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Returns whether a grid has a simulated atmosphere.
+        /// </summary>
+        /// <param name="grid">Grid to be checked.</param>
+        /// <returns>Whether the grid has a simulated atmosphere.</returns>
+        public bool IsSimulatedGrid(GridId grid)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return false;
+
+            if (ComponentManager.HasComponent<GridAtmosphereComponent>(mapGrid.GridEntityId))
+                return true;
+
             return false;
         }
 
