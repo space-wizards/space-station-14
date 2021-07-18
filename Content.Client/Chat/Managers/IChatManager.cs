@@ -36,7 +36,7 @@ namespace Content.Client.Chat.Managers
         /// </summary>
         event Action<ChatResizedEventArgs>? OnChatBoxResized;
 
-        event Action? ChatPermissionsUpdated;
+        event Action<ChatPermissionsUpdatedEventArgs>? ChatPermissionsUpdated;
         event Action? UnreadMessageCountsUpdated;
         event Action<StoredChatMessage>? MessageAdded;
         event Action? FiltersUpdated;
@@ -45,5 +45,10 @@ namespace Content.Client.Chat.Managers
         void ChatBoxOnResized(ChatResizedEventArgs chatResizedEventArgs);
         void OnChatBoxTextSubmitted(ChatBox chatBox, ReadOnlyMemory<char> text, ChatSelectChannel channel);
         void OnFilterButtonToggled(ChatChannel channel, bool enabled);
+    }
+
+    public struct ChatPermissionsUpdatedEventArgs
+    {
+        public ChatSelectChannel OldSelectableChannels;
     }
 }

@@ -105,7 +105,7 @@ namespace Content.Client.Chat.Managers
         /// </summary>
         public event Action<ChatResizedEventArgs>? OnChatBoxResized;
 
-        public event Action? ChatPermissionsUpdated;
+        public event Action<ChatPermissionsUpdatedEventArgs>? ChatPermissionsUpdated;
         public event Action? UnreadMessageCountsUpdated;
         public event Action<StoredChatMessage>? MessageAdded;
         public event Action? FiltersUpdated;
@@ -174,6 +174,7 @@ namespace Content.Client.Chat.Managers
         // for any newly-granted channels
         private void UpdateChannelPermissions()
         {
+            var oldSelectable = SelectableChannels;
             SelectableChannels = default;
             FilterableChannels = default;
 
@@ -218,7 +219,7 @@ namespace Content.Client.Chat.Managers
             DebugTools.Assert((FilterableChannels & ChatChannel.OOC) != 0, "OOC must always be available");
 
             // let our chatbox know all the new settings
-            ChatPermissionsUpdated?.Invoke();
+            ChatPermissionsUpdated?.Invoke(new ChatPermissionsUpdatedEventArgs {OldSelectableChannels = oldSelectable});
         }
 
         public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;

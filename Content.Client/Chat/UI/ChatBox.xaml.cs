@@ -94,9 +94,15 @@ namespace Content.Client.Chat.UI
         private const int MinLeft = 500;
 
         /// <summary>
-        /// Will be Unspecified if set to Console
+        /// The currently default channel that will be used if no prefix is specified.
         /// </summary>
         public ChatSelectChannel SelectedChannel { get; private set; } = ChatSelectChannel.OOC;
+
+        /// <summary>
+        /// The "preferred" channel. Will be switched to if permissions change and the channel becomes available,
+        /// such as by re-entering body. Gets changed if the user manually selects a channel with the buttons.
+        /// </summary>
+        public ChatSelectChannel PreferredChannel { get; set; } = ChatSelectChannel.OOC;
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
@@ -195,7 +201,7 @@ namespace Content.Client.Chat.UI
             base.EnteredTree();
 
             _chatMgr.MessageAdded += WriteChatMessage;
-            _chatMgr.ChatPermissionsUpdated += ChatPermissionsUpdated;
+            _chatMgr.ChatPermissionsUpdated += OnChatPermissionsUpdated;
             _chatMgr.UnreadMessageCountsUpdated += UpdateUnreadMessageCounts;
             _chatMgr.FiltersUpdated += Repopulate;
 
@@ -204,7 +210,7 @@ namespace Content.Client.Chat.UI
             // Tell chat manager to clear these.
             _chatMgr.ClearUnfilteredUnreads();
 
-            ChatPermissionsUpdated();
+            ChatPermissionsUpdated(0);
             UpdateChannelSelectButton();
             Repopulate();
         }
@@ -214,12 +220,17 @@ namespace Content.Client.Chat.UI
             base.ExitedTree();
 
             _chatMgr.MessageAdded -= WriteChatMessage;
-            _chatMgr.ChatPermissionsUpdated -= ChatPermissionsUpdated;
+            _chatMgr.ChatPermissionsUpdated -= OnChatPermissionsUpdated;
             _chatMgr.UnreadMessageCountsUpdated -= UpdateUnreadMessageCounts;
             _chatMgr.FiltersUpdated -= Repopulate;
         }
 
-        private void ChatPermissionsUpdated()
+        private void OnChatPermissionsUpdated(ChatPermissionsUpdatedEventArgs eventArgs)
+        {
+            ChatPermissionsUpdated(eventArgs.OldSelectableChannels);
+        }
+
+        private void ChatPermissionsUpdated(ChatSelectChannel oldSelectable)
         {
             // update the channel selector
             _channelSelectorHBox.Children.Clear();
@@ -236,6 +247,10 @@ namespace Content.Client.Chat.UI
             // Selected channel no longer available, switch to OOC?
             if ((_chatMgr.SelectableChannels & SelectedChannel) == 0)
                 SafelySelectChannel(ChatSelectChannel.OOC);
+
+            // If the preferred channel just became available, switch to it.
+            if ((oldSelectable & PreferredChannel) == 0 && (_chatMgr.SelectableChannels & PreferredChannel) != 0)
+                SafelySelectChannel(PreferredChannel);
 
             // update the channel filters
             _filterVBox.Children.Clear();
@@ -345,12 +360,14 @@ namespace Content.Client.Chat.UI
             if (obj.Button is not ChannelItemButton button)
                 return;
 
+            PreferredChannel = button.Channel;
             SafelySelectChannel(button.Channel);
             _channelSelectorPopup.Close();
         }
 
         public bool SafelySelectChannel(ChatSelectChannel toSelect)
         {
+            toSelect = MapLocalIfGhost(toSelect);
             if ((_chatMgr.SelectableChannels & toSelect) == 0)
                 return false;
 

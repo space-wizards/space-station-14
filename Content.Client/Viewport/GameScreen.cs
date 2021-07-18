@@ -44,7 +44,7 @@ namespace Content.Client.Viewport
         {
             base.Startup();
 
-            _gameChat = new ChatBox();
+            _gameChat = new ChatBox {PreferredChannel = ChatSelectChannel.Local};
             Viewport = new MainViewport
             {
                 Viewport =
@@ -79,7 +79,6 @@ namespace Content.Client.Viewport
             _gameHud.RootControl.Orphan();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = _userInterfaceManager.MainViewport;
-
         }
 
         /// <summary>
