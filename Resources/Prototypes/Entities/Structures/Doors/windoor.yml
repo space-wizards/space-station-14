@@ -1,44 +1,45 @@
 ﻿- type: entity
-  id: Windoor
-  parent: BaseStructure
+  id: WindoorLeft
+  parent: BaseWindoor
   name: windoor
   description: It's a window and a sliding door. Wow!
-  placement:
-    mode: SnapgridCenter
+  suffix: Left
   components:
-  - type: InteractionOutline
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: WindoorRight
+  parent: BaseWindoor
+  name: windoor
+  description: It's a window and a sliding door. Wow! This one is flipped 180 degrees.
+  suffix: Right
+  components:
+  - type: Sprite
+    state: right
+
+- type: entity
+  id: WindoorLeftSecure
+  parent: BaseSecureWindoor
+  name: secure windoor
+  description: It's a sturdy window and a sliding door. Wow!
+  suffix: Left
+  components:
   - type: Sprite
     netsync: false
     drawdepth: Mobs
     sprite: Structures/Doors/windoor.rsi
-    state: left
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5, -0.5, -0.3, 0.5" # i don't understand why these bounds work but they do
-      mass: 100
-      mask:
-      - MobImpassable
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: ApcPowerReceiver
-  - type: Damageable
-    resistances: glassResistances
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    state: left_secure
+
+- type: entity
+  id: WindoorRightSecure
+  parent: BaseSecureWindoor
+  name: secure windoor
+  description: It's a sturdy window and a sliding door. Wow! This one is flipped 180 degrees.
+  suffix: Right
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    sprite: Structures/Doors/windoor.rsi
+    state: right_secure

@@ -1,0 +1,66 @@
+﻿- type: entity
+  id: BaseWindoor
+  parent: BaseStructure
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 50
+      mask:
+      - MobImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    sprite: Structures/Doors/windoor.rsi
+  - type: ApcPowerReceiver
+  - type: Damageable
+    resistances: glassResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: BaseSecureWindoor
+  parent: BaseWindoor
+  abstract: true
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MetalRod:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
