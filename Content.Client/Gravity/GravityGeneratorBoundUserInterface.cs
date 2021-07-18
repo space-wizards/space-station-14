@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Gravity
 {
@@ -73,8 +74,9 @@ namespace Content.Client.Gravity
 
             Title = Loc.GetString("gravity-generator-window-title");
 
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 MinSize = new Vector2(250, 100)
             };
             Status = new Label

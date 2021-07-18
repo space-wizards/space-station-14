@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
@@ -21,7 +22,7 @@ namespace Content.Client.Lobby.UI
         public Button OptionsButton => COptionsButton;
         public Button LeaveButton => CLeaveButton;
         public ChatBox Chat => CChat;
-        public VBoxContainer VoteContainer => CVoteContainer;
+        public BoxContainer VoteContainer => CVoteContainer;
         public LobbyPlayerList OnlinePlayerList => COnlinePlayerList;
         public ServerInfo ServerInfo => CServerInfo;
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
@@ -49,7 +50,7 @@ namespace Content.Client.Lobby.UI
     public class LobbyPlayerList : Control
     {
         private readonly ScrollContainer _scroll;
-        private readonly VBoxContainer _vBox;
+        private readonly BoxContainer _vBox;
 
         public LobbyPlayerList()
         {
@@ -57,7 +58,10 @@ namespace Content.Client.Lobby.UI
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202028")},
             };
-            _vBox = new VBoxContainer();
+            _vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             _scroll = new ScrollContainer();
             _scroll.AddChild(_vBox);
             panel.AddChild(_scroll);
@@ -67,8 +71,9 @@ namespace Content.Client.Lobby.UI
         // Adds a row
         public void AddItem(string name, string status)
         {
-            var hbox = new HBoxContainer
+            var hbox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
 

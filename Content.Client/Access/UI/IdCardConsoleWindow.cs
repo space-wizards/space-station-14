@@ -8,6 +8,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.SharedIdCardConsoleComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Access.UI
 {
@@ -38,7 +39,10 @@ namespace Content.Client.Access.UI
         {
             MinSize = SetSize = (650, 290);
             _owner = owner;
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             vBox.AddChild(new GridContainer
             {
