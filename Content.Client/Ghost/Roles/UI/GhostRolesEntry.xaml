@@ -1,4 +1,4 @@
-<BoxContainer
+<BoxContainer Orientation="Vertical"
     xmlns="https://spacestation14.io">
 
     <RichTextLabel Name="Title" />

@@ -33,7 +33,7 @@ namespace Content.Client.Cloning.UI
                             new BoxContainer
                             {
                                 Orientation = LayoutOrientation.Horizontal,
-                                Align  = AlignMode.Center,
+                                Align = AlignMode.Center,
                                 Children =
                                 {
                                     (AcceptButton = new Button
