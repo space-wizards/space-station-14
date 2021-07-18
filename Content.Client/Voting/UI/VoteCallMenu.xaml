@@ -3,7 +3,7 @@
                  xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
                  MouseFilter="Stop" MinSize="350 150">
     <PanelContainer StyleClasses="AngleRect" />
-    <VBoxContainer>
+    <VBoxContainer Orientation="Vertical">
         <HBoxContainer>
             <MarginContainer MarginLeftOverride="8" HorizontalExpand="True">
                 <Label Text="{Loc 'ui-vote-create-title'}" VAlign="Center" StyleClasses="LabelHeading" />

@@ -1,7 +1,7 @@
 ﻿<SS14Window Title="Make Ghost Role"
             xmlns="https://spacestation14.io">
 
-    <VBoxContainer>
+    <VBoxContainer Orientation="Vertical">
         <HBoxContainer>
             <Label Name="RoleEntityLabel" Text="Entity" />
             <Label Name="RoleEntity" Text="" />

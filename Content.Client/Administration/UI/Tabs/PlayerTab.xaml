@@ -1,5 +1,5 @@
 ﻿<Control xmlns="https://spacestation14.io">
-    <VBoxContainer>
+    <VBoxContainer Orientation="Vertical">
         <HBoxContainer>
             <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"
                    Text="{Loc Player Count}" />
@@ -8,7 +8,7 @@
         </HBoxContainer>
         <Control MinSize="0 5" />
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-            <VBoxContainer Name="PlayerList" />
+            <VBoxContainer Orientation="Vertical" Name="PlayerList" />
         </ScrollContainer>
     </VBoxContainer>
 </Control>

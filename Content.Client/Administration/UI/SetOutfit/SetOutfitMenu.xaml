@@ -1,7 +1,7 @@
 <SS14Window
     xmlns="https://spacestation14.io">
     <HBoxContainer HorizontalExpand="True">
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
+        <VBoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
             <HBoxContainer HorizontalExpand="True" VerticalExpand="True"
                                     SizeFlagsStretchRatio="0.1">
                 <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"

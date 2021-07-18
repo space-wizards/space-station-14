@@ -1,6 +1,6 @@
 <SS14Window xmlns="https://spacestation14.io">
     <HBoxContainer HorizontalExpand="True">
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
+        <VBoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
             <HBoxContainer HorizontalExpand="True">
                 <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
                 <OptionButton Name="Category" MinSize="130 0"/>
@@ -8,19 +8,19 @@
             <ItemList Name="RecipesList" SelectMode="Single" VerticalExpand="True"/>
         </VBoxContainer>
         <Control MinSize="10 0"/>
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
+        <VBoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
             <Control>
                 <HBoxContainer Align="Center">
                     <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep"/>
                     <Control MinSize="10 0"/>
-                    <VBoxContainer>
+                    <VBoxContainer Orientation="Vertical">
                         <RichTextLabel Name="TargetName"/>
                         <RichTextLabel Name="TargetDesc"/>
                     </VBoxContainer>
                 </HBoxContainer>
             </Control>
             <ItemList Name="StepList" VerticalExpand="True"/>
-            <VBoxContainer>
+            <VBoxContainer Orientation="Vertical">
                 <Button Name="BuildButton" Disabled="True" ToggleMode="True" VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
                 <HBoxContainer VerticalExpand="True" SizeFlagsStretchRatio="0.5">
                     <Button Name="EraseButton" ToggleMode="True" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"/>

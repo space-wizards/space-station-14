@@ -3,7 +3,7 @@
                            xmlns:ui="clr-namespace:Content.Client.HUD.UI"
                            MinSize="500 400" MouseFilter="Stop">
     <PanelContainer StyleClasses="AngleRect" />
-    <VBoxContainer>
+    <VBoxContainer Orientation="Vertical">
         <HBoxContainer>
             <Label Margin="6 0 0 0" HorizontalExpand="True" Text="{Loc 'changelog-window-title'}" VAlign="Center"
                    StyleClasses="LabelHeading" />
@@ -13,7 +13,7 @@
         <ui:HighDivider />
 
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-            <VBoxContainer Name="ChangelogBody" />
+            <VBoxContainer Orientation="Vertical" Name="ChangelogBody" />
         </ScrollContainer>
 
         <PanelContainer StyleClasses="LowDivider" />

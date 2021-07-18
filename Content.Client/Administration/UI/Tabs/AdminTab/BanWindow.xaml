@@ -1,7 +1,7 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
     Title="{Loc Ban}" MinSize="425 162">
-    <VBoxContainer>
+    <VBoxContainer Orientation="Vertical">
         <HBoxContainer>
             <Label Text="{Loc Player}" MinWidth="100" />
             <Control MinWidth="50" />

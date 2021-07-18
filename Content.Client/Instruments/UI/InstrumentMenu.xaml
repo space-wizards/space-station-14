@@ -1,6 +1,6 @@
 <SS14Window xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <VBoxContainer SeparationOverride="5">
+    <VBoxContainer Orientation="Vertical" SeparationOverride="5">
         <HBoxContainer VerticalExpand="True">
             <Button Name="InputButton" ToggleMode="True" Text="MIDI Input" TextAlign="Center"
                     HorizontalExpand="True" SizeFlagsStretchRatio="1" />
