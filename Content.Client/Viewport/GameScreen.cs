@@ -1,4 +1,5 @@
 using Content.Client.Administration.Managers;
+using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
@@ -59,28 +60,8 @@ namespace Content.Client.Viewport
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _voteManager.SetPopupContainer(_gameHud.VoteContainer);
-            _gameChat.DefaultChatFormat = "say \"{0}\"";
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(_ => FocusChat(_gameChat)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.OOC)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusLocalChat,
-                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.Local)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusRadio,
-                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.Radio)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(_ => FocusChannel(_gameChat, ChatChannel.AdminChat)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
-                InputCmdHandler.FromDelegate(_ => _gameChat.CycleChatChannel(true)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
-                InputCmdHandler.FromDelegate(_ => _gameChat.CycleChatChannel(false)));
+            ChatInput.SetupChatInputHandlers(_inputManager, _gameChat);
 
             SetupPresenters();
 
@@ -120,23 +101,17 @@ namespace Content.Client.Viewport
         internal static void FocusChat(ChatBox chat)
         {
             if (chat.UserInterfaceManager.KeyboardFocused != null)
-            {
                 return;
-            }
 
-            chat.Input.IgnoreNext = true;
-            chat.Input.GrabKeyboardFocus();
+            chat.Focus();
         }
-        internal static void FocusChannel(ChatBox chat, ChatChannel channel)
+
+        internal static void FocusChannel(ChatBox chat, ChatSelectChannel channel)
         {
             if (chat.UserInterfaceManager.KeyboardFocused != null)
-            {
                 return;
-            }
 
-            chat.SelectChannel(channel);
-            chat.Input.IgnoreNext = true;
-            chat.Input.GrabKeyboardFocus();
+            chat.Focus(channel);
         }
 
         public override void FrameUpdate(FrameEventArgs e)
