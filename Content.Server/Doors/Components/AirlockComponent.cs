@@ -7,12 +7,14 @@ using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
@@ -23,30 +25,41 @@ namespace Content.Server.Doors.Components
     /// Companion component to ServerDoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IDoorCheck))]
-    public class AirlockComponent : Component, IWires, IDoorCheck
+    public class AirlockComponent : Component, IWires
     {
         public override string Name => "Airlock";
 
         [ComponentDependency]
-        private readonly ServerDoorComponent? _doorComponent = null;
+        public readonly ServerDoorComponent? DoorComponent = null;
 
         [ComponentDependency]
-        private readonly SharedAppearanceComponent? _appearanceComponent = null;
+        public readonly SharedAppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
-        private readonly ApcPowerReceiverComponent? _receiverComponent = null;
+        public readonly ApcPowerReceiverComponent? ReceiverComponent = null;
 
         [ComponentDependency]
-        private readonly WiresComponent? _wiresComponent = null;
+        public readonly WiresComponent? WiresComponent = null;
+
+        /// <summary>
+        /// Sound to play when the bolts on the airlock go up.
+        /// </summary>
+        [DataField("boltUpSound")]
+        public SoundSpecifier BoltUpSound = new SoundPathSpecifier("/Audio/Machines/boltsup.ogg");
+
+        /// <summary>
+        /// Sound to play when the bolts on the airlock go down.
+        /// </summary>
+        [DataField("boltDownSound")]
+        public SoundSpecifier BoltDownSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
 
         /// <summary>
         /// Duration for which power will be disabled after pulsing either power wire.
         /// </summary>
-        private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
+        [DataField("powerWiresTimeout")]
+        public float PowerWiresTimeout = 5.0f;
 
         private CancellationTokenSource _powerWiresPulsedTimerCancel = new();
-
         private bool _powerWiresPulsed;
 
         /// <summary>
@@ -83,7 +96,7 @@ namespace Content.Server.Doors.Components
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered()
-                && _doorComponent != null && _doorComponent.State == SharedDoorComponent.DoorState.Closed;
+                && DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Closed;
             set
             {
                 _boltLightsWirePulsed = value;
@@ -91,120 +104,53 @@ namespace Content.Server.Doors.Components
             }
         }
 
-        private static readonly TimeSpan AutoCloseDelayFast = TimeSpan.FromSeconds(1);
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("autoClose")]
+        public bool AutoClose = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _autoClose = true;
+        [DataField("autoCloseDelayModifier")]
+        public float AutoCloseDelayModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool _normalCloseSpeed = true;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private bool _safety = true;
+        public bool Safety = true;
 
         protected override void Initialize()
         {
             base.Initialize();
 
-            if (_receiverComponent != null && _appearanceComponent != null)
+            if (ReceiverComponent != null && AppearanceComponent != null)
             {
-                _appearanceComponent.SetData(DoorVisuals.Powered, _receiverComponent.Powered);
+                AppearanceComponent.SetData(DoorVisuals.Powered, ReceiverComponent.Powered);
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    PowerDeviceOnOnPowerStateChanged(powerChanged);
-                    break;
-            }
-        }
-
-        void IDoorCheck.OnStateChange(SharedDoorComponent.DoorState doorState)
-        {
-            // Only show the maintenance panel if the airlock is closed
-            if (_wiresComponent != null)
-            {
-                _wiresComponent.IsPanelVisible = doorState != SharedDoorComponent.DoorState.Open;
-            }
-            // If the door is closed, we should look if the bolt was locked while closing
-            UpdateBoltLightStatus();
-        }
-
-        bool IDoorCheck.OpenCheck() => CanChangeState();
-
-        bool IDoorCheck.CloseCheck() => CanChangeState();
-
-        bool IDoorCheck.DenyCheck() => CanChangeState();
-
-        bool IDoorCheck.SafetyCheck() => _safety;
-
-        bool IDoorCheck.AutoCloseCheck() => _autoClose;
-
-        TimeSpan? IDoorCheck.GetCloseSpeed()
-        {
-            if (_normalCloseSpeed)
-            {
-                return null;
-            }
-            return AutoCloseDelayFast;
-        }
-
-        bool IDoorCheck.BlockActivate(ActivateEventArgs eventArgs)
-        {
-            if (_wiresComponent != null && _wiresComponent.IsPanelOpen &&
-                eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                _wiresComponent.OpenInterface(actor.PlayerSession);
-                return true;
-            }
-            return false;
-        }
-
-        bool IDoorCheck.CanPryCheck(InteractUsingEventArgs eventArgs)
-        {
-            if (IsBolted())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message "));
-                return false;
-            }
-            if (IsPowered())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
-                return false;
-            }
-            return true;
-        }
-
-        private bool CanChangeState()
+        public bool CanChangeState()
         {
             return IsPowered() && !IsBolted();
         }
 
-        private bool IsBolted()
+        public bool IsBolted()
         {
             return _boltsDown;
         }
 
-        private bool IsPowered()
+        public bool IsPowered()
         {
-            return _receiverComponent == null || _receiverComponent.Powered;
+            return ReceiverComponent == null || ReceiverComponent.Powered;
         }
 
-        private void UpdateBoltLightStatus()
+        public void UpdateBoltLightStatus()
         {
-            if (_appearanceComponent != null)
+            if (AppearanceComponent != null)
             {
-                _appearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
+                AppearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
         }
 
-        private void UpdateWiresStatus()
+        public void UpdateWiresStatus()
         {
-            if (_doorComponent == null)
+            if (DoorComponent == null)
             {
                 return;
             }
@@ -214,9 +160,9 @@ namespace Content.Server.Doors.Components
             {
                 powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
             }
-            else if (_wiresComponent != null &&
-                     _wiresComponent.IsWireCut(Wires.MainPower) &&
-                     _wiresComponent.IsWireCut(Wires.BackupPower))
+            else if (WiresComponent != null &&
+                     WiresComponent.IsWireCut(Wires.MainPower) &&
+                     WiresComponent.IsWireCut(Wires.BackupPower))
             {
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
@@ -226,63 +172,59 @@ namespace Content.Server.Doors.Components
             var boltLightsStatus = new StatusLightData(Color.Lime,
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
+            var ev = new DoorGetCloseTimeModifierEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+
             var timingStatus =
-                new StatusLightData(Color.Orange, !_autoClose ? StatusLightState.Off :
-                                                    !_normalCloseSpeed ? StatusLightState.BlinkingSlow :
+                new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :
+                                                    !MathHelper.CloseTo(ev.CloseTimeModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
 
             var safetyStatus =
-                new StatusLightData(Color.Red, _safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
 
-            if (_wiresComponent == null)
+            if (WiresComponent == null)
             {
                 return;
             }
 
-            _wiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            _wiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
-            _wiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            _wiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
-            _wiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            _wiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
-            /*
-            _wires.SetStatus(6, powerLight);
-            _wires.SetStatus(7, powerLight);
-            _wires.SetStatus(8, powerLight);
-            _wires.SetStatus(9, powerLight);
-            _wires.SetStatus(10, powerLight);
-            _wires.SetStatus(11, powerLight);*/
+            WiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
+            WiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
+            WiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
+            WiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            WiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
+            WiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
         }
 
         private void UpdatePowerCutStatus()
         {
-            if (_receiverComponent == null)
+            if (ReceiverComponent == null)
             {
                 return;
             }
 
             if (PowerWiresPulsed)
             {
-                _receiverComponent.PowerDisabled = true;
+                ReceiverComponent.PowerDisabled = true;
                 return;
             }
 
-            if (_wiresComponent == null)
+            if (WiresComponent == null)
             {
                 return;
             }
 
-            _receiverComponent.PowerDisabled =
-                _wiresComponent.IsWireCut(Wires.MainPower) ||
-                _wiresComponent.IsWireCut(Wires.BackupPower);
+            ReceiverComponent.PowerDisabled =
+                WiresComponent.IsWireCut(Wires.MainPower) ||
+                WiresComponent.IsWireCut(Wires.BackupPower);
         }
 
         private void PowerDeviceOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (_appearanceComponent != null)
+            if (AppearanceComponent != null)
             {
-                _appearanceComponent.SetData(DoorVisuals.Powered, e.Powered);
+                AppearanceComponent.SetData(DoorVisuals.Powered, e.Powered);
             }
 
             // BoltLights also got out
@@ -341,19 +283,13 @@ namespace Content.Server.Doors.Components
             builder.CreateWire(Wires.BoltLight);
             builder.CreateWire(Wires.Timing);
             builder.CreateWire(Wires.Safety);
-            /*
-            builder.CreateWire(6);
-            builder.CreateWire(7);
-            builder.CreateWire(8);
-            builder.CreateWire(9);
-            builder.CreateWire(10);
-            builder.CreateWire(11);*/
+
             UpdateWiresStatus();
         }
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            if(_doorComponent == null)
+            if(DoorComponent == null)
             {
                 return;
             }
@@ -367,7 +303,7 @@ namespace Content.Server.Doors.Components
                         PowerWiresPulsed = true;
                         _powerWiresPulsedTimerCancel.Cancel();
                         _powerWiresPulsedTimerCancel = new CancellationTokenSource();
-                        Owner.SpawnTimer(PowerWiresTimeout,
+                        Owner.SpawnTimer(TimeSpan.FromSeconds(PowerWiresTimeout),
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
                         break;
@@ -390,11 +326,11 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = !_boltLightsWirePulsed;
                         break;
                     case Wires.Timing:
-                        _normalCloseSpeed = !_normalCloseSpeed;
-                        _doorComponent.RefreshAutoClose();
+                        AutoCloseDelayModifier = 0.5f;
+                        DoorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
-                        _safety = !_safety;
+                        Safety = !Safety;
                         break;
                 }
             }
@@ -413,11 +349,11 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = true;
                         break;
                     case Wires.Timing:
-                        _autoClose = true;
-                        _doorComponent.RefreshAutoClose();
+                        AutoClose = true;
+                        DoorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
-                        _safety = true;
+                        Safety = true;
                         break;
                 }
             }
@@ -433,11 +369,11 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = false;
                         break;
                     case Wires.Timing:
-                        _autoClose = false;
-                        _doorComponent.RefreshAutoClose();
+                        AutoClose = false;
+                        DoorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
-                        _safety = false;
+                        Safety = false;
                         break;
                 }
             }
@@ -455,7 +391,7 @@ namespace Content.Server.Doors.Components
 
             BoltsDown = newBolts;
 
-            SoundSystem.Play(Filter.Broadcast(), newBolts ? "/Audio/Machines/boltsdown.ogg" : "/Audio/Machines/boltsup.ogg", Owner);
+            SoundSystem.Play(Filter.Broadcast(), newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Owner);
         }
     }
 }

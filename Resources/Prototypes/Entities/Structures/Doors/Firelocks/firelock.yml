@@ -58,9 +58,9 @@
     - type: Appearance
       visuals:
         - type: AirlockVisualizer
-          open_sound: /Audio/Machines/airlock_open.ogg
-          close_sound: /Audio/Machines/airlock_close.ogg
-          deny_sound: /Audio/Machines/airlock_deny.ogg
+          openSound: /Audio/Machines/airlock_open.ogg
+          closeSound: /Audio/Machines/airlock_close.ogg
+          denySound: /Audio/Machines/airlock_deny.ogg
           animation_time: 0.6
         - type: WiresVisualizer
     - type: Wires

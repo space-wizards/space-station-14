@@ -14,6 +14,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -37,9 +38,6 @@ namespace Content.Server.Doors.Components
     [ComponentReference(typeof(SharedDoorComponent))]
     public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
-        [ComponentDependency]
-        private readonly IDoorCheck? _doorCheck = null;
-
         [ViewVariables]
         [DataField("board")]
         private string? _boardPrototype;
@@ -63,11 +61,8 @@ namespace Content.Server.Doors.Components
                     _ => throw new ArgumentOutOfRangeException(),
                 };
 
-                if (_doorCheck != null)
-                {
-                    _doorCheck.OnStateChange(State);
-                    RefreshAutoClose();
-                }
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+                RefreshAutoClose();
 
                 Dirty();
             }
@@ -140,6 +135,30 @@ namespace Content.Server.Doors.Components
         private bool _weldable = true;
 
         /// <summary>
+        /// Sound to play when the door opens.
+        /// </summary>
+        [DataField("openSound")]
+        public SoundSpecifier? OpenSound;
+
+        /// <summary>
+        /// Sound to play when the door closes.
+        /// </summary>
+        [DataField("closeSound")]
+        public SoundSpecifier? CloseSound;
+
+        /// <summary>
+        /// Sound to play if the door is denied.
+        /// </summary>
+        [DataField("denySound")]
+        public SoundSpecifier? DenySound;
+
+        /// <summary>
+        /// Default time that the door should take to pry open.
+        /// </summary>
+        [DataField("pryTime")]
+        public float PryTime = 0.5f;
+
+        /// <summary>
         /// Whether the door can currently be welded.
         /// </summary>
         private bool CanWeldShut => _weldable && State == DoorState.Closed;
@@ -195,10 +214,10 @@ namespace Content.Server.Doors.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (_doorCheck != null && _doorCheck.BlockActivate(eventArgs))
-            {
+            DoorClickShouldActivateEvent ev = new DoorClickShouldActivateEvent(eventArgs);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            if (ev.Handled)
                 return;
-            }
 
             if (State == DoorState.Open)
             {
@@ -279,12 +298,10 @@ namespace Content.Server.Doors.Components
             {
                 return false;
             }
-            if(_doorCheck != null)
-            {
-                return _doorCheck.OpenCheck();
-            }
 
-            return true;
+            var ev = new BeforeDoorOpenedEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            return !ev.Cancelled;
         }
 
         /// <summary>
@@ -300,6 +317,9 @@ namespace Content.Server.Doors.Components
 
             _stateChangeCancelTokenSource?.Cancel();
             _stateChangeCancelTokenSource = new();
+
+            if (OpenSound != null)
+                SoundSystem.Play(Filter.Pvs(Owner), OpenSound.GetSound());
 
             Owner.SpawnTimer(OpenTimeOne, async () =>
             {
@@ -366,17 +386,19 @@ namespace Content.Server.Doors.Components
         /// <returns>Boolean describing whether this door can close.</returns>
         public bool CanCloseGeneric()
         {
-            if (_doorCheck != null && !_doorCheck.CloseCheck())
-            {
+            var ev = new BeforeDoorClosedEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            if (ev.Cancelled)
                 return false;
-            }
 
             return !IsSafetyColliding();
         }
 
         private bool SafetyCheck()
         {
-            return (_doorCheck != null && _doorCheck.SafetyCheck()) || _inhibitCrush;
+            var ev = new DoorSafetyEnabledEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            return ev.Safety || _inhibitCrush;
         }
 
         /// <summary>
@@ -412,6 +434,10 @@ namespace Content.Server.Doors.Components
 
             _stateChangeCancelTokenSource?.Cancel();
             _stateChangeCancelTokenSource = new();
+
+            if (CloseSound != null)
+                SoundSystem.Play(Filter.Pvs(Owner), CloseSound.GetSound());
+
             Owner.SpawnTimer(CloseTimeOne, async () =>
             {
                 // if somebody walked into the door as it was closing, and we don't crush things
@@ -504,10 +530,10 @@ namespace Content.Server.Doors.Components
 
         public void Deny()
         {
-            if (_doorCheck != null && !_doorCheck.DenyCheck())
-            {
+            var ev = new BeforeDoorDeniedEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            if (ev.Cancelled)
                 return;
-            }
 
             if (State == DoorState.Open || IsWeldedShut)
                 return;
@@ -515,6 +541,10 @@ namespace Content.Server.Doors.Components
             _stateChangeCancelTokenSource?.Cancel();
             _stateChangeCancelTokenSource = new();
             SetAppearance(DoorVisualState.Deny);
+
+            if (DenySound != null)
+                SoundSystem.Play(Filter.Pvs(Owner), DenySound.GetSound());
+
             Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);
@@ -528,13 +558,19 @@ namespace Content.Server.Doors.Components
         {
             _autoCloseCancelTokenSource?.Cancel();
 
-            if (State != DoorState.Open || _doorCheck == null || !_doorCheck.AutoCloseCheck())
-            {
+            if (State != DoorState.Open)
                 return;
-            }
+
+            var autoev = new BeforeDoorAutoCloseEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, autoev, false);
+            if (autoev.Cancelled)
+                return;
+
             _autoCloseCancelTokenSource = new();
 
-            var realCloseTime = _doorCheck.GetCloseSpeed() ?? AutoCloseDelay;
+            var ev = new DoorGetCloseTimeModifierEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            var realCloseTime = AutoCloseDelay * ev.CloseTimeModifier;
 
             Owner.SpawnRepeatingTimer(realCloseTime, async () =>
             {
@@ -556,21 +592,18 @@ namespace Content.Server.Doors.Components
             // for prying doors
             if (tool.HasQuality(ToolQuality.Prying) && !IsWeldedShut)
             {
-                var successfulPry = false;
+                var ev = new DoorGetPryTimeModifierEvent();
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
 
-                if (_doorCheck != null)
-                {
-                    _doorCheck.OnStartPry(eventArgs);
-                    successfulPry = await tool.UseTool(eventArgs.User, Owner,
-                        _doorCheck.GetPryTime() ?? 0.5f, ToolQuality.Prying, () => _doorCheck.CanPryCheck(eventArgs));
-                }
-                else
-                {
-                    successfulPry = await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Prying);
-                }
+                var canEv = new BeforeDoorPryEvent(eventArgs);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
+
+                var successfulPry = await tool.UseTool(eventArgs.User, Owner,
+                        ev.PryTimeModifier * PryTime, ToolQuality.Prying, () => !canEv.Cancelled);
 
                 if (successfulPry && !IsWeldedShut)
                 {
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new OnDoorPryEvent(eventArgs), false);
                     if (State == DoorState.Closed)
                     {
                         Open();
