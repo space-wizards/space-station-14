@@ -46,10 +46,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             || !nodeContainer.TryGetNode(vent.OutletName, out PipeNode? outlet))
                 return;
 
-            var environment = args.Atmosphere.GetTile(vent.Owner.Transform.Coordinates)!;
+            var atmosphereSystem = Get<AtmosphereSystem>();
+            var environment = atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
 
             // We're in an air-blocked tile... Do nothing.
-            if (environment.Air == null)
+            if (environment == null)
                 return;
 
             if (vent.PumpDirection == VentPumpDirection.Releasing)
@@ -58,38 +59,37 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 var pressureDelta = 10000f;
 
                 if ((vent.PressureChecks & DualPortVentPressureBound.ExternalBound) != 0)
-                    pressureDelta = MathF.Min(pressureDelta, (vent.ExternalPressureBound - environment.Air.Pressure));
+                    pressureDelta = MathF.Min(pressureDelta, (vent.ExternalPressureBound - environment.Pressure));
 
                 if ((vent.PressureChecks & DualPortVentPressureBound.InputMinimum) != 0)
                     pressureDelta = MathF.Min(pressureDelta, (inlet.Air.Pressure - vent.InputPressureMin));
 
                 if (pressureDelta > 0 && inlet.Air.Temperature > 0)
                 {
-                    var transferMoles = pressureDelta * environment.Air.Volume / inlet.Air.Temperature * Atmospherics.R;
+                    var transferMoles = pressureDelta * environment.Volume / inlet.Air.Temperature * Atmospherics.R;
                     var removed = inlet.Air.Remove(transferMoles);
-                    environment.AssumeAir(removed);
+                    atmosphereSystem.Merge(environment, removed);
                 }
             }
-            else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Air.Pressure > 0f)
+            else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0f)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.In);
-                var ourMultiplier = outlet.Air.Volume / environment.Air.Temperature * Atmospherics.R;
+                var ourMultiplier = outlet.Air.Volume / environment.Temperature * Atmospherics.R;
                 var molesDelta = 10000 * ourMultiplier;
 
                 if ((vent.PressureChecks & DualPortVentPressureBound.ExternalBound) != 0)
                     molesDelta =
                         MathF.Min(molesDelta,
-                            (environment.Air.Pressure - vent.OutputPressureMax) * environment.Air.Volume / (environment.Air.Temperature * Atmospherics.R));
+                            (environment.Pressure - vent.OutputPressureMax) * environment.Volume / (environment.Temperature * Atmospherics.R));
 
                 if ((vent.PressureChecks &DualPortVentPressureBound.InputMinimum) != 0)
                     molesDelta = MathF.Min(molesDelta, (vent.InputPressureMin - outlet.Air.Pressure) * ourMultiplier);
 
                 if (molesDelta > 0)
                 {
-                    var removed = environment.Air.Remove(molesDelta);
+                    var removed = environment.Remove(molesDelta);
 
                     Get<AtmosphereSystem>().Merge(outlet.Air, removed);
-                    environment.Invalidate();
                 }
             }
         }
