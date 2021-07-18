@@ -517,6 +517,48 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Fix Vacuum
+
+        /// <summary>
+        ///     Attempts to fix a sudden vacuum by creating gas based on adjacent tiles.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        public void FixVacuum(MapCoordinates coordinates)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                FixVacuum(tuple.Value.Grid, tuple.Value.Tile);
+        }
+
+        /// <summary>
+        ///     Attempts to fix a sudden vacuum by creating gas based on adjacent tiles.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        public void FixVacuum(EntityCoordinates coordinates)
+        {
+            if(TryGetGridAndTile(coordinates, out var tuple))
+                FixVacuum(tuple.Value.Grid, tuple.Value.Tile);
+        }
+
+        /// <summary>
+        ///     Attempts to fix a sudden vacuum by creating gas based on adjacent tiles.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        public void FixVacuum(GridId grid, Vector2i tile)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                return;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                gridAtmosphere.FixVacuum(tile);
+
+                return;
+            }
+        }
+
+        #endregion
+
         #region Position Helpers
 
         private bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
