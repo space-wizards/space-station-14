@@ -74,14 +74,14 @@ namespace Content.Client.Research.UI
 
             var vbox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true,
             };
 
             var hboxTechnologies = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 2,
@@ -90,7 +90,7 @@ namespace Content.Client.Research.UI
 
             var hboxSelected = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1
@@ -98,7 +98,7 @@ namespace Content.Client.Research.UI
 
             var vboxPoints = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
@@ -106,7 +106,7 @@ namespace Content.Client.Research.UI
 
             var vboxTechInfo = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
@@ -117,7 +117,7 @@ namespace Content.Client.Research.UI
 
             var vboxPointsButtons = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Align = AlignMode.End,
                 HorizontalExpand = true,
                 VerticalExpand = true,

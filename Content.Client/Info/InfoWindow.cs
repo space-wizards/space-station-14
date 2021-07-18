@@ -60,7 +60,7 @@ namespace Content.Client.Info
         {
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
@@ -102,7 +102,7 @@ namespace Content.Client.Info
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
@@ -136,7 +136,7 @@ namespace Content.Client.Info
 
             vBox.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 10),
                 Children =
                 {
@@ -146,7 +146,7 @@ namespace Content.Client.Info
 
             vBox.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5,
                 Children =
                 {

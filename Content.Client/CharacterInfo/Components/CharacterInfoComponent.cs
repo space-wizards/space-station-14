@@ -70,13 +70,13 @@ namespace Content.Client.CharacterInfo.Components
 
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (SpriteView = new SpriteView { Scale = (2, 2)}),
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Vertical,
+                            Orientation = LayoutOrientation.Vertical,
                             VerticalAlignment = VAlignment.Top,
                             Children =
                             {
@@ -104,7 +104,7 @@ namespace Content.Client.CharacterInfo.Components
                 });
                 ObjectivesContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical
+                    Orientation = LayoutOrientation.Vertical
                 };
                 AddChild(ObjectivesContainer);
 
@@ -123,7 +123,7 @@ namespace Content.Client.CharacterInfo.Components
                 {
                     var vbox = new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Modulate = Color.Gray
                     };
 
@@ -137,7 +137,7 @@ namespace Content.Client.CharacterInfo.Components
                     {
                         var hbox = new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal
+                            Orientation = LayoutOrientation.Horizontal
                         };
                         hbox.AddChild(new ProgressTextureRect
                         {
@@ -151,7 +151,7 @@ namespace Content.Client.CharacterInfo.Components
                         });
                         hbox.AddChild(new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 Children =
                                 {
                                     new Label{Text = objectiveCondition.Title},

@@ -37,14 +37,14 @@ namespace Content.Client.Configurable.UI
 
             _column = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(8),
                 SeparationOverride = 16,
             };
 
             _row = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 16,
                 HorizontalExpand = true
             };
@@ -102,7 +102,7 @@ namespace Content.Client.Configurable.UI
 
                 var row = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 CopyProperties(_row, row);
 

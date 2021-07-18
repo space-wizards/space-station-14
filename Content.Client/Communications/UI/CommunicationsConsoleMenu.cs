@@ -45,7 +45,7 @@ namespace Content.Client.Communications.UI
 
             var vbox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };
@@ -58,7 +58,7 @@ namespace Content.Client.Communications.UI
 
             var hbox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };

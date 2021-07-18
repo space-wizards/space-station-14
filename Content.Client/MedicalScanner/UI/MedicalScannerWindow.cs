@@ -20,7 +20,7 @@ namespace Content.Client.MedicalScanner.UI
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (ScanButton = new Button

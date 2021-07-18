@@ -216,7 +216,7 @@ namespace Content.Client.Storage
 
                 VSplitContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     MouseFilter = MouseFilterMode.Ignore,
                 };
                 containerButton.AddChild(VSplitContainer);
@@ -236,7 +236,7 @@ namespace Content.Client.Storage
                 };
                 _entityList = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     HorizontalExpand = true
                 };
                 listScrollContainer.AddChild(_entityList);
@@ -351,7 +351,7 @@ namespace Content.Client.Storage
 
                 var hBoxContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 EntitySpriteView = new SpriteView
                 {

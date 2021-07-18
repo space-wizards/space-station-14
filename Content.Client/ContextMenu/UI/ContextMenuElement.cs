@@ -67,7 +67,7 @@ namespace Content.Client.ContextMenu.UI
             AddChild(
                 new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new LayoutContainer
@@ -134,14 +134,14 @@ namespace Content.Client.ContextMenu.UI
              AddChild(
                  new BoxContainer
                  {
-                 	Orientation = LayoutOrientation.Horizontal,
+                     Orientation = LayoutOrientation.Horizontal,
                      SeparationOverride = 6,
                      Children =
                      {
                          new LayoutContainer { Children = { _spriteView, _label } },
                          new BoxContainer
                          {
-                         	Orientation = LayoutOrientation.Horizontal,
+                             Orientation = LayoutOrientation.Horizontal,
                              SeparationOverride = 6,
                              Children =
                              {

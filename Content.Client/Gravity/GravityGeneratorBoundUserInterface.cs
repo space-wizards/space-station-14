@@ -76,7 +76,7 @@ namespace Content.Client.Gravity
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 MinSize = new Vector2(250, 100)
             };
             Status = new Label

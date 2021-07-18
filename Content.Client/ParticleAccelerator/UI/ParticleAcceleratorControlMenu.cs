@@ -141,7 +141,7 @@ namespace Content.Client.ParticleAccelerator.UI
             var imgSize = new Vector2(32, 32);
             AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new Control
@@ -170,20 +170,20 @@ namespace Content.Client.ParticleAccelerator.UI
 
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         VerticalExpand = true,
                         Children =
                         {
                             new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 Margin = new Thickness(4, 0, 0, 0),
                                 HorizontalExpand = true,
                                 Children =
                                 {
                                     new BoxContainer
                                     {
-                                    	Orientation = LayoutOrientation.Horizontal,
+                                        Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label
@@ -198,7 +198,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     },
                                     new BoxContainer
                                     {
-                                    	Orientation = LayoutOrientation.Horizontal,
+                                        Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label
@@ -221,7 +221,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     },
                                     (_alarmControl = new BoxContainer
                                     {
-                                    	Orientation = LayoutOrientation.Vertical,
+                                        Orientation = LayoutOrientation.Vertical,
                                         Children =
                                         {
                                             new Label
@@ -237,7 +237,7 @@ namespace Content.Client.ParticleAccelerator.UI
                             },
                             new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 MinSize = (186, 0),
                                 Children =
                                 {
@@ -302,7 +302,7 @@ namespace Content.Client.ParticleAccelerator.UI
                     },
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Margin = new Thickness(12, 0, 0, 0),
                         Children =
                         {

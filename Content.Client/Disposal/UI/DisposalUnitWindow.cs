@@ -30,12 +30,12 @@ namespace Content.Client.Disposal.UI
             Resizable = false;
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 4,
                         Children =
                         {
@@ -46,7 +46,7 @@ namespace Content.Client.Disposal.UI
                     new Control {MinSize = (0, 5)},
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 4,
                         Children =
                         {
@@ -65,7 +65,7 @@ namespace Content.Client.Disposal.UI
                     new Control {MinSize = (0, 10)},
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (Engage = new Button

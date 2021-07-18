@@ -50,7 +50,7 @@ namespace Content.Client.Items.UI
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         SeparationOverride = 0,
                         Children =
                         {

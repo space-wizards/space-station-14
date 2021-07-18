@@ -78,7 +78,7 @@ namespace Content.Client.Preferences.UI
 
             var hbox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             AddChild(hbox);
 
@@ -86,14 +86,14 @@ namespace Content.Client.Preferences.UI
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(10)
             };
             hbox.AddChild(vBox);
 
             var middleContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 10
             };
             vBox.AddChild(middleContainer);
@@ -122,7 +122,7 @@ namespace Content.Client.Preferences.UI
             var namePanel = HighlightedContainer();
             var nameHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true
             };
             var nameLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-name-label") };
@@ -156,7 +156,7 @@ namespace Content.Client.Preferences.UI
 
             var appearanceVBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -174,7 +174,7 @@ namespace Content.Client.Preferences.UI
 
             var sexAndAgeRow = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 10
             };
 
@@ -185,7 +185,7 @@ namespace Content.Client.Preferences.UI
             var sexPanel = HighlightedContainer();
             var sexHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var sexLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-sex-label") };
 
@@ -235,7 +235,7 @@ namespace Content.Client.Preferences.UI
             var agePanel = HighlightedContainer();
             var ageHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var ageLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-age-label") };
             _ageEdit = new LineEdit { MinSize = (40, 0) };
@@ -257,7 +257,7 @@ namespace Content.Client.Preferences.UI
             var genderPanel = HighlightedContainer();
             var genderHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var genderLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-pronouns-label") };
 
@@ -286,7 +286,7 @@ namespace Content.Client.Preferences.UI
             var hairPanel = HighlightedContainer();
             var hairHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
 
             _hairPicker = new HairStylePicker
@@ -347,7 +347,7 @@ namespace Content.Client.Preferences.UI
             var clothingPanel = HighlightedContainer();
             var clothingHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var clothingLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-clothing-label") };
 
@@ -374,7 +374,7 @@ namespace Content.Client.Preferences.UI
             var backpackPanel = HighlightedContainer();
             var backpackHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var backpackLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-backpack-label") };
 
@@ -435,7 +435,7 @@ namespace Content.Client.Preferences.UI
 
                 var jobVBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         (_preferenceUnavailableButton = new OptionButton()),
@@ -483,7 +483,7 @@ namespace Content.Client.Preferences.UI
                     {
                         category = new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Vertical,
+                            Orientation = LayoutOrientation.Vertical,
                             Name = department,
                             ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
                                                     ("departmentName", department))
@@ -560,7 +560,7 @@ namespace Content.Client.Preferences.UI
 
                 var antagVBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new ScrollContainer
@@ -611,7 +611,7 @@ namespace Content.Client.Preferences.UI
             var importExportPanelContainer = HighlightedContainer();
             var importExportHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var importButton = new Button
             {
@@ -654,7 +654,7 @@ namespace Content.Client.Preferences.UI
 
             vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 HorizontalExpand = true,
             };
@@ -982,7 +982,7 @@ namespace Content.Client.Preferences.UI
 
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         icon,
@@ -1026,7 +1026,7 @@ namespace Content.Client.Preferences.UI
 
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         _checkBox

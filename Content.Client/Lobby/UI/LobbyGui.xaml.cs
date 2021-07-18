@@ -73,7 +73,7 @@ namespace Content.Client.Lobby.UI
         {
             var hbox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
 

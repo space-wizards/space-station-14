@@ -119,7 +119,7 @@ namespace Content.Client.Actions.UI
 
             var settingsContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
             hotbarContainer.AddChild(settingsContainer);
@@ -161,7 +161,7 @@ namespace Content.Client.Actions.UI
 
             _loadoutContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 MouseFilter = MouseFilterMode.Stop
             };

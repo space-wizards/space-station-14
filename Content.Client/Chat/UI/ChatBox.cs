@@ -129,7 +129,7 @@ namespace Content.Client.Chat.UI
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (Contents = new OutputPanel
@@ -144,7 +144,7 @@ namespace Content.Client.Chat.UI
                                 {
                                     new BoxContainer
                                     {
-                                    	Orientation = LayoutOrientation.Horizontal,
+                                        Orientation = LayoutOrientation.Horizontal,
                                         HorizontalExpand = true,
                                         SeparationOverride = 4,
                                         Children =
@@ -186,13 +186,13 @@ namespace Content.Client.Chat.UI
                         {
                             new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Horizontal,
+                                Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     new Control{MinSize = (4,0)},
                                     (_filterVBox = new BoxContainer
                                     {
-                                    	Orientation = LayoutOrientation.Vertical,
+                                        Orientation = LayoutOrientation.Vertical,
                                         SeparationOverride = 4
                                     })
                                 }
@@ -208,7 +208,7 @@ namespace Content.Client.Chat.UI
                 {
                     (_channelSelectorHBox = new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 1
                     })
                 }

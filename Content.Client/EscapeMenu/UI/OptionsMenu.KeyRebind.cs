@@ -43,12 +43,12 @@ namespace Content.Client.EscapeMenu.UI
                 Button resetAllButton;
                 var vBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Margin = new Thickness(2, 0, 0, 0)
                 };
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new ScrollContainer
@@ -65,7 +65,7 @@ namespace Content.Client.EscapeMenu.UI
                             {
                                 new BoxContainer
                                 {
-                                	Orientation = LayoutOrientation.Horizontal,
+                                    Orientation = LayoutOrientation.Horizontal,
                                     Children =
                                     {
                                         new Control {MinSize = (2, 0)},
@@ -422,7 +422,7 @@ namespace Content.Client.EscapeMenu.UI
 
                     var hBox = new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Control {MinSize = (5, 0)},

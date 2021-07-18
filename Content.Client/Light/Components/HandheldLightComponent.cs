@@ -58,7 +58,7 @@ namespace Content.Client.Light.Components
 
                 var wrapper = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     SeparationOverride = 4,
                     HorizontalAlignment = HAlignment.Center
                 };

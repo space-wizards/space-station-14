@@ -58,7 +58,7 @@ namespace Content.Client.Cargo.UI
 
             var accountName = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var accountNameLabel = new Label {
                 Text = Loc.GetString("cargo-console-menu-account-name-label") + " ",
@@ -73,7 +73,7 @@ namespace Content.Client.Cargo.UI
 
             var points = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var pointsLabel = new Label
             {
@@ -90,7 +90,7 @@ namespace Content.Client.Cargo.UI
 
             var shuttleStatus = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var shuttleStatusLabel = new Label
             {
@@ -107,7 +107,7 @@ namespace Content.Client.Cargo.UI
 
             var shuttleCapacity = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             var shuttleCapacityLabel = new Label
             {
@@ -124,7 +124,7 @@ namespace Content.Client.Cargo.UI
 
             var buttons = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             CallShuttleButton = new Button()
             {
@@ -144,7 +144,7 @@ namespace Content.Client.Cargo.UI
 
             var category = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             _categories = new OptionButton
             {
@@ -170,7 +170,7 @@ namespace Content.Client.Cargo.UI
             };
             Products = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };
@@ -202,7 +202,7 @@ namespace Content.Client.Cargo.UI
             var ordersLabel = new Label { Text = Loc.GetString("cargo-console-menu-orders-label") };
             _orders = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 StyleClasses = { "transparentItemList" },
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
@@ -416,7 +416,7 @@ namespace Content.Client.Cargo.UI
 
             var hBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
 
@@ -464,7 +464,7 @@ namespace Content.Client.Cargo.UI
 
             var hBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
 
@@ -477,7 +477,7 @@ namespace Content.Client.Cargo.UI
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };

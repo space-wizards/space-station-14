@@ -79,7 +79,7 @@ namespace Content.Client.Actions.UI
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (_searchBar = new LineEdit

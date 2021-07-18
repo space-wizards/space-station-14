@@ -71,7 +71,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             var topContainerWrap = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (_topContainer = new BoxContainer
@@ -90,7 +90,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             var topRow = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
@@ -119,7 +119,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 {
                     (_contentContainer = new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(8, 4),
                     })
                 }
@@ -150,7 +150,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             _contentContainer.AddChild(
                 new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Margin = new Thickness(0, 7, 0, 0),
                     Children = {_lblInternals, _btnInternals}
                 });

@@ -18,12 +18,12 @@ namespace Content.Client.Cloning.UI
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (new Label()
@@ -32,7 +32,7 @@ namespace Content.Client.Cloning.UI
                             }),
                             new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Horizontal,
+                                Orientation = LayoutOrientation.Horizontal,
                                 Align  = AlignMode.Center,
                                 Children =
                                 {

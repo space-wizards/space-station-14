@@ -110,7 +110,7 @@ namespace Content.Client.CharacterAppearance
 
             AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _slider,
@@ -353,7 +353,7 @@ namespace Content.Client.CharacterAppearance
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 8,
                 Children = {_hairStylePicker, _facialHairStylePicker, _eyeColorPicker}
             });

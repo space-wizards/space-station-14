@@ -64,7 +64,7 @@ namespace Content.Client.Atmos.UI
 
             var topContainerWrap = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (_topContainer = new BoxContainer
@@ -85,7 +85,7 @@ namespace Content.Client.Atmos.UI
             Button refreshButton;
             var topRow = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 4, 12, 2),
                 Children =
                 {
@@ -126,7 +126,7 @@ namespace Content.Client.Atmos.UI
                 {
                     (_statusContainer = new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(8, 8, 4, 4)
                     })
                 }
@@ -195,7 +195,7 @@ namespace Content.Client.Atmos.UI
             };
             _statusContainer.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     tableKey,
@@ -211,7 +211,7 @@ namespace Content.Client.Atmos.UI
             var minSize = 24; // This basically allows gases which are too small, to be shown properly
             var gasBar = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 MinSize = new Vector2(0, height)
             };

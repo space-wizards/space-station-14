@@ -50,7 +50,7 @@ namespace Content.Client.Sandbox
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 4
             };
             Contents.AddChild(vBox);

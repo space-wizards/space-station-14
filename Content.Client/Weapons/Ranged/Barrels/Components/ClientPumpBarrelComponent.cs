@@ -82,7 +82,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 VerticalAlignment = VAlignment.Center;
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     HorizontalExpand = true,
                     VerticalAlignment = VAlignment.Center,
                     SeparationOverride = 0,
@@ -90,12 +90,12 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                     {
                         (_bulletsListTop = new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             SeparationOverride = 0
                         }),
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             HorizontalExpand = true,
                             Children =
                             {
@@ -106,7 +106,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                                     {
                                         (_bulletsListBottom = new BoxContainer
                                         {
-                                        	Orientation = LayoutOrientation.Horizontal,
+                                            Orientation = LayoutOrientation.Horizontal,
                                             VerticalAlignment = VAlignment.Center,
                                             SeparationOverride = 0
                                         }),

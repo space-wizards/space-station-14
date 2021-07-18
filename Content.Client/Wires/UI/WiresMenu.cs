@@ -69,7 +69,7 @@ namespace Content.Client.Wires.UI
 
             var shadow = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new PanelContainer
@@ -94,11 +94,11 @@ namespace Content.Client.Wires.UI
 
             var wrappingHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             _wiresHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 4,
                 VerticalAlignment = VAlignment.Bottom
             };
@@ -135,7 +135,7 @@ namespace Content.Client.Wires.UI
 
             var topContainerWrap = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (_topContainer = new BoxContainer
@@ -156,7 +156,7 @@ namespace Content.Client.Wires.UI
             Button helpButton;
             var topRow = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
@@ -205,7 +205,7 @@ namespace Content.Client.Wires.UI
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (_statusContainer = new GridContainer
@@ -571,7 +571,7 @@ namespace Content.Client.Wires.UI
 
                 var hBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     SeparationOverride = 4
                 };
                 hBox.AddChild(new Label

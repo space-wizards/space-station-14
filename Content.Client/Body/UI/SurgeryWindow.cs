@@ -24,7 +24,7 @@ namespace Content.Client.Body.UI
 
             var vSplitContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -37,7 +37,7 @@ namespace Content.Client.Body.UI
                         {
                             (_optionsBox = new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true
                             })
                         }
@@ -99,7 +99,7 @@ namespace Content.Client.Body.UI
 
             AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     (SpriteView = new SpriteView

@@ -18,7 +18,7 @@ namespace Content.Client.Strip
 
             _vboxContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SeparationOverride = 5,
             };
@@ -43,7 +43,7 @@ namespace Content.Client.Strip
 
             _vboxContainer.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 SeparationOverride = 5,
                 Children =

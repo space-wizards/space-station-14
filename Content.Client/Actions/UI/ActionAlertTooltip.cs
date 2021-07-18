@@ -32,7 +32,7 @@ namespace Content.Client.Actions.UI
             BoxContainer vbox;
             AddChild(vbox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 RectClipContent = true
             });
             var nameLabel = new RichTextLabel

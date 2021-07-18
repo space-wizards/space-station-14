@@ -224,7 +224,7 @@ namespace Content.Client.MainMenu
 
                 var vBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     StyleIdentifier = "mainMenuVBox"
                 };
 
@@ -244,7 +244,7 @@ namespace Content.Client.MainMenu
 
                 var userNameHBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     SeparationOverride = 4
                 };
                 vBox.AddChild(userNameHBox);

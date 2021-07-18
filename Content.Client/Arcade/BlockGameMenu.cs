@@ -71,7 +71,7 @@ namespace Content.Client.Arcade
             // building the game container
             _gameRootContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical
+                Orientation = LayoutOrientation.Vertical
             };
 
             _levelLabel = new Label
@@ -98,7 +98,7 @@ namespace Content.Client.Arcade
 
             var gameBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             gameBox.AddChild(SetupHoldBox(backgroundTexture));
             gameBox.AddChild(new Control
@@ -161,7 +161,7 @@ namespace Content.Client.Arcade
 
             var pauseMenuContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -234,7 +234,7 @@ namespace Content.Client.Arcade
 
             var gameOverMenuContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -293,7 +293,7 @@ namespace Content.Client.Arcade
 
             var menuContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -303,7 +303,7 @@ namespace Content.Client.Arcade
 
             var highScoreBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
 
             _localHighscoresLabel = new Label

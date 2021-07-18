@@ -363,7 +363,7 @@ namespace Content.Client.Verbs
             {
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (_icon = new TextureRect
@@ -424,7 +424,7 @@ namespace Content.Client.Verbs
 
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (_icon = new TextureRect

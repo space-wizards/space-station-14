@@ -65,7 +65,7 @@ namespace Content.Client.Preferences.UI
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 0
             };
 
@@ -73,7 +73,7 @@ namespace Content.Client.Preferences.UI
 
             var topHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 40),
                 Children =
                 {
@@ -112,7 +112,7 @@ namespace Content.Client.Preferences.UI
 
             var hBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true,
                 SeparationOverride = 0
             };
@@ -283,7 +283,7 @@ namespace Content.Client.Preferences.UI
 
                 var internalHBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     SeparationOverride = 0,
                     Children =

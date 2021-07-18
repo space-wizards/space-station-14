@@ -241,12 +241,12 @@ namespace Content.Client.Kitchen.UI
 
                 var hSplit = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
 
                 var vBoxGrindJuiceButtonPanel = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalAlignment = VAlignment.Center
                 };
 

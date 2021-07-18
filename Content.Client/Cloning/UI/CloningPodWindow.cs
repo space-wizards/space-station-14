@@ -38,7 +38,7 @@ namespace Content.Client.Cloning.UI
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -55,7 +55,7 @@ namespace Content.Client.Cloning.UI
                     },
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (CloneButton = new Button
@@ -82,7 +82,7 @@ namespace Content.Client.Cloning.UI
                     }),
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label()
@@ -228,7 +228,7 @@ namespace Content.Client.Cloning.UI
 
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (EntityTextureRect = new TextureRect

@@ -28,7 +28,7 @@ namespace Content.Client.Body.UI
 
             var hSplit = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     // Left half
@@ -43,21 +43,21 @@ namespace Content.Client.Body.UI
                     // Right half
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         HorizontalExpand = true,
                         Children =
                         {
                             // Top half of the right half
                             new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 VerticalExpand = true,
                                 Children =
                                 {
                                     (BodyPartLabel = new Label()),
                                     new BoxContainer
                                     {
-                                    	Orientation = LayoutOrientation.Horizontal,
+                                        Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label

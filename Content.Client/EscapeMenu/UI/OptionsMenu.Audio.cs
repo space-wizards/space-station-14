@@ -39,7 +39,7 @@ namespace Content.Client.EscapeMenu.UI
 
                 var contents = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Margin = new Thickness(2, 2, 2, 0),
                     VerticalExpand = true,
                 };
@@ -61,7 +61,7 @@ namespace Content.Client.EscapeMenu.UI
 
                 contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Control {MinSize = (4, 0)},
@@ -114,7 +114,7 @@ namespace Content.Client.EscapeMenu.UI
                     {
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Align = AlignMode.End,
                             HorizontalExpand = true,
                             VerticalExpand = true,

@@ -154,7 +154,7 @@ namespace Content.Client.Power.APC
 
                 var breaker = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 var breakerLabel = new Label {Text = "Main Breaker: "};
                 BreakerButton = new CheckButton {Text = "Toggle"};
@@ -164,7 +164,7 @@ namespace Content.Client.Power.APC
 
                 var externalStatus = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 var externalStatusLabel = new Label {Text = "External Power: "};
                 ExternalPowerStateLabel = new Label {Text = "Good"};
@@ -175,7 +175,7 @@ namespace Content.Client.Power.APC
 
                 var charge = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 var chargeLabel = new Label {Text = "Charge:"};
                 ChargeBar = new ProgressBar

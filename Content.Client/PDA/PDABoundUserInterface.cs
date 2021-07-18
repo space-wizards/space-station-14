@@ -314,7 +314,7 @@ namespace Content.Client.PDA
 
                 var innerHBoxContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         IDInfoLabel,
@@ -339,7 +339,7 @@ namespace Content.Client.PDA
 
                 var mainMenuTabContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
                     HorizontalExpand = true,
                     MinSize = (50, 50),
@@ -358,7 +358,7 @@ namespace Content.Client.PDA
                 //Uplink Tab
                 CategoryListContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical
+                    Orientation = LayoutOrientation.Vertical
                 };
 
                 BalanceInfo = new RichTextLabel
@@ -406,7 +406,7 @@ namespace Content.Client.PDA
                 //Actual list of buttons for buying a listing from the uplink.
                 UplinkListingsContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     HorizontalExpand = true,
                     VerticalExpand = true,
                     SizeFlagsStretchRatio = 2,
@@ -416,7 +416,7 @@ namespace Content.Client.PDA
 
                 var innerVboxContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
 
                     Children =
@@ -428,7 +428,7 @@ namespace Content.Client.PDA
 
                 UplinkTabContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         innerVboxContainer
@@ -504,14 +504,14 @@ namespace Content.Client.PDA
                 //Padding for the price lable.
                 var pricePadding = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     MinSize = (32, 1),
                 };
 
                 //Contains the name of the item and its price. Used for spacing item name and price.
                 var listingButtonHbox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         itemLabel,

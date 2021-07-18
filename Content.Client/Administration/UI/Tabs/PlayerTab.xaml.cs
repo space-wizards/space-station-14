@@ -44,7 +44,7 @@ namespace Content.Client.Administration.UI.Tabs
 
             var header = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 SeparationOverride = 4,
                 Children =
@@ -89,7 +89,7 @@ namespace Content.Client.Administration.UI.Tabs
             {
                 var hBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     SeparationOverride = 4,
                     Children =

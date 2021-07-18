@@ -92,7 +92,7 @@ namespace Content.Client.Administration.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (_errorLabel = new Label

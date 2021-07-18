@@ -177,7 +177,7 @@ namespace Content.Client.Actions.UI
             // padding to the left of the number to shift it right
             var paddingBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 MinSize = (64, 64)
@@ -191,7 +191,7 @@ namespace Content.Client.Actions.UI
             // padding to the left of the small icon
             var paddingBoxItemIcon = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 MinSize = (64, 64)

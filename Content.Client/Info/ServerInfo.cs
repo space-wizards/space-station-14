@@ -23,7 +23,7 @@ namespace Content.Client.Info
 
             var buttons = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             AddChild(buttons);
 

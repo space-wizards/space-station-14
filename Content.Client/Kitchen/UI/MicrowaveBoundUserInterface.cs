@@ -191,7 +191,7 @@ namespace Content.Client.Kitchen.UI
 
                 var hSplit = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
 
                 IngredientsListReagents = new ItemList
@@ -223,7 +223,7 @@ namespace Content.Client.Kitchen.UI
 
                 var vSplit = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
                     HorizontalExpand = true,
                 };
@@ -232,7 +232,7 @@ namespace Content.Client.Kitchen.UI
 
                 ButtonGridContainer = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Align = AlignMode.Center,
                     SizeFlagsStretchRatio = 3
                 };
@@ -263,7 +263,7 @@ namespace Content.Client.Kitchen.UI
                 CookTimeButtonGroup = new ButtonGroup();
                 CookTimeButtonVbox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
                     Align = AlignMode.Center,
                 };
@@ -310,7 +310,7 @@ namespace Content.Client.Kitchen.UI
                     {
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Vertical,
+                            Orientation = LayoutOrientation.Vertical,
                             Children =
                             {
                                 new PanelContainer

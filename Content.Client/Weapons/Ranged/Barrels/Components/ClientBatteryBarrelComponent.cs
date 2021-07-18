@@ -72,7 +72,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
                 AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     Children =
                     {
@@ -83,7 +83,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                             {
                                 (_bulletsList = new BoxContainer
                                 {
-                                	Orientation = LayoutOrientation.Horizontal,
+                                    Orientation = LayoutOrientation.Horizontal,
                                     VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 4
                                 }),

@@ -157,13 +157,13 @@ namespace Content.Client.Credits
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
             vBox.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalAlignment = HAlignment.Center,
                 SeparationOverride = 20,
                 Children =

@@ -39,14 +39,14 @@ namespace Content.Client.Lathe.UI
 
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SeparationOverride = 5,
             };
 
             var hBoxButtons = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
@@ -81,7 +81,7 @@ namespace Content.Client.Lathe.UI
 
             var hBoxFilter = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1

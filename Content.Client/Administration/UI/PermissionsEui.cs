@@ -319,7 +319,7 @@ namespace Content.Client.Administration.UI
                 AdminsList = new GridContainer {Columns = 5, VerticalExpand = true};
                 var adminVBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children = {AdminsList, AddAdminButton},
                 };
                 TabContainer.SetTabTitle(adminVBox, Loc.GetString("permissions-eui-menu-admins-tab-title"));
@@ -327,7 +327,7 @@ namespace Content.Client.Administration.UI
                 AdminRanksList = new GridContainer {Columns = 3};
                 var rankVBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children = { AdminRanksList, AddAdminRankButton}
                 };
                 TabContainer.SetTabTitle(rankVBox, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
@@ -456,7 +456,7 @@ namespace Content.Client.Administration.UI
 
                 var bottomButtons = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 if (data != null)
                 {
@@ -469,18 +469,18 @@ namespace Content.Client.Administration.UI
 
                 Contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             SeparationOverride = 2,
                             Children =
                             {
                                 new BoxContainer
                                 {
-                                	Orientation = LayoutOrientation.Vertical,
+                                    Orientation = LayoutOrientation.Vertical,
                                     HorizontalExpand = true,
                                     Children =
                                     {
@@ -552,7 +552,7 @@ namespace Content.Client.Administration.UI
                 };
                 var flagsBox = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical
+                    Orientation = LayoutOrientation.Vertical
                 };
 
                 foreach (var flag in AdminFlagsHelper.AllFlags)
@@ -579,7 +579,7 @@ namespace Content.Client.Administration.UI
 
                 var bottomButtons = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal
                 };
                 if (data != null)
                 {
@@ -592,7 +592,7 @@ namespace Content.Client.Administration.UI
 
                 Contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         NameEdit,

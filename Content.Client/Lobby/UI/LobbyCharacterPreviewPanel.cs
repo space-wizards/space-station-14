@@ -63,7 +63,7 @@ namespace Content.Client.Lobby.UI
 
             _loaded = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Visible = false
             };
 
@@ -72,7 +72,7 @@ namespace Content.Client.Lobby.UI
 
             var hBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             hBox.AddChild(viewSouth);
             hBox.AddChild(viewNorth);

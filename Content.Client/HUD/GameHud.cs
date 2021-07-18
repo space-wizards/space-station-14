@@ -186,7 +186,7 @@ namespace Content.Client.HUD
 
             _topButtonsContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 8
             };
 
@@ -311,7 +311,7 @@ namespace Content.Client.HUD
 
             _combatPanelContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = Control.HAlignment.Left,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
@@ -329,7 +329,7 @@ namespace Content.Client.HUD
 
             var centerBottomContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 5,
                 HorizontalAlignment = Control.HAlignment.Center
             };
@@ -346,26 +346,26 @@ namespace Content.Client.HUD
             };
             BottomRightInventoryQuickButtonContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Right
             };
             BottomLeftInventoryQuickButtonContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Left
             };
             TopInventoryQuickButtonContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Visible = false,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Center
             };
             var bottomRow = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalAlignment = Control.HAlignment.Center
 
             };
@@ -386,7 +386,7 @@ namespace Content.Client.HUD
 
             var rightBottomContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5
             };
             LC.SetAnchorAndMarginPreset(rightBottomContainer, LC.LayoutPreset.BottomRight);
@@ -407,7 +407,7 @@ namespace Content.Client.HUD
 
             _topNotificationContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 MinSize = (600, 0)
             };
             RootControl.AddChild(_topNotificationContainer);
@@ -579,7 +579,7 @@ namespace Content.Client.HUD
                 AddChild(
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (_textureRect = new TextureRect

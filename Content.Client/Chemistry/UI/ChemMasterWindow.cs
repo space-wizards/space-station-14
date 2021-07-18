@@ -60,13 +60,13 @@ namespace Content.Client.Chemistry.UI
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     //Container
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("chem-master-window-container-label")},
@@ -89,7 +89,7 @@ namespace Content.Client.Chemistry.UI
                             //Currently empty, when server sends state data this will have container contents and fill volume.
                             (ContainerInfo = new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -108,7 +108,7 @@ namespace Content.Client.Chemistry.UI
                     //Buffer
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("chem-master-window-buffer-text")},
@@ -133,7 +133,7 @@ namespace Content.Client.Chemistry.UI
                             //Buffer reagent list
                             (BufferInfo = new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -152,7 +152,7 @@ namespace Content.Client.Chemistry.UI
                     //Packaging
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{Loc.GetString("chem-master-window-packaging-text")} "},
@@ -174,7 +174,7 @@ namespace Content.Client.Chemistry.UI
                             //Packaging options
                             (PackagingInfo = new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                             }),
 
@@ -186,7 +186,7 @@ namespace Content.Client.Chemistry.UI
             //Pills
             PillInfo = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label
@@ -224,7 +224,7 @@ namespace Content.Client.Chemistry.UI
             //Bottles
             BottleInfo = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label
@@ -352,7 +352,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     ContainerInfo.Children.Add(new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{name}: "},
@@ -385,7 +385,7 @@ namespace Content.Client.Chemistry.UI
 
             var bufferHBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal
             };
             BufferInfo.AddChild(bufferHBox);
 
@@ -411,7 +411,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     BufferInfo.Children.Add(new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         //SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Children =
                         {

@@ -38,7 +38,7 @@ namespace Content.Client.AME.UI
                     {
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 new Label {Text = Loc.GetString("ame-window-engine-status-label") + " "},
@@ -47,7 +47,7 @@ namespace Content.Client.AME.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (ToggleInjection = new Button {Text = Loc.GetString("ame-window-toggle-injection-button"), StyleClasses = {StyleBase.ButtonOpenBoth}, Disabled = true}),
@@ -55,7 +55,7 @@ namespace Content.Client.AME.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 new Label {Text = Loc.GetString("ame-window-fuel-status-label") + " "},
@@ -64,7 +64,7 @@ namespace Content.Client.AME.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (EjectButton = new Button {Text = Loc.GetString("ame-window-eject-button"), StyleClasses = {StyleBase.ButtonOpenBoth}, Disabled = true}),
@@ -72,7 +72,7 @@ namespace Content.Client.AME.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 new Label {Text = Loc.GetString("ame-window-injection-amount-label") + " "},
@@ -81,7 +81,7 @@ namespace Content.Client.AME.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (IncreaseFuelButton = new Button {Text = Loc.GetString("ame-window-increase-fuel-button"), StyleClasses = {StyleBase.ButtonOpenRight}}),
@@ -90,7 +90,7 @@ namespace Content.Client.AME.UI
                         },
                         new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                  new Label { Text = Loc.GetString("ame-window-core-count-label") + " "},

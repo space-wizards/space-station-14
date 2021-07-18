@@ -45,7 +45,7 @@ namespace Content.Client.LateJoin
             };
             var vBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -71,7 +71,7 @@ namespace Content.Client.LateJoin
                     {
                         category = new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Vertical,
+                            Orientation = LayoutOrientation.Vertical,
                             Name = department,
                             ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
                                                     ("departmentName", department))
@@ -109,7 +109,7 @@ namespace Content.Client.LateJoin
 
                     var jobSelector = new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         HorizontalExpand = true
                     };
 

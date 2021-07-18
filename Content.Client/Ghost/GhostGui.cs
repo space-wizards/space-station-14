@@ -47,7 +47,7 @@ namespace Content.Client.Ghost
 
             AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _returnToBody,
@@ -94,7 +94,7 @@ namespace Content.Client.Ghost
 
             _buttonContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SeparationOverride = 5,
 

@@ -55,7 +55,7 @@ namespace Content.Client.EscapeMenu.UI
 
                 var contents = new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Vertical,
+                    Orientation = LayoutOrientation.Vertical,
                     Margin = new Thickness(2, 2, 2, 0),
                     VerticalExpand = true,
                 };
@@ -77,7 +77,7 @@ namespace Content.Client.EscapeMenu.UI
 
                 contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Label {Text = Loc.GetString("ui-options-lighting-label")},
@@ -105,7 +105,7 @@ namespace Content.Client.EscapeMenu.UI
 
                 contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Label {Text = Loc.GetString("ui-options-scale-label")},
@@ -123,7 +123,7 @@ namespace Content.Client.EscapeMenu.UI
 
                 contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Label {Text = Loc.GetString("ui-options-hud-theme")},
@@ -162,13 +162,13 @@ namespace Content.Client.EscapeMenu.UI
 
                 contents.AddChild(new BoxContainer
                 {
-                	Orientation = LayoutOrientation.Horizontal,
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         _viewportStretchCheckBox,
                         (_viewportScaleBox = new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (_viewportScaleText = new Label

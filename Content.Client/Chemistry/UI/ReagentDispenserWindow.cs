@@ -75,13 +75,13 @@ namespace Content.Client.Chemistry.UI
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     //First, our dispense amount buttons
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("reagent-dispenser-window-amount-to-dispense-label")},
@@ -109,7 +109,7 @@ namespace Content.Client.Chemistry.UI
                     new Control {MinSize = (0.0f, 10.0f)},
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("reagent-dispenser-window-container-label") + " "},
@@ -132,7 +132,7 @@ namespace Content.Client.Chemistry.UI
                             //Currently empty, when server sends state data this will have container contents and fill volume.
                             (ContainerInfo = new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Vertical,
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -301,7 +301,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     ContainerInfo.Children.Add(new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label
@@ -321,7 +321,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     ContainerInfo.Children.Add(new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{name}: "},

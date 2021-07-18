@@ -56,20 +56,20 @@ namespace Content.Client.Hands
 
             AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 0,
                 HorizontalAlignment = HAlignment.Center,
                 Children =
                 {
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Vertical,
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
                             (HandsContainer = new BoxContainer
                             {
-                            	Orientation = LayoutOrientation.Horizontal,
+                                Orientation = LayoutOrientation.Horizontal,
                                 HorizontalAlignment = HAlignment.Center
                             }),
                         }

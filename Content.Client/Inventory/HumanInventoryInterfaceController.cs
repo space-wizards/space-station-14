@@ -105,7 +105,7 @@ namespace Content.Client.Inventory
 
             _topQuickButtonsContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _hudButtonShoes,
@@ -123,7 +123,7 @@ namespace Content.Client.Inventory
 
             _bottomRightQuickButtonsContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _hudButtonPocket1,
@@ -134,7 +134,7 @@ namespace Content.Client.Inventory
             };
             _bottomLeftQuickButtonsContainer = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _hudButtonBelt,

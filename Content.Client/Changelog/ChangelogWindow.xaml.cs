@@ -102,7 +102,7 @@ namespace Content.Client.Changelog
 
                         var hBox = new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             HorizontalAlignment = HAlignment.Center,
                             Children =
                             {
@@ -155,7 +155,7 @@ namespace Content.Client.Changelog
                         text.SetMessage(FormattedMessage.FromMarkup(change.Message));
                         ChangelogBody.AddChild(new BoxContainer
                         {
-                        	Orientation = LayoutOrientation.Horizontal,
+                            Orientation = LayoutOrientation.Horizontal,
                             Margin = new Thickness(14, 1, 10, 2),
                             Children =
                             {

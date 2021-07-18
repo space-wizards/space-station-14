@@ -23,14 +23,14 @@ namespace Content.Client.Disposal.UI
 
             Contents.AddChild(new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new Label {Text = Loc.GetString("disposal-router-window-tags-label")},
                     new Control {MinSize = (0, 10)},
                     new BoxContainer
                     {
-                    	Orientation = LayoutOrientation.Horizontal,
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (TagInput = new LineEdit

@@ -85,7 +85,7 @@ namespace Content.Client.Examine
             panel.AddChild(vBox);
             var hBox = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5
             };
             vBox.AddChild(hBox);

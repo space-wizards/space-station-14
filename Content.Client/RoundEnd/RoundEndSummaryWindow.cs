@@ -30,14 +30,14 @@ namespace Content.Client.RoundEnd
             //Also good for serious info.
             RoundEndSummaryTab = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-round-end-summary-tab-title")
             };
 
             //Tab for listing  unique info per player.
             PlayerManifestoTab = new BoxContainer
             {
-            	Orientation = LayoutOrientation.Vertical,
+                Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
             };
 
