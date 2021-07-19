@@ -15,7 +15,7 @@
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound: 
-      soundCollection: BikeHorn
+      collection: BikeHorn
     semitoneVariation: 6
   - type: UseDelay
     delay: 0.5
