@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: wirecutter
   parent: BaseItem
   id: Wirecutter
@@ -74,6 +74,7 @@
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 7
   - type: Tool
     qualities:
       - Anchoring
@@ -93,6 +94,7 @@
     size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 7
   - type: Tool
     qualities:
       - Prying
@@ -113,6 +115,7 @@
     size: 5
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 7
   - type: Tool
     qualities:
       - Prying
