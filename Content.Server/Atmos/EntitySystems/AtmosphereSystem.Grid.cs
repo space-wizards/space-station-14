@@ -120,6 +120,64 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
+        #region Grid Get All Mixtures
+
+        /// <summary>
+        ///     Gets all tile mixtures within a grid atmosphere, optionally invalidating them all.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the grid to get all tile mixtures from.</param>
+        /// <param name="invalidate">Whether to invalidate all tiles.</param>
+        /// <returns>All tile mixtures in a grid.</returns>
+        public IEnumerable<GasMixture> GetAllTileMixtures(MapCoordinates coordinates, bool invalidate = false)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return GetAllTileMixtures(tuple.Value.Grid, invalidate);
+
+            return Enumerable.Empty<GasMixture>();
+        }
+
+        /// <summary>
+        ///     Gets all tile mixtures within a grid atmosphere, optionally invalidating them all.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the grid to get all tile mixtures from.</param>
+        /// <param name="invalidate">Whether to invalidate all tiles.</param>
+        /// <returns>All tile mixtures in a grid.</returns>
+        public IEnumerable<GasMixture> GetAllTileMixtures(EntityCoordinates coordinates, bool invalidate = false)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return GetAllTileMixtures(tuple.Value.Grid, invalidate);
+
+            return Enumerable.Empty<GasMixture>();
+        }
+
+        /// <summary>
+        ///     Gets all tile mixtures within a grid atmosphere, optionally invalidating them all.
+        /// </summary>
+        /// <param name="grid">Grid where to get all tile mixtures from.</param>
+        /// <param name="invalidate">Whether to invalidate all tiles.</param>
+        /// <returns>All tile mixtures in a grid.</returns>
+        public IEnumerable<GasMixture> GetAllTileMixtures(GridId grid, bool invalidate = false)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                yield break;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                foreach (var tileAtmos in gridAtmosphere)
+                {
+                    if (tileAtmos?.Air == null)
+                        continue;
+
+                    if(invalidate)
+                        tileAtmos.Invalidate();
+
+                    yield return tileAtmos.Air;
+                }
+            }
+        }
+
+        #endregion
+
         #region Invalidate
 
         /// <summary>
@@ -161,7 +219,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
-        #region Active Tiles
+        #region Tile Active Add
 
         /// <summary>
         ///     Makes a tile become active and start processing.
@@ -200,6 +258,10 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
         }
+
+        #endregion
+
+        #region Tile Active Remove
 
         /// <summary>
         ///     Makes a tile become inactive and stop processing.
