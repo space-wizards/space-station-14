@@ -25,6 +25,7 @@
   id: Cablecuffs
   parent: Handcuffs
   components:
+  - type: Construction
   - type: Handcuff
     cuffTime: 3.5
     uncuffTime: 3.5

@@ -1,0 +1,10 @@
+- type: construction
+  name: makeshift handcuffs
+  id:  makeshift handcuffs
+  graph: makeshiftHandcuffs
+  startNode: start
+  targetNode: cuffscable
+  category: Utility
+  description: "Homemade handcuffs crafted from spare cables."
+  icon: Objects/Misc/cablecuffs.rsi/cuff.png
+  objectType: Item
