@@ -1487,3 +1487,8 @@ Entries:
   - {message: Fixes handheld instruments not working., type: Fix}
   id: 263
   time: '2021-07-18T13:00:50.345009+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix physics rotation issues, type: Fix}
+  id: 264
+  time: '2021-07-19T08:49:18.0000000+00:00'
