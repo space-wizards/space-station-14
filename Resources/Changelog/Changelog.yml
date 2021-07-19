@@ -1492,3 +1492,8 @@ Entries:
   - {message: Fix physics rotation issues, type: Fix}
   id: 264
   time: '2021-07-19T08:49:18.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
+  id: 265
+  time: '2021-07-19T20:55:37.0000000+00:00'
