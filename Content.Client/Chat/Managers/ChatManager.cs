@@ -178,6 +178,9 @@ namespace Content.Client.Chat.Managers
             SelectableChannels = default;
             FilterableChannels = default;
 
+            // Can always send console stuff.
+            SelectableChannels |= ChatSelectChannel.Console;
+
             // can always send/recieve OOC
             SelectableChannels |= ChatSelectChannel.OOC;
             FilterableChannels |= ChatChannel.OOC;
