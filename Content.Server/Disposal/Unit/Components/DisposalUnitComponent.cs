@@ -274,19 +274,13 @@ namespace Content.Server.Disposal.Unit.Components
 
             var entryComponent = Owner.EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
 
-            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
-                tileAtmos.Air != null &&
-                tileAtmos.Air.Temperature > 0)
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true) is {Temperature: > 0} environment)
             {
-                var tileAir = tileAtmos.Air;
-                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (tileAir.Temperature * Atmospherics.R);
+                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (environment.Temperature * Atmospherics.R);
 
-                Air = tileAir.Remove(transferMoles);
-
-                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-                atmosSystem
-                    .GetGridAtmosphere(Owner.Transform.Coordinates)?
-                    .Invalidate(tileAtmos.GridIndices);
+                Air = environment.Remove(transferMoles);
             }
 
             entryComponent.TryInsert(this);

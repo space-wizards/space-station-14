@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
@@ -25,7 +26,7 @@ namespace Content.Server.Commands.Atmos
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var mixture = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
             mixture.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
@@ -40,32 +41,19 @@ namespace Content.Server.Commands.Atmos
                     continue;
                 }
 
-                if (!mapManager.TryGetGrid(new GridId(i), out var grid))
+                var gridId = new GridId(i);
+
+                if (!mapManager.TryGetGrid(gridId, out _))
                 {
                     shell.WriteError($"Grid \"{i}\" doesn't exist.");
                     continue;
                 }
 
-                if (!entityManager.TryGetEntity(grid.GridEntityId, out var entity))
+                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
                 {
-                    shell.WriteError($"Grid entity for grid \"{i}\" doesn't exist.");
-                    continue;
-                }
-
-                var gridAtmosphere = new GridAtmosphereComponent() {Owner = entity};
-
-                // Inject dependencies manually or a NRE will eat your face.
-                IoCManager.InjectDependencies(gridAtmosphere);
-
-                entityManager.ComponentManager.AddComponent(entity, gridAtmosphere, true);
-
-                gridAtmosphere.RepopulateTiles();
-
-                foreach (var tile in gridAtmosphere)
-                {
-                    tile.Air = (GasMixture) mixture.Clone();
-                    tile.Air.Volume = gridAtmosphere.GetVolumeForCells(1);
-                    tile.Invalidate();
+                    tile.Clear();
+                    atmosphereSystem.Merge(tile, mixture);
+                    tile.Temperature = mixture.Temperature;
                 }
             }
         }
