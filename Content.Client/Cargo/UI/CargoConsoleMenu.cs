@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cargo.UI
 {
@@ -27,12 +28,12 @@ namespace Content.Client.Cargo.UI
         private Label _pointsLabel { get; set; }
         private Label _shuttleStatusLabel { get; set; }
         private Label _shuttleCapacityLabel { get; set; }
-        private VBoxContainer _requests { get; set; }
-        private VBoxContainer _orders { get; set; }
+        private BoxContainer _requests { get; set; }
+        private BoxContainer _orders { get; set; }
         private OptionButton _categories { get; set; }
         private LineEdit _searchBar { get; set; }
 
-        public VBoxContainer Products { get; set; }
+        public BoxContainer Products { get; set; }
         public Button CallShuttleButton { get; set; }
         public Button PermissionsButton { get; set; }
 
@@ -49,9 +50,15 @@ namespace Content.Client.Cargo.UI
             else
                 Title = Loc.GetString("cargo-console-menu-title");
 
-            var rows = new VBoxContainer();
+            var rows = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
-            var accountName = new HBoxContainer();
+            var accountName = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var accountNameLabel = new Label {
                 Text = Loc.GetString("cargo-console-menu-account-name-label") + " ",
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
@@ -63,7 +70,10 @@ namespace Content.Client.Cargo.UI
             accountName.AddChild(_accountNameLabel);
             rows.AddChild(accountName);
 
-            var points = new HBoxContainer();
+            var points = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var pointsLabel = new Label
             {
                 Text = Loc.GetString("cargo-console-menu-points-label") + " ",
@@ -77,7 +87,10 @@ namespace Content.Client.Cargo.UI
             points.AddChild(_pointsLabel);
             rows.AddChild(points);
 
-            var shuttleStatus = new HBoxContainer();
+            var shuttleStatus = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var shuttleStatusLabel = new Label
             {
                 Text = Loc.GetString("cargo-console-menu-shuttle-status-label") + " ",
@@ -91,7 +104,10 @@ namespace Content.Client.Cargo.UI
             shuttleStatus.AddChild(_shuttleStatusLabel);
             rows.AddChild(shuttleStatus);
 
-            var shuttleCapacity = new HBoxContainer();
+            var shuttleCapacity = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var shuttleCapacityLabel = new Label
             {
                 Text = Loc.GetString("cargo-console-menu-order-capacity-label") + " ",
@@ -105,7 +121,10 @@ namespace Content.Client.Cargo.UI
             shuttleCapacity.AddChild(_shuttleCapacityLabel);
             rows.AddChild(shuttleCapacity);
 
-            var buttons = new HBoxContainer();
+            var buttons = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             CallShuttleButton = new Button()
             {
                 //Text = Loc.GetString("Call Shuttle"),
@@ -122,7 +141,10 @@ namespace Content.Client.Cargo.UI
             buttons.AddChild(PermissionsButton);
             rows.AddChild(buttons);
 
-            var category = new HBoxContainer();
+            var category = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             _categories = new OptionButton
             {
                 Prefix = Loc.GetString("cargo-console-menu-categories-label") + " ",
@@ -145,8 +167,9 @@ namespace Content.Client.Cargo.UI
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 6
             };
-            Products = new VBoxContainer()
+            Products = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };
@@ -163,17 +186,22 @@ namespace Content.Client.Cargo.UI
             {
                 VerticalExpand = true
             };
-            var rAndOVBox = new VBoxContainer();
-            var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
-            _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added
+            var rAndOVBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical
+            };
+            var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
+            _requests = new BoxContainer // replace with scroll box so that approval buttons can be added
+            {
+                Orientation = LayoutOrientation.Vertical,
                 StyleClasses = { "transparentItemList" },
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
             var ordersLabel = new Label { Text = Loc.GetString("cargo-console-menu-orders-label") };
-            _orders = new VBoxContainer
+            _orders = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 StyleClasses = { "transparentItemList" },
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
@@ -385,8 +413,9 @@ namespace Content.Client.Cargo.UI
             };
             AddChild(MainButton);
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
 
@@ -432,8 +461,9 @@ namespace Content.Client.Cargo.UI
         {
             HorizontalExpand = true;
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
 
@@ -444,8 +474,9 @@ namespace Content.Client.Cargo.UI
             };
             hBox.AddChild(Icon);
 
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true
             };

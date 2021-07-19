@@ -12,6 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Items.UI
 {
@@ -23,7 +24,7 @@ namespace Content.Client.Items.UI
         [ViewVariables]
         private readonly Label _itemNameLabel;
         [ViewVariables]
-        private readonly VBoxContainer _statusContents;
+        private readonly BoxContainer _statusContents;
         [ViewVariables]
         private readonly PanelContainer _panel;
 
@@ -47,12 +48,16 @@ namespace Content.Client.Items.UI
                 ModulateSelfOverride = Color.White.WithAlpha(0.9f),
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         SeparationOverride = 0,
                         Children =
                         {
-                            (_statusContents = new VBoxContainer()),
+                            (_statusContents = new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Vertical
+                            }),
                             (_itemNameLabel = new Label
                             {
                                 ClipText = true,
