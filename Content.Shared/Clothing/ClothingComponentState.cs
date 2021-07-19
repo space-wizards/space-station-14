@@ -1,6 +1,4 @@
-#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -13,7 +11,7 @@ namespace Content.Shared.Clothing
 
         public string? EquippedPrefix { get; }
 
-        public ClothingComponentState(string? clothingEquippedPrefix, string? equippedPrefix) : base(ContentNetIDs.CLOTHING)
+        public ClothingComponentState(string? clothingEquippedPrefix, string? equippedPrefix)
         {
             ClothingEquippedPrefix = clothingEquippedPrefix;
             EquippedPrefix = equippedPrefix;

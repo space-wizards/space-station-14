@@ -1,0 +1,72 @@
+- type: entity
+  abstract: true
+  id: GasCanister
+  name: gas canister
+  description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
+  parent: BaseStructureDynamic
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/canister.rsi
+    state: grey
+  - type: Appearance
+    visuals:
+      - type: GasPortableVisualizer
+        stateConnected: can-connector
+      - type: GasCanisterVisualizer
+        insertedTankState: can-open
+        pressureStates:
+          - can-o0
+          - can-o1
+          - can-o2
+          - can-o3
+  - type: UserInterface
+    interfaces:
+      - key: enum.GasCanisterUiKey.Key
+        type: GasCanisterBoundUserInterface
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GasCanisterBrokenBase:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+      mass: 25
+      mask:
+        - MobImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
+  - type: AtmosDevice
+    requireAnchored: false
+  - type: ContainerContainer
+    containers:
+      GasCanisterTankHolder: !type:ContainerSlot {}
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PortablePipeNode
+        nodeGroupID: Pipe
+        rotationsEnabled: false
+        volume: 1
+  - type: GasPortable
+  - type: GasCanister

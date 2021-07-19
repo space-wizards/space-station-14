@@ -1,6 +1,7 @@
 ## Entity
 
 microwave-component-interact-using-no-power = It has no power!
+microwave-component-interact-using-broken = It's broken!
 microwave-component-interact-using-no-active-hand = You have no active hand!
 microwave-component-interact-using-container-full = Container is full
 microwave-component-interact-using-transfer-success = Transferred {$amount}u

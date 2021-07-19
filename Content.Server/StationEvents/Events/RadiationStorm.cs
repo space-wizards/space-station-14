@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Radiation;
 using Content.Shared.Coordinates;

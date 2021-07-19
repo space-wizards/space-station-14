@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization.Manager.Attributes;

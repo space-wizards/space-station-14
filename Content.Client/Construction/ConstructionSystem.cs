@@ -14,7 +14,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-#nullable enable
 
 namespace Content.Client.Construction
 {

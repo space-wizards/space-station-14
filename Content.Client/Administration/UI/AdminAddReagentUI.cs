@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Administration.UI
 {
@@ -65,8 +66,9 @@ namespace Content.Client.Administration.UI
 
                 Title = Loc.GetString("admin-add-reagent-eui-title");
 
-                Contents.AddChild(new VBoxContainer
+                Contents.AddChild(new BoxContainer
                 {
+	                Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new GridContainer
@@ -88,8 +90,9 @@ namespace Content.Client.Administration.UI
                             HorizontalExpand = true,
                             VerticalExpand = true
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (_errorLabel = new Label

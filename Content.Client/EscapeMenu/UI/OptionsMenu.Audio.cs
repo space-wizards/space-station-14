@@ -9,6 +9,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.EscapeMenu.UI
 {
@@ -31,10 +32,14 @@ namespace Content.Client.EscapeMenu.UI
                 _cfg = cfg;
                 _clydeAudio = clydeAudio;
 
-                var vBox = new VBoxContainer();
-
-                var contents = new VBoxContainer
+                var vBox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical
+                };
+
+                var contents = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
                     Margin = new Thickness(2, 2, 2, 0),
                     VerticalExpand = true,
                 };
@@ -54,8 +59,9 @@ namespace Content.Client.EscapeMenu.UI
                     Align = Label.AlignMode.Right
                 };
 
-                contents.AddChild(new HBoxContainer
+                contents.AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new Control {MinSize = (4, 0)},
@@ -106,9 +112,10 @@ namespace Content.Client.EscapeMenu.UI
                     HasMargins = false,
                     Children =
                     {
-                        new HBoxContainer
+                        new BoxContainer
                         {
-                            Align = BoxContainer.AlignMode.End,
+                            Orientation = LayoutOrientation.Horizontal,
+                            Align = AlignMode.End,
                             HorizontalExpand = true,
                             VerticalExpand = true,
                             Children =

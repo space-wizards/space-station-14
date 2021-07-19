@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;

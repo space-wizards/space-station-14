@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chat.UI
 {
@@ -78,11 +79,11 @@ namespace Content.Client.Chat.UI
 
         private readonly Popup _channelSelectorPopup;
         private readonly Button _channelSelector;
-        private readonly HBoxContainer _channelSelectorHBox;
+        private readonly BoxContainer _channelSelectorHBox;
         private readonly FilterButton _filterButton;
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
-        private readonly VBoxContainer _filterVBox;
+        private readonly BoxContainer _filterVBox;
         private DragMode _currentDrag = DragMode.None;
         private Vector2 _dragOffsetTopLeft;
         private Vector2 _dragOffsetBottomRight;
@@ -126,8 +127,9 @@ namespace Content.Client.Chat.UI
                 HorizontalExpand = true,
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (Contents = new OutputPanel
@@ -140,8 +142,9 @@ namespace Content.Client.Chat.UI
                                 HorizontalExpand = true,
                                 Children =
                                 {
-                                    new HBoxContainer
+                                    new BoxContainer
                                     {
+                                        Orientation = LayoutOrientation.Horizontal,
                                         HorizontalExpand = true,
                                         SeparationOverride = 4,
                                         Children =
@@ -181,13 +184,15 @@ namespace Content.Client.Chat.UI
                         StyleClasses = {StyleNano.StyleClassBorderedWindowPanel},
                         Children =
                         {
-                            new HBoxContainer
+                            new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Horizontal,
                                 Children =
                                 {
                                     new Control{MinSize = (4,0)},
-                                    (_filterVBox = new VBoxContainer
+                                    (_filterVBox = new BoxContainer
                                     {
+                                        Orientation = LayoutOrientation.Vertical,
                                         SeparationOverride = 4
                                     })
                                 }
@@ -201,8 +206,9 @@ namespace Content.Client.Chat.UI
             {
                 Children =
                 {
-                    (_channelSelectorHBox = new HBoxContainer
+                    (_channelSelectorHBox = new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         SeparationOverride = 1
                     })
                 }

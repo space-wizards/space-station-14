@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage.Components;

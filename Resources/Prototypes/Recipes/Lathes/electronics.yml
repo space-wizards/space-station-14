@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: FirelockElectronics
-  icon: Constructible/Misc/module.rsi/mainboard.png
+  icon: Objects/Misc/module.rsi/mainboard.png
   result: FirelockElectronics
   completetime: 500
   materials:
@@ -9,7 +9,7 @@
 
 - type: latheRecipe
   id: DoorElectronics
-  icon: Constructible/Misc/module.rsi/door_electronics.png
+  icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics
   completetime: 500
   materials:
@@ -18,7 +18,7 @@
 
 - type: latheRecipe
   id: APCElectronics
-  icon: Constructible/Misc/module.rsi/charger_APC.png
+  icon: Objects/Misc/module.rsi/charger_APC.png
   result: APCElectronics
   completetime: 500
   materials:

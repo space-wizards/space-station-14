@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage.Components;
 

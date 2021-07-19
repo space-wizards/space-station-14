@@ -1,18 +1,18 @@
 ﻿<Control xmlns="https://spacestation14.io">
     <PanelContainer StyleClasses="AngleRect" />
     <MarginContainer MarginLeftOverride="4" MarginRightOverride="4" MarginTopOverride="4" MarginBottomOverride="4">
-        <VBoxContainer>
+        <BoxContainer Orientation="Vertical">
             <Label Name="VoteCaller" />
             <Label Name="VoteTitle" />
 
             <GridContainer Columns="3" Name="VoteOptionsContainer" />
-            <HBoxContainer>
+            <BoxContainer Orientation="Horizontal">
                 <MarginContainer HorizontalExpand="True" MarginLeftOverride="2" MarginRightOverride="2"
                                      MarginTopOverride="2" MarginBottomOverride="2">
                     <ProgressBar Name="TimeLeftBar" MinValue="0" MaxValue="1" />
                 </MarginContainer>
                 <Label Name="TimeLeftText" />
-            </HBoxContainer>
-        </VBoxContainer>
+            </BoxContainer>
+        </BoxContainer>
     </MarginContainer>
 </Control>

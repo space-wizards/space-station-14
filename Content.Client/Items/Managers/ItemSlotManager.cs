@@ -74,7 +74,7 @@ namespace Content.Client.Items.Managers
                 var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
 
                 var coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(_entityManager, _mapManager, mousePosWorld);
+                    EntityCoordinates.FromMap(_mapManager, mousePosWorld);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
                     coordinates, args.PointerLocation, item.Uid);

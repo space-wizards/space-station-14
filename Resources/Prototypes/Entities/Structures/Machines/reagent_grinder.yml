@@ -1,0 +1,31 @@
+- type: entity
+  id: KitchenReagentGrinder
+  parent: BaseMachinePowered
+  name: reagent grinder
+  description: From BlenderTech. Will It Blend? Let's find out!
+  suffix: grinder/juicer
+  components:
+  - type: SnapGrid
+  - type: ReagentGrinder
+  - type: UserInterface
+    interfaces:
+    - key: enum.ReagentGrinderUiKey.Key
+      type: ReagentGrinderBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ReagentGrinderVisualizer
+  - type: LoopingSound
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.35,-0.08,0.25,0.15"
+      layer:
+      - SmallImpassable
+      mask:
+      - VaultImpassable
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+    drawdepth: Items

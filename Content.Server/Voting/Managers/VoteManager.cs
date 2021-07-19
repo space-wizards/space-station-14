@@ -20,7 +20,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-#nullable enable
 
 namespace Content.Server.Voting.Managers
 {

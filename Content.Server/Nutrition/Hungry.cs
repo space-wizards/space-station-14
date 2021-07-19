@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Administration;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Administration;

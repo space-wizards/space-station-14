@@ -8,7 +8,7 @@
           steps:
             - tag: ConveyorAssembly
               icon:
-                sprite: Constructible/Power/conveyor.rsi
+                sprite: Structures/conveyor.rsi
                 state: conveyor_loose
               name: conveyor belt assembly
               doAfter: 2

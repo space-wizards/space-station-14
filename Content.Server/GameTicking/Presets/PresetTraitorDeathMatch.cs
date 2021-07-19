@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Hands.Components;
@@ -162,10 +163,12 @@ namespace Content.Server.GameTicking.Presets
             _robustRandom.Shuffle(ents);
             var foundATarget = false;
             bestTarget = EntityCoordinates.Invalid;
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             foreach (var entity in ents)
             {
-                if (!entity.Transform.Coordinates.IsTileAirProbablySafe())
+                if (!atmosphereSystem.IsTileMixtureProbablySafe(entity.Transform.Coordinates))
                     continue;
+
                 var distanceFromNearest = float.PositiveInfinity;
                 foreach (var existing in existingPlayerPoints)
                 {

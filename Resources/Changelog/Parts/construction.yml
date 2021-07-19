@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fix bug where constructing walls and windows would place them in the bar.

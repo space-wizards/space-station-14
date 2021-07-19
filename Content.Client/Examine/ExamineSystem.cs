@@ -15,6 +15,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Examine
 {
@@ -77,9 +78,16 @@ namespace Content.Client.Examine
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
             //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             panel.AddChild(vBox);
-            var hBox = new HBoxContainer {SeparationOverride = 5};
+            var hBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                SeparationOverride = 5
+            };
             vBox.AddChild(hBox);
             if (entity.TryGetComponent(out ISpriteComponent? sprite))
             {

@@ -10,7 +10,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-#nullable enable
 
 namespace Content.Server.Extinguisher
 {

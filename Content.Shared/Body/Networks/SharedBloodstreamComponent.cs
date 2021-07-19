@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Chemistry.Solution;
+﻿using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Body.Networks
