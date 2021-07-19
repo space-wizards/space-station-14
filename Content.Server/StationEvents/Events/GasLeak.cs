@@ -157,7 +157,7 @@ namespace Content.Server.StationEvents.Events
                 {
                     return;
                 }
-                
+
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
                 atmosphereSystem.HotspotExpose(_targetGrid.Transform.GridID, _targetTile, 700f, 50f, true);
@@ -173,7 +173,7 @@ namespace Content.Server.StationEvents.Events
             if (!IoCManager.Resolve<IMapManager>().TryGetGrid(defaultGridId, out var grid) ||
                 !IoCManager.Resolve<IEntityManager>().TryGetEntity(grid.GridEntityId, out _targetGrid)) return false;
 
-            _targetGrid.EnsureComponent(out GridAtmosphereComponent gridAtmos);
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();
             var found = false;
             var gridBounds = grid.WorldBounds;
@@ -185,7 +185,7 @@ namespace Content.Server.StationEvents.Events
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (gridAtmos.IsSpace(tile) || gridAtmos.IsAirBlocked(tile)) continue;
+                if (atmosphereSystem.IsTileSpace(defaultGridId, tile) || atmosphereSystem.IsTileAirBlocked(defaultGridId, tile)) continue;
                 found = true;
                 _targetCoords = grid.GridTileToLocal(tile);
                 break;
