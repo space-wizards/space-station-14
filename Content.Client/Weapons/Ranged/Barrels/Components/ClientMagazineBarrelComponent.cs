@@ -17,6 +17,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
@@ -134,7 +135,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         private sealed class StatusControl : Control
         {
             private readonly ClientMagazineBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsList;
+            private readonly BoxContainer _bulletsList;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
             private readonly Label _ammoCount;
@@ -146,8 +147,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 HorizontalExpand = true;
                 VerticalAlignment = VAlignment.Center;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     Children =
                     {
@@ -163,8 +165,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                             HorizontalExpand = true,
                             Children =
                             {
-                                (_bulletsList = new HBoxContainer
+                                (_bulletsList = new BoxContainer
                                 {
+                                    Orientation = LayoutOrientation.Horizontal,
                                     VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 0
                                 }),

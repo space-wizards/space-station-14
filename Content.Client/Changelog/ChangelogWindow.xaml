@@ -3,20 +3,20 @@
                            xmlns:ui="clr-namespace:Content.Client.HUD.UI"
                            MinSize="500 400" MouseFilter="Stop">
     <PanelContainer StyleClasses="AngleRect" />
-    <VBoxContainer>
-        <HBoxContainer>
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
             <Label Margin="6 0 0 0" HorizontalExpand="True" Text="{Loc 'changelog-window-title'}" VAlign="Center"
                    StyleClasses="LabelHeading" />
             <TextureButton Margin="0 0 8 0" Name="CloseButton" StyleClasses="windowCloseButton"
                            VerticalAlignment="Center" />
-        </HBoxContainer>
+        </BoxContainer>
         <ui:HighDivider />
 
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-            <VBoxContainer Name="ChangelogBody" />
+            <BoxContainer Orientation="Vertical" Name="ChangelogBody" />
         </ScrollContainer>
 
         <PanelContainer StyleClasses="LowDivider" />
         <Label Name="VersionLabel" HorizontalAlignment="Right" StyleClasses="LabelSubText" Margin="4 0" />
-    </VBoxContainer>
+    </BoxContainer>
 </changelog:ChangelogWindow>
