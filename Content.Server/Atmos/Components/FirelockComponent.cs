@@ -74,15 +74,12 @@ namespace Content.Server.Atmos.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
-
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(Owner.Transform.Coordinates))
             {
-                // includeAirBlocked remains false, and therefore Air must be present
-                var moles = adjacent.Air!.TotalMoles;
+                var moles = adjacent.TotalMoles;
                 if (moles < minMoles)
                     minMoles = moles;
                 if (moles > maxMoles)
@@ -96,17 +93,18 @@ namespace Content.Server.Atmos.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates) == null)
+            if (!atmosphereSystem.TryGetGridAndTile(Owner.Transform.Coordinates, out var tuple))
                 return false;
 
-            if (atmosphereSystem.IsHotspotActive(Owner.Transform.Coordinates))
+            if (atmosphereSystem.GetTileMixture(tuple.Value.Grid, tuple.Value.Tile) == null)
+                return false;
+
+            if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, tuple.Value.Tile))
                 return true;
 
-            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.Coordinates);
-
-            foreach (var (_, adjacent) in gridAtmosphere.GetAdjacentTiles(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(Owner.Transform.Coordinates))
             {
-                if (adjacent.Hotspot.Valid)
+                if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, adjacent))
                     return true;
             }
 
