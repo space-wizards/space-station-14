@@ -53,9 +53,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, true))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
             {
-                // Pass null appearance, we don't need to set it there.
                 Scrub(atmosphereSystem, scrubber, null, adjacent, outlet);
             }
         }

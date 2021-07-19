@@ -452,47 +452,44 @@ namespace Content.Server.Atmos.EntitySystems
 
         #endregion
 
-        #region Adjacent Get
+        #region Adjacent Get Positions
 
         /// <summary>
-        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
-        ///     Does not return the tile in question, only the adjacent ones.
+        ///     Gets all the positions adjacent to a tile. Can include air-blocked directions.
         /// </summary>
         /// <param name="coordinates">Coordinates where to get the tile.</param>
-        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
-        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
-        public IEnumerable<GasMixture?> GetAdjacentTileMixtures(MapCoordinates coordinates, bool invalidate = false)
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <returns>The positions adjacent to the tile.</returns>
+        public IEnumerable<Vector2i> GetAdjacentTiles(MapCoordinates coordinates, bool includeBlocked = false)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
-                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+                return GetAdjacentTiles(tuple.Value.Grid, tuple.Value.Tile, includeBlocked);
 
-            return Enumerable.Empty<GasMixture?>();
+            return Enumerable.Empty<Vector2i>();
         }
 
         /// <summary>
-        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
-        ///     Does not return the tile in question, only the adjacent ones.
+        ///     Gets all the positions adjacent to a tile. Can include air-blocked directions.
         /// </summary>
         /// <param name="coordinates">Coordinates where to get the tile.</param>
-        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
-        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
-        public IEnumerable<GasMixture?> GetAdjacentTileMixtures(EntityCoordinates coordinates, bool invalidate = false)
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <returns>The positions adjacent to the tile.</returns>
+        public IEnumerable<Vector2i> GetAdjacentTiles(EntityCoordinates coordinates, bool includeBlocked = false)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
-                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+                return GetAdjacentTiles(tuple.Value.Grid, tuple.Value.Tile, includeBlocked);
 
-            return Enumerable.Empty<GasMixture?>();
+            return Enumerable.Empty<Vector2i>();
         }
 
         /// <summary>
-        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
-        ///     Does not return the tile in question, only the adjacent ones.
+        ///     Gets all the positions adjacent to a tile. Can include air-blocked directions.
         /// </summary>
-        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="grid">Grid where to get the tiles.</param>
         /// <param name="tile">Indices of the tile.</param>
-        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
-        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
-        public IEnumerable<GasMixture?> GetAdjacentTileMixtures(GridId grid, Vector2i tile, bool invalidate = false)
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <returns>The positions adjacent to the tile.</returns>
+        public IEnumerable<Vector2i> GetAdjacentTiles(GridId grid, Vector2i tile, bool includeBlocked = false)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 yield break;
@@ -501,14 +498,97 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var tileAtmos = gridAtmosphere.GetTile(tile)!;
 
-                foreach (var adjacentTile in tileAtmos.AdjacentTiles)
+                for (var i = 0; i < tileAtmos.AdjacentTiles.Count; i++)
                 {
+                    var adjacentTile = tileAtmos.AdjacentTiles[i];
                     // TileAtmosphere has nullable disabled, so just in case...
                     // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                    if (adjacentTile == null)
+                    if (adjacentTile?.Air == null)
                         continue;
 
-                    if(invalidate)
+                    if (!includeBlocked)
+                    {
+                        var direction = (AtmosDirection) (1 << i);
+                        if (tileAtmos.BlockedAirflow.IsFlagSet(direction))
+                            continue;
+                    }
+
+                    yield return adjacentTile.GridIndices;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Adjacent Get Mixture
+
+        /// <summary>
+        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
+        ///     Does not return the tile in question, only the adjacent ones. Can include air-blocked directions.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
+        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
+        public IEnumerable<GasMixture> GetAdjacentTileMixtures(MapCoordinates coordinates, bool includeBlocked = false, bool invalidate = false)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+
+            return Enumerable.Empty<GasMixture>();
+        }
+
+        /// <summary>
+        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
+        ///     Does not return the tile in question, only the adjacent ones.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
+        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
+        public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityCoordinates coordinates, bool includeBlocked = false, bool invalidate = false)
+        {
+            if (TryGetGridAndTile(coordinates, out var tuple))
+                return GetAdjacentTileMixtures(tuple.Value.Grid, tuple.Value.Tile);
+
+            return Enumerable.Empty<GasMixture>();
+        }
+
+        /// <summary>
+        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
+        ///     Does not return the tile in question, only the adjacent ones.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
+        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
+        public IEnumerable<GasMixture> GetAdjacentTileMixtures(GridId grid, Vector2i tile, bool includeBlocked = false, bool invalidate = false)
+        {
+            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
+                yield break;
+
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+            {
+                var tileAtmos = gridAtmosphere.GetTile(tile)!;
+
+                for (var i = 0; i < tileAtmos.AdjacentTiles.Count; i++)
+                {
+                    var adjacentTile = tileAtmos.AdjacentTiles[i];
+
+                    // TileAtmosphere has nullable disabled, so just in case...
+                    // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                    if (adjacentTile?.Air == null)
+                        continue;
+
+                    if (!includeBlocked)
+                    {
+                        var direction = (AtmosDirection) (1 << i);
+                        if (tileAtmos.BlockedAirflow.IsFlagSet(direction))
+                            continue;
+                    }
+
+                    if (invalidate)
                         adjacentTile.Invalidate();
 
                     yield return adjacentTile.Air;
@@ -821,7 +901,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Position Helpers
 
-        private bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
+        public bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
         {
             if (!_mapManager.TryFindGridAt(coordinates, out var grid))
             {
@@ -833,7 +913,7 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool TryGetGridAndTile(EntityCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
+        public bool TryGetGridAndTile(EntityCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
         {
             if (!coordinates.IsValid(EntityManager))
             {
