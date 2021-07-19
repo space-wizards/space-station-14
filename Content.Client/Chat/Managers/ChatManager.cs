@@ -4,12 +4,14 @@ using Content.Client.Administration.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Ghost;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -52,7 +54,7 @@ namespace Content.Client.Chat.Managers
         /// <summary>
         ///     The max amount of characters an entity can send in one message
         /// </summary>
-        private int _maxMessageLength = 1000;
+        private int MaxMessageLength => _cfg.GetCVar(CCVars.ChatMaxMessageLength);
 
         public const char ConCmdSlash = '/';
         public const char OOCAlias = '[';
@@ -100,6 +102,7 @@ namespace Content.Client.Chat.Managers
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientAdminManager _adminMgr = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         /// <summary>
         /// Current chat box control. This can be modified, so do not depend on saving a reference to this.
@@ -128,15 +131,11 @@ namespace Content.Client.Chat.Managers
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
-
-            // When connexion is achieved, request the max chat message length
-            _netManager.Connected += RequestMaxLength;
         }
 
         public void PostInject()
@@ -383,12 +382,12 @@ namespace Content.Client.Chat.Managers
                 return;
 
             // Check if message is longer than the character limit
-            if (text.Length > _maxMessageLength)
+            if (text.Length > MaxMessageLength)
             {
                 if (CurrentChatBox != null)
                 {
                     string locWarning = Loc.GetString("chat-manager-max-message-length",
-                                            ("maxMessageLength", _maxMessageLength));
+                                            ("maxMessageLength", MaxMessageLength));
                     CurrentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
                     CurrentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
                 }
@@ -508,17 +507,6 @@ namespace Content.Client.Chat.Managers
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                     break;
             }
-        }
-
-        private void OnMaxLengthReceived(ChatMaxMsgLengthMessage msg)
-        {
-            _maxMessageLength = msg.MaxMessageLength;
-        }
-
-        private void RequestMaxLength(object? sender, NetChannelArgs args)
-        {
-            ChatMaxMsgLengthMessage msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            _netManager.ClientSendMessage(msg);
         }
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)

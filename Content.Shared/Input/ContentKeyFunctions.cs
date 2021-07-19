@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.Input;
 
 namespace Content.Shared.Input

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Robust.Client.Player;

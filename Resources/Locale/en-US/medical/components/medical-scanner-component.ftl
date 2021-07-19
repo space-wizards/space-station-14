@@ -9,7 +9,7 @@ enter-verb-get-data-text = Enter
 
 ## EjectVerb
 
-eject-verb-get-data-text = Eject
+medical-scanner-eject-verb-get-data-text = Eject
 
 ## UI
 

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
@@ -92,12 +91,12 @@ namespace Content.Server.DoAfter
         public EntityEventArgs? UserFinishedEvent { get; set; }
 
         /// <summary>
-        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
+        ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is cancelled.
         /// </summary>
         public EntityEventArgs? TargetCancelledEvent { get; set; }
 
         /// <summary>
-        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
+        ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is finished successfully.
         /// </summary>
         public EntityEventArgs? TargetFinishedEvent { get; set; }
 

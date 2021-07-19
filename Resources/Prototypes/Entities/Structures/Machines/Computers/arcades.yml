@@ -1,0 +1,60 @@
+﻿- type: entity
+  abstract: true
+  id: ArcadeBase
+  description: An arcade cabinet.
+  name: arcade
+  parent: ComputerBase
+  components:
+  - type: ApcPowerReceiver
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - state: arcade
+      map: ["enum.ComputerVisualizer+Layers.Body"]
+    - state: invaders
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.Screen"]
+  - type: Icon
+    sprite: Structures/Machines/computers.rsi
+    state: arcade
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      screen: invaders
+      key: ""
+      body: arcade
+      bodyBroken: arcade
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  id: SpaceVillainArcade
+  parent: ArcadeBase
+  components:
+  - type: SpaceVillainArcade
+  - type: Wires
+    BoardName: "Arcade"
+  - type: UserInterface
+    interfaces:
+      - key: enum.SpaceVillainArcadeUiKey.Key
+        type: SpaceVillainArcadeBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: SpaceVillainArcadeComputerCircuitboard
+
+- type: entity
+  id: BlockGameArcade
+  description: An arcade cabinet with a strangely familiar game.
+  name: NT block game
+  parent: ArcadeBase
+  components:
+  - type: BlockGameArcade
+  - type: UserInterface
+    interfaces:
+      - key: enum.BlockGameUiKey.Key
+        type: BlockGameBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: BlockGameArcadeComputerCircuitboard

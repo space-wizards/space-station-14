@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Stacks;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

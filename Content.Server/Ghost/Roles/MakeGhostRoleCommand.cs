@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Administration;

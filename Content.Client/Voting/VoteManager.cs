@@ -9,7 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
-#nullable enable
 
 namespace Content.Client.Voting
 {

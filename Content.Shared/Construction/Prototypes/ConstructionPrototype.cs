@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Construction.Conditions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;

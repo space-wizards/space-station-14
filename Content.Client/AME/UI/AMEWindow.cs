@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.AME.SharedAMEControllerComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.AME.UI
 {
@@ -30,61 +31,69 @@ namespace Content.Client.AME.UI
 
             MinSize = SetSize = (250, 250);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+	            Orientation = LayoutOrientation.Vertical,
                 Children =
                     {
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
-                                new Label {Text = Loc.GetString("ame-window-engine-status-label")},
+                                new Label {Text = Loc.GetString("ame-window-engine-status-label") + " "},
                                 (InjectionStatus = new Label {Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label")})
                             }
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (ToggleInjection = new Button {Text = Loc.GetString("ame-window-toggle-injection-button"), StyleClasses = {StyleBase.ButtonOpenBoth}, Disabled = true}),
                             }
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
-                                new Label {Text = Loc.GetString("ame-window-fuel-status-label")},
+                                new Label {Text = Loc.GetString("ame-window-fuel-status-label") + " "},
                                 (FuelAmount = new Label {Text = Loc.GetString("ame-window-fuel-not-inserted-text")})
                             }
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (EjectButton = new Button {Text = Loc.GetString("ame-window-eject-button"), StyleClasses = {StyleBase.ButtonOpenBoth}, Disabled = true}),
                             }
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
-                                new Label {Text = Loc.GetString("ame-window-injection-amount-label")},
+                                new Label {Text = Loc.GetString("ame-window-injection-amount-label") + " "},
                                 (InjectionAmount = new Label {Text = "0"})
                             }
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
                                 (IncreaseFuelButton = new Button {Text = Loc.GetString("ame-window-increase-fuel-button"), StyleClasses = {StyleBase.ButtonOpenRight}}),
                                 (DecreaseFuelButton = new Button {Text = Loc.GetString("ame-window-decrease-fuel-button"), StyleClasses = {StyleBase.ButtonOpenLeft}}),
                             }
                         },
-                        new HBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
                             Children =
                             {
-                                 new Label { Text = Loc.GetString("ame-window-core-count-label")},
+                                 new Label { Text = Loc.GetString("ame-window-core-count-label") + " "},
                                 (CoreCount = new Label { Text = "0"}),
                             }
                         }
@@ -130,7 +139,7 @@ namespace Content.Client.AME.UI
                 EjectButton.Disabled = false;
             }
 
-            if(!castState.HasFuelJar)
+            if (!castState.HasFuelJar)
             {
                 EjectButton.Disabled = true;
                 ToggleInjection.Disabled = true;
@@ -143,18 +152,18 @@ namespace Content.Client.AME.UI
                 FuelAmount.Text = $"{castState.FuelAmount}";
             }
 
-            if(!castState.IsMaster)
+            if (!castState.IsMaster)
             {
                 ToggleInjection.Disabled = true;
             }
 
             if (!castState.Injecting)
             {
-                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label");
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label") + " ";
             }
             else
             {
-                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label");
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label") + " ";
             }
 
             CoreCount.Text = $"{castState.CoreCount}";

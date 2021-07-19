@@ -1,14 +1,14 @@
 ﻿<Control xmlns="https://spacestation14.io">
-    <VBoxContainer>
-        <HBoxContainer>
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
             <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"
                    Text="{Loc Player Count}" />
             <Button Name="RefreshButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.3"
                     Text="{Loc Refresh}" />
-        </HBoxContainer>
+        </BoxContainer>
         <Control MinSize="0 5" />
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-            <VBoxContainer Name="PlayerList" />
+            <BoxContainer Orientation="Vertical" Name="PlayerList" />
         </ScrollContainer>
-    </VBoxContainer>
+    </BoxContainer>
 </Control>

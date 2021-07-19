@@ -28,7 +28,7 @@ traitor-death-match-title = Traitor Deathmatch
 traitor-death-match-description = Everyone's a traitor. Everyone wants each other dead.
 traitor-death-match-station-is-too-unsafe-announcement = The station is too unsafe to continue. You have one minute.
 traitor-death-match-end-round-description-first-line = The PDAs recovered afterwards...
-traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {tcBalance} TC
+traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$tcBalance} TC
 
 ## TraitorRole
 

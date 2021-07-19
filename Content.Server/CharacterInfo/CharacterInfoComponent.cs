@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Mind.Components;
 using Content.Server.Roles;
 using Content.Shared.CharacterInfo;

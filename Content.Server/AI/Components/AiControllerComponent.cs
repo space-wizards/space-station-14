@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;

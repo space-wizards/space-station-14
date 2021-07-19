@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Ghost;
+﻿using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
