@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
@@ -27,32 +28,17 @@ namespace Content.Server.Commands.Atmos
 
             var mapMan = IoCManager.Resolve<IMapManager>();
 
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
+            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out _))
             {
                 shell.WriteLine("Invalid grid ID.");
                 return;
             }
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
+            foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
             {
-                shell.WriteLine("Failed to get grid entity.");
-                return;
-            }
-
-            if (!grid.HasComponent<IGridAtmosphereComponent>())
-            {
-                shell.WriteLine("Grid doesn't have an atmosphere.");
-                return;
-            }
-
-            var gam = grid.GetComponent<IGridAtmosphereComponent>();
-
-            foreach (var tile in gam)
-            {
-                tile.Air?.AdjustMoles(gasId, moles);
-                tile.Invalidate();
+                tile.AdjustMoles(gasId, moles);
             }
         }
     }
