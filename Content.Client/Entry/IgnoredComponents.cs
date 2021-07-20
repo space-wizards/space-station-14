@@ -233,7 +233,7 @@ namespace Content.Client.Entry
             "ConveyorAssembly",
             "TwoWayLever",
             "FirelockElectronics",
-            "ChemicalInjectionProjectile",
+            "SolutionInjectOnCollide",
             "Machine",
             "MachinePart",
             "MachineFrame",
