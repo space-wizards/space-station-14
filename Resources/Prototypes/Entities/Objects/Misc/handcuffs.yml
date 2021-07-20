@@ -26,6 +26,7 @@
   parent: Handcuffs
   components:
   - type: Construction
+      graph: makeshifthandcuffs
   - type: Handcuff
     cuffTime: 3.5
     uncuffTime: 3.5
