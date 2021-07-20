@@ -14,7 +14,7 @@ namespace Content.Shared.MachineLinking
     public enum TwoWayLeverSignal : byte
     {
         Middle,
-        Left,
-        Right
+        Right,
+        Left
     }
 }

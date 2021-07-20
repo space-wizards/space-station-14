@@ -28,7 +28,7 @@
   - type: SignalReceiver
     inputs:
       - name: state
-        type: bool
+        type: Content.Shared.MachineLinking.TwoWayLeverSignal
         maxConnections: 1
   - type: ApcPowerReceiver
   - type: Conveyor

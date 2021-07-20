@@ -17,7 +17,5 @@ namespace Content.Server.MachineLinking.Components
 
         [ViewVariables]
         public IReadOnlyList<SignalPort> Inputs => _inputs;
-
-        public List<(SignalTransmitterComponent transmitter, string transmitterPort, string ourPort)> Connections = new();
     }
 }

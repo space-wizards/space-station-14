@@ -23,6 +23,8 @@ namespace Content.Server.MachineLinking.System
         [Dependency] private IComponentManager _componentManager = default!;
         private InteractionSystem _interaction = default!;
 
+        private SignalLinkCollection _linkCollection = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -42,18 +44,12 @@ namespace Content.Server.MachineLinking.System
 
         private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent component, ComponentRemove args)
         {
-            foreach (var (receiver, port, ourPort) in component.Connections)
-            {
-                Disconnect(component, ourPort, receiver, port);
-            }
+            _linkCollection.RemoveLinks(component);
         }
 
         private void OnReceiverRemoved(EntityUid uid, SignalReceiverComponent component, ComponentRemove args)
         {
-            foreach (var (transmitter, port, ourPort) in component.Connections)
-            {
-                Disconnect(transmitter, port, component, ourPort);
-            }
+            _linkCollection.RemoveLinks(component);
         }
 
         private void OnTransmitterInvokePort(EntityUid uid, SignalTransmitterComponent component, InvokePortEvent args)
@@ -74,11 +70,9 @@ namespace Content.Server.MachineLinking.System
 
             port.Signal = args.Value;
 
-            foreach (var (receiver, receiverPort, ourPort) in component.Connections)
+            foreach (var link in _linkCollection.GetLinks(component, port.Name))
             {
-                if (ourPort != port.Name) continue;
-
-                RaiseLocalEvent(receiver.Owner.Uid, new SignalReceivedEvent(receiverPort,args.Value));
+                RaiseLocalEvent(link.ReceiverComponent.Owner.Uid, new SignalReceivedEvent(link.Receiverport.Name, args.Value));
             }
         }
 
@@ -194,21 +188,25 @@ namespace Content.Server.MachineLinking.System
         private void Connect(SignalTransmitterComponent transmitter, string transmitterPort,
             SignalReceiverComponent receiver, string receiverPort)
         {
-            if (!transmitter.Outputs.ContainsPort(transmitterPort) || !receiver.Inputs.ContainsPort(receiverPort))
-                throw new PortNotFoundException();
+            if (transmitter.Outputs.TryGetPort(transmitterPort, out var tport) && tport.MaxConnections != 0 &&
+                tport.MaxConnections >= _linkCollection.LinkCount(transmitter))
+            {
+                return;
+            }
 
-            receiver.Connections.Add((transmitter, transmitterPort, receiverPort));
-            transmitter.Connections.Add((receiver, receiverPort, transmitterPort));
+            if (receiver.Inputs.TryGetPort(receiverPort, out var rport) && rport.MaxConnections != 0 &&
+                rport.MaxConnections >= _linkCollection.LinkCount(receiver))
+            {
+                return;
+            }
+
+            _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
         }
 
         private void Disconnect(SignalTransmitterComponent transmitter, string transmitterPort,
             SignalReceiverComponent receiver, string receiverPort)
         {
-            if (!transmitter.Outputs.ContainsPort(transmitterPort) || !receiver.Inputs.ContainsPort(receiverPort))
-                throw new PortNotFoundException();
-
-            receiver.Connections.Remove((transmitter, transmitterPort, receiverPort));
-            transmitter.Connections.Add((receiver, receiverPort, transmitterPort));
+            _linkCollection.RemoveLink(transmitter, transmitterPort, receiver, receiverPort);
         }
 
         /*todo paul oldcode
