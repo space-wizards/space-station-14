@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Alert;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.ActionBlocker;
@@ -122,7 +123,7 @@ namespace Content.Server.Atmos.Components
                 return;
             }
 
-            tile.HotspotExpose(700, 50, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(tile.GridIndex, tile.GridIndices, 700f, 50f, true);
 
             var physics = Owner.GetComponent<IPhysBody>();
 

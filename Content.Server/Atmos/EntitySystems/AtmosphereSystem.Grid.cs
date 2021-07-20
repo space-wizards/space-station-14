@@ -163,15 +163,15 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
-                foreach (var tileAtmos in gridAtmosphere)
+                foreach (var tile in gridAtmosphere)
                 {
-                    if (tileAtmos?.Air == null)
+                    if (tile?.Air == null)
                         continue;
 
                     if(invalidate)
-                        tileAtmos.Invalidate();
+                        gridAtmosphere.Invalidate(tile.GridIndices);
 
-                    yield return tileAtmos.Air;
+                    yield return tile.Air;
                 }
             }
         }
@@ -560,7 +560,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var tileAtmos = gridAtmosphere.GetTile(tile)!;
 
-                for (var i = 0; i < tileAtmos.AdjacentTiles.Count; i++)
+                for (var i = 0; i < tileAtmos.AdjacentTiles.Length; i++)
                 {
                     var adjacentTile = tileAtmos.AdjacentTiles[i];
                     // TileAtmosphere has nullable disabled, so just in case...
@@ -634,7 +634,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var tileAtmos = gridAtmosphere.GetTile(tile)!;
 
-                for (var i = 0; i < tileAtmos.AdjacentTiles.Count; i++)
+                for (var i = 0; i < tileAtmos.AdjacentTiles.Length; i++)
                 {
                     var adjacentTile = tileAtmos.AdjacentTiles[i];
 
@@ -651,7 +651,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     if (invalidate)
-                        adjacentTile.Invalidate();
+                        gridAtmosphere.Invalidate(adjacentTile.GridIndices);
 
                     yield return adjacentTile.Air;
                 }
@@ -747,7 +747,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
-                gridAtmosphere.GetTile(tile, false)?.HotspotExpose(exposedTemperature, exposedVolume, soh);
+                var tileAtmosphere = gridAtmosphere.GetTile(tile, false);
+
+                if (tileAtmosphere == null)
+                    return;
+
+                HotspotExpose(gridAtmosphere, tileAtmosphere, exposedTemperature, exposedVolume, soh);
                 gridAtmosphere.Invalidate(tile);
                 return;
             }
