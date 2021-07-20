@@ -153,6 +153,8 @@ namespace Content.Client.EscapeMenu.UI
                 AddButton(ContentKeyFunctions.FocusRadio);
                 AddButton(ContentKeyFunctions.FocusOOC);
                 AddButton(ContentKeyFunctions.FocusAdminChat);
+                AddButton(ContentKeyFunctions.FocusDeadChat);
+                AddButton(ContentKeyFunctions.FocusConsoleChat);
                 AddButton(ContentKeyFunctions.CycleChatChannelForward);
                 AddButton(ContentKeyFunctions.CycleChatChannelBackward);
                 AddButton(ContentKeyFunctions.OpenCharacterMenu);
