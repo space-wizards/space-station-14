@@ -25,8 +25,8 @@
   id: Cablecuffs
   parent: Handcuffs
   components:
-  - type: Construction
-      graph: makeshifthandcuffs
+    - type: Construction
+      graph: lightTorch
   - type: Handcuff
     cuffTime: 3.5
     uncuffTime: 3.5
