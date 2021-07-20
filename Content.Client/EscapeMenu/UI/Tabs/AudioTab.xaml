@@ -3,13 +3,12 @@
          xmlns:s="clr-namespace:Content.Client.Stylesheets"
          xmlns:hudUi="clr-namespace:Content.Client.HUD.UI">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Vertical" Margin="6 6 6 8" VerticalExpand="True">
-            <Label Text="{Loc 'ui-options-volume-sliders'}"
+        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-volume-label'}"
                    FontColorOverride="{x:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
-            <BoxContainer Orientation="Vertical" Margin="2 2 2 0">
-                <BoxContainer Orientation="Horizontal">
-                    <Control MinSize="4 0" />
+            <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
                     <Label Text="{Loc 'ui-options-master-volume'}" />
                     <Control MinSize="8 0" />
                     <Slider Name="MasterVolumeSlider"
@@ -22,6 +21,7 @@
                     <Label Name="MasterVolumeLabel" MinSize="48 0" Align="Right" />
                     <Control MinSize="4 0"/>
                 </BoxContainer>
+                <Control MinSize="0 8" />
                 <CheckBox Name="AmbienceCheckBox" Text="{Loc 'ui-options-ambient-hum'}" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
             </BoxContainer>

@@ -13,7 +13,7 @@ ui-options-reset-all = Reset All
 ui-options-master-volume = Master Volume:
 ui-options-ambient-hum = Ambient Hum
 ui-options-lobby-music = Lobby Music
-ui-options-volume-sliders = Volume Sliders
+ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
