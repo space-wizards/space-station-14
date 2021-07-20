@@ -1,6 +1,6 @@
 - type: construction
   name: makeshift handcuffs
-  id: makeshift Handcuffs
+  id: makeshiftHandcuffs
   graph: makeshiftHandcuffs
   startNode: start
   targetNode: cuffscable
