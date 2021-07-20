@@ -1,4 +1,3 @@
-#nullable enable
 #nullable disable warnings
 using System;
 using Content.Server.Atmos.EntitySystems;
@@ -279,8 +278,9 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    tileAtmos?.AssumeAir(Air);
+                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    if(environment != null)
+                        atmosphereSystem.Merge(environment, Air);
 
                     SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
                         AudioHelpers.WithVariation(0.125f));
@@ -297,12 +297,12 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    if (tileAtmos == null)
+                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    if (environment == null)
                         return;
 
                     var leakedGas = Air.RemoveRatio(0.25f);
-                    tileAtmos.AssumeAir(leakedGas);
+                    atmosphereSystem.Merge(environment, leakedGas);
                 }
                 else
                 {

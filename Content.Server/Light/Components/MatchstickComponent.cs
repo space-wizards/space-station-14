@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;

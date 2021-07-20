@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
 {
@@ -28,8 +29,12 @@ namespace Content.Client.Actions.UI
 
             SetOnlyStyleClass(StyleNano.StyleClassTooltipPanel);
 
-            VBoxContainer vbox;
-            AddChild(vbox = new VBoxContainer {RectClipContent = true});
+            BoxContainer vbox;
+            AddChild(vbox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                RectClipContent = true
+            });
             var nameLabel = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,

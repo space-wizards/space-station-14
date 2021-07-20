@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Items;
 using Content.Server.MachineLinking.Components;
 using Content.Server.Power.Components;

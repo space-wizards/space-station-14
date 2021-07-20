@@ -1,8 +1,8 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Interfaces;
 using Content.Server.Items;
@@ -136,10 +136,11 @@ namespace Content.Server.Disposal.Unit.Components
                 }
             }
 
-            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
-                tileAtmos.Air != null)
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true) is {} environment)
             {
-                tileAtmos.AssumeAir(Air);
+                atmosphereSystem.Merge(environment, Air);
                 Air.Clear();
             }
 

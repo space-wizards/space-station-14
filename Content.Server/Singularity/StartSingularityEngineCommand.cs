@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Administration;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;

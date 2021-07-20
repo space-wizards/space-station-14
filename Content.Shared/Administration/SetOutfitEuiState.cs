@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 using System;

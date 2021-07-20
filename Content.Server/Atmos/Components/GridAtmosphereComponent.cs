@@ -1,4 +1,3 @@
-#nullable enable
 // ReSharper disable once RedundantUsingDirective
 using System;
 using System.Collections;
@@ -37,7 +36,6 @@ namespace Content.Server.Atmos.Components
         [Dependency] private IServerEntityManager _serverEntityManager = default!;
         [Dependency] private IGameTiming _gameTiming = default!;
 
-        public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
         internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
@@ -183,7 +181,6 @@ namespace Content.Server.Atmos.Components
                 }
             }
 
-            GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
             GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 

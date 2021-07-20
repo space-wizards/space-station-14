@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.DragDrop;
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.GameObjects;

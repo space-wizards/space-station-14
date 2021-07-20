@@ -12,10 +12,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using Content.Shared.Emoting;
 using Content.Shared.Inventory;
 using Content.Shared.Notification.Managers;
-using Content.Shared.Speech;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -52,7 +50,7 @@ namespace Content.Server.Chat.Managers
         /// <summary>
         /// The maximum length a player-sent message can be sent
         /// </summary>
-        public const int MaxMessageLength = 1000;
+        public int MaxMessageLength => _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 
         private const int VoiceRange = 7; // how far voice goes in world units
 
@@ -64,12 +62,6 @@ namespace Content.Server.Chat.Managers
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>();
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthRequest);
-
-            // Tell all the connected players the chat's character limit
-            var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            msg.MaxMessageLength = MaxMessageLength;
-            _netManager.ServerSendToAll(msg);
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
@@ -333,7 +325,7 @@ namespace Content.Server.Chat.Managers
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
-            msg.Channel = ChatChannel.AdminChat;
+            msg.Channel = ChatChannel.Admin;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
@@ -349,7 +341,7 @@ namespace Content.Server.Chat.Managers
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
-            msg.Channel = ChatChannel.AdminChat;
+            msg.Channel = ChatChannel.Admin;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
@@ -366,13 +358,6 @@ namespace Content.Server.Chat.Managers
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             _netManager.ServerSendToAll(msg);
-        }
-
-        private void OnMaxLengthRequest(ChatMaxMsgLengthMessage msg)
-        {
-            var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            response.MaxMessageLength = MaxMessageLength;
-            _netManager.ServerSendMessage(response, msg.MsgChannel);
         }
 
         public void RegisterChatTransform(TransformChat handler)

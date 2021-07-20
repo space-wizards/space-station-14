@@ -92,5 +92,5 @@
   - type: SolutionContainer
     maxVol: 15
     caps: Refillable, Drainable
-  - type: ChemicalInjectionProjectile
+  - type: SolutionInjectOnCollide
     transferAmount: 15

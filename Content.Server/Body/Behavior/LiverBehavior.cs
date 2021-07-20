@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Networks;

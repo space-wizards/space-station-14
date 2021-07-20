@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-#nullable enable
 
 namespace Content.Client.Construction.UI
 {

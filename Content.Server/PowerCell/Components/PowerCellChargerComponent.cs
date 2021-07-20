@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;

@@ -1,26 +1,16 @@
 ﻿using System;
-using Content.Server.Stunnable.Components;
-using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Damage.Components
 {
+    /// <summary>
+    /// Should the entity take damage / be stunned if colliding at a speed above MinimumSpeed?
+    /// </summary>
     [RegisterComponent]
-    public class DamageOnHighSpeedImpactComponent : Component, IStartCollide
+    internal sealed class DamageOnHighSpeedImpactComponent : Component
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         public override string Name => "DamageOnHighSpeedImpact";
 
         [DataField("damage")]
@@ -41,30 +31,7 @@ namespace Content.Server.Damage.Components
         public float StunSeconds { get; set; } = 1f;
         [DataField("damageCooldown")]
         public float DamageCooldown { get; set; } = 2f;
-        private TimeSpan _lastHit = TimeSpan.Zero;
 
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
-
-            var speed = ourFixture.Body.LinearVelocity.Length;
-
-            if (speed < MinimumSpeed) return;
-
-            if (!string.IsNullOrEmpty(SoundHit))
-                SoundSystem.Play(Filter.Pvs(otherFixture.Body.Owner), SoundHit, otherFixture.Body.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
-
-            if ((_gameTiming.CurTime - _lastHit).TotalSeconds < DamageCooldown)
-                return;
-
-            _lastHit = _gameTiming.CurTime;
-
-            var damage = (int) (BaseDamage * (speed / MinimumSpeed) * Factor);
-
-            if (Owner.TryGetComponent(out StunnableComponent? stun) && _robustRandom.Prob(StunChance))
-                stun.Stun(StunSeconds);
-
-            damageable.ChangeDamage(Damage, damage, false, otherFixture.Body.Owner);
-        }
+        internal TimeSpan LastHit = TimeSpan.Zero;
     }
 }

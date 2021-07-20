@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Cuffs.Components;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
