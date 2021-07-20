@@ -76,6 +76,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     if(tileCount < Atmospherics.MonstermosHardTileLimit)
                         tiles[tileCount++] = adj;
+
                     if (adj.Air.Immutable)
                     {
                         // Looks like someone opened an airlock to space!
@@ -350,7 +351,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void ExplosivelyDepressurize(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
-            if (tile.Air == null) return;
+            // Check if explosive depressurization is enabled and if the tile is valid.
+            if (!MonstermosDepressurization || tile.Air == null)
+                return;
 
             const int limit = Atmospherics.MonstermosHardTileLimit;
 

@@ -256,6 +256,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether monstermos explosive depressurization is enabled.
+        ///     Needs <see cref="MonstermosEqualization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosDepressurization =
+            CVarDef.Create<bool>("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether atmos superconduction is enabled.
         /// </summary>
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
