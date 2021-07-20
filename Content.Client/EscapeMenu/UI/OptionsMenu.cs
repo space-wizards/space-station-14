@@ -22,7 +22,7 @@ namespace Content.Client.EscapeMenu.UI
 
             Title = Loc.GetString("ui-options-title");
 
-            GraphicsControl graphicsControl;
+            GraphicsTab graphicsTab;
             KeyRebindControl rebindControl;
             AudioTab audioTab;
 
@@ -30,13 +30,13 @@ namespace Content.Client.EscapeMenu.UI
             {
                 Children =
                 {
-                    (graphicsControl = new GraphicsControl(_configManager, _prototypeManager)),
+                    (graphicsTab = new GraphicsTab()),
                     (rebindControl = new KeyRebindControl()),
                     (audioTab = new AudioTab())
                 }
             };
 
-            TabContainer.SetTabTitle(graphicsControl, Loc.GetString("ui-options-tab-graphics"));
+            TabContainer.SetTabTitle(graphicsTab, Loc.GetString("ui-options-tab-graphics"));
             TabContainer.SetTabTitle(rebindControl, Loc.GetString("ui-options-tab-controls"));
             TabContainer.SetTabTitle(audioTab, Loc.GetString("ui-options-tab-audio"));
 

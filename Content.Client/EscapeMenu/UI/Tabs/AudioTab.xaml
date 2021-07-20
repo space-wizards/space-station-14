@@ -3,7 +3,7 @@
          xmlns:s="clr-namespace:Content.Client.Stylesheets"
          xmlns:hudUi="clr-namespace:Content.Client.HUD.UI">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" Margin="6 6 6 8" VerticalExpand="True">
             <Label Text="{Loc 'ui-options-volume-sliders'}"
                    FontColorOverride="{x:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
