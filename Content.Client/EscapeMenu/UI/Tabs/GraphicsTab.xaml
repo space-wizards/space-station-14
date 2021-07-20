@@ -30,6 +30,9 @@
                             MinWidth="200" />
                 </BoxContainer>
             </BoxContainer>
+            <CheckBox Name="IntegerScalingCheckBox"
+                      Text="{Loc 'ui-options-vp-integer-scaling'}"
+                      ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />
             <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
         </BoxContainer>
         <hudUi:StripeBack HasBottomEdge="False" HasMargins="False">
