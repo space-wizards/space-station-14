@@ -1,13 +1,13 @@
 ﻿using System;
 using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Damage.Components
 {
+    /// <summary>
+    /// Should the entity take damage / be stunned if colliding at a speed above MinimumSpeed?
+    /// </summary>
     [RegisterComponent]
     internal sealed class DamageOnHighSpeedImpactComponent : Component
     {
