@@ -1,0 +1,71 @@
+- type: entity
+  id: ComputerFrame
+  parent: BaseStructure
+  name: computer frame
+  description: A computer under construction.
+  components:
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+      mass: 25
+      mask:
+        - MobImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
+  - type: InteractionOutline
+  - type: Rotatable
+  - type: Anchorable
+  - type: Construction
+    graph: computer
+    node: frameUnsecured
+  - type: Sprite
+    sprite: Structures/Machines/parts.rsi
+    state: 0
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: monitorBroken
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  parent: ComputerFrame
+  id: ComputerBroken
+  name: broken computer
+  description: This computer has seen better days.
+  components:
+  - type: Construction
+    graph: computer
+    node: monitorBroken
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    state: broken
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

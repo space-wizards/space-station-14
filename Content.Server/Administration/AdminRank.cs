@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Administration;
 
-#nullable enable
 
 namespace Content.Server.Administration
 {

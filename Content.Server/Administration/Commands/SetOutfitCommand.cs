@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
 using Content.Server.Interfaces;

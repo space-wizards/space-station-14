@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
@@ -19,7 +18,7 @@ namespace Content.Client.Atmos.Visualizers
     public class PipeConnectorVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [DataField("rsi")]
-        private string _rsi = "Constructible/Atmos/pipe.rsi";
+        private string _rsi = "Structures/Piping/Atmospherics/pipe.rsi";
 
         [DataField("baseState")]
         private string _baseState = "pipeConnector";

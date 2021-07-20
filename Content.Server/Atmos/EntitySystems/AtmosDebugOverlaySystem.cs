@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -110,7 +109,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay, tile.ExcitedGroup != null, tile.BlockedAirflow);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
             }
         }
 

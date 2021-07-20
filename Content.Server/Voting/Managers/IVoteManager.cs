@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Server.Player;
 
-#nullable enable
 
 namespace Content.Server.Voting.Managers
 {

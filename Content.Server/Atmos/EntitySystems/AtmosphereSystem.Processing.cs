@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                tile.EqualizePressureInZone(this, atmosphere.UpdateCounter);
+                EqualizePressureInZone(atmosphere, tile, atmosphere.UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                tile.ProcessCell(this, atmosphere.UpdateCounter, SpaceWind);
+                ProcessCell(atmosphere, tile, atmosphere.UpdateCounter, SpaceWind);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -106,7 +106,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                tile.HighPressureMovements();
+                HighPressureMovements(atmosphere, tile);
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);
@@ -131,7 +131,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var hotspot))
             {
-                hotspot.ProcessHotspot();
+                ProcessHotspot(atmosphere, hotspot);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -153,7 +153,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var superconductivity))
             {
-                superconductivity.Superconduct(this);
+                Superconduct(atmosphere, superconductivity);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;

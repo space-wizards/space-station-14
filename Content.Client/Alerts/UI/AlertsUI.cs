@@ -48,7 +48,7 @@ namespace Content.Client.Alerts.UI
             base.EnteredTree();
             var _chatManager = IoCManager.Resolve<IChatManager>();
             _chatManager.OnChatBoxResized += OnChatResized;
-            OnChatResized(new ChatResizedEventArgs(ChatBox.InitialChatBottom));
+            OnChatResized(new ChatResizedEventArgs(HudChatBox.InitialChatBottom));
         }
 
         protected override void ExitedTree()

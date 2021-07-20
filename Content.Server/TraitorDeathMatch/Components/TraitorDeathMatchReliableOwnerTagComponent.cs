@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 

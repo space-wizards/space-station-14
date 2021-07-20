@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.Interaction;
 using Content.Shared.Trigger;
 using Robust.Server.GameObjects;

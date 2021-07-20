@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared;
+﻿using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;

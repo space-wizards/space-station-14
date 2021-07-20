@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Power.Components;
 using Content.Server.Solar.EntitySystems;

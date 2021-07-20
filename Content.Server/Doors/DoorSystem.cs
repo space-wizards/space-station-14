@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Doors;
 
 namespace Content.Server.Doors

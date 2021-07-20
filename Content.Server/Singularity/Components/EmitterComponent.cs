@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +23,6 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
-#nullable enable
 
 namespace Content.Server.Singularity.Components
 {

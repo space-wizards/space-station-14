@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Server.Act;
 using Content.Server.Administration;

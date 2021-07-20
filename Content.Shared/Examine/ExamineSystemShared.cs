@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;

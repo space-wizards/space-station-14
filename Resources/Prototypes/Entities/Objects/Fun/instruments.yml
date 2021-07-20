@@ -224,5 +224,5 @@
   - type: Instrument
     program: 13
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    sprite: Structures/Furniture/instruments.rsi
     state: xylophone

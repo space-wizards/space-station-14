@@ -4,7 +4,6 @@ using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.EUI
 {

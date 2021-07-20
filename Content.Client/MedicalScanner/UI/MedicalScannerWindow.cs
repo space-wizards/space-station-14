@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.MedicalScanner.UI
 {
@@ -17,8 +18,9 @@ namespace Content.Client.MedicalScanner.UI
         {
             SetSize = (250, 100);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     (ScanButton = new Button

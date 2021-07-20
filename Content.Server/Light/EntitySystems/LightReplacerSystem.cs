@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Light.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;

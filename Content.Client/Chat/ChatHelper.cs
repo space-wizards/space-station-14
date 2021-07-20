@@ -12,7 +12,7 @@ namespace Content.Client.Chat
                 ChatChannel.Radio => Color.Green,
                 ChatChannel.OOC => Color.LightSkyBlue,
                 ChatChannel.Dead => Color.MediumPurple,
-                ChatChannel.AdminChat => Color.Red,
+                ChatChannel.Admin => Color.Red,
                 _ => Color.DarkGray
             };
     }

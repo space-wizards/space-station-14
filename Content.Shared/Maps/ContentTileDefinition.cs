@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -16,7 +15,7 @@ namespace Content.Shared.Maps
         [ViewVariables]
         string IPrototype.ID => Name;
 
-        public string Path => "/Textures/Constructible/Tiles/";
+        public string Path => "/Textures/Tiles/";
 
         [DataField("name", required: true)] public string Name { get; } = string.Empty;
 

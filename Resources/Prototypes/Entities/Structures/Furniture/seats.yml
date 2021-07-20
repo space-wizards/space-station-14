@@ -1,0 +1,201 @@
+- type: entity
+  name: chair
+  id: SeatBase
+  abstract: true
+  description: You sit in this. Either by will or force.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    sprite: Structures/Furniture/furniture.rsi
+  - type: Strap
+    position: Stand
+  - type: Pullable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  name: chair
+  id: Chair
+  parent: SeatBase
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: chair
+    color: "#8e9799"
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.45, 0.05, 0.45"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chair
+
+- type: entity
+  name: stool
+  id: Stool
+  parent: SeatBase
+  description: Apply butt.
+  components:
+  - type: Anchorable
+  - type: Sprite
+    state: stool_base
+    color: "#8e9799"
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.25, 0.05, 0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: stool
+
+- type: entity
+  name: bar stool
+  id: StoolBar
+  parent: SeatBase
+  components:
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Anchorable
+  - type: Sprite
+    state: bar_stool
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.2, 0.2, 0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: stoolBar
+
+- type: entity
+  name: white office chair
+  id: ChairOfficeLight
+  parent: SeatBase
+  components:
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    state: officechair_white
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.49, -0.25, 0.37, 0.25"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairOffice
+
+- type: entity
+  name: dark office chair
+  id: ChairOfficeDark
+  parent: ChairOfficeLight
+  components:
+  - type: Sprite
+    state: officechair_dark
+  - type: Construction
+    graph: seat
+    node: chairOfficeDark
+
+- type: entity
+  name: comfy chair
+  id: ComfyChair
+  parent: SeatBase
+  description: It looks comfy.
+  components:
+  - type: Anchorable
+  - type: Sprite
+    state: comfychair_preview
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.3, 0.35, 0.3"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairComfy
+
+- type: entity
+  name: wooden chair
+  id: ChairWood
+  parent: SeatBase
+  components:
+  - type: Sprite
+    state: wooden_chair
+    color: "white"
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.37, -0.25, 0.49, 0.24"
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Construction
+    graph: seat
+    node: chairWood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1

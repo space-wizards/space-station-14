@@ -1477,3 +1477,29 @@ Entries:
   - {message: Added the dual-port air vent., type: Add}
   id: 261
   time: '2021-07-15T13:24:45.0000000+00:00'
+- author: Fogapod
+  changes:
+  - {message: Added missing space in Spanish accent., type: Fix}
+  id: 262
+  time: '2021-07-17T21:04:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes handheld instruments not working., type: Fix}
+  id: 263
+  time: '2021-07-18T13:00:50.345009+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix physics rotation issues, type: Fix}
+  id: 264
+  time: '2021-07-19T08:49:18.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
+  id: 265
+  time: '2021-07-19T20:55:37.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Chatbox channel management has been tweaked to be much more intuitive
+      and nice to use., type: Tweak}
+  id: 266
+  time: '2021-07-20T08:29:09.0000000+00:00'

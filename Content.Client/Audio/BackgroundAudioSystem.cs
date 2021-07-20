@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
