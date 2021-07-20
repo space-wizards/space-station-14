@@ -386,7 +386,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (otherTile2.Air == null) continue;
                         if (otherTile2.MonstermosInfo.LastQueueCycle == queueCycle) continue;
 
-                        ConsiderFirelocks(gridAtmosphere, otherTile, otherTile2);
+                        ConsiderFirelocks(otherTile, otherTile2);
 
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
@@ -462,27 +462,34 @@ namespace Content.Server.Atmos.EntitySystems
             ArrayPool<TileAtmosphere>.Shared.Return(progressionOrder);
         }
 
-        private void ConsiderFirelocks(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other)
+        private void ConsiderFirelocks(TileAtmosphere tile, TileAtmosphere other)
         {
+            if (!_mapManager.TryGetGrid(tile.GridIndex, out var mapGrid))
+                return;
+
             var reconsiderAdjacent = false;
 
-            foreach (var entity in tile.GridIndices.GetEntitiesInTileFast(tile.GridIndex, gridAtmosphere.GridTileLookupSystem))
+            foreach (var entity in mapGrid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                if (!ComponentManager.TryGetComponent(entity, out FirelockComponent firelock))
+                    continue;
+
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
             }
 
-            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex, gridAtmosphere.GridTileLookupSystem))
+            foreach (var entity in mapGrid.GetAnchoredEntities(other.GridIndices))
             {
-                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                if (!ComponentManager.TryGetComponent(entity, out FirelockComponent firelock))
+                    continue;
+
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
             }
 
-            if (reconsiderAdjacent)
-            {
-                tile.UpdateAdjacent();
-                other.UpdateAdjacent();
-            }
+            if (!reconsiderAdjacent)
+                return;
+
+            tile.UpdateAdjacent();
+            other.UpdateAdjacent();
         }
 
         public void FinalizeEq(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
