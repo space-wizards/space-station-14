@@ -25,8 +25,9 @@ namespace Content.Server.Atmos.EntitySystems
                 if(_spaceWindSoundCooldown == 0)
                 {
                     var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
-                    SoundSystem.Play(Filter.Pvs(coordinates), "/Audio/Effects/space_wind.ogg",
-                        coordinates, AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                    if(!string.IsNullOrEmpty(SpaceWindSound))
+                        SoundSystem.Play(Filter.Pvs(coordinates), SpaceWindSound, coordinates,
+                            AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 
