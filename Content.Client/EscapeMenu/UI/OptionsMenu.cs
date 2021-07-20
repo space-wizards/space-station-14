@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.EscapeMenu.UI.Tabs;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
@@ -23,7 +24,7 @@ namespace Content.Client.EscapeMenu.UI
 
             GraphicsControl graphicsControl;
             KeyRebindControl rebindControl;
-            AudioControl audioControl;
+            AudioTab audioTab;
 
             var tabs = new TabContainer
             {
@@ -31,13 +32,13 @@ namespace Content.Client.EscapeMenu.UI
                 {
                     (graphicsControl = new GraphicsControl(_configManager, _prototypeManager)),
                     (rebindControl = new KeyRebindControl()),
-                    (audioControl = new AudioControl(_configManager, _clydeAudio)),
+                    (audioTab = new AudioTab())
                 }
             };
 
             TabContainer.SetTabTitle(graphicsControl, Loc.GetString("ui-options-tab-graphics"));
             TabContainer.SetTabTitle(rebindControl, Loc.GetString("ui-options-tab-controls"));
-            TabContainer.SetTabTitle(audioControl, Loc.GetString("ui-options-tab-audio"));
+            TabContainer.SetTabTitle(audioTab, Loc.GetString("ui-options-tab-audio"));
 
             Contents.AddChild(tabs);
         }
