@@ -12,10 +12,10 @@ namespace Content.Server.MachineLinking.Components
         public override string Name => "SignalTransmitter";
 
         [DataField("outputs")]
-        private List<PortPrototype> _outputs = new();
+        private List<SignalPort> _outputs = new();
 
         [ViewVariables]
-        public IReadOnlyList<PortPrototype> Outputs => _outputs;
+        public IReadOnlyList<SignalPort> Outputs => _outputs;
 
         public List<(SignalReceiverComponent transmitter, string receiverPort, string ourPort)> Connections = new();
     }

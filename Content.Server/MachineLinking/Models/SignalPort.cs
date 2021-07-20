@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.MachineLinking.Components
 {
     [DataDefinition]
-    public class PortPrototype
+    public class SignalPort
     {
         [DataField("name", required: true)] public string Name { get; } = default!;
         [DataField("type")] public Type? Type { get; }
@@ -20,7 +20,7 @@ namespace Content.Server.MachineLinking.Components
     }
 
     public static class PortPrototypeExtensions{
-        public static bool ContainsPort(this IReadOnlyList<PortPrototype> ports, string port)
+        public static bool ContainsPort(this IReadOnlyList<SignalPort> ports, string port)
         {
             foreach (var portPrototype in ports)
             {
@@ -33,7 +33,7 @@ namespace Content.Server.MachineLinking.Components
             return false;
         }
 
-        public static IEnumerable<string> GetPortStrings(this IReadOnlyList<PortPrototype> ports)
+        public static IEnumerable<string> GetPortStrings(this IReadOnlyList<SignalPort> ports)
         {
             foreach (var portPrototype in ports)
             {
@@ -41,7 +41,7 @@ namespace Content.Server.MachineLinking.Components
             }
         }
 
-        public static IEnumerable<KeyValuePair<string, bool>> GetValidatedPorts(this IReadOnlyList<PortPrototype> ports, Type? validType)
+        public static IEnumerable<KeyValuePair<string, bool>> GetValidatedPorts(this IReadOnlyList<SignalPort> ports, Type? validType)
         {
             foreach (var portPrototype in ports)
             {
@@ -49,7 +49,7 @@ namespace Content.Server.MachineLinking.Components
             }
         }
 
-        public static bool TryGetPort(this IReadOnlyList<PortPrototype> ports, string name, [NotNullWhen(true)] out PortPrototype? port)
+        public static bool TryGetPort(this IReadOnlyList<SignalPort> ports, string name, [NotNullWhen(true)] out SignalPort? port)
         {
             foreach (var portPrototype in ports)
             {
