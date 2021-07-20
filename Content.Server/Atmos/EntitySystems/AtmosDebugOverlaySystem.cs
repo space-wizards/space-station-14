@@ -109,7 +109,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay, tile.ExcitedGroup != null, tile.BlockedAirflow);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
             }
         }
 

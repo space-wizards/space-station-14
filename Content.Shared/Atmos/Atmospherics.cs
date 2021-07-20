@@ -141,14 +141,14 @@ namespace Content.Shared.Atmos
         #endregion
 
         /// <summary>
-        ///     Hard limit for tile equalization.
+        ///     Hard limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosHardTileLimit = 2000;
+        public const int MonstermosHardTileLimit = 2000;
 
         /// <summary>
         ///     Limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosTileLimit = 200;
+        public const int MonstermosTileLimit = 200;
 
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!

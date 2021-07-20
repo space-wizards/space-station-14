@@ -244,10 +244,23 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     The sound that plays when space wind occurs.
+        /// </summary>
+        public static readonly CVarDef<string> SpaceWindSound =
+            CVarDef.Create("atmos.space_wind_sound", "/Audio/Effects/space_wind.ogg", CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether monstermos tile equalization is enabled.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
             CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether monstermos explosive depressurization is enabled.
+        ///     Needs <see cref="MonstermosEqualization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosDepressurization =
+            CVarDef.Create<bool>("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether atmos superconduction is enabled.

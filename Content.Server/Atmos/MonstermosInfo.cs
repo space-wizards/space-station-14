@@ -4,7 +4,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
-    public struct TileAtmosInfo
+    public struct MonstermosInfo
     {
         [ViewVariables]
         public int LastCycle;
@@ -29,6 +29,15 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public float TransferDirectionSouth;
+
+        [ViewVariables]
+        public float CurrentTransferAmount;
+
+        [ViewVariables]
+        public AtmosDirection CurrentTransferDirection;
+
+        [ViewVariables]
+        public bool FastDone;
 
         public float this[AtmosDirection direction]
         {
@@ -69,13 +78,5 @@ namespace Content.Server.Atmos
             get => this[(AtmosDirection) (1 << index)];
             set => this[(AtmosDirection) (1 << index)] = value;
         }
-
-        [ViewVariables]
-        public float CurrentTransferAmount;
-
-        public AtmosDirection CurrentTransferDirection;
-
-        [ViewVariables]
-        public bool FastDone;
     }
 }
