@@ -1497,3 +1497,9 @@ Entries:
   - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
   id: 265
   time: '2021-07-19T20:55:37.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Chatbox channel management has been tweaked to be much more intuitive
+      and nice to use., type: Tweak}
+  id: 266
+  time: '2021-07-20T08:29:09.0000000+00:00'
