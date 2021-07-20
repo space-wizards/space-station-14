@@ -3,7 +3,7 @@ using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.MachineLinking
+namespace Content.Server.MachineLinking.System
 {
     public class SignalButtonSystem : EntitySystem
     {

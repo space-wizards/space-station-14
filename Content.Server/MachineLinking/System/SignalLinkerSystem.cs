@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.Exceptions;
+using Content.Server.MachineLinking.Models;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
@@ -15,7 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
-namespace Content.Server.MachineLinking
+namespace Content.Server.MachineLinking.System
 {
     public class SignalLinkerSystem : EntitySystem
     {

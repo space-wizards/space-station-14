@@ -1,6 +1,6 @@
 using System;
 
-namespace Content.Server.MachineLinking.Events
+namespace Content.Server.MachineLinking.Exceptions
 {
     public class NoSignalValueProvidedException : Exception
     {

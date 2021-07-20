@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.MachineLinking.Models;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;

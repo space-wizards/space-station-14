@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.Exceptions;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.MachineLinking.Components
+namespace Content.Server.MachineLinking.Models
 {
     [DataDefinition]
     public class SignalPort
@@ -62,6 +63,19 @@ namespace Content.Server.MachineLinking.Components
 
             port = null;
             return false;
+        }
+
+        public static SignalPort GetPort(this IReadOnlyList<SignalPort> ports, string name)
+        {
+            foreach (var portPrototype in ports)
+            {
+                if (portPrototype.Name == name)
+                {
+                    return portPrototype;
+                }
+            }
+
+            throw new PortNotFoundException();
         }
     }
 }
