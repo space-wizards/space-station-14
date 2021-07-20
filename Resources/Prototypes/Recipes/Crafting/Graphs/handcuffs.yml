@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: MakeshiftHandcuffs
+  id: makeshifthandcuffs
   start: start
   graph:
     - node: start
