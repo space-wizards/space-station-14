@@ -36,7 +36,7 @@ namespace Content.Shared.Slippery
         {
             if (!component.Slippery
                 || component.Owner.IsInContainer()
-                ||  component._slipped.Contains(otherBody.Owner.Uid)
+                ||  component.Slipped.Contains(otherBody.Owner.Uid)
                 ||  !otherBody.Owner.TryGetComponent(out SharedStunnableComponent? stun))
             {
                 return false;
@@ -62,7 +62,7 @@ namespace Content.Shared.Slippery
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
             stun.Paralyze(5);
-            component._slipped.Add(otherBody.Owner.Uid);
+            component.Slipped.Add(otherBody.Owner.Uid);
             component.Dirty();
 
             PlaySound(component);
@@ -90,7 +90,7 @@ namespace Content.Shared.Slippery
                 if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var entity))
                 {
                     component.Colliding.Remove(uid);
-                    component._slipped.Remove(uid);
+                    component.Slipped.Remove(uid);
                     component.Dirty();
                     continue;
                 }
@@ -99,12 +99,12 @@ namespace Content.Shared.Slippery
                     !body.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     component.Colliding.Remove(uid);
-                    component._slipped.Remove(uid);
+                    component.Slipped.Remove(uid);
                     component.Dirty();
                     continue;
                 }
 
-                if (!component._slipped.Contains(uid))
+                if (!component.Slipped.Contains(uid))
                     TrySlip(component, body, otherPhysics);
             }
         }

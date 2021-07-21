@@ -32,7 +32,7 @@ namespace Content.Shared.Slippery
         /// <summary>
         ///     The list of entities that have been slipped by this component, which shouldn't be slipped again.
         /// </summary>
-        public readonly HashSet<EntityUid> _slipped = new();
+        public readonly HashSet<EntityUid> Slipped = new();
 
         /// <summary>
         ///     Path to the sound to be played when a mob slips.
@@ -139,7 +139,7 @@ namespace Content.Shared.Slippery
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound, _slipped.ToArray());
+            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound, Slipped.ToArray());
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -152,11 +152,11 @@ namespace Content.Shared.Slippery
             _requiredSlipSpeed = state.RequiredSlipSpeed;
             _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
             _slipSound = state.SlipSound;
-            _slipped.Clear();
+            Slipped.Clear();
 
             foreach (var slipped in state.Slipped)
             {
-                _slipped.Add(slipped);
+                Slipped.Add(slipped);
             }
         }
     }
