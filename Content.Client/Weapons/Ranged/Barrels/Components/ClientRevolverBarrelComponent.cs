@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
@@ -62,7 +63,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         private sealed class StatusControl : Control
         {
             private readonly ClientRevolverBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsList;
+            private readonly BoxContainer _bulletsList;
 
             public StatusControl(ClientRevolverBarrelComponent parent)
             {
@@ -70,8 +71,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 _parent = parent;
                 HorizontalExpand = true;
                 VerticalAlignment = VAlignment.Center;
-                AddChild((_bulletsList = new HBoxContainer
+                AddChild((_bulletsList = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     VerticalAlignment = VAlignment.Center,
                     SeparationOverride = 0

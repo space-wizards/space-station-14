@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
@@ -247,8 +248,7 @@ namespace Content.Server.Botany.Components
                     _updateSpriteAfterUpdate = true;
             }
 
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-            var environment = tileAtmos?.Air ?? GasMixture.SpaceGas;
+            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates, true)?? GasMixture.SpaceGas;
 
             if (Seed.ConsumeGasses.Count > 0)
             {

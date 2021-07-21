@@ -165,7 +165,7 @@ namespace Content.Server.Hands
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
                 !equipmentItem.Owner.TryGetComponent(out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("equipment", SlotNames[equipmentSlot].ToLower())));
+                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;
             }
 
@@ -177,7 +177,7 @@ namespace Content.Server.Hands
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("equipment", SlotNames[equipmentSlot].ToLower())));
+                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 }
                 else
                 {

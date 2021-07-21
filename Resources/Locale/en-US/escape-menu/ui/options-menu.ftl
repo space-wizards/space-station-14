@@ -13,7 +13,7 @@ ui-options-reset-all = Reset All
 ui-options-master-volume = Master Volume:
 ui-options-ambient-hum = Ambient Hum
 ui-options-lobby-music = Lobby Music
-ui-options-volume-sliders = Volume Sliders
+ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
@@ -85,6 +85,8 @@ ui-options-function-focus-local-chat-window = Focus chat (IC)
 ui-options-function-focus-radio-window = Focus chat (Radio)
 ui-options-function-focus-ooc-window = Focus chat (OOC)
 ui-options-function-focus-admin-chat-window = Focus chat (Admin)
+ui-options-function-focus-dead-chat-window = Focus chat (Dead)
+ui-options-function-focus-console-chat-window = Focus chat (Console)
 ui-options-function-cycle-chat-channel-forward = Cycle channel (Forward)
 ui-options-function-cycle-chat-channel-backward = Cycle channel (Backward)
 ui-options-function-open-character-menu = Open character menu

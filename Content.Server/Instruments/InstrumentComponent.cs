@@ -307,7 +307,9 @@ namespace Content.Server.Instruments
         {
             if (!user.TryGetComponent(out ActorComponent? actor)) return;
 
-            if (InstrumentPlayer != null || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+            if ((!Handheld && InstrumentPlayer != null)
+                || (Handheld && actor.PlayerSession != InstrumentPlayer)
+                || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
 
             InstrumentPlayer = actor.PlayerSession;
             OpenUserInterface(InstrumentPlayer);

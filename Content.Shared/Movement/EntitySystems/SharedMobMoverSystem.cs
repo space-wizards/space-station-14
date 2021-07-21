@@ -24,17 +24,15 @@ namespace Content.Shared.Movement.EntitySystems
         /// <summary>
         ///     Fake pushing for player collisions.
         /// </summary>
-        private void HandleCollisionMessage(Fixture ourFixture, Fixture otherFixture, float frameTime, Manifold manifold)
+        private void HandleCollisionMessage(Fixture ourFixture, Fixture otherFixture, float frameTime, Vector2 worldNormal)
         {
             var otherBody = otherFixture.Body;
 
             if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard) return;
 
-            var normal = manifold.LocalNormal;
+            if (!ourFixture.Body.Owner.TryGetComponent(out IMobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
 
-            if (!ourFixture.Body.Owner.TryGetComponent(out IMobMoverComponent? mobMover) || normal == Vector2.Zero) return;
-
-            otherBody.ApplyLinearImpulse(-normal * mobMover.PushStrength * frameTime);
+            otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrength * frameTime);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
@@ -38,32 +39,13 @@ namespace Content.Server.Commands.Atmos
                 return;
             }
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
-            {
-                shell.WriteLine("Failed to get grid entity.");
-                return;
-            }
-
-            if (!grid.HasComponent<GridAtmosphereComponent>())
-            {
-                shell.WriteLine("Grid doesn't have an atmosphere.");
-                return;
-            }
-
-            var gam = grid.GetComponent<GridAtmosphereComponent>();
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var tiles = 0;
-            foreach (var tile in gam)
+            foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
             {
-                if (tile.Air == null)
-                    continue;
-
                 tiles++;
-
-                tile.Air.Temperature = temperature;
-                tile.Invalidate();
+                tile.Temperature = temperature;
             }
 
             shell.WriteLine($"Changed the temperature of {tiles} tiles.");

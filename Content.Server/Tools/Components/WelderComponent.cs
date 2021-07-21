@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Act;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
@@ -212,8 +213,7 @@ namespace Content.Server.Tools.Components
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
 
-            Owner.Transform.Coordinates
-                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
 
             return true;
         }
@@ -256,8 +256,7 @@ namespace Content.Server.Tools.Components
 
             _solutionComponent?.TryRemoveReagent("WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
-            Owner.Transform.Coordinates
-                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();

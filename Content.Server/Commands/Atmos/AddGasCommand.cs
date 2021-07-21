@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
@@ -28,46 +29,17 @@ namespace Content.Server.Commands.Atmos
 
             var gridId = new GridId(id);
 
-            var mapMan = IoCManager.Resolve<IMapManager>();
-
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
-            {
-                shell.WriteLine("Invalid grid ID.");
-                return;
-            }
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
-            {
-                shell.WriteLine("Failed to get grid entity.");
-                return;
-            }
-
-            if (!grid.HasComponent<GridAtmosphereComponent>())
-            {
-                shell.WriteLine("Grid doesn't have an atmosphere.");
-                return;
-            }
-
-            var gam = grid.GetComponent<GridAtmosphereComponent>();
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            var tile = gam.GetTile(indices);
+            var tile = atmosphereSystem.GetTileMixture(gridId, indices, true);
 
             if (tile == null)
             {
-                shell.WriteLine("Invalid coordinates.");
+                shell.WriteLine("Invalid coordinates or tile.");
                 return;
             }
 
-            if (tile.Air == null)
-            {
-                shell.WriteLine("Can't add gas to that tile.");
-                return;
-            }
-
-            tile.Air.AdjustMoles(gasId, moles);
-            tile.Invalidate();
+            tile.AdjustMoles(gasId, moles);
         }
     }
 }

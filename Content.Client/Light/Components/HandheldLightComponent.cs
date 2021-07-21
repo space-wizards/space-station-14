@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Light.Components
 {
@@ -55,8 +56,9 @@ namespace Content.Client.Light.Components
             {
                 _parent = parent;
 
-                var wrapper = new HBoxContainer
+                var wrapper = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     SeparationOverride = 4,
                     HorizontalAlignment = HAlignment.Center
                 };

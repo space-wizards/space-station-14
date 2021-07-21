@@ -9,7 +9,6 @@
   - type: Tag
     tags:
     - CanPilot
-    - Teleportable
     - FootstepSound
   - type: Reactive
     reactions:

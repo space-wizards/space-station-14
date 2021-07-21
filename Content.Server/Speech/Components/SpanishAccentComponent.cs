@@ -19,7 +19,7 @@ namespace Content.Server.Speech.Components
         private string InsertS(string message)
         {
             // Replace every new Word that starts with s/S
-            var msg = message.Replace(" s", " es").Replace(" S", "Es");
+            var msg = message.Replace(" s", " es").Replace(" S", " Es");
 
             // Still need to check if the beginning of the message starts
             if (msg.StartsWith("s"))
