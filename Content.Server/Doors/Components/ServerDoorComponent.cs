@@ -33,7 +33,7 @@ namespace Content.Server.Doors.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedDoorComponent))]
-    public class ServerDoorComponent : SharedDoorComponent, IActivate, IStartCollide, IInteractUsing, IMapInit
+    public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
@@ -96,7 +96,7 @@ namespace Content.Server.Doors.Components
         /// Whether the door will open when it is bumped into.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("bumpOpen")]
-        private bool _bumpOpen = true;
+        public bool BumpOpen = true;
 
         /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
@@ -206,24 +206,6 @@ namespace Content.Server.Doors.Components
             {
                 TryOpen(eventArgs.User);
             }
-        }
-
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (State != DoorState.Closed)
-            {
-                return;
-            }
-
-            if (!_bumpOpen)
-            {
-                return;
-            }
-
-            // Disabled because it makes it suck hard to walk through double doors.
-
-                TryOpen(otherFixture.Body.Owner);
-
         }
 
         #region Opening
