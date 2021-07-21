@@ -99,7 +99,7 @@ namespace Content.Server.Voting.Managers
                 string picked;
                 if (args.Winner == null)
                 {
-                    picked = (string) IoCManager.Resolve<IRobustRandom>().Pick(args.Winners);
+                    picked = (string) _random.Pick(args.Winners);
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("ui-vote-gamemode-tie", ("picked", Loc.GetString(presets[picked]))));
                 }

@@ -17,6 +17,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -31,6 +32,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private int _nextVoteId = 1;
 
