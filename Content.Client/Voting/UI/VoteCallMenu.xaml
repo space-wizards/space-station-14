@@ -12,11 +12,14 @@
         </BoxContainer>
         <hudUi:HighDivider />
 
-        <BoxContainer Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top" Orientation="Horizontal">
-            <OptionButton Name="VoteTypeButton" HorizontalExpand="True" />
-            <Control HorizontalExpand="True">
-                <OptionButton Name="VoteSecondButton" Visible="False" />
-            </Control>
+        <BoxContainer Orientation="Vertical" Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top">
+            <BoxContainer Orientation="Horizontal">
+                <OptionButton Name="VoteTypeButton" HorizontalExpand="True" />
+                <Control HorizontalExpand="True">
+                    <OptionButton Name="VoteSecondButton" Visible="False" />
+                </Control>
+            </BoxContainer>
+            <Label Name="VoteTypeTimeoutLabel" Visible="False" />
         </BoxContainer>
 
         <Button Margin="8 2" Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />

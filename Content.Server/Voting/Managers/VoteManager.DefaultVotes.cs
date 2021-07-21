@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
-using Content.Shared;
 using Content.Shared.CCVar;
+using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
@@ -13,7 +12,24 @@ namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager
     {
-        public void CreateRestartVote(IPlayerSession? initiator)
+        public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
+        {
+            switch (voteType)
+            {
+                case StandardVoteType.Restart:
+                    CreateRestartVote(initiator);
+                    break;
+                case StandardVoteType.Preset:
+                    CreatePresetVote(initiator);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
+            }
+
+            TimeoutStandardVote(voteType);
+        }
+
+        private void CreateRestartVote(IPlayerSession? initiator)
         {
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -72,7 +88,7 @@ namespace Content.Server.Voting.Managers
             }
         }
 
-        public void CreatePresetVote(IPlayerSession? initiator)
+        private void CreatePresetVote(IPlayerSession? initiator)
         {
             var presets = new Dictionary<string, string>
             {
@@ -121,6 +137,13 @@ namespace Content.Server.Voting.Managers
 
                 EntitySystem.Get<GameTicker>().SetStartPreset(picked);
             };
+        }
+
+        private void TimeoutStandardVote(StandardVoteType type)
+        {
+            var timeout = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteSameTypeTimeout));
+            _standardVoteTimeout[type] = _timing.RealTime + timeout;
+            DirtyCanCallVoteAll();
         }
     }
 }
