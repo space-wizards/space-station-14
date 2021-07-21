@@ -6,6 +6,8 @@ using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Exceptions;
 using Content.Server.MachineLinking.Models;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
@@ -60,7 +62,7 @@ namespace Content.Server.MachineLinking.System
 
             if (args.Value == null)
             {
-                if (port.Type == null || !port.Type.IsNullable())
+                if (port.Type != null && !port.Type.IsNullable())
                     throw new InvalidPortValueException();
             }
             else
@@ -73,6 +75,8 @@ namespace Content.Server.MachineLinking.System
 
             foreach (var link in _linkCollection.GetLinks(component, port.Name))
             {
+                if(!IsInRange(component, link.ReceiverComponent)) continue;
+
                 RaiseLocalEvent(link.ReceiverComponent.Owner.Uid, new SignalReceivedEvent(link.Receiverport.Name, args.Value));
             }
         }
@@ -193,25 +197,40 @@ namespace Content.Server.MachineLinking.System
             }
             else
             {
-                var linkAttempt = new LinkAttemptEvent(entity, transmitter, transmitterPort, receiver, receiverPort);
-                RaiseLocalEvent(receiver.Owner.Uid, linkAttempt);
-                RaiseLocalEvent(transmitter.Owner.Uid, linkAttempt);
+                var tport = transmitter.Outputs.GetPort(transmitterPort);
+                var rport = receiver.Inputs.GetPort(receiverPort);
 
-                if (linkAttempt.Cancelled) return;
+                if (!IsInRange(transmitter, receiver))
+                {
+                    entity.PopupMessageCursor(Loc.GetString("signal-linker-component-out-of-range"));
+                    return;
+                }
 
-                if (transmitter.Outputs.TryGetPort(transmitterPort, out var tport) && tport.MaxConnections != 0 &&
+                if (tport.MaxConnections != 0 &&
                     tport.MaxConnections >= _linkCollection.LinkCount(transmitter))
                 {
                     entity.PopupMessageCursor(Loc.GetString("signal-linker-component-max-connections-transmitter"));
                     return;
                 }
 
-                if (receiver.Inputs.TryGetPort(receiverPort, out var rport) && rport.MaxConnections != 0 &&
+                if (rport.MaxConnections != 0 &&
                     rport.MaxConnections <= _linkCollection.LinkCount(receiver))
                 {
                     entity.PopupMessageCursor(Loc.GetString("signal-linker-component-max-connections-receiver"));
                     return;
                 }
+
+                if (tport.Type != rport.Type)
+                {
+                    entity.PopupMessageCursor(Loc.GetString("signal-linker-component-type-mismatch"));
+                    return;
+                }
+
+                var linkAttempt = new LinkAttemptEvent(entity, transmitter, transmitterPort, receiver, receiverPort);
+                RaiseLocalEvent(receiver.Owner.Uid, linkAttempt);
+                RaiseLocalEvent(transmitter.Owner.Uid, linkAttempt);
+
+                if (linkAttempt.Cancelled) return;
 
                 var link = _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
                 if(link.Transmitterport.Signal != null)
@@ -242,83 +261,17 @@ namespace Content.Server.MachineLinking.System
             return true;
         }
 
-        /*todo paul oldcode
-
-        private readonly Dictionary<NetUserId, SignalTransmitterComponent?> _transmitters = new();
-
-        public bool SignalLinkerKeybind(NetUserId id, bool? enable)
+        private bool IsInRange(SignalTransmitterComponent transmitterComponent,
+            SignalReceiverComponent receiverComponent)
         {
-            enable ??= !_transmitters.ContainsKey(id);
-
-            if (enable.Value)
+            if (transmitterComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
+                    out var transmitterPowerReceiverComponent) &&
+                receiverComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
+                    out var receiverPowerReceiverComponent))
             {
-                if (_transmitters.ContainsKey(id))
-                {
-                    return true;
-                }
-
-                if (_transmitters.Count == 0)
-                {
-                    CommandBinds.Builder
-                        .BindBefore(EngineKeyFunctions.Use,
-                            new PointerInputCmdHandler(HandleUse),
-                            typeof(InteractionSystem))
-                        .Register<SignalLinkerSystem>();
-                }
-
-                _transmitters.Add(id, null);
-
+                return false;
             }
-            else
-            {
-                if (!_transmitters.ContainsKey(id))
-                {
-                    return false;
-                }
-
-                _transmitters.Remove(id);
-                if (_transmitters.Count == 0)
-                {
-                    CommandBinds.Unregister<SignalLinkerSystem>();
-                }
-            }
-
-            return enable.Value;
+            return !transmitterComponent.Owner.Transform.MapPosition.InRange(receiverComponent.Owner.Transform.MapPosition, 30f);
         }
-
-        private bool HandleUse(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            if (session?.AttachedEntity == null)
-            {
-                return false;
-            }
-
-            if (!_transmitters.TryGetValue(session.UserId, out var signalTransmitter))
-            {
-                return false;
-            }
-
-            if (!EntityManager.TryGetEntity(uid, out var entity))
-            {
-                return false;
-            }
-
-            if (entity.TryGetComponent<SignalReceiverComponent>(out var signalReceiver))
-            {
-                if (signalReceiver.Interact(session.AttachedEntity, signalTransmitter))
-                {
-                    return true;
-                }
-            }
-
-            if (entity.TryGetComponent<SignalTransmitterComponent>(out var transmitter))
-            {
-                _transmitters[session.UserId] = transmitter.GetSignal(session.AttachedEntity);
-
-                return true;
-            }
-
-            return false;
-        }*/
     }
 }
