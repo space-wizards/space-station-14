@@ -72,6 +72,10 @@
       sprite: Structures/conveyor.rsi
       state: switch-off
     - type: TwoWayLever
+    - type: SignalTransmitter
+      outputs:
+        - name: state
+          type: Content.Shared.MachineLinking.TwoWayLeverSignal
     - type: Appearance
       visuals:
         - type: TwoWayLeverVisualizer

@@ -18,6 +18,13 @@ namespace Content.Server.MachineLinking.System
             base.Initialize();
 
             SubscribeLocalEvent<TwoWayLeverComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<TwoWayLeverComponent, SignalValueRequestedEvent>(OnSignalValueRequested);
+        }
+
+        private void OnSignalValueRequested(EntityUid uid, TwoWayLeverComponent component, SignalValueRequestedEvent args)
+        {
+            args.Signal = component.State;
+            args.Handled = true;
         }
 
         private void OnInteractHand(EntityUid uid, TwoWayLeverComponent component, InteractHandEvent args)
@@ -40,7 +47,7 @@ namespace Content.Server.MachineLinking.System
                 appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
             }
 
-            RaiseLocalEvent(new InvokePortEvent("state", component.State));
+            RaiseLocalEvent(uid, new InvokePortEvent("state", component.State));
         }
     }
 }

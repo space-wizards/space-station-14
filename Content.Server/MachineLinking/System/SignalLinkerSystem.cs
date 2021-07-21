@@ -64,7 +64,7 @@ namespace Content.Server.MachineLinking.System
             }
             else
             {
-                if (port.Type == null || args.Value.GetType().IsAssignableTo(port.Type))
+                if (port.Type == null || !args.Value.GetType().IsAssignableTo(port.Type))
                     throw new InvalidPortValueException();
             }
 
@@ -80,6 +80,13 @@ namespace Content.Server.MachineLinking.System
         {
             if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !linker.Port.HasValue || !args.User.TryGetComponent(out ActorComponent? actor) || !linker.Port.Value.transmitter.Outputs.TryGetPort(linker.Port.Value.port, out var port))
                 return;
+
+            if (component.Inputs.Count == 1)
+            {
+                Connect(linker.Port.Value.transmitter, linker.Port.Value.port, component, component.Inputs[0].Name);
+                //todo paul feedbackmessage
+                return;
+            }
 
             var bui = component.Owner.GetUIOrNull(SignalReceiverUiKey.Key);
             if (bui == null) return;
@@ -195,12 +202,14 @@ namespace Content.Server.MachineLinking.System
             }
 
             if (receiver.Inputs.TryGetPort(receiverPort, out var rport) && rport.MaxConnections != 0 &&
-                rport.MaxConnections >= _linkCollection.LinkCount(receiver))
+                rport.MaxConnections <= _linkCollection.LinkCount(receiver))
             {
                 return;
             }
 
-            _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
+            var link = _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
+            if(link.Transmitterport.Signal != null)
+                RaiseLocalEvent(receiver.Owner.Uid, new SignalReceivedEvent(receiverPort, link.Transmitterport.Signal));
         }
 
         private void Disconnect(SignalTransmitterComponent transmitter, string transmitterPort,

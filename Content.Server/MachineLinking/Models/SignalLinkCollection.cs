@@ -9,7 +9,7 @@ namespace Content.Server.MachineLinking.Models
         private Dictionary<SignalTransmitterComponent, List<SignalLink>> _transmitterDict = new();
         private Dictionary<SignalReceiverComponent, List<SignalLink>> _receiverDict = new();
 
-        public void AddLink(SignalTransmitterComponent transmitterComponent, string transmitterPort,
+        public SignalLink AddLink(SignalTransmitterComponent transmitterComponent, string transmitterPort,
             SignalReceiverComponent receiverComponent, string receiverPort)
         {
             if (LinkExists(transmitterComponent, transmitterPort, receiverComponent, receiverPort))
@@ -30,6 +30,8 @@ namespace Content.Server.MachineLinking.Models
             var link = new SignalLink(transmitterComponent, transmitterPort, receiverComponent, receiverPort);
             _transmitterDict[transmitterComponent].Add(link);
             _receiverDict[receiverComponent].Add(link);
+
+            return link;
         }
 
         private bool LinkExists(SignalTransmitterComponent transmitterComponent, string transmitterPort,
