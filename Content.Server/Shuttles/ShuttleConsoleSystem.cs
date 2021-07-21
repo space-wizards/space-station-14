@@ -145,7 +145,10 @@ namespace Content.Server.Shuttles
             }
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
-            ComponentManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+            // TODO: RemoveComponent<T> is cooked and doesn't sync to client so this fucks up movement prediction.
+            // ComponentManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+            pilotComponent.Console = null;
+            pilotComponent.Dirty();
         }
 
         public void RemovePilot(IEntity entity)
