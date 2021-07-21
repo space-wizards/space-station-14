@@ -37,8 +37,8 @@ namespace Content.Server.Explosion
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
-            SubscribeLocalEvent<ExplodeOnTrigger, TriggerEvent>(HandleExplodeTrigger);
-            SubscribeLocalEvent<FlashOnTrigger, TriggerEvent>(HandleFlashTrigger);
+            SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
+            SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
         }
@@ -49,7 +49,7 @@ namespace Content.Server.Explosion
             Explode(uid, component);
         }
 
-        private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTrigger component, TriggerEvent args)
+        private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
             if (!ComponentManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
 
@@ -71,7 +71,7 @@ namespace Content.Server.Explosion
         #endregion
 
         #region Flash
-        private void HandleFlashTrigger(EntityUid uid, FlashOnTrigger component, TriggerEvent args)
+        private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
                 {
                     if (component.Flashed) return;
 

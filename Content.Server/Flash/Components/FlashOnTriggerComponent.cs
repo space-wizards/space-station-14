@@ -7,7 +7,7 @@ namespace Content.Server.Flash.Components
     /// Upon being triggered will flash in an area around it.
     /// </summary>
     [RegisterComponent]
-    internal sealed class FlashOnTrigger : Component
+    internal sealed class FlashOnTriggerComponent : Component
     {
         public override string Name => "FlashOnTrigger";
 
