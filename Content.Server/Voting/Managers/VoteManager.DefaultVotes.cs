@@ -61,6 +61,15 @@ namespace Content.Server.Voting.Managers
                 // Cast yes vote if created the vote yourself.
                 vote.CastVote(initiator, 0);
             }
+
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                if (player != initiator)
+                {
+                    // Everybody else defaults to a no vote.
+                    vote.CastVote(player, 1);
+                }
+            }
         }
 
         public void CreatePresetVote(IPlayerSession? initiator)
