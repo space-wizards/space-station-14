@@ -1513,3 +1513,14 @@ Entries:
   - {message: Add Station driving, type: Add}
   id: 268
   time: '2021-07-21T11:15:12.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: 'Added integer scaling option. Turn it off to get rid of black bars,
+      at the cost of less crisp scaling.', type: Add}
+  id: 269
+  time: '2021-07-21T11:30:50.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Examine tooltip now closes when moving out of range, type: Tweak}
+  id: 270
+  time: '2021-07-21T11:31:00.0000000+00:00'
