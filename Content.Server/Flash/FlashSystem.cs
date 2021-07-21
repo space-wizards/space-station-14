@@ -10,11 +10,12 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 
 namespace Content.Server.Flash
 {
-    public class FlashSystem : EntitySystem
+    internal sealed class FlashSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -25,6 +26,15 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<FlashAreaOnCollide, StartCollideEvent>(HandleCollide);
+        }
+
+        private void HandleCollide(EntityUid uid, FlashAreaOnCollide component, StartCollideEvent args)
+        {
+            if (component.Flashed) return;
+
+            FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
+            component.Flashed = true;
         }
 
         public void OnMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)

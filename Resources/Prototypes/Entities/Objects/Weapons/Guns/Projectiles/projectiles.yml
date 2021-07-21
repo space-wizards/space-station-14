@@ -38,7 +38,7 @@
     soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Piercing: 10
-  - type: FlashProjectile
+  - type: FlashAreaOnCollide
     range: 1
 
 - type: entity
@@ -212,7 +212,7 @@
   - type: Projectile
     deleteOnCollide: false
     soundHit: /Audio/Effects/flash_bang.ogg
-  - type: FlashProjectile
+  - type: FlashAreaOnCollide
     range: 7
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
