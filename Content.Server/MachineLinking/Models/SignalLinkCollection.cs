@@ -34,7 +34,7 @@ namespace Content.Server.MachineLinking.Models
             return link;
         }
 
-        private bool LinkExists(SignalTransmitterComponent transmitterComponent, string transmitterPort,
+        public bool LinkExists(SignalTransmitterComponent transmitterComponent, string transmitterPort,
             SignalReceiverComponent receiverComponent, string receiverPort)
         {
             if (!_transmitterDict.ContainsKey(transmitterComponent) || !_receiverDict.ContainsKey(receiverComponent))
@@ -52,12 +52,12 @@ namespace Content.Server.MachineLinking.Models
             return false;
         }
 
-        public void RemoveLink(SignalTransmitterComponent transmitterComponent, string transmitterPort,
+        public bool RemoveLink(SignalTransmitterComponent transmitterComponent, string transmitterPort,
             SignalReceiverComponent receiverComponent, string receiverPort)
         {
             if (!_transmitterDict.ContainsKey(transmitterComponent) || !_receiverDict.ContainsKey(receiverComponent))
             {
-                return;
+                return false;
             }
 
             SignalLink? theLink = null;
@@ -70,12 +70,13 @@ namespace Content.Server.MachineLinking.Models
                     break;
                 }
             }
-            if(theLink == null) return;
+            if(theLink == null) return false;
 
             _transmitterDict[transmitterComponent].Remove(theLink);
             if (_transmitterDict[transmitterComponent].Count == 0) _transmitterDict.Remove(transmitterComponent);
             _receiverDict[receiverComponent].Remove(theLink);
             if (_receiverDict[receiverComponent].Count == 0) _receiverDict.Remove(receiverComponent);
+            return true;
         }
 
         public int LinkCount(SignalTransmitterComponent comp) =>

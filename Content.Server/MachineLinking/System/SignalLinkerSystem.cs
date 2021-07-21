@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -83,8 +84,8 @@ namespace Content.Server.MachineLinking.System
 
             if (component.Inputs.Count == 1)
             {
-                Connect(linker.Port.Value.transmitter, linker.Port.Value.port, component, component.Inputs[0].Name);
-                //todo paul feedbackmessage
+                LinkerInteraction(args.User, linker.Port.Value.transmitter, linker.Port.Value.port, component,
+                    component.Inputs[0].Name);
                 return;
             }
 
@@ -115,7 +116,9 @@ namespace Content.Server.MachineLinking.System
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port.Value.port) ||
                         !component.Inputs.ContainsPort(portSelected.Port))
                         return;
-                    Connect(signalLinkerComponent.Port.Value.transmitter, signalLinkerComponent.Port.Value.port, component, portSelected.Port);
+                    LinkerInteraction(msg.Session.AttachedEntity, signalLinkerComponent.Port.Value.transmitter,
+                        signalLinkerComponent.Port.Value.port,
+                        component, portSelected.Port);
                     break;
             }
         }
@@ -151,22 +154,9 @@ namespace Content.Server.MachineLinking.System
                         !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
                         !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner))
                         return;
-                    if (SavePortInSignalLinker(signalLinkerComponent, component, portSelected.Port))
-                    {
-                        msg.Session.AttachedEntity?.PopupMessageCursor(Loc.GetString("signal-linker-component-saved-port",
-                            ("port", portSelected.Port),
-                            ("machine", component.Owner)));
-                    }
+                    LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component, portSelected.Port);
                     break;
             }
-        }
-
-        private bool SavePortInSignalLinker(SignalLinkerComponent linker, SignalTransmitterComponent transmitter,
-            string port)
-        {
-            if (!transmitter.Outputs.ContainsPort(port)) return false;
-            linker.Port = (transmitter, port);
-            return true;
         }
 
         private void TransmitterInteractUsingHandler(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
@@ -177,12 +167,7 @@ namespace Content.Server.MachineLinking.System
             if(component.Outputs.Count == 1)
             {
                 var port = component.Outputs.First();
-                if (SavePortInSignalLinker(linker, component, port.Name))
-                {
-                    args.User.PopupMessageCursor(Loc.GetString("signal-linker-component-saved-port",
-                        ("port", port.Name),
-                        ("machine", component.Owner)));
-                }
+                LinkerSaveInteraction(args.User, linker, component, port.Name);
                 return;
             }
 
@@ -192,30 +177,69 @@ namespace Content.Server.MachineLinking.System
             bui.SetState(new SignalPortsState(component.Outputs.GetPortStrings().ToArray()));
         }
 
-        private void Connect(SignalTransmitterComponent transmitter, string transmitterPort,
+        private void LinkerInteraction(IEntity entity, SignalTransmitterComponent transmitter, string transmitterPort,
             SignalReceiverComponent receiver, string receiverPort)
         {
-            if (transmitter.Outputs.TryGetPort(transmitterPort, out var tport) && tport.MaxConnections != 0 &&
-                tport.MaxConnections >= _linkCollection.LinkCount(transmitter))
+            if (_linkCollection.LinkExists(transmitter, transmitterPort, receiver, receiverPort))
             {
-                return;
+                if (_linkCollection.RemoveLink(transmitter, transmitterPort, receiver, receiverPort))
+                {
+                    RaiseLocalEvent(receiver.Owner.Uid, new PortDisconnectedEvent(receiverPort));
+                    RaiseLocalEvent(transmitter.Owner.Uid, new PortDisconnectedEvent(transmitterPort));
+                    entity.PopupMessageCursor(Loc.GetString("signal-linker-component-unlinked-port",
+                        ("port", receiverPort),
+                        ("machine", receiver)));
+                }
             }
-
-            if (receiver.Inputs.TryGetPort(receiverPort, out var rport) && rport.MaxConnections != 0 &&
-                rport.MaxConnections <= _linkCollection.LinkCount(receiver))
+            else
             {
-                return;
-            }
+                var linkAttempt = new LinkAttemptEvent(entity, transmitter, transmitterPort, receiver, receiverPort);
+                RaiseLocalEvent(receiver.Owner.Uid, linkAttempt);
+                RaiseLocalEvent(transmitter.Owner.Uid, linkAttempt);
 
-            var link = _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
-            if(link.Transmitterport.Signal != null)
-                RaiseLocalEvent(receiver.Owner.Uid, new SignalReceivedEvent(receiverPort, link.Transmitterport.Signal));
+                if (linkAttempt.Cancelled) return;
+
+                if (transmitter.Outputs.TryGetPort(transmitterPort, out var tport) && tport.MaxConnections != 0 &&
+                    tport.MaxConnections >= _linkCollection.LinkCount(transmitter))
+                {
+                    entity.PopupMessageCursor(Loc.GetString("signal-linker-component-max-connections-transmitter"));
+                    return;
+                }
+
+                if (receiver.Inputs.TryGetPort(receiverPort, out var rport) && rport.MaxConnections != 0 &&
+                    rport.MaxConnections <= _linkCollection.LinkCount(receiver))
+                {
+                    entity.PopupMessageCursor(Loc.GetString("signal-linker-component-max-connections-receiver"));
+                    return;
+                }
+
+                var link = _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
+                if(link.Transmitterport.Signal != null)
+                    RaiseLocalEvent(receiver.Owner.Uid, new SignalReceivedEvent(receiverPort, link.Transmitterport.Signal));
+
+                entity.PopupMessageCursor(Loc.GetString("signal-linker-component-linked-port",
+                    ("port", receiverPort),
+                    ("machine", receiver)));
+            }
         }
 
-        private void Disconnect(SignalTransmitterComponent transmitter, string transmitterPort,
-            SignalReceiverComponent receiver, string receiverPort)
+        private void LinkerSaveInteraction(IEntity entity, SignalLinkerComponent linkerComponent,
+            SignalTransmitterComponent transmitterComponent, string transmitterPort)
         {
-            _linkCollection.RemoveLink(transmitter, transmitterPort, receiver, receiverPort);
+            if (SavePortInSignalLinker(linkerComponent, transmitterComponent, transmitterPort))
+            {
+                entity.PopupMessageCursor(Loc.GetString("signal-linker-component-saved-port",
+                    ("port", transmitterPort),
+                    ("machine", transmitterComponent.Owner)));
+            }
+        }
+
+        private bool SavePortInSignalLinker(SignalLinkerComponent linker, SignalTransmitterComponent transmitter,
+            string port)
+        {
+            if (!transmitter.Outputs.ContainsPort(port)) return false;
+            linker.Port = (transmitter, port);
+            return true;
         }
 
         /*todo paul oldcode
