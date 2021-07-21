@@ -1524,3 +1524,9 @@ Entries:
   - {message: Examine tooltip now closes when moving out of range, type: Tweak}
   id: 270
   time: '2021-07-21T11:31:00.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'Restart round votes now start with everybody selecting "no", effectively
+      requiring 80% of the whole server to agree.', type: Tweak}
+  id: 271
+  time: '2021-07-21T13:26:06.988275+00:00'

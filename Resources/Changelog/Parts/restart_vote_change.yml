@@ -1,4 +1,0 @@
-﻿author: PJB
-changes:
-  - type: Tweak
-    message: Restart round votes now start with everybody selecting "no", effectively requiring 80% of the whole server to agree.
