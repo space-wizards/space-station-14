@@ -57,7 +57,7 @@ namespace Content.Server.Projectiles
             }
 
             if (component.DeleteOnCollide)
-                component.Owner.QueueDelete();
+                EntityManager.GetEntity(uid).QueueDelete();
         }
 
         public override void Update(float frameTime)
