@@ -58,7 +58,7 @@ namespace Content.Server.Explosion.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
+            if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades)
                 return false;
 
             _grenadesContainer.Insert(args.Using);
@@ -70,7 +70,7 @@ namespace Content.Server.Explosion.Components
         {
             base.Initialize();
 
-            _grenadesContainer = ContainerHelpers.EnsureContainer<Container>(Owner, "cluster-flash");
+            _grenadesContainer = Owner.EnsureContainer<Container>("cluster-flash");
 
         }
 

@@ -1,30 +1,26 @@
 ﻿using System;
-using System.Linq;
 using Content.Server.Explosion.Components;
+using Content.Server.Flash.Components;
+using Content.Shared.Acts;
+using Content.Shared.Audio;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion
 {
     /// <summary>
-    /// This interface gives components behavior when being "triggered" by timer or other conditions
+    /// Raised whenever something is Triggered on the entity.
     /// </summary>
-    public interface ITrigger
-    {
-        /// <summary>
-        /// Called when one object is triggering some event
-        /// </summary>
-        bool Trigger(TriggerEventArgs eventArgs);
-    }
-
-    public class TriggerEventArgs : HandledEntityEventArgs
+    public class TriggerEvent : HandledEntityEventArgs
     {
         public IEntity Triggered { get; }
         public IEntity? User { get; }
 
-        public TriggerEventArgs(IEntity triggered, IEntity? user = null)
+        public TriggerEvent(IEntity triggered, IEntity? user = null)
         {
             Triggered = triggered;
             User = user;
@@ -38,6 +34,61 @@ namespace Content.Server.Explosion
         {
             base.Initialize();
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
+
+            SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
+            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
+            SubscribeLocalEvent<ExplodeOnTrigger, TriggerEvent>(HandleExplodeTrigger);
+            SubscribeLocalEvent<FlashOnTrigger, TriggerEvent>(HandleFlashTrigger);
+
+            SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
+        }
+
+        #region Explosions
+        private void HandleDestruction(EntityUid uid, ExplosiveComponent component, DestructionEventArgs args)
+        {
+            Explode(uid, component);
+        }
+
+        private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTrigger component, TriggerEvent args)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
+
+            Explode(uid, explosiveComponent);
+        }
+
+        // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
+        public void Explode(EntityUid uid, ExplosiveComponent component)
+        {
+            if (component.Exploding)
+            {
+                return;
+            }
+
+            component.Exploding = true;
+            component.Owner.SpawnExplosion(component.DevastationRange, component.HeavyImpactRange, component.LightImpactRange, component.FlashRange);
+            EntityManager.QueueDeleteEntity(uid);
+        }
+        #endregion
+
+        #region Flash
+        private void HandleFlashTrigger(EntityUid uid, FlashOnTrigger component, TriggerEvent args)
+                {
+                    if (component.Flashed) return;
+
+                    FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
+                    component.Flashed = true;
+                }
+        #endregion
+
+        private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
+        {
+            if (component.Sound == null) return;
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), AudioHelpers.WithVariation(0.01f));
+        }
+
+        private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
+        {
+            EntityManager.QueueDeleteEntity(uid);
         }
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
@@ -47,23 +98,18 @@ namespace Content.Server.Explosion
 
         public void Trigger(IEntity trigger, IEntity? user = null)
         {
-            var timerTriggers = trigger.GetAllComponents<ITrigger>().ToList();
-            var triggerEvent = new TriggerEventArgs(trigger, user);
-
-            foreach (var timerTrigger in timerTriggers)
-            {
-                if (timerTrigger.Trigger(triggerEvent))
-                {
-                    // If an IOnTimerTrigger returns a status completion we finish our trigger
-                    return;
-                }
-            }
-
+            var triggerEvent = new TriggerEvent(trigger, user);
             EntityManager.EventBus.RaiseLocalEvent(trigger.Uid, triggerEvent);
         }
 
         public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, IEntity? user = null)
         {
+            if (delay.TotalSeconds <= 0)
+            {
+                Trigger(triggered, user);
+                return;
+            }
+
             Timer.Spawn(delay, () =>
             {
                 Trigger(triggered, user);
