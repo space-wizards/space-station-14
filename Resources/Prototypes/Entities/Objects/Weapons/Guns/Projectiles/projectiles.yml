@@ -71,8 +71,9 @@
     soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Blunt: 3
-  - type: StunnableProjectile
-    paralyzeAmount: 2
+  - type: StunOnCollide
+    stunAmount: 2
+    knockdownAmount: 2
 
 # Energy projectiles
 - type: entity
@@ -105,7 +106,7 @@
     soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
-  - type: StunnableProjectile
+  - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
 
@@ -175,8 +176,9 @@
   - type: Projectile
     deleteOnCollide: false
     soundHit: /Audio/Effects/gen_hit.ogg
-  - type: StunnableProjectile
-    paralyzeAmount: 8
+  - type: StunOnCollide
+    stunAmount: 8
+    knockdownAmount: 8
 
 - type: entity
   id: BulletGrenadeBlast

@@ -78,7 +78,7 @@ namespace Content.Client.Entry
             "SpeedLoader",
             "Hitscan",
             "ExplosiveProjectile",
-            "StunnableProjectile",
+            "StunOnCollide",
             "RandomPottedPlant",
             "CommunicationsConsole",
             "BarSign",
