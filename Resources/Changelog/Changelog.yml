@@ -1503,3 +1503,8 @@ Entries:
       and nice to use., type: Tweak}
   id: 266
   time: '2021-07-20T08:29:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove portals until someone does a better job coding it, type: Remove}
+  id: 267
+  time: '2021-07-21T09:16:10.0000000+00:00'
