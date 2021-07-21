@@ -13,7 +13,7 @@ namespace Content.Server.Explosion.Components
     /// When triggered will flash in an area around the object and destroy itself
     /// </summary>
     [RegisterComponent]
-    public class FlashExplosiveComponent : Component, ITimerTrigger, IDestroyAct
+    public class FlashExplosiveComponent : Component, ITrigger, IDestroyAct
     {
         public override string Name => "FlashExplosive";
 
@@ -48,7 +48,7 @@ namespace Content.Server.Explosion.Components
             return true;
         }
 
-        bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)
+        bool ITrigger.Trigger(TriggerEventArgs eventArgs)
         {
             return Explode();
         }

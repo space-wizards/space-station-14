@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.Explosion.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion
@@ -9,45 +11,62 @@ namespace Content.Server.Explosion
     /// <summary>
     /// This interface gives components behavior when being "triggered" by timer or other conditions
     /// </summary>
-    public interface ITimerTrigger
+    public interface ITrigger
     {
         /// <summary>
         /// Called when one object is triggering some event
         /// </summary>
-        bool Trigger(TimerTriggerEventArgs eventArgs);
+        bool Trigger(TriggerEventArgs eventArgs);
     }
 
-    public class TimerTriggerEventArgs : EventArgs
+    public class TriggerEventArgs : HandledEntityEventArgs
     {
-        public TimerTriggerEventArgs(IEntity user, IEntity source)
-        {
-            User = user;
-            Source = source;
-        }
+        public IEntity Triggered { get; }
+        public IEntity? User { get; }
 
-        public IEntity User { get; set; }
-        public IEntity Source { get; set; }
+        public TriggerEventArgs(IEntity triggered, IEntity? user = null)
+        {
+            Triggered = triggered;
+            User = user;
+        }
     }
 
     [UsedImplicitly]
     public sealed class TriggerSystem : EntitySystem
     {
-        public void HandleTimerTrigger(TimeSpan delay, IEntity user, IEntity trigger)
+        public override void Initialize()
         {
+            base.Initialize();
+            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
+        }
 
+        private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        {
+            Trigger(component.Owner);
+        }
+
+        public void Trigger(IEntity trigger, IEntity? user = null)
+        {
+            var timerTriggers = trigger.GetAllComponents<ITrigger>().ToList();
+            var triggerEvent = new TriggerEventArgs(trigger, user);
+
+            foreach (var timerTrigger in timerTriggers)
+            {
+                if (timerTrigger.Trigger(triggerEvent))
+                {
+                    // If an IOnTimerTrigger returns a status completion we finish our trigger
+                    return;
+                }
+            }
+
+            EntityManager.EventBus.RaiseLocalEvent(trigger.Uid, triggerEvent);
+        }
+
+        public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, IEntity? user = null)
+        {
             Timer.Spawn(delay, () =>
             {
-                var timerTriggerEventArgs = new TimerTriggerEventArgs(user, trigger);
-                var timerTriggers = trigger.GetAllComponents<ITimerTrigger>().ToList();
-
-                foreach (var timerTrigger in timerTriggers)
-                {
-                    if (timerTrigger.Trigger(timerTriggerEventArgs))
-                    {
-                        // If an IOnTimerTrigger returns a status completion we finish our trigger
-                        return;
-                    }
-                }
+                Trigger(triggered, user);
             });
         }
     }

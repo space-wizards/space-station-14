@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public class ExplosiveComponent : Component, ITimerTrigger, IDestroyAct
+    public class ExplosiveComponent : Component, ITrigger, IDestroyAct
     {
         public override string Name => "Explosive";
 
@@ -35,7 +35,7 @@ namespace Content.Server.Explosion.Components
             }
         }
 
-        bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)
+        bool ITrigger.Trigger(TriggerEventArgs eventArgs)
         {
             return Explosion();
         }
