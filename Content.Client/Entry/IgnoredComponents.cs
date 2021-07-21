@@ -21,7 +21,6 @@ namespace Content.Client.Entry
             "EmitSoundOnActivate",
             "FootstepModifier",
             "HeatResistance",
-            "ItemTeleporter",
             "EntityStorage",
             "Wirecutter",
             "Screwdriver",
