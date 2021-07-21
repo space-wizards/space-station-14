@@ -1530,3 +1530,8 @@ Entries:
       requiring 80% of the whole server to agree.', type: Tweak}
   id: 271
   time: '2021-07-21T13:26:06.988275+00:00'
+- author: PJB
+  changes:
+  - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
+  id: 272
+  time: '2021-07-21T17:04:18.364235+00:00'
