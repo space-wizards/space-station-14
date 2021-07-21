@@ -4,36 +4,24 @@
                  MouseFilter="Stop" MinSize="350 150">
     <PanelContainer StyleClasses="AngleRect" />
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal">
-            <MarginContainer MarginLeftOverride="8" HorizontalExpand="True">
-                <Label Text="{Loc 'ui-vote-create-title'}" VAlign="Center" StyleClasses="LabelHeading" />
-            </MarginContainer>
-            <MarginContainer MarginRightOverride="8">
-                <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
-                               SizeFlagsVertical="ShrinkCenter" />
-            </MarginContainer>
+        <BoxContainer Margin="8 0" Orientation="Horizontal">
+            <Label Text="{Loc 'ui-vote-create-title'}"
+                   HorizontalExpand="True" VAlign="Center" StyleClasses="LabelHeading" />
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
+                           VerticalAlignment="Center" />
         </BoxContainer>
         <hudUi:HighDivider />
 
-        <MarginContainer SizeFlagsHorizontal="Fill" SizeFlagsVertical="Expand"
-                         MarginLeftOverride="8" MarginRightOverride="8" MarginTopOverride="2">
-            <BoxContainer Orientation="Horizontal">
-                <OptionButton Name="VoteTypeButton" HorizontalExpand="True" />
-                <Control HorizontalExpand="True">
-                    <OptionButton Name="VoteSecondButton" Visible="False" />
-                </Control>
-            </BoxContainer>
-        </MarginContainer>
+        <BoxContainer Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top" Orientation="Horizontal">
+            <OptionButton Name="VoteTypeButton" HorizontalExpand="True" />
+            <Control HorizontalExpand="True">
+                <OptionButton Name="VoteSecondButton" Visible="False" />
+            </Control>
+        </BoxContainer>
 
-        <MarginContainer SizeFlagsHorizontal="Fill"
-                         MarginLeftOverride="8" MarginRightOverride="8" MarginBottomOverride="2">
-            <Button Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />
-        </MarginContainer>
+        <Button Margin="8 2" Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />
 
         <PanelContainer StyleClasses="LowDivider" />
-        <MarginContainer MarginLeftOverride="12">
-            <Label StyleClasses="LabelSubText" Text="{Loc 'ui-vote-fluff'}" />
-        </MarginContainer>
-
+        <Label Margin="12 0 0 0" StyleClasses="LabelSubText" Text="{Loc 'ui-vote-fluff'}" />
     </BoxContainer>
 </ui:VoteCallMenu>
