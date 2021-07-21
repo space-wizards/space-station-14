@@ -33,7 +33,7 @@ namespace Content.Server.Singularity.EntitySystems
                     _ => 0
                 };
 
-                component.Owner.Delete();
+                EntityManager.QueueDeleteEntity(uid);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             if (component.Parent == null)
             {
-                component.Owner.QueueDelete();
+                EntityManager.QueueDeleteEntity(uid);
                 return;
             }
 
