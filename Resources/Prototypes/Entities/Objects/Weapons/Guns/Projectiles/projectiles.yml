@@ -72,7 +72,8 @@
     damages:
       Blunt: 3
   - type: StunOnCollide
-    paralyzeAmount: 2
+    stunAmount: 2
+    knockdownAmount: 2
 
 # Energy projectiles
 - type: entity
@@ -176,7 +177,8 @@
     deleteOnCollide: false
     soundHit: /Audio/Effects/gen_hit.ogg
   - type: StunOnCollide
-    paralyzeAmount: 8
+    stunAmount: 8
+    knockdownAmount: 8
 
 - type: entity
   id: BulletGrenadeBlast
