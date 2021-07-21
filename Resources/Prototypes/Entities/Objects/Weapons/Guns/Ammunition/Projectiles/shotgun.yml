@@ -23,7 +23,7 @@
   - type: Projectile
     damages:
       Blunt: 10
-  - type: StunnableProjectile
+  - type: StunOnCollide
 
 - type: entity
   id: PelletShotgun
