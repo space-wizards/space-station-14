@@ -98,7 +98,7 @@ namespace Content.Client.Entry
             "PresetIdCard",
             "SolarControlConsole",
             "FlashExplosive",
-            "FlashProjectile",
+            "FlashAreaOnCollide",
             "Utensil",
             "UnarmedCombat",
             "TimedSpawner",
