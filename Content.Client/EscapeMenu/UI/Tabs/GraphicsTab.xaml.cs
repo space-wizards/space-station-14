@@ -73,6 +73,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 UpdateViewportScale();
             };
 
+            IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
             ApplyButton.OnPressed += OnApplyButtonPressed;
             VSyncCheckBox.Pressed = _cfg.GetCVar(CVars.DisplayVSync);
@@ -82,6 +83,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             HudThemeOption.SelectId(_cfg.GetCVar(CCVars.HudTheme));
             ViewportScaleSlider.Value = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             ViewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
+            IntegerScalingCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0;
             ViewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
 
             UpdateViewportScale();
@@ -114,6 +116,8 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[UIScaleOption.SelectedId]);
             _cfg.SetCVar(CCVars.ViewportStretch, ViewportStretchCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ViewportFixedScaleFactor, (int) ViewportScaleSlider.Value);
+            _cfg.SetCVar(CCVars.ViewportSnapToleranceMargin,
+                         IntegerScalingCheckBox.Pressed ? CCVars.ViewportSnapToleranceMargin.DefaultValue : 0);
             _cfg.SetCVar(CCVars.ViewportScaleRender, !ViewportLowResCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateApplyButton();
@@ -139,6 +143,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
             var isVPStretchSame = ViewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
             var isVPScaleSame = (int) ViewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+            var isIntegerScalingSame = IntegerScalingCheckBox.Pressed == (_cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0);
             var isVPResSame = ViewportLowResCheckBox.Pressed == !_cfg.GetCVar(CCVars.ViewportScaleRender);
 
             ApplyButton.Disabled = isVSyncSame &&
@@ -147,6 +152,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                                    isUIScaleSame &&
                                    isVPStretchSame &&
                                    isVPScaleSame &&
+                                   isIntegerScalingSame &&
                                    isVPResSame &&
                                    isHudThemeSame;
         }
@@ -217,6 +223,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         private void UpdateViewportScale()
         {
             ViewportScaleBox.Visible = !ViewportStretchCheckBox.Pressed;
+            IntegerScalingCheckBox.Visible = ViewportStretchCheckBox.Pressed;
             ViewportScaleText.Text = Loc.GetString("ui-options-vp-scale", ("scale", ViewportScaleSlider.Value));
         }
     }

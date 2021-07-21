@@ -37,9 +37,14 @@ ui-options-hud-theme = HUD Theme:
 ui-options-hud-theme-default = Default
 ui-options-hud-theme-modernized = Modernized
 ui-options-hud-theme-classic = Classic
-ui-options-vp-stretch = Stretch viewport to fit game window?
+ui-options-vp-stretch = Stretch viewport to fit game window
 ui-options-vp-scale = Fixed viewport scale: x{ $scale }
-ui-options-vp-low-res = Low-resolution viewport?
+ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
+ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport will be scaled using an integer value
+                                        at specific resolutions. While this results in crisp textures, it also often
+                                        means that black bars appear at the top/bottom of the screen or that part
+                                        of the viewport is not visible.
+ui-options-vp-low-res = Low-resolution viewport
 
 ## Controls menu
 

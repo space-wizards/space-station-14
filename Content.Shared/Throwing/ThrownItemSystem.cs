@@ -39,7 +39,8 @@ namespace Content.Shared.Throwing
                 Logger.Error($"Tried to remove throwing fixture for {component.Owner} but none found?");
                 return;
             }
-            physicsComponent.RemoveFixture(fixture);
+
+            Get<SharedBroadphaseSystem>().DestroyFixture(physicsComponent, fixture);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -54,8 +55,7 @@ namespace Content.Shared.Throwing
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            var fixture = new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture};
-            physicsComponent.AddFixture(fixture);
+            Get<SharedBroadphaseSystem>().CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)

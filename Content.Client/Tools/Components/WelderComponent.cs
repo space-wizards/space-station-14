@@ -15,7 +15,6 @@ namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-
     public class WelderComponent : SharedToolComponent, IItemStatus
     {
         public override string Name => "Welder";
