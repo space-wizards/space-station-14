@@ -1,9 +1,7 @@
-﻿using Content.Server.ParticleAccelerator.Components;
-using Content.Server.Power.EntitySystems;
+﻿using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Singularity.EntitySystems
 {
