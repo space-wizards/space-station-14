@@ -8,6 +8,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/closet.rsi
+    noRot: true
     layers:
     - state: generic
     - state: generic_door

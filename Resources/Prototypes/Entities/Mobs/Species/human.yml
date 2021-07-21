@@ -8,6 +8,7 @@
   components:
   - type: Tag
     tags:
+    - CanPilot
     - FootstepSound
   - type: Reactive
     reactions:
@@ -253,6 +254,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+      noRot: true
       # TODO BODY Turn these into individual body parts?
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]

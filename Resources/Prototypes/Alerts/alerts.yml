@@ -136,7 +136,7 @@
   alertType: PilotingShuttle
   category: Piloting
   onClick: !type:StopPiloting { }
-  icon: /Textures/Interface/Alerts/Buckle/buckled.png
+  icon: /Textures/Interface/Alerts/piloting.png
   name: Piloting Shuttle
   description: You are piloting a shuttle. Click the alert to stop.
 

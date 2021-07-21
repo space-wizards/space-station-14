@@ -12,6 +12,17 @@
 
 - type: entity
   parent: ComputerBase
+  id: ComputerShuttleBase
+  name: shuttle console
+  description: Used to pilot a shuttle.
+  abstract: true
+  components:
+  - type: ShuttleConsole
+  - type: ApcPowerReceiver
+    powerLoad: 200
+
+- type: entity
+  parent: ComputerShuttleBase
   id: ComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -23,7 +34,7 @@
       screen: shuttle
 
 - type: entity
-  parent: ComputerBase
+  parent: ComputerShuttleBase
   id: ComputerShuttleSyndie
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
@@ -79,7 +90,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    load: 200
+    powerLoad: 200
     priority: Low
   - type: Computer
     board: ResearchComputerCircuitboard
