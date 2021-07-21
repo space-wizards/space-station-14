@@ -24,13 +24,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<VaporComponent, ComponentInit>(HandleInit);
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
-        }
-
-        private void HandleInit(EntityUid uid, VaporComponent component, ComponentInit args)
-        {
-            component.Owner.EnsureComponentWarn<SolutionContainerComponent>();
         }
 
         private void HandleCollide(EntityUid uid, VaporComponent component, StartCollideEvent args)
@@ -46,10 +40,9 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-
         public void Start(VaporComponent vapor, Vector2 dir, float speed, EntityCoordinates target, float aliveTime)
         {
-            vapor._running = true;
+            vapor.Active = true;
             vapor.Target = target;
             vapor.AliveTime = aliveTime;
             // Set Move
@@ -92,7 +85,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void Update(float frameTime, VaporComponent vapor, SolutionContainerComponent contents)
         {
-            if (!vapor._running)
+            if (!vapor.Active)
                 return;
 
             var entity = vapor.Owner;

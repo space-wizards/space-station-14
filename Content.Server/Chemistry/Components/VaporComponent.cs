@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.Components
         internal float ReactTimer;
         internal float Timer;
         internal EntityCoordinates Target;
-        internal bool _running;
+        internal bool Active;
         internal float AliveTime;
     }
 }
