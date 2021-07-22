@@ -66,6 +66,9 @@
       - floor_white
   - type: Stack
     stackType: FloorTileWhite
+  - type: Construction
+    graph: tileWhite
+    node: whitetile
 
 - type: entity
   name: dark tile
@@ -82,6 +85,9 @@
       - floor_dark
   - type: Stack
     stackType: FloorTileDark
+  - type: Construction
+    graph: tileDark
+    node: darktile
 
 - type: entity
   name: techmaint floor
@@ -98,6 +104,9 @@
       - floor_techmaint
   - type: Stack
     stackType: FloorTileTechmaint
+  - type: Construction
+    graph: tileTechmaint
+    node: techmainttile
 
 - type: entity
   name: freezer tile
@@ -114,6 +123,9 @@
       - floor_freezer
   - type: Stack
     stackType: FloorTileFreezer
+  - type: Construction
+    graph: tileFreezer
+    node: freezertile
 
 - type: entity
   name: showroom tile
@@ -130,6 +142,9 @@
       - floor_showroom
   - type: Stack
     stackType: FloorTileShowroom
+  - type: Construction
+    graph: tileShowroom
+    node: showroomtile
 
 - type: entity
   name: green-circuit floor
@@ -162,6 +177,9 @@
       - floor_gold
   - type: Stack
     stackType: FloorTileGold
+  - type: Construction
+    graph: tileGold
+    node: goldtile
 
 - type: entity
   name: reinforced tile

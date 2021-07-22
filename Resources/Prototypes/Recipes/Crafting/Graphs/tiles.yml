@@ -23,3 +23,81 @@
             - material: WoodPlank
     - node: woodtile
       entity: FloorTileItemWood
+
+- type: constructionGraph
+  id: tileWhite
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitetile
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitetile
+      entity: FloorTileItemWhite
+
+- type: constructionGraph
+  id: tileDark
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darktile
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darktile
+      entity: FloorTileItemDark
+
+- type: constructionGraph
+  id: tileTechmaint
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: techmainttile
+          steps:
+            - material: Steel
+              amount: 1
+    - node: techmainttile
+      entity: FloorTileItemTechmaint
+
+- type: constructionGraph
+  id: tileFreezer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: freezertile
+          steps:
+            - material: Steel
+              amount: 1
+    - node: freezertile
+      entity: FloorTileItemFreezer
+
+- type: constructionGraph
+  id: tileShowroom
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: showroomtile
+          steps:
+            - material: Steel
+              amount: 1
+    - node: showroomtile
+      entity: FloorTileItemShowroom
+
+- type: constructionGraph
+  id: tileGold
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: goldtile
+          steps:
+            - material: Gold
+              amount: 1
+    - node: goldtile
+      entity: FloorTileItemGold
