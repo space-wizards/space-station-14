@@ -1535,3 +1535,8 @@ Entries:
   - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
   id: 272
   time: '2021-07-21T17:04:18.364235+00:00'
+- author: Seth
+  changes:
+  - {message: Added Cannabis and Tabaco seeds into the exotic seeds crate, type: Add}
+  id: 273
+  time: '2021-07-22T02:20:41.0000000+00:00'
