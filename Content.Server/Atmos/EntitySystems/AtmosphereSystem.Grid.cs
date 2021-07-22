@@ -9,7 +9,6 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.GameObjects;
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.IoC;
@@ -441,6 +440,12 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Tile Atmosphere Get
 
+        /// <summary>
+        ///     Gets the tile atmosphere in a position, or null.
+        /// </summary>
+        /// <param name="coordinates">Coordinates where to get the tile.</param>
+        /// <remarks>Do NOT use this outside of atmos internals.</remarks>
+        /// <returns>The Tile Atmosphere in the position, or null if not on a grid.</returns>
         public TileAtmosphere? GetTileAtmosphere(EntityCoordinates coordinates)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
@@ -449,6 +454,13 @@ namespace Content.Server.Atmos.EntitySystems
             return null;
         }
 
+        /// <summary>
+        ///     Gets the tile atmosphere in a position, or null.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <remarks>Do NOT use this outside of atmos internals.</remarks>
+        /// <returns>The Tile Atmosphere in the position, or null.</returns>
         public TileAtmosphere? GetTileAtmosphere(GridId grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
@@ -462,6 +474,13 @@ namespace Content.Server.Atmos.EntitySystems
             return null;
         }
 
+        /// <summary>
+        ///     Gets the tile atmosphere in a position, or null.
+        /// </summary>
+        /// <param name="gridAtmosphere">Grid atmosphere where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <remarks>Do NOT use this outside of atmos internals.</remarks>
+        /// <returns>The Tile Atmosphere in the position, or null.</returns>
         public TileAtmosphere? GetTileAtmosphere(GridAtmosphereComponent gridAtmosphere, Vector2i tile)
         {
             if (gridAtmosphere.Tiles.TryGetValue(tile, out var tileAtmosphere))
@@ -470,6 +489,12 @@ namespace Content.Server.Atmos.EntitySystems
             return null;
         }
 
+        /// <summary>
+        ///     Gets the tile atmosphere in a position and if not possible returns a space tile or null.
+        /// </summary>
+        /// <param name="coordinates">Coordinates of the tile.</param>
+        /// <remarks>Do NOT use this outside of atmos internals.</remarks>
+        /// <returns>The tile atmosphere of a specific position in a grid, a space tile atmosphere if the tile is space or null if not on a grid.</returns>
         public TileAtmosphere? GetTileAtmosphereOrCreateSpace(EntityCoordinates coordinates)
         {
             if (TryGetGridAndTile(coordinates, out var tuple))
@@ -478,6 +503,13 @@ namespace Content.Server.Atmos.EntitySystems
             return null;
         }
 
+        /// <summary>
+        ///     Gets the tile atmosphere in a position and if not possible returns a space tile or null.
+        /// </summary>
+        /// <param name="grid">Grid where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <remarks>Do NOT use this outside of atmos internals.</remarks>
+        /// <returns>The tile atmosphere of a specific position in a grid, a space tile atmosphere if the tile is space or null if the grid doesn't exist.</returns>
         public TileAtmosphere? GetTileAtmosphereOrCreateSpace(GridId grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
@@ -491,7 +523,15 @@ namespace Content.Server.Atmos.EntitySystems
             return null;
         }
 
-        public TileAtmosphere? GetTileAtmosphereOrCreateSpace(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, Vector2i tile)
+        /// <summary>
+        ///     Gets the tile atmosphere in a position and if not possible returns a space tile or null.
+        /// </summary>
+        /// <param name="mapGrid">Grid where to get the tile.</param>
+        /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
+        /// <param name="tile">Indices of the tile.</param>
+        /// <remarks>Do NOT use this outside of atmos internals.</remarks>
+        /// <returns>The tile atmosphere of a specific position in a grid or a space tile atmosphere if the tile is space.</returns>
+        public TileAtmosphere GetTileAtmosphereOrCreateSpace(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, Vector2i tile)
         {
             var tileAtmosphere = GetTileAtmosphere(gridAtmosphere, tile);
 
@@ -1025,6 +1065,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Immediately updates a tile's blocked air directions.
         /// </summary>
+        /// <param name="mapGrid">Grid where to get the tile.</param>
         /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
         public void UpdateAdjacent(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, Vector2i tile)
@@ -1054,11 +1095,10 @@ namespace Content.Server.Atmos.EntitySystems
                 var adjacent = GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, otherIndices);
                 tileAtmosphere.AdjacentTiles[direction.ToIndex()] = adjacent;
 
-                if (adjacent != null)
-                    UpdateAdjacent(mapGrid, gridAtmosphere, adjacent, direction.GetOpposite());
+                UpdateAdjacent(mapGrid, gridAtmosphere, adjacent, direction.GetOpposite());
 
-                if (adjacent != null && !tileAtmosphere.BlockedAirflow.IsFlagSet(direction)
-                                     && !IsTileAirBlocked(mapGrid, adjacent.GridIndices, direction.GetOpposite()))
+                if (!tileAtmosphere.BlockedAirflow.IsFlagSet(direction)
+                    && !IsTileAirBlocked(mapGrid, adjacent.GridIndices, direction.GetOpposite()))
                 {
                     tileAtmosphere.AdjacentBits |= direction;
                 }
@@ -1097,6 +1137,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Immediately updates a tile's single blocked air direction.
         /// </summary>
+        /// <param name="mapGrid">Grid where to get the tile.</param>
         /// <param name="gridAtmosphere">Grid Atmosphere where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
         /// <param name="direction">Direction to be updated.</param>
