@@ -1,4 +1,0 @@
-﻿author: PJB
-changes:
-  - type: Tweak
-    message: AFK players no longer automatically vote "no" on restart votes.
