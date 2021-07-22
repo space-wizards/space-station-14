@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Collections;
@@ -32,6 +33,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private int _nextVoteId = 1;
 
