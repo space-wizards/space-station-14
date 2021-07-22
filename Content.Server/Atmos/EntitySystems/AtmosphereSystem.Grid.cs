@@ -64,65 +64,6 @@ namespace Content.Server.Atmos.EntitySystems
             GridRepopulateTiles(mapGrid.Grid, gridAtmosphere);
         }
 
-        #region Get GridAtmosphere
-
-        public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
-        {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
-                return null;
-
-            return ComponentManager.TryGetComponent(grid.GridEntityId, out IGridAtmosphereComponent? gridAtmosphere)
-                ? gridAtmosphere : null;
-        }
-
-        public IGridAtmosphereComponent GetGridAtmosphere(EntityCoordinates coordinates)
-        {
-            return GetGridAtmosphere(coordinates.ToMap(EntityManager));
-        }
-
-        public IGridAtmosphereComponent GetGridAtmosphere(MapCoordinates coordinates)
-        {
-            if (coordinates.MapId == MapId.Nullspace)
-            {
-                throw new ArgumentException($"Coordinates cannot be in nullspace!", nameof(coordinates));
-            }
-
-            if (_mapManager.TryFindGridAt(coordinates, out var grid))
-            {
-                if (ComponentManager.TryGetComponent(grid.GridEntityId, out IGridAtmosphereComponent? atmos))
-                {
-                    return atmos;
-                }
-            }
-
-            return _mapManager.GetMapEntity(coordinates.MapId).GetComponent<IGridAtmosphereComponent>();
-        }
-
-        /// <summary>
-        ///     Unlike GetGridAtmosphere, this doesn't return space grid when not found.
-        /// </summary>
-        public bool TryGetSimulatedGridAtmosphere(MapCoordinates coordinates, [NotNullWhen(true)] out IGridAtmosphereComponent? atmosphere)
-        {
-            if (coordinates.MapId == MapId.Nullspace)
-            {
-                atmosphere = null;
-                return false;
-            }
-
-            if (_mapManager.TryFindGridAt(coordinates, out var mapGrid)
-                && ComponentManager.TryGetComponent(mapGrid.GridEntityId, out IGridAtmosphereComponent? atmosGrid)
-                && atmosGrid.Simulated)
-            {
-                atmosphere = atmosGrid;
-                return true;
-            }
-
-            atmosphere = null;
-            return false;
-        }
-
-        #endregion
-
         #region Grid Is Simulated
 
         /// <summary>

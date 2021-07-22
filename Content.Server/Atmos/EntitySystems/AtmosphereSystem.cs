@@ -81,7 +81,6 @@ namespace Content.Server.Atmos.EntitySystems
                 foreach (var exposed in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
                 {
                     // TODO ATMOS: Kill this with fire.
-                    var atmos = GetGridAtmosphere(exposed.Owner.Transform.Coordinates);
                     var tile = GetTileAtmosphereOrCreateSpace(exposed.Owner.Transform.Coordinates);
                     if (tile == null) continue;
                     exposed.Update(tile, _exposedTimer, this);
