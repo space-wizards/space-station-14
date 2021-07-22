@@ -13,3 +13,6 @@
     size: 24
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     prefix: inhand
+  - type: Construction
+    graph: bat
+    node: bat
