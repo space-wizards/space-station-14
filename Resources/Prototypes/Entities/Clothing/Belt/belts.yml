@@ -94,6 +94,15 @@
   - type: StorageFill
     contents:
       - id: CaptainSabre
+  - type: ItemCounter
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - CaptainSabre
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
 
 - type: entity
   parent: ClothingBeltBase
@@ -139,7 +148,7 @@
   parent: ClothingBeltBase
   id: ClothingBeltHolster
   name: shoulder holster
-  description: A holster to carry a handgun and ammo. WARNING: Badasses only.
+  description: 'A holster to carry a handgun and ammo. WARNING: Badasses only.'
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
