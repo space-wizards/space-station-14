@@ -13,7 +13,7 @@ namespace Content.Server.Atmos
         public bool Disposed = false;
 
         [ViewVariables]
-        public readonly HashSet<TileAtmosphere> Tiles = new();
+        public readonly HashSet<TileAtmosphere> Tiles = new(100);
 
         [ViewVariables]
         public int DismantleCooldown { get; set; }

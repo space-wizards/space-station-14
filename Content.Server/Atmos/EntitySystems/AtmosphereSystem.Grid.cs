@@ -260,11 +260,17 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Grid Revalidate
 
-        private void Revalidate(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere)
+        private bool Revalidate(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere)
         {
             var volume = GetVolumeForCells(mapGrid, 1);
 
-            foreach (var indices in gridAtmosphere.InvalidatedCoords)
+            if (!gridAtmosphere.RevalidatePaused)
+                gridAtmosphere.CurrentRunInvalidatedCoordinates = new Queue<Vector2i>(gridAtmosphere.InvalidatedCoords);
+
+            gridAtmosphere.InvalidatedCoords.Clear();
+
+            var number = 0;
+            while (gridAtmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
             {
                 var tile = GetTileAtmosphere(gridAtmosphere, indices);
 
@@ -338,9 +344,17 @@ namespace Content.Server.Atmos.EntitySystems
                     if (otherTile != null)
                         AddActiveTile(gridAtmosphere, otherTile);
                 }
+
+                if (number++ < InvalidCoordinatesLagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                {
+                    return false;
+                }
             }
 
-            gridAtmosphere.InvalidatedCoords.Clear();
+            return true;
         }
 
         #endregion

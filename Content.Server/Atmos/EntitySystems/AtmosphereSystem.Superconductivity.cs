@@ -57,6 +57,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool ConsiderSuperconductivity(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, bool starting)
         {
+            if (!Superconduction)
+                return false;
+
             if (tile.Air == null || tile.Air.Temperature < (starting
                 ? Atmospherics.MinimumTemperatureStartSuperConduction
                 : Atmospherics.MinimumTemperatureForSuperconduction))

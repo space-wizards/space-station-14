@@ -55,16 +55,23 @@ namespace Content.Server.Atmos.EntitySystems
             return mixture.Temperature * GetHeatCapacity(mixture);
         }
 
+        public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
+        {
+            return mixture.Temperature * cachedHeatCapacity;
+        }
+
         public void Merge(GasMixture receiver, GasMixture giver)
         {
             if (receiver.Immutable) return;
 
             if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                var combinedHeatCapacity = GetHeatCapacity(receiver) + GetHeatCapacity(giver);
+                var receiverHeatCapacity = GetHeatCapacity(receiver);
+                var giverHeatCapacity = GetHeatCapacity(giver);
+                var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
                 if (combinedHeatCapacity > 0f)
                 {
-                    receiver.Temperature = (GetThermalEnergy(giver) + GetThermalEnergy(receiver)) / combinedHeatCapacity;
+                    receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                 }
             }
 

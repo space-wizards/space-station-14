@@ -19,7 +19,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
-        public void EqualizePressureInZone(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        public void EqualizePressureInZone(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
                 return; // Already done.
@@ -81,8 +81,8 @@ namespace Content.Server.Atmos.EntitySystems
                     if (adj.Air.Immutable)
                     {
                         // Looks like someone opened an airlock to space!
-                        if(TryGetMapGrid(gridAtmosphere, out var mapGrid))
-                            ExplosivelyDepressurize(mapGrid, gridAtmosphere, tile, cycleNum);
+
+                        ExplosivelyDepressurize(mapGrid, gridAtmosphere, tile, cycleNum);
                         return;
                     }
                 }

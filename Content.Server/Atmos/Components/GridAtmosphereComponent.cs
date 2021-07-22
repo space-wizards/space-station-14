@@ -23,7 +23,13 @@ namespace Content.Server.Atmos.Components
         public override string Name => "GridAtmosphere";
         public virtual bool Simulated => true;
 
+        [ViewVariables]
+        public bool RevalidatePaused { get; set; } = false;
+
+        [ViewVariables]
         public bool ProcessingPaused { get; set; } = false;
+
+        [ViewVariables]
         public float Timer { get; set; } = 0f;
 
         [ViewVariables]
@@ -90,8 +96,12 @@ namespace Content.Server.Atmos.Components
         public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
 
         [ViewVariables]
+        public Queue<Vector2i> CurrentRunInvalidatedCoordinates = new();
+
+        [ViewVariables]
         public int InvalidatedCoordsCount => InvalidatedCoords.Count;
 
+        [ViewVariables]
         public long EqualizationQueueCycleControl { get; set; }
 
         [ViewVariables]
