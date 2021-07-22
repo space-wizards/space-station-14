@@ -340,7 +340,7 @@
         - VaultImpassable
         - SmallImpassable
         layer:
-        - MobImpassable
+        - Opaque
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate
