@@ -1,34 +1,23 @@
+# Belts with visualizers
+
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltAssault
   name: assault belt
-  description: "A tactical assault belt."
+  description: A tactical assault belt.
   components:
   - type: Sprite
     sprite: Clothing/Belt/assault.rsi
   - type: Clothing
     sprite: Clothing/Belt/assault.rsi
-  - type: Storage
-    capacity: 40
-
-- type: entity
-  parent: ClothingBeltBase
-  id: ClothingBeltBandolier
-  name: bandolier
-  description: "A bandolier for holding shotgun ammunition."
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/bandolier.rsi
-  - type: Clothing
-    sprite: Clothing/Belt/bandolier.rsi
   - type: Storage
     capacity: 40
 
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltChiefEngineer
-  name:  chief's toolbelt
-  description: "Holds tools, looks snazzy."
+  name: chief's toolbelt
+  description: Holds tools, looks snazzy.
   components:
   - type: Sprite
     sprite: Clothing/Belt/ce.rsi
@@ -39,34 +28,9 @@
 
 - type: entity
   parent: ClothingBeltBase
-  id: ClothingBeltChampion
-  name:  championship belt
-  description: "Proves to the world that you are the strongest!"
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/champion.rsi
-  - type: Clothing
-    sprite: Clothing/Belt/champion.rsi
-    QuickEquip: true
-
-- type: entity
-  parent: ClothingBeltBase
-  id: ClothingBeltHolster
-  name:  shoulder holster
-  description: "A holster to carry a handgun and ammo. WARNING: Badasses only."
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/holster.rsi
-  - type: Clothing
-    sprite: Clothing/Belt/holster.rsi
-  - type: Storage
-    capacity: 20
-
-- type: entity
-  parent: ClothingBeltBase
   id: ClothingBeltJanitor
-  name:  janibelt
-  description: "A belt used to hold most janitorial supplies."
+  name: janibelt
+  description: A belt used to hold most janitorial supplies.
   components:
   - type: Sprite
     sprite: Clothing/Belt/janitor.rsi
@@ -78,60 +42,47 @@
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltMedical
-  name:  medical belt
-  description: "Can hold various medical equipment."
+  name: medical belt
+  description: Can hold various medical equipment.
   components:
   - type: Sprite
     sprite: Clothing/Belt/medical.rsi
   - type: Clothing
     sprite: Clothing/Belt/medical.rsi
+  - type: Storage
+    capacity: 40
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltPlant
+  name: plant belt
+  description: Can hold tools for the care of plants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/plant.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/plant.rsi
   - type: Storage
     capacity: 40
 
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltSecurity
-  name:  security belt
-  description: "Can hold security gear like handcuffs and flashes."
+  name: security belt
+  description: Can hold security gear like handcuffs and flashes.
   components:
   - type: Sprite
     sprite: Clothing/Belt/security.rsi
   - type: Clothing
     sprite: Clothing/Belt/security.rsi
-  - type: Storage
-    capacity: 40
-
-- type: entity
-  parent: ClothingBeltBase
-  id: ClothingBeltSecurityWebbing
-  name:  security webbing
-  description: "Unique and versatile chest rig, can hold security gear."
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/securitywebbing.rsi
-  - type: Clothing
-    sprite: Clothing/Belt/securitywebbing.rsi
-  - type: Storage
-    capacity: 40
-
-- type: entity
-  parent: ClothingBeltBase
-  id: ClothingBeltMilitaryWebbing
-  name:  chest rig
-  description: "A set of tactical webbing worn by Syndicate boarding parties."
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/militarywebbing.rsi
-  - type: Clothing
-    sprite: Clothing/Belt/militarywebbing.rsi
   - type: Storage
     capacity: 40
 
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltSheath
-  name:  sabre sheath
-  description: "An ornate sheath designed to hold an officer's blade."
+  name: sabre sheath
+  description: An ornate sheath designed to hold an officer's blade.
   components:
   - type: Sprite
     sprite: Clothing/Belt/sheath.rsi
@@ -146,22 +97,9 @@
 
 - type: entity
   parent: ClothingBeltBase
-  id: ClothingBeltSuspenders
-  name: suspenders
-  description: "For holding your pants up."
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/suspenders.rsi
-    state: icon
-  - type: Clothing
-    sprite: Clothing/Belt/suspenders.rsi
-    QuickEquip: true
-
-- type: entity
-  parent: ClothingBeltBase
   id: ClothingBeltUtility
   name: utility belt
-  description: "Can hold various things."
+  description: Can hold various things.
   components:
   - type: Sprite
     sprite: Clothing/Belt/utility.rsi
@@ -169,3 +107,82 @@
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
     capacity: 40
+
+# Belts without visualizers
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltBandolier
+  name: bandolier
+  description: A bandolier for holding shotgun ammunition.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/bandolier.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/bandolier.rsi
+  - type: Storage
+    capacity: 40
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltChampion
+  name: championship belt
+  description: Proves to the world that you are the strongest!
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/champion.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/champion.rsi
+    QuickEquip: true
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltHolster
+  name: shoulder holster
+  description: A holster to carry a handgun and ammo. WARNING: Badasses only.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/holster.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/holster.rsi
+  - type: Storage
+    capacity: 20
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltSecurityWebbing
+  name: security webbing
+  description: Unique and versatile chest rig, can hold security gear.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/securitywebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/securitywebbing.rsi
+  - type: Storage
+    capacity: 40
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltMilitaryWebbing
+  name: chest rig
+  description: A set of tactical webbing worn by Syndicate boarding parties.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/militarywebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/militarywebbing.rsi
+  - type: Storage
+    capacity: 40
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltSuspenders
+  name: suspenders
+  description: For holding your pants up.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/suspenders.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Belt/suspenders.rsi
+    QuickEquip: true

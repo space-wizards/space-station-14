@@ -8,6 +8,9 @@
   },
   "states": [
     {
+      "name": "bottle"
+    },
+    {
       "name": "crowbar"
     },
     {
@@ -20,6 +23,9 @@
       "name": "crowbar_red"
     },
     {
+      "name": "cultivator"
+    },
+    {
       "name": "cutters_brass"
     },
     {
@@ -28,29 +34,33 @@
     {
       "name": "cutters_yellow"
     },
+
     {
-      "name": "drill_bolt"
-    },
-    {
-      "name": "drill_screw"
+      "name": "drill"
     },
     {
       "name": "flashbang"
     },
     {
-      "name": "jaws_cutter"
+      "name": "hatchet"
     },
     {
-      "name": "jaws_pry"
+      "name": "hydro"
+    },
+    {
+      "name": "hypo"
+    },
+    {
+      "name": "jaws"
     },
     {
       "name": "multitool"
     },
     {
-      "name": "multitool_red"
+      "name": "pill"
     },
     {
-      "name": "multitool_yellow"
+      "name": "plantbgone"
     },
     {
       "name": "screwdriver"
@@ -65,13 +75,22 @@
       "name": "screwdriver_nuke"
     },
     {
+      "name": "secateurs"
+    },
+    {
+      "name": "spray_med"
+    },
+    {
+      "name": "spray_brute"
+    },
+    {
+      "name": "spray_burn"
+    },
+    {
+      "name": "spray_synth"
+    },
+    {
       "name": "stunbaton"
-    },
-    {
-      "name": "stunbaton_active"
-    },
-    {
-      "name": "stunbaton_nocell"
     },
     {
       "name": "wrench"
