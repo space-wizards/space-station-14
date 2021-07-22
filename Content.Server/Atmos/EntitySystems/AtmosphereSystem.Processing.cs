@@ -69,22 +69,22 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessExcitedGroups(GridAtmosphereComponent atmosphere)
+        private bool ProcessExcitedGroups(GridAtmosphereComponent gridAtmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
-                atmosphere.CurrentRunExcitedGroups = new Queue<ExcitedGroup>(atmosphere.ExcitedGroups);
+            if(!gridAtmosphere.ProcessingPaused)
+                gridAtmosphere.CurrentRunExcitedGroups = new Queue<ExcitedGroup>(gridAtmosphere.ExcitedGroups);
 
             var number = 0;
-            while (atmosphere.CurrentRunExcitedGroups.TryDequeue(out var excitedGroup))
+            while (gridAtmosphere.CurrentRunExcitedGroups.TryDequeue(out var excitedGroup))
             {
                 excitedGroup.BreakdownCooldown++;
                 excitedGroup.DismantleCooldown++;
 
                 if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    excitedGroup.SelfBreakdown(this, ExcitedGroupsSpaceIsAllConsuming);
+                    ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup, ExcitedGroupsSpaceIsAllConsuming);
 
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
-                    excitedGroup.Dismantle();
+                    ExcitedGroupDismantle(gridAtmosphere, excitedGroup);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -195,7 +195,7 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunAtmosDevices = new Queue<AtmosDeviceComponent>(atmosphere.AtmosDevices);
 
             var time = _gameTiming.CurTime;
-            var updateEvent = new AtmosDeviceUpdateEvent(atmosphere);
+            var updateEvent = new AtmosDeviceUpdateEvent();
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
@@ -237,8 +237,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 atmosphere.Timer += frameTime;
 
-                if (atmosphere.InvalidatedCoords.Count != 0)
-                    atmosphere.Revalidate();
+                if (atmosphere.InvalidatedCoords.Count != 0 && TryGetMapGrid(atmosphere, out var mapGrid))
+                    Revalidate(mapGrid, atmosphere);
 
                 if (atmosphere.Timer < AtmosTime)
                     continue;

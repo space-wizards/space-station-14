@@ -1,6 +1,7 @@
 using System;
 using Content.Server.Atmos.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -21,40 +22,18 @@ namespace Content.Server.Atmos.Piping.Components
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; private set; } = true;
 
-        public IGridAtmosphereComponent? Atmosphere { get; set; }
-
         [ViewVariables]
         public TimeSpan LastProcess { get; set; } = TimeSpan.Zero;
+
+        public GridId? JoinedGrid { get; set; }
     }
 
-    public abstract class BaseAtmosDeviceEvent : EntityEventArgs
-    {
-        public IGridAtmosphereComponent Atmosphere { get; }
+    public sealed class AtmosDeviceUpdateEvent : EntityEventArgs
+    {}
 
-        public BaseAtmosDeviceEvent(IGridAtmosphereComponent atmosphere)
-        {
-            Atmosphere = atmosphere;
-        }
-    }
+    public sealed class AtmosDeviceEnabledEvent : EntityEventArgs
+    {}
 
-    public sealed class AtmosDeviceUpdateEvent : BaseAtmosDeviceEvent
-    {
-        public AtmosDeviceUpdateEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
-        {
-        }
-    }
-
-    public sealed class AtmosDeviceEnabledEvent : BaseAtmosDeviceEvent
-    {
-        public AtmosDeviceEnabledEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
-        {
-        }
-    }
-
-    public sealed class AtmosDeviceDisabledEvent : BaseAtmosDeviceEvent
-    {
-        public AtmosDeviceDisabledEvent(IGridAtmosphereComponent atmosphere) : base(atmosphere)
-        {
-        }
-    }
+    public sealed class AtmosDeviceDisabledEvent : EntityEventArgs
+    {}
 }

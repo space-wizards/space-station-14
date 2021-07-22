@@ -1,9 +1,13 @@
 using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+
         public bool SpaceWind { get; private set; }
         public string? SpaceWindSound { get; private set; }
         public bool MonstermosEqualization { get; private set; }

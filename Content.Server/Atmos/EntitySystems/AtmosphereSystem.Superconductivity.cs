@@ -48,10 +48,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool ConsiderSuperconductivity(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
-            if (tile.ThermalConductivity == 0f)
+            if (tile.ThermalConductivity == 0f || !Superconduction)
                 return false;
 
-            gridAtmosphere.AddSuperconductivityTile(tile);
+            gridAtmosphere.SuperconductivityTiles.Add(tile);
             return true;
         }
 
@@ -62,7 +62,7 @@ namespace Content.Server.Atmos.EntitySystems
                 : Atmospherics.MinimumTemperatureForSuperconduction))
                 return false;
 
-            return !(gridAtmosphere.AtmosphereSystem.GetHeatCapacity(tile.Air) < Atmospherics.MCellWithRatio)
+            return !(GetHeatCapacity(tile.Air) < Atmospherics.MCellWithRatio)
                    && ConsiderSuperconductivity(gridAtmosphere, tile);
         }
 
@@ -82,7 +82,7 @@ namespace Content.Server.Atmos.EntitySystems
             // Make sure it's still hot enough to continue conducting.
             if (temperature < Atmospherics.MinimumTemperatureForSuperconduction)
             {
-                gridAtmosphere.RemoveSuperconductivityTile(tile);
+                gridAtmosphere.SuperconductivityTiles.Remove(tile);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Content.Server.Atmos.EntitySystems
                 TemperatureShareOpenToSolid(tile, other);
             }
 
-            gridAtmosphere.AddActiveTile(tile);
+            AddActiveTile(gridAtmosphere, tile);
         }
 
         private void TemperatureShareOpenToSolid(TileAtmosphere tile, TileAtmosphere other)

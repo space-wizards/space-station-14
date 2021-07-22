@@ -4,12 +4,16 @@ using System.Linq;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
         private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
 
