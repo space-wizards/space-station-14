@@ -20,6 +20,7 @@
       hard: false
       mask:
       - Impassable
+      layer:
       - MobImpassable
     linearDamping: 0
     angularDamping: 0
