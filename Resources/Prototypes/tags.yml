@@ -35,6 +35,9 @@
   id: Ingot
 
 - type: Tag
+  id: NoSpinOnThrow
+
+- type: Tag
   id: Ore
 
 - type: Tag
