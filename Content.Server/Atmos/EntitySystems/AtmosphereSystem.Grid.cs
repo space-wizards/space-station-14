@@ -1300,7 +1300,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
-                gridAtmosphere.RemovePipeNet(pipeNet);
+                gridAtmosphere.PipeNets.Remove(pipeNet);
             }
         }
 
