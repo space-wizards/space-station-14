@@ -132,8 +132,10 @@ namespace Content.Server.Hands
             if (direction == Vector2.Zero)
                 return true;
 
-            var throwVec = direction.Normalized * MathF.Min(direction.Length, hands.ThrowRange) * hands.ThrowForceMultiplier;
-            throwEnt.TryThrow(throwVec, playerEnt);
+            direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
+
+            var throwStrength = hands.ThrowForceMultiplier;
+            throwEnt.TryThrow(direction, throwStrength, playerEnt);
 
             return true;
         }
