@@ -126,7 +126,7 @@ namespace Content.Server.Physics.Controllers
                                                             physicsComponent.Mass *
                                                             movement.Y *
                                                             10);
-                        physicsComponent.ApplyAngularImpulse(movement.X * angularSpeed);
+                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS
