@@ -57,7 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
                         throw;
                     }
 
-                    gridAtmosphere.InvalidatedCoords.Add(indices);
+                    InvalidateTile(gridAtmosphere, indices);
                 }
             }
 
@@ -146,7 +146,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 if (invalidate)
-                    gridAtmosphere.InvalidatedCoords.Add(indices);
+                    InvalidateTile(gridAtmosphere, indices);
 
                 yield return tile.Air;
             }
@@ -156,18 +156,30 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Grid Cell Volume
 
-        public float GetVolumeForCells(GridId grid, int cells = 1)
+        /// <summary>
+        ///     Gets the volume in liters for a number of tiles, on a specific grid.
+        /// </summary>
+        /// <param name="grid">The grid in question.</param>
+        /// <param name="tiles">The amount of tiles.</param>
+        /// <returns>The volume in liters that the tiles occupy.</returns>
+        public float GetVolumeForTiles(GridId grid, int tiles = 1)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
-                return Atmospherics.CellVolume * cells;
+                return Atmospherics.CellVolume * tiles;
 
-            return GetVolumeForCells(mapGrid, cells);
+            return GetVolumeForTiles(mapGrid, tiles);
 
         }
 
-        public float GetVolumeForCells(IMapGrid mapGrid, int cells = 1)
+        /// <summary>
+        ///     Gets the volume in liters for a number of tiles, on a specific grid.
+        /// </summary>
+        /// <param name="mapGrid">The grid in question.</param>
+        /// <param name="tiles">The amount of tiles.</param>
+        /// <returns>The volume in liters that the tiles occupy.</returns>
+        public float GetVolumeForTiles(IMapGrid mapGrid, int tiles = 1)
         {
-            return Atmospherics.CellVolume * mapGrid.TileSize * cells;
+            return Atmospherics.CellVolume * mapGrid.TileSize * tiles;
 
         }
 
@@ -175,9 +187,15 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Grid Get Obstructing
 
-        public virtual IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i indices)
+        /// <summary>
+        ///     Gets all obstructing AirtightComponent instances in a specific tile.
+        /// </summary>
+        /// <param name="mapGrid">The grid where to get the tile.</param>
+        /// <param name="tile">The indices of the tile.</param>
+        /// <returns></returns>
+        public virtual IEnumerable<AirtightComponent> GetObstructingComponents(IMapGrid mapGrid, Vector2i tile)
         {
-            foreach (var uid in mapGrid.GetAnchoredEntities(indices))
+            foreach (var uid in mapGrid.GetAnchoredEntities(tile))
             {
                 if (ComponentManager.TryGetComponent<AirtightComponent>(uid, out var ac))
                     yield return ac;
@@ -201,9 +219,15 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Grid Revalidate
 
-        private bool Revalidate(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere)
+        /// <summary>
+        ///     Revalidates all invalid coordinates in a grid atmosphere.
+        /// </summary>
+        /// <param name="mapGrid">The grid in question.</param>
+        /// <param name="gridAtmosphere">The grid atmosphere in question.</param>
+        /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
+        private bool GridRevalidate(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere)
         {
-            var volume = GetVolumeForCells(mapGrid, 1);
+            var volume = GetVolumeForTiles(mapGrid, 1);
 
             if (!gridAtmosphere.RevalidatePaused)
                 gridAtmosphere.CurrentRunInvalidatedCoordinates = new Queue<Vector2i>(gridAtmosphere.InvalidatedCoords);
@@ -302,16 +326,21 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Grid Repopulate
 
+        /// <summary>
+        ///     Repopulates all tiles on a grid atmosphere.
+        /// </summary>
+        /// <param name="mapGrid">The grid where to get all valid tiles from.</param>
+        /// <param name="gridAtmosphere">The grid atmosphere where the tiles will be repopulated.</param>
         public void GridRepopulateTiles(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere)
         {
-            var volume = GetVolumeForCells(mapGrid, 1);
+            var volume = GetVolumeForTiles(mapGrid, 1);
 
             foreach (var tile in mapGrid.GetAllTiles())
             {
                 if(!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
                     gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridIndex, tile.GridIndices, new GasMixture(volume){Temperature = Atmospherics.T20C});
 
-                gridAtmosphere.InvalidatedCoords.Add(tile.GridIndices);
+                InvalidateTile(gridAtmosphere, tile.GridIndices);
             }
 
             foreach (var (position, tile) in gridAtmosphere.Tiles.ToArray())
@@ -325,6 +354,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Tile Pry
 
+        /// <summary>
+        ///     Pries a tile in a grid.
+        /// </summary>
+        /// <param name="grid">The grid in question.</param>
+        /// <param name="tile">The indices of the tile.</param>
         public void PryTile(GridId grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
@@ -333,6 +367,11 @@ namespace Content.Server.Atmos.EntitySystems
             PryTile(mapGrid, tile);
         }
 
+        /// <summary>
+        ///     Pries a tile in a grid.
+        /// </summary>
+        /// <param name="mapGrid">The grid in question.</param>
+        /// <param name="tile">The indices of the tile.</param>
         public void PryTile(IMapGrid mapGrid, Vector2i tile)
         {
             if (!mapGrid.TryGetTileRef(tile, out var tileRef))
@@ -359,15 +398,15 @@ namespace Content.Server.Atmos.EntitySystems
         ///     Invalidates a tile at a certain position.
         /// </summary>
         /// <param name="grid">Grid where to invalidate the tile.</param>
-        /// <param name="position">The tile's indices.</param>
-        public void InvalidateTile(GridId grid, Vector2i position)
+        /// <param name="tile">The indices of the tile.</param>
+        public void InvalidateTile(GridId grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
 
             if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
             {
-                InvalidateTile(gridAtmosphere, position);
+                InvalidateTile(gridAtmosphere, tile);
                 return;
             }
         }
@@ -376,10 +415,11 @@ namespace Content.Server.Atmos.EntitySystems
         ///     Invalidates a tile at a certain position.
         /// </summary>
         /// <param name="gridAtmosphere">Grid Atmosphere where to invalidate the tile.</param>
-        /// <param name="position">The tile's indices.</param>
-        public void InvalidateTile(GridAtmosphereComponent gridAtmosphere, Vector2i position)
+        /// <param name="tile">The tile's indices.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void InvalidateTile(GridAtmosphereComponent gridAtmosphere, Vector2i tile)
         {
-            gridAtmosphere.InvalidatedCoords.Add(position);
+            gridAtmosphere.InvalidatedCoords.Add(tile);
         }
 
         #endregion
@@ -646,7 +686,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             // Invalidate the tile if needed.
             if (invalidate)
-                gridAtmosphere.InvalidatedCoords.Add(tile);
+                InvalidateTile(gridAtmosphere, tile);
 
             // Return actual tile air or null.
             return tileAtmosphere.Air;
@@ -699,7 +739,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!gridAtmosphere.Tiles.TryGetValue(tile, out var tileAtmosphere) || tileAtmosphere.Air == null)
                 return ReactionResult.NoReaction;
 
-            gridAtmosphere.InvalidatedCoords.Add(tile);
+            InvalidateTile(gridAtmosphere, tile);
 
             return React(tileAtmosphere.Air, tileAtmosphere);
         }
@@ -945,7 +985,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (invalidate)
-                    gridAtmosphere.InvalidatedCoords.Add(adjacentTile.GridIndices);
+                    InvalidateTile(gridAtmosphere, adjacentTile.GridIndices);
 
                 yield return adjacentTile.Air;
             }
@@ -1129,7 +1169,7 @@ namespace Content.Server.Atmos.EntitySystems
                     return;
 
                 HotspotExpose(gridAtmosphere, tileAtmosphere, exposedTemperature, exposedVolume, soh);
-                gridAtmosphere.InvalidatedCoords.Add(tile);
+                InvalidateTile(gridAtmosphere, tile);
                 return;
             }
         }
@@ -1176,7 +1216,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             tileAtmosphere.Hotspot = new Hotspot();
-            gridAtmosphere.InvalidatedCoords.Add(tile);
+            InvalidateTile(gridAtmosphere, tile);
         }
 
         #endregion
@@ -1398,7 +1438,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             var adjacent = GetAdjacentTileMixtures(gridAtmosphere, tile, invalidate:true).ToArray();
-            tileAtmosphere.Air = new GasMixture(GetVolumeForCells(tileAtmosphere.GridIndex, 1))
+            tileAtmosphere.Air = new GasMixture(GetVolumeForTiles(tileAtmosphere.GridIndex, 1))
                 {Temperature = Atmospherics.T20C};
 
             // Return early, let's not cause any funny NaNs.

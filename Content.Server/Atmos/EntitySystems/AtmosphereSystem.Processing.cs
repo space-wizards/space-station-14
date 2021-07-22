@@ -247,7 +247,7 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.Timer += frameTime;
 
                 if ((atmosphere.InvalidatedCoords.Count != 0 || atmosphere.RevalidatePaused) && TryGetMapGrid(atmosphere, out var mapGrid))
-                    if (!Revalidate(mapGrid, atmosphere))
+                    if (!GridRevalidate(mapGrid, atmosphere))
                     {
                         atmosphere.RevalidatePaused = true;
                         return;
