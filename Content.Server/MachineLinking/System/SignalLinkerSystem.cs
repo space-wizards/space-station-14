@@ -267,11 +267,11 @@ namespace Content.Server.MachineLinking.System
             if (transmitterComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
                     out var transmitterPowerReceiverComponent) &&
                 receiverComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
-                    out var receiverPowerReceiverComponent))
+                    out var receiverPowerReceiverComponent)) //&& todo are they on the same powernet?
             {
-                return false;
+                return true;
             }
-            return !transmitterComponent.Owner.Transform.MapPosition.InRange(receiverComponent.Owner.Transform.MapPosition, 30f);
+            return transmitterComponent.Owner.Transform.MapPosition.InRange(receiverComponent.Owner.Transform.MapPosition, 30f);
         }
     }
 }
