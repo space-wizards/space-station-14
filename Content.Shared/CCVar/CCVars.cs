@@ -382,5 +382,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * AFK
+         */
+
+        /// <summary>
+        /// How long a client can go without any input before being considered AFK.
+        /// </summary>
+        public static readonly CVarDef<float> AfkTime =
+            CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
     }
 }
