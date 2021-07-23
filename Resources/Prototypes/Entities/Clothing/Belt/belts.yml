@@ -1,4 +1,4 @@
-# Belts with visualizers
+# Belts that need/have visualizers
 
 - type: entity
   parent: ClothingBeltBase
@@ -24,7 +24,49 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
+    # whitelist:
+    #   tags:
+    #     - BotanyHoe
+    #     - PlantAnalyzer
+    #     - BotanyHoe
+    #     - BotanyShovel
+    #   components:
+    #     - Seed
     capacity: 100
+  - type: ItemCounter
+    mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
+      cutters_red:
+        whitelist:
+          tags:
+          - Wirecutter
+      crowbar:
+        whitelist:
+          tags:
+          - Crowbar
+      crowbar_red:
+        whitelist:
+          tags:
+          - CrowbarRed
+      jaws:
+        whitelist:
+          tags:
+          - JawsOfLife
+      screwdriver_nuke:
+        whitelist:
+          tags:
+          - Screwdriver
+      multitool:
+        whitelist:
+          components:
+          - SignalLinker
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_icon_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -55,8 +97,8 @@
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltPlant
-  name: plant belt
-  description: Can hold tools for the care of plants.
+  name: botanical belt
+  description: A belt used to hold most hydroponics supplies. Suprisingly, not green.
   components:
   - type: Sprite
     sprite: Clothing/Belt/plant.rsi

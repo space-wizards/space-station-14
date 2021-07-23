@@ -44,6 +44,12 @@
   id: CrayonYellow
 
 - type: Tag
+  id: Crowbar
+
+- type: Tag
+  id: CrowbarRed
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -74,7 +80,7 @@
   id: Ingot
 
 - type: Tag
-  id: Multitool
+  id: JawsOfLife
 
 - type: Tag
   id: Ore
@@ -86,6 +92,12 @@
   id: PlantSampleTaker
 
 - type: Tag
+  id: Powerdrill
+
+- type: Tag
+  id: Screwdriver
+
+- type: Tag
   id: Sheet
 
 - type: Tag
@@ -93,6 +105,9 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: Wirecutter
 
 - type: Tag
   id: Write
