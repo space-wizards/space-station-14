@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -460,6 +461,17 @@ namespace Content.Server.Atmos.EntitySystems
                 otherTile.Air?.Clear();
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
                 HandleDecompressionFloorRip(mapGrid, otherTile, sum);
+            }
+
+            if (GridImpulse && tileCount > 0)
+            {
+                var direction = ((Vector2)tiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
+
+                var gridPhysics = ComponentManager.GetComponent<PhysicsComponent>(mapGrid.GridEntityId);
+
+                // TODO ATMOS: Come up with better values for these.
+                gridPhysics.ApplyLinearImpulse(direction * totalGasesRemoved * gridPhysics.Mass);
+                gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalGasesRemoved);
             }
 
             ArrayPool<TileAtmosphere>.Shared.Return(tiles);

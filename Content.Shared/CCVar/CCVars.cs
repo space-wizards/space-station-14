@@ -270,6 +270,14 @@ namespace Content.Shared.CCVar
             CVarDef.Create<bool>("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether explosive depressurization will cause the grid to gain an impulse.
+        ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> AtmosGridImpulse =
+            CVarDef.Create("atmos.grid_impulse", false, CVar.SERVERONLY);
+
+
+        /// <summary>
         ///     Whether atmos superconduction is enabled.
         /// </summary>
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
