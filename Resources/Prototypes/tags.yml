@@ -1,5 +1,14 @@
 - type: Tag
+  id: BotanyHatchet
+
+- type: Tag
+  id: BotanyHoe
+
+- type: Tag
   id: BotanySharp
+
+- type: Tag
+  id: BotanyShovel
 
 - type: Tag
   id: CanPilot
@@ -65,7 +74,13 @@
   id: Ingot
 
 - type: Tag
+  id: Multitool
+
+- type: Tag
   id: Ore
+
+- type: Tag
+  id: PlantAnalyzer
 
 - type: Tag
   id: PlantSampleTaker

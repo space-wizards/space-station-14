@@ -144,6 +144,9 @@
     qualities:
       - Multitool
   - type: SignalLinker
+  - type: Tag
+    tags:
+    - Multitool
 
 - type: entity
   name: power drill

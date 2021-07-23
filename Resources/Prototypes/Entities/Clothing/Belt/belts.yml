@@ -63,7 +63,37 @@
   - type: Clothing
     sprite: Clothing/Belt/plant.rsi
   - type: Storage
+    # whitelist:
+    #   tags:
+    #     - BotanyHoe
+    #     - PlantAnalyzer
+    #     - BotanyHoe
+    #     - BotanyShovel
+    #   components:
+    #     - Seed
     capacity: 40
+  - type: ItemCounter
+    mapLayers:
+      hatchet:
+        whitelist:
+          tags:
+          - BotanyHatchet
+      hydro:
+        whitelist:
+          tags:
+          - PlantAnalyzer # Dunno what to put here, should be aight.
+      hoe:
+        whitelist:
+          tags:
+          - BotanyHoe
+      secateurs: # We don't have secateurs and this looks similar enough.
+        whitelist:
+          tags:
+          - BotanyShovel
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_icon_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -116,6 +146,10 @@
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
     capacity: 40
+  - type: Appearance
+    sprite: Clothing/Belt/belt_icon_overlay.rsi
+    visuals:
+    - type: MappedItemVisualizer
 
 # Belts without visualizers
 

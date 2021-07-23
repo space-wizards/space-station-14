@@ -23,9 +23,6 @@
       "name": "crowbar_red"
     },
     {
-      "name": "cultivator"
-    },
-    {
       "name": "cutters_brass"
     },
     {
@@ -43,6 +40,9 @@
     },
     {
       "name": "hatchet"
+    },
+    {
+      "name": "hoe"
     },
     {
       "name": "hydro"
