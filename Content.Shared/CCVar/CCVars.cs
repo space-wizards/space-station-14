@@ -263,11 +263,26 @@ namespace Content.Shared.CCVar
             CVarDef.Create<bool>("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether monstermos explosive depressurization will rip tiles..
+        ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosRipTiles =
+            CVarDef.Create<bool>("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether atmos superconduction is enabled.
         /// </summary>
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
         public static readonly CVarDef<bool> Superconduction =
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether all tiles in an excited group will clear themselves once being exposed to space.
+        ///     Similar to <see cref="MonstermosDepressurization"/>, without none of the tile ripping or
+        ///     things being thrown around very violently.
+        /// </summary>
+        public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
+            CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time in milliseconds that atmos can take processing.
@@ -280,9 +295,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
             CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
-            CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
 
         /*
          * MIDI instruments

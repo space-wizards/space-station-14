@@ -41,7 +41,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            PerformHotspotExposure(gridAtmosphere, tile);
+            PerformHotspotExposure(tile);
 
             if (tile.Hotspot.Bypassing)
             {
@@ -118,7 +118,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void PerformHotspotExposure(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
+        private void PerformHotspotExposure(TileAtmosphere tile)
         {
             if (tile.Air == null || !tile.Hotspot.Valid) return;
 

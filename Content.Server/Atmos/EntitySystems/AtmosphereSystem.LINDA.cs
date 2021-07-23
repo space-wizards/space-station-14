@@ -7,7 +7,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
-        private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount, bool spaceWind = true)
+        private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount)
         {
             // Can't process a tile without air
             if (tile.Air == null)
@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var difference = Share(tile.Air!, enemyTile.Air!, adjacentTileLength);
 
-                    if (spaceWind)
+                    if (SpaceWind)
                     {
                         if (difference > 0)
                         {

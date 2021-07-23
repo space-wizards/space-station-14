@@ -64,7 +64,7 @@ namespace Content.Server.Atmos.EntitySystems
             excitedGroup.DismantleCooldown = 0;
         }
 
-        private void ExcitedGroupSelfBreakdown(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup, bool spaceIsAllConsuming = false)
+        private void ExcitedGroupSelfBreakdown(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup)
         {
             DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");
             DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
@@ -87,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 Merge(combined, tile.Air);
 
-                if (!spaceIsAllConsuming || !tile.Air.Immutable)
+                if (!ExcitedGroupsSpaceIsAllConsuming || !tile.Air.Immutable)
                     continue;
 
                 combined.Clear();

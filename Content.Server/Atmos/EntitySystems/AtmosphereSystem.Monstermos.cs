@@ -554,6 +554,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void HandleDecompressionFloorRip(IMapGrid mapGrid, TileAtmosphere tile, float sum)
         {
+            if (!MonstermosRipTiles)
+                return;
+
             var chance = MathHelper.Clamp(sum / 500, 0.005f, 0.5f);
 
             if (sum > 20 && _robustRandom.Prob(chance))

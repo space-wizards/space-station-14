@@ -356,22 +356,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Pries a tile in a grid.
         /// </summary>
-        /// <param name="grid">The grid in question.</param>
-        /// <param name="tile">The indices of the tile.</param>
-        public void PryTile(GridId grid, Vector2i tile)
-        {
-            if (!_mapManager.TryGetGrid(grid, out var mapGrid))
-                return;
-
-            PryTile(mapGrid, tile);
-        }
-
-        /// <summary>
-        ///     Pries a tile in a grid.
-        /// </summary>
         /// <param name="mapGrid">The grid in question.</param>
         /// <param name="tile">The indices of the tile.</param>
-        public void PryTile(IMapGrid mapGrid, Vector2i tile)
+        private void PryTile(IMapGrid mapGrid, Vector2i tile)
         {
             if (!mapGrid.TryGetTileRef(tile, out var tileRef))
                 return;

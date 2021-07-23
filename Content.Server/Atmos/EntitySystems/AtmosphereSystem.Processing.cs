@@ -64,7 +64,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                ProcessCell(atmosphere, tile, atmosphere.UpdateCounter, SpaceWind);
+                ProcessCell(atmosphere, tile, atmosphere.UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -90,7 +90,7 @@ namespace Content.Server.Atmos.EntitySystems
                 excitedGroup.DismantleCooldown++;
 
                 if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
-                    ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup, ExcitedGroupsSpaceIsAllConsuming);
+                    ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup);
 
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     ExcitedGroupDismantle(gridAtmosphere, excitedGroup);
