@@ -1,0 +1,14 @@
+<customControls:SS14Window Title="{customControls:Loc grinder-menu-title}" MinSize="512 256" SetSize="512 256" xmlns:customControls="https://spacestation14.io"
+                           xmlns:ui="clr-namespace:Content.Client.Kitchen.UI">
+    <customControls:BoxContainer Orientation="Horizontal">
+        <customControls:BoxContainer Orientation="Vertical" VerticalAlignment="Center">
+            <customControls:Button Name="GrindButton" Text="{customControls:Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 64"/>
+            <customControls:Control MinSize="0 16"/>
+            <customControls:Button Name="JuiceButton" Text="{customControls:Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 64"/>
+        </customControls:BoxContainer>
+        <customControls:Control MinSize="16 0"/>
+        <ui:LabelledContentBox Name="ChamberContentBox" LabelText="{customControls:Loc grinder-menu-chamber-content-box-label}" ButtonText="{customControls:Loc grinder-menu-chamber-content-box-button}" VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+        <customControls:Control MinSize="8 0"/>
+        <ui:LabelledContentBox Name="BeakerContentBox" LabelText="{customControls:Loc grinder-menu-beaker-content-box-label}" ButtonText="{customControls:Loc grinder-menu-beaker-content-box-button}" VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+    </customControls:BoxContainer>
+</customControls:SS14Window>
