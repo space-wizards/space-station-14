@@ -14,6 +14,9 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
     [GenerateTypedNameReferences]
     public partial class AdminbusTab : Control
     {
+        private EntitySpawnWindow? _entitySpawnWindow;
+        private TileSpawnWindow? _tileSpawnWindow;
+
         protected override void EnteredTree()
         {
             // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
@@ -22,22 +25,22 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             SpawnTilesButton.OnPressed += SpawnTilesButtonOnOnPressed;
         }
 
-        private static void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
             var manager = IoCManager.Resolve<IAdminMenuManager>();
-            var window = new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
+            _entitySpawnWindow ??= new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
                 IoCManager.Resolve<IPrototypeManager>(),
                 IoCManager.Resolve<IResourceCache>());
-            manager.OpenCommand(window);
+            manager.OpenCommand(_entitySpawnWindow);
         }
 
-        private static void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
             var manager = IoCManager.Resolve<IAdminMenuManager>();
-            var window = new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
+            _tileSpawnWindow ??= new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
                 IoCManager.Resolve<IPlacementManager>(),
                 IoCManager.Resolve<IResourceCache>());
-            manager.OpenCommand(window);
+            manager.OpenCommand(_tileSpawnWindow);
         }
     }
 }
