@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void ExcitedGroupAddTile(ExcitedGroup excitedGroup, TileAtmosphere tile)
         {
             DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");
-            DebugTools.Assert(tile.ExcitedGroup != null, "Tried to add a tile to an excited group when it's already in another one!");
+            DebugTools.Assert(tile.ExcitedGroup == null, "Tried to add a tile to an excited group when it's already in another one!");
             excitedGroup.Tiles.Add(tile);
             tile.ExcitedGroup = excitedGroup;
             ExcitedGroupResetCooldowns(excitedGroup);
@@ -27,6 +27,8 @@ namespace Content.Server.Atmos.EntitySystems
         {
             DebugTools.Assert(!ourGroup.Disposed, "Excited group is disposed!");
             DebugTools.Assert(!otherGroup.Disposed, "Excited group is disposed!");
+            DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(ourGroup), "Grid Atmosphere does not contain Excited Group!");
+            DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(otherGroup), "Grid Atmosphere does not contain Excited Group!");
             var ourSize = ourGroup.Tiles.Count;
             var otherSize = otherGroup.Tiles.Count;
 
@@ -65,6 +67,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void ExcitedGroupSelfBreakdown(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup, bool spaceIsAllConsuming = false)
         {
             DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");
+            DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
             var combined = new GasMixture(Atmospherics.CellVolume);
 
             var tileSize = excitedGroup.Tiles.Count;
@@ -105,7 +108,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void ExcitedGroupDismantle(GridAtmosphereComponent gridAtmosphere, ExcitedGroup excitedGroup, bool unexcite = true)
         {
-            DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");
             foreach (var tile in excitedGroup.Tiles)
             {
                 tile.ExcitedGroup = null;
@@ -124,7 +126,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (excitedGroup.Disposed)
                 return;
 
-            DebugTools.Assert(!gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
+            DebugTools.Assert(gridAtmosphere.ExcitedGroups.Contains(excitedGroup), "Grid Atmosphere does not contain Excited Group!");
 
             excitedGroup.Disposed = true;
 
