@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, float difference)
         {
-            gridAtmosphere.AddHighPressureDelta(tile);
+            gridAtmosphere.HighPressureDelta.Add(tile);
             if (difference > tile.PressureDifference)
             {
                 tile.PressureDifference = difference;

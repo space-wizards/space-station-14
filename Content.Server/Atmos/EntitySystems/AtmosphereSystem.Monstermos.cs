@@ -7,6 +7,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
@@ -18,7 +19,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
-        public void EqualizePressureInZone(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        public void EqualizePressureInZone(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
                 return; // Already done.
@@ -80,7 +81,8 @@ namespace Content.Server.Atmos.EntitySystems
                     if (adj.Air.Immutable)
                     {
                         // Looks like someone opened an airlock to space!
-                        ExplosivelyDepressurize(gridAtmosphere, tile, cycleNum);
+
+                        ExplosivelyDepressurize(mapGrid, gridAtmosphere, tile, cycleNum);
                         return;
                     }
                 }
@@ -339,7 +341,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
                     var otherTile2 = otherTile.AdjacentTiles[j];
                     if (otherTile2?.Air?.Compare(tile.Air) == GasMixture.GasCompareResult.NoExchange) continue;
-                    gridAtmosphere.AddActiveTile(otherTile2);
+                    AddActiveTile(gridAtmosphere, otherTile2);
                     break;
                 }
             }
@@ -349,7 +351,7 @@ namespace Content.Server.Atmos.EntitySystems
             ArrayPool<TileAtmosphere>.Shared.Return(takerTiles);
         }
 
-        public void ExplosivelyDepressurize(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        public void ExplosivelyDepressurize(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             // Check if explosive depressurization is enabled and if the tile is valid.
             if (!MonstermosDepressurization || tile.Air == null)
@@ -389,7 +391,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (otherTile2.Air == null) continue;
                         if (otherTile2.MonstermosInfo.LastQueueCycle == queueCycle) continue;
 
-                        ConsiderFirelocks(otherTile, otherTile2);
+                        ConsiderFirelocks(gridAtmosphere, otherTile, otherTile2);
 
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
@@ -438,8 +440,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var otherTile = progressionOrder[i];
                 if (otherTile.MonstermosInfo.CurrentTransferDirection == AtmosDirection.Invalid) continue;
-                gridAtmosphere.AddHighPressureDelta(otherTile);
-                gridAtmosphere.AddActiveTile(otherTile);
+                gridAtmosphere.HighPressureDelta.Add(otherTile);
+                AddActiveTile(gridAtmosphere, otherTile);
                 var otherTile2 = otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()];
                 if (otherTile2?.Air == null) continue;
                 var sum = otherTile2.Air.TotalMoles;
@@ -455,9 +457,9 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                otherTile.Air.Clear();
-                otherTile.UpdateVisuals();
-                HandleDecompressionFloorRip(gridAtmosphere, otherTile, sum);
+                otherTile.Air?.Clear();
+                InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
+                HandleDecompressionFloorRip(mapGrid, otherTile, sum);
             }
 
             ArrayPool<TileAtmosphere>.Shared.Return(tiles);
@@ -465,7 +467,7 @@ namespace Content.Server.Atmos.EntitySystems
             ArrayPool<TileAtmosphere>.Shared.Return(progressionOrder);
         }
 
-        private void ConsiderFirelocks(TileAtmosphere tile, TileAtmosphere other)
+        private void ConsiderFirelocks(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other)
         {
             if (!_mapManager.TryGetGrid(tile.GridIndex, out var mapGrid))
                 return;
@@ -491,8 +493,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            tile.UpdateAdjacent();
-            other.UpdateAdjacent();
+            UpdateAdjacent(mapGrid, gridAtmosphere, tile);
+            UpdateAdjacent(mapGrid, gridAtmosphere, other);
+            InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+            InvalidateVisuals(other.GridIndex, other.GridIndices);
         }
 
         public void FinalizeEq(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
@@ -524,8 +528,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                     otherTile.MonstermosInfo[direction.GetOpposite()] = 0;
                     Merge(otherTile.Air, tile.Air.Remove(amount));
-                    tile.UpdateVisuals();
-                    otherTile.UpdateVisuals();
+                    InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+                    InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
                     ConsiderPressureDifference(gridAtmosphere, tile, otherTile, amount);
                 }
             }
@@ -548,12 +552,12 @@ namespace Content.Server.Atmos.EntitySystems
             tile.AdjacentTiles[direction.ToIndex()].MonstermosInfo[direction.GetOpposite()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(IMapGrid mapGrid, TileAtmosphere tile, float sum)
         {
             var chance = MathHelper.Clamp(sum / 500, 0.005f, 0.5f);
 
             if (sum > 20 && _robustRandom.Prob(chance))
-                gridAtmosphere.PryTile(tile.GridIndices);
+                PryTile(mapGrid, tile.GridIndices);
         }
 
         private class TileAtmosphereComparer : IComparer<TileAtmosphere>

@@ -12,7 +12,7 @@ namespace Content.Server.Atmos.EntitySystems
             // Can't process a tile without air
             if (tile.Air == null)
             {
-                gridAtmosphere.RemoveActiveTile(tile);
+                RemoveActiveTile(gridAtmosphere, tile);
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     if (tile.ExcitedGroup != enemyTile.ExcitedGroup)
                     {
-                        tile.ExcitedGroup.MergeGroups(enemyTile.ExcitedGroup);
+                        ExcitedGroupMerge(gridAtmosphere, tile.ExcitedGroup, enemyTile.ExcitedGroup);
                     }
 
                     shouldShareAir = true;
@@ -54,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     if (!enemyTile.Excited)
                     {
-                        gridAtmosphere.AddActiveTile(enemyTile);
+                        AddActiveTile(gridAtmosphere, enemyTile);
                     }
 
                     var excitedGroup = tile.ExcitedGroup;
@@ -63,14 +63,14 @@ namespace Content.Server.Atmos.EntitySystems
                     if (excitedGroup == null)
                     {
                         excitedGroup = new ExcitedGroup();
-                        excitedGroup.Initialize(gridAtmosphere);
+                        gridAtmosphere.ExcitedGroups.Add(excitedGroup);
                     }
 
                     if (tile.ExcitedGroup == null)
-                        excitedGroup.AddTile(tile);
+                        ExcitedGroupAddTile(excitedGroup, tile);
 
                     if(enemyTile.ExcitedGroup == null)
-                        excitedGroup.AddTile(enemyTile);
+                        ExcitedGroupAddTile(excitedGroup, enemyTile);
 
                     shouldShareAir = true;
                 }
@@ -97,7 +97,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             if(tile.Air != null)
                 React(tile.Air, tile);
-            tile.UpdateVisuals();
+
+            InvalidateVisuals(tile.GridIndex, tile.GridIndices);
 
             var remove = true;
 
@@ -106,7 +107,7 @@ namespace Content.Server.Atmos.EntitySystems
                     remove = false;
 
             if(tile.ExcitedGroup == null && remove)
-                gridAtmosphere.RemoveActiveTile(tile);
+                RemoveActiveTile(gridAtmosphere, tile);
         }
 
         private void Archive(TileAtmosphere tile, int fireCount)
@@ -124,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
             switch (tile.Air.LastShare)
             {
                 case > Atmospherics.MinimumAirToSuspend:
-                    tile.ExcitedGroup.ResetCooldowns();
+                    ExcitedGroupResetCooldowns(tile.ExcitedGroup);
                     break;
                 case > Atmospherics.MinimumMolesDeltaToMove:
                     tile.ExcitedGroup.DismantleCooldown = 0;
