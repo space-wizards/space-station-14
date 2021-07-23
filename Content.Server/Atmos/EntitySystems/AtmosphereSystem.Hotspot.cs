@@ -137,7 +137,6 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.Hotspot.Temperature = affected.Temperature;
                 tile.Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Merge(tile.Air, affected);
-                gridAtmosphere.InvalidatedCoords.Add(tile.GridIndices);
             }
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
