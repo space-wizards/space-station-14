@@ -84,7 +84,6 @@ namespace Content.Client.Clickable
                     var dirCount = sprite.GetLayerDirectionCount(layer);
                     var dir = layer.EffectiveDirection(worldRotation);
                     var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, dirCount) : Angle.Zero;
-                    modAngle += dir.Convert().ToAngle();
 
                     var layerPos = modAngle.RotateVec(localPos);
 
