@@ -1550,3 +1550,8 @@ Entries:
   - {message: AFK players no longer automatically vote "no" on restart votes., type: Tweak}
   id: 275
   time: '2021-07-22T21:22:04.854449+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pies no longer spin when thrown., type: Tweak}
+  id: 276
+  time: '2021-07-23T06:12:08.0000000+00:00'
