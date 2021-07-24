@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Access;
 using Content.Server.Access.Components;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable.Components;
@@ -313,7 +314,7 @@ namespace Content.Server.Doors.Components
         {
             if (Owner.TryGetComponent(out AirtightComponent? airtight))
             {
-                airtight.AirBlocked = false;
+                EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
             base.OnPartialOpen();
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
@@ -441,7 +442,7 @@ namespace Content.Server.Doors.Components
 
             if (becomeairtight && Owner.TryGetComponent(out AirtightComponent? airtight))
             {
-                airtight.AirBlocked = true;
+                EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
             }
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
