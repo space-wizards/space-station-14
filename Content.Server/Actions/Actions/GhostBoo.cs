@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Server.Ghost;
 using Content.Shared.Actions.Behaviors;

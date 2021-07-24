@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
@@ -17,7 +16,6 @@ namespace Content.Server.Atmos.Components
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private (GridId, Vector2i) _lastPosition;
-        private AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Name => "Airtight";
 
@@ -77,8 +75,6 @@ namespace Content.Server.Atmos.Components
         {
             base.Initialize();
 
-            _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
             if (_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.WorldRotation));
 
@@ -133,7 +129,7 @@ namespace Content.Server.Atmos.Components
 
             if (_fixVacuum)
             {
-                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
+                EntitySystem.Get<AtmosphereSystem>().FixVacuum(_lastPosition.Item1, _lastPosition.Item2);
             }
         }
 
@@ -165,10 +161,9 @@ namespace Content.Server.Atmos.Components
             if (!gridId.IsValid())
                 return;
 
-            var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
-
-            gridAtmos?.UpdateAdjacentBits(pos);
-            gridAtmos?.Invalidate(pos);
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            atmosphereSystem.UpdateAdjacent(gridId, pos);
+            atmosphereSystem.InvalidateTile(gridId, pos);
         }
     }
 }

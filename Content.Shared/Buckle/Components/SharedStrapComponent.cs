@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;

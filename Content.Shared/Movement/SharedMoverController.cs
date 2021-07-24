@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.ActionBlocker;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
@@ -21,12 +20,12 @@ namespace Content.Shared.Movement
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private SharedBroadPhaseSystem _broadPhaseSystem = default!;
+        private SharedBroadphaseSystem _broadPhaseSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+            _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
         }
 
         /// <summary>
@@ -101,7 +100,7 @@ namespace Content.Shared.Movement
             physicsComponent.LinearVelocity = total;
         }
 
-        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body, IMapManager mapManager)
+        public static bool UseMobMovement(SharedBroadphaseSystem broadPhaseSystem, PhysicsComponent body, IMapManager mapManager)
         {
             return (body.BodyStatus == BodyStatus.OnGround) &
                    body.Owner.HasComponent<IMobStateComponent>() &&
@@ -119,7 +118,7 @@ namespace Content.Shared.Movement
         /// <param name="mover"></param>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedBroadphaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

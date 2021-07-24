@@ -2,6 +2,9 @@
   id: BotanySharp
 
 - type: Tag
+  id: CanPilot
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -32,6 +35,9 @@
   id: Ingot
 
 - type: Tag
+  id: NoSpinOnThrow
+
+- type: Tag
   id: Ore
 
 - type: Tag
@@ -42,9 +48,6 @@
 
 - type: Tag
   id: Shovel
-
-- type: Tag
-  id: Teleportable
 
 - type: Tag
   id: Wall

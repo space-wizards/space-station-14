@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;

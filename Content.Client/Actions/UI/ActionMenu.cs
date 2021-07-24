@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
 {
@@ -71,12 +72,14 @@ namespace Content.Client.Actions.UI
             Title = Loc.GetString("ui-actionmenu-title");
             MinSize = (300, 300);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+	            Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             (_searchBar = new LineEdit

@@ -1,3 +1,4 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
@@ -55,12 +56,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var tile = args.Atmosphere.GetTile(pump.Owner.Transform.Coordinates);
+                var atmosphereSystem = Get<AtmosphereSystem>();
+                var tile = atmosphereSystem.GetTileMixture(pump.Owner.Transform.Coordinates, true);
 
                 if (tile != null)
                 {
                     var leaked = removed.RemoveRatio(pump.LeakRatio);
-                    tile.AssumeAir(leaked);
+                    atmosphereSystem.Merge(tile, leaked);
                 }
             }
 

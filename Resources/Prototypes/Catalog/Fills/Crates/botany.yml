@@ -12,6 +12,10 @@
         amount: 2
       - id: TowercapSeeds
         amount: 2
+      - id: TobaccoSeeds
+        amount: 2
+      - id: CannabisSeeds
+        amount: 2
 #      - id: NettleSeeds
 #        amount: 2
 #      - id: RainbowBunchSeeds

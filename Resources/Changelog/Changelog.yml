@@ -1477,3 +1477,81 @@ Entries:
   - {message: Added the dual-port air vent., type: Add}
   id: 261
   time: '2021-07-15T13:24:45.0000000+00:00'
+- author: Fogapod
+  changes:
+  - {message: Added missing space in Spanish accent., type: Fix}
+  id: 262
+  time: '2021-07-17T21:04:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes handheld instruments not working., type: Fix}
+  id: 263
+  time: '2021-07-18T13:00:50.345009+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix physics rotation issues, type: Fix}
+  id: 264
+  time: '2021-07-19T08:49:18.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
+  id: 265
+  time: '2021-07-19T20:55:37.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Chatbox channel management has been tweaked to be much more intuitive
+      and nice to use., type: Tweak}
+  id: 266
+  time: '2021-07-20T08:29:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove portals until someone does a better job coding it, type: Remove}
+  id: 267
+  time: '2021-07-21T09:16:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add Station driving, type: Add}
+  id: 268
+  time: '2021-07-21T11:15:12.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: 'Added integer scaling option. Turn it off to get rid of black bars,
+      at the cost of less crisp scaling.', type: Add}
+  id: 269
+  time: '2021-07-21T11:30:50.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Examine tooltip now closes when moving out of range, type: Tweak}
+  id: 270
+  time: '2021-07-21T11:31:00.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'Restart round votes now start with everybody selecting "no", effectively
+      requiring 80% of the whole server to agree.', type: Tweak}
+  id: 271
+  time: '2021-07-21T13:26:06.988275+00:00'
+- author: PJB
+  changes:
+  - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
+  id: 272
+  time: '2021-07-21T17:04:18.364235+00:00'
+- author: Seth
+  changes:
+  - {message: Added Cannabis and Tabaco seeds into the exotic seeds crate, type: Add}
+  id: 273
+  time: '2021-07-22T02:20:41.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Added visualizer for things like Crayons and Toolbelts, type: Add}
+  id: 274
+  time: '2021-07-22T09:56:55.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: AFK players no longer automatically vote "no" on restart votes., type: Tweak}
+  id: 275
+  time: '2021-07-22T21:22:04.854449+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pies no longer spin when thrown., type: Tweak}
+  id: 276
+  time: '2021-07-23T06:12:08.0000000+00:00'

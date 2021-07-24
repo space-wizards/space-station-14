@@ -1,0 +1,153 @@
+#nullable disable warnings
+#nullable enable annotations
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Reactions;
+using Content.Server.Coordinates.Helpers;
+using Content.Shared.Atmos;
+using Content.Shared.Maps;
+using Robust.Shared.Map;
+
+namespace Content.Server.Atmos.EntitySystems
+{
+    public partial class AtmosphereSystem
+    {
+        private void ProcessHotspot(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
+        {
+            if (!tile.Hotspot.Valid)
+            {
+                gridAtmosphere.HotspotTiles.Remove(tile);
+                return;
+            }
+
+            if (!tile.Excited)
+            {
+                AddActiveTile(gridAtmosphere, tile);
+            }
+
+            if (!tile.Hotspot.SkippedFirstProcess)
+            {
+                tile.Hotspot.SkippedFirstProcess = true;
+                return;
+            }
+
+            if(tile.ExcitedGroup != null)
+                ExcitedGroupResetCooldowns(tile.ExcitedGroup);
+
+            if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
+                || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f))
+            {
+                tile.Hotspot = new Hotspot();
+                InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+                return;
+            }
+
+            PerformHotspotExposure(tile);
+
+            if (tile.Hotspot.Bypassing)
+            {
+                tile.Hotspot.State = 3;
+                // TODO ATMOS: Burn tile here
+
+                if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
+                {
+                    var radiatedTemperature = tile.Air.Temperature * Atmospherics.FireSpreadRadiosityScale;
+                    foreach (var otherTile in tile.AdjacentTiles)
+                    {
+                        // TODO ATMOS: This is sus. Suss this out.
+                        if (otherTile == null)
+                            continue;
+
+                        if(!otherTile.Hotspot.Valid)
+                            HotspotExpose(gridAtmosphere, otherTile, radiatedTemperature, Atmospherics.CellVolume/4);
+                    }
+                }
+            }
+            else
+            {
+                tile.Hotspot.State = (byte) (tile.Hotspot.Volume > Atmospherics.CellVolume * 0.4f ? 2 : 1);
+            }
+
+            if (tile.Hotspot.Temperature > tile.MaxFireTemperatureSustained)
+                tile.MaxFireTemperatureSustained = tile.Hotspot.Temperature;
+
+            // TODO ATMOS Maybe destroy location here?
+        }
+
+        private void HotspotExpose(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, float exposedTemperature, float exposedVolume, bool soh = false)
+        {
+            if (tile.Air == null)
+                return;
+
+            var oxygen = tile.Air.GetMoles(Gas.Oxygen);
+
+            if (oxygen < 0.5f)
+                return;
+
+            var plasma = tile.Air.GetMoles(Gas.Plasma);
+            var tritium = tile.Air.GetMoles(Gas.Tritium);
+
+            if (tile.Hotspot.Valid)
+            {
+                if (soh)
+                {
+                    if (plasma > 0.5f || tritium > 0.5f)
+                    {
+                        if (tile.Hotspot.Temperature < exposedTemperature)
+                            tile.Hotspot.Temperature = exposedTemperature;
+                        if (tile.Hotspot.Volume < exposedVolume)
+                            tile.Hotspot.Volume = exposedVolume;
+                    }
+                }
+
+                return;
+            }
+
+            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f))
+            {
+                tile.Hotspot = new Hotspot
+                {
+                    Volume = exposedVolume * 25f,
+                    Temperature = exposedTemperature,
+                    SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter
+                };
+
+                tile.Hotspot.Start();
+
+                AddActiveTile(gridAtmosphere, tile);
+                gridAtmosphere.HotspotTiles.Add(tile);
+            }
+        }
+
+        private void PerformHotspotExposure(TileAtmosphere tile)
+        {
+            if (tile.Air == null || !tile.Hotspot.Valid) return;
+
+            tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f;
+
+            if (tile.Hotspot.Bypassing)
+            {
+                tile.Hotspot.Volume = tile.Air.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
+                tile.Hotspot.Temperature = tile.Air.Temperature;
+            }
+            else
+            {
+                var affected = tile.Air.RemoveRatio(tile.Hotspot.Volume / tile.Air.Volume);
+                affected.Temperature = tile.Hotspot.Temperature;
+                React(affected, tile);
+                tile.Hotspot.Temperature = affected.Temperature;
+                tile.Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
+                Merge(tile.Air, affected);
+            }
+
+            var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
+
+            foreach (var entity in tileRef.GetEntitiesInTileFast())
+            {
+                foreach (var fireAct in entity.GetAllComponents<IFireAct>())
+                {
+                    fireAct.FireAct(tile.Hotspot.Temperature, tile.Hotspot.Volume);
+                }
+            }
+        }
+    }
+}

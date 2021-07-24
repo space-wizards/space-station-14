@@ -1,4 +1,3 @@
-#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Coordinates.Helpers;

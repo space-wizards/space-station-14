@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Act;
 using Content.Server.Notification;
 using Content.Shared.Audio;

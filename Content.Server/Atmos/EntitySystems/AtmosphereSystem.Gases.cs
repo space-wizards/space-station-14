@@ -4,12 +4,16 @@ using System.Linq;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
         private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
 
@@ -51,16 +55,23 @@ namespace Content.Server.Atmos.EntitySystems
             return mixture.Temperature * GetHeatCapacity(mixture);
         }
 
+        public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
+        {
+            return mixture.Temperature * cachedHeatCapacity;
+        }
+
         public void Merge(GasMixture receiver, GasMixture giver)
         {
             if (receiver.Immutable) return;
 
             if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                var combinedHeatCapacity = GetHeatCapacity(receiver) + GetHeatCapacity(giver);
+                var receiverHeatCapacity = GetHeatCapacity(receiver);
+                var giverHeatCapacity = GetHeatCapacity(giver);
+                var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
                 if (combinedHeatCapacity > 0f)
                 {
-                    receiver.Temperature = (GetThermalEnergy(giver) + GetThermalEnergy(receiver)) / combinedHeatCapacity;
+                    receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
                 }
             }
 

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
@@ -28,7 +27,7 @@ namespace Content.Server.Recycling.Components
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
-    public class RecyclerComponent : Component, IStartCollide, ISuicideAct
+    public class RecyclerComponent : Component, ISuicideAct
     {
         public override string Name => "Recycler";
 
@@ -38,25 +37,17 @@ namespace Content.Server.Recycling.Components
         ///     Whether or not sentient beings will be recycled
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("safe")]
-        private bool _safe = true;
+        internal bool Safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("efficiency")]
-        private float _efficiency = 0.25f;
+        internal float Efficiency = 0.25f;
 
-        private bool Powered =>
+        internal bool Powered =>
             !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
-
-        private void Bloodstain()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(RecyclerVisuals.Bloody, true);
-            }
-        }
 
         private void Clean()
         {
@@ -64,35 +55,6 @@ namespace Content.Server.Recycling.Components
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
-        }
-
-        private bool CanGib(IEntity entity)
-        {
-            // We suppose this entity has a Recyclable component.
-            return entity.HasComponent<SharedBodyComponent>() && !_safe && Powered;
-        }
-
-        private void Recycle(IEntity entity)
-        {
-            if (!Intersecting.Contains(entity))
-            {
-                Intersecting.Add(entity);
-            }
-
-            // TODO: Prevent collision with recycled items
-
-            // Can only recycle things that are recyclable... And also check the safety of the thing to recycle.
-            if (!entity.TryGetComponent(out RecyclableComponent? recyclable) || !recyclable.Safe && _safe) return;
-
-            // Mobs are a special case!
-            if (CanGib(entity))
-            {
-                entity.GetComponent<SharedBodyComponent>().Gib(true);
-                Bloodstain();
-                return;
-            }
-
-            recyclable.Recycle(_efficiency);
         }
 
         public bool CanRun()
@@ -142,11 +104,6 @@ namespace Content.Server.Recycling.Components
             return true;
         }
 
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            Recycle(otherFixture.Body.Owner);
-        }
-
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
         {
             var mind = victim.PlayerSession()?.ContentData()?.Mind;
@@ -164,7 +121,7 @@ namespace Content.Server.Recycling.Components
                 body.Gib(true);
             }
 
-            Bloodstain();
+            EntitySystem.Get<RecyclerSystem>().Bloodstain(this);
 
             return SuicideKind.Bloodloss;
         }

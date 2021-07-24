@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
@@ -68,8 +69,8 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         private sealed class StatusControl : Control
         {
             private readonly ClientBoltActionBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsListTop;
-            private readonly HBoxContainer _bulletsListBottom;
+            private readonly BoxContainer _bulletsListTop;
+            private readonly BoxContainer _bulletsListBottom;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
 
@@ -79,16 +80,22 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 _parent = parent;
                 HorizontalExpand = true;
                 VerticalAlignment = VAlignment.Center;
-                AddChild(new VBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     HorizontalExpand = true,
                     VerticalAlignment = VAlignment.Center,
                     SeparationOverride = 0,
                     Children =
                     {
-                        (_bulletsListTop = new HBoxContainer {SeparationOverride = 0}),
-                        new HBoxContainer
+                        (_bulletsListTop = new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Horizontal,
+                            SeparationOverride = 0
+                        }),
+                        new BoxContainer
+                        {
+                            Orientation = LayoutOrientation.Horizontal,
                             HorizontalExpand = true,
                             Children =
                             {
@@ -97,8 +104,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                                     HorizontalExpand = true,
                                     Children =
                                     {
-                                        (_bulletsListBottom = new HBoxContainer
+                                        (_bulletsListBottom = new BoxContainer
                                         {
+                                            Orientation = LayoutOrientation.Horizontal,
                                             VerticalAlignment = VAlignment.Center,
                                             SeparationOverride = 0
                                         }),

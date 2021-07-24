@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Coordinates.Helpers;
@@ -22,9 +21,8 @@ namespace Content.Server.Atmos.Reactions
             var location = holder as TileAtmosphere;
             mixture.ReactionResults[GasReaction.Fire] = 0;
 
-            // More plasma released at higher temperatures
+            // More plasma released at higher temperatures.
             var temperatureScale = 0f;
-            var superSaturation = false;
 
             if (temperature > Atmospherics.PlasmaUpperTemperature)
                 temperatureScale = 1f;
@@ -32,33 +30,31 @@ namespace Content.Server.Atmos.Reactions
                 temperatureScale = (temperature - Atmospherics.PlasmaMinimumBurnTemperature) /
                                    (Atmospherics.PlasmaUpperTemperature - Atmospherics.PlasmaMinimumBurnTemperature);
 
-            if (temperatureScale > 0f)
+            if (temperatureScale > 0)
             {
-                var plasmaBurnRate = 0f;
                 var oxygenBurnRate = Atmospherics.OxygenBurnRateBase - temperatureScale;
+                var plasmaBurnRate = 0f;
 
-                if (mixture.GetMoles(Gas.Oxygen) / mixture.GetMoles(Gas.Plasma) >
-                    Atmospherics.SuperSaturationThreshold)
-                    superSaturation = true;
+                var initialOxygenMoles = mixture.GetMoles(Gas.Oxygen);
+                var initialPlasmaMoles = mixture.GetMoles(Gas.Plasma);
 
-                if (mixture.GetMoles(Gas.Oxygen) >
-                    mixture.GetMoles(Gas.Plasma) * Atmospherics.PlasmaOxygenFullburn)
-                    plasmaBurnRate = (mixture.GetMoles(Gas.Plasma) * temperatureScale) /
-                                     Atmospherics.PlasmaBurnRateDelta;
+                // Supersaturation makes tritium.
+                var supersaturation = initialOxygenMoles / initialPlasmaMoles > Atmospherics.SuperSaturationThreshold;
+
+                if (initialOxygenMoles > initialPlasmaMoles * Atmospherics.PlasmaOxygenFullburn)
+                    plasmaBurnRate = initialPlasmaMoles * temperatureScale / Atmospherics.PlasmaBurnRateDelta;
                 else
-                    plasmaBurnRate = (temperatureScale * (mixture.GetMoles(Gas.Oxygen) / Atmospherics.PlasmaOxygenFullburn)) / Atmospherics.PlasmaBurnRateDelta;
+                    plasmaBurnRate = temperatureScale * (initialOxygenMoles / Atmospherics.PlasmaOxygenFullburn) / Atmospherics.PlasmaBurnRateDelta;
 
                 if (plasmaBurnRate > Atmospherics.MinimumHeatCapacity)
                 {
-                    plasmaBurnRate = MathF.Min(MathF.Min(plasmaBurnRate, mixture.GetMoles(Gas.Plasma)), mixture.GetMoles(Gas.Oxygen)/oxygenBurnRate);
-                    mixture.SetMoles(Gas.Plasma, mixture.GetMoles(Gas.Plasma) - plasmaBurnRate);
-                    mixture.SetMoles(Gas.Oxygen, mixture.GetMoles(Gas.Oxygen) - (plasmaBurnRate * oxygenBurnRate));
+                    plasmaBurnRate = MathF.Min(plasmaBurnRate, MathF.Min(initialPlasmaMoles, initialOxygenMoles / oxygenBurnRate));
+                    mixture.SetMoles(Gas.Plasma, initialPlasmaMoles - plasmaBurnRate);
+                    mixture.SetMoles(Gas.Oxygen, initialOxygenMoles - plasmaBurnRate * oxygenBurnRate);
+                    mixture.AdjustMoles(supersaturation ? Gas.Tritium : Gas.CarbonDioxide, plasmaBurnRate);
 
-                    mixture.AdjustMoles(superSaturation ? Gas.Tritium : Gas.CarbonDioxide, plasmaBurnRate);
-
-                    energyReleased += Atmospherics.FirePlasmaEnergyReleased * (plasmaBurnRate);
-
-                    mixture.ReactionResults[GasReaction.Fire] += (plasmaBurnRate) * (1 + oxygenBurnRate);
+                    energyReleased += Atmospherics.FirePlasmaEnergyReleased * plasmaBurnRate;
+                    mixture.ReactionResults[GasReaction.Fire] += plasmaBurnRate * (1 + oxygenBurnRate);
                 }
             }
 
@@ -66,25 +62,15 @@ namespace Content.Server.Atmos.Reactions
             {
                 var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
                 if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
-                    mixture.Temperature = ((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity);
+                    mixture.Temperature = (temperature * oldHeatCapacity + energyReleased) / newHeatCapacity;
             }
 
             if (location != null)
             {
-                temperature = mixture.Temperature;
-                if (temperature > Atmospherics.FireMinimumTemperatureToExist)
+                var mixTemperature = mixture.Temperature;
+                if (mixTemperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    location.HotspotExpose(temperature, mixture.Volume);
-
-                    foreach (var entity in location.GridIndices.GetEntitiesInTileFast(location.GridIndex))
-                    {
-                        foreach (var temperatureExpose in entity.GetAllComponents<ITemperatureExpose>())
-                        {
-                            temperatureExpose.TemperatureExpose(mixture, temperature, mixture.Volume);
-                        }
-                    }
-
-                    location.TemperatureExpose(mixture, temperature, mixture.Volume);
+                    atmosphereSystem.HotspotExpose(location.GridIndex, location.GridIndices, mixTemperature, mixture.Volume);
                 }
             }
 

@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Body.UI
 {
@@ -12,7 +13,7 @@ namespace Content.Client.Body.UI
     {
         public delegate void OptionSelectedCallback(int selectedOptionData);
 
-        private readonly VBoxContainer _optionsBox;
+        private readonly BoxContainer _optionsBox;
         private OptionSelectedCallback? _optionSelectedCallback;
 
         public SurgeryWindow()
@@ -21,8 +22,9 @@ namespace Content.Client.Body.UI
             Title = Loc.GetString("surgery-window-title");
             RectClipContent = true;
 
-            var vSplitContainer = new VBoxContainer
+            var vSplitContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -33,8 +35,9 @@ namespace Content.Client.Body.UI
                         VScrollEnabled = true,
                         Children =
                         {
-                            (_optionsBox = new VBoxContainer
+                            (_optionsBox = new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true
                             })
                         }
@@ -94,8 +97,9 @@ namespace Content.Client.Body.UI
 
             AddChild(Button);
 
-            AddChild(new HBoxContainer
+            AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     (SpriteView = new SpriteView

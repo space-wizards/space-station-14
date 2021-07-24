@@ -1,4 +1,3 @@
-#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;

@@ -19,6 +19,7 @@
     innerclothing: ClothingUniformJumpsuitResearchDirector
     backpack: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorBrown
+    outerclothing: ClothingOuterCoatLab
     idcard: RnDPDA
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector

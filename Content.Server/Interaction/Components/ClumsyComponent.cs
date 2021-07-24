@@ -2,7 +2,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-#nullable enable
 
 namespace Content.Server.Interaction.Components
 {

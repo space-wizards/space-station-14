@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.GameObjects;
