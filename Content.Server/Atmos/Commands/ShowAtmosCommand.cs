@@ -5,7 +5,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Commands.Atmos
+namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
     public class ShowAtmos : IConsoleCommand

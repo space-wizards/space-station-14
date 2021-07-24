@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Reactions;
-using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;

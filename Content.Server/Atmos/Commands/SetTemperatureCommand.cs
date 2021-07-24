@@ -1,32 +1,36 @@
 ﻿using Content.Server.Administration;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Atmos;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Commands.Atmos
+namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public class RemoveGasCommand : IConsoleCommand
+    public class SetTemperatureCommand : IConsoleCommand
     {
-        public string Command => "removegas";
-        public string Description => "Removes an amount of gases.";
-        public string Help => "removegas <X> <Y> <GridId> <amount> <ratio>\nIf <ratio> is true, amount will be treated as the ratio of gas to be removed.";
+        public string Command => "settemp";
+        public string Description => "Sets a tile's temperature (in kelvin).";
+        public string Help => "Usage: settemp <X> <Y> <GridId> <Temperature>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 5) return;
+            if (args.Length < 4) return;
             if(!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !int.TryParse(args[2], out var id)
-               || !float.TryParse(args[3], out var amount)
-               || !bool.TryParse(args[4], out var ratio)) return;
+               || !float.TryParse(args[3], out var temperature)) return;
 
             var gridId = new GridId(id);
+
+            if (temperature < Atmospherics.TCMB)
+            {
+                shell.WriteLine("Invalid temperature.");
+                return;
+            }
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
@@ -38,11 +42,7 @@ namespace Content.Server.Commands.Atmos
                 return;
             }
 
-            if (ratio)
-                tile.RemoveRatio(amount);
-            else
-                tile.Remove(amount);
+            tile.Temperature = temperature;
         }
     }
-
 }

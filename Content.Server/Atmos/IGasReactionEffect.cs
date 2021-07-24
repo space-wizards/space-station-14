@@ -1,9 +1,7 @@
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
-using Robust.Server.GameObjects;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.Atmos
 {
     public interface IGasReactionEffect
     {
