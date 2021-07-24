@@ -14,5 +14,5 @@
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     prefix: inhand
   - type: Construction
-    graph: bat
+    graph: WoodenBat
     node: bat
