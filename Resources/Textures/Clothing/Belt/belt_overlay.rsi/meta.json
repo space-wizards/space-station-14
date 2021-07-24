@@ -29,7 +29,7 @@
       "name": "cutters_handle"
     },
     {
-      "name": "cutters_mask"
+      "name": "cutters_blade"
     },
     {
       "name": "cutters_yellow"
@@ -108,43 +108,7 @@
       "directions": 4
     },
     {
-      "name": "baton-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "beaker-equipped-BELT",
-      "directions": 4
-    },
-    {
       "name": "c4-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "cigpack-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "clipboard-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "coil-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "crowbar-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "crowbar_red-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "cutters-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "drill-equipped-BELT",
       "directions": 4
     },
     {
@@ -152,55 +116,11 @@
       "directions": 4
     },
     {
-      "name": "flare-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "flashbang-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "flashlight-equipped-BELT",
-      "directions": 4
-    },
-    {
       "name": "geiger_counter-equipped-BELT",
       "directions": 4
     },
     {
-      "name": "grenade-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "gun-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "handcuff-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "horn-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "horn_gold-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "hypo-equipped-BELT",
-      "directions": 4
-    },
-    {
       "name": "injector-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "jawsoflife-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "knife-equipped-BELT",
       "directions": 4
     },
     {
@@ -212,19 +132,11 @@
       "directions": 4
     },
     {
-      "name": "minibomb-equipped-BELT",
-      "directions": 4
-    },
-    {
       "name": "painter-equipped-BELT",
       "directions": 4
     },
     {
       "name": "plasmatank-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "rcd-equipped-BELT",
       "directions": 4
     },
     {
@@ -240,39 +152,11 @@
       "directions": 4
     },
     {
-      "name": "screwdriver-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "spade-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "spraybottle-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "spraycan-equipped-BELT",
-      "directions": 4
-    },
-    {
       "name": "tele_baton-equipped-BELT",
       "directions": 4
     },
     {
       "name": "tray-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "welder-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "wrench-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "x4-equipped-BELT",
       "directions": 4
     }
   ]
