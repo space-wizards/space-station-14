@@ -44,6 +44,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, ReagentGrinderComponent component, InteractUsingEvent args)
         {
+            if(args.Handled) return;
+
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 component.Owner.PopupMessage(args.User, Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
@@ -101,12 +103,16 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInteractHand(EntityUid uid, ReagentGrinderComponent component, InteractHandEvent args)
         {
+            if (args.Handled) return;
+
             if (!args.User.TryGetComponent(out ActorComponent? actor))
             {
+                args.Handled = false;
                 return;
             }
             EnqueueUiUpdate(component);
             component.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key)?.Toggle(actor.PlayerSession);
+            args.Handled = true;
         }
 
         private void EnqueueUiUpdate(ReagentGrinderComponent component)
