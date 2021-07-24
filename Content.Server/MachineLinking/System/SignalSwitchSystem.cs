@@ -29,6 +29,7 @@ namespace Content.Server.MachineLinking.System
             component.State = !component.State;
             RaiseLocalEvent(uid, new InvokePortEvent("state", component.State), false);
             RaiseLocalEvent(uid, new InvokePortEvent("stateChange"), false);
+            args.Handled = true;
         }
     }
 }

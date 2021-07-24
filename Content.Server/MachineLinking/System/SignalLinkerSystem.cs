@@ -83,21 +83,30 @@ namespace Content.Server.MachineLinking.System
 
         private void OnReceiverInteractUsing(EntityUid uid, SignalReceiverComponent component, InteractUsingEvent args)
         {
+            if (args.Handled) return;
+
             if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !linker.Port.HasValue || !args.User.TryGetComponent(out ActorComponent? actor) || !linker.Port.Value.transmitter.Outputs.TryGetPort(linker.Port.Value.port, out var port))
+            {
                 return;
+            }
 
             if (component.Inputs.Count == 1)
             {
                 LinkerInteraction(args.User, linker.Port.Value.transmitter, linker.Port.Value.port, component,
                     component.Inputs[0].Name);
+                args.Handled = true;
                 return;
             }
 
             var bui = component.Owner.GetUIOrNull(SignalReceiverUiKey.Key);
-            if (bui == null) return;
+            if (bui == null)
+            {
+                return;
+            }
 
             bui.Open(actor.PlayerSession);
             bui.SetState(new SignalPortsState(new Dictionary<string, bool>(component.Inputs.GetValidatedPorts(port.Type))));
+            args.Handled = true;
         }
 
         private void OnReceiverStartup(EntityUid uid, SignalReceiverComponent component, ComponentStartup args)
@@ -165,13 +174,18 @@ namespace Content.Server.MachineLinking.System
 
         private void TransmitterInteractUsingHandler(EntityUid uid, SignalTransmitterComponent component, InteractUsingEvent args)
         {
+            if(args.Handled) return;
+
             if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !args.User.TryGetComponent(out ActorComponent? actor))
+            {
                 return;
+            }
 
             if(component.Outputs.Count == 1)
             {
                 var port = component.Outputs.First();
                 LinkerSaveInteraction(args.User, linker, component, port.Name);
+                args.Handled = true;
                 return;
             }
 
@@ -179,6 +193,7 @@ namespace Content.Server.MachineLinking.System
             if (bui == null) return;
             bui.Open(actor.PlayerSession);
             bui.SetState(new SignalPortsState(component.Outputs.GetPortStrings().ToArray()));
+            args.Handled = true;
         }
 
         private void LinkerInteraction(IEntity entity, SignalTransmitterComponent transmitter, string transmitterPort,

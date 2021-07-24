@@ -48,6 +48,7 @@ namespace Content.Server.MachineLinking.System
             }
 
             RaiseLocalEvent(uid, new InvokePortEvent("state", component.State));
+            args.Handled = true;
         }
     }
 }
