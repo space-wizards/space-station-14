@@ -1,0 +1,62 @@
+- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasTrinaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        filter:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: East
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+
+- type: entity
+  parent: GasTrinaryBase
+  id: GasFilter
+  name: gas filter
+  description: Very useful for filtering gases.
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS Improve this sprite and appearance...
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeTJunction
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: gasFilter
+    - type: GasFilter
+
+- type: entity
+  parent: GasTrinaryBase
+  id: GasMixer
+  name: gas mixer
+  description: Very useful for mixing gases.
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS Give this its actual sprite...
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeTJunction
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: gasFilter
+    - type: GasMixer
+      inletOne: inlet
+      inletTwo: filter

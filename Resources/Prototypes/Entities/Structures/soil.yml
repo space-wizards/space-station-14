@@ -1,0 +1,52 @@
+- type: entity
+  name: soil
+  id: hydroponicsSoil
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.1, 0.5"
+      mass: 25
+      hard: false
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Hydroponics/misc.rsi
+    state: soil
+    drawdepth: FloorObjects
+  - type: PlantHolder
+    drawWarnings: false
+  - type: SolutionContainer
+    maxVol: 200
+    caps: Refillable
+  - type: SnapGrid
+  - type: Reactive
+    reactions:
+      - !type:AddToSolutionReaction
+  - type: Appearance
+    visuals:
+      - type: PlantHolderVisualizer

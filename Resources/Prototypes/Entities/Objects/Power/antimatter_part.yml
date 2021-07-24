@@ -2,7 +2,7 @@
   parent: BaseItem
   id: AMEPart
   name: AME part
-  description: A flatpack used for constructing an antimatter engine reactor.\nUse a multitool to unpack it.
+  description: A flatpack used for constructing an antimatter engine reactor. Use a multitool to unpack it.
   components:
   - type: Item
     size: 5

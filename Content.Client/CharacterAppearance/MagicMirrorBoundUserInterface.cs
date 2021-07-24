@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.CharacterAppearance.Components.SharedMagicMirrorComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.CharacterAppearance
 {
@@ -107,8 +108,9 @@ namespace Content.Client.CharacterAppearance
                 MinSize = (50, 0)
             };
 
-            AddChild(new HBoxContainer
+            AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     _slider,
@@ -204,10 +206,16 @@ namespace Content.Client.CharacterAppearance
         {
             IoCManager.InjectDependencies(this);
 
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             AddChild(vBox);
 
-            _colorContainer = new VBoxContainer();
+            _colorContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             vBox.AddChild(_colorContainer);
             _colorContainer.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
             _colorContainer.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
@@ -289,7 +297,10 @@ namespace Content.Client.CharacterAppearance
 
         public EyeColorPicker()
         {
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             AddChild(vBox);
 
             vBox.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
@@ -340,8 +351,9 @@ namespace Content.Client.CharacterAppearance
             _eyeColorPicker = new EyeColorPicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
             _eyeColorPicker.OnEyeColorPicked += newColor => owner.EyeColorSelected(newColor);
 
-            Contents.AddChild(new HBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 8,
                 Children = {_hairStylePicker, _facialHairStylePicker, _eyeColorPicker}
             });

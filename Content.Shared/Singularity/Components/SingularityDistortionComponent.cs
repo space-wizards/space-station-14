@@ -1,6 +1,6 @@
-﻿using System;
-using Content.Shared.NetIDs;
+using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,10 +9,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Singularity.Components
 {
     [RegisterComponent]
+    [NetworkedComponent]
     public class SingularityDistortionComponent : Component
     {
         public override string Name => "SingularityDistortion";
-        public override uint? NetID => ContentNetIDs.SINGULARITY_DISTORTION;
 
         [DataField("intensity")]
         private float _intensity = 0.25f;
@@ -56,7 +56,7 @@ namespace Content.Shared.Singularity.Components
     [Serializable, NetSerializable]
     public class SingularityDistortionComponentState : ComponentState
     {
-        public SingularityDistortionComponentState(float intensity, float falloff) : base(ContentNetIDs.SINGULARITY_DISTORTION)
+        public SingularityDistortionComponentState(float intensity, float falloff)
         {
             Intensity = intensity;
             Falloff = falloff;

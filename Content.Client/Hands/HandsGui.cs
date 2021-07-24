@@ -21,6 +21,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Hands
 {
@@ -36,7 +37,7 @@ namespace Content.Client.Hands
 
         private ItemStatusPanel StatusPanel { get; }
 
-        private HBoxContainer HandsContainer { get; }
+        private BoxContainer HandsContainer { get; }
 
         [ViewVariables]
         public IReadOnlyList<GuiHand> Hands => _hands;
@@ -53,18 +54,24 @@ namespace Content.Client.Hands
             IoCManager.InjectDependencies(this);
             _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
 
-            AddChild(new HBoxContainer
+            AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 0,
                 HorizontalAlignment = HAlignment.Center,
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (StatusPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
-                            (HandsContainer = new HBoxContainer() { HorizontalAlignment = HAlignment.Center } ),
+                            (HandsContainer = new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Horizontal,
+                                HorizontalAlignment = HAlignment.Center
+                            }),
                         }
                     },
                 }

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Client.Administration.UI.Tabs;
 using Content.Client.HUD;

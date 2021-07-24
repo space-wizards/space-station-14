@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Buckle.Components;
+﻿using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 

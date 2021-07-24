@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Circulatory;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry.Reagent;

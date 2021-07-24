@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using Content.Client.IoC;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Animations;
@@ -12,15 +11,18 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
     public class ClientMagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()
@@ -70,7 +72,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         };
 
         public override string Name => "MagazineBarrel";
-        public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
         private StatusControl? _statusControl;
 
@@ -134,7 +135,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         private sealed class StatusControl : Control
         {
             private readonly ClientMagazineBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsList;
+            private readonly BoxContainer _bulletsList;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
             private readonly Label _ammoCount;
@@ -146,8 +147,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 HorizontalExpand = true;
                 VerticalAlignment = VAlignment.Center;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     Children =
                     {
@@ -163,8 +165,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                             HorizontalExpand = true,
                             Children =
                             {
-                                (_bulletsList = new HBoxContainer
+                                (_bulletsList = new BoxContainer
                                 {
+                                    Orientation = LayoutOrientation.Horizontal,
                                     VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 0
                                 }),

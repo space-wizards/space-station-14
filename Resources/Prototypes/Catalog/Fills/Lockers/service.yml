@@ -24,9 +24,9 @@
 #  parent: LockerFormal
 
 - type: entity
-  id: LockerChefFilled
+  id: ClosetChefFilled
   suffix: Filled
-  parent: LockerChef
+  parent: ClosetChef
   components:
   - type: StorageFill
     contents:
@@ -36,9 +36,9 @@
       - id: ReagentContainerFlour
 
 - type: entity
-  id: LockerJanitorFilled
+  id: ClosetJanitorFilled
   suffix: Filled
-  parent: LockerJanitor
+  parent: ClosetJanitor
   components:
   - type: StorageFill
     contents:

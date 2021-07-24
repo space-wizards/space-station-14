@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
 {
@@ -42,7 +43,7 @@ namespace Content.Client.Actions.UI
         private readonly Label _loadoutNumber;
         private readonly Texture _lockTexture;
         private readonly Texture _unlockTexture;
-        private readonly HBoxContainer _loadoutContainer;
+        private readonly BoxContainer _loadoutContainer;
 
         private readonly TextureRect _dragShadow;
 
@@ -108,15 +109,17 @@ namespace Content.Client.Actions.UI
             };
             AddChild(panelContainer);
 
-            var hotbarContainer = new VBoxContainer
+            var hotbarContainer = new BoxContainer
             {
+	            Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 3,
                 HorizontalAlignment = HAlignment.Left
             };
             panelContainer.AddChild(hotbarContainer);
 
-            var settingsContainer = new HBoxContainer
+            var settingsContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
             hotbarContainer.AddChild(settingsContainer);
@@ -156,8 +159,9 @@ namespace Content.Client.Actions.UI
             };
             hotbarContainer.AddChild(_slotContainer);
 
-            _loadoutContainer = new HBoxContainer
+            _loadoutContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 MouseFilter = MouseFilterMode.Stop
             };

@@ -1,6 +1,6 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Shared.Storage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -17,8 +17,7 @@ namespace Content.Server.Storage.Components
     {
         public override string Name => "StorageFill";
 
-        [DataField("contents")]
-        private List<StorageFillEntry> _contents = new();
+        [DataField("contents")] private List<StorageFillEntry> _contents = new();
 
         public IReadOnlyList<StorageFillEntry> Contents => _contents;
 
@@ -41,7 +40,8 @@ namespace Content.Server.Storage.Components
             foreach (var storageItem in _contents)
             {
                 if (string.IsNullOrEmpty(storageItem.PrototypeId)) continue;
-                if (!string.IsNullOrEmpty(storageItem.GroupId) && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
+                if (!string.IsNullOrEmpty(storageItem.GroupId) &&
+                    alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
                 if (storageItem.SpawnProbability != 1f &&
                     !random.Prob(storageItem.SpawnProbability))
@@ -51,8 +51,10 @@ namespace Content.Server.Storage.Components
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    storage.Insert(Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
+                    storage.Insert(
+                        Owner.EntityManager.SpawnEntity(storageItem.PrototypeId, Owner.Transform.Coordinates));
                 }
+
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
         }
@@ -64,13 +66,13 @@ namespace Content.Server.Storage.Components
             [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
             public string? PrototypeId;
 
-            [DataField("prob")]
-            public float SpawnProbability;
+            [DataField("prob")] public float SpawnProbability;
+
             /// <summary>
             /// The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
             /// </summary>
-            [DataField("orGroup")]
-            public string GroupId;
+            [DataField("orGroup")] public string GroupId;
+
             /// <summary>
             /// orGroup signifies to pick between entities designated with an ID.
             ///
@@ -93,8 +95,7 @@ namespace Content.Server.Storage.Components
             /// </code>
             /// </example>
             /// </summary>
-            [DataField("amount")]
-            public int Amount;
+            [DataField("amount")] public int Amount;
 
             public void PopulateDefaultValues()
             {

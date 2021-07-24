@@ -1,0 +1,47 @@
+﻿- type: entity
+  id: KitchenMicrowave
+  parent: BaseMachinePowered
+  name: microwave
+  description: It's magic.
+  components:
+  - type: Microwave
+  - type: SolutionContainer
+    maxVol: 100
+    caps: Refillable
+  - type: Appearance
+    visuals:
+    - type: MicrowaveVisualizer
+  - type: LoopingSound
+  - type: UserInterface
+    interfaces:
+    - key: enum.MicrowaveUiKey.Key
+      type: MicrowaveBoundUserInterface
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.16,-0.3,0.16,0.3"
+      mass: 25
+      layer:
+      - MobMask
+      - Opaque
+      mask:
+      - MobMask
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/microwave.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - state: mw0
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw_unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Audio;
 using Content.Shared.Hands;
 using Content.Shared.Rotation;

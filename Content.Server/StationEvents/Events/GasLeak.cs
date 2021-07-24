@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
@@ -10,7 +11,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-#nullable enable
 namespace Content.Server.StationEvents.Events
 {
     internal sealed class GasLeak : StationEvent
@@ -114,19 +114,20 @@ namespace Content.Server.StationEvents.Events
             if (_timeUntilLeak > 0f) return;
             _timeUntilLeak += LeakCooldown;
 
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
             if (!_foundTile ||
                 _targetGrid == null ||
                 _targetGrid.Deleted ||
-                !_targetGrid.TryGetComponent(out GridAtmosphereComponent? gridAtmos))
+                !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
             {
                 Running = false;
                 return;
             }
 
-            var atmos = gridAtmos.GetTile(_targetTile);
+            var environment = atmosphereSystem.GetTileMixture(_targetGrid.Transform.GridID, _targetTile, true);
 
-            atmos?.Air?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
-            atmos?.Invalidate();
+            environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
 
         public override void Shutdown()
@@ -145,21 +146,21 @@ namespace Content.Server.StationEvents.Events
 
         private void Spark()
         {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             if (robustRandom.NextFloat() <= SparkChance)
             {
                 if (!_foundTile ||
                     _targetGrid == null ||
                     _targetGrid.Deleted ||
-                    !_targetGrid.TryGetComponent(out GridAtmosphereComponent? gridAtmos))
+                    !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
                 {
                     return;
                 }
 
-                var atmos = gridAtmos.GetTile(_targetTile);
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                atmos?.HotspotExpose(700f, 50f, true);
+                atmosphereSystem.HotspotExpose(_targetGrid.Transform.GridID, _targetTile, 700f, 50f, true);
                 SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
             }
         }
@@ -172,7 +173,7 @@ namespace Content.Server.StationEvents.Events
             if (!IoCManager.Resolve<IMapManager>().TryGetGrid(defaultGridId, out var grid) ||
                 !IoCManager.Resolve<IEntityManager>().TryGetEntity(grid.GridEntityId, out _targetGrid)) return false;
 
-            _targetGrid.EnsureComponent(out GridAtmosphereComponent gridAtmos);
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             robustRandom ??= IoCManager.Resolve<IRobustRandom>();
             var found = false;
             var gridBounds = grid.WorldBounds;
@@ -184,7 +185,7 @@ namespace Content.Server.StationEvents.Events
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (gridAtmos.IsSpace(tile) || gridAtmos.IsAirBlocked(tile)) continue;
+                if (atmosphereSystem.IsTileSpace(defaultGridId, tile) || atmosphereSystem.IsTileAirBlocked(defaultGridId, tile)) continue;
                 found = true;
                 _targetCoords = grid.GridTileToLocal(tile);
                 break;

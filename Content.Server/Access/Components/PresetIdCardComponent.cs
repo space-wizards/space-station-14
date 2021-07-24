@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace Content.Server.Speech.Components
+﻿namespace Content.Server.Speech.Components
 {
     internal interface IAccentComponent
     {

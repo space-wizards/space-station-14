@@ -1,3 +1,4 @@
+using System.Buffers;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Construction.Components;
@@ -25,7 +26,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (!component.Owner.Transform.Coordinates.TryGetTileAir(out var environment, EntityManager))
+            if (Get<AtmosphereSystem>().GetTileMixture(component.Owner.Transform.Coordinates) is not {} environment)
                 return;
 
             foreach (var node in nodes.Nodes.Values)
@@ -46,12 +47,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (!component.Owner.Transform.Coordinates.TryGetTileAtmosphere(out var environment))
-                environment = null;
+            var atmosphereSystem = Get<AtmosphereSystem>();
 
-            var environmentPressure = environment?.Air?.Pressure ?? 0f;
-            var environmentVolume = environment?.Air?.Volume ?? Atmospherics.CellVolume;
-            var environmentTemperature = environment?.Air?.Volume ?? Atmospherics.TCMB;
+            if (atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is not {} environment)
+                environment = GasMixture.SpaceGas;
 
             var lost = 0f;
             var timesLost = 0;
@@ -60,15 +59,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             {
                 if (node is not PipeNode pipe) continue;
 
-                var difference = pipe.Air.Pressure - environmentPressure;
-                lost += difference * environmentVolume / (environmentTemperature * Atmospherics.R);
+                var difference = pipe.Air.Pressure - environment.Pressure;
+                lost += difference * environment.Volume / (environment.Temperature * Atmospherics.R);
                 timesLost++;
             }
 
             var sharedLoss = lost / timesLost;
             var buffer = new GasMixture();
-
-            var atmosphereSystem = Get<AtmosphereSystem>();
 
             foreach (var node in nodes.Nodes.Values)
             {
@@ -77,7 +74,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
             }
 
-            environment?.AssumeAir(buffer);
+            atmosphereSystem.Merge(environment, buffer);
         }
     }
 }

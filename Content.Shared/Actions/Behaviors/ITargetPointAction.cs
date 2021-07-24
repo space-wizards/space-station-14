@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Actions.Behaviors
