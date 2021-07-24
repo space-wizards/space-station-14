@@ -4,12 +4,12 @@
   description: A sterile injector for rapid administration of drugs to patients.
   id: Hypospray
   components:
-    - type: Sprite
-      sprite: Objects/Specific/Medical/hypospray.rsi
-      state: hypo
-    - type: Item
-      sprite: Objects/Specific/Medical/hypospray.rsi
-    - type: SolutionContainer
-      maxVol: 30
-      caps: Refillable, CanExamine
-    - type: Hypospray
+  - type: Sprite
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: hypo
+  - type: Item
+    sprite: Objects/Specific/Medical/hypospray.rsi
+  - type: SolutionContainer
+    maxVol: 30
+    caps: Refillable, CanExamine
+  - type: Hypospray

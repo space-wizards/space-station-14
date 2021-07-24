@@ -11,6 +11,9 @@
   id: BotanyShovel
 
 - type: Tag
+  id: Bottle
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
@@ -89,6 +92,9 @@
   id: PlantAnalyzer
 
 - type: Tag
+  id: PlantBGone
+
+- type: Tag
   id: PlantSampleTaker
 
 - type: Tag
@@ -104,10 +110,16 @@
   id: Shovel
 
 - type: Tag
+  id: Spray
+
+- type: Tag
   id: Wall
 
 - type: Tag
   id: Wirecutter
+
+- type: Tag
+  id: Wrench
 
 - type: Tag
   id: Write

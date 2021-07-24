@@ -71,6 +71,9 @@
   id: Wrench
   description: A common tool for assembly and disassembly, righty tighty lefty loosey.
   components:
+  - type: Tag
+    tags:
+    - Wrench
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon

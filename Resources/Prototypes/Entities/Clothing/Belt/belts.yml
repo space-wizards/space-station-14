@@ -2,16 +2,64 @@
 
 - type: entity
   parent: ClothingBeltBase
-  id: ClothingBeltAssault
-  name: assault belt
-  description: A tactical assault belt.
+  id: ClothingBeltUtility
+  name: utility belt
+  description: Can hold various things.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/assault.rsi
+    sprite: Clothing/Belt/utility.rsi
   - type: Clothing
-    sprite: Clothing/Belt/assault.rsi
+    sprite: Clothing/Belt/utility.rsi
   - type: Storage
     capacity: 40
+    # TODO: Fill this out more.
+    # whitelist:
+    #   tags:
+    #     - Wirecutter
+    #     - Crowbar
+    #     - CrowbarRed
+    #     - Screwdriver
+    #     - Flashlight
+    #     - Welder
+    #     - Wrench
+    #     - Painter
+    #     - GeigerCounter
+    #     - Flare
+    #     - Coilsofwire
+    #     -
+    #     -
+    #   components:
+    #     - SignalLinker
+  - type: ItemCounter
+    mapLayers:
+      cutters_red:
+        whitelist:
+          tags:
+          - Wirecutter
+      crowbar:
+        whitelist:
+          tags:
+          - Crowbar
+      crowbar_red:
+        whitelist:
+          tags:
+          - CrowbarRed
+      screwdriver_nuke:
+        whitelist:
+          tags:
+          - Screwdriver
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+      multitool:
+        whitelist:
+          components:
+          - SignalLinker
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -24,14 +72,24 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
+    # TODO: Fill this out more.
     # whitelist:
     #   tags:
-    #     - BotanyHoe
-    #     - PlantAnalyzer
-    #     - BotanyHoe
-    #     - BotanyShovel
+    #     - Wirecutter
+    #     - Crowbar
+    #     - CrowbarRed
+    #     - Screwdriver
+    #     - Flashlight
+    #     - Welder
+    #     - Wrench
+    #     - Painter
+    #     - GeigerCounter
+    #     - Flare
+    #     - Coilsofwire
+    #     -
+    #     -
     #   components:
-    #     - Seed
+    #     - SignalLinker
     capacity: 100
   - type: ItemCounter
     mapLayers:
@@ -63,10 +121,41 @@
         whitelist:
           components:
           - SignalLinker
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_icon_overlay.rsi
+      sprite: Clothing/Belt/belt_overlay.rsi
+
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltAssault
+  name: assault belt
+  description: A tactical assault belt.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/assault.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/assault.rsi
+  - type: Storage
+    capacity: 40
+  - type: ItemCounter
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashExplosive
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -80,6 +169,20 @@
     sprite: Clothing/Belt/janitor.rsi
   - type: Storage
     capacity: 40
+  - type: ItemCounter
+    mapLayers:
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+      bottle_spray:
+        whitelist:
+          tags:
+          - Spray
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -93,6 +196,40 @@
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
     capacity: 40
+  - type: ItemCounter
+    mapLayers:
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+      hypo:
+        whitelist:
+          components:
+          - Hypospray
+      pill:
+        whitelist:
+          components:
+          - Pill
+      bottle_spray:
+        whitelist:
+          tags:
+          - Spray
+      # spray_med:
+      #   whitelist:
+      #     tags:
+      #     - SprayMedical
+      # wrench_medical:
+      #   whitelist:
+      #     tags:
+      #     - WrenchMedical
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -111,6 +248,8 @@
     #     - PlantAnalyzer
     #     - BotanyHoe
     #     - BotanyShovel
+    #     - PlantBGone
+    #     - Bottle
     #   components:
     #     - Seed
     capacity: 40
@@ -132,10 +271,18 @@
         whitelist:
           tags:
           - BotanyShovel
+      plantbgone:
+        whitelist:
+          tags:
+          - PlantBGone
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_icon_overlay.rsi
+      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -149,6 +296,20 @@
     sprite: Clothing/Belt/security.rsi
   - type: Storage
     capacity: 40
+  - type: ItemCounter
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashExplosive
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltBase
@@ -173,23 +334,6 @@
           tags:
           - CaptainSabre
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-
-- type: entity
-  parent: ClothingBeltBase
-  id: ClothingBeltUtility
-  name: utility belt
-  description: Can hold various things.
-  components:
-  - type: Sprite
-    sprite: Clothing/Belt/utility.rsi
-  - type: Clothing
-    sprite: Clothing/Belt/utility.rsi
-  - type: Storage
-    capacity: 40
-  - type: Appearance
-    sprite: Clothing/Belt/belt_icon_overlay.rsi
     visuals:
     - type: MappedItemVisualizer
 
