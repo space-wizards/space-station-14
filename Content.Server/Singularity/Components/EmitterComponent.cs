@@ -27,8 +27,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class EmitterComponent : Component, IActivate, IInteractUsing
+    public class EmitterComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -39,7 +38,7 @@ namespace Content.Server.Singularity.Components
 
         private CancellationTokenSource? _timerCancel;
 
-        private PowerConsumerComponent _powerConsumer = default!;
+        [ComponentDependency] private readonly PowerConsumerComponent? _powerConsumer = default;
 
         // whether the power switch is in "on"
         [ViewVariables] public bool IsOn { get; private set; }
@@ -61,33 +60,6 @@ namespace Content.Server.Singularity.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireInterval")] private TimeSpan _fireInterval = TimeSpan.FromSeconds(2);
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMin")] private TimeSpan _fireBurstDelayMin = TimeSpan.FromSeconds(2);
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fireBurstDelayMax")] private TimeSpan _fireBurstDelayMax = TimeSpan.FromSeconds(10);
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (_isLocked)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-access-locked", ("target", Owner)));
-                return;
-            }
-
-            if (Owner.TryGetComponent(out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
-            {
-                if (!IsOn)
-                {
-                    SwitchOn();
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-on", ("target", Owner)));
-                }
-                else
-                {
-                    SwitchOff();
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-turned-off", ("target", Owner)));
-                }
-            }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-emitter-not-anchored", ("target", Owner)));
-            }
-        }
 
         Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -122,7 +94,7 @@ namespace Content.Server.Singularity.Components
         public void SwitchOff()
         {
             IsOn = false;
-            _powerConsumer.DrawRate = 0;
+            if (_powerConsumer != null) _powerConsumer.DrawRate = 0;
             PowerOff();
             UpdateAppearance();
         }
@@ -130,7 +102,7 @@ namespace Content.Server.Singularity.Components
         public void SwitchOn()
         {
             IsOn = true;
-            _powerConsumer.DrawRate = _powerUseActive;
+            if (_powerConsumer != null) _powerConsumer.DrawRate = _powerUseActive;
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
             UpdateAppearance();
@@ -175,7 +147,7 @@ namespace Content.Server.Singularity.Components
             // and thus not firing
             DebugTools.Assert(_isPowered);
             DebugTools.Assert(IsOn);
-            DebugTools.Assert(_powerConsumer.DrawRate <= _powerConsumer.ReceivedPower);
+            DebugTools.Assert(_powerConsumer != null && (_powerConsumer.DrawRate <= _powerConsumer.ReceivedPower));
 
             Fire();
 
