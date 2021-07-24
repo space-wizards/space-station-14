@@ -79,7 +79,6 @@ namespace Content.Server.Kitchen.EntitySystems
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
                 //Why am I asking you? You're biased.
-                args.Handled = false;
                 return;
             }
 
@@ -87,13 +86,11 @@ namespace Content.Server.Kitchen.EntitySystems
             //Maybe I should have done that for the microwave too?
             if (component.Chamber.ContainedEntities.Count >= component.StorageCap)
             {
-                args.Handled = false;
                 return;
             }
 
             if (!component.Chamber.Insert(heldEnt))
             {
-                args.Handled = false;
                 return;
             }
 
@@ -107,7 +104,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (!args.User.TryGetComponent(out ActorComponent? actor))
             {
-                args.Handled = false;
                 return;
             }
             EnqueueUiUpdate(component);
