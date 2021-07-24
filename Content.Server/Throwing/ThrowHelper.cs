@@ -12,7 +12,7 @@ namespace Content.Server.Throwing
 {
     internal static class ThrowHelper
     {
-        private const float ThrowAngularImpulse = 3.0f;
+        //private const float ThrowAngularImpulse = 3.0f;
 
         /// <summary>
         ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
@@ -44,7 +44,8 @@ namespace Content.Server.Throwing
             {
                 entity.EnsureComponent<ThrownItemComponent>().Thrower = user;
                 // Give it a l'il spin.
-                physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
+                physicsComponent.ApplyLinearImpulse(direction/3);
+                physicsComponent.AngularVelocity = 5;
 
                 if (user != null)
                     EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);
