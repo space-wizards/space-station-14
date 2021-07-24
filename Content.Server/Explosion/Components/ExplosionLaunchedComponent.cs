@@ -16,6 +16,9 @@ namespace Content.Server.Explosion.Components
 
             var sourceLocation = eventArgs.Source;
             var targetLocation = eventArgs.Target.Transform.Coordinates;
+
+            if (sourceLocation.Equals(targetLocation)) return;
+
             var direction = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
 
             var throwForce = eventArgs.Severity switch
@@ -24,7 +27,8 @@ namespace Content.Server.Explosion.Components
                 ExplosionSeverity.Light => 20,
                 _ => 0,
             };
-            Owner.TryThrow(direction * throwForce);
+            
+            Owner.TryThrow(direction, throwForce);
         }
     }
 }
