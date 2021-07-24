@@ -1,7 +1,5 @@
 #nullable disable warnings
 #nullable enable annotations
-using System.Runtime.CompilerServices;
-using Content.Server.Atmos.Components;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
@@ -11,6 +9,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
+    /// <summary>
+    ///     Internal Atmos class that stores data about the atmosphere in a grid.
+    /// </summary>
     public class TileAtmosphere : IGasMixtureHolder
     {
         [ViewVariables]
@@ -39,9 +40,6 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public bool Excited { get; set; }
-
-        [ViewVariables]
-        private readonly GridAtmosphereComponent _gridAtmosphereComponent;
 
         /// <summary>
         ///     Adjacent tiles in the same order as <see cref="AtmosDirection"/>. (NSEW)
@@ -86,57 +84,14 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
+        public TileAtmosphere(GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
         {
-            _gridAtmosphereComponent = atmosphereComponent;
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
 
             if(immutable)
                 Air?.MarkImmutable();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void UpdateVisuals()
-        {
-            if (Air == null) return;
-
-            _gridAtmosphereComponent.GasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
-        }
-
-        public void UpdateAdjacent()
-        {
-            for (var i = 0; i < Atmospherics.Directions; i++)
-            {
-                var direction = (AtmosDirection) (1 << i);
-
-                var otherIndices = GridIndices.Offset(direction.ToDirection());
-
-                var isSpace = _gridAtmosphereComponent.IsSpace(GridIndices);
-                var adjacent = _gridAtmosphereComponent.GetTile(otherIndices, !isSpace);
-                AdjacentTiles[direction.ToIndex()] = adjacent;
-                adjacent?.UpdateAdjacent(direction.GetOpposite());
-
-                if (adjacent != null && !BlockedAirflow.IsFlagSet(direction) && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
-                {
-                    AdjacentBits |= direction;
-                }
-            }
-        }
-
-        private void UpdateAdjacent(AtmosDirection direction)
-        {
-            AdjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
-
-            if (!BlockedAirflow.IsFlagSet(direction) && !_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
-            {
-                AdjacentBits |= direction;
-            }
-            else
-            {
-                AdjacentBits &= ~direction;
-            }
         }
     }
 }

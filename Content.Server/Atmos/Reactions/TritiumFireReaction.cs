@@ -64,16 +64,6 @@ namespace Content.Server.Atmos.Reactions
                 if (temperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
                     atmosphereSystem.HotspotExpose(location.GridIndex, location.GridIndices, temperature, mixture.Volume);
-
-                    foreach (var entity in location.GridIndices.GetEntitiesInTileFast(location.GridIndex))
-                    {
-                        foreach (var temperatureExpose in entity.GetAllComponents<ITemperatureExpose>())
-                        {
-                            temperatureExpose.TemperatureExpose(mixture, temperature, mixture.Volume);
-                        }
-                    }
-
-                    // TODO ATMOS: location.TemperatureExpose(mixture, temperature, mixture.Volume);
                 }
             }
 

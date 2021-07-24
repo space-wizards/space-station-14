@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Console;
@@ -27,7 +28,7 @@ namespace Content.Server.Singularity
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var comp in entityManager.ComponentManager.EntityQuery<EmitterComponent>())
             {
-                comp.SwitchOn();
+                EntitySystem.Get<EmitterSystem>().SwitchOn(comp);
             }
             foreach (var comp in entityManager.ComponentManager.EntityQuery<RadiationCollectorComponent>())
             {

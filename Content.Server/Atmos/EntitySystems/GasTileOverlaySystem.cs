@@ -144,14 +144,14 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Checks whether the overlay-relevant data for a gas tile has been updated.
         /// </summary>
-        /// <param name="gam"></param>
+        /// <param name="grid"></param>
         /// <param name="oldTile"></param>
         /// <param name="indices"></param>
         /// <param name="overlayData"></param>
         /// <returns>true if updated</returns>
-        private bool TryRefreshTile(GridAtmosphereComponent gam, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
+        private bool TryRefreshTile(GridId grid, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = gam.GetTile(indices);
+            var tile = _atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, indices);
 
             if (tile == null)
             {
@@ -287,7 +287,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 
-                    if (!TryRefreshTile(gam, chunk.GetData(invalid), invalid, out var data)) continue;
+                    if (!TryRefreshTile(grid.Index, chunk.GetData(invalid), invalid, out var data)) continue;
 
                     if (!updatedTiles.TryGetValue(chunk, out var tiles))
                     {

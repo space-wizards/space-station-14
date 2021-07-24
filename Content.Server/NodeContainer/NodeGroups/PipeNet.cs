@@ -8,7 +8,9 @@ using Content.Server.Interfaces;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -30,16 +32,14 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
-        [ViewVariables]
-        private IGridAtmosphereComponent? GridAtmos =>
-            _atmosphereSystem?.GetGridAtmosphere(GridId);
+        public GridId Grid => GridId;
 
         public override void Initialize(Node sourceNode)
         {
             base.Initialize(sourceNode);
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            GridAtmos?.AddPipeNet(this);
+            _atmosphereSystem.AddPipeNet(this);
         }
 
         public void Update()
@@ -94,7 +94,8 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         private void RemoveFromGridAtmos()
         {
-            GridAtmos?.RemovePipeNet(this);
+            DebugTools.AssertNotNull(_atmosphereSystem);
+            _atmosphereSystem?.RemovePipeNet(this);
         }
     }
 }

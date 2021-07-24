@@ -3,19 +3,15 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
     public partial class AtmosphereSystem : SharedAtmosphereSystem
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
@@ -28,6 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             InitializeGases();
             InitializeCVars();
+            InitializeGrid();
 
             #region Events
 
@@ -57,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            GetGridAtmosphere(eventArgs.NewTile.GridIndex)?.Invalidate(eventArgs.NewTile.GridIndices);
+            InvalidateTile(eventArgs.NewTile.GridIndex, eventArgs.NewTile.GridIndices);
         }
 
         private void OnMapCreated(object? sender, MapEventArgs e)
@@ -84,8 +81,7 @@ namespace Content.Server.Atmos.EntitySystems
                 foreach (var exposed in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
                 {
                     // TODO ATMOS: Kill this with fire.
-                    var atmos = GetGridAtmosphere(exposed.Owner.Transform.Coordinates);
-                    var tile = atmos.GetTile(exposed.Owner.Transform.Coordinates);
+                    var tile = GetTileAtmosphereOrCreateSpace(exposed.Owner.Transform.Coordinates);
                     if (tile == null) continue;
                     exposed.Update(tile, _exposedTimer, this);
                 }
