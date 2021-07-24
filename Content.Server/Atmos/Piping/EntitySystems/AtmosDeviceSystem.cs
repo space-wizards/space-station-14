@@ -20,13 +20,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentInit>(OnDeviceInitialize);
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentShutdown>(OnDeviceShutdown);
-            SubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>(OnDeviceBodyTypeChanged);
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
+            SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
         private bool CanJoinAtmosphere(AtmosDeviceComponent component)
         {
-            return !component.RequireAnchored || !component.Owner.TryGetComponent(out PhysicsComponent? physics) || physics.BodyType == BodyType.Static;
+            return !component.RequireAnchored || !component.Owner.Transform.Anchored;
         }
 
         public void JoinAtmosphere(AtmosDeviceComponent component)
@@ -34,26 +34,22 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!CanJoinAtmosphere(component))
                 return;
 
-            // We try to get a valid, simulated atmosphere.
-            if (!Get<AtmosphereSystem>().TryGetSimulatedGridAtmosphere(component.Owner.Transform.MapPosition, out var atmosphere))
+            // We try to add the device to a valid atmosphere.
+            if (!Get<AtmosphereSystem>().AddAtmosDevice(component))
                 return;
 
             component.LastProcess = _gameTiming.CurTime;
-            component.Atmosphere = atmosphere;
-            atmosphere.AddAtmosDevice(component);
 
-            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceEnabledEvent(atmosphere), false);
+            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceEnabledEvent(), false);
         }
 
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
-            var atmosphere = component.Atmosphere;
-            atmosphere?.RemoveAtmosDevice(component);
-            component.Atmosphere = null;
-            component.LastProcess = TimeSpan.Zero;
+            if (!Get<AtmosphereSystem>().RemoveAtmosDevice(component))
+                return;
 
-            if(atmosphere != null)
-                RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceDisabledEvent(atmosphere), false);
+            component.LastProcess = TimeSpan.Zero;
+            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceDisabledEvent(), false);
         }
 
         public void RejoinAtmosphere(AtmosDeviceComponent component)
@@ -72,13 +68,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             LeaveAtmosphere(component);
         }
 
-        private void OnDeviceBodyTypeChanged(EntityUid uid, AtmosDeviceComponent component, PhysicsBodyTypeChangedEvent args)
+        private void OnDeviceAnchorChanged(EntityUid uid, AtmosDeviceComponent component, AnchorStateChangedEvent args)
         {
             // Do nothing if the component doesn't require being anchored to function.
             if (!component.RequireAnchored)
                 return;
 
-            if (args.New == BodyType.Static)
+            if(component.Owner.Transform.Anchored)
                 JoinAtmosphere(component);
             else
                 LeaveAtmosphere(component);

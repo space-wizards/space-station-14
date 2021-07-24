@@ -7,7 +7,7 @@
   category: Structures
   description: A large structural assembly made out of metal.
   icon:
-    sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+    sprite: /Textures/Structures/Walls/solid.rsi
     state: wall_girder
   objectType: Structure
   placementMode: SnapgridCenter
@@ -25,7 +25,7 @@
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -43,7 +43,7 @@
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
     state: rgeneric
   objectType: Structure
   placementMode: SnapgridCenter
@@ -64,7 +64,7 @@
     - !type:NoWindowsInTile {}
     - !type:TileNotBlocked {}
   icon:
-    sprite: Constructible/Structures/Walls/low_wall.rsi
+    sprite: Structures/Walls/low_wall.rsi
     state: metal
   objectType: Structure
   placementMode: SnapgridCenter
@@ -82,7 +82,7 @@
     - !type:LowWallInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/window.rsi
+    sprite: Structures/Windows/window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -100,7 +100,7 @@
     - !type:LowWallInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+    sprite: Structures/Windows/reinforced_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -118,7 +118,7 @@
     - !type:LowWallInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -133,7 +133,7 @@
   category: Structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
-    sprite: Constructible/Structures/Doors/Standard/firelock.rsi
+    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
@@ -157,7 +157,7 @@
         - plating
         - underplating
   icon:
-    sprite: Constructible/Tiles/catwalk.rsi
+    sprite: Structures/catwalk.rsi
     state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
@@ -172,7 +172,7 @@
   category: Structures
   description: An improvised barricade made out of wooden planks.
   icon:
-    sprite: Constructible/Structures/barricades.rsi
+    sprite: Structures/Walls/barricades.rsi
     state: barricadewooden
   objectType: Structure
   placementMode: SnapgridCenter
@@ -189,7 +189,7 @@
   category: Structures
   description: It opens, it closes, and maybe crushes you.
   icon:
-    sprite: Constructible/Structures/Doors/Standard/basic.rsi
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     state: assembly
   objectType: Structure
   placementMode: SnapgridCenter

@@ -119,7 +119,7 @@ namespace Content.Server.RCD.Components
                 ExtraCheck = () => IsRCDStillValid(eventArgs, mapGrid, tile, snapPos, startingMode) //All of the sanity checks are here
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await _doAfterSystem.WaitDoAfter(doAfterEventArgs);
             if (result == DoAfterStatus.Cancelled)
             {
                 return true;

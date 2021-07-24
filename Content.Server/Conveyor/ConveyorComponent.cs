@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Items;
 using Content.Server.MachineLinking.Components;
 using Content.Server.Power.Components;
@@ -19,7 +18,7 @@ namespace Content.Server.Conveyor
     {
         public override string Name => "Conveyor";
 
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
@@ -105,7 +104,7 @@ namespace Content.Server.Conveyor
                 return false;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;

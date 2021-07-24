@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
@@ -59,7 +58,7 @@ namespace Content.Server.Cargo.Components
         [DataField("requestOnly")]
         private bool _requestOnly = false;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
@@ -171,7 +170,7 @@ namespace Content.Server.Cargo.Components
                     {
                         foreach (IEntity entity in enumerator)
                         {
-                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<PowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
+                            if (entity.HasComponent<CargoTelepadComponent>() && entity.TryGetComponent<ApcPowerReceiverComponent>(out var powerReceiver) && powerReceiver.Powered)
                             {
                                 cargoTelepad = entity;
                                 break;

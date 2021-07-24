@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Cloning.Components;
@@ -74,7 +73,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, PowerReceiverComponent>(true))
+            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {

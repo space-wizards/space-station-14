@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;

@@ -1,0 +1,17 @@
+- type: entity
+  parent: Airlock
+  id: AirlockExternal
+  suffix: External
+  description: "It opens, it closes, it might crush you, and there might be only space behind it.\nHas to be manually activated."
+  components:
+  - type: Door
+    bumpOpen: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer
+      open_sound: /Audio/Machines/airlock_ext_open.ogg
+      close_sound: /Audio/Machines/airlock_ext_close.ogg
+      deny_sound: /Audio/Machines/airlock_deny.ogg
+    - type: WiresVisualizer

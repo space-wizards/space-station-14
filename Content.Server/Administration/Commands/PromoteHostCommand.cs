@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Administration.Managers;
+﻿using Content.Server.Administration.Managers;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Console;

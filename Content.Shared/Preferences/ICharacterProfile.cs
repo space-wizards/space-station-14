@@ -1,6 +1,5 @@
 using Content.Shared.CharacterAppearance;
 
-#nullable enable
 
 namespace Content.Shared.Preferences
 {

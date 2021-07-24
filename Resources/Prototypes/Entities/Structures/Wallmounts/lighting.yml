@@ -1,0 +1,151 @@
+- type: entity
+  id: WallLight
+  name: light
+  description: "An unpowered light."
+  suffix: Unpowered
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: lightFixture
+    node: tubeLight
+  - type: Physics
+    canCollide: false
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.15, 0.45, 0.35"
+      layer: [ Passable ]
+  - type: LoopingSound
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    layers:
+    - state: on
+      map: ["enum.PoweredLightLayers.Base"]
+    state: on
+  - type: PointLight
+    radius: 10
+    energy: 1.4
+    softness: 1.1
+    offset: "0, -0.5"
+  - type: SignalReceiver
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  placement:
+    snap:
+    - Wallmount
+
+- type: entity
+  name: light
+  description: "A powered wall light emitting... light."
+  id: Poweredlight
+  suffix: Powered
+  parent: WallLight
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    state: off
+  - type: PointLight
+    enabled: false
+  - type: PoweredLight
+    bulb: Tube
+  - type: ApcPowerReceiver
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
+      blinkingSound: "/Audio/Machines/light_tube_on.ogg"
+
+- type: entity
+  id: PoweredlightEmpty
+  description: "A wall light. It's empty."
+  suffix: Empty, Powered
+  parent: Poweredlight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False
+
+- type: entity
+  name: small light
+  description: "An unpowered light."
+  id: SmallLight
+  suffix: Unpowered
+  parent: WallLight
+  components:
+    - type: Sprite
+      sprite: Structures/Wallmounts/Lighting/light_small.rsi
+      state: on
+    - type: PointLight
+      energy: 1.0
+      radius: 6
+      softness: 1.1
+      enabled: true
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:EmptyAllContainersBehaviour
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - type: Construction
+      graph: lightFixture
+      node: bulbLight
+
+- type: entity
+  name: small light
+  description: "A powered wall light emitting... light."
+  id: PoweredSmallLight
+  suffix: Powered
+  parent: SmallLight
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    state: off
+  - type: PointLight
+    enabled: false
+    offset: "0, -0.5"
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "0, 0, 0.25, 0.1"
+      layer: [ Passable ]
+  - type: PoweredLight
+    bulb: Bulb
+  - type: ApcPowerReceiver
+  - type: Appearance
+    visuals:
+    - type: PoweredLightVisualizer
+
+- type: entity
+  id: PoweredSmallLightEmpty
+  suffix: Empty, Powered
+  parent: PoweredSmallLight
+  components:
+  - type: Sprite
+    state: empty
+  - type: PoweredLight
+    hasLampOnSpawn: False

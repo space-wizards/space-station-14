@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -522,7 +521,7 @@ namespace Content.Server.Storage.Components
                         BreakOnUserMove = true,
                         NeedHand = true,
                     };
-                    var result = await doAfterSystem.DoAfter(doAfterArgs);
+                    var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
                     if (result != DoAfterStatus.Finished) return true;
                 }
 

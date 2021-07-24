@@ -7,6 +7,7 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Research.UI
 {
@@ -71,36 +72,41 @@ namespace Content.Client.Research.UI
 
             _futureTechnologies.OnItemSelected += FutureTechnologySelected;
 
-            var vbox = new VBoxContainer()
+            var vbox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true,
             };
 
-            var hboxTechnologies = new HBoxContainer()
+            var hboxTechnologies = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 2,
                 SeparationOverride = 10,
             };
 
-            var hboxSelected = new HBoxContainer()
+            var hboxSelected = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1
             };
 
-            var vboxPoints = new VBoxContainer()
+            var vboxPoints = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
 
-            var vboxTechInfo = new VBoxContainer()
+            var vboxTechInfo = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
@@ -109,9 +115,10 @@ namespace Content.Client.Research.UI
             _pointLabel = new Label() { Text = Loc.GetString("research-console-menu-research-points-text", ("points", 0)) };
             _pointsPerSecondLabel = new Label() { Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSecond", 0)) };
 
-            var vboxPointsButtons = new VBoxContainer()
+            var vboxPointsButtons = new BoxContainer
             {
-                Align = BoxContainer.AlignMode.End,
+                Orientation = LayoutOrientation.Vertical,
+                Align = AlignMode.End,
                 HorizontalExpand = true,
                 VerticalExpand = true,
             };
@@ -264,7 +271,7 @@ namespace Content.Client.Research.UI
 
             _technologyIcon.Texture = TechnologySelected.Icon.Frame0();
             _technologyName.Text = TechnologySelected.Name;
-            _technologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text").ToLowerInvariant();
+            _technologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text" ,("points", Owner.Points)).ToLowerInvariant();
             _technologyRequirements.Text = Loc.GetString("research-console-tech-requirements-none");
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
@@ -286,7 +293,7 @@ namespace Content.Client.Research.UI
         public void PopulatePoints()
         {
             _pointLabel.Text = Loc.GetString("research-console-menu-research-points-text", ("points", Owner.Points));
-            _pointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSeconds", Owner.PointsPerSecond));
+            _pointsPerSecondLabel.Text = Loc.GetString("research-console-menu-points-per-second-text", ("pointsPerSecond", Owner.PointsPerSecond));
         }
 
         /// <summary>

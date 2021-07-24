@@ -1,9 +1,8 @@
-#nullable enable
 using System;
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
@@ -36,7 +35,7 @@ namespace Content.Server.Doors.Components
         private readonly SharedAppearanceComponent? _appearanceComponent = null;
 
         [ComponentDependency]
-        private readonly PowerReceiverComponent? _receiverComponent = null;
+        private readonly ApcPowerReceiverComponent? _receiverComponent = null;
 
         [ComponentDependency]
         private readonly WiresComponent? _wiresComponent = null;

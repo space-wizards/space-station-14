@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -238,7 +237,7 @@ namespace Content.Server.Construction
                 NeedHand = false,
             };
 
-            if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;

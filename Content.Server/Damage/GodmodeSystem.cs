@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using System.Linq;
 using Content.Shared.Damage;

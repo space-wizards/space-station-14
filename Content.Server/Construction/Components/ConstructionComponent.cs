@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -258,7 +257,7 @@ namespace Content.Server.Construction.Components
                     {
                         case ArbitraryInsertConstructionGraphStep arbitraryStep:
                             if (arbitraryStep.EntityValid(eventArgs.Using)
-                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
+                                && await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;
                             }
@@ -267,7 +266,7 @@ namespace Content.Server.Construction.Components
 
                         case MaterialConstructionGraphStep materialStep:
                             if (materialStep.EntityValid(eventArgs.Using, out var stack)
-                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
+                                && await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, stack, materialStep.Amount, eventArgs.User.Transform.Coordinates);
 

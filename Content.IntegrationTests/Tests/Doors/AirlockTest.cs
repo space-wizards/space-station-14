@@ -126,8 +126,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             server.Assert(() =>
             {
-                var mapId = new MapId(1);
-                mapManager.CreateNewMapEntity(mapId);
+                var mapId = mapManager.CreateMap();
 
                 var humanCoordinates = new MapCoordinates((physicsDummyStartingX, 0), mapId);
                 physicsDummy = entityManager.SpawnEntity("PhysicsDummy", humanCoordinates);
@@ -159,6 +158,7 @@ namespace Content.IntegrationTests.Tests.Doors
             // Sanity check
             // Sloth: Okay I'm sorry but I hate having to rewrite tests for every refactor
             // If you see this yell at me in discord so I can continue to pretend this didn't happen.
+            // REMINDER THAT I STILL HAVE TO FIX THIS TEST EVERY OTHER PHYSICS PR
             // Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock

@@ -1,7 +1,7 @@
-#nullable enable
 using System;
 using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Server.Player;
@@ -128,55 +128,39 @@ namespace Content.Server.Commands.Atmos
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(gridId, out var grid))
+            if (!mapManager.TryGetGrid(gridId, out _))
             {
                 shell.WriteLine($"No grid exists with id {gridId}");
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
-            {
-                shell.WriteLine($"Grid {gridId} has no entity.");
-                return;
-            }
-
-            if (!gridEntity.TryGetComponent(out GridAtmosphereComponent? atmosphere))
-            {
-                shell.WriteLine($"Grid {gridId} has no {nameof(GridAtmosphereComponent)}");
-                return;
-            }
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var tiles = 0;
             var moles = 0f;
 
             if (gas == null)
             {
-                foreach (var tile in atmosphere)
+                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
                 {
-                    if (tile.Air == null || tile.Air.Immutable) continue;
+                    if (tile.Immutable) continue;
 
                     tiles++;
-                    moles += tile.Air.TotalMoles;
+                    moles += tile.TotalMoles;
 
-                    tile.Air.Clear();
-
-                    tile.Invalidate();
+                    tile.Clear();
                 }
             }
             else
             {
-                foreach (var tile in atmosphere)
+                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
                 {
-                    if (tile.Air == null || tile.Air.Immutable) continue;
+                    if (tile.Immutable) continue;
 
                     tiles++;
-                    moles += tile.Air.TotalMoles;
+                    moles += tile.TotalMoles;
 
-                    tile.Air.SetMoles(gas.Value, 0);
-
-                    tile.Invalidate();
+                    tile.SetMoles(gas.Value, 0);
                 }
             }
 

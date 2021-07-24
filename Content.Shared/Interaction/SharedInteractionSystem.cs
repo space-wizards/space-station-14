@@ -46,7 +46,7 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = Get<SharedBroadphaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return dir.Length;
             return (rayResults[0].HitPos - origin.Position).Length;
@@ -122,7 +122,7 @@ namespace Content.Shared.Interaction
             predicate ??= _ => false;
 
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = Get<SharedBroadphaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 

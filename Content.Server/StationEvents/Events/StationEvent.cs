@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Chat.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;

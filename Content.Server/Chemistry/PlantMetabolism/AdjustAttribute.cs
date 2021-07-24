@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Botany.Components;
 using Content.Shared.Botany;
 using Robust.Shared.GameObjects;
