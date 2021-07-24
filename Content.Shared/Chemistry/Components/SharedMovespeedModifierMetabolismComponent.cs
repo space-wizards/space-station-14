@@ -1,5 +1,4 @@
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
@@ -7,7 +6,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using System;
-using System.Threading;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -41,7 +39,7 @@ namespace Content.Shared.Chemistry.Components
         }
         public void ResetTimer()
         {
-            ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime/1000)));
+            ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime/1000))); // EffectTime is milliseconds, TimeSpan.FromSeconds() is just seconds
             Dirty();
         }
 
@@ -72,7 +70,7 @@ namespace Content.Shared.Chemistry.Components
             public float SprintSpeedModifier { get; }
             public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
 
-            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, (TimeSpan Start, TimeSpan End)? modifierTimer): base(ContentNetIDs.METABOLISM_SPEEDCHANGE)
+            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, (TimeSpan Start, TimeSpan End)? modifierTimer)
             {
                 WalkSpeedModifier = walkSpeedModifier;
                 SprintSpeedModifier = sprintSpeedModifier;
