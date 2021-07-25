@@ -39,8 +39,13 @@
     soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Piercing: 10
-  - type: FlashAreaOnCollide
+  - type: FlashOnTrigger
     range: 1
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: TriggerOnCollide
+  - type: DeleteOnTrigger
 
 - type: entity
   id: BulletBaseHV
@@ -151,7 +156,9 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
@@ -191,7 +198,9 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
@@ -213,8 +222,13 @@
   - type: Projectile
     deleteOnCollide: false
     soundHit: /Audio/Effects/flash_bang.ogg
-  - type: FlashAreaOnCollide
+  - type: FlashOnTrigger
     range: 7
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: TriggerOnCollide
+  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
@@ -227,7 +241,9 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Content.Server.Flash.Components;
 using Content.Server.Throwing;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
@@ -58,7 +59,8 @@ namespace Content.Server.Explosion.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades || !args.Using.HasComponent<FlashExplosiveComponent>())
+            if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades ||
+                !args.Using.HasComponent<FlashOnTriggerComponent>())
                 return false;
 
             _grenadesContainer.Insert(args.Using);
@@ -70,7 +72,7 @@ namespace Content.Server.Explosion.Components
         {
             base.Initialize();
 
-            _grenadesContainer = ContainerHelpers.EnsureContainer<Container>(Owner, "cluster-flash");
+            _grenadesContainer = Owner.EnsureContainer<Container>("cluster-flash");
 
         }
 
@@ -117,10 +119,7 @@ namespace Content.Server.Explosion.Components
                         if (grenade.Deleted)
                             return;
 
-                        if (grenade.TryGetComponent(out OnUseTimerTriggerComponent? useTimer))
-                        {
-                            useTimer.Trigger(eventArgs.User);
-                        }
+                        EntitySystem.Get<TriggerSystem>().Trigger(grenade, eventArgs.User);
                     });
                 }
 

@@ -1,11 +1,13 @@
-using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Explosion.Components
 {
+    /// <summary>
+    /// Specifies an explosion range should this entity be exploded.
+    /// </summary>
     [RegisterComponent]
-    public class ExplosiveComponent : Component, ITimerTrigger, IDestroyAct
+    public class ExplosiveComponent : Component
     {
         public override string Name => "Explosive";
 
@@ -18,31 +20,6 @@ namespace Content.Server.Explosion.Components
         [DataField("flashRange")]
         public int FlashRange;
 
-        public bool Exploding { get; private set; } = false;
-
-        public bool Explosion()
-        {
-            if (Exploding)
-            {
-                return false;
-            }
-            else
-            {
-                Exploding = true;
-                Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
-                Owner.QueueDelete();
-                return true;
-            }
-        }
-
-        bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)
-        {
-            return Explosion();
-        }
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Explosion();
-        }
+        public bool Exploding { get; set; } = false;
     }
 }

@@ -4,12 +4,12 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Flash.Components
 {
     /// <summary>
-    /// Upon colliding with an object this will flash in an area around it
+    /// Upon being triggered will flash in an area around it.
     /// </summary>
     [RegisterComponent]
-    internal sealed class FlashAreaOnCollide : Component
+    internal sealed class FlashOnTriggerComponent : Component
     {
-        public override string Name => "FlashAreaOnCollide";
+        public override string Name => "FlashOnTrigger";
 
         [DataField("range")] internal float Range = 1.0f;
         [DataField("duration")] internal float Duration = 8.0f;

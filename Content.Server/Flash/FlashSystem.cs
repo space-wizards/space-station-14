@@ -3,14 +3,12 @@ using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 
 namespace Content.Server.Flash
@@ -26,15 +24,6 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<FlashAreaOnCollide, StartCollideEvent>(HandleCollide);
-        }
-
-        private void HandleCollide(EntityUid uid, FlashAreaOnCollide component, StartCollideEvent args)
-        {
-            if (component.Flashed) return;
-
-            FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
-            component.Flashed = true;
         }
 
         public void OnMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
