@@ -145,7 +145,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 foreach (var fireAct in entity.GetAllComponents<IFireAct>())
                 {
-
                     fireAct.FireAct(tile.Hotspot.Temperature, tile.Hotspot.Volume);
                 }
             }

@@ -8,8 +8,11 @@
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 20
+    damage: 15
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     prefix: inhand
+  - type: Construction
+    graph: WoodenBat
+    node: bat

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Tag;
+using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -50,13 +51,16 @@ namespace Content.Shared.Whitelist
             _registrations = new List<IComponentRegistration>();
             foreach (var name in Components)
             {
-                if (!compfact.TryGetRegistration(name, out var registration))
+                var availability = compfact.GetComponentAvailability(name);
+                if (compfact.TryGetRegistration(name, out var registration)
+                    && availability == ComponentAvailability.Available)
                 {
-                    Logger.Warning($"Invalid component name {name} passed to EntityWhitelist!");
-                    continue;
+                    _registrations.Add(registration);
                 }
-
-                _registrations.Add(registration);
+                else if (availability == ComponentAvailability.Unknown)
+                {
+                    Logger.Warning($"Unknown component name {name} passed to EntityWhitelist!");
+                }
             }
         }
 
@@ -75,7 +79,7 @@ namespace Content.Shared.Whitelist
             {
                 foreach (var reg in _registrations)
                 {
-                    if (entity.TryGetComponent(reg.Type, out _))
+                    if (entity.HasComponent(reg.Type))
                         return true;
                 }
             }
