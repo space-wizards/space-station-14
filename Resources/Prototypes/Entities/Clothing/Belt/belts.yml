@@ -147,7 +147,7 @@
       flashbang:
         whitelist:
           components:
-          - FlashExplosive
+          - FlashOnTrigger
       stunbaton:
         whitelist:
           components:
@@ -301,7 +301,7 @@
       flashbang:
         whitelist:
           components:
-          - FlashExplosive
+          - FlashOnTrigger
       stunbaton:
         whitelist:
           components:
