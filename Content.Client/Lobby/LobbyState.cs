@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu.UI;
 using Content.Client.GameTicking.Managers;
@@ -74,24 +75,9 @@ namespace Content.Client.Lobby
             _chatManager.SetChatBox(_lobby.Chat);
             _voteManager.SetPopupContainer(_lobby.VoteContainer);
 
-            _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
-
             _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName;
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChat(_lobby.Chat)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.OOC)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.AdminChat)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
-                InputCmdHandler.FromDelegate(_ => _lobby.Chat.CycleChatChannel(true)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
-                InputCmdHandler.FromDelegate(_ => _lobby.Chat.CycleChatChannel(false)));
+            ChatInput.SetupChatInputHandlers(_inputManager, _lobby.Chat);
 
             UpdateLobbyUi();
 

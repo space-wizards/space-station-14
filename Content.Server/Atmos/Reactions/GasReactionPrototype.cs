@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interfaces;
@@ -67,7 +66,7 @@ namespace Content.Server.Atmos.Reactions
         /// </summary>
         [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, AtmosphereSystem atmosphereSystem)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {
             var result = ReactionResult.NoReaction;
 

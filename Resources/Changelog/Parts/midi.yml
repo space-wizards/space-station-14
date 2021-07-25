@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix
-    message: Fix crash when MIDI stops playing.

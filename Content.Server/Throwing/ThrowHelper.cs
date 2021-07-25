@@ -1,7 +1,8 @@
-#nullable enable
+using System;
 using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Shared.MobState;
+using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -44,7 +45,14 @@ namespace Content.Server.Throwing
             {
                 entity.EnsureComponent<ThrownItemComponent>().Thrower = user;
                 // Give it a l'il spin.
-                physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
+                if (!entity.HasTag("NoSpinOnThrow"))
+                {
+                    physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
+                }
+                else
+                {
+                    entity.Transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+                }
 
                 if (user != null)
                     EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);

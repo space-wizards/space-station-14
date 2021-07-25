@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Ghost;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -52,23 +53,17 @@ namespace Content.Client.Chat.Managers
         /// <summary>
         ///     The max amount of characters an entity can send in one message
         /// </summary>
-        private int _maxMessageLength = 1000;
+        public int MaxMessageLength => _cfg.GetCVar(CCVars.ChatMaxMessageLength);
 
-        public const char ConCmdSlash = '/';
-        public const char OOCAlias = '[';
-        public const char MeAlias = '@';
-        public const char AdminChatAlias = ']';
-        public const char RadioAlias = ';';
+        private readonly List<StoredChatMessage> _history = new();
+        public IReadOnlyList<StoredChatMessage> History => _history;
 
-        private readonly List<StoredChatMessage> _filteredHistory = new();
-
-        // currently enabled channel filters set by the user. If an entry is not in this
-        // list it has not been explicitly set yet, thus will default to enabled when it first
-        // becomes filterable (added to _filterableChannels)
+        // currently enabled channel filters set by the user.
+        // All values default to on, even if they aren't a filterable chat channel currently.
         // Note that these are persisted here, at the manager,
         // rather than the chatbox so that these settings persist between instances of different
         // chatboxes.
-        public readonly Dictionary<ChatChannel, bool> _channelFilters = new();
+        public ChatChannel ChannelFilters { get; private set; } = (ChatChannel) ushort.MaxValue;
 
         // Maintains which channels a client should be able to filter (for showing in the chatbox)
         // and select (for attempting to send on).
@@ -80,18 +75,16 @@ namespace Content.Client.Chat.Managers
         //
         // Note that Command is an available selection in the chatbox channel selector,
         // which is not actually a chat channel but is always available.
-        private readonly HashSet<ChatChannel> _filterableChannels = new();
-        private readonly List<ChatChannel> _selectableChannels = new();
-
-        // Flag Enums for holding filtered channels
-        private ChatChannel _filteredChannels;
+        public ChatSelectChannel SelectableChannels { get; private set; }
+        public ChatChannel FilterableChannels { get; private set; }
 
         /// <summary>
         /// For currently disabled chat filters,
-        /// unread messages (messages received since the channel has been filtered
-        /// out). Never goes above 10 (9+ should be shown when at 10)
+        /// unread messages (messages received since the channel has been filtered out).
         /// </summary>
-        private readonly Dictionary<ChatChannel, byte> _unreadMessages = new();
+        private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
+
+        public IReadOnlyDictionary<ChatChannel, int> UnreadMessages => _unreadMessages;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
@@ -100,15 +93,22 @@ namespace Content.Client.Chat.Managers
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientAdminManager _adminMgr = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         /// <summary>
         /// Current chat box control. This can be modified, so do not depend on saving a reference to this.
         /// </summary>
         public ChatBox? CurrentChatBox { get; private set; }
+
         /// <summary>
         /// Invoked when CurrentChatBox is resized (including after setting initial default size)
         /// </summary>
         public event Action<ChatResizedEventArgs>? OnChatBoxResized;
+
+        public event Action<ChatPermissionsUpdatedEventArgs>? ChatPermissionsUpdated;
+        public event Action? UnreadMessageCountsUpdated;
+        public event Action<StoredChatMessage>? MessageAdded;
+        public event Action? FiltersUpdated;
 
         private Control _speechBubbleRoot = null!;
 
@@ -128,15 +128,11 @@ namespace Content.Client.Chat.Managers
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
-
-            // When connexion is achieved, request the max chat message length
-            _netManager.Connected += RequestMaxLength;
         }
 
         public void PostInject()
@@ -178,83 +174,58 @@ namespace Content.Client.Chat.Managers
         // for any newly-granted channels
         private void UpdateChannelPermissions()
         {
+            var oldSelectable = SelectableChannels;
+            SelectableChannels = default;
+            FilterableChannels = default;
+
+            // Can always send console stuff.
+            SelectableChannels |= ChatSelectChannel.Console;
+
             // can always send/recieve OOC
-            if (!_selectableChannels.Contains(ChatChannel.OOC))
-            {
-                _selectableChannels.Add(ChatChannel.OOC);
-            }
-            AddFilterableChannel(ChatChannel.OOC);
+            SelectableChannels |= ChatSelectChannel.OOC;
+            FilterableChannels |= ChatChannel.OOC;
 
             // can always hear server (nobody can actually send server messages).
-            AddFilterableChannel(ChatChannel.Server);
+            FilterableChannels |= ChatChannel.Server;
 
             // can always hear local / radio / emote
-            AddFilterableChannel(ChatChannel.Local);
-            AddFilterableChannel(ChatChannel.Radio);
-            AddFilterableChannel(ChatChannel.Emotes);
+            // todo: this makes no sense the lobby exists fix this.
+            FilterableChannels |= ChatChannel.Local;
+            FilterableChannels |= ChatChannel.Radio;
+            FilterableChannels |= ChatChannel.Emotes;
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
-            if (!_playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false)
+            if (!IsGhost)
             {
-                _selectableChannels.Add(ChatChannel.Local);
-                _selectableChannels.Add(ChatChannel.Radio);
-                _selectableChannels.Add(ChatChannel.Emotes);
-            }
-            else
-            {
-                _selectableChannels.Remove(ChatChannel.Local);
-                _selectableChannels.Remove(ChatChannel.Radio);
-                _selectableChannels.Remove(ChatChannel.Emotes);
+                SelectableChannels |= ChatSelectChannel.Local;
+                SelectableChannels |= ChatSelectChannel.Radio;
+                SelectableChannels |= ChatSelectChannel.Emotes;
             }
 
             // Only ghosts and admins can send / see deadchat.
-            // TODO: Should spectators also be able to see deadchat?
-            if (_adminMgr.HasFlag(AdminFlags.Admin) ||
-                (_playerManager?.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false))
+            if (_adminMgr.HasFlag(AdminFlags.Admin) || IsGhost)
             {
-                AddFilterableChannel(ChatChannel.Dead);
-                if (!_selectableChannels.Contains(ChatChannel.Dead))
-                {
-                    _selectableChannels.Add(ChatChannel.Dead);
-                }
-            }
-            else
-            {
-                _filterableChannels.Remove(ChatChannel.Dead);
-                _selectableChannels.Remove(ChatChannel.Dead);
+                FilterableChannels |= ChatChannel.Dead;
+                SelectableChannels |= ChatSelectChannel.Dead;
             }
 
             // only admins can see / filter asay
             if (_adminMgr.HasFlag(AdminFlags.Admin))
             {
-                AddFilterableChannel(ChatChannel.AdminChat);
-                if (!_selectableChannels.Contains(ChatChannel.AdminChat))
-                {
-                    _selectableChannels.Add(ChatChannel.AdminChat);
-                }
+                FilterableChannels |= ChatChannel.Admin;
+                SelectableChannels |= ChatSelectChannel.Admin;
             }
-            else
-            {
-                _selectableChannels.Remove(ChatChannel.AdminChat);
-                _filterableChannels.Remove(ChatChannel.AdminChat);
-            }
+
+            // Necessary so that we always have a channel to fall back to.
+            DebugTools.Assert((SelectableChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
+            DebugTools.Assert((FilterableChannels & ChatChannel.OOC) != 0, "OOC must always be available");
 
             // let our chatbox know all the new settings
-            CurrentChatBox?.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages, true);
+            ChatPermissionsUpdated?.Invoke(new ChatPermissionsUpdatedEventArgs {OldSelectableChannels = oldSelectable});
         }
 
-        /// <summary>
-        /// Adds the channel to the set of filterable channels, defaulting it as enabled
-        /// if it doesn't currently have an explicit enable/disable setting
-        /// </summary>
-        private void AddFilterableChannel(ChatChannel channel)
-        {
-            if (!_channelFilters.ContainsKey(channel))
-                _channelFilters[channel] = true;
-            _filterableChannels.Add(channel);
-        }
-
+        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
 
         public void FrameUpdate(FrameEventArgs delta)
         {
@@ -296,27 +267,19 @@ namespace Content.Client.Chat.Managers
 
         public void SetChatBox(ChatBox chatBox)
         {
-            if (CurrentChatBox != null)
-            {
-                CurrentChatBox.TextSubmitted -= OnChatBoxTextSubmitted;
-                CurrentChatBox.FilterToggled -= OnFilterButtonToggled;
-                CurrentChatBox.OnResized -= ChatBoxOnResized;
-            }
-
             CurrentChatBox = chatBox;
-            if (CurrentChatBox != null)
-            {
-                CurrentChatBox.TextSubmitted += OnChatBoxTextSubmitted;
-                CurrentChatBox.FilterToggled += OnFilterButtonToggled;
-                CurrentChatBox.OnResized += ChatBoxOnResized;
-
-                CurrentChatBox.SetChannelPermissions(_selectableChannels, _filterableChannels, _channelFilters, _unreadMessages, false);
-            }
-
-            RepopulateChat(_filteredHistory);
         }
 
-        private void ChatBoxOnResized(ChatResizedEventArgs chatResizedEventArgs)
+        public void ClearUnfilteredUnreads()
+        {
+            foreach (var channel in _unreadMessages.Keys.ToArray())
+            {
+                if ((ChannelFilters & channel) != 0)
+                    _unreadMessages.Remove(channel);
+            }
+        }
+
+        public void ChatBoxOnResized(ChatResizedEventArgs chatResizedEventArgs)
         {
             OnChatBoxResized?.Invoke(chatResizedEventArgs);
         }
@@ -334,158 +297,86 @@ namespace Content.Client.Chat.Managers
             }
         }
 
-        private void WriteChatMessage(StoredChatMessage message)
-        {
-            Logger.Debug($"{message.Channel}: {message.Message}");
-
-            if (IsFiltered(message.Channel))
-            {
-                Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
-                // accumulate unread
-                if (message.Read) return;
-                if (!_unreadMessages.TryGetValue(message.Channel, out var count))
-                {
-                    count = 0;
-                }
-                count = (byte) Math.Min(count + 1, 10);
-                _unreadMessages[message.Channel] = count;
-                CurrentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
-                return;
-            }
-
-            var color = Color.DarkGray;
-            var messageText = FormattedMessage.EscapeText(message.Message);
-            if (!string.IsNullOrEmpty(message.MessageWrap))
-            {
-               messageText = string.Format(message.MessageWrap, messageText);
-            }
-
-            if (message.MessageColorOverride != Color.Transparent)
-            {
-                color = message.MessageColorOverride;
-            }
-            else
-            {
-                color = ChatHelper.ChatColor(message.Channel);
-            }
-
-            if (CurrentChatBox == null) return;
-            CurrentChatBox.AddLine(messageText, message.Channel, color);
-            // TODO: Can make this "smarter" later by only setting it false when the message has been scrolled to
-            message.Read = true;
-        }
-
-        private void OnChatBoxTextSubmitted(ChatBox chatBox, string text)
+        public void OnChatBoxTextSubmitted(ChatBox chatBox, ReadOnlyMemory<char> text, ChatSelectChannel channel)
         {
             DebugTools.Assert(chatBox == CurrentChatBox);
 
-            if (string.IsNullOrWhiteSpace(text))
-                return;
+            var str = text.ToString();
 
-            // Check if message is longer than the character limit
-            if (text.Length > _maxMessageLength)
+            switch (channel)
             {
-                if (CurrentChatBox != null)
-                {
-                    string locWarning = Loc.GetString("chat-manager-max-message-length",
-                                            ("maxMessageLength", _maxMessageLength));
-                    CurrentChatBox.AddLine(locWarning, ChatChannel.Server, Color.Orange);
-                    CurrentChatBox.ClearOnEnter = false; // The text shouldn't be cleared if it hasn't been sent
-                }
-                return;
-            }
-
-            switch (text[0])
-            {
-                case ConCmdSlash:
-                {
+                case ChatSelectChannel.Console:
                     // run locally
-                    var conInput = text.Substring(1);
-                    _consoleHost.ExecuteCommand(conInput);
+                    _consoleHost.ExecuteCommand(text.ToString());
                     break;
-                }
-                case OOCAlias:
-                {
-                    var conInput = text.Substring(1);
-                    if (string.IsNullOrWhiteSpace(conInput))
-                        return;
-                    _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
-                    break;
-                }
-                case AdminChatAlias:
-                {
-                    var conInput = text.Substring(1);
-                    if (string.IsNullOrWhiteSpace(conInput))
-                        return;
-                    if (_adminMgr.HasFlag(AdminFlags.Admin))
-                    {
-                        _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
-                    }
-                    else
-                    {
-                        _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
-                    }
 
+                case ChatSelectChannel.OOC:
+                    _consoleHost.ExecuteCommand($"ooc \"{CommandParsing.Escape(str)}\"");
                     break;
-                }
-                case MeAlias:
-                {
-                    var conInput = text.Substring(1);
-                    if (string.IsNullOrWhiteSpace(conInput))
-                        return;
-                    _consoleHost.ExecuteCommand($"me \"{CommandParsing.Escape(conInput)}\"");
+
+                case ChatSelectChannel.Admin:
+                    _consoleHost.ExecuteCommand($"asay \"{CommandParsing.Escape(str)}\"");
                     break;
-                }
+
+                case ChatSelectChannel.Emotes:
+                    _consoleHost.ExecuteCommand($"me \"{CommandParsing.Escape(str)}\"");
+                    break;
+
+                case ChatSelectChannel.Dead:
+                    if (IsGhost)
+                        goto case ChatSelectChannel.Local;
+                    else if (_adminMgr.HasFlag(AdminFlags.Admin))
+                        _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(str)}\"");
+                    else
+                        Logger.WarningS("chat", "Tried to speak on deadchat without being ghost or admin.");
+                    break;
+
+                case ChatSelectChannel.Radio:
+                    _consoleHost.ExecuteCommand($"say \";{CommandParsing.Escape(str)}\"");
+                    break;
+
+                case ChatSelectChannel.Local:
+                    _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
+                    break;
+
                 default:
-                {
-                    var conInput = CurrentChatBox?.DefaultChatFormat != null
-                        ? string.Format(CurrentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
-                        : text;
-                    _consoleHost.ExecuteCommand(conInput);
-                    break;
-                }
+                    throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }
         }
 
-        private void OnFilterButtonToggled(ChatChannel channel, bool enabled)
+        public void OnFilterButtonToggled(ChatChannel channel, bool enabled)
         {
             if (enabled)
             {
-                _channelFilters[channel] = true;
-                _filteredChannels &= ~channel;
+                ChannelFilters |= channel;
                 _unreadMessages.Remove(channel);
-                CurrentChatBox?.UpdateUnreadMessageCounts(_unreadMessages);
+                UnreadMessageCountsUpdated?.Invoke();
             }
             else
             {
-                _channelFilters[channel] = false;
-                _filteredChannels |= channel;
+                ChannelFilters &= ~channel;
             }
 
-            RepopulateChat(_filteredHistory);
-        }
-
-        private void RepopulateChat(IEnumerable<StoredChatMessage> filteredMessages)
-        {
-            if (CurrentChatBox == null)
-            {
-                return;
-            }
-
-            CurrentChatBox.Contents.Clear();
-
-            foreach (var msg in filteredMessages)
-            {
-                WriteChatMessage(msg);
-            }
+            FiltersUpdated?.Invoke();
         }
 
         private void OnChatMessage(MsgChatMessage msg)
         {
             // Log all incoming chat to repopulate when filter is un-toggled
             var storedMessage = new StoredChatMessage(msg);
-            _filteredHistory.Add(storedMessage);
-            WriteChatMessage(storedMessage);
+            _history.Add(storedMessage);
+            MessageAdded?.Invoke(storedMessage);
+
+            if (!storedMessage.Read)
+            {
+                Logger.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
+                    count = 0;
+
+                count += 1;
+                _unreadMessages[msg.Channel] = count;
+                UnreadMessageCountsUpdated?.Invoke();
+            }
 
             // Local messages that have an entity attached get a speech bubble.
             if (msg.SenderEntity == default)
@@ -498,7 +389,7 @@ namespace Content.Client.Chat.Managers
                     break;
 
                 case ChatChannel.Dead:
-                    if (!_playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? true)
+                    if (!IsGhost)
                         break;
 
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
@@ -508,17 +399,6 @@ namespace Content.Client.Chat.Managers
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                     break;
             }
-        }
-
-        private void OnMaxLengthReceived(ChatMaxMsgLengthMessage msg)
-        {
-            _maxMessageLength = msg.MaxMessageLength;
-        }
-
-        private void RequestMaxLength(object? sender, NetChannelArgs args)
-        {
-            ChatMaxMsgLengthMessage msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            _netManager.ClientSendMessage(msg);
         }
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)
@@ -604,7 +484,8 @@ namespace Content.Client.Chat.Managers
 
         private void CreateSpeechBubble(IEntity entity, SpeechBubbleData speechData)
         {
-            var bubble = SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
+            var bubble =
+                SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
 
             if (_activeSpeechBubbles.TryGetValue(entity.Uid, out var existing))
             {
@@ -629,11 +510,6 @@ namespace Content.Client.Chat.Managers
                 var last = existing[0];
                 last.FadeNow();
             }
-        }
-
-        private bool IsFiltered(ChatChannel channel)
-        {
-            return _filteredChannels.HasFlag(channel);
         }
 
         private sealed class SpeechBubbleQueueData

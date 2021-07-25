@@ -1,0 +1,8 @@
+- type: entity
+  id: ClosetCursed
+  parent: ClosetBase
+  name: closet
+  suffix: cursed
+  description: A standard-issue Nanotrasen storage unit.
+  components:
+  - type: CursedEntityStorage

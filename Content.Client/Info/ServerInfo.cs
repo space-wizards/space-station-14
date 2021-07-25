@@ -21,7 +21,10 @@ namespace Content.Client.Info
             };
             AddChild(_richTextLabel);
 
-            var buttons = new HBoxContainer();
+            var buttons = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             AddChild(buttons);
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();

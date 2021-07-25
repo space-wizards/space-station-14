@@ -1,0 +1,58 @@
+﻿- type: entity
+  id: Window
+  parent: BaseStructure
+  name: window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    color: "#DDDDDD"
+    netsync: false
+    drawdepth: WallTops
+    sprite: Structures/Windows/window.rsi
+  - type: Icon
+    sprite: Structures/Windows/window.rsi
+    state: full
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      mask:
+      - VaultImpassable
+  - type: Damageable
+    resistances: glassResistances
+  - type: Repairable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundCollectionBehavior
+        soundCollection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Airtight
+  - type: Window
+    base: window
+  - type: Construction
+    graph: window
+    node: window
+  - type: Appearance
+    visuals:
+    - type: WindowVisualizer

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.NodeGroups;
@@ -175,6 +174,7 @@ namespace Content.Server.Power.Components
         private void OnNewPowerState()
         {
             SendMessage(new PowerChangedMessage(Powered));
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered));
 
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
@@ -213,6 +213,19 @@ namespace Content.Server.Power.Components
         public readonly bool Powered;
 
         public PowerChangedMessage(bool powered)
+        {
+            Powered = powered;
+        }
+    }
+
+    /// <summary>
+    /// Raised whenever an ApcPowerReceiver becomes powered / unpowered.
+    /// </summary>
+    public sealed class PowerChangedEvent : EntityEventArgs
+    {
+        public readonly bool Powered;
+
+        public PowerChangedEvent(bool powered)
         {
             Powered = powered;
         }

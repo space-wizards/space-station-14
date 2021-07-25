@@ -1,0 +1,495 @@
+- type: entity
+  parent: WallBase
+  id: WallBrick
+  name: brick wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/brick.rsi
+  - type: Icon
+    sprite: Structures/Walls/brick.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: brick
+
+- type: entity
+  parent: WallBase
+  id: WallClock
+  name: clock wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/clock.rsi
+  - type: Icon
+    sprite: Structures/Walls/clock.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: clock
+
+- type: entity
+  parent: WallBase
+  id: WallClown
+  name: clown wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/clown.rsi
+  - type: Icon
+    sprite: Structures/Walls/clown.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: clown
+
+
+- type: entity
+  parent: WallBase
+  id: WallCult
+  name: cult wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/cult.rsi
+  - type: Icon
+    sprite: Structures/Walls/cult.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cult
+
+- type: entity
+  parent: WallBase
+  id: WallDebug
+  name: debug wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/debug.rsi
+  - type: Icon
+    sprite: Structures/Walls/debug.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: debug
+
+- type: entity
+  parent: WallBase
+  id: WallDiamond
+  name: diamond wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/diamond.rsi
+  - type: Icon
+    sprite: Structures/Walls/diamond.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: diamond
+
+- type: entity
+  parent: WallBase
+  id: WallGold
+  name: gold wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/gold.rsi
+  - type: Icon
+    sprite: Structures/Walls/gold.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: gold
+
+- type: entity
+  parent: WallBase
+  id: WallIce
+  name: ice wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/ice.rsi
+  - type: Icon
+    sprite: Structures/Walls/ice.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: ice
+
+- type: entity
+  parent: WallBase
+  id: WallMetal
+  name: metal wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/metal.rsi
+  - type: Icon
+    sprite: Structures/Walls/metal.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: metal
+
+- type: entity
+  parent: WallBase
+  id: WallPlasma
+  name: plasma wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/plasma.rsi
+  - type: Icon
+    sprite: Structures/Walls/plasma.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: plasma
+
+- type: entity
+  parent: WallBase
+  id: WallPlastic
+  name: plastic wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/plastic.rsi
+  - type: Icon
+    sprite: Structures/Walls/plastic.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: plastic
+
+- type: entity
+  parent: WallBase
+  id: WallReinforced
+  name: reinforced wall
+  components:
+  - type: Sprite
+    color: "#889192"
+    sprite: Structures/Walls/solid.rsi
+  - type: Icon
+    sprite: Structures/Walls/solid.rsi
+    state: rgeneric
+  - type: Construction
+    graph: girder
+    node: reinforcedWall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ReinforcedWall
+    key: walls
+    base: solid
+    reinforcedBase: reinf_over
+  - type: Appearance
+    visuals:
+      - type: ReinforcedWallVisualizer
+
+# Riveting
+- type: entity
+  parent: WallBase
+  id: WallRiveted
+  name: riveted wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/riveted.rsi
+  - type: Icon
+    sprite: Structures/Walls/riveted.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: riveted
+
+- type: entity
+  parent: WallBase
+  id: WallSandstone
+  name: sandstone wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/sandstone.rsi
+  - type: Icon
+    sprite: Structures/Walls/sandstone.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: sandstone
+
+- type: entity
+  parent: WallBase
+  id: WallSilver
+  name: silver wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/silver.rsi
+  - type: Icon
+    sprite: Structures/Walls/silver.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: silver
+
+- type: entity
+  parent: WallBase
+  id: WallSolid
+  name: solid wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    color: "#889192"
+    sprite: Structures/Walls/solid.rsi
+  - type: Construction
+    graph: girder
+    node: wall
+  - type: Icon
+    sprite: Structures/Walls/solid.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound: /Audio/Effects/metalbreak.ogg
+  - type: IconSmooth
+    key: walls
+    base: solid
+
+- type: entity
+  parent: WallBase
+  id: WallUranium
+  name: uranium wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/uranium.rsi
+  - type: Icon
+    sprite: Structures/Walls/uranium.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: uranium
+
+- type: entity
+  parent: WallBase
+  id: WallWood
+  name: wood wall
+  components:
+  - type: RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/wood.rsi
+  - type: Icon
+    sprite: Structures/Walls/wood.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: wood

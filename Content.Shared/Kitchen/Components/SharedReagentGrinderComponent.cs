@@ -1,7 +1,5 @@
-﻿#nullable enable
 using System;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -10,7 +8,6 @@ namespace Content.Shared.Kitchen.Components
     public abstract class SharedReagentGrinderComponent : Component
     {
         public override string Name => "ReagentGrinder";
-        public override uint? NetID => ContentNetIDs.REAGENT_GRINDER;
 
         [Serializable, NetSerializable]
         public class ReagentGrinderGrindStartMessage : BoundUserInterfaceMessage

@@ -1,0 +1,117 @@
+﻿- type: entity
+  abstract: true
+  id: GasPipeBase
+  name: pipe
+  description: Holds gas.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: SnapGrid
+  - type: Damageable
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: BelowFloor
+    netsync: false
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
+    - type: PipeColorVisualizer
+  - type: NodeContainer
+  - type: AtmosUnsafeUnanchor
+  - type: AtmosPipeColor
+
+#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeHalf
+  suffix: Half
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: Sprite
+    layers:
+      - state: pipeHalf
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeStraight
+  suffix: Straight
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Sprite
+    layers:
+      - state: pipeStraight
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeBend
+  suffix: Bend
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: SWBend
+  - type: Sprite
+    layers:
+      - state: pipeBend
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeTJunction
+  suffix: TJunction
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: TSouth
+  - type: Sprite
+    layers:
+      - state: pipeTJunction
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeFourway
+  suffix: Fourway
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+  - type: Sprite
+    layers:
+      - state: pipeFourway
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;

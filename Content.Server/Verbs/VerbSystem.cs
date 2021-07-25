@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;

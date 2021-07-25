@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Sandbox

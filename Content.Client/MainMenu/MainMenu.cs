@@ -14,6 +14,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
 
 namespace Content.Client.MainMenu
@@ -221,8 +222,9 @@ namespace Content.Client.MainMenu
                 var layout = new LayoutContainer();
                 AddChild(layout);
 
-                var vBox = new VBoxContainer
+                var vBox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     StyleIdentifier = "mainMenuVBox"
                 };
 
@@ -240,7 +242,11 @@ namespace Content.Client.MainMenu
                 };
                 vBox.AddChild(logo);
 
-                var userNameHBox = new HBoxContainer {SeparationOverride = 4};
+                var userNameHBox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    SeparationOverride = 4
+                };
                 vBox.AddChild(userNameHBox);
                 userNameHBox.AddChild(new Label {Text = Loc.GetString("main-menu-username-label") });
 

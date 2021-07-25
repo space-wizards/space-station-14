@@ -8,7 +8,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-#nullable enable
 
 namespace Content.Server.Suspicion.EntitySystems
 {

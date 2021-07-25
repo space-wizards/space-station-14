@@ -44,7 +44,7 @@
             - prototype: SolarTrackerElectronics
               name: Solar Tracker Electronics
               icon: 
-                sprite: Constructible/Misc/module.rsi
+                sprite: Objects/Misc/module.rsi
                 state: id_mod
               doAfter: 1
             - material: Glass

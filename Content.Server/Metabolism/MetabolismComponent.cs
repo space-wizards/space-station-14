@@ -1,9 +1,9 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Alert;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Behavior;
 using Content.Server.Body.Circulatory;
 using Content.Server.Temperature.Components;
@@ -283,7 +283,7 @@ namespace Content.Server.Metabolism
                 }
 
                 // creadth: sweating does not help in airless environment
-                if (Owner.Transform.Coordinates.TryGetTileAir(out _, Owner.EntityManager))
+                if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
                     temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
                 }

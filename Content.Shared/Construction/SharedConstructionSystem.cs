@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

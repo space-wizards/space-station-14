@@ -3,20 +3,22 @@ using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Strip
 {
     public class StrippingMenu : SS14Window
     {
-        private readonly VBoxContainer _vboxContainer;
+        private readonly BoxContainer _vboxContainer;
 
         public StrippingMenu(string title)
         {
             MinSize = SetSize = (400, 600);
             Title = title;
 
-            _vboxContainer = new VBoxContainer()
+            _vboxContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SeparationOverride = 5,
             };
@@ -39,8 +41,9 @@ namespace Content.Client.Strip
 
             button.OnPressed += onPressed;
 
-            _vboxContainer.AddChild(new HBoxContainer()
+            _vboxContainer.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 SeparationOverride = 5,
                 Children =

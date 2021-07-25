@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
@@ -8,7 +9,6 @@ using Content.Shared.Cooldown;
 using Content.Shared.DragDrop;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
@@ -26,12 +26,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
-    class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
+    internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
     {
         public const float SprayDistance = 3f;
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(10);
@@ -117,7 +116,9 @@ namespace Content.Server.Fluids.Components
                 return true;
 
             var playerPos = eventArgs.User.Transform.Coordinates;
-            if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
+            var entManager = Owner.EntityManager;
+
+            if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
             if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
@@ -149,21 +150,22 @@ namespace Content.Server.Fluids.Components
                 if (solution.TotalVolume <= ReagentUnit.Zero)
                     break;
 
-                var vapor = _serverEntityManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
+                var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
                 vapor.Transform.LocalRotation = rotation;
 
                 if (vapor.TryGetComponent(out AppearanceComponent? appearance)) // Vapor sprite should face down.
                 {
-                    appearance.SetData(VaporVisuals.Rotation, -Angle.South + rotation);
+                    appearance.SetData(VaporVisuals.Rotation, -Angle.Zero + rotation);
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
 
                 // Add the solution to the vapor and actually send the thing
                 var vaporComponent = vapor.GetComponent<VaporComponent>();
-                vaporComponent.TryAddSolution(solution);
+                var vaporSystem = EntitySystem.Get<VaporSystem>();
+                vaporSystem.TryAddSolution(vaporComponent, solution);
 
-                vaporComponent.Start(rotation.ToVec(), _sprayVelocity, target, _sprayAliveTime);
+                vaporSystem.Start(vaporComponent, rotation.ToVec(), _sprayVelocity, target, _sprayAliveTime);
 
                 if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
                 {

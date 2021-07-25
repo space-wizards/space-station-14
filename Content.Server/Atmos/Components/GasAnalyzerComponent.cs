@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
@@ -124,8 +123,7 @@ namespace Content.Server.Atmos.Components
         {
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.Coordinates);
-            var tile = gam?.GetTile(Owner.Transform.Coordinates)?.Air;
+            var tile = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates);
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -183,9 +181,8 @@ namespace Content.Server.Atmos.Components
                 pos = _position.Value;
             }
 
-            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            var gam = atmosSystem.GetGridAtmosphere(pos);
-            var tile = gam.GetTile(pos)?.Air;
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var tile = atmosphereSystem.GetTileMixture(pos);
             if (tile == null)
             {
                 error = "No Atmosphere!";
@@ -202,7 +199,7 @@ namespace Content.Server.Atmos.Components
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = atmosSystem.GetGas(i);
+                var gas = atmosphereSystem.GetGas(i);
 
                 if (tile.Moles[i] <= Atmospherics.GasMinMoles) continue;
 

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

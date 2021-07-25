@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
@@ -56,6 +57,7 @@ namespace Content.Server.Entry
             }
 
             IoCManager.BuildGraph();
+            factory.GenerateNetIds();
 
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
@@ -91,6 +93,7 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
+            IoCManager.Resolve<IAfkManager>().Initialize();
             _euiManager.Initialize();
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();

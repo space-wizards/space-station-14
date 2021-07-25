@@ -1,23 +1,19 @@
-#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Physics;
-using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component, IStartCollide
+    public class ContainmentFieldGeneratorComponent : Component
     {
         public override string Name => "ContainmentFieldGenerator";
 
@@ -101,7 +97,7 @@ namespace Content.Server.Singularity.Components
 
                 var dirVec = direction.ToVec();
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var rawRayCastResults = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;
@@ -163,13 +159,6 @@ namespace Content.Server.Singularity.Components
             else if(connection != null)
             {
                 Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
-            }
-        }
-
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (otherFixture.Body.Owner.HasTag("EmitterBolt")) {
-                ReceivePower(6);
             }
         }
 
