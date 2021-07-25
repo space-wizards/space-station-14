@@ -124,9 +124,12 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            var entityManager = IoCManager.Resolve<IServerEntityManager>();
+            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager))
+            {
+                return true;
+            }
 
-            var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
+            var entity = Owner.EntityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
