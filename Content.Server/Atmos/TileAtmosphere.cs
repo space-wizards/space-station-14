@@ -1,6 +1,5 @@
 #nullable disable warnings
 #nullable enable annotations
-using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Shared.Map;

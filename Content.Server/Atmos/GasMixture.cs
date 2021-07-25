@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
-using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;

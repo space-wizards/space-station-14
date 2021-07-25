@@ -9,7 +9,6 @@ using Content.Server.Construction.Components;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Interfaces;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
