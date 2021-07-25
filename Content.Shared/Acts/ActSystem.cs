@@ -17,7 +17,7 @@ namespace Content.Shared.Acts
         void OnDestroy(DestructionEventArgs eventArgs);
     }
 
-    public class DestructionEventArgs : EventArgs
+    public class DestructionEventArgs : EntityEventArgs
     {
         public IEntity Owner { get; set; } = default!;
     }

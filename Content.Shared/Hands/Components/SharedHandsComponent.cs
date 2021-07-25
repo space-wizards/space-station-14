@@ -66,7 +66,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         [DataField("throwForceMultiplier")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ThrowForceMultiplier { get; set; } = 14f; //should be tuned so that a thrown item lands about under the player's cursor
+        public float ThrowForceMultiplier { get; set; } = 10f; //should be tuned so that a thrown item lands about under the player's cursor
 
         /// <summary>
         ///     Distance after which longer throw targets stop increasing throw impulse.

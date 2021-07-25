@@ -69,6 +69,22 @@
     },
     {
       "name": "coilall-30"
+    },
+    {
+      "name": "coil-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "coillv-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "coilmv-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "coilhv-equipped-BELT",
+      "directions": 4
     }
   ]
 }
