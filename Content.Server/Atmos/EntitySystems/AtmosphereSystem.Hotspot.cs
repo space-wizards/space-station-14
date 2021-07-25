@@ -108,10 +108,11 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     Volume = exposedVolume * 25f,
                     Temperature = exposedTemperature,
-                    SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter
+                    SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter,
+                    Valid = true,
+                    State = 1
                 };
 
-                tile.Hotspot.Start();
 
                 AddActiveTile(gridAtmosphere, tile);
                 gridAtmosphere.HotspotTiles.Add(tile);
