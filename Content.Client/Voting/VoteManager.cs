@@ -19,7 +19,10 @@ namespace Content.Client.Voting
         void ClearPopupContainer();
         void SetPopupContainer(Control container);
         bool CanCallVote { get; }
+
+        bool CanCallStandardVote(StandardVoteType type, out TimeSpan whenCan);
         event Action<bool> CanCallVoteChanged;
+        event Action CanCallStandardVotesChanged;
     }
 
     public sealed class VoteManager : IVoteManager
@@ -29,12 +32,16 @@ namespace Content.Client.Voting
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IBaseClient _client = default!;
 
+        private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();
         private readonly Dictionary<int, UI.VotePopup> _votePopups = new();
         private Control? _popupContainer;
 
         public bool CanCallVote { get; private set; }
+
         public event Action<bool>? CanCallVoteChanged;
+
+        public event Action? CanCallStandardVotesChanged;
 
         public void Initialize()
         {
@@ -52,6 +59,11 @@ namespace Content.Client.Voting
                 ClearPopupContainer();
                 _votes.Clear();
             }
+        }
+
+        public bool CanCallStandardVote(StandardVoteType type, out TimeSpan whenCan)
+        {
+            return !_standardVoteTimeouts.TryGetValue(type, out whenCan);
         }
 
         public void ClearPopupContainer()
@@ -161,11 +173,20 @@ namespace Content.Client.Voting
 
         private void ReceiveVoteCanCall(MsgVoteCanCall message)
         {
-            if (CanCallVote == message.CanCall)
-                return;
+            if (CanCallVote != message.CanCall)
+            {
+                // TODO: actually use the "when can call vote" time for UI display or something.
+                CanCallVote = message.CanCall;
+                CanCallVoteChanged?.Invoke(CanCallVote);
+            }
 
-            CanCallVote = message.CanCall;
-            CanCallVoteChanged?.Invoke(CanCallVote);
+            _standardVoteTimeouts.Clear();
+            foreach (var (type, time) in message.VotesUnavailable)
+            {
+                _standardVoteTimeouts.Add(type, _gameTiming.RealServerToLocal(time));
+            }
+
+            CanCallStandardVotesChanged?.Invoke();
         }
 
         public void SendCastVote(int voteId, int option)

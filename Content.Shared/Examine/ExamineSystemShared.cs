@@ -72,6 +72,9 @@ namespace Content.Shared.Examine
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
+            if (origin.MapId == MapId.Nullspace ||
+                other.MapId == MapId.Nullspace) return false;
+
             var occluderSystem = Get<OccluderSystem>();
             if (!origin.InRange(other, range)) return false;
 

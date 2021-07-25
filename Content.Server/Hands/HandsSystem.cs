@@ -132,8 +132,10 @@ namespace Content.Server.Hands
             if (direction == Vector2.Zero)
                 return true;
 
-            var throwVec = direction.Normalized * MathF.Min(direction.Length, hands.ThrowRange) * hands.ThrowForceMultiplier;
-            throwEnt.TryThrow(throwVec, playerEnt);
+            direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
+
+            var throwStrength = hands.ThrowForceMultiplier;
+            throwEnt.TryThrow(direction, throwStrength, playerEnt);
 
             return true;
         }
@@ -165,7 +167,7 @@ namespace Content.Server.Hands
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
                 !equipmentItem.Owner.TryGetComponent(out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("equipment", SlotNames[equipmentSlot].ToLower())));
+                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;
             }
 
@@ -177,7 +179,7 @@ namespace Content.Server.Hands
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("equipment", SlotNames[equipmentSlot].ToLower())));
+                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 }
                 else
                 {

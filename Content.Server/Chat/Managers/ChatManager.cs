@@ -325,7 +325,7 @@ namespace Content.Server.Chat.Managers
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
-            msg.Channel = ChatChannel.AdminChat;
+            msg.Channel = ChatChannel.Admin;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
@@ -341,7 +341,7 @@ namespace Content.Server.Chat.Managers
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
-            msg.Channel = ChatChannel.AdminChat;
+            msg.Channel = ChatChannel.Admin;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));

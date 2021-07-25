@@ -7,7 +7,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 
@@ -20,7 +20,7 @@ namespace Content.Shared.Friction
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        private SharedBroadPhaseSystem _broadPhaseSystem = default!;
+        private SharedBroadphaseSystem _broadPhaseSystem = default!;
 
         private float _stopSpeed;
 
@@ -29,7 +29,7 @@ namespace Content.Shared.Friction
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+            _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
 
             _frictionModifier = _configManager.GetCVar(CCVars.TileFrictionModifier);
             _configManager.OnValueChanged(CCVars.TileFrictionModifier, value => _frictionModifier = value);
