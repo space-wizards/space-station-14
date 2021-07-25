@@ -9877,7 +9877,7 @@ entities:
       -26,12: 0
       -26,13: 0
       -26,14: 0
-      -26,15: 1
+      -26,15: 0
       -25,0: 0
       -25,1: 0
       -25,2: 0
@@ -10579,7 +10579,7 @@ entities:
       22,-17: 0
       23,-27: 0
       23,-26: 0
-      23,-25: 1
+      23,-25: 0
       23,-24: 0
       23,-23: 0
       23,-22: 0
@@ -10596,7 +10596,7 @@ entities:
       25,-19: 0
       25,-18: 0
       25,-17: 0
-      26,-20: 1
+      26,-20: 0
       26,-19: 0
       26,-18: 0
       26,-17: 0
@@ -10805,7 +10805,7 @@ entities:
       -20,16: 0
       -20,17: 0
       -20,18: 0
-      -20,19: 2
+      -20,19: 0
       -20,20: 0
       -20,21: 0
       -20,22: 0
@@ -12315,89 +12315,89 @@ entities:
       45,-33: 0
       46,-34: 0
       47,-34: 0
-      24,-27: 3
-      24,-26: 3
-      24,-25: 3
-      24,-24: 3
-      24,-23: 3
-      24,-22: 3
-      24,-21: 3
-      25,-27: 3
-      25,-26: 3
-      25,-25: 3
-      25,-24: 3
-      25,-23: 3
-      25,-22: 3
-      25,-21: 3
-      26,-27: 3
-      26,-26: 3
-      26,-25: 3
-      26,-24: 3
-      26,-23: 3
-      26,-22: 3
-      26,-21: 3
-      27,-27: 3
-      27,-26: 3
-      27,-25: 3
-      27,-24: 3
-      27,-23: 3
-      27,-22: 3
-      27,-21: 3
-      28,-27: 3
-      28,-26: 3
-      28,-25: 3
-      28,-24: 3
-      28,-23: 3
-      28,-22: 3
-      28,-21: 3
-      -28,16: 3
-      -28,17: 3
-      -28,18: 3
-      -28,19: 3
-      -28,20: 3
-      -28,21: 3
-      -27,16: 3
-      -27,17: 3
-      -27,18: 3
-      -27,19: 3
-      -27,20: 3
-      -27,21: 3
-      -26,16: 3
-      -26,17: 3
-      -26,18: 3
-      -26,19: 3
-      -26,20: 3
-      -26,21: 3
-      -25,16: 3
-      -25,17: 3
-      -25,18: 3
-      -25,19: 3
-      -25,20: 3
-      -25,21: 3
-      -24,16: 3
-      -24,17: 3
-      -24,18: 3
-      -24,19: 3
-      -24,20: 3
-      -24,21: 3
-      -23,16: 3
-      -23,17: 3
-      -23,18: 3
-      -23,19: 3
-      -23,20: 3
-      -23,21: 3
-      -22,16: 3
-      -22,17: 3
-      -22,18: 3
-      -22,19: 3
-      -22,20: 3
-      -22,21: 3
-      -21,16: 3
-      -21,17: 3
-      -21,18: 3
-      -21,19: 3
-      -21,20: 3
-      -21,21: 3
+      24,-27: 0
+      24,-26: 0
+      24,-25: 0
+      24,-24: 0
+      24,-23: 0
+      24,-22: 0
+      24,-21: 0
+      25,-27: 0
+      25,-26: 0
+      25,-25: 0
+      25,-24: 0
+      25,-23: 0
+      25,-22: 0
+      25,-21: 0
+      26,-27: 0
+      26,-26: 0
+      26,-25: 0
+      26,-24: 0
+      26,-23: 0
+      26,-22: 0
+      26,-21: 0
+      27,-27: 0
+      27,-26: 0
+      27,-25: 0
+      27,-24: 0
+      27,-23: 0
+      27,-22: 0
+      27,-21: 0
+      28,-27: 0
+      28,-26: 0
+      28,-25: 0
+      28,-24: 0
+      28,-23: 0
+      28,-22: 0
+      28,-21: 0
+      -28,16: 0
+      -28,17: 0
+      -28,18: 0
+      -28,19: 0
+      -28,20: 0
+      -28,21: 0
+      -27,16: 0
+      -27,17: 0
+      -27,18: 0
+      -27,19: 0
+      -27,20: 0
+      -27,21: 0
+      -26,16: 0
+      -26,17: 0
+      -26,18: 0
+      -26,19: 0
+      -26,20: 0
+      -26,21: 0
+      -25,16: 0
+      -25,17: 0
+      -25,18: 0
+      -25,19: 0
+      -25,20: 0
+      -25,21: 0
+      -24,16: 0
+      -24,17: 0
+      -24,18: 0
+      -24,19: 0
+      -24,20: 0
+      -24,21: 0
+      -23,16: 0
+      -23,17: 0
+      -23,18: 0
+      -23,19: 0
+      -23,20: 0
+      -23,21: 0
+      -22,16: 0
+      -22,17: 0
+      -22,18: 0
+      -22,19: 0
+      -22,20: 0
+      -22,21: 0
+      -21,16: 0
+      -21,17: 0
+      -21,18: 0
+      -21,19: 0
+      -21,20: 0
+      -21,21: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -12413,66 +12413,6 @@ entities:
       moles:
       - 21.824879
       - 82.10312
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.5375
-      molesArchived:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      moles:
-      - 16.36866
-      - 61.57734
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.53749
-      molesArchived:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      moles:
-      - 16.36866
-      - 61.57734
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      molesArchived:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      moles:
-      - 0
-      - 0
       - 0
       - 0
       - 0
@@ -15991,8 +15931,7 @@ entities:
 - uid: 1248
   type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,9.5
+  - pos: -33.5,9.5
     parent: 853
     type: Transform
 - uid: 1249
@@ -19797,7 +19736,7 @@ entities:
 - uid: 1709
   type: AirlockMaint
   components:
-  - pos: 26.5,-19.5
+  - pos: -25.5,15.5
     parent: 853
     type: Transform
   - containers:
@@ -23319,12 +23258,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2210
-  type: WallSolid
+  type: AirlockMaint
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,-15.5
+  - pos: -23.5,18.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2211
   type: WallSolid
   components:
@@ -23384,8 +23326,7 @@ entities:
 - uid: 2219
   type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,-17.5
+  - pos: 20.5,-17.5
     parent: 853
     type: Transform
 - uid: 2220
@@ -49486,15 +49427,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 4978
-  type: AirlockMaint
+  type: WallSolid
   components:
-  - pos: 25.5,-22.5
+  - pos: 25.5,-15.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 4979
   type: ClosetBase
   components:
@@ -49692,7 +49629,7 @@ entities:
 - uid: 5000
   type: AirlockMaint
   components:
-  - pos: -25.5,15.5
+  - pos: 26.5,-19.5
     parent: 853
     type: Transform
   - containers:
@@ -49742,7 +49679,7 @@ entities:
 - uid: 5007
   type: AirlockMaint
   components:
-  - pos: -23.5,18.5
+  - pos: 25.5,-22.5
     parent: 853
     type: Transform
   - containers:
@@ -50106,6 +50043,93 @@ entities:
   components:
   - anchored: True
     pos: 25.5,-22.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5051
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5052
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,17.5
+    parent: 853
+    type: Transform
+- uid: 5053
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5054
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -24.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5055
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -23.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5056
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -22.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5057
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -21.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5058
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -23.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5059
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -24.5,18.5
     parent: 853
     type: Transform
   - visible: False
