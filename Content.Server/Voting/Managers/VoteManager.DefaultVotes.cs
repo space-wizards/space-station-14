@@ -80,7 +80,7 @@ namespace Content.Server.Voting.Managers
 
             foreach (var player in _playerManager.GetAllPlayers())
             {
-                if (player != initiator)
+                if (player != initiator && !_afkManager.IsAfk(player))
                 {
                     // Everybody else defaults to a no vote.
                     vote.CastVote(player, 1);

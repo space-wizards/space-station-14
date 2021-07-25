@@ -18,6 +18,9 @@
         Quantity: 15
   - type: SliceableFood
     count: 4
+  - type: Tag
+    tags:
+    - NoSpinOnThrow
 
 - type: entity
   parent: FoodPieBase

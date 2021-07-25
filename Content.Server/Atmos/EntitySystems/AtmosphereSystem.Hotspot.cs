@@ -4,8 +4,8 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
-using Content.Shared.GameTicking;
 using Content.Shared.Maps;
+using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -15,13 +15,13 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!tile.Hotspot.Valid)
             {
-                gridAtmosphere.RemoveHotspotTile(tile);
+                gridAtmosphere.HotspotTiles.Remove(tile);
                 return;
             }
 
             if (!tile.Excited)
             {
-                gridAtmosphere.AddActiveTile(tile);
+                AddActiveTile(gridAtmosphere, tile);
             }
 
             if (!tile.Hotspot.SkippedFirstProcess)
@@ -30,28 +30,33 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            tile.ExcitedGroup?.ResetCooldowns();
+            if(tile.ExcitedGroup != null)
+                ExcitedGroupResetCooldowns(tile.ExcitedGroup);
 
             if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
                 || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 tile.Hotspot = new Hotspot();
-                tile.UpdateVisuals();
+                InvalidateVisuals(tile.GridIndex, tile.GridIndices);
                 return;
             }
 
-            PerformHotspotExposure(gridAtmosphere, tile);
+            PerformHotspotExposure(tile);
 
             if (tile.Hotspot.Bypassing)
             {
                 tile.Hotspot.State = 3;
-                gridAtmosphere.BurnTile(tile.GridIndices);
+                // TODO ATMOS: Burn tile here
 
                 if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
                 {
                     var radiatedTemperature = tile.Air.Temperature * Atmospherics.FireSpreadRadiosityScale;
                     foreach (var otherTile in tile.AdjacentTiles)
                     {
+                        // TODO ATMOS: This is sus. Suss this out.
+                        if (otherTile == null)
+                            continue;
+
                         if(!otherTile.Hotspot.Valid)
                             HotspotExpose(gridAtmosphere, otherTile, radiatedTemperature, Atmospherics.CellVolume/4);
                     }
@@ -108,12 +113,12 @@ namespace Content.Server.Atmos.EntitySystems
 
                 tile.Hotspot.Start();
 
-                gridAtmosphere.AddActiveTile(tile);
-                gridAtmosphere.AddHotspotTile(tile);
+                AddActiveTile(gridAtmosphere, tile);
+                gridAtmosphere.HotspotTiles.Add(tile);
             }
         }
 
-        private void PerformHotspotExposure(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
+        private void PerformHotspotExposure(TileAtmosphere tile)
         {
             if (tile.Air == null || !tile.Hotspot.Valid) return;
 
@@ -128,11 +133,10 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var affected = tile.Air.RemoveRatio(tile.Hotspot.Volume / tile.Air.Volume);
                 affected.Temperature = tile.Hotspot.Temperature;
-                gridAtmosphere.AtmosphereSystem.React(affected, tile);
+                React(affected, tile);
                 tile.Hotspot.Temperature = affected.Temperature;
                 tile.Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Merge(tile.Air, affected);
-                gridAtmosphere.Invalidate(tile.GridIndices);
             }
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
@@ -141,7 +145,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 foreach (var fireAct in entity.GetAllComponents<IFireAct>())
                 {
-
                     fireAct.FireAct(tile.Hotspot.Temperature, tile.Hotspot.Volume);
                 }
             }
