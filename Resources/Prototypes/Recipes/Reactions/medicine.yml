@@ -105,12 +105,11 @@
   id: Dexalin
   reactants:
     Oxygen:
-      amount: 2
-    Plasma:
-      amount: 5
-      catalyst: true
+      amount: 1
+    Inaprovaline:
+      amount: 1
   products:
-    Dexalin: 3
+    Dexalin: 2
 
 - type: reaction
   id: DexalinPlus
