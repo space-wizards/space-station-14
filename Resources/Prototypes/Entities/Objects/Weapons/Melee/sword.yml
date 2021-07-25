@@ -13,6 +13,9 @@
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
     prefix: inhand
+  - type: Tag
+    tags:
+    - CaptainSabre
 
 - type: entity
   name: katana

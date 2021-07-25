@@ -1,8 +1,56 @@
 - type: Tag
+  id: BotanyHatchet
+
+- type: Tag
+  id: BotanyHoe
+
+- type: Tag
   id: BotanySharp
 
 - type: Tag
+  id: BotanyShovel
+
+- type: Tag
+  id: Bottle
+
+- type: Tag
   id: CanPilot
+
+- type: Tag
+  id: CaptainSabre
+
+- type: Tag
+  id: Crayon
+
+- type: Tag
+  id: CrayonBlack
+
+- type: Tag
+  id: CrayonBlue
+
+- type: Tag
+  id: CrayonGreen
+
+- type: Tag
+  id: CrayonOrange
+
+- type: Tag
+  id: CrayonPurple
+
+- type: Tag
+  id: CrayonRed
+
+- type: Tag
+  id: CrayonWhite
+
+- type: Tag
+  id: CrayonYellow
+
+- type: Tag
+  id: Crowbar
+
+- type: Tag
+  id: CrowbarRed
 
 - type: Tag
   id: ConveyorAssembly
@@ -35,13 +83,28 @@
   id: Ingot
 
 - type: Tag
+  id: JawsOfLife
+  
+- type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
   id: Ore
 
 - type: Tag
+  id: PlantAnalyzer
+
+- type: Tag
+  id: PlantBGone
+
+- type: Tag
   id: PlantSampleTaker
+
+- type: Tag
+  id: Powerdrill
+
+- type: Tag
+  id: Screwdriver
 
 - type: Tag
   id: Sheet
@@ -50,7 +113,16 @@
   id: Shovel
 
 - type: Tag
+  id: Spray
+
+- type: Tag
   id: Wall
+
+- type: Tag
+  id: Wirecutter
+
+- type: Tag
+  id: Wrench
 
 - type: Tag
   id: Write
