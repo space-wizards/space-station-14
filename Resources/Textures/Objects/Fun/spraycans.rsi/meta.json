@@ -54,6 +54,10 @@
     },
     {
       "name": "spray_colors"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
     }
   ]
 }

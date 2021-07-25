@@ -1560,3 +1560,31 @@ Entries:
   - {message: Made the baseball bat craftable, type: Add}
   id: 277
   time: '2021-07-24T23:51:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Throwing feels more natural., type: Tweak}
+  - {message: Pushed objects don't slide as far., type: Tweak}
+  id: 278
+  time: '2021-07-25T06:58:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add server cvar for whether pushing is enabled., type: Add}
+  id: 279
+  time: '2021-07-25T06:58:11.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: botanical belt for gardening tools, type: Add}
+  - {message: add mapped storage sprites for lots of belts and other stuff, type: Add}
+  id: 280
+  time: '2021-07-25T07:21:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now set the transfer amount of solution containers using a right-click
+      verb., type: Add}
+  id: 281
+  time: '2021-07-25T07:53:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Items with missing inhand sprites no longer show a giant ERROR, type: Fix}
+  id: 282
+  time: '2021-07-25T10:02:48.0000000+00:00'

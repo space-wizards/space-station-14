@@ -1,5 +1,6 @@
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Damage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -26,9 +27,13 @@ namespace Content.Server.Projectiles
                 return;
             }
 
+            var otherEntity = args.OtherFixture.Body.Owner;
+
             var coordinates = args.OtherFixture.Body.Owner.Transform.Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
-            if (args.OtherFixture.Body.Owner.TryGetComponent(out IDamageableComponent? damage) && component.SoundHitSpecies != null)
+
+            if (!otherEntity.Deleted &&
+                otherEntity.HasComponent<SharedBodyComponent>() && component.SoundHitSpecies != null)
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies, coordinates);
             }
@@ -37,7 +42,7 @@ namespace Content.Server.Projectiles
                 SoundSystem.Play(playerFilter, component.SoundHit, coordinates);
             }
 
-            if (damage != null)
+            if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))
             {
                 EntityManager.TryGetEntity(component.Shooter, out var shooter);
 
@@ -50,7 +55,7 @@ namespace Content.Server.Projectiles
             }
 
             // Damaging it can delete it
-            if (!args.OtherFixture.Body.Deleted && args.OtherFixture.Body.Owner.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (!otherEntity.Deleted && otherEntity.TryGetComponent(out CameraRecoilComponent? recoilComponent))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

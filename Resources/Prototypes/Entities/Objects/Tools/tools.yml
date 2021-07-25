@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - PlantSampleTaker
+    - Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -37,6 +38,9 @@
   id: Screwdriver
   description: Industrial grade torque in a small screwdriving package.
   components:
+  - type: Tag
+    tags:
+    - Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     layers:
@@ -67,6 +71,9 @@
   id: Wrench
   description: A common tool for assembly and disassembly, righty tighty lefty loosey.
   components:
+  - type: Tag
+    tags:
+    - Wrench
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
@@ -86,6 +93,9 @@
   id: Crowbar
   description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
+  - type: Tag
+    tags:
+    - Crowbar
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
@@ -107,6 +117,9 @@
   id: CrowbarRed
   description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
+  - type: Tag
+    tags:
+    - CrowbarRed
   - type: Sprite
     sprite: Objects/Tools/crowbar_red.rsi
     state: icon
@@ -151,26 +164,29 @@
   id: PowerDrill
   description: A simple powered hand drill.
   components:
-    - type: Sprite
-      sprite: Objects/Tools/drill.rsi
-      state: drill_screw
-    - type: Item
-      sprite: Objects/Tools/drill.rsi
-      size: 20
-    - type: Tool
-      qualities:
-        - Screwing
-      statusShowBehavior: true
-    - type: MultiTool
-      tools:
-        - behavior: Screwing
-          state: drill_screw
-          useSound: /Audio/Items/drill_use.ogg
-          changeSound: /Audio/Items/change_drill.ogg
-        - behavior: Anchoring
-          state: drill_bolt
-          useSound: /Audio/Items/drill_use.ogg
-          changeSound: /Audio/Items/change_drill.ogg
+  - type: Tag
+    tags:
+    - Powerdrill
+  - type: Sprite
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: Objects/Tools/drill.rsi
+    size: 20
+  - type: Tool
+    qualities:
+      - Screwing
+    statusShowBehavior: true
+  - type: MultiTool
+    tools:
+      - behavior: Screwing
+        state: drill_screw
+        useSound: /Audio/Items/drill_use.ogg
+        changeSound: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        state: drill_bolt
+        useSound: /Audio/Items/drill_use.ogg
+        changeSound: /Audio/Items/change_drill.ogg
 
 - type: entity
   name: RCD
@@ -208,13 +224,13 @@
   id: Shovel
   description: A large tool for digging and moving dirt.
   components:
-    - type: Tag
-      tags:
-      - Shovel
-    - type: Sprite
-      sprite: Objects/Tools/shovel.rsi
-      state: icon
-    - type: ItemCooldown
-    - type: MeleeWeapon
-    - type: Item
-      sprite: Objects/Tools/shovel.rsi
+  - type: Tag
+    tags:
+    - Shovel
+  - type: Sprite
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Item
+    sprite: Objects/Tools/shovel.rsi
