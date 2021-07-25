@@ -126,6 +126,7 @@ namespace Content.Server.Crayon
 
             if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager))
             {
+                eventArgs.User.PopupMessage(Loc.GetString("crayon-interact-invalid-location"));
                 return true;
             }
 
