@@ -17,6 +17,12 @@ namespace Content.Server.Throwing
         private const float ThrowAngularImpulse = 1.5f;
 
         /// <summary>
+        /// The minimum amount of time an entity needs to be thrown before the timer can be run.
+        /// Anything below this threshold never enters the air.
+        /// </summary>
+        private const float FlyTime = 0.15f;
+
+        /// <summary>
         ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
         /// </summary>
         /// <param name="entity">The entity being thrown.</param>
@@ -66,10 +72,8 @@ namespace Content.Server.Throwing
             physicsComponent.ApplyLinearImpulse(direction.Normalized * strength * physicsComponent.Mass);
             // Estimate time to arrival so we can apply OnGround status and slow it much faster.
             var time = (direction / strength).Length;
-            // TODO: Make constant before pr.
-            var flyTime = 0.15f;
 
-            if (time < flyTime)
+            if (time < FlyTime)
             {
                 physicsComponent.BodyStatus = BodyStatus.OnGround;
             }
@@ -77,7 +81,7 @@ namespace Content.Server.Throwing
             {
                 physicsComponent.BodyStatus = BodyStatus.InAir;
 
-                Timer.Spawn(TimeSpan.FromSeconds(time - flyTime), () =>
+                Timer.Spawn(TimeSpan.FromSeconds(time - FlyTime), () =>
                 {
                     if (physicsComponent.Deleted) return;
                     physicsComponent.BodyStatus = BodyStatus.OnGround;
