@@ -176,10 +176,10 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<float> TileFrictionModifier =
-            CVarDef.Create("physics.tilefriction", 15.0f);
+            CVarDef.Create("physics.tile_friction", 40.0f);
 
         public static readonly CVarDef<float> StopSpeed =
-            CVarDef.Create("physics.stopspeed", 0.1f);
+            CVarDef.Create("physics.stop_speed", 0.1f);
 
         /*
          * Ambience
