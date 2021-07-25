@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.Components;
-using Content.Server.Interfaces;
 using Content.Server.Metabolism;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;

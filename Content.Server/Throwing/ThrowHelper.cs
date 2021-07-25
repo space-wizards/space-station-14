@@ -8,23 +8,34 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Throwing
 {
     internal static class ThrowHelper
     {
-        private const float ThrowAngularImpulse = 3.0f;
+        private const float ThrowAngularImpulse = 1.5f;
+
+        /// <summary>
+        /// The minimum amount of time an entity needs to be thrown before the timer can be run.
+        /// Anything below this threshold never enters the air.
+        /// </summary>
+        private const float FlyTime = 0.15f;
 
         /// <summary>
         ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="direction">Will use the vector's magnitude as the strength of the impulse</param>
+        /// <param name="entity">The entity being thrown.</param>
+        /// <param name="direction">A vector pointing from the entity to its destination.</param>
+        /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
         /// <param name="user"></param>
         /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction, IEntity? user = null, float pushbackRatio = 1.0f)
+        internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
         {
-            if (entity.Deleted || direction == Vector2.Zero || !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (entity.Deleted ||
+                direction == Vector2.Zero ||
+                strength <= 0f ||
+                !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -58,7 +69,25 @@ namespace Content.Server.Throwing
                     EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);
             }
 
-            physicsComponent.ApplyLinearImpulse(direction);
+            physicsComponent.ApplyLinearImpulse(direction.Normalized * strength * physicsComponent.Mass);
+            // Estimate time to arrival so we can apply OnGround status and slow it much faster.
+            var time = (direction / strength).Length;
+
+            if (time < FlyTime)
+            {
+                physicsComponent.BodyStatus = BodyStatus.OnGround;
+            }
+            else
+            {
+                physicsComponent.BodyStatus = BodyStatus.InAir;
+
+                Timer.Spawn(TimeSpan.FromSeconds(time - FlyTime), () =>
+                {
+                    if (physicsComponent.Deleted) return;
+                    physicsComponent.BodyStatus = BodyStatus.OnGround;
+                });
+            }
+
             // Give thrower an impulse in the other direction
             if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
             {

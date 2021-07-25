@@ -1,6 +1,5 @@
 using System;
 using Content.Server.Administration;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
@@ -10,7 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Commands.Atmos
+namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
     public class DeleteGasCommand : IConsoleCommand

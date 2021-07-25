@@ -246,6 +246,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var isAirBlocked = IsTileAirBlocked(mapGrid, indices);
 
+                tile.BlockedAirflow = GetBlockedDirections(mapGrid, indices);
+                UpdateAdjacent(mapGrid, gridAtmosphere, tile);
+
                 if (IsTileSpace(mapGrid, indices) && !isAirBlocked)
                 {
                     tile.Air = new GasMixture(volume);
@@ -293,11 +296,8 @@ namespace Content.Server.Atmos.EntitySystems
                 // Then we activate the tile again.
                 AddActiveTile(gridAtmosphere, tile);
 
-                tile.BlockedAirflow = GetBlockedDirections(mapGrid, indices);
-
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
                 tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
-                UpdateAdjacent(mapGrid, gridAtmosphere, tile);
                 InvalidateVisuals(mapGrid.Index, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
@@ -993,11 +993,25 @@ namespace Content.Server.Atmos.EntitySystems
         public IEnumerable<GasMixture> GetAdjacentTileMixtures(GridAtmosphereComponent gridAtmosphere, Vector2i tile, bool includeBlocked = false, bool invalidate = false)
         {
             if (!gridAtmosphere.Tiles.TryGetValue(tile, out var tileAtmosphere))
-                yield break;
+                return Enumerable.Empty<GasMixture>();
 
-            for (var i = 0; i < tileAtmosphere.AdjacentTiles.Length; i++)
+            return GetAdjacentTileMixtures(gridAtmosphere, tileAtmosphere, includeBlocked, invalidate);
+        }
+
+        /// <summary>
+        ///     Gets all tile gas mixtures adjacent to a specific tile, and optionally invalidates them.
+        ///     Does not return the tile in question, only the adjacent ones.
+        /// </summary>
+        /// <param name="gridAtmosphere">Grid Atmosphere where the tile is.</param>
+        /// <param name="tile">Tile Atmosphere in question.</param>
+        /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
+        /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
+        /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
+        private IEnumerable<GasMixture> GetAdjacentTileMixtures(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, bool includeBlocked = false, bool invalidate = false)
+        {
+            for (var i = 0; i < tile.AdjacentTiles.Length; i++)
             {
-                var adjacentTile = tileAtmosphere.AdjacentTiles[i];
+                var adjacentTile = tile.AdjacentTiles[i];
 
                 // TileAtmosphere has nullable disabled, so just in case...
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
@@ -1007,7 +1021,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!includeBlocked)
                 {
                     var direction = (AtmosDirection) (1 << i);
-                    if (tileAtmosphere.BlockedAirflow.IsFlagSet(direction))
+                    if (tile.BlockedAirflow.IsFlagSet(direction))
                         continue;
                 }
 
@@ -1465,7 +1479,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!gridAtmosphere.Tiles.TryGetValue(tile, out var tileAtmosphere))
                 return;
 
-            var adjacent = GetAdjacentTileMixtures(gridAtmosphere, tile, invalidate:true).ToArray();
+            var adjacent = GetAdjacentTileMixtures(gridAtmosphere, tileAtmosphere, false, true).ToArray();
             tileAtmosphere.Air = new GasMixture(GetVolumeForTiles(tileAtmosphere.GridIndex, 1))
                 {Temperature = Atmospherics.T20C};
 

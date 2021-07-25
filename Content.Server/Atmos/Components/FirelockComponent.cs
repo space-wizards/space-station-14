@@ -28,7 +28,7 @@ namespace Content.Server.Atmos.Components
                 _doorComponent.Close();
                 if (Owner.TryGetComponent(out AirtightComponent? airtight))
                 {
-                    airtight.AirBlocked = true;
+                    EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
                 }
                 return true;
             }

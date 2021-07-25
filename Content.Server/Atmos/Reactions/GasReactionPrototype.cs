@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;

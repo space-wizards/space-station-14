@@ -3,7 +3,6 @@ using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
-using Content.Server.Interfaces;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
