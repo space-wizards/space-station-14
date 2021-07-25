@@ -59,6 +59,12 @@
   id: DoorElectronics
 
 - type: Tag
+  id: Donut
+
+- type: Tag
+  id: Egg
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
@@ -84,12 +90,18 @@
 
 - type: Tag
   id: JawsOfLife
-  
+
+- type: Tag
+  id: MonkeyCube
+
 - type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
   id: Ore
+
+- type: Tag
+  id: Pizza
 
 - type: Tag
   id: PlantAnalyzer
@@ -102,6 +114,9 @@
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: RollingPaper
 
 - type: Tag
   id: Screwdriver
