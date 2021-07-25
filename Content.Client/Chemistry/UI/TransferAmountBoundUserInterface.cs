@@ -28,11 +28,6 @@ namespace Content.Client.Chemistry.UI
             _window.OpenCentered();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-
-        }
-
         public TransferAmountBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }

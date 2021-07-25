@@ -10,6 +10,7 @@ namespace Content.Client.Chemistry.UI
     {
         public Button applyButton => ApplyButton;
         public LineEdit amountLineEdit => AmountLineEdit;
+
         public TransferAmountWindow()
         {
             RobustXamlLoader.Load(this);
