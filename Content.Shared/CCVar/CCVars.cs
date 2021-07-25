@@ -181,6 +181,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> StopSpeed =
             CVarDef.Create("physics.stop_speed", 0.1f);
 
+        /// <summary>
+        /// Whether mobs can push objects like lockers.
+        /// </summary>
+        /// <remarks>
+        /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
+        /// </remarks>
+        public static readonly CVarDef<bool> MobPushing =
+            CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
+
         /*
          * Ambience
          */
