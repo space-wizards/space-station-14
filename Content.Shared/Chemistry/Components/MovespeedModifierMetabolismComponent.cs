@@ -6,6 +6,8 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Threading;
 using Robust.Shared.GameStates;
+using Robust.Shared.Timing;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -14,6 +16,8 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent]
     public sealed class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         [ViewVariables]
         public override string Name => "MovespeedModifierMetabolismComponent";
 
@@ -27,6 +31,8 @@ namespace Content.Shared.Chemistry.Components
         public int EffectTime { get; set; }
 
         private CancellationTokenSource? _cancellation;
+
+        public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
 
         public void ResetModifiers()
         {
@@ -42,6 +48,21 @@ namespace Content.Shared.Chemistry.Components
             Dirty();
         }
 
+        public void Update(float delta)
+        {
+            var curTime = _gameTiming.CurTime;
+
+            if (ModifierTimer != null)
+            {
+                if (ModifierTimer.Value.End <= curTime)
+                {
+                    ModifierTimer = null;
+                    ResetModifiers();
+                    Dirty();
+                }
+            }
+        }
+
         /// <summary>
         /// Perpetuate the modifiers further.
         /// </summary>
@@ -50,6 +71,9 @@ namespace Content.Shared.Chemistry.Components
             _cancellation?.Cancel();
             _cancellation = new CancellationTokenSource();
             Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
+
+            ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime / 1000))); // EffectTime is milliseconds, TimeSpan.FromSeconds() is just seconds
+            Dirty();
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -62,6 +86,7 @@ namespace Content.Shared.Chemistry.Components
 
             WalkSpeedModifier = state.WalkSpeedModifier;
             SprintSpeedModifier = state.SprintSpeedModifier;
+            ModifierTimer = state.ModifierTimer;
             if (Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
             {
                 modifier.RefreshMovementSpeedModifiers();
@@ -70,7 +95,7 @@ namespace Content.Shared.Chemistry.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier);
+            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier, ModifierTimer);
         }
 
         [Serializable, NetSerializable]
@@ -78,10 +103,13 @@ namespace Content.Shared.Chemistry.Components
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }
-            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier)
+            public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; }
+
+            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, (TimeSpan Start, TimeSpan End)? modifierTimer)
             {
                 WalkSpeedModifier = walkSpeedModifier;
                 SprintSpeedModifier = sprintSpeedModifier;
+                ModifierTimer = modifierTimer;
             }
         }
     }

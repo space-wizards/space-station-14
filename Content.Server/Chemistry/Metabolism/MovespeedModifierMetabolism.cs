@@ -59,8 +59,9 @@ namespace Content.Server.Chemistry.Metabolism
                 status.ResetTimer();
                 status.Dirty();
 
-                // TODO: Scaly you should also check if the modifiers already equals these, and if so then don't refresh, just update the timers.
-                movement.RefreshMovementSpeedModifiers();
+                
+                if (movement.WalkSpeedModifier.Equals(WalkSpeedModifier) || movement.SprintSpeedModifier.Equals(SprintSpeedModifier))
+                    movement.RefreshMovementSpeedModifiers();
             }
             return MetabolismRate;
         }
