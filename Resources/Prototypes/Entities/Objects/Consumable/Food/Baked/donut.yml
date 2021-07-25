@@ -1,8 +1,5 @@
 # Base
 
-- type: Tag
-  id: Donut
-
 - type: entity
   parent: BaseItem
   id: FoodDonutBase
