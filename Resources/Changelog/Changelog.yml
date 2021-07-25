@@ -1593,3 +1593,8 @@ Entries:
   - {message: Added Makeshift Handcuffs into the construction list, type: Add}
   id: 283
   time: '2021-07-25T15:30:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle-relative movement for when we get shuttle rotation., type: Add}
+  id: 284
+  time: '2021-07-25T15:48:22.0000000+00:00'
