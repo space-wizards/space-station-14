@@ -1583,3 +1583,8 @@ Entries:
       verb., type: Add}
   id: 281
   time: '2021-07-25T07:53:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Items with missing inhand sprites no longer show a giant ERROR, type: Fix}
+  id: 282
+  time: '2021-07-25T10:02:48.0000000+00:00'
