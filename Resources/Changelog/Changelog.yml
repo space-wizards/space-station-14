@@ -1577,3 +1577,9 @@ Entries:
   - {message: add mapped storage sprites for lots of belts and other stuff, type: Add}
   id: 280
   time: '2021-07-25T07:21:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now set the transfer amount of solution containers using a right-click
+      verb., type: Add}
+  id: 281
+  time: '2021-07-25T07:53:53.0000000+00:00'
