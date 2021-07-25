@@ -17,10 +17,10 @@ namespace Content.Shared.Movement.EntitySystems
         {
             base.Initialize();
             Get<SharedPhysicsSystem>().KinematicControllerCollision += HandleCollisionMessage;
-            IoCManager.Resolve<IConfigurationManager>().OnValueChanged(CCVars.MobPushing, PushingToggle, true);
+            IoCManager.Resolve<IConfigurationManager>().OnValueChanged(CCVars.MobPushing, SetPushing, true);
         }
 
-        private void PushingToggle(bool value)
+        private void SetPushing(bool value)
         {
             _pushingEnabled = value;
         }
@@ -28,7 +28,7 @@ namespace Content.Shared.Movement.EntitySystems
         public override void Shutdown()
         {
             base.Shutdown();
-            IoCManager.Resolve<IConfigurationManager>().UnsubValueChanged(CCVars.MobPushing, PushingToggle);
+            IoCManager.Resolve<IConfigurationManager>().UnsubValueChanged(CCVars.MobPushing, SetPushing);
             Get<SharedPhysicsSystem>().KinematicControllerCollision -= HandleCollisionMessage;
         }
 
