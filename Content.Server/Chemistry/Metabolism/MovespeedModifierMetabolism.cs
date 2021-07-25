@@ -4,6 +4,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
 using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -58,6 +59,7 @@ namespace Content.Server.Chemistry.Metabolism
                 status.ResetTimer();
                 status.Dirty();
 
+                // TODO: Scaly you should also check if the modifiers already equals these, and if so then don't refresh, just update the timers.
                 movement.RefreshMovementSpeedModifiers();
             }
             return MetabolismRate;
