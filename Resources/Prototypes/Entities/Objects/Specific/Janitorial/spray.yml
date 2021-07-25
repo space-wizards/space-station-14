@@ -18,7 +18,6 @@
     maxVol: 100
     caps: Refillable, Drainable
   - type: SolutionTransfer
-    transferAmount: 5.0
   - type: Spillable
   - type: ItemCooldown
   - type: Spray
