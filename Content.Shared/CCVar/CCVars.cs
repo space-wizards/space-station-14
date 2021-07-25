@@ -175,6 +175,12 @@ namespace Content.Shared.CCVar
          * Physics
          */
 
+        /// <summary>
+        /// When a mob is walking should its X / Y movement be relative to its parent (true) or the map (false).
+        /// </summary>
+        public static readonly CVarDef<bool> RelativeMovement =
+            CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED);
+
         public static readonly CVarDef<float> TileFrictionModifier =
             CVarDef.Create("physics.tile_friction", 40.0f);
 
