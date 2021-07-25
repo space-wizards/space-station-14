@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.Metabolism
     {
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
-        /// </summary> 
+        /// </summary>
         [DataField("rate")]
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
@@ -56,6 +56,7 @@ namespace Content.Server.Chemistry.Metabolism
                 status.SprintSpeedModifier = SprintSpeedModifier;
                 status.EffectTime = StatusLifetime * MetabolismRate.Int();
                 status.ResetTimer();
+                status.Dirty();
 
                 movement.RefreshMovementSpeedModifiers();
             }
