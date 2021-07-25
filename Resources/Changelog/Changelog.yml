@@ -1588,3 +1588,8 @@ Entries:
   - {message: Items with missing inhand sprites no longer show a giant ERROR, type: Fix}
   id: 282
   time: '2021-07-25T10:02:48.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Makeshift Handcuffs into the construction list, type: Add}
+  id: 283
+  time: '2021-07-25T15:30:42.0000000+00:00'
