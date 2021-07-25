@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -6,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Access;
 using Content.Server.Access.Components;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable.Components;
@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
@@ -35,7 +36,7 @@ namespace Content.Server.Doors.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedDoorComponent))]
-    public class ServerDoorComponent : SharedDoorComponent, IActivate, IStartCollide, IInteractUsing, IMapInit
+    public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
@@ -101,7 +102,7 @@ namespace Content.Server.Doors.Components
         /// Whether the door will open when it is bumped into.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("bumpOpen")]
-        private bool _bumpOpen = true;
+        public bool BumpOpen = true;
 
         /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
@@ -213,24 +214,6 @@ namespace Content.Server.Doors.Components
             }
         }
 
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (State != DoorState.Closed)
-            {
-                return;
-            }
-
-            if (!_bumpOpen)
-            {
-                return;
-            }
-
-            // Disabled because it makes it suck hard to walk through double doors.
-
-                TryOpen(otherFixture.Body.Owner);
-
-        }
-
         #region Opening
 
         public void TryOpen(IEntity user)
@@ -335,7 +318,7 @@ namespace Content.Server.Doors.Components
         {
             if (Owner.TryGetComponent(out AirtightComponent? airtight))
             {
-                airtight.AirBlocked = false;
+                EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, false);
             }
             base.OnPartialOpen();
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
@@ -410,7 +393,7 @@ namespace Content.Server.Doors.Components
 
             if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                var broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+                var broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
                 foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
@@ -463,7 +446,7 @@ namespace Content.Server.Doors.Components
 
             if (becomeairtight && Owner.TryGetComponent(out AirtightComponent? airtight))
             {
-                airtight.AirBlocked = true;
+                EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
             }
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));

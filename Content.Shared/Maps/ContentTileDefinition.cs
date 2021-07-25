@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -16,6 +15,8 @@ namespace Content.Shared.Maps
     {
         [ViewVariables]
         string IPrototype.ID => Name;
+
+        public string Path => "/Textures/Tiles/";
 
         [DataField("name", required: true)] public string Name { get; } = string.Empty;
 

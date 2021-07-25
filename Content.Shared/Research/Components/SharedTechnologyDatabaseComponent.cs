@@ -1,10 +1,9 @@
-#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,10 +11,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Research.Components
 {
+    [NetworkedComponent()]
     public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
         public override string Name => "TechnologyDatabase";
-        public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
 
         [DataField("technologies")] private List<string> _technologyIds = new();
 
@@ -114,12 +113,12 @@ namespace Content.Shared.Research.Components
     public class TechnologyDatabaseState : ComponentState
     {
         public List<string> Technologies;
-        public TechnologyDatabaseState(List<string> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
+        public TechnologyDatabaseState(List<string> technologies)
         {
             Technologies = technologies;
         }
 
-        public TechnologyDatabaseState(List<TechnologyPrototype> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
+        public TechnologyDatabaseState(List<TechnologyPrototype> technologies)
         {
             Technologies = new List<string>();
             foreach (var technology in technologies)

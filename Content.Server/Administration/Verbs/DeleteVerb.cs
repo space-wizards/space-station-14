@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;

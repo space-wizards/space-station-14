@@ -1,0 +1,160 @@
+- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasUnaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasVentPump
+  name: air vent
+  description: Has a valve and a pump attached to it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/vent.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeHalf
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: vent_off
+          map: ["enum.VentVisualLayers.Vent"]
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
+        - type: VentPumpVisualizer
+    - type: GasVentPump
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasPassiveVent
+  name: passive vent
+  description: It is an open vent.
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS: Find sprite for this.
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/vent.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeHalf
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: vent_off
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
+    - type: GasPassiveVent
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasVentScrubber
+  name: air scrubber
+  description: Has a valve and pump attached to it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/scrubber.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeHalf
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: scrub_off
+          map: ["enum.ScrubberVisualLayers.Scrubber"]
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
+        - type: ScrubberVisualizer
+    - type: AtmosDevice
+    - type: GasVentScrubber
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasOutletInjector
+  name: air injector
+  description: Has a valve and pump attached to it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasOutletInjector
+    # TODO ATMOS: Actual sprite for this.
+    - type: Sprite
+      netsync: false
+      layers:
+        - state: pipeHalf
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasUnaryBase
+  id: GasThermoMachineBase
+  name: thermomachine
+  description: Heats or cools gas in connected pipes.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+    - type: GasThermoMachine
+
+- type: entity
+  parent: GasThermoMachineBase
+  id: GasThermoMachineFreezer
+  name: freezer
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: freezer_off
+        - state: pipe
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: ThermoMachineVisualizer
+          enabledState: freezer_on
+    - type: GasThermoMachine
+      mode: Freezer
+      minTemperature: 73.15
+
+- type: entity
+  parent: GasThermoMachineBase
+  id: GasThermoMachineHeater
+  name: heater
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: heater_off
+        - state: pipe
+    - type: Appearance
+      visuals:
+        - type: PipeConnectorVisualizer
+        - type: ThermoMachineVisualizer
+          enabledState: heater_on
+    - type: GasThermoMachine
+      mode: Heater
+      maxTemperature: 573.15 # This is changed when parts are refreshed.

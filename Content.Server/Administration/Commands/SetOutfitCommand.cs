@@ -1,7 +1,5 @@
-#nullable enable
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
-using Content.Server.Interfaces;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.PDA;

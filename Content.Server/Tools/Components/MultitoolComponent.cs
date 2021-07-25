@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -16,6 +16,7 @@ namespace Content.Server.Tools.Components
     ///     Not to be confused with Multitool (power)
     /// </summary>
     [RegisterComponent]
+    [NetworkedComponent()]
     public class MultiToolComponent : Component, IUse
     {
         [DataDefinition]
@@ -40,7 +41,6 @@ namespace Content.Server.Tools.Components
         }
 
         public override string Name => "MultiTool";
-        public override uint? NetID => ContentNetIDs.MULTITOOLS;
         [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 

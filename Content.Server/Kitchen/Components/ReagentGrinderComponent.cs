@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +9,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;

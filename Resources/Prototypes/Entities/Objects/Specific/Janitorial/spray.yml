@@ -5,6 +5,9 @@
   suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
+  - type: Tag
+    tags:
+    - Spray
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -15,7 +18,6 @@
     maxVol: 100
     caps: Refillable, Drainable
   - type: SolutionTransfer
-    transferAmount: 5.0
   - type: Spillable
   - type: ItemCooldown
   - type: Spray
@@ -30,12 +32,12 @@
   suffix: Filled
   parent: SprayBottle
   components:
-    - type: SolutionContainer
-      maxVol: 100
-      contents:
-        reagents:
-          - ReagentId: Water
-            Quantity: 100
+  - type: SolutionContainer
+    maxVol: 100
+    contents:
+      reagents:
+        - ReagentId: Water
+          Quantity: 100
 
 - type: entity
   name: space cleaner
@@ -44,12 +46,12 @@
   parent: SprayBottle
   suffix: ""
   components:
-    - type: SolutionContainer
-      maxVol: 100
-      contents:
-        reagents:
-          - ReagentId: SpaceCleaner
-            Quantity: 100
+  - type: SolutionContainer
+    maxVol: 100
+    contents:
+      reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 100
 
 # Vapor
 

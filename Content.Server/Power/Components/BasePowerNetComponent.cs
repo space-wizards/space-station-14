@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Power.NodeGroups;
 

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Triggers;

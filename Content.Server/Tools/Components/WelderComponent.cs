@@ -1,8 +1,8 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Act;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
@@ -14,7 +14,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
@@ -23,6 +22,7 @@ using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
@@ -37,12 +37,12 @@ namespace Content.Server.Tools.Components
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
     [ComponentReference(typeof(IHotItem))]
+    [NetworkedComponent()]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override string Name => "Welder";
-        public override uint? NetID => ContentNetIDs.WELDER;
 
         /// <summary>
         /// Default Cost of using the welder fuel for an action
@@ -226,8 +226,7 @@ namespace Content.Server.Tools.Components
                 PlaySound(welderOnSOunds, -5);
             _welderSystem.Subscribe(this);
 
-            Owner.Transform.Coordinates
-                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
 
             return true;
         }
@@ -270,8 +269,7 @@ namespace Content.Server.Tools.Components
 
             _solutionComponent?.TryRemoveReagent("WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
-            Owner.Transform.Coordinates
-                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();

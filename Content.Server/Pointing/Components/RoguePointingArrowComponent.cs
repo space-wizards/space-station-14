@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Server.Explosion;
 using Content.Shared.Pointing.Components;

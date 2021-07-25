@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.CharacterAppearance.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors;

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Components;
@@ -86,7 +85,7 @@ namespace Content.Server.TraitorDeathMatch.Components
             {
                 // This shouldn't even BE POSSIBLE in the actual mode this is meant for.
                 // Advanced Syndicate anti-tampering technology.
-                // Owner.PopupMessage(eventArgs.User, Loc.GetString("Tampering detected."));
+                // Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-tampering-detected"));
                 // if (eventArgs.User.TryGetComponent<DamagableComponent>(out var userDamagable))
                 //     userDamagable.ChangeDamage(DamageType.Shock, 9001, true, null);
                 // ...So apparently, "it probably shouldn't kill people for a mistake".

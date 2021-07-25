@@ -12,7 +12,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-#nullable enable
 
 namespace Content.Server.Extinguisher
 {

@@ -4,7 +4,6 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
@@ -13,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -26,12 +26,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "RevolverBarrel";
-        public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
         [ViewVariables]
         [DataField("caliber")]

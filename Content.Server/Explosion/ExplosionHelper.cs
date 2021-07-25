@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -277,10 +276,12 @@ namespace Content.Server.Explosion
         public static void SpawnExplosion(this IEntity entity, int devastationRange = 0, int heavyImpactRange = 0,
             int lightImpactRange = 0, int flashRange = 0)
         {
+            // TODO: Need to refactor this stufferino
+
             // If you want to directly set off the explosive
             if (!entity.Deleted && entity.TryGetComponent(out ExplosiveComponent? explosive) && !explosive.Exploding)
             {
-                explosive.Explosion();
+                EntitySystem.Get<TriggerSystem>().Explode(entity.Uid, explosive);
             }
             else
             {

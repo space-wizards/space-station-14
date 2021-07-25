@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
@@ -126,9 +125,13 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            var entityManager = IoCManager.Resolve<IServerEntityManager>();
+            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager))
+            {
+                eventArgs.User.PopupMessage(Loc.GetString("crayon-interact-invalid-location"));
+                return true;
+            }
 
-            var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
+            var entity = Owner.EntityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);

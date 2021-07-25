@@ -1,26 +1,26 @@
 ﻿<SS14Window Title="Make Ghost Role"
             xmlns="https://spacestation14.io">
 
-    <VBoxContainer>
-        <HBoxContainer>
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
             <Label Name="RoleEntityLabel" Text="Entity" />
             <Label Name="RoleEntity" Text="" />
-        </HBoxContainer>
-        <HBoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Label Name="RoleNameLabel" Text="Role Name" />
             <LineEdit Name="RoleName" HorizontalExpand="True" />
-        </HBoxContainer>
-        <HBoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Label Name="RoleDescriptionLabel" Text="Role Description" />
             <LineEdit Name="RoleDescription" HorizontalExpand="True" />
-        </HBoxContainer>
-        <HBoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Label Name="MakeSentientLabel" Text="Make Sentient" />
             <CheckBox Name="MakeSentientCheckbox" />
-        </HBoxContainer>
-        <HBoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Button Name="MakeButton" Text="Make" />
-        </HBoxContainer>
-    </VBoxContainer>
+        </BoxContainer>
+    </BoxContainer>
 
 </SS14Window>

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -6,7 +5,6 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-#nullable enable
 
 namespace Content.Shared.Interaction
 {

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -231,7 +230,7 @@ namespace Content.Server.Kitchen.Components
 
             if (_broken)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's broken!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-broken"));
                 return false;
             }
 

@@ -14,7 +14,7 @@
   - type: SolutionContainer
     maxVol: 10
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 10
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -313,7 +313,7 @@
   - type: SolutionContainer
     maxVol: 30
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 30
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -448,7 +448,7 @@
   - type: SolutionContainer
     maxVol: 15
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 15
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Coordinates.Helpers;

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;

@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Atmos.GasTank
 {
@@ -18,7 +19,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
     {
         private GasTankBoundUserInterface _owner;
         private readonly Label _lblName;
-        private readonly VBoxContainer _topContainer;
+        private readonly BoxContainer _topContainer;
         private readonly Control _contentContainer;
 
 
@@ -68,11 +69,15 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             LayoutContainer.SetGrowHorizontal(bottomWrap, LayoutContainer.GrowDirection.Both);
 
 
-            var topContainerWrap = new VBoxContainer
+            var topContainerWrap = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    (_topContainer = new VBoxContainer()),
+                    (_topContainer = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }),
                     new Control {MinSize = (0, 110)}
                 }
             };
@@ -83,8 +88,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
-            var topRow = new HBoxContainer
+            var topRow = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
@@ -111,8 +117,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
                 Children =
                 {
-                    (_contentContainer = new VBoxContainer
+                    (_contentContainer = new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(8, 4),
                     })
                 }
@@ -141,8 +148,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             _btnInternals = new Button {Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
 
             _contentContainer.AddChild(
-                new HBoxContainer
+                new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Margin = new Thickness(0, 7, 0, 0),
                     Children = {_lblInternals, _btnInternals}
                 });

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Act;
 using Content.Server.Interaction;
 using Content.Server.Notification;

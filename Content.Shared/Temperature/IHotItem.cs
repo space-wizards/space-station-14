@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Shared.Analyzers;
+﻿using Robust.Shared.Analyzers;
 
 namespace Content.Shared.Temperature
 {

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -7,7 +6,6 @@ using Content.Server.WireHacking;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Sound;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;

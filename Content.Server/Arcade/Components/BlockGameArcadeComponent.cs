@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +6,6 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Arcade;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -25,7 +22,6 @@ namespace Content.Server.Arcade.Components
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "BlockGameArcade";
-        public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
 
         [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
 

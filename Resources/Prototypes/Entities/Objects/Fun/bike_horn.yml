@@ -15,7 +15,7 @@
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound: 
-      path: /Audio/Items/bikehorn.ogg
+      collection: BikeHorn
     semitoneVariation: 6
   - type: UseDelay
     delay: 0.5

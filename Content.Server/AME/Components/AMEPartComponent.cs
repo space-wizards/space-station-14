@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;

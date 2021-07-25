@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Shared.Analyzers;
+﻿using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Radiation

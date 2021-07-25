@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Directions;

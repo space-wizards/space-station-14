@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Threading;
 using Content.Server.Power.Components;

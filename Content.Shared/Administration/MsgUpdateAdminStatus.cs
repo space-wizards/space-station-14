@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Lidgren.Network;
 using Robust.Shared.Network;
 

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Other.Components;
 using Content.Shared.Atmos;
@@ -20,7 +21,9 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
         private void OnMinerUpdated(EntityUid uid, GasMinerComponent miner, AtmosDeviceUpdateEvent args)
         {
-            if (!CheckMinerOperation(args.Atmosphere, miner, out var tile) || !miner.Enabled || !miner.SpawnGas.HasValue || miner.SpawnAmount <= 0f)
+            var atmosphereSystem = Get<AtmosphereSystem>();
+
+            if (!CheckMinerOperation(atmosphereSystem, miner, out var environment) || !miner.Enabled || !miner.SpawnGas.HasValue || miner.SpawnAmount <= 0f)
                 return;
 
             // Time to mine some gas.
@@ -28,22 +31,22 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
             merger.SetMoles(miner.SpawnGas.Value, miner.SpawnAmount);
 
-            tile.AssumeAir(merger);
+            atmosphereSystem.Merge(environment, merger);
         }
 
-        private bool CheckMinerOperation(IGridAtmosphereComponent atmosphere, GasMinerComponent miner, [NotNullWhen(true)] out TileAtmosphere? tile)
+        private bool CheckMinerOperation(AtmosphereSystem atmosphereSystem, GasMinerComponent miner, [NotNullWhen(true)] out GasMixture? environment)
         {
-            tile = atmosphere.GetTile(miner.Owner.Transform.Coordinates)!;
+            environment = atmosphereSystem.GetTileMixture(miner.Owner.Transform.Coordinates, true);
 
             // Space.
-            if (atmosphere.IsSpace(tile.GridIndices))
+            if (atmosphereSystem.IsTileSpace(miner.Owner.Transform.Coordinates))
             {
                 miner.Broken = true;
                 return false;
             }
 
-            // Airblocked location.
-            if (tile.Air == null)
+            // Air-blocked location.
+            if (environment == null)
             {
                 miner.Broken = true;
                 return false;
@@ -51,14 +54,14 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
             // External pressure above threshold.
             if (!float.IsInfinity(miner.MaxExternalPressure) &&
-                tile.Air.Pressure > miner.MaxExternalPressure - miner.SpawnAmount * miner.SpawnTemperature * Atmospherics.R / tile.Air.Volume)
+                environment.Pressure > miner.MaxExternalPressure - miner.SpawnAmount * miner.SpawnTemperature * Atmospherics.R / environment.Volume)
             {
                 miner.Broken = true;
                 return false;
             }
 
             // External gas amount above threshold.
-            if (!float.IsInfinity(miner.MaxExternalAmount) && tile.Air.TotalMoles > miner.MaxExternalAmount)
+            if (!float.IsInfinity(miner.MaxExternalAmount) && environment.TotalMoles > miner.MaxExternalAmount)
             {
                 miner.Broken = true;
                 return false;

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;

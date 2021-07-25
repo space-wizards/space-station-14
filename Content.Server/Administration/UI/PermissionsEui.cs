@@ -14,7 +14,6 @@ using Robust.Shared.Network;
 using DbAdminRank = Content.Server.Database.AdminRank;
 using static Content.Shared.Administration.PermissionsEuiMsg;
 
-#nullable enable
 
 namespace Content.Server.Administration.UI
 {
