@@ -1571,3 +1571,9 @@ Entries:
   - {message: Add server cvar for whether pushing is enabled., type: Add}
   id: 279
   time: '2021-07-25T06:58:11.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: botanical belt for gardening tools, type: Add}
+  - {message: add mapped storage sprites for lots of belts and other stuff, type: Add}
+  id: 280
+  time: '2021-07-25T07:21:18.0000000+00:00'
