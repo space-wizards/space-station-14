@@ -291,7 +291,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AtmosGridImpulse =
             CVarDef.Create("atmos.grid_impulse", false, CVar.SERVERONLY);
 
-
         /// <summary>
         ///     Whether atmos superconduction is enabled.
         /// </summary>
@@ -300,9 +299,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether excited groups will be processed and created.
+        /// </summary>
+        public static readonly CVarDef<bool> ExcitedGroups =
+            CVarDef.Create("atmos.excited_groups", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether all tiles in an excited group will clear themselves once being exposed to space.
         ///     Similar to <see cref="MonstermosDepressurization"/>, without none of the tile ripping or
         ///     things being thrown around very violently.
+        ///     Needs <see cref="ExcitedGroups"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
             CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);

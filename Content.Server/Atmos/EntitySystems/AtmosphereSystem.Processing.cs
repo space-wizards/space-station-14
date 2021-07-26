@@ -281,7 +281,8 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.ExcitedGroups;
+                        // Next state depends on whether excited groups are enabled or not.
+                        atmosphere.State = ExcitedGroups ? AtmosphereProcessingState.ExcitedGroups : AtmosphereProcessingState.HighPressureDelta;
                         continue;
                     case AtmosphereProcessingState.ExcitedGroups:
                         if (!ProcessExcitedGroups(atmosphere))
