@@ -1,0 +1,21 @@
+{
+    "name":1,
+    "size": {"x":32,"y":32},
+    "states":
+    [
+        {"name":"assembly2","directions":4,"delays":[[0.3,0.3],[0.3,0.3],[0.3,0.3],[0.3,0.3]]},
+        {"name":"assembly1","directions":4},
+        {"name":"closed","directions":4},
+        {"name":"closing","directions":4,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1]]},
+        {"name":"open","directions":4},
+        {"name":"opening","directions":4,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1]]},
+        {"name":"deny_unlit","directions":4,"delays":[[0.1,0.2,0.1],[0.1,0.2,0.1],[0.1,0.2,0.1],[0.1,0.2,0.1]]},
+        {"name":"spark","directions":4,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1]]},
+        {"name":"closed_unlit","directions":4},
+        {"name":"panel_open","directions":4},
+        {"name":"welded","directions":4},
+        {"name":"bolted_unlit","directions":4}
+    ],
+    "license":"CC BY-SA-3.0",
+    "copyright":"https://github.com/tgstation/tgstation/blob/3681006d7102045e334e8eddb23a8685fcdb258a/icons/obj/doors/windoor.dmi"
+}

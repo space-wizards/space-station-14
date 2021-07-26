@@ -1,45 +1,11 @@
 ﻿- type: entity
-  id: WindoorLeft
+  id: Windoor
   parent: BaseWindoor
   name: windoor
   description: It's a window and a sliding door. Wow!
-  suffix: Left
-  components:
-  - type: Sprite
-    state: left
 
 - type: entity
-  id: WindoorRight
-  parent: BaseWindoor
-  name: windoor
-  description: It's a window and a sliding door. Wow! This one is flipped 180 degrees.
-  suffix: Right
-  components:
-  - type: Sprite
-    state: right
-
-- type: entity
-  id: WindoorLeftSecure
+  id: WindoorSecure
   parent: BaseSecureWindoor
   name: secure windoor
   description: It's a sturdy window and a sliding door. Wow!
-  suffix: Left
-  components:
-  - type: Sprite
-    netsync: false
-    drawdepth: Mobs
-    sprite: Structures/Doors/windoor.rsi
-    state: left_secure
-
-- type: entity
-  id: WindoorRightSecure
-  parent: BaseSecureWindoor
-  name: secure windoor
-  description: It's a sturdy window and a sliding door. Wow! This one is flipped 180 degrees.
-  suffix: Right
-  components:
-  - type: Sprite
-    netsync: false
-    drawdepth: Mobs
-    sprite: Structures/Doors/windoor.rsi
-    state: right_secure
