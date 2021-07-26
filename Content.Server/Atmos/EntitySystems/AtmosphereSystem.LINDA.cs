@@ -16,9 +16,6 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (tile.ArchivedCycle < fireCount)
-                Archive(tile, fireCount);
-
             tile.CurrentCycle = fireCount;
             var adjacentTileLength = 0;
 
@@ -38,7 +35,6 @@ namespace Content.Server.Atmos.EntitySystems
                 // If the tile is null or has no air, we don't do anything for it.
                 if(enemyTile?.Air == null) continue;
                 if (fireCount <= enemyTile.CurrentCycle) continue;
-                Archive(enemyTile, fireCount);
 
                 var shouldShareAir = false;
 
@@ -108,13 +104,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             if(tile.ExcitedGroup == null && remove)
                 RemoveActiveTile(gridAtmosphere, tile);
-        }
-
-        private void Archive(TileAtmosphere tile, int fireCount)
-        {
-            tile.Air?.Archive();
-            tile.ArchivedCycle = fireCount;
-            tile.TemperatureArchived = tile.Temperature;
         }
 
         private void LastShareCheck(TileAtmosphere tile)
