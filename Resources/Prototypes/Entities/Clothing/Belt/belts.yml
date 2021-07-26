@@ -98,7 +98,7 @@
         - Flash
         - Radio
         - Handcuff
-        - Powercell
+        - PowerCell
   - type: ItemCounter
     mapLayers:
       drill:
