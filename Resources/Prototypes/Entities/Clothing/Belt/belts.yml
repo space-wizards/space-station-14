@@ -31,7 +31,7 @@
         - RCDAmmo
         - Welder
         - Radio
-        - Powercell
+        - PowerCell
   - type: ItemCounter
     mapLayers:
       cutters_red:
