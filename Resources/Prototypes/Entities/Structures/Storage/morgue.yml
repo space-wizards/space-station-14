@@ -54,6 +54,18 @@
   name: morgue tray
   description: If you lay down to have a rest on this, you'll soon have a problem.
   components:
+  - type: Physics
+    bodyType: Static
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+        mass: 25
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/morgue.rsi
