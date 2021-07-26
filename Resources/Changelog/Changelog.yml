@@ -1603,3 +1603,8 @@ Entries:
   - {message: Added Storage Room to Coats, type: Add}
   id: 285
   time: '2021-07-26T05:36:27.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added a hardsuit into research directors locker, type: Add}
+  id: 286
+  time: '2021-07-26T22:14:10.0000000+00:00'
