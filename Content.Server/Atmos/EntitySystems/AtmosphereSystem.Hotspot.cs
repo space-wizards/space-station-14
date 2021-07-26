@@ -140,7 +140,7 @@ namespace Content.Server.Atmos.EntitySystems
                 Merge(tile.Air, affected);
             }
 
-            var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
+            var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex, _mapManager);
 
             foreach (var entity in tileRef.GetEntitiesInTileFast())
             {
