@@ -17,6 +17,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, DoorClickShouldActivateEvent>(OnDoorClickShouldActivate);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorPryEvent>(OnBeforeDoorPry);
+            SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
         }
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
@@ -59,5 +60,10 @@ namespace Content.Server.Doors.Systems
             }
         }
 
+        private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
+        {
+            // Firelocks can't autoclose, they must be manually closed
+            args.Cancel();
+        }
     }
 }
