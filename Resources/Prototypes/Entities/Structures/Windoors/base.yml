@@ -6,15 +6,6 @@
     mode: SnapgridCenter
   components:
   - type: InteractionOutline
-  - type: Airlock
-  - type: Door
-  - type: Wires
-    BoardName: "Windoor Control"
-    LayoutId: Airlock
-  - type: UserInterface
-    interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
   - type: Physics
     fixtures:
     - shape:
@@ -61,11 +52,21 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: AccessReader
+  - type: Airlock
+  - type: Door
+  - type: Wires
+    BoardName: "Windoor Control"
+    LayoutId: Airlock
+  - type: UserInterface
+    interfaces:
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
   - type: Appearance
     visuals:
       - type: AirlockVisualizer
-        open_sound: /Audio/Machines/airlock_open.ogg
-        close_sound: /Audio/Machines/airlock_close.ogg
+        open_sound: /Audio/Machines/windoor_open.ogg
+        close_sound: /Audio/Machines/windoor_open.ogg
         deny_sound: /Audio/Machines/airlock_deny.ogg
         hasMaintenancePanel: false
         openCloseUnlit: false

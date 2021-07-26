@@ -9,3 +9,39 @@
   parent: BaseSecureWindoor
   name: secure windoor
   description: It's a sturdy window and a sliding door. Wow!
+
+# Bar windoor
+- type: entity
+  parent: Windoor
+  id: WindoorBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+# Chemistry windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorMedicalLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+# HOP's office windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+# Cargo windoor
+- type: entity
+  parent: Windoor
+  id: WindoorCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
