@@ -19,6 +19,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -26,6 +27,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     [UsedImplicitly]
     public class GasCanisterSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -131,23 +134,21 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(canister.PortName, out PortablePipeNode? portNode))
                 return;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-
-            atmosphereSystem.React(canister.Air, portNode);
+            _atmosphereSystem.React(canister.Air, portNode);
 
             if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
             {
                 var buffer = new GasMixture(net.Air.Volume + canister.Air.Volume);
 
-                atmosphereSystem.Merge(buffer, net.Air);
-                atmosphereSystem.Merge(buffer, canister.Air);
+                _atmosphereSystem.Merge(buffer, net.Air);
+                _atmosphereSystem.Merge(buffer, canister.Air);
 
                 net.Air.Clear();
-                atmosphereSystem.Merge(net.Air, buffer);
+                _atmosphereSystem.Merge(net.Air, buffer);
                 net.Air.Multiply(net.Air.Volume / buffer.Volume);
 
                 canister.Air.Clear();
-                atmosphereSystem.Merge(canister.Air, buffer);
+                _atmosphereSystem.Merge(canister.Air, buffer);
                 canister.Air.Multiply(canister.Air.Volume / buffer.Volume);
             }
 
@@ -161,12 +162,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (container.ContainedEntities.Count > 0)
                 {
                     var gasTank = container.ContainedEntities[0].GetComponent<GasTankComponent>();
-                    atmosphereSystem.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
+                    _atmosphereSystem.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
                 }
                 else
                 {
-                    var environment = atmosphereSystem.GetTileMixture(canister.Owner.Transform.Coordinates, true);
-                    atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
+                    var environment = _atmosphereSystem.GetTileMixture(canister.Owner.Transform.Coordinates, true);
+                    _atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
                 }
             }
 

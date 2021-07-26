@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -16,6 +17,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     [UsedImplicitly]
     public class GasVentScrubberSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -45,17 +48,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
                 return;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-            var environment = atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
 
-            Scrub(atmosphereSystem, scrubber, appearance, environment, outlet);
+            Scrub(_atmosphereSystem, scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
             {
-                Scrub(atmosphereSystem, scrubber, null, adjacent, outlet);
+                Scrub(_atmosphereSystem, scrubber, null, adjacent, outlet);
             }
         }
 

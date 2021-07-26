@@ -21,6 +21,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>
         ///     Players allowed to see the atmos debug overlay.
@@ -127,7 +128,6 @@ namespace Content.Server.Atmos.EntitySystems
             AccumulatedFrameTime -= _updateCooldown;
 
             var currentTick = _gameTiming.CurTick;
-            var atmosphereSystem = Get<AtmosphereSystem>();
 
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
@@ -157,7 +157,7 @@ namespace Content.Server.Atmos.EntitySystems
                         for (var x = 0; x < LocalViewRange; x++)
                         {
                             var Vector2i = new Vector2i(baseTile.X + x, baseTile.Y + y);
-                            debugOverlayContent[index++] = ConvertTileToData(atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, gam, Vector2i));
+                            debugOverlayContent[index++] = ConvertTileToData(_atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, gam, Vector2i));
                         }
                     }
 
