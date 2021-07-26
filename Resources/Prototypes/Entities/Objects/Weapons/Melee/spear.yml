@@ -4,6 +4,9 @@
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: Tag
+    tags:
+    - Spear
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
