@@ -50,7 +50,7 @@
   name: pest spray
   id: PestSpray
   parent: WeedSpray
-  description: Objects/Tools/Hydroponics/sprays.rsi
+  description: It's some pest eliminator spray! Do not inhale!
   suffix: "Filled"
   components:
   - type: Sprite
