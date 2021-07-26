@@ -1,16 +1,14 @@
 using System;
 using System.Linq;
-using System.Text;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-
-#nullable enable
 
 namespace Content.Server.Voting
 {
@@ -29,28 +27,21 @@ namespace Content.Server.Voting
                 return;
             }
 
-            var type = args[0];
+            if (!Enum.TryParse<StandardVoteType>(args[0], ignoreCase: true, out var type))
+            {
+                shell.WriteError(Loc.GetString("create-vote-command-invalid-vote-type"));
+                return;
+            }
 
             var mgr = IoCManager.Resolve<IVoteManager>();
 
-            if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player))
+            if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player, type))
             {
                 shell.WriteError(Loc.GetString("create-vote-command-cannot-call-vote-now"));
                 return;
             }
 
-            switch (type)
-            {
-                case "restart":
-                    mgr.CreateRestartVote((IPlayerSession?) shell.Player);
-                    break;
-                case "preset":
-                    mgr.CreatePresetVote((IPlayerSession?) shell.Player);
-                    break;
-                default:
-                    shell.WriteError(Loc.GetString("create-vote-command-invalid-vote-type"));
-                    break;
-            }
+            mgr.CreateStandardVote((IPlayerSession?) shell.Player, type);
         }
     }
 

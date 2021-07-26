@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.Hands;
 using Content.Shared.Item;
 using Robust.Shared.Containers;

@@ -4,9 +4,6 @@
   id: SimpleMobBase
   suffix: AI
   components:
-  - type: Tag
-    tags:
-    - Teleportable
   - type: Reactive
     reactions:
       - !type:ExtinguishReaction

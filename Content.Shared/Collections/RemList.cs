@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-#nullable enable
 
 namespace Content.Shared.Collections
 {

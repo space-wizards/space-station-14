@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.ActionBlocker;
+﻿using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.State

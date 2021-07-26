@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
@@ -149,7 +148,7 @@ namespace Content.Server.Body.Behavior
                 return;
             }
 
-            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
+            if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates, true) is not {} tileAir)
             {
                 return;
             }
@@ -167,7 +166,7 @@ namespace Content.Server.Body.Behavior
 
         public void Exhale(float frameTime)
         {
-            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
+            if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates, true) is not {} tileAir)
             {
                 return;
             }

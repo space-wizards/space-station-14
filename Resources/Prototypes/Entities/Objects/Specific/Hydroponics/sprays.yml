@@ -5,6 +5,9 @@
   description: Kills those pesky weeds!
   suffix: "Filled"
   components:
+  - type: Tag
+    tags:
+    - PlantBGone
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: plantbgone

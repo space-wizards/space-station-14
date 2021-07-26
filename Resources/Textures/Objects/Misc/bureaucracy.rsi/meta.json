@@ -296,6 +296,10 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "clipboard-equipped-BELT",
+      "directions": 4
     }
   ]
 }

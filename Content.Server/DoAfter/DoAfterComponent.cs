@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Robust.Shared.GameObjects;

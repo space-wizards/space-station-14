@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;

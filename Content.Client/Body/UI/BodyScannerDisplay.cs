@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.Body.UI
@@ -25,8 +26,9 @@ namespace Content.Client.Body.UI
             Owner = owner;
             Title = Loc.GetString("body-scanner-display-title");
 
-            var hSplit = new HBoxContainer
+            var hSplit = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     // Left half
@@ -39,20 +41,23 @@ namespace Content.Client.Body.UI
                         }
                     },
                     // Right half
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         HorizontalExpand = true,
                         Children =
                         {
                             // Top half of the right half
-                            new VBoxContainer
+                            new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 VerticalExpand = true,
                                 Children =
                                 {
                                     (BodyPartLabel = new Label()),
-                                    new HBoxContainer
+                                    new BoxContainer
                                     {
+                                        Orientation = LayoutOrientation.Horizontal,
                                         Children =
                                         {
                                             new Label

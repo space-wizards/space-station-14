@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.CombatMode;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Notification;

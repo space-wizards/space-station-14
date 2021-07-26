@@ -2,6 +2,7 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Paper.UI
 {
@@ -13,7 +14,10 @@ namespace Content.Client.Paper.UI
         public PaperWindow()
         {
             MinSize = SetSize = (300, 300);
-            var container = new VBoxContainer();
+            var container = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             _label = new RichTextLabel();
             Input = new LineEdit {Visible = false};
             container.AddChild(_label);

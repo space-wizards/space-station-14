@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Communications.UI
@@ -42,7 +43,12 @@ namespace Content.Client.Communications.UI
             EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
             EmergencyShuttleButton.Disabled = !owner.CanCall;
 
-            var vbox = new VBoxContainer() {HorizontalExpand = true, VerticalExpand = true};
+            var vbox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                HorizontalExpand = true,
+                VerticalExpand = true
+            };
             vbox.AddChild(_messageInput);
             vbox.AddChild(new Control(){MinSize = new Vector2(0,10), HorizontalExpand = true});
             vbox.AddChild(AnnounceButton);
@@ -50,7 +56,12 @@ namespace Content.Client.Communications.UI
             vbox.AddChild(_countdownLabel);
             vbox.AddChild(EmergencyShuttleButton);
 
-            var hbox = new HBoxContainer() {HorizontalExpand = true, VerticalExpand = true};
+            var hbox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                VerticalExpand = true
+            };
             hbox.AddChild(new Control(){MinSize = new Vector2(100,0), HorizontalExpand = true});
             hbox.AddChild(vbox);
             hbox.AddChild(new Control(){MinSize = new Vector2(100,0), HorizontalExpand = true});

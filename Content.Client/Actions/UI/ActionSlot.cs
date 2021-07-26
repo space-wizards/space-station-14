@@ -16,6 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
 {
@@ -174,8 +175,9 @@ namespace Content.Client.Actions.UI
             _cooldownGraphic = new CooldownGraphic {Progress = 0, Visible = false};
 
             // padding to the left of the number to shift it right
-            var paddingBox = new HBoxContainer()
+            var paddingBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 MinSize = (64, 64)
@@ -187,8 +189,9 @@ namespace Content.Client.Actions.UI
             paddingBox.AddChild(_number);
 
             // padding to the left of the small icon
-            var paddingBoxItemIcon = new HBoxContainer()
+            var paddingBoxItemIcon = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 MinSize = (64, 64)

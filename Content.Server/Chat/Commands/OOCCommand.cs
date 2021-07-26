@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Robust.Server.Player;

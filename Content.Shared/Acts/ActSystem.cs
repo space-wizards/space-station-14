@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -18,7 +17,7 @@ namespace Content.Shared.Acts
         void OnDestroy(DestructionEventArgs eventArgs);
     }
 
-    public class DestructionEventArgs : EventArgs
+    public class DestructionEventArgs : EntityEventArgs
     {
         public IEntity Owner { get; set; } = default!;
     }

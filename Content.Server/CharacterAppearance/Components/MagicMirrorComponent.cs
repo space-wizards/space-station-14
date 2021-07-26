@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.UserInterface;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;

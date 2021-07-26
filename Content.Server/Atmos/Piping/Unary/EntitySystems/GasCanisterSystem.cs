@@ -165,9 +165,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
                 else
                 {
-                    var tileAtmosphere = canister.Owner.Transform.Coordinates.GetTileAtmosphere();
-                    atmosphereSystem.ReleaseGasTo(canister.Air, tileAtmosphere?.Air, canister.ReleasePressure);
-                    tileAtmosphere?.Invalidate();
+                    var environment = atmosphereSystem.GetTileMixture(canister.Owner.Transform.Coordinates, true);
+                    atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
                 }
             }
 

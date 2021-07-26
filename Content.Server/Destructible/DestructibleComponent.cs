@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Destructible.Thresholds;
 using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
