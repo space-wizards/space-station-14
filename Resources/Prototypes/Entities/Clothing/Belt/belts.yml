@@ -453,7 +453,10 @@
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
   - type: Storage
-    capacity: 40
+    capacity: 60
+    whitelist:
+      tags:
+        - ShotgunShell
 
 - type: entity
   parent: ClothingBeltBase

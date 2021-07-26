@@ -167,6 +167,9 @@
   id: Sheet
 
 - type: Tag
+  id: ShotgunShell
+
+- type: Tag
   id: Shovel
 
 - type: Tag

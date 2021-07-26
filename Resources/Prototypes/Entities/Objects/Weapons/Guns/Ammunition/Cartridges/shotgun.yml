@@ -4,6 +4,9 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - ShotgunShell
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40
