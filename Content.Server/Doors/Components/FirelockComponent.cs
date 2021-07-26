@@ -12,7 +12,8 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Doors.Components
 {
     /// <summary>
-    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying, and not being openable on open-hand click.
+    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying,
+    /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
     public class FirelockComponent : Component
