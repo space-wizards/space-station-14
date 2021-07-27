@@ -27,8 +27,9 @@ namespace Content.Client.Hands
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(SetupGui);
-            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(ClearGui);
+            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
+            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
+            SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
             SubscribeLocalEvent<HandsModifiedMessage>(HandleHandsModified);
 
             SubscribeNetworkEvent<PickupAnimationMessage>(HandlePickupAnimation);
@@ -64,8 +65,8 @@ namespace Content.Client.Hands
             if (player == null || !player.TryGetComponent(out HandsComponent? hands))
                 return new HandsGuiState(Array.Empty<GuiHand>());
 
-            var states = hands.ReadOnlyHands
-                .Select(hand => new GuiHand(hand.Name, hand.Location, hand.HeldEntity, hand.Enabled))
+            var states = hands.Hands
+                .Select(hand => new GuiHand(hand.Name, hand.Location, hand.HeldEntity))
                 .ToArray();
 
             return new HandsGuiState(states, hands.ActiveHand);
@@ -116,16 +117,26 @@ namespace Content.Client.Hands
             RaiseNetworkEvent (new ActivateInHandMsg(handName));
         }
 
-        private void SetupGui(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
+        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
             component.Gui = new HandsGui(component, this);
             _gameHud.HandsContainer.AddChild(component.Gui);
         }
 
-        private static void ClearGui(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
+        private static void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
         {
-            component.Gui?.Orphan();
-            component.Gui = null;
+            ClearGui(component);
+        }
+
+        private static void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
+        {
+            ClearGui(component);
+        }
+
+        private static void ClearGui(HandsComponent comp)
+        {
+            comp.Gui?.Orphan();
+            comp.Gui = null;
         }
     }
 }

@@ -13,6 +13,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -22,6 +23,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Utility;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Hands
@@ -42,6 +44,10 @@ namespace Content.Server.Hands
             SubscribeNetworkEvent<UseInHandMsg>(HandleUseInHand);
             SubscribeNetworkEvent<MoveItemFromHandMsg>(HandleMoveItemFromHand);
 
+            SubscribeLocalEvent<HandsComponent, PullAttemptMessage>(HandlePullAttempt);
+            SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
+            SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -50,6 +56,48 @@ namespace Content.Server.Hands
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false))
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
                 .Register<HandsSystem>();
+        }
+
+        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptMessage args)
+        {
+            // Cancel pull if all hands full.
+            if (component.Hands.All(hand => !hand.IsEmpty))
+                args.Cancelled = true;
+        }
+
+        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
+        {
+            foreach (var handName in component.ActivePriorityEnumerable())
+            {
+                var hand = component.GetHand(handName);
+                if (!hand.IsEmpty)
+                    continue;
+
+                var pos = component.Owner.Transform.Coordinates;
+                var virtualPull = EntityManager.SpawnEntity("HandVirtualPull", pos);
+                var virtualPullComp = virtualPull.GetComponent<HandVirtualPullComponent>();
+                virtualPullComp.PulledEntity = args.Pulled.Owner.Uid;
+                component.PutEntityIntoHand(hand, virtualPull);
+                return;
+            }
+
+            DebugTools.Assert("Unable to find available hand when starting pulling??");
+        }
+
+        private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
+        {
+            // Try find hand that is doing this pull.
+            // and clear it.
+            foreach (var hand in component.Hands)
+            {
+                if (hand.HeldEntity == null
+                    || !hand.HeldEntity.TryGetComponent(out HandVirtualPullComponent? virtualPull)
+                    || virtualPull.PulledEntity != args.Pulled.Owner.Uid)
+                    continue;
+
+                hand.HeldEntity.Delete();
+                break;
+            }
         }
 
         private void SwapHandsPressed(ICommonSession? session)

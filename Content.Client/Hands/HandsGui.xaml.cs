@@ -96,8 +96,6 @@ namespace Content.Client.Hands
                 newButton.OnPressed += args => OnHandPressed(args, handName);
                 newButton.OnStoragePressed += _ => OnStoragePressed(handName);
 
-                newButton.Blocked.Visible = !hand.Enabled;
-
                 _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
             }
 
@@ -256,18 +254,11 @@ namespace Content.Client.Hands
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
-        /// <summary>
-        ///     If this hand can be used by the player.
-        /// </summary>
-        [ViewVariables]
-        public bool Enabled { get; }
-
-        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem, bool enabled)
+        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
         {
             Name = name;
             HandLocation = handLocation;
             HeldItem = heldItem;
-            Enabled = enabled;
         }
     }
 }

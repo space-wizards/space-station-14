@@ -11,7 +11,6 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
 using Content.Shared.Notification.Managers;
-using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -33,24 +32,6 @@ namespace Content.Server.Hands.Components
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case PullAttemptMessage msg:
-                    AttemptPull(msg);
-                    break;
-                case PullStartedMessage:
-                    StartPulling();
-                    break;
-                case PullStoppedMessage:
-                    StopPulling();
-                    break;
-            }
-        }
 
         protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
         {
@@ -189,41 +170,13 @@ namespace Content.Server.Hands.Components
             return pullable.TryStopPull();
         }
 
-        private void AttemptPull(PullAttemptMessage msg)
-        {
-            if (!ReadOnlyHands.Any(hand => hand.Enabled))
-            {
-                msg.Cancelled = true;
-            }
-        }
-
-        private void StartPulling()
-        {
-            var firstFreeHand = Hands.FirstOrDefault(hand => hand.Enabled);
-
-            if (firstFreeHand == null)
-                return;
-
-            DisableHand(firstFreeHand);
-        }
-
-        private void StopPulling()
-        {
-            var firstOccupiedHand = Hands.FirstOrDefault(hand => !hand.Enabled);
-
-            if (firstOccupiedHand == null)
-                return;
-
-            EnableHand(firstOccupiedHand);
-        }
-
         #endregion
 
         #region Old public methods
 
-        public IEnumerable<string> HandNames => ReadOnlyHands.Select(h => h.Name);
+        public IEnumerable<string> HandNames => Hands.Select(h => h.Name);
 
-        public int Count => ReadOnlyHands.Count;
+        public int Count => Hands.Count;
 
         /// <summary>
         ///     Returns a list of all hand names, with the active hand being first.
@@ -233,9 +186,9 @@ namespace Content.Server.Hands.Components
             if (ActiveHand != null)
                 yield return ActiveHand;
 
-            foreach (var hand in ReadOnlyHands)
+            foreach (var hand in Hands)
             {
-                if (hand.Name == ActiveHand || !hand.Enabled)
+                if (hand.Name == ActiveHand)
                     continue;
 
                 yield return hand.Name;

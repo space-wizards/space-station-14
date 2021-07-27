@@ -22,7 +22,7 @@ namespace Content.Client.Hands
 
             foreach (var handState in state.Hands)
             {
-                var newHand = new Hand(handState.Name, handState.Enabled, handState.Location);
+                var newHand = new Hand(handState.Name, handState.Location);
                 Hands.Add(newHand);
             }
 
@@ -65,7 +65,7 @@ namespace Content.Client.Hands
         private HandsVisualState GetHandsVisualState()
         {
             var hands = new List<HandVisualState>();
-            foreach (var hand in ReadOnlyHands)
+            foreach (var hand in Hands)
             {
                 if (hand.HeldEntity == null)
                     continue;
