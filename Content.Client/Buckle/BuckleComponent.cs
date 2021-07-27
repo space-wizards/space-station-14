@@ -13,7 +13,7 @@ namespace Content.Client.Buckle
 
         public override bool Buckled => _buckled;
 
-        public override bool TryBuckle(IEntity? user, IEntity to, bool check_range, float? range)
+        public override bool TryBuckle(IEntity? user, IEntity to, bool checkRange, float? range)
         {
             // TODO: Prediction
             return false;

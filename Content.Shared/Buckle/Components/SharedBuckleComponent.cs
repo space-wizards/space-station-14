@@ -33,7 +33,7 @@ namespace Content.Shared.Buckle.Components
 
         public bool DontCollide { get; set; }
 
-        public abstract bool TryBuckle(IEntity? user, IEntity to, bool check_range = true, float? range = null);
+        public abstract bool TryBuckle(IEntity? user, IEntity to, bool checkRange = true, float? range = null);
 
         bool IEffectBlocker.CanFall() => !Buckled;
 

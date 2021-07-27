@@ -240,9 +240,9 @@ namespace Content.Server.Buckle.Components
             return true;
         }
 
-        public override bool TryBuckle(IEntity? user, IEntity to, bool check_range = true, float? range = null)
+        public override bool TryBuckle(IEntity? user, IEntity to, bool checkRange = true, float? range = null)
         {
-            if (user == null || !CanBuckle(user, to, out var strap, check_range, range))
+            if (user == null || !CanBuckle(user, to, out var strap, checkRange, range))
             {
                 return false;
             }
@@ -317,15 +317,15 @@ namespace Content.Server.Buckle.Components
 
             if (!force)
             {
-                // Send message to entity to which mob is buckled to
-                var unbuckleAttemptMsg = new UnbuckleAttemptEvent(user, Owner);
-                Owner.EntityManager.EventBus.RaiseLocalEvent(BuckledTo.Owner.Uid, unbuckleAttemptMsg);
-                if (unbuckleAttemptMsg.Cancelled) return false;
-
                 if (_gameTiming.CurTime < _buckleTime + _unbuckleDelay)
                 {
                     return false;
                 }
+
+                // Send message to entity to which mob is buckled to
+                var unbuckleAttemptMsg = new UnbuckleAttemptEvent(user, Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(BuckledTo.Owner.Uid, unbuckleAttemptMsg);
+                if (unbuckleAttemptMsg.Cancelled) return false;
 
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
