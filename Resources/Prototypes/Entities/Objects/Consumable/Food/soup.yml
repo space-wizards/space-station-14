@@ -5,7 +5,6 @@
   components:
   - type: Food
     trash: FoodBowlBig
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 20
     contents:

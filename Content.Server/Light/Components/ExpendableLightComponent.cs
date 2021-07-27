@@ -20,8 +20,6 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
     {
-        private static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, true, 0.3f);
-
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
@@ -77,18 +75,20 @@ namespace Content.Server.Light.Components
 
         private void UpdateVisualizer()
         {
+            _appearance?.SetData(ExpendableLightVisuals.State, CurrentState);
+
             switch (CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    _appearance?.SetData(ExpendableLightVisuals.State, TurnOnBehaviourID);
+                    _appearance?.SetData(ExpendableLightVisuals.Behavior, TurnOnBehaviourID);
                     break;
 
                 case ExpendableLightState.Fading:
-                    _appearance?.SetData(ExpendableLightVisuals.State, FadeOutBehaviourID);
+                    _appearance?.SetData(ExpendableLightVisuals.Behavior, FadeOutBehaviourID);
                     break;
 
                 case ExpendableLightState.Dead:
-                    _appearance?.SetData(ExpendableLightVisuals.State, string.Empty);
+                    _appearance?.SetData(ExpendableLightVisuals.Behavior, string.Empty);
                     break;
             }
         }
@@ -100,12 +100,6 @@ namespace Content.Server.Light.Components
                 switch (CurrentState)
                 {
                     case ExpendableLightState.Lit:
-
-                        if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopingSound))
-                        {
-                            loopingSound.Play(LoopedSound, LoopedSoundParams);
-                        }
-
                         if (LitSound != string.Empty)
                         {
                             SoundSystem.Play(Filter.Pvs(Owner), LitSound, Owner);
@@ -129,11 +123,6 @@ namespace Content.Server.Light.Components
                         if (DieSound != string.Empty)
                         {
                             SoundSystem.Play(Filter.Pvs(Owner), DieSound, Owner);
-                        }
-
-                        if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopSound))
-                        {
-                            loopSound.StopAllSounds();
                         }
 
                         sprite.LayerSetState(0, IconStateSpent);

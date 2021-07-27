@@ -5,7 +5,7 @@
   id: BasePlushie
   components:
   - type: EmitSoundOnUse
-    sound: 
+    sound:
       collection: ToySqueak
   - type: EmitSoundOnLand
     sound:
@@ -13,7 +13,6 @@
   - type: EmitSoundOnActivate
     sound:
       collection: ToySqueak
-  - type: LoopingSound
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -91,7 +90,6 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_snake
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
@@ -108,7 +106,6 @@
     sprite: Objects/Fun/toys.rsi
     state: toy_mouse
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
@@ -125,7 +122,6 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_vox
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
@@ -151,7 +147,6 @@
     sound:
       path: /Audio/Items/Toys/helpme.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/helpme.ogg
@@ -170,12 +165,11 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: 
+    sound:
       path: /Audio/Items/Toys/hellothere.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: 
+    sound:
       path: /Audio/Items/Toys/hellothere.ogg
   - type: UseDelay
     delay: 1.0
@@ -195,9 +189,8 @@
     sound:
       path: /Audio/Items/Toys/thankyou.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: 
+    sound:
       path: /Audio/Items/Toys/thankyou.ogg
   - type: UseDelay
     delay: 1.0
@@ -214,12 +207,11 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: 
+    sound:
       path: /Audio/Items/Toys/verygood.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: 
+    sound:
       path: /Audio/Items/Toys/verygood.ogg
   - type: UseDelay
     delay: 1.0
@@ -239,7 +231,6 @@
     sound:
       path: /Audio/Items/Toys/imsorry.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/imsorry.ogg
@@ -311,7 +302,6 @@
     sprite: Objects/Fun/toys.rsi
     state: ian
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/ian.ogg
