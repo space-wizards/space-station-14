@@ -46,11 +46,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Server.Database", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{50404922-9637-4394-BF59-165D0850ADC8}"
 	ProjectSection(SolutionItems) = preProject
+		RobustToolbox\MSBuild\Robust.Analyzers.targets = RobustToolbox\MSBuild\Robust.Analyzers.targets
 		RobustToolbox\MSBuild\Robust.DefineConstants.targets = RobustToolbox\MSBuild\Robust.DefineConstants.targets
 		RobustToolbox\MSBuild\Robust.Engine.targets = RobustToolbox\MSBuild\Robust.Engine.targets
 		RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
 		RobustToolbox\MSBuild\XamlIL.targets = RobustToolbox\MSBuild\XamlIL.targets
-		RobustToolbox\MSBuild\Robust.Analyzers.targets = RobustToolbox\MSBuild\Robust.Analyzers.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
@@ -68,43 +68,43 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSerializer", "RobustTool
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Physics", "RobustToolbox\Robust.Physics\Robust.Physics.csproj", "{3BC34700-882F-426B-82BB-56D5708B5E0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client.NameGenerator", "RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj", "{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client.NameGenerator", "RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj", "{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client.Injectors", "RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj", "{8922428F-17C3-47A7-BFE9-570DEB2464DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client.Injectors", "RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj", "{8922428F-17C3-47A7-BFE9-570DEB2464DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Net.HttpListener", "RobustToolbox\ManagedHttpListener\src\System.Net.HttpListener.csproj", "{3429ACDA-F32F-4710-90F5-8C6DF4800304}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Net.HttpListener", "RobustToolbox\ManagedHttpListener\src\System.Net.HttpListener.csproj", "{3429ACDA-F32F-4710-90F5-8C6DF4800304}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.IL.Cecil", "RobustToolbox\XamlX\src\XamlX.IL.Cecil\XamlX.IL.Cecil.csproj", "{16F7DE32-0186-44B9-9345-0C20D1BF2422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX.IL.Cecil", "RobustToolbox\XamlX\src\XamlX.IL.Cecil\XamlX.IL.Cecil.csproj", "{16F7DE32-0186-44B9-9345-0C20D1BF2422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamlX", "XamlX", "{AFF53804-115F-4E67-B81F-26265EA27880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX", "RobustToolbox\XamlX\src\XamlX\XamlX.csproj", "{23F09C45-950E-4DB7-A465-E937450FF008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX", "RobustToolbox\XamlX\src\XamlX\XamlX.csproj", "{23F09C45-950E-4DB7-A465-E937450FF008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Base", "RobustToolbox\Avalonia.Base\Avalonia.Base.csproj", "{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Base", "RobustToolbox\Avalonia.Base\Avalonia.Base.csproj", "{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Benchmarks", "RobustToolbox\Robust.Benchmarks\Robust.Benchmarks.csproj", "{8A21C7CA-2EB8-40E5-8043-33582C06D139}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Benchmarks", "RobustToolbox\Robust.Benchmarks\Robust.Benchmarks.csproj", "{8A21C7CA-2EB8-40E5-8043-33582C06D139}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linguini", "Linguini", "{ECA11A64-8C77-4BEE-8E48-15FE585B84B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linguini.Bundle", "RobustToolbox\Linguini\Linguini.Bundle\Linguini.Bundle.csproj", "{CEF5CBAC-B5C2-453D-AC0B-EE755CE577C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linguini.Bundle", "RobustToolbox\Linguini\Linguini.Bundle\Linguini.Bundle.csproj", "{CEF5CBAC-B5C2-453D-AC0B-EE755CE577C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linguini.Shared", "RobustToolbox\Linguini\Linguini.Shared\Linguini.Shared.csproj", "{454AF09E-9A75-4A18-9C37-70CA8E381F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linguini.Shared", "RobustToolbox\Linguini\Linguini.Shared\Linguini.Shared.csproj", "{454AF09E-9A75-4A18-9C37-70CA8E381F57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linguini.Syntax", "RobustToolbox\Linguini\Linguini.Syntax\Linguini.Syntax.csproj", "{18BA44A5-5EB0-4356-BE19-179992A14D40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linguini.Syntax", "RobustToolbox\Linguini\Linguini.Syntax\Linguini.Syntax.csproj", "{18BA44A5-5EB0-4356-BE19-179992A14D40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluralRules.Generator", "RobustToolbox\Linguini\PluralRules.Generator\PluralRules.Generator.csproj", "{9210CCA8-94AA-407F-8F9A-64101D0E552D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluralRules.Generator", "RobustToolbox\Linguini\PluralRules.Generator\PluralRules.Generator.csproj", "{9210CCA8-94AA-407F-8F9A-64101D0E552D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,8 +125,8 @@ Global
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -272,8 +272,8 @@ Global
 		{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{8922428F-17C3-47A7-BFE9-570DEB2464DA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{3429ACDA-F32F-4710-90F5-8C6DF4800304} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{AFF53804-115F-4E67-B81F-26265EA27880} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{16F7DE32-0186-44B9-9345-0C20D1BF2422} = {AFF53804-115F-4E67-B81F-26265EA27880}
+		{AFF53804-115F-4E67-B81F-26265EA27880} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{23F09C45-950E-4DB7-A465-E937450FF008} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{440426C1-8DCA-43F6-967F-94439B8DAF47} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}

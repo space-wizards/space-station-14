@@ -15,6 +15,10 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
+    <Compile Remove="ExplosionHelper.cs" />
+    <Compile Remove="TriggerSystem.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>

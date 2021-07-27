@@ -36,7 +36,7 @@
       visible: false
   - type: Emitter
   - type: PowerConsumer
-    voltage: Medium
+    drawRate: 10
   - type: NodeContainer
     examinable: true
     nodes:
