@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -19,9 +20,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 
 namespace Content.Server.Hands.Components
 {
@@ -49,30 +48,6 @@ namespace Content.Server.Hands.Components
                     break;
                 case PullStoppedMessage:
                     StopPulling();
-                    break;
-            }
-        }
-
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
-        {
-            base.HandleNetworkMessage(message, channel, session);
-
-            switch (message)
-            {
-                case ClientChangedHandMsg msg:
-                    ActiveHand = msg.HandName;
-                    break;
-                case ClientAttackByInHandMsg msg:
-                    InteractHandWithActiveHand(msg.HandName);
-                    break;
-                case UseInHandMsg:
-                    UseActiveHeldEntity();
-                    break;
-                case ActivateInHandMsg msg:
-                    ActivateHeldEntity(msg.HandName);
-                    break;
-                case MoveItemFromHandMsg msg:
-                    TryMoveHeldEntityToActiveHand(msg.HandName);
                     break;
             }
         }
@@ -141,7 +116,8 @@ namespace Content.Server.Hands.Components
             if (pickupDirection == initialPosition.ToMapPos(Owner.EntityManager))
                 return;
 
-            SendNetworkMessage(new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
+            Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
+                new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
         }
 
         #region Pull/Disarm
@@ -151,9 +127,17 @@ namespace Content.Server.Hands.Components
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
 
-            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: make hand body part have a handlocation?
+            // If this annoys you, which it should.
+            // Ping Smugleaf.
+            var location = args.Part.Symmetry switch
+            {
+                BodyPartSymmetry.None => HandLocation.Middle,
+                BodyPartSymmetry.Left => HandLocation.Left,
+                BodyPartSymmetry.Right => HandLocation.Right,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-            AddHand(args.Slot, handLocation);
+            AddHand(args.Slot, location);
         }
 
         void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs args)

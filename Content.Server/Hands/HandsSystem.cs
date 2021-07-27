@@ -15,7 +15,6 @@ using Content.Shared.Input;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Server.Player;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -38,13 +37,78 @@ namespace Content.Server.Hands
             base.Initialize();
 
             SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
+            SubscribeNetworkEvent<ActivateInHandMsg>(HandleActivateInHand);
+            SubscribeNetworkEvent<ClientInteractUsingInHandMsg>(HandleInteractUsingInHand);
+            SubscribeNetworkEvent<UseInHandMsg>(HandleUseInHand);
+            SubscribeNetworkEvent<MoveItemFromHandMsg>(HandleMoveItemFromHand);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
+                .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false))
+                .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
                 .Register<HandsSystem>();
+        }
+
+        private void SwapHandsPressed(ICommonSession? session)
+        {
+            var player = session?.AttachedEntity;
+
+            if (player == null)
+                return;
+
+            if (!player.TryGetComponent(out SharedHandsComponent? hands))
+                return;
+
+            if (!hands.TryGetSwapHandsResult(out var nextHand))
+                return;
+
+            hands.ActiveHand = nextHand;
+        }
+
+        private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            var player = session?.AttachedEntity;
+
+            if (player == null)
+                return false;
+
+            if (!player.TryGetComponent(out SharedHandsComponent? hands))
+                return false;
+
+            var activeHand = hands.ActiveHand;
+
+            if (activeHand == null)
+                return false;
+
+            hands.TryDropHand(activeHand, coords);
+            return false;
+        }
+
+        private void HandleMoveItemFromHand(MoveItemFromHandMsg msg, EntitySessionEventArgs args)
+        {
+            if (!TryGetHandsComp(args.SenderSession, out var hands))
+                return;
+
+            hands.TryMoveHeldEntityToActiveHand(msg.HandName);
+        }
+
+        private void HandleUseInHand(UseInHandMsg msg, EntitySessionEventArgs args)
+        {
+            if (!TryGetHandsComp(args.SenderSession, out var hands))
+                return;
+
+            hands.UseActiveHeldEntity();
+        }
+
+        private void HandleInteractUsingInHand(ClientInteractUsingInHandMsg msg, EntitySessionEventArgs args)
+        {
+            if (!TryGetHandsComp(args.SenderSession, out var hands))
+                return;
+
+            hands.InteractHandWithActiveHand(msg.HandName);
         }
 
         public override void Shutdown()
@@ -52,6 +116,14 @@ namespace Content.Server.Hands
             base.Shutdown();
 
             CommandBinds.Unregister<HandsSystem>();
+        }
+
+        private void HandleActivateInHand(ActivateInHandMsg msg, EntitySessionEventArgs args)
+        {
+            if (!TryGetHandsComp(args.SenderSession, out var hands))
+                return;
+
+            hands.ActivateHeldEntity(msg.HandName);
         }
 
         protected override void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
@@ -75,25 +147,21 @@ namespace Content.Server.Hands
             }
         }
 
-        protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
-        {
-            component.Dirty();
-        }
-
-        private bool TryGetHandsComp(ICommonSession? session, [NotNullWhen(true)] out SharedHandsComponent? hands)
+        private static bool TryGetHandsComp(
+            ICommonSession? session,
+            [NotNullWhen(true)] out SharedHandsComponent? hands)
         {
             hands = default;
 
             if (session is not IPlayerSession playerSession)
                 return false;
 
-            var playerEnt = playerSession?.AttachedEntity;
+            var playerEnt = playerSession.AttachedEntity;
 
             if (playerEnt == null || !playerEnt.IsValid())
                 return false;
 
-            playerEnt.TryGetComponent(out hands);
-            return hands != null;
+            return playerEnt.TryGetComponent(out hands);
         }
 
         private void HandleActivateItem(ICommonSession? session)

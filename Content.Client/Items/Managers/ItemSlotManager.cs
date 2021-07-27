@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Content.Client.Examine;
 using Content.Client.Items.UI;
 using Content.Client.Storage;
@@ -29,6 +31,10 @@ namespace Content.Client.Items.Managers
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
+        private readonly HashSet<EntityUid> _highlightEntities = new();
+
+        public event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
+
         public bool SetItemSlot(ItemSlotButton button, IEntity? entity)
         {
             if (entity == null)
@@ -45,6 +51,11 @@ namespace Content.Client.Items.Managers
                 button.SpriteView.Sprite = sprite;
                 button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
             }
+
+            button.Entity = entity?.Uid ?? default;
+
+            // im lazy
+            button.UpdateSlotHighlighted();
             return true;
         }
 
@@ -145,5 +156,38 @@ namespace Content.Client.Items.Managers
 
             button.HoverSpriteView.Sprite = hoverSprite;
         }
+
+        public bool IsHighlighted(EntityUid uid)
+        {
+            return _highlightEntities.Contains(uid);
+        }
+
+        public void HighlightEntity(EntityUid uid)
+        {
+            if (!_highlightEntities.Add(uid))
+                return;
+
+            EntityHighlightedUpdated?.Invoke(new EntitySlotHighlightedEventArgs(uid, true));
+        }
+
+        public void UnHighlightEntity(EntityUid uid)
+        {
+            if (!_highlightEntities.Remove(uid))
+                return;
+
+            EntityHighlightedUpdated?.Invoke(new EntitySlotHighlightedEventArgs(uid, false));
+        }
+    }
+
+    public readonly struct EntitySlotHighlightedEventArgs
+    {
+        public EntitySlotHighlightedEventArgs(EntityUid entity, bool newHighlighted)
+        {
+            Entity = entity;
+            NewHighlighted = newHighlighted;
+        }
+
+        public EntityUid Entity { get; }
+        public bool NewHighlighted { get; }
     }
 }

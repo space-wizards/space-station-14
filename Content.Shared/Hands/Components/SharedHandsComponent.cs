@@ -55,6 +55,7 @@ namespace Content.Shared.Hands.Components
                 }
             }
         }
+
         private string? _activeHand;
 
         [ViewVariables]
@@ -89,7 +90,10 @@ namespace Content.Shared.Hands.Components
 
         public virtual void HandsModified()
         {
+            // todo axe all this for ECS.
             Dirty();
+
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
         }
 
         public void AddHand(string handName, HandLocation handLocation)
@@ -160,13 +164,13 @@ namespace Content.Shared.Hands.Components
             return GetHand(ActiveHand);
         }
 
-        protected bool TryGetHand(string handName, [NotNullWhen(true)] out Hand? foundHand)
+        public bool TryGetHand(string handName, [NotNullWhen(true)] out Hand? foundHand)
         {
             foundHand = GetHand(handName);
             return foundHand != null;
         }
 
-        protected bool TryGetActiveHand([NotNullWhen(true)] out Hand? activeHand)
+        public bool TryGetActiveHand([NotNullWhen(true)] out Hand? activeHand)
         {
             activeHand = GetActiveHand();
             return activeHand != null;
@@ -870,7 +874,7 @@ namespace Content.Shared.Hands.Components
     }
 
     [Serializable, NetSerializable]
-    public class HandsComponentState : ComponentState
+    public sealed class HandsComponentState : ComponentState
     {
         public HandState[] Hands { get; }
         public string? ActiveHand { get; }
@@ -886,25 +890,20 @@ namespace Content.Shared.Hands.Components
     /// A message that calls the use interaction on an item in hand, presumed for now the interaction will occur only on the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class UseInHandMsg : ComponentMessage
+    public sealed class UseInHandMsg : EntityEventArgs
     {
-        public UseInHandMsg()
-        {
-            Directed = true;
-        }
     }
 
     /// <summary>
     /// A message that calls the activate interaction on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ActivateInHandMsg : ComponentMessage
+    public class ActivateInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
         public ActivateInHandMsg(string handName)
         {
-            Directed = true;
             HandName = handName;
         }
     }
@@ -913,13 +912,12 @@ namespace Content.Shared.Hands.Components
     ///     Uses the item in the active hand on the item in the specified hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ClientAttackByInHandMsg : ComponentMessage
+    public class ClientInteractUsingInHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
-        public ClientAttackByInHandMsg(string handName)
+        public ClientInteractUsingInHandMsg(string handName)
         {
-            Directed = true;
             HandName = handName;
         }
     }
@@ -928,28 +926,12 @@ namespace Content.Shared.Hands.Components
     ///     Moves an item from one hand to the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class MoveItemFromHandMsg : ComponentMessage
+    public class MoveItemFromHandMsg : EntityEventArgs
     {
         public string HandName { get; }
 
         public MoveItemFromHandMsg(string handName)
         {
-            Directed = true;
-            HandName = handName;
-        }
-    }
-
-    /// <summary>
-    ///     Sets the player's active hand to a specified hand.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class ClientChangedHandMsg : ComponentMessage
-    {
-        public string HandName { get; }
-
-        public ClientChangedHandMsg(string handName)
-        {
-            Directed = true;
             HandName = handName;
         }
     }
@@ -975,7 +957,7 @@ namespace Content.Shared.Hands.Components
     }
 
     [Serializable, NetSerializable]
-    public class PickupAnimationMessage : ComponentMessage
+    public class PickupAnimationMessage : EntityEventArgs
     {
         public EntityUid EntityUid { get; }
         public EntityCoordinates InitialPosition { get; }
@@ -983,10 +965,15 @@ namespace Content.Shared.Hands.Components
 
         public PickupAnimationMessage(EntityUid entityUid, Vector2 pickupDirection, EntityCoordinates initialPosition)
         {
-            Directed = true;
             EntityUid = entityUid;
             PickupDirection = pickupDirection;
             InitialPosition = initialPosition;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public struct HandsModifiedMessage
+    {
+        public SharedHandsComponent Hands;
     }
 }
