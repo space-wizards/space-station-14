@@ -49,10 +49,7 @@ namespace Content.Server.Arcade.Components
             "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
         };
         [ViewVariables(VVAccess.ReadWrite)] [DataField("possibleRewards")] private List<string> _possibleRewards = new List<string>()
-        {
-            "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
-            "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
-            "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
+        {"SingularityToy"
         };
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
