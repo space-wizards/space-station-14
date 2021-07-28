@@ -66,7 +66,7 @@ namespace Content.Shared.Hands
             hands.ActiveHand = msg.HandName;
         }
 
-        private static void HandleContainerModified(
+        protected virtual void HandleContainerModified(
             EntityUid uid,
             SharedHandsComponent component,
             ContainerModifiedMessage args)

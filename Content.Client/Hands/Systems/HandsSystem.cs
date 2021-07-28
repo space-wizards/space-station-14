@@ -7,6 +7,7 @@ using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -44,6 +45,12 @@ namespace Content.Client.Hands
         private void HandleHandsModified(HandsModifiedMessage ev)
         {
             if (ev.Hands.Owner == _playerManager.LocalPlayer?.ControlledEntity)
+                GuiStateUpdated?.Invoke();
+        }
+
+        protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
+        {
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity?.Uid)
                 GuiStateUpdated?.Invoke();
         }
 
