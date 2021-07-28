@@ -65,8 +65,19 @@ namespace Content.Server.Body.Behavior
                 delta.Increment(1);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    solution.TryRemoveReagent(delta.ReagentId, delta.Quantity);
-                    transferSolution.AddReagent(delta.ReagentId, delta.Quantity);
+                    // This reagant has been in the somach long enough, TRY to transfer it.
+                    // But first, check if the reagant still exists, and how much is left.
+                    // Some poort spessman may have washed down a potassium snack with some water.
+                    if (solution.Solution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity)){
+
+                        if (quantity > delta.Quantity) {
+                            quantity = delta.Quantity;
+                        }
+
+                        solution.TryRemoveReagent(delta.ReagentId, quantity);
+                        transferSolution.AddReagent(delta.ReagentId, quantity);
+                    }
+
                     _reagentDeltas.Remove(delta);
                 }
             }
