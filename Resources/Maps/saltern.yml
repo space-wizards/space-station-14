@@ -50136,4 +50136,28 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 5060
+  type: Firelock
+  components:
+  - pos: 26.5,-19.5
+    parent: 853
+    type: Transform
+- uid: 5061
+  type: Firelock
+  components:
+  - pos: 23.5,-24.5
+    parent: 853
+    type: Transform
+- uid: 5062
+  type: Firelock
+  components:
+  - pos: -25.5,15.5
+    parent: 853
+    type: Transform
+- uid: 5063
+  type: Firelock
+  components:
+  - pos: -19.5,19.5
+    parent: 853
+    type: Transform
 ...
