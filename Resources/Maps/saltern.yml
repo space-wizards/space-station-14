@@ -50322,4 +50322,12 @@ entities:
       EntityStorageComponent: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 5082
+  type: CableHVStack
+  components:
+  - pos: -22.638397,16.589691
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
