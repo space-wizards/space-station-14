@@ -67,8 +67,10 @@ namespace Content.Server.Body.Behavior
                 }
             }
 
-            // Transfer digested reagents to bloodstream
-            bloodstream.TryTransferSolution(transferSolution);
+            // Transfer digested reagents to bloodstream, if there is something to actually transfer
+            if (transferSolution.TotalVolume > 0){ 
+                bloodstream.TryTransferSolution(transferSolution);
+            }
         }
 
         /// <summary>
