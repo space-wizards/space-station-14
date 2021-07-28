@@ -18,6 +18,11 @@ namespace Content.Server.Body.Behavior
         private float _accumulatedFrameTime;
 
         /// <summary>
+        ///     How frequently to metabolise blood contents.
+        /// </summary>
+        private float _updateInterval = 1.0f;
+
+        /// <summary>
         ///     Whether the liver is functional.
         /// </summary>
         //[ViewVariables] private bool _liverFailing = false;
@@ -63,13 +68,13 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime += frameTime;
 
-            // Update at most once per second
-            if (_accumulatedFrameTime < 1)
+            // Update at most once every _updateInterval
+            if (_accumulatedFrameTime < _updateInterval)
             {
                 return;
             }
 
-            _accumulatedFrameTime -= 1;
+            _accumulatedFrameTime -= _updateInterval;
 
             if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
@@ -99,7 +104,7 @@ namespace Content.Server.Body.Behavior
                 // Run metabolism code for each reagent
                 foreach (var metabolizable in prototype.Metabolism)
                 {
-                    var reagentDelta = metabolizable.Metabolize(Body.Owner, reagent.ReagentId, frameTime);
+                    var reagentDelta = metabolizable.Metabolize(Body.Owner, reagent.ReagentId, _updateInterval);
                     bloodstream.Solution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
                 }
             }
