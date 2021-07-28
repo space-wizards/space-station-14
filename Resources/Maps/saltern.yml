@@ -49433,9 +49433,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 4979
-  type: ClosetBase
+  type: ClosetMaintenanceFilledRandom
   components:
-  - pos: 27.5,-25.5
+  - pos: -20.5,16.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -49927,10 +49927,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 5039
-  type: ClosetBase
+  type: ClosetMaintenanceFilledRandom
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,16.5
+  - pos: 27.5,-25.5
     parent: 853
     type: Transform
   - IsPlaceable: False
