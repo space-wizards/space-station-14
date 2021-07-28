@@ -30,6 +30,8 @@ namespace Content.Server.Body.Behavior
         /// </param>
         public override void Update(float frameTime)
         {
+
+            // Do not metabolise if the organ does not have a body.
             if (Body == null)
             {
                 return;
@@ -45,7 +47,9 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
+            // Note that "Owner" should be the organ that has this behaviour/mechanism, and it should have a dedicated
+            // solution container. "Body.Owner" is something else, and may have more than one solution container.
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
                 !Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
@@ -135,10 +139,10 @@ namespace Content.Server.Body.Behavior
 
         public bool TryTransferSolution(Solution solution)
         {
-            if (Body == null || !CanTransferSolution(solution))
+            if (Owner == null || !CanTransferSolution(solution))
                 return false;
 
-            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }
