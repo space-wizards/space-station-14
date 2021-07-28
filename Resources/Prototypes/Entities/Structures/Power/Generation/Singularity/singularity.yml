@@ -6,16 +6,16 @@
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
+    bodyStatus: InAir
     fixtures:
     - id: DeleteCircle
+      hard: false
       shape:
         !type:PhysShapeCircle
           radius: 0.5
       mass: 5
       # Keep an eye on ParticlesProjectile when adjusting these
       layer:
-      - Impassable
-      mask:
       - AllMask
   - type: Singularity
   - type: SingularityDistortion

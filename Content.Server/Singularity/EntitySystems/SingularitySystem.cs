@@ -1,3 +1,4 @@
+using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity;
 using JetBrains.Annotations;
@@ -28,24 +29,19 @@ namespace Content.Server.Singularity.EntitySystems
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
-            {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(args.OurFixture.Body.GetWorldAABB()))
-                {
-                    mapGridComponent.Grid.SetTile(tile.GridIndices, Robust.Shared.Map.Tile.Empty);
-                    component.Energy++;
-                }
-                return;
-            }
+            // Handle "actual" singulo bounds.
+            if (args.OurFixture.ID != DeleteFixture) return;
 
+            // TODO: Need a singuloimmune tag.
             if (otherEntity.HasComponent<ContainmentFieldComponent>() ||
-                (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var containmentField) && containmentField.CanRepell(component.Owner)))
+                (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var containmentField) && containmentField.CanRepell(component.Owner)) ||
+                otherEntity.HasComponent<IMapGridComponent>() ||
+                otherEntity.HasComponent<GhostComponent>())
             {
                 return;
             }
 
-            if (otherEntity.IsInContainer())
-                return;
+            // Handle deleting entities + increasing energy.
 
             // Singularity priority management / etc.
             if (otherEntity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))

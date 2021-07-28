@@ -1,6 +1,7 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -14,11 +15,20 @@ namespace Content.Server.Physics.Controllers
 {
     internal sealed class SingularityController : VirtualController
     {
+        [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         private float _pullAccumulator;
         private float _moveAccumulator;
+
+        private const float GravityCooldown = 0.5f;
+        private const float MoveCooldown = 3.0f;
+
+        /// <summary>
+        /// How much energy the singulo gains from destroying a tile.
+        /// </summary>
+        private const int TileEnergyGain = 1;
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
@@ -27,33 +37,40 @@ namespace Content.Server.Physics.Controllers
             _moveAccumulator += frameTime;
             _pullAccumulator += frameTime;
 
-            while (_pullAccumulator > 0.5f)
+            while (_pullAccumulator > GravityCooldown)
             {
-                _pullAccumulator -= 0.5f;
+                _pullAccumulator -= GravityCooldown;
 
                 foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
                 {
-                    // TODO: Use colliders instead probably yada yada
-                    PullEntities(singularity);
-                    // Yeah look the collision with station wasn't working and I'm 15k lines in and not debugging this shit
-                    DestroyTiles(singularity);
+                    var worldPos = singularity.Owner.Transform.WorldPosition;
+                    PullEntities(singularity, worldPos);
+                    DestroyTiles(singularity, worldPos);
                 }
             }
 
-            while (_moveAccumulator > 1.0f)
+            while (_moveAccumulator > MoveCooldown)
             {
-                _moveAccumulator -= 1.0f;
+                _moveAccumulator -= MoveCooldown;
 
                 foreach (var (singularity, physics) in ComponentManager.EntityQuery<ServerSingularityComponent, PhysicsComponent>())
                 {
                     if (singularity.Owner.HasComponent<ActorComponent>()) continue;
 
-                    // TODO: Need to essentially use a push vector in a random direction for us PLUS
-                    // Any entity colliding with our larger circlebox needs to have an impulse applied to itself.
-                    physics.BodyStatus = BodyStatus.InAir;
                     MoveSingulo(singularity, physics);
                 }
             }
+        }
+
+        private float PullRange(ServerSingularityComponent component)
+        {
+            // Level 6 is normally 15 range but that's yuge.
+            return 2 + component.Level * 2;
+        }
+
+        private float DestroyTileRange(ServerSingularityComponent component)
+        {
+            return component.Level - 0.5f;
         }
 
         private void MoveSingulo(ServerSingularityComponent singularity, PhysicsComponent physics)
@@ -66,39 +83,55 @@ namespace Content.Server.Physics.Controllers
 
             if (pushVector == Vector2.Zero) return;
 
-            physics.LinearVelocity = Vector2.Zero;
-            physics.LinearVelocity = pushVector.Normalized * 2;
+            // Need to reset its velocity entirely. Probably look better with like a slerped version but future problem.
+            physics.LinearVelocity = pushVector.Normalized * singularity.Level;
         }
 
-        private void PullEntities(ServerSingularityComponent component)
+        private void PullEntities(ServerSingularityComponent component, Vector2 worldPos)
         {
-            var singularityCoords = component.Owner.Transform.Coordinates;
-            // TODO: Maybe if we have named fixtures needs to pull out the outer circle collider (inner will be for deleting).
-            var entitiesToPull = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(singularityCoords, component.Level * 10);
-            foreach (var entity in entitiesToPull)
+            // TODO: When we split up dynamic and static trees we might be able to make items always on the broadphase
+            // in which case we can just query dynamictree directly for brrt
+            var pullRange = PullRange(component);
+            var destroyRange = DestroyTileRange(component);
+
+            foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, pullRange))
             {
-                if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent) || collidableComponent.BodyType == BodyType.Static) continue;
-                if (entity.HasComponent<GhostComponent>()) continue;
-                if (singularityCoords.EntityId != entity.Transform.Coordinates.EntityId) continue;
-                var vec = (singularityCoords - entity.Transform.Coordinates).Position;
-                if (vec == Vector2.Zero) continue;
+                if (entity == component.Owner ||
+                    !entity.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
+                    collidableComponent.BodyType == BodyType.Static ||
+                    entity.HasComponent<GhostComponent>() ||
+                    entity.HasComponent<IMapGridComponent>() ||
+                    entity.HasComponent<MapComponent>() ||
+                    entity.IsInContainer()) continue;
 
-                var speed = 10 / vec.Length * component.Level;
+                var vec = (worldPos - entity.Transform.WorldPosition);
 
+                if (vec.Length < destroyRange - 0.01f) continue;
+
+                var speed = vec.Length * component.Level * 10;
+
+                // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
                 collidableComponent.ApplyLinearImpulse(vec.Normalized * speed);
             }
         }
 
-        private void DestroyTiles(ServerSingularityComponent component)
+        /// <summary>
+        /// Destroy any grid tiles within the relevant Level range.
+        /// </summary>
+        private void DestroyTiles(ServerSingularityComponent component, Vector2 worldPos)
         {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-            var worldBox = physicsComponent.GetWorldAABB();
+            var radius = DestroyTileRange(component);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(component.Owner.Transform.MapID, worldBox))
+            var circle = new Circle(worldPos, radius);
+            var box = new Box2(worldPos - radius, worldPos + radius);
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(component.Owner.Transform.MapID, box))
             {
-                foreach (var tile in grid.GetTilesIntersecting(worldBox))
+                foreach (var tile in grid.GetTilesIntersecting(circle))
                 {
+                    if (tile.Tile.IsEmpty) continue;
                     grid.SetTile(tile.GridIndices, Tile.Empty);
+                    component.Energy += TileEnergyGain;
                 }
             }
         }

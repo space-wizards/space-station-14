@@ -9,6 +9,8 @@ namespace Content.Shared.Singularity
 {
     public abstract class SharedSingularitySystem : EntitySystem
     {
+        public const string DeleteFixture = "DeleteCircle";
+
         private float GetFalloff(int level)
         {
             return level switch
@@ -72,8 +74,7 @@ namespace Content.Shared.Singularity
             }
 
             if (physics != null &&
-                singularity.DeleteFixtureId != null &&
-                physics.GetFixture(singularity.DeleteFixtureId) is {Shape: PhysShapeCircle circle})
+                physics.GetFixture(DeleteFixture) is {Shape: PhysShapeCircle circle})
             {
                 circle.Radius = value - 0.5f;
             }
