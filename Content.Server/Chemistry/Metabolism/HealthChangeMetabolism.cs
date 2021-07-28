@@ -44,11 +44,16 @@ namespace Content.Server.Chemistry.Metabolism
         /// <returns></returns>
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
+            var metabolismAmount = MetabolismRate * tickTime;
+            var healthChangeAmmount = HealthChange * metabolismAmount.Float();
+
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {
-                health.ChangeDamage(DamageType, (int)HealthChange, true);
-                float decHealthChange = (float) (HealthChange - (int) HealthChange);
-                _accumulatedHealth += decHealthChange;
+                // Heal damage by healthChangeAmmount, rounding down to nearest integer
+                health.ChangeDamage(DamageType, (int) healthChangeAmmount, true);
+
+                // Store decimal remainder of healthChangeAmmount in _accumulatedHealth
+                _accumulatedHealth += (healthChangeAmmount - (int) healthChangeAmmount);
 
                 if (_accumulatedHealth >= 1)
                 {
@@ -62,7 +67,7 @@ namespace Content.Server.Chemistry.Metabolism
                     _accumulatedHealth += 1;
                 }
             }
-            return MetabolismRate;
+            return metabolismAmount;
         }
     }
 }
