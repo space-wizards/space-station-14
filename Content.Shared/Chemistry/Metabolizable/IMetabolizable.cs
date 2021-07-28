@@ -16,8 +16,8 @@ namespace Content.Shared.Chemistry.Metabolizable
         /// <param name="solutionEntity">The entity containing the solution.</param>
         /// <param name="reagentId">The reagent id</param>
         /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
-        /// <param name="availableReagant">Reagant available to be metabolized.</param>
+        /// <param name="availableReagent">Reagent available to be metabolized.</param>
         /// <returns>The amount of reagent to be removed. The metabolizing organ should handle removing the reagent.</returns>
-        ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagant);
+        ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent);
     }
 }

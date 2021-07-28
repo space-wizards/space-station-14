@@ -65,8 +65,8 @@ namespace Content.Server.Body.Behavior
                 delta.Increment(1);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    // This reagant has been in the somach long enough, TRY to transfer it.
-                    // But first, check if the reagant still exists, and how much is left.
+                    // This reagent has been in the somach long enough, TRY to transfer it.
+                    // But first, check if the reagent still exists, and how much is left.
                     // Some poor spessman may have washed down a potassium snack with some water.
                     if (solution.Solution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity)){
 

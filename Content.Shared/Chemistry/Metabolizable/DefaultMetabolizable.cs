@@ -19,10 +19,10 @@ namespace Content.Shared.Chemistry.Metabolizable
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
 
-            // how much reagant should we metabolize
+            // how much reagent should we metabolize
             var metabolismAmount = ReagentUnit.New(MetabolismRate * tickTime);
 
-            // is that much reagant actually available?
+            // is that much reagent actually available?
             if (availableReagent < metabolismAmount)
             {
                 return availableReagent;

@@ -96,7 +96,7 @@ namespace Content.Server.Body.Behavior
                 }
 
                 // How much reagent is available to metabolise?
-                // This needs to be passed to other functions that have metabolism rate information, such that they don't "overmetabolise" a reagant.
+                // This needs to be passed to other functions that have metabolism rate information, such that they don't "overmetabolise" a reagent.
                 var availableReagent = bloodstream.Solution.Solution.GetReagentQuantity(reagent.ReagentId);
 
                 //TODO BODY Check if it's a Toxin. If volume < _toxinTolerance, just remove it. If greater, add damage = volume * _toxinLethality

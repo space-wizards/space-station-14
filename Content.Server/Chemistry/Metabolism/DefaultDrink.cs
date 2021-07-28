@@ -25,10 +25,10 @@ namespace Content.Server.Chemistry.Metabolism
         //Remove reagent at set rate, satiate thirst if a ThirstComponent can be found
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
-            // how much reagant should we metabolize
+            // how much reagent should we metabolize
             var metabolismAmount = MetabolismRate * tickTime;
 
-            // is that much reagant actually available?
+            // is that much reagent actually available?
             if (availableReagent < metabolismAmount)
             {
                 metabolismAmount = availableReagent;
