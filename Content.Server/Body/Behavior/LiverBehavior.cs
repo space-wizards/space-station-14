@@ -68,7 +68,7 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime += frameTime;
 
-            // Update at most once every _updateInterval
+            // Update at most once every _updateIntervalSeconds
             if (_accumulatedFrameTime < _updateIntervalSeconds)
             {
                 return;
