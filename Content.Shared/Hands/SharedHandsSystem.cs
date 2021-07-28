@@ -1,12 +1,8 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using System;
-using Content.Shared.Input;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.Players;
 
 namespace Content.Shared.Hands
 {

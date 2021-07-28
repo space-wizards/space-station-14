@@ -97,6 +97,10 @@ namespace Content.Client.Hands
                 newButton.OnStoragePressed += _ => OnStoragePressed(handName);
 
                 _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
+
+                // Show blocked overlay if hand is pulling.
+                newButton.Blocked.Visible =
+                    hand.HeldItem != null && hand.HeldItem.HasComponent<HandVirtualPullComponent>();
             }
 
             if (TryGetActiveHand(out var activeHand))

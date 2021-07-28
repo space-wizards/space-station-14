@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Hands
 {
     [UsedImplicitly]
-    public sealed class VirtualPullSystem : EntitySystem
+    public sealed class HandVirtualPullSystem : EntitySystem
     {
         public override void Initialize()
         {

@@ -5,6 +5,7 @@ using Content.Client.Items.UI;
 using Content.Client.Storage;
 using Content.Client.Verbs;
 using Content.Shared.Cooldown;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -30,6 +31,7 @@ namespace Content.Client.Items.Managers
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IComponentManager _componentManager = default!;
 
         private readonly HashSet<EntityUid> _highlightEntities = new();
 
@@ -44,8 +46,16 @@ namespace Content.Client.Items.Managers
             }
             else
             {
-                if (!entity.TryGetComponent(out ISpriteComponent? sprite))
+                ISpriteComponent? sprite;
+                if (entity.TryGetComponent(out HandVirtualPullComponent? virtPull)
+                    && _componentManager.TryGetComponent(virtPull.PulledEntity, out ISpriteComponent pulledSprite))
+                {
+                    sprite = pulledSprite;
+                }
+                else if (!entity.TryGetComponent(out sprite))
+                {
                     return false;
+                }
 
                 button.ClearHover();
                 button.SpriteView.Sprite = sprite;
