@@ -60,6 +60,8 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        public float MoveAccumulator;
+
         // This is an interesting little workaround.
         // See, two singularities queuing deletion of each other at the same time will annihilate.
         // This is undesirable behaviour, so this flag allows the imperatively first one processed to take priority.

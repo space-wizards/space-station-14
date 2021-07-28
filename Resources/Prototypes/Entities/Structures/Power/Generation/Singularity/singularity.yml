@@ -6,7 +6,6 @@
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
-    bodyStatus: InAir
     fixtures:
     - id: DeleteCircle
       hard: false
@@ -14,7 +13,8 @@
         !type:PhysShapeCircle
           radius: 0.5
       mass: 5
-      # Keep an eye on ParticlesProjectile when adjusting these
+      mask:
+      - AllMask
       layer:
       - AllMask
   - type: Singularity
@@ -25,6 +25,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
+    netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
