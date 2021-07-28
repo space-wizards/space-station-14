@@ -67,7 +67,7 @@ namespace Content.Server.Body.Behavior
                 {
                     // This reagant has been in the somach long enough, TRY to transfer it.
                     // But first, check if the reagant still exists, and how much is left.
-                    // Some poort spessman may have washed down a potassium snack with some water.
+                    // Some poor spessman may have washed down a potassium snack with some water.
                     if (solution.Solution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity)){
 
                         if (quantity > delta.Quantity) {
