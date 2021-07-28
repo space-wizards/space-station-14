@@ -24,7 +24,7 @@ namespace Content.Server.Singularity.EntitySystems
         private const int TileEnergyGain = 1;
 
         private const float GravityCooldown = 0.5f;
-        private float _gravityAccumulator = 0f;
+        private float _gravityAccumulator;
 
         private int _updateInterval = 1;
         private float _accumulator;
@@ -54,6 +54,7 @@ namespace Content.Server.Singularity.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            _gravityAccumulator += frameTime;
             _accumulator += frameTime;
 
             while (_accumulator > _updateInterval)
