@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -16,9 +16,19 @@ namespace Content.Shared.Chemistry.Metabolizable
         [DataField("rate")]
         public double MetabolismRate { get; set; } = 1;
 
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
-            return ReagentUnit.New(MetabolismRate * tickTime);
+
+            // how much reagant should we metabolize
+            var metabolismAmount = ReagentUnit.New(MetabolismRate * tickTime);
+
+            // is that much reagant actually available?
+            if (availableReagent < metabolismAmount)
+            {
+                return availableReagent;
+            }
+
+            return metabolismAmount;
         }
     }
 }

@@ -41,10 +41,19 @@ namespace Content.Server.Chemistry.Metabolism
         /// <param name="solutionEntity"></param>
         /// <param name="reagentId"></param>
         /// <param name="tickTime"></param>
+        /// <param name="availableReagant">Reagant available to be metabolized.</param>
         /// <returns></returns>
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
+            // how much reagant should we metabolize
             var metabolismAmount = MetabolismRate * tickTime;
+
+            // is that much reagant actually available?
+            if (availableReagent < metabolismAmount) {
+                metabolismAmount = availableReagent;
+            }
+
+            // how much does this much reagant heal for
             var healthChangeAmmount = HealthChange * metabolismAmount.Float();
 
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))

@@ -1,4 +1,4 @@
-﻿using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
@@ -25,9 +25,17 @@ namespace Content.Server.Chemistry.Metabolism
         [DataField("nutritionFactor")] public float NutritionFactor { get; set; } = 30.0f;
 
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
+            // how much reagant should we metabolize
             var metabolismAmount = MetabolismRate * tickTime;
+
+            // is that much reagant actually available?
+            if (availableReagent < metabolismAmount)
+            {
+                metabolismAmount = availableReagent;
+            }
+
             if (solutionEntity.TryGetComponent(out HungerComponent? hunger))
                 hunger.UpdateFood(metabolismAmount.Float() * NutritionFactor);
 
