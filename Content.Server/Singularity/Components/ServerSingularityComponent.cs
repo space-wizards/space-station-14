@@ -91,11 +91,6 @@ namespace Content.Server.Singularity.Components
             _singularitySystem.ChangeSingularityLevel(this, 1);
         }
 
-        public void Update(int seconds)
-        {
-            Energy -= EnergyDrain * seconds;
-        }
-
         protected override void OnRemove()
         {
             _playingSound?.Stop();

@@ -26,7 +26,7 @@ namespace Content.Server.Singularity.EntitySystems
         private const float GravityCooldown = 0.5f;
         private float _gravityAccumulator = 0f;
 
-        private float _updateInterval = 1.0f;
+        private int _updateInterval = 1;
         private float _accumulator;
 
         public override void Initialize()
@@ -62,8 +62,7 @@ namespace Content.Server.Singularity.EntitySystems
 
                 foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
                 {
-                    singularity.Update(1);
-                    Update(singularity, _updateInterval);
+                    singularity.Energy -= singularity.EnergyDrain;
                 }
             }
 
