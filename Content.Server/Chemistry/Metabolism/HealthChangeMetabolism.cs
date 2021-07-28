@@ -54,15 +54,15 @@ namespace Content.Server.Chemistry.Metabolism
             }
 
             // how much does this much reagant heal for
-            var healthChangeAmmount = HealthChange * metabolismAmount.Float();
+            var healthChangeAmount = HealthChange * metabolismAmount.Float();
 
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {
                 // Heal damage by healthChangeAmmount, rounding down to nearest integer
-                health.ChangeDamage(DamageType, (int) healthChangeAmmount, true);
+                health.ChangeDamage(DamageType, (int) healthChangeAmount, true);
 
                 // Store decimal remainder of healthChangeAmmount in _accumulatedHealth
-                _accumulatedHealth += (healthChangeAmmount - (int) healthChangeAmmount);
+                _accumulatedHealth += (healthChangeAmount - (int) healthChangeAmount);
 
                 if (_accumulatedHealth >= 1)
                 {
