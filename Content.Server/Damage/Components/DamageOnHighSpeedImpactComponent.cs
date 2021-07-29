@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,8 +13,8 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnHighSpeedImpact";
 
-        [DataField("damage")]
-        public DamageType Damage { get; set; } = DamageType.Blunt;
+        [DataField("damageType", required: true)]
+        public DamageTypePrototype DamageType { get; set; } = default!;
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("baseDamage")]
