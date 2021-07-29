@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.Components;
@@ -7,7 +7,9 @@ using Content.Server.Items;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Stacks; //
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification.Managers;
@@ -275,7 +277,13 @@ namespace Content.Server.Kitchen.EntitySystems
                         {
                             if (!item.HasTag("Grindable")) continue;
                             if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
-                            if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume > component.HeldBeaker.MaxVolume) continue;
+                            int stackCount = 1;
+                            if (item.TryGetComponent<SharedStackComponent>(out var itemStack))
+                            {
+                                stackCount = itemStack.Count;
+                            }
+                            if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * stackCount > component.HeldBeaker.MaxVolume) continue;
+                            solution.Solution.ScaleSolution(stackCount);
                             component.HeldBeaker.TryAddSolution(solution.Solution);
                             solution.RemoveAllSolution();
                             item.Delete();
@@ -294,7 +302,13 @@ namespace Content.Server.Kitchen.EntitySystems
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
                             if (!item.TryGetComponent<JuiceableComponent>(out var juiceMe)) continue;
-                            if (component.HeldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume > component.HeldBeaker.MaxVolume) continue;
+                            int stackCount = 1;
+                            if (item.TryGetComponent<SharedStackComponent>(out var itemStack))
+                            {
+                                stackCount = itemStack.Count;
+                            }
+                            if (component.HeldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume * stackCount > component.HeldBeaker.MaxVolume) continue;
+                            juiceMe.JuiceResultSolution.ScaleSolution(stackCount);
                             component.HeldBeaker.TryAddSolution(juiceMe.JuiceResultSolution);
                             item.Delete();
                         }
