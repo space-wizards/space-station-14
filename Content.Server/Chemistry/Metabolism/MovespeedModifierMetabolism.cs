@@ -38,10 +38,10 @@ namespace Content.Server.Chemistry.Metabolism
 
         /// <summary>
         /// how long the modifier persist after the final unit of reagent is metabolised,
-        /// should really be longer than however long it takes for a metabolism tick(1 second).
+        /// should really be less than however long it takes for a metabolism tick(1 second).
         /// </summary>
         [DataField("statusLifetime")]
-        public int StatusLifetime = 9000;
+        public int StatusLifetime = 900;
 
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
@@ -56,7 +56,7 @@ namespace Content.Server.Chemistry.Metabolism
             {
                 solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
-                if(status.WalkSpeedModifier != WalkSpeedModifier)
+                if (status.WalkSpeedModifier != WalkSpeedModifier)
                 {
                     status.WalkSpeedModifier = WalkSpeedModifier;
                 }
@@ -69,13 +69,11 @@ namespace Content.Server.Chemistry.Metabolism
                     status.EffectTime = StatusLifetime * MetabolismRate.Int();
                 }
 
-
                 //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
                 //Also I don't know if this is a good way to do a NAND gate in c#
                 if (!(status.WalkSpeedModifier.Equals(movement.WalkSpeedModifier) & status.SprintSpeedModifier.Equals(movement.SprintSpeedModifier)))
                     movement?.RefreshMovementSpeedModifiers();
-                
-                status.Dirty();    
+
             }
             return MetabolismRate;
         }
