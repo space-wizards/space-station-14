@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class MovespeedModifierMetabolism : IMetabolizable
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        private IGameTiming _gametiming = IoCManager.Resolve<IGameTiming>();
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
         /// </summary>
@@ -41,7 +41,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// should really be less than however long it takes for a metabolism tick(1 second).
         /// </summary>
         [DataField("statusLifetime")]
-        public int StatusLifetime = 900;
+        public int StatusLifetime = 3000;
 
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
@@ -69,6 +69,8 @@ namespace Content.Server.Chemistry.Metabolism
                     status.EffectTime = StatusLifetime * MetabolismRate.Int();
                 }
 
+                ResetTimer(status);
+
                 //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
                 //Also I don't know if this is a good way to do a NAND gate in c#
                 if (!(status.WalkSpeedModifier.Equals(movement.WalkSpeedModifier) & status.SprintSpeedModifier.Equals(movement.SprintSpeedModifier)))
@@ -79,7 +81,7 @@ namespace Content.Server.Chemistry.Metabolism
         }
         public void ResetTimer(MovespeedModifierMetabolismComponent status)
         {
-            status.ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(status.EffectTime / 1000))); // EffectTime is milliseconds, TimeSpan.FromSeconds() is just seconds
+            status.ModifierTimer = (_gametiming.CurTime, _gametiming.CurTime.Add(TimeSpan.FromMilliseconds(status.EffectTime)));
             status.Dirty();
         }
     }
