@@ -7968,10 +7968,9 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 823
-  type: ClosetBase
+  type: ClosetMaintenanceFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-12.5
+  - pos: -11.5,-12.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -24695,7 +24694,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2414
-  type: ClosetBase
+  type: ClosetMaintenanceFilledRandom
   components:
   - pos: -8.5,-25.5
     parent: 853
