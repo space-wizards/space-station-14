@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using Content.Server.Alert;
 using Content.Server.Pressure;
@@ -8,7 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Dependency = Robust.Shared.IoC.DependencyAttribute;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Components
 {
@@ -20,6 +20,7 @@ namespace Content.Server.Atmos.Components
     {
         public override string Name => "Barotrauma";
 
+        [Robust.Shared.IoC.Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageType = default!;
 
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos.Components
                     if(pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.ChangeDamage(damageable.GetDamageType("Blunt"), Atmospherics.LowPressureDamage, false, Owner);
+                    damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), Atmospherics.LowPressureDamage, false, Owner);
 
                     if (status == null) break;
 
@@ -71,7 +72,7 @@ namespace Content.Server.Atmos.Components
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.ChangeDamage(damageable.GetDamageType(_damageType), damage, false, Owner);
+                    damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), damage, false, Owner);
 
                     if (status == null) break;
 
