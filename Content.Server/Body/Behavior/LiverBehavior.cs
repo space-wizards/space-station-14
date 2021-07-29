@@ -83,7 +83,7 @@ namespace Content.Server.Body.Behavior
 
             // Run metabolism for each reagent, remove metabolized reagents
             // Using ToList here lets us edit reagents while iterating
-            foreach (var reagent in bloodstream.Solution.ReagentList.ToList())
+            foreach (var reagent in bloodstream.Solution.ReagentList)
             {
                 if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? prototype))
                 {

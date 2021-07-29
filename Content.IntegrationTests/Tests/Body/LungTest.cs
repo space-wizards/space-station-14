@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Body
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
-  - type: Metabolism
+  - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -148,7 +148,7 @@ namespace Content.IntegrationTests.Tests.Body
 
             MapId mapId;
             IMapGrid grid = null;
-            MetabolismComponent metabolism = null;
+            RespiratorComponent respirator = null;
             IEntity human = null;
 
             var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
@@ -169,8 +169,8 @@ namespace Content.IntegrationTests.Tests.Body
 
                 Assert.True(human.TryGetComponent(out SharedBodyComponent body));
                 Assert.True(body.HasMechanismBehavior<LungBehavior>());
-                Assert.True(human.TryGetComponent(out metabolism));
-                Assert.False(metabolism.Suffocating);
+                Assert.True(human.TryGetComponent(out respirator));
+                Assert.False(respirator.Suffocating);
             });
 
             var increment = 10;
@@ -178,7 +178,7 @@ namespace Content.IntegrationTests.Tests.Body
             for (var tick = 0; tick < 600; tick += increment)
             {
                 await server.WaitRunTicks(increment);
-                Assert.False(metabolism.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+                Assert.False(respirator.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
             }
 
             await server.WaitIdleAsync();

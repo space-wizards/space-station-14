@@ -67,7 +67,7 @@
     currentTemperature: 310.15
     specificHeat: 42
     tempDamageCoefficient: 0.1
-  - type: Metabolism
+  - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000

@@ -60,7 +60,6 @@ namespace Content.Shared.Chemistry.Reagent
         public string SpriteReplacementPath { get; } = string.Empty;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
-        public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;
         public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
         public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
 
