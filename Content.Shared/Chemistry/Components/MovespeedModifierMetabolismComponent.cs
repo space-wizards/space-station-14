@@ -30,8 +30,6 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public int EffectTime { get; set; }
 
-        private CancellationTokenSource? _cancellation;
-
         public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
 
         public void ResetModifiers()
@@ -43,8 +41,6 @@ namespace Content.Shared.Chemistry.Components
             {
                 modifier.RefreshMovementSpeedModifiers();
             }
-
-            _cancellation?.Cancel();
             Dirty();
         }
 
@@ -68,30 +64,8 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         public void ResetTimer()
         {
-            _cancellation?.Cancel();
-            _cancellation = new CancellationTokenSource();
-            Owner.SpawnTimer(EffectTime, ResetModifiers, _cancellation.Token);
-
             ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime / 1000))); // EffectTime is milliseconds, TimeSpan.FromSeconds() is just seconds
             Dirty();
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not MovespeedModifierMetabolismComponentState state) return;
-
-            if (state.WalkSpeedModifier.Equals(WalkSpeedModifier) &&
-                state.SprintSpeedModifier.Equals(SprintSpeedModifier)) return;
-
-            WalkSpeedModifier = state.WalkSpeedModifier;
-            SprintSpeedModifier = state.SprintSpeedModifier;
-            ModifierTimer = state.ModifierTimer;
-
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
-            {
-                modifier.RefreshMovementSpeedModifiers();
-            }
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

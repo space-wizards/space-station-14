@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// should really be longer than however long it takes for a metabolism tick(1 second).
         /// </summary>
         [DataField("statusLifetime")]
-        public int StatusLifetime = 1500;
+        public int StatusLifetime = 9000;
 
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
