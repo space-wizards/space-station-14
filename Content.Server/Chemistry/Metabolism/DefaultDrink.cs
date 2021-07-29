@@ -9,31 +9,22 @@ namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
-    /// and to update it's thirst values.
+    /// and to update it's thirst values. Inherits metabolisation rate logic from DefaultMetabolizable.
     /// </summary>
     [DataDefinition]
-    public class DefaultDrink : IMetabolizable
+    public class DefaultDrink : DefaultMetabolizable
     {
-        //Rate of metabolism in units / second
-        [DataField("rate")]
-        public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
-
         //How much thirst is satiated when 1u of the reagent is metabolized
         [DataField("hydrationFactor")]
         public float HydrationFactor { get; set; } = 30.0f;
 
         //Remove reagent at set rate, satiate thirst if a ThirstComponent can be found
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
+        public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
-            // how much reagent should we metabolize
-            var metabolismAmount = MetabolismRate * tickTime;
+            // use DefaultMetabolism to determine how much reagent we should metabolize
+            var metabolismAmount = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
 
-            // is that much reagent actually available?
-            if (availableReagent < metabolismAmount)
-            {
-                metabolismAmount = availableReagent;
-            }
-
+            // If metabolizing entity has a ThirstComponent, hydrate them.
             if (solutionEntity.TryGetComponent(out ThirstComponent? thirst))
                 thirst.UpdateThirst(metabolismAmount.Float() * HydrationFactor);
 

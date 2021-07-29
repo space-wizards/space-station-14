@@ -10,16 +10,11 @@ namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
     /// Default metabolism for medicine reagents. Attempts to find a DamageableComponent on the target,
-    /// and to update its damage values.
+    /// and to update its damage values. Inherits metabolisation rate logic from DefaultMetabolizable.
     /// </summary>
     [DataDefinition]
-    public class HealthChangeMetabolism : IMetabolizable
+    public class HealthChangeMetabolism : DefaultMetabolizable
     {
-        /// <summary>
-        /// How much of the reagent should be metabolized each sec.
-        /// </summary>
-        [DataField("rate")]
-        public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         /// <summary>
         /// How much damage is changed when 1u of the reagent is metabolized.
@@ -43,15 +38,10 @@ namespace Content.Server.Chemistry.Metabolism
         /// <param name="tickTime"></param>
         /// <param name="availableReagent">Reagent available to be metabolized.</param>
         /// <returns></returns>
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
+        public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
-            // how much reagent should we metabolize
-            var metabolismAmount = MetabolismRate * tickTime;
-
-            // is that much reagent actually available?
-            if (availableReagent < metabolismAmount) {
-                metabolismAmount = availableReagent;
-            }
+            // use DefaultMetabolism to determine how much reagent we should metabolize
+            var metabolismAmount = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
 
             // how much does this much reagent heal for
             var healthChangeAmount = HealthChange * metabolismAmount.Float();

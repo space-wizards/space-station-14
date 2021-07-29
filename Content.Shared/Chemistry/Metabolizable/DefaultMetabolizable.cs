@@ -13,14 +13,13 @@ namespace Content.Shared.Chemistry.Metabolizable
         /// <summary>
         ///     Rate of metabolism in units / second
         /// </summary>
-        [DataField("rate")]
-        public double MetabolismRate { get; set; } = 1;
+        [DataField("rate")] public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
+        public virtual ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
 
             // how much reagent should we metabolize
-            var metabolismAmount = ReagentUnit.New(MetabolismRate * tickTime);
+            var metabolismAmount = MetabolismRate * tickTime;
 
             // is that much reagent actually available?
             if (availableReagent < metabolismAmount)
