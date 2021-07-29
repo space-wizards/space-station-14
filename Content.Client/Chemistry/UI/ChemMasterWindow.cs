@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Client.Graphics;
@@ -279,7 +280,7 @@ namespace Content.Client.Chemistry.UI
             UpdatePanelInfo(castState);
             if (Contents.Children != null)
             {
-                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
                 EjectButton.Disabled = !castState.HasBeaker;
             }
         }
