@@ -1608,3 +1608,8 @@ Entries:
   - {message: Added a hardsuit into research directors locker, type: Add}
   id: 286
   time: '2021-07-26T22:14:10.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added bio suits into bio lockers, type: Add}
+  id: 287
+  time: '2021-07-28T17:36:06.0000000+00:00'
