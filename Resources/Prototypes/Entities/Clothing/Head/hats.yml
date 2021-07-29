@@ -11,14 +11,25 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeret
-  name: beret
+  id: ClothingHeadHatBeretRed
+  name: red beret
   description: A beret, an artists favorite headwear.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret.rsi
+    sprite: Clothing/Head/Hats/beret_red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret.rsi
+    sprite: Clothing/Head/Hats/beret_red.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretPurple
+  name: purple beret
+  description: A beret, an artists favorite headwear.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_purple.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_purple.rsi
 
 - type: entity
   parent: ClothingHeadBase
