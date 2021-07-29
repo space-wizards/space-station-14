@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
 using Content.Shared.Buckle;

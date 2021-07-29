@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Morgue;
+﻿using Content.Shared.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

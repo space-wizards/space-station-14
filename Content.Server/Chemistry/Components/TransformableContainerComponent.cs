@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;

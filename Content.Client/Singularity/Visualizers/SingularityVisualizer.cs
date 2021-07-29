@@ -33,7 +33,7 @@ namespace Content.Client.Singularity.Visualizers
                 return;
             }
 
-            sprite.LayerSetRSI(Layer, "Constructible/Power/Singularity/singularity_" + level + ".rsi");
+            sprite.LayerSetRSI(Layer, "Structures/Power/Generation/Singularity/singularity_" + level + ".rsi");
             sprite.LayerSetState(Layer, "singularity_" + level);
         }
     }

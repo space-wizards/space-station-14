@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Power.Components;
@@ -143,7 +142,7 @@ namespace Content.Server.Light.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("emergency-light-component-on-examine",("batteryStateText", BatteryStateText[State])));
+            message.AddMarkup(Loc.GetString("emergency-light-component-on-examine",("batteryStateText", Loc.GetString(BatteryStateText[State]))));
         }
 
         public enum EmergencyLightState

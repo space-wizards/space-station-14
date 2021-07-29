@@ -1,6 +1,6 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -9,10 +9,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Gravity
 {
     [RegisterComponent]
+    [NetworkedComponent]
     public sealed class GravityComponent : Component
     {
         public override string Name => "Gravity";
-        public override uint? NetID => ContentNetIDs.GRAVITY;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled
@@ -53,7 +53,7 @@ namespace Content.Shared.Gravity
         {
             public bool Enabled { get; }
 
-            public GravityComponentState(bool enabled) : base(ContentNetIDs.GRAVITY)
+            public GravityComponentState(bool enabled)
             {
                 Enabled = enabled;
             }

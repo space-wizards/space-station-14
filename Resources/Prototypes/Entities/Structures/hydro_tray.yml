@@ -1,0 +1,22 @@
+- type: entity
+  name: hydroponics tray
+  parent: hydroponicsSoil
+  id: hydroponicsTray
+  description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
+  components:
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      mass: 25
+      hard: true
+      mask:
+      - Impassable
+  - type: Anchorable
+  - type: Pullable
+  - type: Sprite
+    sprite: Structures/Hydroponics/containers.rsi
+    state: hydrotray3
+    drawdepth: FloorObjects
+  - type: PlantHolder
+    drawWarnings: true

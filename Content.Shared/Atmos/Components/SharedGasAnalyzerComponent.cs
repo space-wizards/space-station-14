@@ -1,15 +1,15 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components
 {
+    [NetworkedComponent()]
     public class SharedGasAnalyzerComponent : Component
     {
         public override string Name => "GasAnalyzer";
-        public override uint? NetID => ContentNetIDs.GAS_ANALYZER;
 
         [Serializable, NetSerializable]
         public enum GasAnalyzerUiKey
@@ -77,7 +77,7 @@ namespace Content.Shared.Atmos.Components
         {
             public GasAnalyzerDanger Danger;
 
-            public GasAnalyzerComponentState(GasAnalyzerDanger danger) : base(ContentNetIDs.GAS_ANALYZER)
+            public GasAnalyzerComponentState(GasAnalyzerDanger danger)
             {
                 Danger = danger;
             }

@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -16,6 +17,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     [UsedImplicitly]
     public class GasVentScrubberSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -45,17 +48,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
                 return;
 
-            var environment = args.Atmosphere.GetTile(scrubber.Owner.Transform.Coordinates)!;
+            var environment = _atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
 
-            Scrub(scrubber, appearance, environment, outlet);
+            Scrub(_atmosphereSystem, scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in environment.AdjacentTiles)
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
             {
-                // Pass null appearance, we don't need to set it there.
-                Scrub(scrubber, null, adjacent, outlet);
+                Scrub(_atmosphereSystem, scrubber, null, adjacent, outlet);
             }
         }
 
@@ -67,10 +69,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void Scrub(GasVentScrubberComponent scrubber, AppearanceComponent? appearance, TileAtmosphere? tile, PipeNode outlet)
+        private void Scrub(AtmosphereSystem atmosphereSystem, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
-            if (tile?.Air == null)
+            if (tile == null)
                 return;
 
             // Cannot scrub if pressure too high.
@@ -80,30 +82,28 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
                 appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-                var transferMoles = MathF.Min(1f, (scrubber.VolumeRate / tile.Air.Volume) * tile.Air.TotalMoles);
+                var transferMoles = MathF.Min(1f, (scrubber.VolumeRate / tile.Volume) * tile.TotalMoles);
 
                 // Take a gas sample.
-                var removed = tile.Air.Remove(transferMoles);
+                var removed = tile.Remove(transferMoles);
 
                 // Nothing left to remove from the tile.
                 if (MathHelper.CloseTo(removed.TotalMoles, 0f))
                     return;
 
-                // TODO: Entity system dependency
-                Get<AtmosphereSystem>().ScrubInto(removed, outlet.Air, scrubber.FilterGases);
+                atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);
 
                 // Remix the gases.
-                tile.AssumeAir(removed);
+                atmosphereSystem.Merge(tile, removed);
             }
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
             {
                 appearance?.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
-                var transferMoles = tile.Air.TotalMoles * (scrubber.VolumeRate / tile.Air.Volume);
+                var transferMoles = tile.TotalMoles * (scrubber.VolumeRate / tile.Volume);
 
-                var removed = tile.Air.Remove(transferMoles);
+                var removed = tile.Remove(transferMoles);
 
                 outlet.AssumeAir(removed);
-                tile.Invalidate();
             }
         }
     }

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 

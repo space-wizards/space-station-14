@@ -1,0 +1,23 @@
+﻿- type: entity
+  id: MedicalScanner
+  parent: BaseMachinePowered
+  name: medical scanner
+  description: A bulky medical scanner.
+  components:
+  - type: MedicalScanner
+  - type: Sprite
+    netsync: false
+    noRot: true
+    sprite: Structures/Machines/scanner.rsi
+    layers:
+    - state: open
+      map: ["enum.MedicalScannerVisualLayers.Machine"]
+    - state: idle_unlit
+      map: ["enum.MedicalScannerVisualLayers.Terminal"]
+  - type: Appearance
+    visuals:
+    - type: MedicalScannerVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.MedicalScannerUiKey.Key
+      type: MedicalScannerBoundUserInterface

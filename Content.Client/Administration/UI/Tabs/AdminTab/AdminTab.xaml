@@ -5,7 +5,7 @@
     xmlns:at="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
     Margin="4"
     MinSize="50 50">
-    <VBoxContainer>
+    <BoxContainer Orientation="Vertical">
         <GridContainer Columns="4">
             <cc:UICommandButton Command="kick" Text="{Loc Kick}" WindowType="{x:Type at:KickWindow}" />
             <cc:UICommandButton Command="ban" Text="{Loc Ban}" WindowType="{x:Type at:BanWindow}" />
@@ -13,5 +13,5 @@
             <cc:UICommandButton Command="tpto" Text="{Loc Teleport}" WindowType="{x:Type at:TeleportWindow}" />
             <cc:CommandButton Command="permissions" Text="{Loc Permissions Panel}" />
         </GridContainer>
-    </VBoxContainer>
+    </BoxContainer>
 </Control>

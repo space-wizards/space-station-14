@@ -18,6 +18,7 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -29,6 +30,9 @@ namespace Content.Server.Hands
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
+        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -113,12 +117,12 @@ namespace Content.Server.Hands
             if (!hands.TryGetActiveHeldEntity(out var throwEnt))
                 return false;
 
-            if (!Get<InteractionSystem>().TryThrowInteraction(hands.Owner, throwEnt))
+            if (!_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
+                var splitStack = _stackSystem.Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
 
                 if (splitStack == null)
                     return false;
@@ -132,8 +136,10 @@ namespace Content.Server.Hands
             if (direction == Vector2.Zero)
                 return true;
 
-            var throwVec = direction.Normalized * MathF.Min(direction.Length, hands.ThrowRange) * hands.ThrowForceMultiplier;
-            throwEnt.TryThrow(throwVec, playerEnt);
+            direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
+
+            var throwStrength = hands.ThrowForceMultiplier;
+            throwEnt.TryThrow(direction, throwStrength, playerEnt);
 
             return true;
         }
@@ -165,7 +171,7 @@ namespace Content.Server.Hands
             if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
                 !equipmentItem.Owner.TryGetComponent(out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("equipment", SlotNames[equipmentSlot].ToLower())));
+                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 return;
             }
 
@@ -177,7 +183,7 @@ namespace Content.Server.Hands
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("equipment", SlotNames[equipmentSlot].ToLower())));
+                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
                 }
                 else
                 {

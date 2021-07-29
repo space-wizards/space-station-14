@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace Content.Shared.Damage
+﻿namespace Content.Shared.Damage
 {
     /// <summary>
     ///     Data class with information on how the value of a

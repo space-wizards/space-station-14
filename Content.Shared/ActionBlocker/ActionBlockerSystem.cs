@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.DragDrop;
+﻿using Content.Shared.DragDrop;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;

@@ -4,8 +4,8 @@
 #   parent: LockerSyndicatePersonal
 
 - type: entity
-  id: LockerEmergencyFilledRandom
-  parent: LockerEmergency
+  id: ClosetEmergencyFilledRandom
+  parent: ClosetEmergency
   suffix: Filled, Random
   components:
   - type: StorageFill
@@ -22,8 +22,8 @@
         prob: 0.2
 
 - type: entity
-  id: LockerFireFilled
-  parent: LockerFire
+  id: ClosetFireFilled
+  parent: ClosetFire
   suffix: Filled
   components:
     - type: StorageFill

@@ -1,0 +1,52 @@
+- type: entity
+  id: CrateGeneric
+  parent: BaseStructureDynamic
+  abstract: true
+  name: crate
+  description: A large container for items.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
+  - type: InteractionOutline
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4, -0.4, 0.29, 0.4"
+      mass: 25
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - SmallImpassable
+  - type: EntityStorage
+    Capacity: 500
+    CanWeldShut: true
+  - type: PlaceableSurface
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: crate_open
+      state_closed: crate_door
+  - type: LoopingSound

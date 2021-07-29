@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Server.GameObjects;
+﻿using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.UserInterface

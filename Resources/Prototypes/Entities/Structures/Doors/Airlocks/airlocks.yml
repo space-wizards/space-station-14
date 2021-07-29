@@ -1,0 +1,125 @@
+- type: entity
+  parent: Airlock
+  id: AirlockFreezer
+  suffix: Freezer
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockEngineering
+  suffix: Engineering
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockCargo
+  suffix: Cargo
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockMedical
+  suffix: Medical
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockScience
+  suffix: Science
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/science.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockCommand
+  suffix: Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/command.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockSecurity
+  suffix: Security
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockMaint
+  name: maintenance hatch
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+# Glass
+
+- type: entity
+  id: AirlockGlass
+  parent: Airlock
+  name: glass airlock
+  components:
+  - type: Door
+    occludes: false
+  - type: Occluder
+    enabled: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockEngineeringGlass
+  suffix: Engineering
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCargoGlass
+  suffix: Cargo
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMedicalGlass
+  suffix: Medical
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockScienceGlass
+  suffix: Science
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/science.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCommandGlass
+  suffix: Command
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/command.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSecurityGlass
+  suffix: Security
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/security.rsi

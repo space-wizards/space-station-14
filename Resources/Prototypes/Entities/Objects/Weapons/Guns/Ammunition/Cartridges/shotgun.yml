@@ -101,3 +101,4 @@
     maxVol: 15
     caps: Refillable, Drainable
   - type: SolutionTransfer
+    maxTransferAmount: 15

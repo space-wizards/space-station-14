@@ -27,8 +27,7 @@ namespace Content.Server.AI.Steering
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-
-        private PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
 
         /// <summary>
         /// Whether we try to avoid non-blocking physics objects
@@ -87,7 +86,6 @@ namespace Content.Server.AI.Steering
         public override void Initialize()
         {
             base.Initialize();
-            _pathfindingSystem = Get<PathfindingSystem>();
 
             for (var i = 0; i < AgentListCount; i++)
             {

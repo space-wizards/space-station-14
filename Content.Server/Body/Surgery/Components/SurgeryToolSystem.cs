@@ -6,12 +6,15 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Surgery.Components
 {
     [UsedImplicitly]
     public class SurgeryToolSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         private readonly HashSet<SurgeryToolComponent> _openSurgeryUIs = new();
 
         public override void Initialize()
@@ -54,7 +57,7 @@ namespace Content.Server.Body.Surgery.Components
                     continue;
                 }
 
-                if (!Get<ActionBlockerSystem>().CanInteract(tool.PerformerCache) ||
+                if (!_actionBlockerSystem.CanInteract(tool.PerformerCache) ||
                     !tool.PerformerCache.InRangeUnobstructed(tool.BodyCache))
                 {
                     tool.CloseAllSurgeryUIs();

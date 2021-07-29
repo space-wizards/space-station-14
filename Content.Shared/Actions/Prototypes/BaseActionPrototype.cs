@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;

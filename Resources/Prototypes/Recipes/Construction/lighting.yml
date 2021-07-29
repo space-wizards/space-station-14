@@ -7,7 +7,7 @@
   category: Structures
   description: A wall light fixture. Use light tubes.
   icon:
-    sprite: Constructible/Lighting/light_tube.rsi
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     state: off
   objectType: Structure
   placementMode: WallmountLight
@@ -25,7 +25,7 @@
   category: Structures
   description: A wall light fixture. Use light bulbs.
   icon:
-    sprite: Constructible/Lighting/light_small.rsi
+    sprite: Structures/Wallmounts/Lighting/light_small.rsi
     state: off
   objectType: Structure
   placementMode: WallmountLight
