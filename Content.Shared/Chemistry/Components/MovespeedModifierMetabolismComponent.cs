@@ -4,7 +4,6 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
-using System.Threading;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.IoC;

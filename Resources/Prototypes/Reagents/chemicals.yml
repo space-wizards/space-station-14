@@ -238,11 +238,12 @@
   meltingPoint: 170.0
   metabolism:
     - !type:HealthChangeMetabolism
-      healthChange: 1.2
+      healthChange: 2.5 # On tg it's 1-4 brain damage, but since as of now, we don't have brain damage, toxin will have to do.
       damageClass: Toxin
+      rate: 0.6
     - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 2.3
-      sprintSpeedModifier: 2.3
+      walkSpeedModifier: 1.65
+      sprintSpeedModifier: 1.65
 
 - type: reagent
   id: Iodine
@@ -265,10 +266,7 @@
   metabolism:
     - !type:HealthChangeMetabolism
       healthChange: 0.3
-      damageClass: Toxin
-    - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 1.1
-      sprintSpeedModifier: 1.1
+      damageClass: Toxin 
 
 - type: reagent
   id: Oil
