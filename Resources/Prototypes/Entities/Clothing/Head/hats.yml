@@ -11,7 +11,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretRed
+  id: ClothingHeadHatBeret
   name: red beret
   description: A beret, an artists favorite headwear.
   components:
