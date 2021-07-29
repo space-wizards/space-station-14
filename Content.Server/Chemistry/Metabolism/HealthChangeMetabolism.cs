@@ -41,10 +41,10 @@ namespace Content.Server.Chemistry.Metabolism
         public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
             // use DefaultMetabolism to determine how much reagent we should metabolize
-            var metabolismAmount = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
+            var amountMetabolized = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
 
             // how much does this much reagent heal for
-            var healthChangeAmount = HealthChange * metabolismAmount.Float();
+            var healthChangeAmount = HealthChange * amountMetabolized.Float();
 
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {
@@ -66,7 +66,7 @@ namespace Content.Server.Chemistry.Metabolism
                     _accumulatedHealth += 1;
                 }
             }
-            return metabolismAmount;
+            return amountMetabolized;
         }
     }
 }

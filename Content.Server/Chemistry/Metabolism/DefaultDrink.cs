@@ -22,14 +22,14 @@ namespace Content.Server.Chemistry.Metabolism
         public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
             // use DefaultMetabolism to determine how much reagent we should metabolize
-            var metabolismAmount = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
+            var amountMetabolized = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
 
             // If metabolizing entity has a ThirstComponent, hydrate them.
             if (solutionEntity.TryGetComponent(out ThirstComponent? thirst))
-                thirst.UpdateThirst(metabolismAmount.Float() * HydrationFactor);
+                thirst.UpdateThirst(amountMetabolized.Float() * HydrationFactor);
 
             //Return amount of reagent to be removed, remove reagent regardless of ThirstComponent presence
-            return metabolismAmount;
+            return amountMetabolized;
         }
     }
 }

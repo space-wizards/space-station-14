@@ -19,15 +19,15 @@ namespace Content.Shared.Chemistry.Metabolizable
         {
 
             // how much reagent should we metabolize
-            var metabolismAmount = MetabolismRate * tickTime;
+            var amountMetabolized = MetabolismRate * tickTime;
 
             // is that much reagent actually available?
-            if (availableReagent < metabolismAmount)
+            if (availableReagent < amountMetabolized)
             {
                 return availableReagent;
             }
 
-            return metabolismAmount;
+            return amountMetabolized;
         }
     }
 }
