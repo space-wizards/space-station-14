@@ -5,7 +5,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Chemistry.Metabolizable
 {
     /// <summary>
-    ///     Default metabolism for reagents. Metabolizes the reagent with no effects
+    ///     Default metabolization for reagents. Returns the amount of reagents metabolized without applying effects.
+    ///     Metabolizes reagents at a constant rate, limited by how much is available. Other classes are derived from
+    ///     this class, so that they do not need their own metabolization quantity calculation.
     /// </summary>
     [DataDefinition]
     public class DefaultMetabolizable : IMetabolizable
@@ -18,7 +20,8 @@ namespace Content.Shared.Chemistry.Metabolizable
         public virtual ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
 
-            // how much reagent should we metabolize
+            // How much reagent should we metabolize
+            // The default behaviour is to metabolize at a constant rate, independent of the quantity of reagents.
             var amountMetabolized = MetabolismRate * tickTime;
 
             // is that much reagent actually available?
