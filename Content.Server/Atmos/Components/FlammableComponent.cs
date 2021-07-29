@@ -20,6 +20,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Components
 {
@@ -29,8 +31,10 @@ namespace Content.Server.Atmos.Components
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
 
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [DataField("damageType", required:true)]
-        private readonly DamageTypePrototype _damageType = default!;
+        private readonly string _damageType = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; set; }
@@ -95,7 +99,7 @@ namespace Content.Server.Atmos.Components
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
-                    damageable.ChangeDamage(_damageType, damage, false);
+                    damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), damage, false);
                 }
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));
