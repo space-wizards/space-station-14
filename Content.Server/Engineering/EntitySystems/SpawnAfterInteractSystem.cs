@@ -16,6 +16,8 @@ namespace Content.Server.Engineering.EntitySystems
     public class SpawnAfterInteractSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
 
         public override void Initialize()
         {
@@ -41,7 +43,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (!IsTileClear())
                 return;
 
-            if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))
+            if (component.DoAfterTime > 0)
             {
                 var doAfterArgs = new DoAfterEventArgs(args.User, component.DoAfterTime)
                 {
@@ -49,7 +51,7 @@ namespace Content.Server.Engineering.EntitySystems
                     BreakOnStun = true,
                     PostCheck = IsTileClear,
                 };
-                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
+                var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result != DoAfterStatus.Finished)
                     return;
@@ -59,7 +61,7 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
 
             if (component.Owner.TryGetComponent<SharedStackComponent>(out var stackComp)
-                && component.RemoveOnInteract && !Get<StackSystem>().Use(uid, stackComp, 1))
+                && component.RemoveOnInteract && !_stackSystem.Use(uid, stackComp, 1))
             {
                 return;
             }

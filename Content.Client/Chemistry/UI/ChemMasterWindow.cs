@@ -285,29 +285,6 @@ namespace Content.Client.Chemistry.UI
         }
 
         /// <summary>
-        /// This searches recursively through all the children of "parent"
-        /// and sets the Disabled value of any buttons found to "val"
-        /// </summary>
-        /// <param name="parent">The control which childrens get searched</param>
-        /// <param name="val">The value to which disabled gets set</param>
-        private void SetButtonDisabledRecursive(Control parent, bool val)
-        {
-            foreach (var child in parent.Children)
-            {
-                if (child is Button but)
-                {
-                    but.Disabled = val;
-                    continue;
-                }
-
-                if (child.Children != null)
-                {
-                    SetButtonDisabledRecursive(child, val);
-                }
-            }
-        }
-
-        /// <summary>
         /// Update the container, buffer, and packaging panels.
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>

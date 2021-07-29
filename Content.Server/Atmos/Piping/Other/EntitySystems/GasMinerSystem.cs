@@ -6,12 +6,15 @@ using Content.Server.Atmos.Piping.Other.Components;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Other.EntitySystems
 {
     [UsedImplicitly]
     public class GasMinerSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -21,9 +24,7 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
         private void OnMinerUpdated(EntityUid uid, GasMinerComponent miner, AtmosDeviceUpdateEvent args)
         {
-            var atmosphereSystem = Get<AtmosphereSystem>();
-
-            if (!CheckMinerOperation(atmosphereSystem, miner, out var environment) || !miner.Enabled || !miner.SpawnGas.HasValue || miner.SpawnAmount <= 0f)
+            if (!CheckMinerOperation(miner, out var environment) || !miner.Enabled || !miner.SpawnGas.HasValue || miner.SpawnAmount <= 0f)
                 return;
 
             // Time to mine some gas.
@@ -31,15 +32,15 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
             var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
             merger.SetMoles(miner.SpawnGas.Value, miner.SpawnAmount);
 
-            atmosphereSystem.Merge(environment, merger);
+            _atmosphereSystem.Merge(environment, merger);
         }
 
-        private bool CheckMinerOperation(AtmosphereSystem atmosphereSystem, GasMinerComponent miner, [NotNullWhen(true)] out GasMixture? environment)
+        private bool CheckMinerOperation(GasMinerComponent miner, [NotNullWhen(true)] out GasMixture? environment)
         {
-            environment = atmosphereSystem.GetTileMixture(miner.Owner.Transform.Coordinates, true);
+            environment = _atmosphereSystem.GetTileMixture(miner.Owner.Transform.Coordinates, true);
 
             // Space.
-            if (atmosphereSystem.IsTileSpace(miner.Owner.Transform.Coordinates))
+            if (_atmosphereSystem.IsTileSpace(miner.Owner.Transform.Coordinates))
             {
                 miner.Broken = true;
                 return false;

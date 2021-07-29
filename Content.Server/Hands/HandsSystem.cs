@@ -18,6 +18,7 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -29,6 +30,9 @@ namespace Content.Server.Hands
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
+        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -113,12 +117,12 @@ namespace Content.Server.Hands
             if (!hands.TryGetActiveHeldEntity(out var throwEnt))
                 return false;
 
-            if (!Get<InteractionSystem>().TryThrowInteraction(hands.Owner, throwEnt))
+            if (!_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = Get<StackSystem>().Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
+                var splitStack = _stackSystem.Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
 
                 if (splitStack == null)
                     return false;

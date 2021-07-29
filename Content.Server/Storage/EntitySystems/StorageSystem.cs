@@ -6,7 +6,7 @@ using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Storage
+namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class StorageSystem : EntitySystem
@@ -54,7 +54,7 @@ namespace Content.Server.Storage
             {
                 storageComp.HandleEntityMaybeInserted(message);
             }
-            
+
             if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
             {
                 newStorageComp.ContainerUpdateAppearance(message.Container);

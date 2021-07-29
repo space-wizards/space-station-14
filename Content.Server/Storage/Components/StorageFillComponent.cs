@@ -17,9 +17,9 @@ namespace Content.Server.Storage.Components
     {
         public override string Name => "StorageFill";
 
-        [DataField("contents")] private List<StorageFillEntry> _contents = new();
+        [DataField("contents")] private List<EntitySpawnEntry> _contents = new();
 
-        public IReadOnlyList<StorageFillEntry> Contents => _contents;
+        public IReadOnlyList<EntitySpawnEntry> Contents => _contents;
 
         void IMapInit.MapInit()
         {
@@ -39,7 +39,6 @@ namespace Content.Server.Storage.Components
             var alreadySpawnedGroups = new List<string>();
             foreach (var storageItem in _contents)
             {
-                if (string.IsNullOrEmpty(storageItem.PrototypeId)) continue;
                 if (!string.IsNullOrEmpty(storageItem.GroupId) &&
                     alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
@@ -56,51 +55,6 @@ namespace Content.Server.Storage.Components
                 }
 
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
-            }
-        }
-
-        [Serializable]
-        [DataDefinition]
-        public struct StorageFillEntry : IPopulateDefaultValues
-        {
-            [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-            public string? PrototypeId;
-
-            [DataField("prob")] public float SpawnProbability;
-
-            /// <summary>
-            /// The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
-            /// </summary>
-            [DataField("orGroup")] public string GroupId;
-
-            /// <summary>
-            /// orGroup signifies to pick between entities designated with an ID.
-            ///
-            /// <example>
-            /// <para>To define an orGroup in a StorageFill component you
-            /// need to add it to the entities you want to choose between and
-            /// add a prob field. In this example there is a 50% chance the storage
-            /// spawns with Y or Z.
-            ///
-            /// </para>
-            /// <code>
-            /// - type: StorageFill
-            ///   contents:
-            ///     - name: X
-            ///     - name: Y
-            ///       prob: 0.50
-            ///       orGroup: YOrZ
-            ///     - name: Z
-            ///       orGroup: YOrZ
-            /// </code>
-            /// </example>
-            /// </summary>
-            [DataField("amount")] public int Amount;
-
-            public void PopulateDefaultValues()
-            {
-                Amount = 1;
-                SpawnProbability = 1;
             }
         }
     }

@@ -1,55 +1,63 @@
+using Content.Server.Interaction.Components;
+using Content.Server.Sound.Components;
+using Content.Server.Throwing;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
-using Content.Server.Interaction.Components;
-using Content.Server.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 
 namespace Content.Server.Sound
 {
+    /// <summary>
+    /// Will play a sound on various events if the affected entity has a component derived from BaseEmitSoundComponent
+    /// </summary>
     [UsedImplicitly]
     public class EmitSoundSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>((eUI, comp, arg) => PlaySound(comp));
-            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>((eUI, comp, arg) => PlaySound(comp));
-            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>((eUI, comp, arg) => PlaySound(comp));
-            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>((eUI, comp, args) => PlaySound(comp));
+            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>(HandleEmitSoundOnLand);
+            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>(HandleEmitSoundOnUseInHand);
+            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(HandleEmitSoundOnThrown);
+            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
         }
 
-        private void PlaySound(BaseEmitSoundComponent component)
+        private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
         {
-            PlayRandomSoundFromCollection(component);
+            TryEmitSound(component);
         }
 
-        private void PlayRandomSoundFromCollection(BaseEmitSoundComponent component)
+        private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
         {
-            var file = SelectRandomSoundFromSoundCollection(component.SoundCollectionName!);
-            PlaySingleSound(file, component);
+            TryEmitSound(component);
         }
 
-        private string SelectRandomSoundFromSoundCollection(string soundCollectionName)
+        private void HandleEmitSoundOnThrown(EntityUid eUI, BaseEmitSoundComponent component, ThrownEvent arg)
         {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
-            return _random.Pick(soundCollection.PickFiles);
+            TryEmitSound(component);
         }
 
-        private static void PlaySingleSound(string soundName, BaseEmitSoundComponent component)
+        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), soundName, component.Owner,
-                             AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+            TryEmitSound(component);
+        }
+
+        private static void TryEmitSound(BaseEmitSoundComponent component)
+        {
+            if (!string.IsNullOrWhiteSpace(component.Sound.GetSound()))
+            {
+                SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+            }
+            else
+            {
+                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has no {nameof(component.Sound)} to play.");
+            }
         }
     }
 }

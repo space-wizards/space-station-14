@@ -72,6 +72,8 @@
         prob: 1
       - id: ClothingOuterApronBotanist
         prob: 0.8
+      - id: ClothingBeltPlant
+        prob: 1
       - id: TowercapSeeds
         prob: 1
       - id: BananaSeeds

@@ -9,12 +9,15 @@ using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public class GasVentPumpSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -44,8 +47,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
                 return;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-            var environment = atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)
@@ -66,7 +68,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 {
                     var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
-                    atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
+                    _atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
                 }
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0)

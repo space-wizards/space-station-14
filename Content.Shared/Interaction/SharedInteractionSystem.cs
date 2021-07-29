@@ -4,6 +4,7 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -17,6 +18,8 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
+        [Dependency] private readonly SharedBroadphaseSystem _sharedBroadphaseSystem = default!;
+
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
@@ -46,7 +49,7 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = Get<SharedBroadphaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return dir.Length;
             return (rayResults[0].HitPos - origin.Position).Length;
@@ -122,7 +125,7 @@ namespace Content.Shared.Interaction
             predicate ??= _ => false;
 
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = Get<SharedBroadphaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 

@@ -1588,3 +1588,28 @@ Entries:
   - {message: Items with missing inhand sprites no longer show a giant ERROR, type: Fix}
   id: 282
   time: '2021-07-25T10:02:48.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Makeshift Handcuffs into the construction list, type: Add}
+  id: 283
+  time: '2021-07-25T15:30:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle-relative movement for when we get shuttle rotation., type: Add}
+  id: 284
+  time: '2021-07-25T15:48:22.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Storage Room to Coats, type: Add}
+  id: 285
+  time: '2021-07-26T05:36:27.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added a hardsuit into research directors locker, type: Add}
+  id: 286
+  time: '2021-07-26T22:14:10.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added bio suits into bio lockers, type: Add}
+  id: 287
+  time: '2021-07-28T17:36:06.0000000+00:00'

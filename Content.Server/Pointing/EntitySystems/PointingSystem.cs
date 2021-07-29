@@ -31,6 +31,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -112,7 +113,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player))
+            if (_actionBlockerSystem.CanChangeDirection(player))
             {
                 var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)

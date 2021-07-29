@@ -25,6 +25,7 @@ namespace Content.Client.Audio
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly ClientGameTicker _gameTicker = default!;
 
         private SoundCollectionPrototype _ambientCollection = default!;
 
@@ -48,7 +49,7 @@ namespace Content.Client.Audio
             _client.PlayerJoinedServer += OnJoin;
             _client.PlayerLeaveServer += OnLeave;
 
-            Get<ClientGameTicker>().LobbyStatusUpdated += LobbySongReceived;
+            _gameTicker.LobbyStatusUpdated += LobbySongReceived;
         }
 
         public override void Shutdown()
@@ -60,7 +61,7 @@ namespace Content.Client.Audio
             _client.PlayerJoinedServer -= OnJoin;
             _client.PlayerLeaveServer -= OnLeave;
 
-            Get<ClientGameTicker>().LobbyStatusUpdated -= LobbySongReceived;
+            _gameTicker.LobbyStatusUpdated -= LobbySongReceived;
 
             EndAmbience();
             EndLobbyMusic();
@@ -165,7 +166,7 @@ namespace Content.Client.Audio
         private void StartLobbyMusic()
         {
             EndLobbyMusic();
-            var file = Get<ClientGameTicker>().LobbySong;
+            var file = _gameTicker.LobbySong;
             if (file == null) // We have not received the lobby song yet.
             {
                 return;

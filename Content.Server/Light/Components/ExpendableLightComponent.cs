@@ -1,6 +1,6 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Items;
-using Content.Server.Sound;
+using Content.Server.Sound.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -56,7 +56,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         private bool TryActivate()
         {
-            if (!Activated)
+            if (!Activated && CurrentState == ExpendableLightState.BrandNew)
             {
                 if (Owner.TryGetComponent<ItemComponent>(out var item))
                 {

@@ -12318,15 +12318,6 @@ entities:
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
-      molesArchived:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
       moles:
       - 21.824879
       - 82.10312
