@@ -32,9 +32,18 @@ namespace Content.Shared.Chemistry
         {
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;
+
             component.WalkSpeedModifier = cast.WalkSpeedModifier;
             component.SprintSpeedModifier = cast.SprintSpeedModifier;
             component.ModifierTimer = cast.ModifierTimer;
+
+            //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
+            //Also I don't know if this is a good way to do a NAND gate in c#
+            component.Owner.TryGetComponent(out MovementSpeedModifierComponent? movement);
+            if (!(cast.WalkSpeedModifier.Equals(movement?.WalkSpeedModifier) && cast.SprintSpeedModifier.Equals(movement?.SprintSpeedModifier)))
+                movement?.RefreshMovementSpeedModifiers();
+            
+            
         }
 
         public override void Update(float frameTime)

@@ -87,6 +87,7 @@ namespace Content.Shared.Chemistry.Components
             WalkSpeedModifier = state.WalkSpeedModifier;
             SprintSpeedModifier = state.SprintSpeedModifier;
             ModifierTimer = state.ModifierTimer;
+
             if (Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
             {
                 modifier.RefreshMovementSpeedModifiers();

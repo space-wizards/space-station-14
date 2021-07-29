@@ -3,7 +3,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Chemistry.Metabolism
@@ -57,13 +56,12 @@ namespace Content.Server.Chemistry.Metabolism
                 status.SprintSpeedModifier = SprintSpeedModifier;
                 status.EffectTime = StatusLifetime * MetabolismRate.Int();
                 status.ResetTimer();
-                
 
+                //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
+                //Also I don't know if this is a good way to do a NAND gate in c#
+                if (!(status.WalkSpeedModifier.Equals(WalkSpeedModifier) && status.SprintSpeedModifier.Equals(SprintSpeedModifier)))
+                    movement?.RefreshMovementSpeedModifiers();
                 
-                if (!movement.WalkSpeedModifier.Equals(WalkSpeedModifier) || !movement.SprintSpeedModifier.Equals(SprintSpeedModifier))
-                {
-                    movement.RefreshMovementSpeedModifiers();
-                }
                 status.Dirty();    
             }
             return MetabolismRate;
