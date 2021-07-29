@@ -62,11 +62,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// Perpetuate the modifiers further.
         /// </summary>
-        public void ResetTimer()
-        {
-            ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(EffectTime / 1000))); // EffectTime is milliseconds, TimeSpan.FromSeconds() is just seconds
-            Dirty();
-        }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {

@@ -4,6 +4,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
 using Content.Shared.Chemistry.Components;
+using Robust.Shared.Timing;
+using Robust.Shared.IoC;
+using System;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -14,6 +17,7 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class MovespeedModifierMetabolism : IMetabolizable
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
         /// </summary>
@@ -64,8 +68,7 @@ namespace Content.Server.Chemistry.Metabolism
                 {
                     status.EffectTime = StatusLifetime * MetabolismRate.Int();
                 }
-                
-                status.ResetTimer();
+
 
                 //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
                 //Also I don't know if this is a good way to do a NAND gate in c#
@@ -75,6 +78,11 @@ namespace Content.Server.Chemistry.Metabolism
                 status.Dirty();    
             }
             return MetabolismRate;
+        }
+        public void ResetTimer(MovespeedModifierMetabolismComponent status)
+        {
+            status.ModifierTimer = (_gameTiming.CurTime, _gameTiming.CurTime.Add(TimeSpan.FromSeconds(status.EffectTime / 1000))); // EffectTime is milliseconds, TimeSpan.FromSeconds() is just seconds
+            status.Dirty();
         }
     }
 }
