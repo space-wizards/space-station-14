@@ -29,6 +29,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Doors.Components
 {
@@ -37,6 +39,8 @@ namespace Content.Server.Doors.Components
     [ComponentReference(typeof(SharedDoorComponent))]
     public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
 
@@ -45,7 +49,7 @@ namespace Content.Server.Doors.Components
         private string? _boardPrototype;
 
         [DataField("damageType", required: true)]
-        private readonly DamageTypePrototype _damageType = default!;
+        private readonly string _damageType = default!;
 
         public override DoorState State
         {
@@ -489,7 +493,7 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.ChangeDamage(_damageType, DoorCrushDamage, false, Owner);
+                damage.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
             }
 

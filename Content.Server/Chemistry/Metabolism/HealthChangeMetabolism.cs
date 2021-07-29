@@ -6,6 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -16,6 +17,8 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class HealthChangeMetabolism : IMetabolizable
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
         /// </summary>
@@ -32,7 +35,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// Class of damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary>
         [DataField("damageClass", true)]
-        public string damageType { get; set; } = default!;
+        public string DamageType { get; set; } = default!;
 
         private float _accumulatedHealth;
 
@@ -47,19 +50,19 @@ namespace Content.Server.Chemistry.Metabolism
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
-                damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), (int)HealthChange, true);
+                damageComponent.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(DamageType), (int)HealthChange, true);
                 float decHealthChange = (float) (HealthChange - (int) HealthChange);
                 _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
-                    damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), 1, true);
+                    damageComponent.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(DamageType), 1, true);
                     _accumulatedHealth -= 1;
                 }
 
                 else if(_accumulatedHealth <= -1)
                 {
-                    damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), -1, true);
+                    damageComponent.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(DamageType), -1, true);
                     _accumulatedHealth += 1;
                 }
             }

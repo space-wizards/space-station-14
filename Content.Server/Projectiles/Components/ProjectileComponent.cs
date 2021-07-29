@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Robust.Shared.GameObjects;
@@ -14,10 +14,10 @@ namespace Content.Server.Projectiles.Components
     {
 
         [DataField("damageTypes")]
-        private Dictionary<DamageTypePrototype, int> _damageTypes = new();
+        private Dictionary<string, int> _damageTypes = new();
 
         [ViewVariables]
-        public Dictionary<DamageTypePrototype, int> Damages
+        public Dictionary<string, int> Damages
         {
             get => _damageTypes;
             set => _damageTypes = value;

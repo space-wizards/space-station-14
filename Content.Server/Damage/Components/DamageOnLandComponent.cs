@@ -3,6 +3,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Components
 {
@@ -11,8 +13,10 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnLand";
 
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [DataField("damageType", required: true)]
-        private DamageTypePrototype _damageType = default!;
+        private readonly string _damageType = default!;
 
         [DataField("amount")]
         private int _amount = 1;
@@ -24,7 +28,7 @@ namespace Content.Server.Damage.Components
         {
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }

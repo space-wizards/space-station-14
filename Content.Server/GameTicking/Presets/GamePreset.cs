@@ -9,6 +9,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -17,7 +18,7 @@ namespace Content.Server.GameTicking.Presets
     /// </summary>
     public abstract class GamePreset
     {
-
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
@@ -68,7 +69,7 @@ namespace Content.Server.GameTicking.Presets
                     {
                         //todo: what if they dont breathe lol
                         //cry deeply
-                        damageable.SetDamage(damageable.GetDamageType("Asphyxiation"), 200, playerEntity);
+                        damageable.SetDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200, playerEntity);
                     }
                 }
             }

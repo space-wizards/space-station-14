@@ -14,7 +14,7 @@ namespace Content.Server.Damage.Components
         public override string Name => "DamageOnHighSpeedImpact";
 
         [DataField("damageType", required: true)]
-        public DamageTypePrototype DamageType { get; set; } = default!;
+        public string DamageType { get; set; } = default!;
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("baseDamage")]

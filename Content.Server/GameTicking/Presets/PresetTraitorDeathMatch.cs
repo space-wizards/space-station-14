@@ -23,6 +23,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -38,6 +39,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string PDAPrototypeName => "CaptainPDA";
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
@@ -196,7 +198,7 @@ namespace Content.Server.GameTicking.Presets
                     if (entity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
-                        damageable.ChangeDamage(damageable.GetDamageType("Asphyxiation"), 100, true);
+                        damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
                     }
                 }
                 else if (!mobState.IsDead())

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
@@ -10,12 +10,16 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
     public class HealingComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "Healing";
 
         [DataField("heal", required: true )]
@@ -49,9 +53,9 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            foreach (var (type, amount) in Heal)
+            foreach (var (damageType, amount) in Heal)
             {
-                damageable.ChangeDamage(damageable.GetDamageType(type), -amount, true);
+                damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageType), -amount, true);
             }
 
             return true;

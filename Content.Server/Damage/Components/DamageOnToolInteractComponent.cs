@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
@@ -7,12 +7,16 @@ using Content.Shared.Interaction;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
     public class DamageOnToolInteractComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override string Name => "DamageOnToolInteract";
 
         [DataField("damage")]
@@ -22,10 +26,10 @@ namespace Content.Server.Damage.Components
         private List<ToolQuality> _tools = new();
 
         [DataField("weldingDamageType",required: true)]
-        private readonly DamageTypePrototype _weldingDamageType = default!;
+        private readonly string _weldingDamageType = default!;
 
         [DataField("defaultDamageType",required: true)]
-        private readonly DamageTypePrototype _defaultDamageType = default!;
+        private readonly string _defaultDamageType = default!;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -54,8 +58,8 @@ namespace Content.Server.Damage.Components
                 return false;
 
             damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                    ? _weldingDamageType
-                    : _defaultDamageType,
+                    ? _prototypeManager.Index<DamageTypePrototype>(_weldingDamageType)
+                    : _prototypeManager.Index<DamageTypePrototype>(_defaultDamageType),
                 Damage, false, eventArgs.User);
 
             return true;

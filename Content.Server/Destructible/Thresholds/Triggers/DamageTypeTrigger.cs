@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {
@@ -13,6 +15,8 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public class DamageTypeTrigger : IThresholdTrigger
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [DataField("damageType")]
         public string? DamageType { get; set; }
 
@@ -26,7 +30,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
                 return false;
             }
 
-            return damageable.TryGetDamage(damageable.GetDamageType(DamageType), out var damageReceived) &&
+            return damageable.TryGetDamage(_prototypeManager.Index<DamageTypePrototype>(DamageType), out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }

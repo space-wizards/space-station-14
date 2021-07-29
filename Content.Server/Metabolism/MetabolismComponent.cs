@@ -14,6 +14,8 @@ using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Metabolism.Events;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 using Content.Shared.MobState;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
@@ -27,6 +29,7 @@ namespace Content.Server.Metabolism
     public class MetabolismComponent : Component
     {
         [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Metabolism";
 
@@ -353,7 +356,7 @@ namespace Content.Server.Metabolism
                 return;
             }
 
-            damageable.ChangeDamage(damageable.GetDamageType(_damageType), _suffocationDamage, false);
+            damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), _suffocationDamage, false);
         }
 
         private void StopSuffocation()
@@ -362,7 +365,7 @@ namespace Content.Server.Metabolism
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.ChangeDamage(damageable.GetDamageType(_damageType), -_suffocationDamageRecovery, false);
+                damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), -_suffocationDamageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
