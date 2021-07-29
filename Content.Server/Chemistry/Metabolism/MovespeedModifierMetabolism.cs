@@ -52,14 +52,24 @@ namespace Content.Server.Chemistry.Metabolism
             {
                 solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
-                status.WalkSpeedModifier = WalkSpeedModifier;
-                status.SprintSpeedModifier = SprintSpeedModifier;
-                status.EffectTime = StatusLifetime * MetabolismRate.Int();
+                if(status.WalkSpeedModifier != WalkSpeedModifier)
+                {
+                    status.WalkSpeedModifier = WalkSpeedModifier;
+                }
+                if (status.SprintSpeedModifier != SprintSpeedModifier)
+                {
+                    status.SprintSpeedModifier = SprintSpeedModifier;
+                }
+                if (status.EffectTime != StatusLifetime * MetabolismRate.Int())
+                {
+                    status.EffectTime = StatusLifetime * MetabolismRate.Int();
+                }
+                
                 status.ResetTimer();
 
                 //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
                 //Also I don't know if this is a good way to do a NAND gate in c#
-                if (!(status.WalkSpeedModifier.Equals(WalkSpeedModifier) && status.SprintSpeedModifier.Equals(SprintSpeedModifier)))
+                if (!(status.WalkSpeedModifier.Equals(movement.WalkSpeedModifier) & status.SprintSpeedModifier.Equals(movement.SprintSpeedModifier)))
                     movement?.RefreshMovementSpeedModifiers();
                 
                 status.Dirty();    

@@ -40,7 +40,7 @@ namespace Content.Shared.Chemistry
             //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
             //Also I don't know if this is a good way to do a NAND gate in c#
             component.Owner.TryGetComponent(out MovementSpeedModifierComponent? movement);
-            if (!(cast.WalkSpeedModifier.Equals(movement?.WalkSpeedModifier) && cast.SprintSpeedModifier.Equals(movement?.SprintSpeedModifier)))
+            if (!(cast.WalkSpeedModifier.Equals(movement?.WalkSpeedModifier) & cast.SprintSpeedModifier.Equals(movement?.SprintSpeedModifier)))
                 movement?.RefreshMovementSpeedModifiers();
             
             
