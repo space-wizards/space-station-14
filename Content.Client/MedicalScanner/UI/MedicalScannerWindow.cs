@@ -57,16 +57,17 @@ namespace Content.Client.MedicalScanner.UI
                 {
 
                     // Show total damage for the group
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", damageGroupID), ("amount", damageAmount))}");
+                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", damageGroupID), ("amount", damageAmount))}");
 
                     // Then show the damage for each type in that group.
                     // currently state has a dictionary mapping groupsIDs to damage, and typeIDs to damage, but does not know how types and groups are related.
                     // This sounds like a job for PrototypeManager-man!
-                    foreach (var type in IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID).DamageTypes)
+                    var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID);
+                    foreach (var type in group.DamageTypes)
                     {
                         if (state.DamageTypeIDs.TryGetValue(type.ID, out var typeAmount))
                         {
-                            text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
+                            text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type.ID), ("amount", typeAmount))}");
                         }
                     }
                     text.Append('\n');
