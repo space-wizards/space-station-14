@@ -41,12 +41,6 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         ResistanceSet Resistances { get; }
 
-        /// <summary>
-        ///  Get a specific DamageType Prototype via an ID.
-        /// </summary>
-        /// <param name="ID"></param>
-        DamageTypePrototype GetDamageType(string ID);
-
         bool SupportsDamageClass(DamageGroupPrototype group);
 
         bool SupportsDamageType(DamageTypePrototype type);

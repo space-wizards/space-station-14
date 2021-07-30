@@ -111,16 +111,6 @@ namespace Content.Shared.Damage.Components
             ForceHealthChangedEvent();
         }
 
-        public DamageTypePrototype GetDamageType(string ID)
-        {
-            return _prototypeManager.Index<DamageTypePrototype>(ID);
-        }
-
-        public DamageGroupPrototype GetDamageGroup(string ID)
-        {
-            return _prototypeManager.Index<DamageGroupPrototype>(ID);
-        }
-
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new DamageableComponentState(_damageDict);
