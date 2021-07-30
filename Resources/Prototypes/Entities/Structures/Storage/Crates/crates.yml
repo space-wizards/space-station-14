@@ -261,7 +261,7 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
     layers:
@@ -290,7 +290,7 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/engicrate_secure.rsi
     layers:
@@ -319,7 +319,7 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
     layers:
@@ -347,7 +347,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/privatecrate_secure.rsi
     layers:
@@ -376,7 +376,7 @@
   components:
   - type: AccessReader
     access: [["Research"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/scicrate_secure.rsi
     layers:
@@ -405,7 +405,7 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
     layers:
@@ -433,7 +433,7 @@
   parent: CrateGeneric
   components:
   - type: AccessReader
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/secure.rsi
     layers:
@@ -462,7 +462,7 @@
   components:
   - type: AccessReader
     access: [["Service"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/hydro_secure.rsi
     layers:
@@ -491,7 +491,7 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-  - type: SecureEntityStorage
+  - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/weapon.rsi
     layers:
