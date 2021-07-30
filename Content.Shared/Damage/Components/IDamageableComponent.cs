@@ -99,6 +99,8 @@ namespace Content.Shared.Damage.Components
         ///     resistance values only if it is damage.
         ///     Spreads amount evenly between the <see cref="DamageTypePrototype"></see>s
         ///     represented by that group.
+        ///     Note that if only a subset of the damage types in the group are actually supported, then the
+        ///     total change change will be less than expected.
         /// </summary>
         /// <param name="group">group of damage being changed.</param>
         /// <param name="amount">
