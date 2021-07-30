@@ -31,33 +31,6 @@ namespace Content.Shared.Chemistry.Components
 
         public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
 
-        public void ResetModifiers()
-        {
-            WalkSpeedModifier = 1;
-            SprintSpeedModifier = 1;
-
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
-            {
-                modifier.RefreshMovementSpeedModifiers();
-            }
-            Dirty();
-        }
-
-        public void Update(float delta)
-        {
-            var curTime = _gameTiming.CurTime;
-
-            if (ModifierTimer != null)
-            {
-                if (ModifierTimer.Value.End <= curTime)
-                {
-                    ModifierTimer = null;
-                    ResetModifiers();
-                    Dirty();
-                }
-            }
-        }
-
         /// <summary>
         /// Perpetuate the modifiers further.
         /// </summary>
