@@ -54,7 +54,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         private bool TryActivate()
         {
-            if (!Activated)
+            if (!Activated && CurrentState == ExpendableLightState.BrandNew)
             {
                 if (Owner.TryGetComponent<ItemComponent>(out var item))
                 {
