@@ -18,13 +18,11 @@ namespace Pow3r
 
         private readonly string[] _solverNames =
         {
-            nameof(GraphWalkSolver),
             nameof(BatteryRampPegSolver),
             nameof(NoOpSolver)
         };
 
         private readonly IPowerSolver[] _solvers = {
-            new GraphWalkSolver(),
             new BatteryRampPegSolver(),
             new NoOpSolver()
         };
