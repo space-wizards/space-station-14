@@ -27,7 +27,7 @@ namespace Content.Server.Body.Respiratory
     {
         [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
 
-        public override string Name => "Metabolism";
+        public override string Name => "Respirator";
 
         private float _accumulatedFrameTime;
 

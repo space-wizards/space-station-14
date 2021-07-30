@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Metabolism
 {
-    // TODO mirror move updating here to BodySystem so it can be ordered?
+    // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
     public class MetabolizerSystem : EntitySystem
     {
         public override void Update(float frameTime)
@@ -39,9 +39,9 @@ namespace Content.Server.Body.Metabolism
             SolutionContainerComponent? solution = null;
             SharedBodyComponent? body = null;
 
-            if (owner.TryGetComponent<SharedMechanismComponent>(out var mech))
+            // if this field is passed we should try and take from the bloodstream over anything else
+            if (comp.TakeFromBloodstream && owner.TryGetComponent<SharedMechanismComponent>(out var mech))
             {
-                // we have a mechanism, so we'll assume we're in a body and can use the bloodstream to metabolize
                 body = mech.Body;
                 if (body != null)
                 {
@@ -60,27 +60,25 @@ namespace Content.Server.Body.Metabolism
                 solution = sol;
                 reagentList = sol.ReagentList.ToList();
             }
-            if (solution == null)
+            if (solution == null || reagentList.Count == 0)
             {
                 // We're all outta ideas on where to metabolize from
                 return;
             }
 
-                // Run metabolism for each reagent, remove metabolized reagents
-            // Using ToList here lets us edit reagents while iterating
-            foreach (var reagent  in reagentList)
+            // Run metabolism for each reagent, remove metabolized reagents
+            foreach (var reagent in reagentList)
             {
                 if (!comp.Metabolisms.ContainsKey(reagent.ReagentId))
-                    return;
+                    continue;
 
                 var metabolism = comp.Metabolisms[reagent.ReagentId];
                 // Run metabolism code for each reagent
                 foreach (var effect in metabolism.Effects)
                 {
                     // If we're part of a body, pass that entity to Metabolize
-                    // Otherwise, just pass our current entity, maybe we're a plant or something
+                    // Otherwise, just pass our owner entity, maybe we're a plant or something
                     effect.Metabolize(body != null ? body.Owner : owner, reagent.Quantity);
-                    solution.TryRemoveReagent(reagent.ReagentId, metabolism.MetabolismRate);
                 }
 
                 solution.TryRemoveReagent(reagent.ReagentId, metabolism.MetabolismRate);

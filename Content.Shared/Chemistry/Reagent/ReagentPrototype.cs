@@ -16,9 +16,6 @@ namespace Content.Shared.Chemistry.Reagent
     [DataDefinition]
     public class ReagentPrototype : IPrototype
     {
-        [DataField("metabolism", serverOnly: true)]
-        private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
-
         [DataField("tileReactions", serverOnly: true)]
         private readonly List<ITileReaction> _tileReactions = new(0);
 

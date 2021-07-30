@@ -8,21 +8,21 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
-    /// Attempts to find a HungerComponent on the target,
-    /// and to update it's hunger values.
+    /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
+    /// and to update it's thirst values.
     /// </summary>
-    public class SatiateHunger : ReagentEffect
+    public class SatiateThirst : ReagentEffect
     {
-        /// <summary>
-        ///     How much hunger is satiated when 1u of the reagent is metabolized
-        /// </summary>
-        [DataField("nutritionFactor")] public float NutritionFactor { get; set; } = 30.0f;
+        /// How much thirst is satiated each metabolism tick. Not currently tied to
+        /// rate or anything.
+        [DataField("hydrationFactor")]
+        public float HydrationFactor { get; set; } = 3.0f;
 
-        //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
+        /// Satiate thirst if a ThirstComponent can be found
         public override void Metabolize(IEntity solutionEntity, ReagentUnit amount)
         {
-            if (solutionEntity.TryGetComponent(out HungerComponent? hunger))
-                hunger.UpdateFood(NutritionFactor);
+            if (solutionEntity.TryGetComponent(out ThirstComponent? thirst))
+                thirst.UpdateThirst(HydrationFactor);
         }
     }
 }

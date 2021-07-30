@@ -9,6 +9,7 @@ namespace Content.Server.Body.Metabolism
     /// <summary>
     ///     Handles metabolizing various reagents with given effects.
     /// </summary>
+    [RegisterComponent]
     public class MetabolizerComponent : Component
     {
         public override string Name => "Metabolizer";
@@ -21,6 +22,13 @@ namespace Content.Server.Body.Metabolism
         /// <returns></returns>
         [DataField("updateFrequency")]
         public float UpdateFrequency = 1.0f;
+
+        /// <summary>
+        ///     Whether this metabolizer should attempt to metabolize chemicals in its parent bodies' bloodstream,
+        ///     as opposed to a solution container on the metabolizing entity itself.
+        /// </summary>
+        [DataField("takeFromBloodstream")]
+        public bool TakeFromBloodstream = true;
 
         /// <summary>
         ///     A dictionary mapping reagent string IDs to a list of effects & associated metabolism rate.
