@@ -21,7 +21,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageClass: Toxin
+      damageGroup: Toxin
   plantMetabolism:
     - !type:AdjustToxins
       amount: -10
@@ -37,10 +37,10 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageClass: Toxin #I think you need multiple of these components for different types of damage so I'll maybe change it to work better in the future 
+      damageGroup: Toxin #I think you need multiple of these components for different types of damage so I'll maybe change it to work better in the future 
     - !type:HealthChangeMetabolism 
       healthChange: 0.5
-      damageClass: Brute
+      damageGroup: Brute
 
 - type: reagent
   id: Bicaridine
@@ -51,7 +51,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -2
-      damageClass: Brute
+      damageGroup: Brute
 
 - type: reagent
   id: Cryoxadone
@@ -93,7 +93,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -3
-      damageClass: Burn
+      damageGroup: Burn
 
 - type: reagent
   id: Dexalin
@@ -104,7 +104,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageClass: Airloss #this may be asphyxiation
+      damageGroup: Airloss #this may be asphyxiation
       
 - type: reagent
   id: DexalinPlus
@@ -115,7 +115,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -3
-      damageClass: Airloss
+      damageGroup: Airloss
 
 - type: reagent
   id: Ethylredoxrazine
@@ -168,7 +168,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -1
-      damageClass: Burn
+      damageGroup: Burn
 
 - type: reagent
   id: Leporazine
@@ -228,7 +228,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: 0.67
-      damageClass: Toxin
+      damageGroup: Toxin
       rate: 0.2 
 
 - type: reagent
@@ -292,7 +292,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: 1
-      damageClass: Airloss
+      damageGroup: Airloss
 
 - type: reagent
   id: Impedrezene
@@ -310,7 +310,7 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: 7
-      damageClass: Airloss
+      damageGroup: Airloss
 
 - type: reagent
   id: Lipozine
@@ -366,14 +366,14 @@
   metabolism:
     - !type:HealthChangeMetabolism 
       healthChange: -2
-      damageClass: Burn
+      damageGroup: Burn
     - !type:HealthChangeMetabolism 
       healthChange: -2
-      damageClass: Toxin
+      damageGroup: Toxin
     - !type:HealthChangeMetabolism 
       healthChange: -2
-      damageClass: Airloss
+      damageGroup: Airloss
     - !type:HealthChangeMetabolism 
       healthChange: -2
-      damageClass: Brute
+      damageGroup: Brute
 
