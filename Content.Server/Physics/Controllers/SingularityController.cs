@@ -49,9 +49,8 @@ namespace Content.Server.Physics.Controllers
             if (pushVector == Vector2.Zero) return;
 
             physics.BodyStatus = BodyStatus.InAir;
-            // Need to reset its velocity entirely. Probably look better with like a slerped version but future problem.
-            // We'll also slow it down as it gets chunkier
-            physics.LinearVelocity = pushVector.Normalized * 2f + (1f / singularity.Level);
+            physics.ApplyLinearImpulse(pushVector.Normalized + (1f / singularity.Level) * physics.Mass);
+            // TODO: Speedcap it probably?
         }
     }
 }

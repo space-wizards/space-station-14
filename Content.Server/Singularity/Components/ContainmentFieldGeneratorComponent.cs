@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Physics;
+using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -13,10 +14,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component
+    [ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
+    public class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
     {
-        public override string Name => "ContainmentFieldGenerator";
-
         private int _powerBuffer;
 
         [ViewVariables]

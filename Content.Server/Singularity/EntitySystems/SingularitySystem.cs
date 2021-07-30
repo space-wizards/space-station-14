@@ -45,10 +45,9 @@ namespace Content.Server.Singularity.EntitySystems
             if (component.BeingDeletedByAnotherSingularity)
                 return;
 
-            // Handle "actual" singulo bounds.
-            if (args.OurFixture.ID != DeleteFixture) return;
-
-            HandleDestroy(component, args.OtherFixture.Body.Owner);
+            // Using this to also get smooth deletions is hard because we need to be hard for good bounce
+            // off of containment but also we need to be non-hard so we can freely move through the station.
+            // For now I've just made it so only the lookup does deletions and collision is just for fields.
         }
 
         public override void Update(float frameTime)

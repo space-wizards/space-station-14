@@ -8,11 +8,10 @@
     bodyType: Dynamic
     fixtures:
     - id: DeleteCircle
-      hard: false
       shape:
         !type:PhysShapeCircle
           radius: 0.5
-      mass: 5
+      restitution: 0.9
       mask:
       - AllMask
       layer:
