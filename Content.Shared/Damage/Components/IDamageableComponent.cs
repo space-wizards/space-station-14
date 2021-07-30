@@ -148,9 +148,9 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Sets all damage values to zero.
+        ///     Sets all supported damage types to specified value using <see cref="SetDamage"></see>.
         /// </summary>
-        void Heal();
+        void SetAllDamage(int newValue);
 
         /// <summary>
         ///     Invokes the HealthChangedEvent with the current values of health.

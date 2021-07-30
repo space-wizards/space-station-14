@@ -202,16 +202,11 @@ namespace Content.Shared.Damage.Components
             return false;
         }
 
-        public void Heal(DamageTypePrototype type)
-        {
-            SetDamage(type, 0);
-        }
-
-        public void Heal()
+        public void SetAllDamage(int newValue)
         {
             foreach (var type in SupportedTypes)
             {
-                Heal(type);
+                SetDamage(type, newValue);
             }
         }
 

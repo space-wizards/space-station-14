@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds;
@@ -121,8 +121,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // No thresholds reached as they weren't healed below the trigger amount
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
-                // Heal down to 0
-                sDamageableComponent.Heal();
+                // Set damage to 0
+                sDamageableComponent.SetAllDamage(0);
 
                 // Damage for 100, up to 100
                 Assert.True(sDamageableComponent.ChangeDamage(bluntDamageType, 100, true));
@@ -181,7 +181,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Heal all damage
-                sDamageableComponent.Heal();
+                sDamageableComponent.SetAllDamage(0);
 
                 // Damage up to 50
                 sDamageableComponent.ChangeDamage(bluntDamageType, 50, true);
@@ -232,7 +232,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Heal the entity completely
-                sDamageableComponent.Heal();
+                sDamageableComponent.SetAllDamage(0);
 
                 // Check that the entity has 0 damage
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
