@@ -35,7 +35,7 @@ namespace Content.Shared.Chemistry
 
             foreach (var component in ComponentManager.EntityQuery<MovespeedModifierMetabolismComponent>(true))
             {
-                if (component.ModifierTimer.Value.End <= _gameTiming.CurTime)
+                if (component.ModifierTimer?.End <= _gameTiming.CurTime)
                 {
                     component.ModifierTimer = null;
                     component.WalkSpeedModifier = 1;
