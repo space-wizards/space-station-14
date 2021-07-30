@@ -50,6 +50,11 @@ namespace Content.Shared.Damage.Components
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageTypesDictToDamageGroupDict(_damageDict);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageDict;
 
+        // TODO DAMAGE Cache this
+        // Whenever sending over network, need a <string, int> dictionary
+        public IReadOnlyDictionary<string, int> DamageGroupIDs => ConvertDictKeysToIDs(DamageGroups);
+        public IReadOnlyDictionary<string, int> DamageTypeIDs => ConvertDictKeysToIDs(DamageTypes);
+
         // Some inorganic damagable components might take shock/electrical damage from radiation?
         // Similarly, some may react differetly to explosions?
         // There definittely should be a better way of doing this.

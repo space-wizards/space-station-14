@@ -22,6 +22,16 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes { get; }
 
+        /// <summary>
+        ///     The amount of damage mapped by the string IDs of <see cref="DamageGroupPrototype"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, int> DamageGroupIDs { get;  }
+
+        /// <summary>
+        ///     The amount of damage mapped by the string IDs of <see cref="DamageTypePrototype"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, int> DamageTypeIDs { get; }
+
         HashSet<DamageTypePrototype> SupportedTypes { get; }
 
         HashSet<DamageGroupPrototype> SupportedGroups { get; }
