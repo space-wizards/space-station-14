@@ -36,6 +36,8 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly InputSystem _inputSystem = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -69,8 +71,6 @@ namespace Content.Client.DragDrop
 
         private ShaderInstance? _dropTargetInRangeShader;
         private ShaderInstance? _dropTargetOutOfRangeShader;
-        private SharedInteractionSystem _interactionSystem = default!;
-        private InputSystem _inputSystem = default!;
 
         private readonly List<ISpriteComponent> _highlightedSprites = new();
 
@@ -80,8 +80,6 @@ namespace Content.Client.DragDrop
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
-            _interactionSystem = Get<SharedInteractionSystem>();
-            _inputSystem = Get<InputSystem>();
             // needs to fire on mouseup and mousedown so we can detect a drag / drop
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))

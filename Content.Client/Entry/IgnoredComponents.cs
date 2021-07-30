@@ -57,7 +57,6 @@ namespace Content.Client.Entry
             "CablePlacer",
             "Drink",
             "Food",
-            "FoodContainer",
             "MagicMirror",
             "FloorTile",
             "ShuttleController",
@@ -278,6 +277,7 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
+            "SpawnItemsOnUse"
         };
     }
 }

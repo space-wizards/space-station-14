@@ -1,8 +1,5 @@
 # Base
 
-- type: Tag
-  id: Egg
-
 - type: entity
   parent: BaseItem
   id: FoodEggBase
@@ -66,7 +63,7 @@
   - type: Puddle
     variants: 4
     state: egg
-    
+
 - type: entity
   name: eggshells
   parent: BaseItem
@@ -86,6 +83,9 @@
       reagents:
       - ReagentId: Egg
         Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
 
 # Egg
 

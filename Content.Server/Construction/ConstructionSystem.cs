@@ -39,6 +39,8 @@ namespace Content.Server.Construction
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
@@ -170,7 +172,7 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = Get<StackSystem>().Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
+                            var splitStack = _stackSystem.Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
 
                             if (splitStack == null)
                                 continue;
@@ -226,8 +228,6 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var doAfterSystem = Get<DoAfterSystem>();
-
             var doAfterArgs = new DoAfterEventArgs(user, doAfterTime)
             {
                 BreakOnDamage = true,
@@ -237,7 +237,7 @@ namespace Content.Server.Construction
                 NeedHand = false,
             };
 
-            if (await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;

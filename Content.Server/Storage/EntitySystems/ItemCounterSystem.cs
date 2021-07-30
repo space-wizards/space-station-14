@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Storage
+namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
     public class ItemCounterSystem : SharedItemCounterSystem

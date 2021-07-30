@@ -14,16 +14,10 @@ namespace Content.Server.Atmos
     public class TileAtmosphere : IGasMixtureHolder
     {
         [ViewVariables]
-        public int ArchivedCycle;
-
-        [ViewVariables]
         public int CurrentCycle;
 
         [ViewVariables]
         public float Temperature { get; set; } = Atmospherics.T20C;
-
-        [ViewVariables]
-        public float TemperatureArchived { get; set; } = Atmospherics.T20C;
 
         [ViewVariables]
         public TileAtmosphere? PressureSpecificTarget { get; set; }

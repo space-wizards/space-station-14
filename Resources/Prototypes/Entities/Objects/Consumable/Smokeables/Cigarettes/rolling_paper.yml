@@ -4,10 +4,15 @@
   id: PackPaperRolling
   description: "A pack of thin pieces of paper used to make fine smokeables."
   components:
-    # I know but it just works.
-  - type: FoodContainer
-    prototypes:
-      PaperRolling: 100
+  - type: Storage
+    whitelist:
+      tags:
+      - RollingPaper
+    capacity: 16
+  - type: StorageFill
+    contents:
+      - id: PaperRolling
+        amount: 8
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
     state: cigpapers
@@ -29,6 +34,10 @@
       state: cigpaper
     - type: Item
       sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+      size: 2
+    - type: Tag
+      tags:
+      - RollingPaper
 
 - type: entity
   id: CigaretteFilter

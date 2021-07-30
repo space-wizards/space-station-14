@@ -460,7 +460,7 @@ namespace Content.Server.Inventory.Components
         {
             if (!HasSlot(slot))
             {
-                throw new InvalidOperationException($"Slow '{slot}' does not exist.");
+                throw new InvalidOperationException($"Slot '{slot}' does not exist.");
             }
 
             ForceUnequip(slot);
