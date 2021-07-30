@@ -96,7 +96,7 @@ namespace Content.Server.Throwing
 
                 if (!msg.Cancelled)
                 {
-                    body.ApplyLinearImpulse(-direction * pushbackRatio);
+                    body.ApplyLinearImpulse(-direction.Normalized * strength * physicsComponent.Mass * pushbackRatio);
                 }
             }
         }
