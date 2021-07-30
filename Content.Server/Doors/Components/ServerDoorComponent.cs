@@ -39,8 +39,6 @@ namespace Content.Server.Doors.Components
     [ComponentReference(typeof(SharedDoorComponent))]
     public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         [ComponentDependency]
         private readonly IDoorCheck? _doorCheck = null;
 
@@ -48,8 +46,11 @@ namespace Content.Server.Doors.Components
         [DataField("board")]
         private string? _boardPrototype;
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
-        private readonly string _damageType = default!;
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         public override DoorState State
         {
@@ -493,7 +494,7 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), DoorCrushDamage, false, Owner);
+                damage.ChangeDamage(_damageType, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
             }
 

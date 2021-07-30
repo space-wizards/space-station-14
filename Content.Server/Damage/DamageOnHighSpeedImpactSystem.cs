@@ -1,13 +1,11 @@
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -20,7 +18,6 @@ namespace Content.Server.Damage
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         
         public override void Initialize()
         {
@@ -50,7 +47,7 @@ namespace Content.Server.Damage
             if (ComponentManager.TryGetComponent(uid, out StunnableComponent? stun) && _robustRandom.Prob(component.StunChance))
                 stun.Stun(component.StunSeconds);
 
-            damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(component.DamageType), damage, false, args.OtherFixture.Body.Owner);
+            damageable.ChangeDamage(component.DamageType, damage, false, args.OtherFixture.Body.Owner);
         }
     }
 }

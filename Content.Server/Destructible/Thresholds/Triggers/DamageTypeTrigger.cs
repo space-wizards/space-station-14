@@ -15,10 +15,12 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public class DamageTypeTrigger : IThresholdTrigger
     {
+        //TODO Why is damage type allowd to be null here? if it is, this component does nothing? Surely it should be a required datafield?
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         [DataField("damageType")]
-        public string? DamageType { get; set; }
+        public string? DamageTypeID { get; set; }
+        public DamageTypePrototype? DamageType => DamageTypeID == null ? null : _prototypeManager.Index<DamageTypePrototype>(DamageTypeID);
 
         [DataField("damage")]
         public int Damage { get; set; }

@@ -29,7 +29,6 @@ namespace Content.Server.Metabolism
     public class MetabolismComponent : Component
     {
         [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Metabolism";
 
@@ -38,8 +37,11 @@ namespace Content.Server.Metabolism
         private bool _isShivering;
         private bool _isSweating;
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
-        private readonly string _damageType = default!;
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
 
@@ -356,7 +358,7 @@ namespace Content.Server.Metabolism
                 return;
             }
 
-            damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), _suffocationDamage, false);
+            damageable.ChangeDamage(_damageType, _suffocationDamage, false);
         }
 
         private void StopSuffocation()
@@ -365,7 +367,7 @@ namespace Content.Server.Metabolism
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), -_suffocationDamageRecovery, false);
+                damageable.ChangeDamage(_damageType, -_suffocationDamageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

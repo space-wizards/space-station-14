@@ -35,7 +35,6 @@ namespace Content.Server.Light.Components
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "PoweredLight";
 
@@ -53,8 +52,11 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
-        private readonly string _damageType = default!;
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [ViewVariables] [DataField("on")]
         private bool _on = true;
@@ -122,7 +124,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), 20, false, Owner);
+                damageableComponent.ChangeDamage(_damageType, 20, false, Owner);
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
 

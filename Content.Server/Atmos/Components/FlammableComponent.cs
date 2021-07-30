@@ -31,10 +31,12 @@ namespace Content.Server.Atmos.Components
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
 
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        [DataField("damageType", required:true)]
-        private readonly string _damageType = default!;
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [DataField("damageType", required: true)]
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; set; }
@@ -99,7 +101,7 @@ namespace Content.Server.Atmos.Components
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
-                    damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), damage, false);
+                    damageable.ChangeDamage(_damageType, damage, false);
                 }
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));

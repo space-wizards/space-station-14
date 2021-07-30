@@ -18,10 +18,11 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public class HealingComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Healing";
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported (need to change dictionary type).
+        //Question: would protype references be able to deal with this, loading a Dictionary<DamagePrototype, int> from the yaml file?
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("heal", required: true )]
         public Dictionary<string, int> Heal { get; private set; } = new();
 

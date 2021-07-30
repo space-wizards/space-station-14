@@ -11,12 +11,14 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public class DamageOtherOnHitComponent : Component, IThrowCollide
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "DamageOtherOnHit";
 
-        [DataField("damageType",required: true)]
-        private readonly string _damageType = default!;
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [DataField("damageType", required: true)]
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [DataField("amount")]
         private int _amount = 1;
@@ -28,7 +30,7 @@ namespace Content.Server.Damage.Components
         {
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
                 return;
-            damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), _amount, _ignoreResistances, eventArgs.User);
+            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }
