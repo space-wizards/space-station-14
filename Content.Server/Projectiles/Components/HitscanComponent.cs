@@ -21,7 +21,6 @@ namespace Content.Server.Projectiles.Components
     public class HitscanComponent : Component
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Hitscan";
 
@@ -33,9 +32,10 @@ namespace Content.Server.Projectiles.Components
         [DataField("damage")]
         private float _damage = 10f;
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
-        private string _damageTypeID = default!;
-
+        private readonly string _damageTypeID = default!;
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [DataField("muzzleFlash")]
