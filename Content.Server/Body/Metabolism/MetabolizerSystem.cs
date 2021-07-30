@@ -76,9 +76,28 @@ namespace Content.Server.Body.Metabolism
                 // Run metabolism code for each reagent
                 foreach (var effect in metabolism.Effects)
                 {
+                    var ent = body != null ? body.Owner : owner;
+                    var conditionsMet = true;
+                    if (effect.Conditions != null)
+                    {
+                        // yes this is 3 nested for loops, but all of these lists are
+                        // basically guaranteed to be small or empty
+                        foreach (var condition in effect.Conditions)
+                        {
+                            if (!condition.Condition(ent, reagent))
+                            {
+                                conditionsMet = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!conditionsMet)
+                        return;
+
                     // If we're part of a body, pass that entity to Metabolize
                     // Otherwise, just pass our owner entity, maybe we're a plant or something
-                    effect.Metabolize(body != null ? body.Owner : owner, reagent.Quantity);
+                    effect.Metabolize(ent, reagent);
                 }
 
                 solution.TryRemoveReagent(reagent.ReagentId, metabolism.MetabolismRate);

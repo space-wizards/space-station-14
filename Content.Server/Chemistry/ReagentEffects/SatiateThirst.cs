@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -19,7 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public float HydrationFactor { get; set; } = 3.0f;
 
         /// Satiate thirst if a ThirstComponent can be found
-        public override void Metabolize(IEntity solutionEntity, ReagentUnit amount)
+        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
             if (solutionEntity.TryGetComponent(out ThirstComponent? thirst))
                 thirst.UpdateThirst(HydrationFactor);

@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
@@ -31,7 +32,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// <summary>
         ///     Changes damage if a DamageableComponent can be found.
         /// </summary>
-        public override void Metabolize(IEntity solutionEntity, ReagentUnit amount)
+        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {

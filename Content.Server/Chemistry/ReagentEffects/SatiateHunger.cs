@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -19,7 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("nutritionFactor")] public float NutritionFactor { get; set; } = 3.0f;
 
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        public override void Metabolize(IEntity solutionEntity, ReagentUnit amount)
+        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
             if (solutionEntity.TryGetComponent(out HungerComponent? hunger))
                 hunger.UpdateFood(NutritionFactor);
