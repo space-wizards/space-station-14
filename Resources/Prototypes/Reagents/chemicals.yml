@@ -240,7 +240,7 @@
     - !type:HealthChangeMetabolism
       healthChange: 2.5 # On tg it's 1-4 brain damage, but since as of now, we don't have brain damage, toxin will have to do.
       damageClass: Toxin
-      rate: 0.6
+      rate: 1
     - !type:MovespeedModifierMetabolism
       walkSpeedModifier: 1.65
       sprintSpeedModifier: 1.65
@@ -248,25 +248,25 @@
 - type: reagent
   id: Iodine
   name: iodine
-  desc: Iodine is a dark purple element, and a potent dye.
+  desc: Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.
   physicalDesc: Dark Brown
-  color: "#331A00"
+  color: "#BC8A00"
   boilingPoint: 184.3
   meltingPoint: 113.7
-  # don't know what effects it should have, didn't find any on the tg wiki.
+
 
 - type: reagent
   id: Ephedrine
   name: ephedrine
-  desc: Ephedrine is a medication and stimulant and is a component of Methamphetamine.
+  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing
   physicalDesc: Bone white
-  color: "#FFFFE6"
+  color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolism:
-    - !type:HealthChangeMetabolism
-      healthChange: 0.3
-      damageClass: Toxin 
+    - !type:MovespeedModifierMetabolism
+      walkSpeedModifier: 1.5
+      sprintSpeedModifier: 1.5
 
 - type: reagent
   id: Oil
