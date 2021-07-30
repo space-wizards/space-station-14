@@ -462,6 +462,44 @@ namespace Content.Shared.Damage.Components
                 ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), damage, false);
             }
         }
+
+        // TODO This probably does not belong here? Should this be a PrototypeManager function?
+        /// <summary>
+        /// Take a dictionary with protoype keys, and return a dictionary using the prototype ID strings as keys instead.
+        /// Usefull when sending prototypes dictionaries over the network.
+        /// </summary>
+        public static IReadOnlyDictionary<string, TValue>
+            ConvertDictKeysToIDs<TPrototype,TValue>(IReadOnlyDictionary<TPrototype, TValue> prototypeDict) where TPrototype : IPrototype
+        {
+            Dictionary<string, TValue> idDict = new(prototypeDict.Count);
+            foreach (var entry in prototypeDict)
+            {
+                idDict.Add(entry.Key.ID, entry.Value);
+            }
+            return idDict;
+        }
+
+        // TODO This probably does not belong here? Should this be a PrototypeManager function?
+        /// <summary>
+        /// Takes a dictionary with strings as keys.
+        /// Find prototypes with matching IDs using the prototype manager.
+        /// Returns a dictionary with the ID strings replaced by prototypes.
+        /// Usefull when receiving prototypes dictionaries over the network.
+        /// </summary>
+        /// <exception cref="KeyNotFoundException">
+        /// Thrown if one of the string IDs does not exist.
+        /// </exception>
+        public IReadOnlyDictionary<TPrototype, TValue>
+            ConvertDictKeysToPrototypes<TPrototype, TValue>(IReadOnlyDictionary<string, TValue> stringDict)
+            where TPrototype : class, IPrototype
+        {
+            Dictionary<TPrototype, TValue> prototypeDict = new(stringDict.Count);
+            foreach (var entry in stringDict)
+            {
+                prototypeDict.Add(_prototypeManager.Index<TPrototype>(entry.Key), entry.Value);
+            }
+            return prototypeDict;
+        }
     }
 
     [Serializable, NetSerializable]
