@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Alert;
 using Content.Shared.Alert;
@@ -14,6 +14,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -22,8 +23,11 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
-        private readonly DamageTypePrototype _damageType = default!;
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
