@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -14,6 +15,7 @@ namespace Content.Client.MedicalScanner.UI
     {
         public readonly Button ScanButton;
         private readonly Label _diagnostics;
+
         public MedicalScannerWindow()
         {
             SetSize = (250, 100);
@@ -51,20 +53,22 @@ namespace Content.Client.MedicalScanner.UI
             {
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
-                foreach (var (damageGroup, damageAmount) in state.DamageGroup)
+                foreach (var (damageGroupID, damageAmount) in state.DamageGroupIDs)
                 {
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", damageGroup), ("amount", damageAmount))}");
 
-                    foreach (var type in damageGroup.DamageTypes)
+                    // Show total damage for the group
+                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", damageGroupID), ("amount", damageAmount))}");
+
+                    // Then show the damage for each type in that group.
+                    // currently state has a dictionary mapping groupsIDs to damage, and typeIDs to damage, but does not know how types and groups are related.
+                    // This sounds like a job for PrototypeManager-man!
+                    foreach (var type in IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID).DamageTypes)
                     {
-                        if (!state.DamageTypes.TryGetValue(type, out var typeAmount))
+                        if (state.DamageTypeIDs.TryGetValue(type.ID, out var typeAmount))
                         {
-                            continue;
+                            text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
                         }
-
-                        text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType",type) ,("amount", typeAmount))}");
                     }
-
                     text.Append('\n');
                 }
 
