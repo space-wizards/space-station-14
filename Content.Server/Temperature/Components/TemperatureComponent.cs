@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -33,11 +33,10 @@ namespace Content.Server.Temperature.Components
         [DataField("tempDamageCoefficient")]
         private float _tempDamageCoefficient = 1;
         [DataField("currentTemperature")]
-        private float _currentTemperature = Atmospherics.T20C;
+        private float CurrentTemperature { get; set; } = Atmospherics.T20C;
         [DataField("specificHeat")]
         private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
-        [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
         [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
         [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
         [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;
