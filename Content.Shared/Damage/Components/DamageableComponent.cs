@@ -77,9 +77,9 @@ namespace Content.Shared.Damage.Components
             Resistances = new ResistanceSet(resistancePrototype);
         }
 
-        public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
+        public bool SupportsDamageClass(DamageGroupPrototype group)
         {
-            return SupportedGroups.Contains(damageGroup);
+            return SupportedGroups.Contains(group);
         }
 
         public bool SupportsDamageType(DamageTypePrototype type)
@@ -136,16 +136,16 @@ namespace Content.Shared.Damage.Components
             return _damageList.TryGetValue(type, out damage);
         }
 
-        public int GetDamage(DamageGroupPrototype damageGroup)
+        public int GetDamage(DamageGroupPrototype group)
         {
-            if (!SupportsDamageClass(damageGroup))
+            if (!SupportsDamageClass(group))
             {
                 return 0;
             }
 
             var damage = 0;
 
-            foreach (var type in damageGroup.DamageTypes)
+            foreach (var type in group.DamageTypes)
             {
                 damage += GetDamage(type);
             }
@@ -153,15 +153,15 @@ namespace Content.Shared.Damage.Components
             return damage;
         }
 
-        public bool TryGetDamage(DamageGroupPrototype damageGroup, out int damage)
+        public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
-            if (!SupportsDamageClass(damageGroup))
+            if (!SupportsDamageClass(group))
             {
                 damage = 0;
                 return false;
             }
 
-            damage = GetDamage(damageGroup);
+            damage = GetDamage(group);
             return true;
         }
 
@@ -257,16 +257,16 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
-        public bool ChangeDamage(DamageGroupPrototype damageGroup, int amount, bool ignoreResistances,
+        public bool ChangeDamage(DamageGroupPrototype group, int amount, bool ignoreResistances,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (!SupportsDamageClass(damageGroup))
+            if (!SupportsDamageClass(group))
             {
                 return false;
             }
 
-            var types = damageGroup.DamageTypes.ToArray();
+            var types = group.DamageTypes.ToArray();
 
             if (amount < 0)
             {

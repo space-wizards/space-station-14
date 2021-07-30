@@ -37,7 +37,7 @@ namespace Content.Shared.Damage.Components
         /// <param name="ID"></param>
         DamageTypePrototype GetDamageType(string ID);
 
-        bool SupportsDamageClass(DamageGroupPrototype damageGroup);
+        bool SupportsDamageClass(DamageGroupPrototype group);
 
         bool SupportsDamageType(DamageTypePrototype type);
 
@@ -59,7 +59,7 @@ namespace Content.Shared.Damage.Components
         /// <returns>
         ///     True if the given <see cref="@class"/> is supported, false otherwise.
         /// </returns>
-        bool TryGetDamage(DamageGroupPrototype damageGroup, out int damage);
+        bool TryGetDamage(DamageGroupPrototype group, out int damage);
 
         /// <summary>
         ///     Changes the specified <see cref="DamageTypePrototype"/>, applying
@@ -114,7 +114,7 @@ namespace Content.Shared.Damage.Components
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(
-            DamageGroupPrototype damageGroup,
+            DamageGroupPrototype group,
             int amount,
             bool ignoreResistances,
             IEntity? source = null,
