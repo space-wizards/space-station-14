@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Body.Behavior;
 using Content.Server.Body.Circulatory;
-using Content.Server.Metabolism;
+using Content.Server.Body.Respiratory;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using NUnit.Framework;

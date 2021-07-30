@@ -23,27 +23,21 @@ namespace Content.Server.Body.Metabolism
         public float UpdateFrequency = 1.0f;
 
         /// <summary>
-        ///     A list of metabolisms
+        ///     A dictionary mapping reagent string IDs to a list of effects & associated metabolism rate.
         /// </summary>
         /// <returns></returns>
-        [DataField("metabolism", required: true)]
-        public List<ReagentEffectsEntry> Metabolisms = default!;
+        [DataField("metabolisms", required: true)]
+        public Dictionary<string, ReagentEffectsEntry> Metabolisms = default!;
     }
 
     [DataDefinition]
     public class ReagentEffectsEntry
     {
         /// <summary>
-        ///     List of reagents associated with this metabolism rate and effects.
-        /// </summary>
-        [DataField("reagents", required: true)]
-        public List<string> Reagents = default!;
-
-        /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
         /// </summary>
         [DataField("metabolismRate")]
-        public float MetabolismRate = 1.0f;
+        public ReagentUnit MetabolismRate = ReagentUnit.New(1.0f);
 
         /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.

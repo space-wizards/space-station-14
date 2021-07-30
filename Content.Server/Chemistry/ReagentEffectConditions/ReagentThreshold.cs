@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -17,9 +18,9 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("max")]
         public ReagentUnit Max = ReagentUnit.MaxValue;
 
-        public override bool Condition(IEntity solutionEntity, ReagentUnit amount)
+        public override bool Condition(IEntity solutionEntity, Solution.ReagentQuantity reagent)
         {
-            return amount > Min && amount < Max;
+            return reagent.Quantity > Min && reagent.Quantity < Max;
         }
     }
 }
