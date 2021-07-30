@@ -58,7 +58,8 @@ namespace Content.Shared.Damage.Components
         // Some inorganic damagable components might take shock/electrical damage from radiation?
         // Similarly, some may react differetly to explosions?
         // There definittely should be a better way of doing this.
-        // TODO PROTOTYPE Replace this code with prototype references, once they are supported (requires changing list type).
+        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
+        // This also requires changing the list type and modifying the functions here that use them.
         [ViewVariables]
         [DataField("radiationDamageTypes")]
         public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};

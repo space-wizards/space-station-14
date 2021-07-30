@@ -13,8 +13,8 @@ namespace Content.Server.Projectiles.Components
     public class ProjectileComponent : SharedProjectileComponent
     {
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported (need to change dictionary type).
-        // This would also require changes to ProjectileSystem.cs
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // This also requires changing the dictionary type and modifying ProjectileSystem.cs, which uses it.
         [DataField("damageTypes")]
         private Dictionary<string, int> _damageTypes = new();
 

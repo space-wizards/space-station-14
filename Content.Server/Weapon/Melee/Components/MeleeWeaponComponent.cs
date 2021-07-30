@@ -49,7 +49,7 @@ namespace Content.Server.Weapon.Melee.Components
         [DataField("damage")]
         public int Damage { get; set; } = 5;
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("damageType")]

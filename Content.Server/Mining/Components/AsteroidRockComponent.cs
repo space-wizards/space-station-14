@@ -23,7 +23,7 @@ namespace Content.Server.Mining.Components
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageTypeID = default!;

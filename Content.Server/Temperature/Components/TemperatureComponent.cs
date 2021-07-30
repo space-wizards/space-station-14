@@ -24,7 +24,7 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("coldDamageType", required: true)]
         private readonly string _coldDamageTypeID = default!;

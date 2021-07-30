@@ -20,8 +20,9 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported (need to change dictionary type).
-        //Question: would protype references be able to deal with this, loading a Dictionary<DamagePrototype, int> from the yaml file?
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
+        // TODO QUESTION Would protype references be able to deal with this, loading a Dictionary<DamagePrototype, int> from the yaml file?
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("heal", required: true )]
         public Dictionary<string, int> Heal { get; private set; } = new();
@@ -54,9 +55,9 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            foreach (var (damageType, amount) in Heal)
+            foreach (var (damageTypeID, amount) in Heal)
             {
-                damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageType), -amount, true);
+                damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), -amount, true);
             }
 
             return true;

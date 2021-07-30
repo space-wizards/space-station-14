@@ -85,7 +85,7 @@ namespace Content.Shared.Body.Components
         /// <summary>
         /// Damage type to deal when all vital organs are removed.
         /// </summary>
-        // TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [ViewVariables]
         [DataField("vitalPartsRemovedDamageType", required: true)]
         public string VitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;

@@ -51,7 +51,8 @@ namespace Content.Server.Weapon.Ranged
         [DataField("canHotspot")]
         private bool _canHotspot = true;
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported (also need to change dictionary type).
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // This also requires changing the dictionary type and modifying TryFire(), which uses it.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clumsyDamage")]

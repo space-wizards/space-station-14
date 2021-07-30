@@ -37,7 +37,7 @@ namespace Content.Server.Metabolism
         private bool _isShivering;
         private bool _isSweating;
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageTypeID = default!;

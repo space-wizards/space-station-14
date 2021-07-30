@@ -61,7 +61,7 @@ namespace Content.Client.MedicalScanner.UI
 
                     // Then show the damage for each type in that group.
                     // currently state has a dictionary mapping groupsIDs to damage, and typeIDs to damage, but does not know how types and groups are related.
-                    // This sounds like a job for PrototypeManager-man!
+                    // So use PrototypeManager.
                     var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID);
                     foreach (var type in group.DamageTypes)
                     {

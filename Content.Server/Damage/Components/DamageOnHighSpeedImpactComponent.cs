@@ -15,7 +15,7 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnHighSpeedImpact";
 
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         public string DamageTypeID { get; set; } = default!;

@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Components
     {
         public override string Name => "Barotrauma";
 
-        //TODO PROTOTYPE Replace with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Robust.Shared.IoC.Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageTypeID = default!;

@@ -33,7 +33,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// <summary>
         /// Group damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary>
-        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageGroup", required: true)]
         private readonly string _damageGroupID = default!;
