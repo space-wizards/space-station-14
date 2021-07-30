@@ -26,6 +26,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using System.Collections.Generic;
 
 namespace Content.Server.Weapon.Ranged
 {
@@ -48,6 +50,16 @@ namespace Content.Server.Weapon.Ranged
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canHotspot")]
         private bool _canHotspot = true;
+
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported (also need to change dictionary type).
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("clumsyDamage")]
+        public Dictionary<string, int> ClumsyDamage { get;  set; } = new()
+        {
+            { "Blunt", 10 },
+            { "Heat", 5 }
+        };
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;
@@ -160,22 +172,28 @@ namespace Content.Server.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
-
+                //Wound them
                 if (user.TryGetComponent(out IDamageableComponent? health))
                 {
-                    health.ChangeDamage(health.GetDamageType("Blunt"), 10, false, user);
-                    health.ChangeDamage(health.GetDamageType("Heat"), 5, false, user);
+                    foreach (KeyValuePair<string, int> damage in ClumsyDamage)
+                    {
+                        health.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damage.Key), damage.Value, false, user);
+                    }
                 }
 
+                // Knock them down
                 if (user.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Paralyze(3f);
                 }
+
+                // Apply salt to the wound
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
+                Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+
+                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
