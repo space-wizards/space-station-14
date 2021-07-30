@@ -52,8 +52,8 @@ namespace Content.Server.Weapon.Melee.Components
         //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("damageType", required: true)]
-        public  string DamageTypeID { get; set; } = default!;
+        [DataField("damageType")]
+        public  string DamageTypeID { get; set; } = "Blunt";
         public DamageTypePrototype DamageType => _prototypeManager.Index<DamageTypePrototype>(DamageTypeID);
 
         [ViewVariables(VVAccess.ReadWrite)]
