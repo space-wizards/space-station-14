@@ -171,7 +171,7 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Metabolism
-    damageType: Blunt
+    suffocationDamageType: Asphyxiation
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
