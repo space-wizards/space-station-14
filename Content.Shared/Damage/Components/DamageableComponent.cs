@@ -94,7 +94,7 @@ namespace Content.Shared.Damage.Components
             Resistances = new ResistanceSet(resistancePrototype);
         }
 
-        public bool SupportsDamageClass(DamageGroupPrototype group)
+        public bool SupportsDamageGroup(DamageGroupPrototype group)
         {
             return SupportedGroups.Contains(group);
         }
@@ -145,7 +145,7 @@ namespace Content.Shared.Damage.Components
 
         public int GetDamage(DamageGroupPrototype group)
         {
-            if (!SupportsDamageClass(group))
+            if (!SupportsDamageGroup(group))
             {
                 return 0;
             }
@@ -162,7 +162,7 @@ namespace Content.Shared.Damage.Components
 
         public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
-            if (!SupportsDamageClass(group))
+            if (!SupportsDamageGroup(group))
             {
                 damage = 0;
                 return false;
@@ -268,7 +268,7 @@ namespace Content.Shared.Damage.Components
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (!SupportsDamageClass(group))
+            if (!SupportsDamageGroup(group))
             {
                 return false;
             }

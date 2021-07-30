@@ -112,7 +112,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 foreach (var damageGroup in sPrototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportsDamageClass(damageGroup));
+                    Assert.That(sDamageableComponent.SupportsDamageGroup(damageGroup));
 
                     var types = damageGroup.DamageTypes;
 

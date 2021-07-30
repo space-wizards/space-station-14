@@ -41,7 +41,7 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         ResistanceSet Resistances { get; }
 
-        bool SupportsDamageClass(DamageGroupPrototype group);
+        bool SupportsDamageGroup(DamageGroupPrototype group);
 
         bool SupportsDamageType(DamageTypePrototype type);
 
@@ -56,12 +56,12 @@ namespace Content.Shared.Damage.Components
         bool TryGetDamage(DamageTypePrototype type, out int damage);
 
         /// <summary>
-        ///     Gets the amount of damage of a class.
+        ///     Gets the total amount of damage in a damage group.
         /// </summary>
-        /// <param name="class">The class to get the damage of.</param>
-        /// <param name="damage">The amount of damage of that class.</param>
+        /// <param name="group">The group to get the damage of.</param>
+        /// <param name="damage">The amount of damage in that group.</param>
         /// <returns>
-        ///     True if the given <see cref="@class"/> is supported, false otherwise.
+        ///     True if the given <see cref="@group"/> is supported, false otherwise.
         /// </returns>
         bool TryGetDamage(DamageGroupPrototype group, out int damage);
 
@@ -95,12 +95,12 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageClassPrototype"/>, applying
+        ///     Changes the specified <see cref="DamageGroupPrototype"/>, applying
         ///     resistance values only if it is damage.
         ///     Spreads amount evenly between the <see cref="DamageTypePrototype"></see>s
-        ///     represented by that class.
+        ///     represented by that group.
         /// </summary>
-        /// <param name="class">Class of damage being changed.</param>
+        /// <param name="group">group of damage being changed.</param>
         /// <param name="amount">
         ///     Amount of damage being received (positive for damage, negative for heals).
         /// </param>
@@ -114,7 +114,7 @@ namespace Content.Shared.Damage.Components
         ///     such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if the given class is not supported or improper
+        ///     Returns false if the given group is not supported or improper
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(
