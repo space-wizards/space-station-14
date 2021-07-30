@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -22,6 +21,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>
         ///     Players allowed to see the atmos debug overlay.
@@ -110,7 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay, tile.ExcitedGroup != null, tile.BlockedAirflow);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.ExcitedGroup != null, tile.BlockedAirflow);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Content.Server.Atmos.EntitySystems
                         for (var x = 0; x < LocalViewRange; x++)
                         {
                             var Vector2i = new Vector2i(baseTile.X + x, baseTile.Y + y);
-                            debugOverlayContent[index++] = ConvertTileToData(gam.GetTile(Vector2i));
+                            debugOverlayContent[index++] = ConvertTileToData(_atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, gam, Vector2i));
                         }
                     }
 

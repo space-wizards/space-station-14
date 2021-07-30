@@ -23,12 +23,13 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -47,6 +48,7 @@ namespace Content.Client.Verbs
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
@@ -68,7 +70,7 @@ namespace Content.Client.Verbs
             CommandBinds.Unregister<VerbSystem>();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             ToggleContainerVisibility?.Invoke(this, false);
         }
@@ -325,13 +327,16 @@ namespace Content.Client.Verbs
 
         private sealed class VerbPopup : Popup
         {
-            public VBoxContainer List { get; }
+            public BoxContainer List { get; }
 
             public VerbPopup()
             {
                 AddChild(new PanelContainer
                 {
-                    Children = {(List = new VBoxContainer())},
+                    Children = {(List = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    })},
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
                 });
             }
@@ -356,8 +361,9 @@ namespace Content.Client.Verbs
 
             public VerbButton()
             {
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (_icon = new TextureRect
@@ -416,8 +422,9 @@ namespace Content.Client.Verbs
 
                 MouseFilter = MouseFilterMode.Stop;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (_icon = new TextureRect

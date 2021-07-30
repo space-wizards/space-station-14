@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -253,7 +252,7 @@ namespace Content.Server.Cuffs.Components
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _uncuffing = true;
 
-            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterEventArgs);
 
             _uncuffing = false;
 

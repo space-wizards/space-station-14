@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.Analyzers;
 
 namespace Content.Shared.DragDrop

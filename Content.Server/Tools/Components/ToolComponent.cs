@@ -85,7 +85,7 @@ namespace Content.Server.Tools.Components
                     NeedHand = true,
                 };
 
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
+                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result == DoAfterStatus.Cancelled)
                     return false;

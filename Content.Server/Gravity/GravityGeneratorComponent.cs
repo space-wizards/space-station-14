@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Gravity;
@@ -7,6 +6,7 @@ using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -25,7 +25,7 @@ namespace Content.Server.Gravity
 
         private GravityGeneratorStatus _status;
 
-        public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         public bool SwitchedOn => _switchedOn;
 
@@ -108,6 +108,9 @@ namespace Content.Server.Gravity
             {
                 MakeOn();
             }
+
+            var msg = new GravityGeneratorUpdateEvent(Owner.Transform.GridID, Status);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
         }
 
         private void HandleUIMessage(ServerBoundUserInterfaceMessage message)
@@ -161,6 +164,18 @@ namespace Content.Server.Gravity
 
             _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, true);
+        }
+    }
+
+    public sealed class GravityGeneratorUpdateEvent : EntityEventArgs
+    {
+        public GridId GridId { get; }
+        public GravityGeneratorStatus Status { get; }
+
+        public GravityGeneratorUpdateEvent(GridId gridId, GravityGeneratorStatus status)
+        {
+            GridId = gridId;
+            Status = status;
         }
     }
 }

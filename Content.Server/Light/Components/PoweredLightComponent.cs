@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Ghost;
@@ -198,7 +197,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateLight()
         {
-            var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            var powerReceiver = Owner.GetComponent<ApcPowerReceiverComponent>();
 
             if (LightBulb == null) // No light bulb.
             {

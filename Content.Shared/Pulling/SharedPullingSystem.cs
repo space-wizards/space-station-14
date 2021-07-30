@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,6 +5,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Rotatable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -19,7 +19,7 @@ using Robust.Shared.Players;
 namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
-    public abstract class SharedPullingSystem : EntitySystem, IResettingEntitySystem
+    public abstract class SharedPullingSystem : EntitySystem
     {
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
@@ -50,6 +50,7 @@ namespace Content.Shared.Pulling
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
             SubscribeLocalEvent<MoveEvent>(PullerMoved);
@@ -69,7 +70,7 @@ namespace Content.Shared.Pulling
             _stoppedMoving.Clear();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _pullers.Clear();
             _moving.Clear();
@@ -236,6 +237,13 @@ namespace Content.Shared.Pulling
                 if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
                     pulled.Transform.WorldRotation = newAngle;
             }
+        }
+
+        public bool CanPull(IEntity puller, IEntity pulled)
+        {
+            var startPull = new StartPullAttemptEvent(puller, pulled);
+            RaiseLocalEvent(puller.Uid, startPull);
+            return !startPull.Cancelled;
         }
     }
 }

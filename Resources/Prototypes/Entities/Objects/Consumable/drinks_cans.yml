@@ -14,7 +14,12 @@
       - ReagentId: Cola
         Quantity: 20
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
+    maxTransferAmount: 10
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
 
@@ -111,6 +116,13 @@
   name: thirteen loko can
   description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
+  - type: SolutionContainer
+    maxVol: 20
+    caps: None
+    contents:
+      reagents:
+      - ReagentId: ThirteenLoko
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
 

@@ -1,13 +1,12 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -19,11 +18,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
+    [NetworkedComponent()]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
-
-        public sealed override uint? NetID => ContentNetIDs.HANDS;
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
 
@@ -68,7 +66,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         [DataField("throwForceMultiplier")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ThrowForceMultiplier { get; set; } = 14f; //should be tuned so that a thrown item lands about under the player's cursor
+        public float ThrowForceMultiplier { get; set; } = 10f; //should be tuned so that a thrown item lands about under the player's cursor
 
         /// <summary>
         ///     Distance after which longer throw targets stop increasing throw impulse.
@@ -442,14 +440,24 @@ namespace Content.Shared.Hands.Components
             var origin = Owner.Transform.MapPosition;
             var other = targetCoords.ToMap(Owner.EntityManager);
 
+            var dropVector = other.Position - origin.Position;
+            var requestedDropDistance = (dropVector.Length);
+
+            if (dropVector.Length > SharedInteractionSystem.InteractionRange)
+            {
+                dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
+                other = new MapCoordinates(origin.Position + dropVector, other.MapId);
+            }
+
             var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
-            dropLength = MathF.Min(dropLength, SharedInteractionSystem.InteractionRange);
 
-            var dropVector = origin.Position;
-            if (dropLength != 0)
-                dropVector += (other.Position - origin.Position).Normalized * dropLength;
+            var diff = requestedDropDistance - dropLength;
 
-            return targetCoords.WithPosition(dropVector);
+            // If we come up short then offset the drop location.
+            if (diff > 0)
+                return targetCoords.Offset(-dropVector.Normalized * diff);
+
+            return targetCoords;
         }
 
         /// <summary>
@@ -867,7 +875,7 @@ namespace Content.Shared.Hands.Components
         public HandState[] Hands { get; }
         public string? ActiveHand { get; }
 
-        public HandsComponentState(HandState[] hands, string? activeHand = null) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(HandState[] hands, string? activeHand = null)
         {
             Hands = hands;
             ActiveHand = activeHand;

@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
@@ -50,7 +51,6 @@ namespace Content.Server.IoC
             IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<IPowerNetManager, PowerNetManager>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IAccentManager, AccentManager>();
@@ -63,6 +63,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
+            IoCManager.Register<IAfkManager, AfkManager>();
         }
     }
 }

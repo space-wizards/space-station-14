@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
@@ -13,7 +12,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem, IResettingEntitySystem
+    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -37,6 +36,7 @@ namespace Content.Client.Atmos.EntitySystems
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<AtmosDebugOverlayMessage>(HandleAtmosDebugOverlayMessage);
             SubscribeNetworkEvent<AtmosDebugOverlayDisableMessage>(HandleAtmosDebugOverlayDisableMessage);
 
@@ -66,7 +66,7 @@ namespace Content.Client.Atmos.EntitySystems
                 overlayManager.RemoveOverlay<GasTileOverlay>();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _tileData.Clear();
         }

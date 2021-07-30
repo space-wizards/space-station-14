@@ -1,10 +1,12 @@
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Content.Server.GameObjects.Components.Chemistry;
-using System.Threading;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
+using Content.Shared.Chemistry.Components;
+using Robust.Shared.Timing;
+using Robust.Shared.IoC;
+using System;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -15,9 +17,10 @@ namespace Content.Server.Chemistry.Metabolism
     [DataDefinition]
     public class MovespeedModifierMetabolism : IMetabolizable
     {
+        private IGameTiming _gametiming = IoCManager.Resolve<IGameTiming>();
         /// <summary>
         /// How much of the reagent should be metabolized each sec.
-        /// </summary> 
+        /// </summary>
         [DataField("rate")]
         public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
@@ -35,10 +38,10 @@ namespace Content.Server.Chemistry.Metabolism
 
         /// <summary>
         /// how long the modifier persist after the final unit of reagent is metabolised,
-        /// should really be longer than however long it takes for a metabolism tick(1 second).
+        /// should really be less than however long it takes for a metabolism tick(1 second).
         /// </summary>
         [DataField("statusLifetime")]
-        public int StatusLifetime = 1500;
+        public int StatusLifetime = 3000;
 
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.
@@ -53,14 +56,33 @@ namespace Content.Server.Chemistry.Metabolism
             {
                 solutionEntity.EnsureComponent(out MovespeedModifierMetabolismComponent status);
 
-                status.WalkSpeedModifier = WalkSpeedModifier;
-                status.SprintSpeedModifier = SprintSpeedModifier;
-                status.EffectTime = StatusLifetime * MetabolismRate.Int();
-                status.ResetTimer();
+                if (status.WalkSpeedModifier != WalkSpeedModifier)
+                {
+                    status.WalkSpeedModifier = WalkSpeedModifier;
+                }
+                if (status.SprintSpeedModifier != SprintSpeedModifier)
+                {
+                    status.SprintSpeedModifier = SprintSpeedModifier;
+                }
+                if (status.EffectTime != StatusLifetime * MetabolismRate.Int())
+                {
+                    status.EffectTime = StatusLifetime * MetabolismRate.Int();
+                }
 
-                movement.RefreshMovementSpeedModifiers();
+                ResetTimer(status);
+
+                //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
+                //Also I don't know if this is a good way to do a NAND gate in c#
+                if (!(status.WalkSpeedModifier.Equals(movement.WalkSpeedModifier) & status.SprintSpeedModifier.Equals(movement.SprintSpeedModifier)))
+                    movement?.RefreshMovementSpeedModifiers();
+
             }
             return MetabolismRate;
+        }
+        public void ResetTimer(MovespeedModifierMetabolismComponent status)
+        {
+            status.ModifierTimer = (_gametiming.CurTime, _gametiming.CurTime.Add(TimeSpan.FromMilliseconds(status.EffectTime)));
+            status.Dirty();
         }
     }
 }

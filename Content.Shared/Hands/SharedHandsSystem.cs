@@ -23,6 +23,38 @@ namespace Content.Shared.Hands
             SubscribeNetworkEvent<RequestDropHeldEntityEvent>(HandleDrop);
         }
 
+        public void DropHandItems(IEntity entity, bool doMobChecks = true)
+        {
+            if (!entity.TryGetComponent(out SharedHandsComponent? handsComponent)) return;
+            DropHandItems(handsComponent, doMobChecks);
+        }
+
+        private void DropHandItems(SharedHandsComponent handsComponent, bool doMobChecks = true)
+        {
+            var msg = new DropHandItemsAttemptEvent();
+            var entity = handsComponent.Owner;
+            var uid = entity.Uid;
+            var eventBus = EntityManager.EventBus;
+
+            eventBus.RaiseLocalEvent(uid, msg);
+
+            if (msg.Cancelled) return;
+
+            if (entity.TryGetContainerMan(out var containerManager))
+            {
+                var parentMsg = new ContainedEntityDropHandItemsAttemptEvent(uid);
+                eventBus.RaiseLocalEvent(containerManager.Owner.Uid, parentMsg);
+
+                if (parentMsg.Cancelled) return;
+            }
+
+            DropAllItemsInHands(entity, doMobChecks);
+        }
+
+        protected virtual void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
+        {
+        }
+
         private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
             var entity = eventArgs.SenderSession?.AttachedEntity;
@@ -45,6 +77,18 @@ namespace Content.Shared.Hands
 
         protected abstract void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args);
     }
+
+    public sealed class ContainedEntityDropHandItemsAttemptEvent : CancellableEntityEventArgs
+    {
+        public EntityUid EntityUid { get; }
+
+        public ContainedEntityDropHandItemsAttemptEvent(EntityUid uid)
+        {
+            EntityUid = uid;
+        }
+    }
+
+    public sealed class DropHandItemsAttemptEvent : CancellableEntityEventArgs {}
 
     [Serializable, NetSerializable]
     public class RequestSetHandEvent : EntityEventArgs

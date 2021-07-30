@@ -62,19 +62,21 @@ namespace Content.Client.CharacterInfo.Components
             public Label NameLabel { get; }
             public Label SubText { get; }
 
-            public VBoxContainer ObjectivesContainer { get; }
+            public BoxContainer ObjectivesContainer { get; }
 
             public CharacterInfoControl(IResourceCache resourceCache)
             {
                 IoCManager.InjectDependencies(this);
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (SpriteView = new SpriteView { Scale = (2, 2)}),
-                        new VBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Vertical,
                             VerticalAlignment = VAlignment.Top,
                             Children =
                             {
@@ -100,7 +102,10 @@ namespace Content.Client.CharacterInfo.Components
                     Text = Loc.GetString("character-info-objectives-label"),
                     HorizontalAlignment = HAlignment.Center
                 });
-                ObjectivesContainer = new VBoxContainer();
+                ObjectivesContainer = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical
+                };
                 AddChild(ObjectivesContainer);
 
                 AddChild(new Placeholder()
@@ -116,8 +121,9 @@ namespace Content.Client.CharacterInfo.Components
                 ObjectivesContainer.RemoveAllChildren();
                 foreach (var (groupId, objectiveConditions) in characterInfoMessage.Objectives)
                 {
-                    var vbox = new VBoxContainer
+                    var vbox = new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Modulate = Color.Gray
                     };
 
@@ -129,7 +135,10 @@ namespace Content.Client.CharacterInfo.Components
 
                     foreach (var objectiveCondition in objectiveConditions)
                     {
-                        var hbox = new HBoxContainer();
+                        var hbox = new BoxContainer
+                        {
+                            Orientation = LayoutOrientation.Horizontal
+                        };
                         hbox.AddChild(new ProgressTextureRect
                         {
                             Texture = objectiveCondition.SpriteSpecifier.Frame0(),
@@ -140,8 +149,9 @@ namespace Content.Client.CharacterInfo.Components
                         {
                             MinSize = (10,0)
                         });
-                        hbox.AddChild(new VBoxContainer
+                        hbox.AddChild(new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 Children =
                                 {
                                     new Label{Text = objectiveCondition.Title},

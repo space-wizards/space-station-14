@@ -8,5 +8,5 @@
       tags:
       - FirelockElectronics
     - type: Sprite
-      sprite: Constructible/Misc/module.rsi
+      sprite: Objects/Misc/module.rsi
       state: mainboard

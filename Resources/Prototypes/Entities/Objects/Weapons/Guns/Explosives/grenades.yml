@@ -22,6 +22,7 @@
     heavyImpactRange: 2
     lightImpactRange: 4
     flashRange: 7
+  - type: ExplodeOnTrigger
   - type: Damageable
   - type: Destructible
     thresholds:
@@ -55,7 +56,12 @@
     - Belt
   - type: OnUseTimerTrigger
     delay: 3.5
-  - type: FlashExplosive
+  - type: FlashOnTrigger
+    range: 7
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: DeleteOnTrigger
   - type: Damageable
   - type: Destructible
     thresholds:
@@ -90,6 +96,7 @@
     heavyImpactRange: 3
     lightImpactRange: 5
     flashRange: 10
+  - type: ExplodeOnTrigger
   - type: Damageable
   - type: Destructible
     thresholds:
@@ -123,6 +130,7 @@
     devastationRange: 25
     heavyImpactRange: 25
     flashRange: 50
+  - type: ExplodeOnTrigger
   - type: Damageable
   - type: Destructible
     thresholds:

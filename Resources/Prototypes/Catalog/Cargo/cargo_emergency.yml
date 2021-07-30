@@ -39,7 +39,7 @@
   id: EmergencyRadiation
   description: "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this."
   icon:
-    sprite: Constructible/Misc/decals.rsi
+    sprite: Structures/Wallmounts/signs.rsi
     state: radiation
   product: CrateEmergencyRadiation
   cost: 1000

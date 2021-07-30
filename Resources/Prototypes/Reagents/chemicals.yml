@@ -180,7 +180,7 @@
       amount: 10
     - !type:AdjustHealth
       amount: -5
-      
+
 - type: reagent
   id: SulfuricAcid
   name: sulfuric acid
@@ -233,24 +233,48 @@
   name: meth
   desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with dangerous side-effects if too much is consumed.
   physicalDesc: translucent
-  color: "#c0e0ff20"
-  boilingPoint: 212.0 #Meth vape when? 
+  color: "#FAFAFA"
+  boilingPoint: 212.0 #Meth vape when?
   meltingPoint: 170.0
   metabolism:
     - !type:HealthChangeMetabolism
-      healthChange: 0.5
+      healthChange: 2.5 # On tg it's 1-4 brain damage, but since as of now, we don't have brain damage, toxin will have to do.
       damageClass: Toxin
+      rate: 0.6
     - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 1.2
-      sprintSpeedModifier: 1.2
-      
+      walkSpeedModifier: 1.65
+      sprintSpeedModifier: 1.65
+
+- type: reagent
+  id: Iodine
+  name: iodine
+  desc: Iodine is a dark purple element, and a potent dye.
+  physicalDesc: Dark Brown
+  color: "#331A00"
+  boilingPoint: 184.3
+  meltingPoint: 113.7
+  # don't know what effects it should have, didn't find any on the tg wiki.
+
+- type: reagent
+  id: Ephedrine
+  name: ephedrine
+  desc: Ephedrine is a medication and stimulant and is a component of Methamphetamine.
+  physicalDesc: Bone white
+  color: "#FFFFE6"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolism:
+    - !type:HealthChangeMetabolism
+      healthChange: 0.3
+      damageClass: Toxin 
+
 - type: reagent
   id: Oil
   name: oil
   desc: Used by chefs to cook.
   physicalDesc: oily
   color: "#b67823"
-  boilingPoint: 300.0 
+  boilingPoint: 300.0
   meltingPoint: -16.0
   tileReactions:
     - !type:FlammableTileReaction {}

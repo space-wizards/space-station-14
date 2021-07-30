@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,10 +10,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Ghost
 {
+    [NetworkedComponent()]
     public class SharedGhostComponent : Component, IActionBlocker
     {
         public override string Name => "Ghost";
-        public override uint? NetID => ContentNetIDs.GHOST;
 
         /// <summary>
         ///     Changed by <see cref="GhostChangeCanReturnToBodyEvent"/>
@@ -61,7 +61,6 @@ namespace Content.Shared.Ghost
             bool canReturnToBody,
             HashSet<string>? locationWarps = null,
             Dictionary<EntityUid, string>? playerWarps = null)
-            : base(ContentNetIDs.GHOST)
         {
             CanReturnToBody = canReturnToBody;
             LocationWarps = locationWarps;

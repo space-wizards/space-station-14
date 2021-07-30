@@ -21,6 +21,9 @@
     count: 8
   - type: Item
     size: 8
+  - type: Tag
+    tags:
+    - Pizza
 
 - type: entity
   parent: FoodPizzaBase
@@ -37,6 +40,9 @@
         Quantity: 5
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+    - Pizza
 
 # Pizza
 

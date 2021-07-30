@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -182,7 +181,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physics = EntitySystem.Get<SharedBroadphaseSystem>();
 
             var worldBox = GetWorldTileBox(turf);
 

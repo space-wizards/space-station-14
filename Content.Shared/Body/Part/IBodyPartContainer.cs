@@ -1,5 +1,4 @@
-﻿#nullable enable
-
+﻿
 namespace Content.Shared.Body.Part
 {
     /// <summary>

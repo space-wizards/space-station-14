@@ -4,7 +4,6 @@ using Content.Client.Lobby;
 using Content.Client.Preferences;
 using Content.Client.State;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces;
 using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
 using Content.Shared;

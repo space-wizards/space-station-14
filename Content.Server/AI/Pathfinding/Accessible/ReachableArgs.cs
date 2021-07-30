@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Access.Components;
 using Content.Server.AI.Components;
 using Robust.Shared.GameObjects;

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Cloning.Components;
@@ -16,7 +15,7 @@ using static Content.Shared.Cloning.SharedCloningPodComponent;
 
 namespace Content.Server.Cloning
 {
-    internal sealed class CloningSystem : EntitySystem, IResettingEntitySystem
+    internal sealed class CloningSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         public readonly Dictionary<Mind.Mind, int> MindToId = new();
@@ -29,6 +28,7 @@ namespace Content.Server.Cloning
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
@@ -73,7 +73,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, PowerReceiverComponent>(true))
+            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {
@@ -142,7 +142,7 @@ namespace Content.Server.Cloning
             return IdToDNA.ToDictionary(m => m.Key, m => m.Value.Mind.CharacterName);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             MindToId.Clear();
             IdToDNA.Clear();

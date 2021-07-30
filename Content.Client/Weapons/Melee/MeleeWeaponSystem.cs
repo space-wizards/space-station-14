@@ -18,6 +18,7 @@ namespace Content.Client.Weapons.Melee
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly EffectSystem _effectSystem = default!;
 
         public override void Initialize()
         {
@@ -67,7 +68,6 @@ namespace Content.Client.Weapons.Melee
                     source.TryGetComponent(out ISpriteComponent? sourceSprite) &&
                     sourceSprite.BaseRSI?.Path != null)
                 {
-                    var sys = Get<EffectSystem>();
                     var curTime = _gameTiming.CurTime;
                     var effect = new EffectSystemMessage
                     {
@@ -81,7 +81,8 @@ namespace Content.Client.Weapons.Melee
                         Born = curTime,
                         DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
                     };
-                    sys.CreateEffect(effect);
+
+                    _effectSystem.CreateEffect(effect);
                 }
             }
 

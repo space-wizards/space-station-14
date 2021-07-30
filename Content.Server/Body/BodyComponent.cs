@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Mind.Components;

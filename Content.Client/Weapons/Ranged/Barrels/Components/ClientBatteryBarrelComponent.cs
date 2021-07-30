@@ -1,22 +1,23 @@
-﻿using System;
+using System;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
-using Content.Shared.NetIDs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
     public class ClientBatteryBarrelComponent : Component, IItemStatus
     {
         public override string Name => "BatteryBarrel";
-        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         private StatusControl? _statusControl;
 
@@ -58,7 +59,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         private sealed class StatusControl : Control
         {
             private readonly ClientBatteryBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsList;
+            private readonly BoxContainer _bulletsList;
             private readonly Label _noBatteryLabel;
             private readonly Label _ammoCount;
 
@@ -69,8 +70,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 HorizontalExpand = true;
                 VerticalAlignment = VAlignment.Center;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     Children =
                     {
@@ -79,8 +81,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                             HorizontalExpand = true,
                             Children =
                             {
-                                (_bulletsList = new HBoxContainer
+                                (_bulletsList = new BoxContainer
                                 {
+                                    Orientation = LayoutOrientation.Horizontal,
                                     VerticalAlignment = VAlignment.Center,
                                     SeparationOverride = 4
                                 }),

@@ -1,0 +1,43 @@
+﻿- type: entity
+  abstract: true
+  id: ReagentDispenserBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.4"
+      mass: 25
+      mask:
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+  - type: ApcPowerReceiver
+  - type: UserInterface
+    interfaces:
+    - key: enum.ReagentDispenserUiKey.Key
+      type: ReagentDispenserBoundUserInterface
+  - type: LoopingSound
+  - type: Anchorable
+  - type: Pullable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg

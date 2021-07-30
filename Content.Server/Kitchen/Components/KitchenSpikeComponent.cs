@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Act;
@@ -133,7 +132,7 @@ namespace Content.Server.Kitchen.Components
 
             _beingButchered.Add(victimUid);
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
             _beingButchered.Remove(victimUid);
 

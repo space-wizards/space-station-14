@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 
-#nullable enable
 
 namespace Content.Server.Administration.Managers
 {

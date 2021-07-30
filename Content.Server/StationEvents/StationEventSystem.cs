@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
     // Somewhat based off of TG's implementation of events
-    public sealed class StationEventSystem : EntitySystem, IResettingEntitySystem
+    public sealed class StationEventSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
@@ -185,6 +184,8 @@ namespace Content.Server.StationEvents
 
             _netManager.RegisterNetMessage<MsgRequestStationEvents>(RxRequest);
             _netManager.RegisterNetMessage<MsgStationEvents>();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         }
 
         private void RxRequest(MsgRequestStationEvents msg)
@@ -359,7 +360,7 @@ namespace Content.Server.StationEvents
             base.Shutdown();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             if (CurrentEvent?.Running == true)
             {

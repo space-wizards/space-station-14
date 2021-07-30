@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
 using Content.Server.DoAfter;
@@ -123,7 +122,7 @@ namespace Content.Server.Fluids.Components
                 BreakOnStun = true,
                 BreakOnDamage = true,
             };
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterArgs);
 
             Mopping = false;
 

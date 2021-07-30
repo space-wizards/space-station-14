@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Client.Graphics;
@@ -14,6 +15,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Chemistry.Components.SharedChemMasterComponent;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -25,11 +27,11 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
-        private readonly VBoxContainer ContainerInfo;
+        private readonly BoxContainer ContainerInfo;
 
-        private readonly VBoxContainer BufferInfo;
+        private readonly BoxContainer BufferInfo;
 
-        private readonly VBoxContainer PackagingInfo;
+        private readonly BoxContainer PackagingInfo;
 
         /// <summary>Ejects the reagent container from the dispenser.</summary>
         public Button EjectButton { get; }
@@ -41,8 +43,8 @@ namespace Content.Client.Chemistry.UI
 
         public event Action<ButtonEventArgs, ChemButton>? OnChemButtonPressed;
 
-        public HBoxContainer PillInfo { get; set; }
-        public HBoxContainer BottleInfo { get; set; }
+        public BoxContainer PillInfo { get; set; }
+        public BoxContainer BottleInfo { get; set; }
         public SpinBox PillAmount { get; set; }
         public SpinBox BottleAmount { get; set; }
         public Button CreatePills { get; }
@@ -57,13 +59,15 @@ namespace Content.Client.Chemistry.UI
             MinSize = SetSize = (400, 525);
             IoCManager.InjectDependencies(this);
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     //Container
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("chem-master-window-container-label")},
@@ -84,8 +88,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Currently empty, when server sends state data this will have container contents and fill volume.
-                            (ContainerInfo = new VBoxContainer
+                            (ContainerInfo = new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -102,8 +107,9 @@ namespace Content.Client.Chemistry.UI
                     new Control {MinSize = (0.0f, 10.0f)},
 
                     //Buffer
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("chem-master-window-buffer-text")},
@@ -126,8 +132,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Buffer reagent list
-                            (BufferInfo = new VBoxContainer
+                            (BufferInfo = new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -144,8 +151,9 @@ namespace Content.Client.Chemistry.UI
                     new Control {MinSize = (0.0f, 10.0f)},
 
                     //Packaging
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{Loc.GetString("chem-master-window-packaging-text")} "},
@@ -165,8 +173,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Packaging options
-                            (PackagingInfo = new VBoxContainer
+                            (PackagingInfo = new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                             }),
 
@@ -176,8 +185,9 @@ namespace Content.Client.Chemistry.UI
             });
 
             //Pills
-            PillInfo = new HBoxContainer
+            PillInfo = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label
@@ -213,8 +223,9 @@ namespace Content.Client.Chemistry.UI
             PillInfo.AddChild(CreatePills);
 
             //Bottles
-            BottleInfo = new HBoxContainer
+            BottleInfo = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label
@@ -269,31 +280,8 @@ namespace Content.Client.Chemistry.UI
             UpdatePanelInfo(castState);
             if (Contents.Children != null)
             {
-                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
                 EjectButton.Disabled = !castState.HasBeaker;
-            }
-        }
-
-        /// <summary>
-        /// This searches recursively through all the children of "parent"
-        /// and sets the Disabled value of any buttons found to "val"
-        /// </summary>
-        /// <param name="parent">The control which childrens get searched</param>
-        /// <param name="val">The value to which disabled gets set</param>
-        private void SetButtonDisabledRecursive(Control parent, bool val)
-        {
-            foreach (var child in parent.Children)
-            {
-                if (child is Button but)
-                {
-                    but.Disabled = val;
-                    continue;
-                }
-
-                if (child.Children != null)
-                {
-                    SetButtonDisabledRecursive(child, val);
-                }
             }
         }
 
@@ -315,8 +303,9 @@ namespace Content.Client.Chemistry.UI
                 return;
             }
 
-            ContainerInfo.Children.Add(new HBoxContainer // Name of the container and its fill status (Ex: 44/100u)
+            ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label {Text = $"{state.ContainerName}: "},
@@ -339,8 +328,9 @@ namespace Content.Client.Chemistry.UI
 
                 if (proto != null)
                 {
-                    ContainerInfo.Children.Add(new HBoxContainer
+                    ContainerInfo.Children.Add(new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{name}: "},
@@ -371,7 +361,10 @@ namespace Content.Client.Chemistry.UI
                 return;
             }
 
-            var bufferHBox = new HBoxContainer();
+            var bufferHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             BufferInfo.AddChild(bufferHBox);
 
             var bufferLabel = new Label { Text = $"{Loc.GetString("chem-master-window-buffer-label")} " };
@@ -394,8 +387,9 @@ namespace Content.Client.Chemistry.UI
 
                 if (proto != null)
                 {
-                    BufferInfo.Children.Add(new HBoxContainer
+                    BufferInfo.Children.Add(new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         //SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Children =
                         {

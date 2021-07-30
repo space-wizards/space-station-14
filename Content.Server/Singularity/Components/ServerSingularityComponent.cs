@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Audio;
@@ -15,7 +14,7 @@ namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSingularityComponent))]
-    public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
+    public class ServerSingularityComponent : SharedSingularityComponent
     {
         private SharedSingularitySystem _singularitySystem = default!;
 
@@ -93,46 +92,6 @@ namespace Content.Server.Singularity.Components
         public void Update(int seconds)
         {
             Energy -= EnergyDrain * seconds;
-        }
-
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            // If we're being deleted by another singularity, this call is probably for that singularity.
-            // Even if not, just don't bother.
-            if (BeingDeletedByAnotherSingularity)
-                return;
-
-            var otherEntity = otherFixture.Body.Owner;
-
-            if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
-            {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourFixture.Body.GetWorldAABB()))
-                {
-                    mapGridComponent.Grid.SetTile(tile.GridIndices, Robust.Shared.Map.Tile.Empty);
-                    Energy++;
-                }
-                return;
-            }
-
-            if (otherEntity.HasComponent<ContainmentFieldComponent>() ||
-                (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
-            {
-                return;
-            }
-
-            if (otherEntity.IsInContainer())
-                return;
-
-            // Singularity priority management / etc.
-            if (otherEntity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
-                otherSingulo.BeingDeletedByAnotherSingularity = true;
-
-            otherEntity.QueueDelete();
-
-            if (otherEntity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
-                Energy += singuloFood.Energy;
-            else
-                Energy++;
         }
 
         protected override void OnRemove()

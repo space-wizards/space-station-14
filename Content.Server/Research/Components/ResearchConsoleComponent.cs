@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Audio;
@@ -26,7 +25,7 @@ namespace Content.Server.Research.Components
 
         private const string SoundCollectionName = "keyboard";
 
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchConsoleUiKey.Key);
 

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using Content.Server.Advertise;
 using Content.Server.Notification;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Acts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -41,7 +40,7 @@ namespace Content.Server.VendingMachines
         private string? _description;
         private string _spriteName = "";
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         [DataField("soundVend")]
@@ -87,7 +86,7 @@ namespace Content.Server.VendingMachines
             if (!string.IsNullOrEmpty(_spriteName))
             {
                 var spriteComponent = Owner.GetComponent<SpriteComponent>();
-                const string vendingMachineRSIPath = "Constructible/Power/VendingMachines/{0}.rsi";
+                const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
 
@@ -108,7 +107,7 @@ namespace Content.Server.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }

@@ -1,32 +1,32 @@
 <SS14Window xmlns="https://spacestation14.io">
-    <HBoxContainer HorizontalExpand="True">
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
-            <HBoxContainer HorizontalExpand="True">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
                 <OptionButton Name="Category" MinSize="130 0"/>
-            </HBoxContainer>
+            </BoxContainer>
             <ItemList Name="RecipesList" SelectMode="Single" VerticalExpand="True"/>
-        </VBoxContainer>
+        </BoxContainer>
         <Control MinSize="10 0"/>
-        <VBoxContainer HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
             <Control>
-                <HBoxContainer Align="Center">
+                <BoxContainer Orientation="Horizontal" Align="Center">
                     <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep"/>
                     <Control MinSize="10 0"/>
-                    <VBoxContainer>
+                    <BoxContainer Orientation="Vertical">
                         <RichTextLabel Name="TargetName"/>
                         <RichTextLabel Name="TargetDesc"/>
-                    </VBoxContainer>
-                </HBoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
             </Control>
             <ItemList Name="StepList" VerticalExpand="True"/>
-            <VBoxContainer>
+            <BoxContainer Orientation="Vertical">
                 <Button Name="BuildButton" Disabled="True" ToggleMode="True" VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
-                <HBoxContainer VerticalExpand="True" SizeFlagsStretchRatio="0.5">
+                <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">
                     <Button Name="EraseButton" ToggleMode="True" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"/>
                     <Button Name="ClearButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.3"/>
-                </HBoxContainer>
-            </VBoxContainer>
-        </VBoxContainer>
-    </HBoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
 </SS14Window>

@@ -1,0 +1,49 @@
+﻿- type: entity
+  id: BarSign
+  parent: BaseStructure
+  name: bar sign
+  components:
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45, -0.95, 0.45, 1"
+      layer:
+      - Passable
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: empty
+  - type: ApcPowerReceiver
+  - type: BarSign
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: LargeBarSign
+  name: large bar sign
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/sylphs.rsi
+    state: sylph
+  - type: ApcPowerReceiver
+  - type: BarSign
+
+- type: entity
+  id: BarSignEngineChange
+  name: The Engine Change
+  parent: BarSign
+  components:
+  - type: BarSign
+    current: EngineChange

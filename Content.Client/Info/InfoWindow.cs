@@ -1,4 +1,3 @@
-#nullable enable
 
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Info
 {
@@ -57,8 +57,9 @@ namespace Content.Client.Info
 
         private void PopulateRules(Control rulesList)
         {
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
@@ -98,8 +99,9 @@ namespace Content.Client.Info
         {
             Button controlsButton;
 
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
@@ -131,8 +133,9 @@ namespace Content.Client.Info
 
             AddSection(Loc.GetString("ui-info-header-intro"), "Intro.txt");
 
-            vBox.AddChild(new HBoxContainer
+            vBox.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 10),
                 Children =
                 {
@@ -140,8 +143,9 @@ namespace Content.Client.Info
                 }
             });
 
-            vBox.AddChild(new HBoxContainer
+            vBox.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5,
                 Children =
                 {
