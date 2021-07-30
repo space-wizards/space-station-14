@@ -17,10 +17,9 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     {
         //TODO Why is damage type allowd to be null here? if it is, this component does nothing? Surely it should be a required datafield?
         //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType")]
         public string? DamageTypeID { get; set; }
-        public DamageTypePrototype? DamageType => DamageTypeID == null ? null : _prototypeManager.Index<DamageTypePrototype>(DamageTypeID);
+        public DamageTypePrototype? DamageType => DamageTypeID == null ? null : IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(DamageTypeID);
 
         [DataField("damage")]
         public int Damage { get; set; }
