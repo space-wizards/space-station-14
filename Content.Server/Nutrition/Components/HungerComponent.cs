@@ -32,6 +32,10 @@ namespace Content.Server.Nutrition.Components
         private readonly string _damageTypeID = default!;
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
+        [DataField("damageRecoveredPerSecond")]
+        private float _damageRecoveredPerSecond = 0.1f;
+
+        private float _acumulatedDamageRecovery;
         private float _actualDecayRate;
         private float _currentHunger;
         private HungerThreshold _currentHungerThreshold;
@@ -44,6 +48,12 @@ namespace Content.Server.Nutrition.Components
             {HungerThreshold.Starving, 150.0f},
             {HungerThreshold.Dead, 0.0f},
         };
+
+        // TODO QUESTION Are all of _baseDecayRate, _actualDecayRate, _currentHunger all redundant here?
+        // i.e., shouldn't it just be:
+        //    [ViewVariables(VVAccess.ReadWrite)]
+        //    [DataField("baseDecayRate")]
+        //    private float BaseDecayRate { get; set; } = 0.1f;
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
@@ -195,7 +205,14 @@ namespace Content.Server.Nutrition.Components
 
             if (!mobState.IsDead())
             {
-                damageable.ChangeDamage(_damageType, 2, true);
+                // Recover some health over time
+                var damageRecovered = _damageRecoveredPerSecond * frametime;
+                _acumulatedDamageRecovery += damageRecovered - ((int) damageRecovered);
+                damageable.ChangeDamage(_damageType, (int) -damageRecovered);
+                if (_acumulatedDamageRecovery >= 1) {
+                    _acumulatedDamageRecovery -= 1;
+                    damageable.ChangeDamage(_damageType, -1);
+                }
             }
         }
 
