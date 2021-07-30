@@ -1,6 +1,5 @@
 ﻿using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;

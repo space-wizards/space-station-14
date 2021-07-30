@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

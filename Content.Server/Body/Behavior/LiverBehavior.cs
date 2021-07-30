@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Networks;
-using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
