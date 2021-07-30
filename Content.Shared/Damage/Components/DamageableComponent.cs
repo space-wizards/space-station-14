@@ -29,7 +29,7 @@ namespace Content.Shared.Damage.Components
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private Dictionary<DamageTypePrototype, int> _damageList = new();
+        private Dictionary<DamageTypePrototype, int> _damageDict = new();
 
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
@@ -46,9 +46,9 @@ namespace Content.Shared.Damage.Components
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
         // TODO DAMAGE Cache this
-        [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => damageTypeToDamageGroupGroup(_damageList);
-        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageList;
+        [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => DamageTypesDictToDamageGroupDict(_damageDict);
+        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageDict;
 
         // Some inorganic damagable components might take shock/electrical damage from radiation?
         // Similarly, some may react differetly to explosions?
@@ -82,7 +82,7 @@ namespace Content.Shared.Damage.Components
 
             foreach (var DamageType in SupportedTypes)
             {
-                _damageList.Add(DamageType,0);
+                _damageDict.Add(DamageType,0);
             }
 
             var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
@@ -118,7 +118,7 @@ namespace Content.Shared.Damage.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new DamageableComponentState(_damageList);
+            return new DamageableComponentState(_damageDict);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -130,22 +130,22 @@ namespace Content.Shared.Damage.Components
                 return;
             }
 
-            _damageList.Clear();
+            _damageDict.Clear();
 
             foreach (var (type, damage) in state.DamageList)
             {
-                _damageList[type] = damage;
+                _damageDict[type] = damage;
             }
         }
 
         public int GetDamage(DamageTypePrototype type)
         {
-            return _damageList.GetValueOrDefault(type);
+            return _damageDict.GetValueOrDefault(type);
         }
 
         public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
-            return _damageList.TryGetValue(type, out damage);
+            return _damageDict.TryGetValue(type, out damage);
         }
 
         public int GetDamage(DamageGroupPrototype group)
@@ -192,8 +192,8 @@ namespace Content.Shared.Damage.Components
 
             if (SupportedTypes.Contains(type))
             {
-                var old = _damageList[type] = newValue;
-                _damageList[type] = newValue;
+                var old = _damageDict[type] = newValue;
+                _damageDict[type] = newValue;
 
                 var delta = newValue - old;
                 var datum = new DamageChangeData(type, newValue, delta);
@@ -242,7 +242,7 @@ namespace Content.Shared.Damage.Components
             if (finalDamage == 0)
                 return false;
 
-            if (!_damageList.TryGetValue(type, out var current))
+            if (!_damageDict.TryGetValue(type, out var current))
             {
                 return false;
             }
@@ -251,15 +251,15 @@ namespace Content.Shared.Damage.Components
             {
                 if (current == 0)
                     return false;
-                _damageList[type] = 0;
+                _damageDict[type] = 0;
                 finalDamage = -current;
             }
             else
             {
-                _damageList[type] = current + finalDamage;
+                _damageDict[type] = current + finalDamage;
             }
 
-            current = _damageList[type];
+            current = _damageDict[type];
 
             var datum = new DamageChangeData(type, current, finalDamage);
             var data = new List<DamageChangeData> {datum};
@@ -361,13 +361,13 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            if (!_damageList.ContainsKey(type))
+            if (!_damageDict.ContainsKey(type))
             {
                 return false;
             }
 
-            var old = _damageList[type];
-            _damageList[type] = newValue;
+            var old = _damageDict[type];
+            _damageDict[type] = newValue;
 
             var delta = newValue - old;
             var datum = new DamageChangeData(type, 0, delta);
@@ -406,7 +406,7 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         /// <param name="damageTypeDict"></param>
         /// <returns></returns>
-        private IReadOnlyDictionary<DamageGroupPrototype, int> damageTypeToDamageGroupGroup(IReadOnlyDictionary<DamageTypePrototype, int> damageTypeDict)
+        private IReadOnlyDictionary<DamageGroupPrototype, int> DamageTypesDictToDamageGroupDict(IReadOnlyDictionary<DamageTypePrototype, int> damageTypeDict)
         {
             var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
             int damageGroupSumDamage, damageTypeDamage;
