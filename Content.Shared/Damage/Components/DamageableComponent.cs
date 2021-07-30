@@ -27,7 +27,8 @@ namespace Content.Shared.Damage.Components
     {
         public override string Name => "Damageable";
 
-        private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private Dictionary<DamageTypePrototype, int> _damageList = new();
 
         // TODO define these in yaml?
@@ -49,6 +50,18 @@ namespace Content.Shared.Damage.Components
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => DamageListToDamageGroup(_damageList);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageList;
 
+        // Some inorganic damagable components might take shock/electrical damage from radiation?
+        // Similarly, some may react differetly to explosions?
+        // There definittely should be a better way of doing this.
+        // TODO PROTOTYPE Replace this code with prototype references, once they are supported (requires changing list type).
+        [ViewVariables]
+        [DataField("radiationDamageTypes")]
+        public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
+        [ViewVariables]
+        [DataField("explosionDamageTypes")]
+        public List<string> ExplosionDamageTypeIDs { get; set; } = new() { "Piercing", "Heat" };
+
+
         public HashSet<DamageGroupPrototype> SupportedGroups { get; } = new();
 
         public HashSet<DamageTypePrototype> SupportedTypes { get; } = new();
@@ -56,7 +69,6 @@ namespace Content.Shared.Damage.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             // TODO DAMAGE Serialize damage done and resistance changes
             var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
@@ -420,7 +432,11 @@ namespace Content.Shared.Damage.Components
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
-            ChangeDamage(GetDamageType("Radiation"), totalDamage, false, radiation.Owner);
+            foreach (string damageTypeID in RadiationDamageTypeIDs)
+            {
+                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), totalDamage, false, radiation.Owner);
+            }
+            
         }
 
         public void OnExplosion(ExplosionEventArgs eventArgs)
@@ -433,8 +449,10 @@ namespace Content.Shared.Damage.Components
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            ChangeDamage(GetDamageType("Piercing"), damage, false);
-            ChangeDamage(GetDamageType("Heat"), damage, false);
+            foreach (string damageTypeID in ExplosionDamageTypeIDs)
+            {
+                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), damage, false);
+            }
         }
     }
 
