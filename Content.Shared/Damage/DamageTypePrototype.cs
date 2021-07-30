@@ -6,7 +6,8 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Damage
 {
     /// <summary>
-    ///
+    /// A single damage type.
+    /// These types are grouped togehter in <see cref="DamageGroupPrototype"/> 
     /// </summary>
     [Prototype("damageType")]
     [Serializable, NetSerializable]

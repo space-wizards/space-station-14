@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Damage
 {
     /// <summary>
-    /// A Group of DamageTypes.
+    /// A Group of <see cref="DamageTypePrototype"/>s .
     /// </summary>
     [Prototype("damageGroup")]
     [Serializable, NetSerializable]
