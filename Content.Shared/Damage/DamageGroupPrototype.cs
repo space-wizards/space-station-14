@@ -21,11 +21,6 @@ namespace Content.Shared.Damage
         [DataField("damageTypes", required: true)]
         public List<string> TypeIds { get; } = default!;
 
-        void ISerializationHooks.AfterDeserialization()
-        {
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        }
-
         public IEnumerable<DamageTypePrototype> DamageTypes
         {
             get
