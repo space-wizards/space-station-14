@@ -29,9 +29,10 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: ["enum.VentVisualLayers.Vent"]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
+        - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
@@ -54,8 +55,10 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
+        - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
     - type: GasPassiveVent
@@ -76,9 +79,10 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
-          map: ["enum.ScrubberVisualLayers.Scrubber"]
+          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
+        - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: ScrubberVisualizer
@@ -93,18 +97,24 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: GasOutletInjector
+
     # TODO ATMOS: Actual sprite for this.
     - type: Sprite
       netsync: false
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
+    - type: GasOutletInjector
 
 - type: entity
-  parent: GasUnaryBase
-  id: GasThermoMachineBase
+  parent: BaseMachinePowered
+  id: BaseGasThermoMachine
   name: thermomachine
   description: Heats or cools gas in connected pipes.
   abstract: true
@@ -117,10 +127,19 @@
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasThermoMachine
+    - type: AtmosPipeColor
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
 
 - type: entity
-  parent: GasThermoMachineBase
+  parent: BaseGasThermoMachine
   id: GasThermoMachineFreezer
   name: freezer
   placement:
@@ -130,9 +149,11 @@
       layers:
         - state: freezer_off
         - state: pipe
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           enabledState: freezer_on
     - type: GasThermoMachine
@@ -140,7 +161,7 @@
       minTemperature: 73.15
 
 - type: entity
-  parent: GasThermoMachineBase
+  parent: BaseGasThermoMachine
   id: GasThermoMachineHeater
   name: heater
   placement:
@@ -150,9 +171,11 @@
       layers:
         - state: heater_off
         - state: pipe
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
         - type: ThermoMachineVisualizer
           enabledState: heater_on
     - type: GasThermoMachine
