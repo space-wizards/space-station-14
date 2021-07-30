@@ -44,7 +44,7 @@ namespace Content.Server.Mining.Components
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent)) return false;
 
-            var DamageableComponent = Owner.GetComponent<IDamageableComponent>().ChangeDamage(_damageType, meleeWeaponComponent.Damage, false, item);
+            Owner.GetComponent<IDamageableComponent>().ChangeDamage(_damageType, meleeWeaponComponent.Damage, false, item);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))
