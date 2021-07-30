@@ -2,6 +2,7 @@ using Content.Server.Lock;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -19,8 +20,8 @@ namespace Content.Server.Storage.Components
         public override string Name => "Lock";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("locked")] public bool Locked { get; set; } = true;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("unlockingSound")] public string UnlockSound { get; set; } = "/Audio/Machines/door_lock_off.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("lockingSound")] public string LockSound { get; set; } = "/Audio/Machines/door_lock_off.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("unlockingSound")] public SoundSpecifier? UnlockSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("lockingSound")] public SoundSpecifier? LockSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg");
 
         [Verb]
         private sealed class ToggleLockVerb : Verb<LockComponent>

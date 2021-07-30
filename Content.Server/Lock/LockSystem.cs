@@ -63,7 +63,11 @@ namespace Content.Server.Lock
 
             lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
             lockComp.Locked = true;
-            SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound, lockComp.Owner, AudioParams.Default.WithVolume(-5));
+            if(lockComp.LockSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+            }
+            
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, true);
@@ -81,7 +85,11 @@ namespace Content.Server.Lock
 
             lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
             lockComp.Locked = false;
-            SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound, lockComp.Owner, AudioParams.Default.WithVolume(-5));
+            if(lockComp.UnlockSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+            }
+            
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, false);
