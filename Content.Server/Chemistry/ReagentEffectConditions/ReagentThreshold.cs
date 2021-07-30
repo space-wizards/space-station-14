@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override bool Condition(IEntity solutionEntity, Solution.ReagentQuantity reagent)
         {
-            return reagent.Quantity > Min && reagent.Quantity < Max;
+            return reagent.Quantity >= Min && reagent.Quantity < Max;
         }
     }
 }
