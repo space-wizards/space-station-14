@@ -8,6 +8,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Components
 {
@@ -22,10 +24,16 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        [DataField("coldDamageType",required: true)]
-        private readonly string coldDamageType = default!;
-        [DataField("hotDamageType",required: true)]
-        private readonly string hotDamageType = default!;
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [DataField("coldDamageType", required: true)]
+        private readonly string _coldDamageTypeID = default!;
+        private DamageTypePrototype _coldDamageType => _prototypeManager.Index<DamageTypePrototype>(_coldDamageTypeID);
+        [DataField("hotDamageType", required: true)]
+        private readonly string _hotDamageTypeID = default!;
+        private DamageTypePrototype _hotDamageType => _prototypeManager.Index<DamageTypePrototype>(_hotDamageTypeID);
+
+
         [DataField("heatDamageThreshold")]
         private float _heatDamageThreshold = default;
         [DataField("coldDamageThreshold")]
@@ -99,22 +107,17 @@ namespace Content.Server.Temperature.Components
 
             if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
 
-            var tempDamage = 0;
-            DamageTypePrototype? damageType = null;
-
             if (CurrentTemperature >= _heatDamageThreshold)
             {
-                tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                damageType = component.GetDamageType(hotDamageType);
+                int tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
+                component.ChangeDamage(_hotDamageType, tempDamage, false);
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
-                tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                damageType = component.GetDamageType(coldDamageType);
+                int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
+                component.ChangeDamage(_coldDamageType, tempDamage, false);
             }
-
-            if (damageType is null) return;
-            component.ChangeDamage(damageType, tempDamage, false);
+            
         }
 
         /// <summary>
