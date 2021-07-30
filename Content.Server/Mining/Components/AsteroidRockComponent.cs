@@ -19,13 +19,15 @@ namespace Content.Server.Mining.Components
     public class AsteroidRockComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
-        [DataField("damageType",required: true)]
-        private readonly string _damageType = default!;
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [DataField("damageType", required: true)]
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         protected override void Initialize()
         {
@@ -42,8 +44,7 @@ namespace Content.Server.Mining.Components
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent)) return false;
 
-            var DamageableComponent = Owner.GetComponent<IDamageableComponent>().ChangeDamage(
-                _prototypeManager.Index<DamageTypePrototype>(_damageType), meleeWeaponComponent.Damage, false, item);
+            var DamageableComponent = Owner.GetComponent<IDamageableComponent>().ChangeDamage(_damageType, meleeWeaponComponent.Damage, false, item);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))

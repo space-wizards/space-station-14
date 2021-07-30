@@ -20,9 +20,11 @@ namespace Content.Server.Atmos.Components
     {
         public override string Name => "Barotrauma";
 
+        //TODO PROTOTYPE Replace with prototype references, once they are supported.
         [Robust.Shared.IoC.Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
-        private readonly string _damageType = default!;
+        private readonly string _damageTypeID = default!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)
@@ -50,7 +52,7 @@ namespace Content.Server.Atmos.Components
                     if(pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), Atmospherics.LowPressureDamage, false, Owner);
+                    damageable.ChangeDamage(_damageType, Atmospherics.LowPressureDamage, false, Owner);
 
                     if (status == null) break;
 
@@ -72,7 +74,7 @@ namespace Content.Server.Atmos.Components
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(_damageType), damage, false, Owner);
+                    damageable.ChangeDamage(_damageType, damage, false, Owner);
 
                     if (status == null) break;
 

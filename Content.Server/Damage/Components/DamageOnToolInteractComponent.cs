@@ -15,7 +15,6 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public class DamageOnToolInteractComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "DamageOnToolInteract";
 
@@ -25,11 +24,14 @@ namespace Content.Server.Damage.Components
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("weldingDamageType",required: true)]
-        private readonly string _weldingDamageType = default!;
-
+        private readonly string _weldingDamageTypeID = default!;
+        private DamageTypePrototype _weldingDamageType => _prototypeManager.Index<DamageTypePrototype>(_weldingDamageTypeID);
         [DataField("defaultDamageType",required: true)]
-        private readonly string _defaultDamageType = default!;
+        private readonly string _defaultDamageTypeID = default!;
+        private DamageTypePrototype _defaultDamageType => _prototypeManager.Index<DamageTypePrototype>(_defaultDamageTypeID);
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -58,8 +60,8 @@ namespace Content.Server.Damage.Components
                 return false;
 
             damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                    ? _prototypeManager.Index<DamageTypePrototype>(_weldingDamageType)
-                    : _prototypeManager.Index<DamageTypePrototype>(_defaultDamageType),
+                    ? _weldingDamageType
+                    : _defaultDamageType,
                 Damage, false, eventArgs.User);
 
             return true;
