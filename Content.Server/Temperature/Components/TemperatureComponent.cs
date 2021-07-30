@@ -41,7 +41,7 @@ namespace Content.Server.Temperature.Components
         [DataField("tempDamageCoefficient")]
         private float _tempDamageCoefficient = 1;
         [DataField("currentTemperature")]
-        private float CurrentTemperature { get; set; } = Atmospherics.T20C;
+        public float CurrentTemperature { get; set; } = Atmospherics.T20C;
         [DataField("specificHeat")]
         private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 

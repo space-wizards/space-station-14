@@ -32,7 +32,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
                 return false;
             }
 
-            return damageable.TryGetDamage(_prototypeManager.Index<DamageTypePrototype>(DamageType), out var damageReceived) &&
+            return damageable.TryGetDamage(DamageType, out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }
