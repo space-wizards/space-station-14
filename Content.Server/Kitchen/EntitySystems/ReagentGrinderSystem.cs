@@ -47,7 +47,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void JuiceableScaling(EntityUid uid, StackComponent component, JuiceableScalingEvent args)
         {
-            args.Scalar = component.Count; // set scalar to amount of items in stack
+            args.Scalar *= component.Count; // multiply scalar by amount of items in stack
         }
 
         private void OnInteractUsing(EntityUid uid, ReagentGrinderComponent component, InteractUsingEvent args)
