@@ -13,6 +13,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
     public class AtmosDeviceSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -35,7 +36,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 return;
 
             // We try to add the device to a valid atmosphere.
-            if (!Get<AtmosphereSystem>().AddAtmosDevice(component))
+            if (!_atmosphereSystem.AddAtmosDevice(component))
                 return;
 
             component.LastProcess = _gameTiming.CurTime;
@@ -45,7 +46,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
-            if (!Get<AtmosphereSystem>().RemoveAtmosDevice(component))
+            if (!_atmosphereSystem.RemoveAtmosDevice(component))
                 return;
 
             component.LastProcess = TimeSpan.Zero;

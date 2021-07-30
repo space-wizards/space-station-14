@@ -57,7 +57,6 @@ namespace Content.Client.Entry
             "CablePlacer",
             "Drink",
             "Food",
-            "FoodContainer",
             "MagicMirror",
             "FloorTile",
             "ShuttleController",
@@ -93,6 +92,7 @@ namespace Content.Client.Entry
             "ExaminableBattery",
             "PottedPlantHide",
             "SecureEntityStorage",
+            "Lock",
             "PresetIdCard",
             "SolarControlConsole",
             "FlashOnTrigger",
@@ -277,6 +277,7 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
+            "SpawnItemsOnUse"
         };
     }
 }

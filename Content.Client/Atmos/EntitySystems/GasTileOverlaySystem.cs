@@ -19,6 +19,7 @@ namespace Content.Client.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         // Gas overlays
         private readonly float[] _timer = new float[Atmospherics.TotalNumberOfGases];
@@ -38,15 +39,11 @@ namespace Content.Client.Atmos.EntitySystems
         private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
             new();
 
-        private AtmosphereSystem _atmosphereSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
             SubscribeNetworkEvent<GasOverlayMessage>(HandleGasOverlayMessage);
             _mapManager.OnGridRemoved += OnGridRemoved;
-
-            _atmosphereSystem = Get<AtmosphereSystem>();
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {

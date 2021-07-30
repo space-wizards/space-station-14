@@ -147,6 +147,10 @@
         prob: 1
       - id: ClothingHeadsetMedicalScience
         prob: 1
+      - id: ClothingHeadHelmetHardsuitRd
+        prob: 1
+      - id: ClothingOuterHardsuitRd
+        prob: 1
       - id: PlushieSlime
         prob: 0.1
 

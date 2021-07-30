@@ -23,13 +23,10 @@ namespace Content.Server.Atmos.EntitySystems
     public partial class AtmosphereSystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-
-        private GasTileOverlaySystem _gasTileOverlaySystem = default!;
+        [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
 
         private void InitializeGrid()
         {
-            _gasTileOverlaySystem = Get<GasTileOverlaySystem>();
-
             SubscribeLocalEvent<GridAtmosphereComponent, ComponentInit>(OnGridAtmosphereInit);
         }
 

@@ -16,9 +16,6 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (tile.ArchivedCycle < fireCount)
-                Archive(tile, fireCount);
-
             tile.CurrentCycle = fireCount;
             var adjacentTileLength = 0;
 
@@ -38,11 +35,10 @@ namespace Content.Server.Atmos.EntitySystems
                 // If the tile is null or has no air, we don't do anything for it.
                 if(enemyTile?.Air == null) continue;
                 if (fireCount <= enemyTile.CurrentCycle) continue;
-                Archive(enemyTile, fireCount);
 
                 var shouldShareAir = false;
 
-                if (tile.ExcitedGroup != null && enemyTile.ExcitedGroup != null)
+                if (ExcitedGroups && tile.ExcitedGroup != null && enemyTile.ExcitedGroup != null)
                 {
                     if (tile.ExcitedGroup != enemyTile.ExcitedGroup)
                     {
@@ -57,20 +53,23 @@ namespace Content.Server.Atmos.EntitySystems
                         AddActiveTile(gridAtmosphere, enemyTile);
                     }
 
-                    var excitedGroup = tile.ExcitedGroup;
-                    excitedGroup ??= enemyTile.ExcitedGroup;
-
-                    if (excitedGroup == null)
+                    if (ExcitedGroups)
                     {
-                        excitedGroup = new ExcitedGroup();
-                        gridAtmosphere.ExcitedGroups.Add(excitedGroup);
+                        var excitedGroup = tile.ExcitedGroup;
+                        excitedGroup ??= enemyTile.ExcitedGroup;
+
+                        if (excitedGroup == null)
+                        {
+                            excitedGroup = new ExcitedGroup();
+                            gridAtmosphere.ExcitedGroups.Add(excitedGroup);
+                        }
+
+                        if (tile.ExcitedGroup == null)
+                            ExcitedGroupAddTile(excitedGroup, tile);
+
+                        if(enemyTile.ExcitedGroup == null)
+                            ExcitedGroupAddTile(excitedGroup, enemyTile);
                     }
-
-                    if (tile.ExcitedGroup == null)
-                        ExcitedGroupAddTile(excitedGroup, tile);
-
-                    if(enemyTile.ExcitedGroup == null)
-                        ExcitedGroupAddTile(excitedGroup, enemyTile);
 
                     shouldShareAir = true;
                 }
@@ -106,15 +105,8 @@ namespace Content.Server.Atmos.EntitySystems
                 if (ConsiderSuperconductivity(gridAtmosphere, tile, true))
                     remove = false;
 
-            if(tile.ExcitedGroup == null && remove)
+            if(ExcitedGroups && tile.ExcitedGroup == null && remove)
                 RemoveActiveTile(gridAtmosphere, tile);
-        }
-
-        private void Archive(TileAtmosphere tile, int fireCount)
-        {
-            tile.Air?.Archive();
-            tile.ArchivedCycle = fireCount;
-            tile.TemperatureArchived = tile.Temperature;
         }
 
         private void LastShareCheck(TileAtmosphere tile)

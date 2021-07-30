@@ -16,6 +16,7 @@ using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -48,10 +49,16 @@ namespace Content.Server.Storage.Components
 
         [DataField("occludesLight")]
         private bool _occludesLight = true;
+
         [DataField("quickInsert")]
-        private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
+        private bool _quickInsert = false; // Can insert storables by "attacking" them with the storage entity
+
         [DataField("areaInsert")]
-        private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+
+        [DataField("whitelist")]
+        private EntityWhitelist? _whitelist = null;
+
         private bool _storageInitialCalculated;
         private int _storageUsed;
         [DataField("capacity")]
@@ -120,6 +127,11 @@ namespace Content.Server.Storage.Components
 
             if (entity.TryGetComponent(out SharedItemComponent? store) &&
                 store.Size > _storageCapacityMax - _storageUsed)
+            {
+                return false;
+            }
+
+            if (_whitelist != null && !_whitelist.IsValid(entity))
             {
                 return false;
             }

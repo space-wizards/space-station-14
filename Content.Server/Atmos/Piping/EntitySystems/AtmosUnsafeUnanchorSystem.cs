@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Notification.Managers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
@@ -15,6 +16,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
     [UsedImplicitly]
     public class AtmosUnsafeUnanchorSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, BeforeUnanchoredEvent>(OnBeforeUnanchored);
@@ -26,7 +29,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (Get<AtmosphereSystem>().GetTileMixture(component.Owner.Transform.Coordinates) is not {} environment)
+            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates) is not {} environment)
                 return;
 
             foreach (var node in nodes.Nodes.Values)
@@ -47,9 +50,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-
-            if (atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is not {} environment)
+            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is not {} environment)
                 environment = GasMixture.SpaceGas;
 
             var lost = 0f;
@@ -71,10 +72,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             {
                 if (node is not PipeNode pipe) continue;
 
-                atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
+                _atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
             }
 
-            atmosphereSystem.Merge(environment, buffer);
+            _atmosphereSystem.Merge(environment, buffer);
         }
     }
 }

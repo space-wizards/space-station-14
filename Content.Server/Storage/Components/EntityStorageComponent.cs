@@ -25,7 +25,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -132,7 +131,8 @@ namespace Content.Server.Storage.Components
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut {
+        public bool CanWeldShut
+        {
             get => _canWeldShut;
             set
             {
@@ -161,6 +161,13 @@ namespace Content.Server.Storage.Components
 
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
+            // HACK until EntityStorageComponent gets refactored to the new ECS system
+            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            {
+                // Do nothing, LockSystem is responsible for handling this case
+                return;
+            }
+
             ToggleOpen(eventArgs.User);
         }
 
@@ -168,7 +175,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
             return true;
@@ -468,7 +475,8 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
+                component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked) // HACK extra check, until EntityStorage gets refactored
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -478,7 +486,7 @@ namespace Content.Server.Storage.Components
             {
                 data.Visibility = VerbVisibility.Disabled;
                 var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
+                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message", ("verb", verb));
                 return;
             }
 

@@ -175,19 +175,13 @@ namespace Content.Server.Power.EntitySystems
             }
 
             // Synchronize batteries
-            foreach (var battery in ComponentManager.EntityQuery<PowerNetworkBatteryComponent>())
-            {
-                RaiseLocalEvent(battery.Owner.Uid, new NetworkBatteryPreSync());
-            }
+            RaiseLocalEvent(new NetworkBatteryPreSync());
 
             // Run power solver.
             _solver.Tick(frameTime, _powerState);
 
             // Synchronize batteries, the other way around.
-            foreach (var battery in ComponentManager.EntityQuery<PowerNetworkBatteryComponent>())
-            {
-                RaiseLocalEvent(battery.Owner.Uid, new NetworkBatteryPostSync());
-            }
+            RaiseLocalEvent(new NetworkBatteryPostSync());
 
             // Send events where necessary.
             {
@@ -313,7 +307,7 @@ namespace Content.Server.Power.EntitySystems
     ///     Raised before power network simulation happens, to synchronize battery state from
     ///     components like <see cref="BatteryComponent"/> into <see cref="PowerNetworkBatteryComponent"/>.
     /// </summary>
-    public sealed class NetworkBatteryPreSync : EntityEventArgs
+    public struct NetworkBatteryPreSync
     {
     }
 
@@ -321,7 +315,7 @@ namespace Content.Server.Power.EntitySystems
     ///     Raised after power network simulation happens, to synchronize battery charge changes from
     ///     <see cref="PowerNetworkBatteryComponent"/> to components like <see cref="BatteryComponent"/>.
     /// </summary>
-    public sealed class NetworkBatteryPostSync : EntityEventArgs
+    public struct NetworkBatteryPostSync
     {
     }
 
