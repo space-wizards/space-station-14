@@ -23,7 +23,7 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        [DataField("base_decay_rate")]
+        [DataField("baseDecayRate")]
         private float _baseDecayRate = 0.1f;
 
         //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
