@@ -46,7 +46,7 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => damageListToDamageGroup(_damageList);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => DamageListToDamageGroup(_damageList);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageList;
 
         public HashSet<DamageGroupPrototype> SupportedGroups { get; } = new();
@@ -386,7 +386,7 @@ namespace Content.Shared.Damage.Components
             OnHealthChanged(args);
         }
 
-        private IReadOnlyDictionary<DamageGroupPrototype, int> damageListToDamageGroup(IReadOnlyDictionary<DamageTypePrototype, int> damagelist)
+        private IReadOnlyDictionary<DamageGroupPrototype, int> DamageListToDamageGroup(IReadOnlyDictionary<DamageTypePrototype, int> damagelist)
         {
             var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
             int damageGroupSumDamage = 0;
