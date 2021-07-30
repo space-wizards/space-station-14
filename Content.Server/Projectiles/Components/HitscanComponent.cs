@@ -30,7 +30,7 @@ namespace Content.Server.Projectiles.Components
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
         [DataField("damage")]
-        private float _damage = 10f;
+        public float Damage { get; set; } = 10f;
 
         //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -53,11 +53,6 @@ namespace Content.Server.Projectiles.Components
         public float MaxLength => 20.0f;
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         public float ColorModifier { get; set; } = 1.0f;
-        public float Damage
-        {
-            get => _damage;
-            set => _damage = value;
-        }
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {
