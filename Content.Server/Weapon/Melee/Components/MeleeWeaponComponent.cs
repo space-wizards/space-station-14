@@ -3,6 +3,8 @@ using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weapon.Melee.Components
 {
@@ -47,9 +49,12 @@ namespace Content.Server.Weapon.Melee.Components
         [DataField("damage")]
         public int Damage { get; set; } = 5;
 
+        //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("damageType", required: true)]
-        public string DamageType { get; set; } = default!;
+        public  string DamageTypeID { get; set; } = default!;
+        public DamageTypePrototype DamageType => _prototypeManager.Index<DamageTypePrototype>(DamageTypeID);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clickAttackEffect")]
