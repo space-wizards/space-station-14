@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Damageable
         }
 
         [Test]
-        public async Task TestDamageClassDamageAndHeal()
+        public async Task TestDamageGroupDamageAndHeal()
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {

@@ -33,10 +33,9 @@ namespace Content.Server.Chemistry.Metabolism
         /// <summary>
         /// Group damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary>
-        //TODO Rename  'damageClass' data field to damageGroup
         //TODO PROTOTYPE Replace this code with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageClass", required: true)]
+        [DataField("damageGroup", required: true)]
         private readonly string _damageGroupID = default!;
         private DamageTypePrototype _damageGroup => _prototypeManager.Index<DamageTypePrototype>(_damageGroupID);
 

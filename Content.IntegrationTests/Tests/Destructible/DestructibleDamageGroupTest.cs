@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -12,9 +12,9 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 namespace Content.IntegrationTests.Tests.Destructible
 {
     [TestFixture]
-    [TestOf(typeof(DamageClassTrigger))]
+    [TestOf(typeof(DamageGroupTrigger))]
     [TestOf(typeof(AndTrigger))]
-    public class DestructibleDamageClassTest : ContentIntegrationTest
+    public class DestructibleDamageGroupTest : ContentIntegrationTest
     {
         [Test]
         public async Task AndTest()
@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var coordinates = new MapCoordinates(0, 0, mapId);
                 sMapManager.CreateMap(mapId);
 
-                sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageClassEntityId, coordinates);
+                sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<IDamageableComponent>();
                 sThresholdListenerComponent = sDestructibleEntity.GetComponent<TestThresholdListenerComponent>();
             });
@@ -91,8 +91,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 var trigger = (AndTrigger) threshold.Trigger;
 
-                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[0]);
-                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[1]);
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[1]);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
@@ -153,8 +153,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 trigger = (AndTrigger) threshold.Trigger;
 
-                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[0]);
-                Assert.IsInstanceOf<DamageClassTrigger>(trigger.Triggers[1]);
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[1]);
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 

@@ -1,4 +1,4 @@
-﻿namespace Content.IntegrationTests.Tests.Destructible
+namespace Content.IntegrationTests.Tests.Destructible
 {
     public static class DestructibleTestPrototypes
     {
@@ -6,7 +6,7 @@
         public const string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
         public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
-        public const string DestructibleDamageClassEntityId = "DestructibleTestsDestructibleDamageClassEntity";
+        public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
 
         public static readonly string Prototypes = $@"
 - type: entity
@@ -73,16 +73,16 @@
         !type:AndTrigger
         triggers:
         - !type:DamageTypeTrigger
-          type: Blunt
+          damageType: Blunt
           damage: 10
         - !type:DamageTypeTrigger
-          type: Slash
+          damageType: Slash
           damage: 10
   - type: TestThresholdListener
 
 - type: entity
-  id: {DestructibleDamageClassEntityId}
-  name: {DestructibleDamageClassEntityId}
+  id: {DestructibleDamageGroupEntityId}
+  name: {DestructibleDamageGroupEntityId}
   components:
   - type: Damageable
   - type: Destructible
@@ -90,11 +90,11 @@
     - trigger:
         !type:AndTrigger
         triggers:
-        - !type:DamageClassTrigger
-          class: Brute
+        - !type:DamageGroupTrigger
+          damageGroup: Brute
           damage: 10
-        - !type:DamageClassTrigger
-          class: Burn
+        - !type:DamageGroupTrigger
+          damageGroup: Burn
           damage: 10
   - type: TestThresholdListener";
     }

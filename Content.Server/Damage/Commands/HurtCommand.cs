@@ -96,25 +96,25 @@ namespace Content.Server.Damage.Commands
                 return false;
             }
 
-            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageClass))
+            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.DamageGroups.ContainsKey(damageClass))
+                    if (!damageable.DamageGroups.ContainsKey(damageGroup))
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageGroup}");
 
                         return;
                     }
 
-                    if (!damageable.ChangeDamage(damageClass, amount, ignoreResistances))
+                    if (!damageable.ChangeDamage(damageGroup, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
                         return;
                     }
 
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
