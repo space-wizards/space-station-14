@@ -284,10 +284,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             if (!item.HasTag("Grindable")) continue;
                             if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
                             var juiceEvent = new JuiceableScalingEvent(); // default of scalar is always 1.0
-                            if (item.HasComponent<StackComponent>())
-                            {
-                                RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent);
-                            }
+                            RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent, false);
                             if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
                             solution.Solution.ScaleSolution(juiceEvent.Scalar);
                             component.HeldBeaker.TryAddSolution(solution.Solution);
