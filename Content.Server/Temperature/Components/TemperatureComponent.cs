@@ -55,8 +55,6 @@ namespace Content.Server.Temperature.Components
 
         public void Update()
         {
-            var tempDamage = 0;
-            DamageTypePrototype? damageType = null;
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
@@ -100,6 +98,9 @@ namespace Content.Server.Temperature.Components
             }
 
             if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
+
+            var tempDamage = 0;
+            DamageTypePrototype? damageType = null;
 
             if (CurrentTemperature >= _heatDamageThreshold)
             {
