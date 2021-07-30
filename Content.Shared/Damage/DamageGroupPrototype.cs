@@ -14,12 +14,17 @@ namespace Content.Shared.Damage
     [Serializable, NetSerializable]
     public class DamageGroupPrototype : IPrototype, ISerializationHooks
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        private IPrototypeManager _prototypeManager = default!;
 
         [DataField("id", required: true)] public string ID { get; } = default!;
 
         [DataField("damageTypes", required: true)]
         public List<string> TypeIds { get; } = default!;
+
+        void ISerializationHooks.AfterDeserialization()
+        {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        }
 
         public IEnumerable<DamageTypePrototype> DamageTypes
         {
