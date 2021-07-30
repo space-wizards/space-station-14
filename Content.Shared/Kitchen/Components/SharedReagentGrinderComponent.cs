@@ -52,16 +52,6 @@ namespace Content.Shared.Kitchen.Components
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
-        {
-            public Solution.ReagentQuantity ReagentQuantity;
-            public ReagentGrinderVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
-            {
-                ReagentQuantity = reagentQuantity;
-            }
-        }
-
-        [Serializable, NetSerializable]
         public class ReagentGrinderWorkStartedMessage : BoundUserInterfaceMessage
         {
             public GrinderProgram GrinderProgram;

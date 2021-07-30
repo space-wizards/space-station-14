@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Client.Graphics;
@@ -186,7 +187,7 @@ namespace Content.Client.Chemistry.UI
             // Disable all buttons if not powered
             if (Contents.Children != null)
             {
-                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
                 EjectButton.Disabled = false;
             }
 
