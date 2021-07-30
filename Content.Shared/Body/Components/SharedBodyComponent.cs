@@ -73,6 +73,24 @@ namespace Content.Shared.Body.Components
 
         public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
+
+        /// <summary>
+        /// Ammount of damage to deal when all vital organs are removed.
+        /// </summary>
+        [ViewVariables]
+        [DataField("vitalPartsRemovedDamage", required: true)]
+        public int VitalPartsRemovedDamage { get; set; } = 300!;
+
+
+        /// <summary>
+        /// Damage type to deal when all vital organs are removed.
+        /// </summary>
+        // TODO PROTOTYPE Replace this code with prototype references, once they are supported.
+        [ViewVariables]
+        [DataField("vitalPartsRemovedDamageType", required: true)]
+        public string VitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;
+        private DamageTypePrototype VitalPartsRemovedDamageType => _prototypeManager.Index<DamageTypePrototype>(VitalPartsRemovedDamageTypeID);
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -196,7 +214,7 @@ namespace Content.Shared.Body.Components
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.ChangeDamage(damageable.GetDamageType("Bloodloss"), 300, true); // TODO BODY KILL
+                    damageable.ChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
                 }
             }
 
