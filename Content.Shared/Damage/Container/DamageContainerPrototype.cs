@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -22,8 +22,8 @@ namespace Content.Shared.Damage.Container
         public string ID { get; } = default!;
 
         [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<string> _supportedDamageGroupsButAsStrings = new();
-        [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypesButAsStrings = new();
+        [DataField("supportedClasses")] private HashSet<string> _supportedDamageGroupIDs = new();
+        [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypeIDs = new();
 
         private HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
         private HashSet<DamageTypePrototype> _supportedDamageTypes = new();
@@ -50,7 +50,7 @@ namespace Content.Shared.Damage.Container
                 return;
             }
 
-            foreach (var supportedClassID in _supportedDamageGroupsButAsStrings)
+            foreach (var supportedClassID in _supportedDamageGroupIDs)
             {
                 var DamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
                 _supportedDamageGroups.Add(DamageGroup);
