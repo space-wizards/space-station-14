@@ -15,7 +15,7 @@ namespace Content.Shared.Damage.Components
         /// <summary>
         ///     The amount of damage mapped by <see cref="DamageGroupPrototype"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses { get; }
+        IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups { get; }
 
         /// <summary>
         ///     The amount of damage mapped by <see cref="DamageTypePrototype"/>.

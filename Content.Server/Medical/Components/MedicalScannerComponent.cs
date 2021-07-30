@@ -121,7 +121,7 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            var classes = new Dictionary<DamageGroupPrototype, int>(damageable.DamageClasses);
+            var classes = new Dictionary<DamageGroupPrototype, int>(damageable.DamageGroups);
             var types = new Dictionary<DamageTypePrototype, int>(damageable.DamageTypes);
 
             if (_bodyContainer.ContainedEntity?.Uid == null)

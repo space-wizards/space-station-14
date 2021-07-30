@@ -100,7 +100,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.DamageClasses.ContainsKey(damageClass))
+                    if (!damageable.DamageGroups.ContainsKey(damageClass))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
 

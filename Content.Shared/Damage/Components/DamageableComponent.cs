@@ -47,7 +47,7 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => DamageTypesDictToDamageGroupDict(_damageDict);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageTypesDictToDamageGroupDict(_damageDict);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageDict;
 
         // Some inorganic damagable components might take shock/electrical damage from radiation?
