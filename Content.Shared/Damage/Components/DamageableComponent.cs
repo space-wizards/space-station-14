@@ -47,7 +47,7 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => DamageListToDamageGroup(_damageList);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageClasses => damageTypeToDamageGroupGroup(_damageList);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageList;
 
         // Some inorganic damagable components might take shock/electrical damage from radiation?
@@ -398,21 +398,29 @@ namespace Content.Shared.Damage.Components
             OnHealthChanged(args);
         }
 
-        private IReadOnlyDictionary<DamageGroupPrototype, int> DamageListToDamageGroup(IReadOnlyDictionary<DamageTypePrototype, int> damagelist)
+        /// <summary>
+        /// Converts a dictionary of damage types to a dictionary of damage groups.
+        /// Returned dictionary adds up the total damage in each group.
+        /// If a damage type is associated with more than one supported damage group,
+        /// it will contribute to the total of each group.
+        /// </summary>
+        /// <param name="damageTypeDict"></param>
+        /// <returns></returns>
+        private IReadOnlyDictionary<DamageGroupPrototype, int> damageTypeToDamageGroupGroup(IReadOnlyDictionary<DamageTypePrototype, int> damageTypeDict)
         {
             var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
-            int damageGroupSumDamage = 0;
-            int damageTypeDamage = 0 ;
-            foreach (var damageGroup in SupportedGroups)
+            int damageGroupSumDamage, damageTypeDamage;
+            foreach (var group in SupportedGroups)
             {
                 damageGroupSumDamage = 0;
-                foreach (var damageType in SupportedTypes)
+                foreach (var type in group.DamageTypes)
                 {
-                    damageTypeDamage = 0;
-                     damagelist.TryGetValue(damageType,out damageTypeDamage);
-                     damageGroupSumDamage += damageTypeDamage;
+                    // if the damage type is in the dictionary, add it's damage to the group total.
+                    if (damageTypeDict.TryGetValue(type, out damageTypeDamage)) {
+                        damageGroupSumDamage += damageTypeDamage;
+                    }
                 }
-                damageGroupDict.Add(damageGroup,damageGroupSumDamage);
+                damageGroupDict.Add(group, damageGroupSumDamage);
             }
 
             return damageGroupDict;
