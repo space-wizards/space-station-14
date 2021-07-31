@@ -2,18 +2,12 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Solution.Components
@@ -22,7 +16,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     ///     Holds a <see cref="Solution"/> with a limited volume.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedSolutionContainerComponent : Component, IExamine, ISolutionInteractionsComponent
+    public abstract class SharedSolutionContainerComponent : Component, ISolutionInteractionsComponent
     {
         public override string Name => "SolutionContainer";
 
@@ -36,8 +30,7 @@ namespace Content.Shared.Chemistry.Solution.Components
         [DataField("maxVol")]
         public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
 
-        [ViewVariables]
-        public ReagentUnit CurrentVolume => Solution.TotalVolume;
+        [ViewVariables] public ReagentUnit CurrentVolume => Solution.TotalVolume;
 
         /// <summary>
         ///     Volume needed to fill this container.
@@ -45,8 +38,7 @@ namespace Content.Shared.Chemistry.Solution.Components
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
-        [ViewVariables]
-        public virtual Color Color => Solution.Color;
+        [ViewVariables] public virtual Color Color => Solution.Color;
 
         /// <summary>
         ///     If reactions will be checked for when adding reagents to the container.
@@ -184,43 +176,12 @@ namespace Content.Shared.Chemistry.Solution.Components
                 .FullyReactSolution(Solution, Owner, MaxVolume);
         }
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!CanExamineContents)
-                return;
-
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            if (ReagentList.Count == 0)
-            {
-                message.AddText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
-                return;
-            }
-
-            var primaryReagent = Solution.GetPrimaryReagentId();
-            if (!prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
-            {
-                Logger.Error($"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
-                return;
-            }
-
-            var colorHex = Color.ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
-            var messageString = "shared-solution-container-component-on-examine-main-text";
-
-            message.AddMarkup(Loc.GetString(messageString,
-                                            ("color", colorHex),
-                                            ("wordedAmount", Loc.GetString(ReagentList.Count == 1 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent" :
-                                                                                                    "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                                            ("desc", Loc.GetString(proto.PhysicalDescription))));
-        }
-
         ReagentUnit ISolutionInteractionsComponent.RefillSpaceAvailable => EmptyVolume;
         ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
         ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
         ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
 
-        [DataField("maxSpillRefill")]
-        public ReagentUnit MaxSpillRefill { get; set; }
+        [DataField("maxSpillRefill")] public ReagentUnit MaxSpillRefill { get; set; }
 
         void ISolutionInteractionsComponent.Refill(Solution solution)
         {
