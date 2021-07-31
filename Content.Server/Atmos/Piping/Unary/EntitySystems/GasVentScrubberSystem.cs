@@ -37,13 +37,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            if (!scrubber.Enabled
-            || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-            || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
-            {
-                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
+            appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
+
+            if (!scrubber.Enabled)
                 return;
-            }
+
+            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
+                return;
 
             var environment = _atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
 
@@ -69,12 +72,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void Scrub(AtmosphereSystem atmosphereSystem, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
-            if (tile == null
-                || outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
-            {
-                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
+            if (tile == null)
                 return;
-            }
+
+            // Cannot scrub if pressure too high.
+            if (outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere)
+                return;
 
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {

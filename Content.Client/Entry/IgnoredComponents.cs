@@ -92,7 +92,6 @@ namespace Content.Client.Entry
             "ExaminableBattery",
             "PottedPlantHide",
             "SecureEntityStorage",
-            "Lock",
             "PresetIdCard",
             "SolarControlConsole",
             "FlashOnTrigger",

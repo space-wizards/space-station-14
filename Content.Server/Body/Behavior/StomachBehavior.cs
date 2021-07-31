@@ -30,8 +30,6 @@ namespace Content.Server.Body.Behavior
         /// </param>
         public override void Update(float frameTime)
         {
-
-            // Do not metabolise if the organ does not have a body.
             if (Body == null)
             {
                 return;
@@ -47,9 +45,7 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            // Note that "Owner" should be the organ that has this behaviour/mechanism, and it should have a dedicated
-            // solution container. "Body.Owner" is something else, and may have more than one solution container.
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
+            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
                 !Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
@@ -65,19 +61,8 @@ namespace Content.Server.Body.Behavior
                 delta.Increment(1);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    // This reagent has been in the somach long enough, TRY to transfer it.
-                    // But first, check if the reagent still exists, and how much is left.
-                    // Some poor spessman may have washed down a potassium snack with some water.
-                    if (solution.Solution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity)){
-
-                        if (quantity > delta.Quantity) {
-                            quantity = delta.Quantity;
-                        }
-
-                        solution.TryRemoveReagent(delta.ReagentId, quantity);
-                        transferSolution.AddReagent(delta.ReagentId, quantity);
-                    }
-
+                    solution.TryRemoveReagent(delta.ReagentId, delta.Quantity);
+                    transferSolution.AddReagent(delta.ReagentId, delta.Quantity);
                     _reagentDeltas.Remove(delta);
                 }
             }
@@ -148,10 +133,10 @@ namespace Content.Server.Body.Behavior
 
         public bool TryTransferSolution(Solution solution)
         {
-            if (Owner == null || !CanTransferSolution(solution))
+            if (Body == null || !CanTransferSolution(solution))
                 return false;
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
+            if (!Body.Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }

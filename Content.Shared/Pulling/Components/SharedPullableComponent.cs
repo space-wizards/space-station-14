@@ -50,8 +50,6 @@ namespace Content.Shared.Pulling.Components
                     return;
                 }
 
-                var eventBus = Owner.EntityManager.EventBus;
-
                 // New value. Abandon being pulled by any existing object.
                 if (_puller != null)
                 {
@@ -66,9 +64,10 @@ namespace Content.Shared.Pulling.Components
                     {
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
-                        eventBus.RaiseLocalEvent(oldPuller.Uid, message, broadcast: false);
-                        eventBus.RaiseLocalEvent(Owner.Uid, message);
+                        oldPuller.SendMessage(null, message);
+                        Owner.SendMessage(null, message);
 
+                        oldPuller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
                         _physics.WakeBody();
                     }
                     // else-branch warning is handled below
@@ -126,14 +125,14 @@ namespace Content.Shared.Pulling.Components
 
                     var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
 
-                    eventBus.RaiseLocalEvent(value.Uid, pullAttempt, broadcast: false);
+                    value.SendMessage(null, pullAttempt);
 
                     if (pullAttempt.Cancelled)
                     {
                         return;
                     }
 
-                    eventBus.RaiseLocalEvent(Owner.Uid, pullAttempt);
+                    Owner.SendMessage(null, pullAttempt);
 
                     if (pullAttempt.Cancelled)
                     {
@@ -148,8 +147,10 @@ namespace Content.Shared.Pulling.Components
 
                     var message = new PullStartedMessage(PullerPhysics, _physics);
 
-                    eventBus.RaiseLocalEvent(_puller.Uid, message, broadcast: false);
-                    eventBus.RaiseLocalEvent(Owner.Uid, message);
+                    _puller.SendMessage(null, message);
+                    Owner.SendMessage(null, message);
+
+                    _puller.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
                     var union = PullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
@@ -332,6 +333,29 @@ namespace Content.Shared.Pulling.Components
             }
 
             Puller = entity;
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            if (message is not PullMessage pullMessage ||
+                pullMessage.Pulled.Owner != Owner)
+            {
+                return;
+            }
+
+            var pulledStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
+
+            switch (message)
+            {
+                case PullStartedMessage:
+                    pulledStatus?.ShowAlert(AlertType.Pulled);
+                    break;
+                case PullStoppedMessage:
+                    pulledStatus?.ClearAlert(AlertType.Pulled);
+                    break;
+            }
         }
 
         protected override void OnRemove()

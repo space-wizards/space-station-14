@@ -10,11 +10,16 @@ namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
     /// Default metabolism for medicine reagents. Attempts to find a DamageableComponent on the target,
-    /// and to update its damage values. Inherits metabolisation rate logic from DefaultMetabolizable.
+    /// and to update its damage values.
     /// </summary>
     [DataDefinition]
-    public class HealthChangeMetabolism : DefaultMetabolizable
+    public class HealthChangeMetabolism : IMetabolizable
     {
+        /// <summary>
+        /// How much of the reagent should be metabolized each sec.
+        /// </summary>
+        [DataField("rate")]
+        public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
 
         /// <summary>
         /// How much damage is changed when 1u of the reagent is metabolized.
@@ -36,23 +41,14 @@ namespace Content.Server.Chemistry.Metabolism
         /// <param name="solutionEntity"></param>
         /// <param name="reagentId"></param>
         /// <param name="tickTime"></param>
-        /// <param name="availableReagent">Reagent available to be metabolized.</param>
         /// <returns></returns>
-        public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            // use DefaultMetabolism to determine how much reagent we should metabolize
-            var amountMetabolized = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
-
-            // how much does this much reagent heal for
-            var healthChangeAmount = HealthChange * amountMetabolized.Float();
-
             if (solutionEntity.TryGetComponent(out IDamageableComponent? health))
             {
-                // Heal damage by healthChangeAmmount, rounding down to nearest integer
-                health.ChangeDamage(DamageType, (int) healthChangeAmount, true);
-
-                // Store decimal remainder of healthChangeAmmount in _accumulatedHealth
-                _accumulatedHealth += (healthChangeAmount - (int) healthChangeAmount);
+                health.ChangeDamage(DamageType, (int)HealthChange, true);
+                float decHealthChange = (float) (HealthChange - (int) HealthChange);
+                _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
@@ -66,7 +62,7 @@ namespace Content.Server.Chemistry.Metabolism
                     _accumulatedHealth += 1;
                 }
             }
-            return amountMetabolized;
+            return MetabolismRate;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Content.Server.Power.EntitySystems
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
+        private int _nextId = 1;
         private readonly BatteryRampPegSolver _solver = new();
 
         public override void Initialize()
@@ -49,7 +50,7 @@ namespace Content.Server.Power.EntitySystems
         private void ApcPowerReceiverShutdown(EntityUid uid, ApcPowerReceiverComponent component,
             ComponentShutdown args)
         {
-            _powerState.Loads.Free(component.NetworkLoad.Id);
+            _powerState.Loads.Remove(component.NetworkLoad.Id);
         }
 
         private static void ApcPowerReceiverPaused(
@@ -67,7 +68,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void BatteryShutdown(EntityUid uid, PowerNetworkBatteryComponent component, ComponentShutdown args)
         {
-            _powerState.Batteries.Free(component.NetworkBattery.Id);
+            _powerState.Batteries.Remove(component.NetworkBattery.Id);
         }
 
         private static void BatteryPaused(EntityUid uid, PowerNetworkBatteryComponent component, EntityPausedEvent args)
@@ -82,7 +83,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerConsumerShutdown(EntityUid uid, PowerConsumerComponent component, ComponentShutdown args)
         {
-            _powerState.Loads.Free(component.NetworkLoad.Id);
+            _powerState.Loads.Remove(component.NetworkLoad.Id);
         }
 
         private static void PowerConsumerPaused(EntityUid uid, PowerConsumerComponent component, EntityPausedEvent args)
@@ -97,7 +98,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerSupplierShutdown(EntityUid uid, PowerSupplierComponent component, ComponentShutdown args)
         {
-            _powerState.Supplies.Free(component.NetworkSupply.Id);
+            _powerState.Supplies.Remove(component.NetworkSupply.Id);
         }
 
         private static void PowerSupplierPaused(EntityUid uid, PowerSupplierComponent component, EntityPausedEvent args)
@@ -112,7 +113,7 @@ namespace Content.Server.Power.EntitySystems
 
         public void DestroyPowerNet(PowerNet powerNet)
         {
-            _powerState.Networks.Free(powerNet.NetworkNode.Id);
+            _powerState.Networks.Remove(powerNet.NetworkNode.Id);
         }
 
         public void QueueReconnectPowerNet(PowerNet powerNet)
@@ -127,7 +128,7 @@ namespace Content.Server.Power.EntitySystems
 
         public void DestroyApcNet(ApcNet apcNet)
         {
-            _powerState.Networks.Free(apcNet.NetworkNode.Id);
+            _powerState.Networks.Remove(apcNet.NetworkNode.Id);
         }
 
         public void QueueReconnectApcNet(ApcNet apcNet)
@@ -212,22 +213,26 @@ namespace Content.Server.Power.EntitySystems
 
         private void AllocLoad(PowerState.Load load)
         {
-            _powerState.Loads.Allocate(out load.Id) = load;
+            load.Id = AllocId();
+            _powerState.Loads.Add(load.Id, load);
         }
 
         private void AllocSupply(PowerState.Supply supply)
         {
-            _powerState.Supplies.Allocate(out supply.Id) = supply;
+            supply.Id = AllocId();
+            _powerState.Supplies.Add(supply.Id, supply);
         }
 
         private void AllocBattery(PowerState.Battery battery)
         {
-            _powerState.Batteries.Allocate(out battery.Id) = battery;
+            battery.Id = AllocId();
+            _powerState.Batteries.Add(battery.Id, battery);
         }
 
         private void AllocNetwork(PowerState.Network network)
         {
-            _powerState.Networks.Allocate(out network.Id) = network;
+            network.Id = AllocId();
+            _powerState.Networks.Add(network.Id, network);
         }
 
         private static void DoReconnectApcNet(ApcNet net)
@@ -290,6 +295,11 @@ namespace Content.Server.Power.EntitySystems
                 netNode.BatteriesDischarging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
+        }
+
+        private PowerState.NodeId AllocId()
+        {
+            return new(_nextId++);
         }
     }
 

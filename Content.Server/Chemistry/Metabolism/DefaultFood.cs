@@ -1,4 +1,4 @@
-using Content.Server.Nutrition.Components;
+﻿using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
@@ -9,30 +9,30 @@ namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
     /// Default metabolism for food reagents. Attempts to find a HungerComponent on the target,
-    /// and to update it's hunger values. Inherits metabolisation rate logic from DefaultMetabolizable.
+    /// and to update it's hunger values.
     /// </summary>
     [DataDefinition]
-    public class DefaultFood : DefaultMetabolizable
+    public class DefaultFood : IMetabolizable
     {
+        /// <summary>
+        ///     Rate of metabolism in units / second
+        /// </summary>
+        [DataField("rate")] public ReagentUnit MetabolismRate { get; private set; } = ReagentUnit.New(1.0);
 
         /// <summary>
         ///     How much hunger is satiated when 1u of the reagent is metabolized
         /// </summary>
         [DataField("nutritionFactor")] public float NutritionFactor { get; set; } = 30.0f;
 
-
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            // use DefaultMetabolism to determine how much reagent we should metabolize
-            var amountMetabolized = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
-
-            // If metabolizing entity has a HungerComponent, feed them.
+            var metabolismAmount = MetabolismRate * tickTime;
             if (solutionEntity.TryGetComponent(out HungerComponent? hunger))
-                hunger.UpdateFood(amountMetabolized.Float() * NutritionFactor);
+                hunger.UpdateFood(metabolismAmount.Float() * NutritionFactor);
 
-            //Return amount of reagent to be removed. Reagent is removed regardless of HungerComponent presence
-            return amountMetabolized;
+            //Return amount of reagent to be removed, remove reagent regardless of HungerComponent presence
+            return metabolismAmount;
         }
     }
 }

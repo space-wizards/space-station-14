@@ -1,6 +1,7 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using System;
 
@@ -15,7 +16,11 @@ namespace Content.Shared.Hands
             SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
-            SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
+            SubscribeLocalEvent<RequestSetHandEvent>(HandleSetHand);
+            SubscribeNetworkEvent<RequestSetHandEvent>(HandleSetHand);
+
+            SubscribeLocalEvent<RequestDropHeldEntityEvent>(HandleDrop);
+            SubscribeNetworkEvent<RequestDropHeldEntityEvent>(HandleDrop);
         }
 
         public void DropHandItems(IEntity entity, bool doMobChecks = true)
@@ -33,16 +38,14 @@ namespace Content.Shared.Hands
 
             eventBus.RaiseLocalEvent(uid, msg);
 
-            if (msg.Cancelled)
-                return;
+            if (msg.Cancelled) return;
 
             if (entity.TryGetContainerMan(out var containerManager))
             {
                 var parentMsg = new ContainedEntityDropHandItemsAttemptEvent(uid);
                 eventBus.RaiseLocalEvent(containerManager.Owner.Uid, parentMsg);
 
-                if (parentMsg.Cancelled)
-                    return;
+                if (parentMsg.Cancelled) return;
             }
 
             DropAllItemsInHands(entity, doMobChecks);
@@ -52,9 +55,9 @@ namespace Content.Shared.Hands
         {
         }
 
-        private static void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
+        private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
-            var entity = eventArgs.SenderSession.AttachedEntity;
+            var entity = eventArgs.SenderSession?.AttachedEntity;
 
             if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
                 return;
@@ -62,13 +65,17 @@ namespace Content.Shared.Hands
             hands.ActiveHand = msg.HandName;
         }
 
-        protected virtual void HandleContainerModified(
-            EntityUid uid,
-            SharedHandsComponent component,
-            ContainerModifiedMessage args)
+        private void HandleDrop(RequestDropHeldEntityEvent msg, EntitySessionEventArgs eventArgs)
         {
-            component.Dirty();
+            var entity = eventArgs.SenderSession?.AttachedEntity;
+
+            if (entity == null || !entity.TryGetComponent(out SharedHandsComponent? hands))
+                return;
+
+            hands.TryDropHand(msg.HandName, msg.DropTarget);
         }
+
+        protected abstract void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args);
     }
 
     public sealed class ContainedEntityDropHandItemsAttemptEvent : CancellableEntityEventArgs
@@ -94,6 +101,23 @@ namespace Content.Shared.Hands
         public RequestSetHandEvent(string handName)
         {
             HandName = handName;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class RequestDropHeldEntityEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     The hand to drop from.
+        /// </summary>
+        public string HandName { get; }
+
+        public EntityCoordinates DropTarget { get; }
+
+        public RequestDropHeldEntityEvent(string handName, EntityCoordinates dropTarget)
+        {
+            HandName = handName;
+            DropTarget = dropTarget;
         }
     }
 }

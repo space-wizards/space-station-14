@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: AccessReader
-  - type: Lock
+  - type: SecureEntityStorage
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/closet.rsi
