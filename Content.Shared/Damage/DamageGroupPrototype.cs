@@ -21,21 +21,18 @@ namespace Content.Shared.Damage
         [DataField("damageTypes", required: true)]
         public List<string> TypeIds { get; } = default!;
 
+        public HashSet<DamageTypePrototype> DamageTypes { get; } = default!;
+
+
+        // Initialise list of damage types in this group
         void ISerializationHooks.AfterDeserialization()
         {
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        }
-
-        public IEnumerable<DamageTypePrototype> DamageTypes
-        {
-            get
+            foreach (var id in TypeIds)
             {
-                foreach (var ID in TypeIds)
-                {
-                    var typeResolved = _prototypeManager.Index<DamageTypePrototype>(ID);
-                    yield return typeResolved;
-                }
+                DamageTypes.Add(_prototypeManager.Index<DamageTypePrototype>(ID));
             }
+
         }
 
     /// <summary>

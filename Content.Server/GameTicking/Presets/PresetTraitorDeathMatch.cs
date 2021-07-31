@@ -194,7 +194,7 @@ namespace Content.Server.GameTicking.Presets
             {
                 if (mobState.IsCritical())
                 {
-                    // TODO: This is copy/pasted from ghost code. Really, IDamagableComponent needs a method to reliably kill the target.
+                    // TODO: This is copy/pasted from ghost code. Really, IDamageableComponent needs a method to reliably kill the target.
                     if (entity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol

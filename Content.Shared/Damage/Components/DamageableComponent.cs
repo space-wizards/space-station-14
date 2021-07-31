@@ -47,7 +47,7 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, SupportedGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageDict;
 
         // TODO DAMAGE Cache this
@@ -55,7 +55,7 @@ namespace Content.Shared.Damage.Components
         public IReadOnlyDictionary<string, int> DamageGroupIDs => ConvertDictKeysToIDs(DamageGroups);
         public IReadOnlyDictionary<string, int> DamageTypeIDs => ConvertDictKeysToIDs(DamageTypes);
 
-        // Some inorganic damagable components might take shock/electrical damage from radiation?
+        // Some inorganic damageable components might take shock/electrical damage from radiation?
         // Similarly, some may react differetly to explosions?
         // There definittely should be a better way of doing this.
         // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
@@ -68,9 +68,9 @@ namespace Content.Shared.Damage.Components
         public List<string> ExplosionDamageTypeIDs { get; set; } = new() { "Piercing", "Heat" };
 
 
-        public HashSet<DamageGroupPrototype> SupportedGroups { get; } = new();
+        public HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; } = new();
 
-        public HashSet<DamageTypePrototype> SupportedTypes { get; } = new();
+        public HashSet<DamageTypePrototype> SupportedDamageTypes { get; } = new();
 
         protected override void Initialize()
         {
@@ -79,14 +79,14 @@ namespace Content.Shared.Damage.Components
             // TODO DAMAGE Serialize damage done and resistance changes
             var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
-            SupportedGroups.Clear();
-            SupportedTypes.Clear();
+            ApplicableDamageGroups.Clear();
+            SupportedDamageTypes.Clear();
 
             DamageContainerId = damageContainerPrototype.ID;
-            SupportedGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
-            SupportedTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
+            ApplicableDamageGroups.UnionWith(damageContainerPrototype.ApplicableDamageGroups);
+            SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
-            foreach (var DamageType in SupportedTypes)
+            foreach (var DamageType in SupportedDamageTypes)
             {
                 _damageDict.Add(DamageType,0);
             }
@@ -97,12 +97,12 @@ namespace Content.Shared.Damage.Components
 
         public bool SupportsDamageGroup(DamageGroupPrototype group)
         {
-            return SupportedGroups.Contains(group);
+            return ApplicableDamageGroups.Contains(group);
         }
 
         public bool SupportsDamageType(DamageTypePrototype type)
         {
-            return SupportedTypes.Contains(type);
+            return SupportedDamageTypes.Contains(type);
         }
 
         protected override void Startup()
@@ -186,7 +186,7 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            if (SupportedTypes.Contains(type))
+            if (SupportedDamageTypes.Contains(type))
             {
                 var old = _damageDict[type] = newValue;
                 _damageDict[type] = newValue;
@@ -213,7 +213,7 @@ namespace Content.Shared.Damage.Components
 
         public void SetAllDamage(int newValue)
         {
-            foreach (var type in SupportedTypes)
+            foreach (var type in SupportedDamageTypes)
             {
                 SetDamage(type, newValue);
             }
@@ -352,7 +352,7 @@ namespace Content.Shared.Damage.Components
         public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
             // TODO QUESTION what is this if statement supposed to do?
-            // Is TotalDamage supposed to be something like MaxDamage? I don't think DamagableComponents have a MaxDamage Field?
+            // Is TotalDamage supposed to be something like MaxDamage? I don't think DamageableComponents has a MaxDamage?
             if (newValue >= TotalDamage)
             {
                 return false;
@@ -389,7 +389,7 @@ namespace Content.Shared.Damage.Components
         {
             var data = new List<DamageChangeData>();
 
-            foreach (var type in SupportedTypes)
+            foreach (var type in SupportedDamageTypes)
             {
                 var damage = GetDamage(type);
                 var datum = new DamageChangeData(type, damage, 0);

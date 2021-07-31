@@ -42,8 +42,8 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.SupportedTypes.Clear();
-                damageable.SupportedGroups.Clear();
+                damageable.SupportedDamageTypes.Clear();
+                damageable.ApplicableDamageGroups.Clear();
             }
 
             return true;
@@ -70,12 +70,12 @@ namespace Content.Server.Damage
             {
                 if (old.SupportedTypes != null)
                 {
-                    damageable.SupportedTypes.UnionWith(old.SupportedTypes);
+                    damageable.SupportedDamageTypes.UnionWith(old.SupportedTypes);
                 }
 
                 if (old.SupportedClasses != null)
                 {
-                    damageable.SupportedGroups.UnionWith(old.SupportedClasses);
+                    damageable.ApplicableDamageGroups.UnionWith(old.SupportedClasses);
                 }
             }
 
@@ -110,8 +110,8 @@ namespace Content.Server.Damage
 
                 if (entity.TryGetComponent(out IDamageableComponent? damageable))
                 {
-                    SupportedTypes = damageable.SupportedTypes.ToHashSet();
-                    SupportedClasses = damageable.SupportedGroups.ToHashSet();
+                    SupportedTypes = damageable.SupportedDamageTypes.ToHashSet();
+                    SupportedClasses = damageable.ApplicableDamageGroups.ToHashSet();
                 }
             }
 

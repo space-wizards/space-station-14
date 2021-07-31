@@ -32,9 +32,25 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         public IReadOnlyDictionary<string, int> DamageTypeIDs { get; }
 
-        HashSet<DamageTypePrototype> SupportedTypes { get; }
+        /// <summary>
+        /// Collection of damage types supported by this damageable component.
+        /// </summary>
+        /// <remarks>
+        /// Each of these damage types is fully supported. If any of these damage types is a
+        /// member of a damage group, these groups are added to <see cref="ApplicableDamageGroups"></see>
+        /// </remarks>
+        HashSet<DamageTypePrototype> SupportedDamageTypes { get; }
 
-        HashSet<DamageGroupPrototype> SupportedGroups { get; }
+        /// <summary>
+        /// Collection of damage groups that could affect this damageable component.
+        /// </summary>
+        /// <remarks>
+        /// This describes what damage groups could have an effect on this damage container. However not every damage
+        /// group has to be fully supported. For example, the container may support ONLY the piercing damage type. It should
+        /// therefore be affected by instances of brute damage, but does not neccesarily support blunt or slash damage.
+        /// For a list of supported damage types, see <see cref="SupportedDamageTypes"/>.
+        /// </remarks>
+        HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; }
 
         /// <summary>
         ///     The resistances of this component.
