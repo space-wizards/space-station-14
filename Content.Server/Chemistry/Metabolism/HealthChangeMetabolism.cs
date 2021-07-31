@@ -34,10 +34,14 @@ namespace Content.Server.Chemistry.Metabolism
         /// Group damage changed, Brute, Burn, Toxin, Airloss.
         /// </summary>
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also requires replacing DamageGroup() calls with something like _damageGroup
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageGroup", required: true)]
         private readonly string _damageGroupID = default!;
-        private DamageTypePrototype _damageGroup => _prototypeManager.Index<DamageTypePrototype>(_damageGroupID);
+        private DamageGroupPrototype DamageGroup() {
+            IoCManager.InjectDependencies(this);
+            return _prototypeManager.Index<DamageGroupPrototype>(_damageGroupID);
+        }
 
         private float _accumulatedHealth;
 
@@ -52,19 +56,19 @@ namespace Content.Server.Chemistry.Metabolism
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
-                damageComponent.ChangeDamage(_damageGroup, (int)HealthChange, true);
+                damageComponent.ChangeDamage(DamageGroup(), (int)HealthChange, true);
                 float decHealthChange = (float) (HealthChange - (int) HealthChange);
                 _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
-                    damageComponent.ChangeDamage(_damageGroup, 1, true);
+                    damageComponent.ChangeDamage(DamageGroup(), 1, true);
                     _accumulatedHealth -= 1;
                 }
 
                 else if(_accumulatedHealth <= -1)
                 {
-                    damageComponent.ChangeDamage(_damageGroup, -1, true);
+                    damageComponent.ChangeDamage(DamageGroup(), -1, true);
                     _accumulatedHealth += 1;
                 }
             }

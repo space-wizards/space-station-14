@@ -61,9 +61,6 @@ namespace Content.Shared.Damage.Components
         // type was hard coded, now its a yaml datafield as recommended. However, as DrSmugleaf said, "There should be a
         // better way of doing this". I think there is, and have some comments in the damage.yml file, though maybe
         // those are controversial oppinions.
-        //
-        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported. This
-        // also requires changing the list type and modifying the functions here that use them.
         [ViewVariables]
         [DataField("radiationDamageTypes")]
         public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
