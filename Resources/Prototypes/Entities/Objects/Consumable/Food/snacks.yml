@@ -9,7 +9,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 30 # Room for extra condiments
     contents:

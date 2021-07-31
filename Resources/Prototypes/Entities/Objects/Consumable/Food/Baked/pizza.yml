@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 15
     contents:

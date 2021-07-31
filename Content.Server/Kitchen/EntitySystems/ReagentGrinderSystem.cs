@@ -195,6 +195,9 @@ namespace Content.Server.Kitchen.EntitySystems
 
             while (_uiUpdateQueue.TryDequeue(out var comp))
             {
+                if(comp.Deleted)
+                    continue;
+
                 bool canJuice = false;
                 bool canGrind = false;
                 if (comp.BeakerContainer.ContainedEntity != null)

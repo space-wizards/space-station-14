@@ -52,7 +52,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     - type: PointLight
       enabled: false
       radius: 3
-    - type: LoopingSound
     - type: Appearance
       visuals:
         - type: FlashLightVisualizer
