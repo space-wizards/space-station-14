@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// <param name="reagentId"></param>
         /// <param name="tickTime"></param>
         /// <returns></returns>
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
             if (solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
