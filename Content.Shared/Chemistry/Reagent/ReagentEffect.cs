@@ -16,7 +16,7 @@ namespace Content.Shared.Chemistry.Reagent
         ///     The list of conditions required for the effect to activate. Not required.
         /// </summary>
         [DataField("conditions")]
-        public List<ReagentEffectCondition>? Conditions;
+        public ReagentEffectCondition[]? Conditions;
 
         public abstract void Metabolize(IEntity solutionEntity, Solution.Solution.ReagentQuantity amount);
     }

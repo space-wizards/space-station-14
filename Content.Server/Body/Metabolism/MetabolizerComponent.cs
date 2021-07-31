@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -34,7 +35,7 @@ namespace Content.Server.Body.Metabolism
         ///     A dictionary mapping reagent string IDs to a list of effects & associated metabolism rate.
         /// </summary>
         /// <returns></returns>
-        [DataField("metabolisms", required: true)]
+        [DataField("metabolisms", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, ReagentPrototype>))]
         public Dictionary<string, ReagentEffectsEntry> Metabolisms = default!;
     }
 
@@ -51,6 +52,6 @@ namespace Content.Server.Body.Metabolism
         ///     A list of effects to apply when these reagents are metabolized.
         /// </summary>
         [DataField("effects", required: true)]
-        public List<ReagentEffect> Effects = default!;
+        public ReagentEffect[] Effects = default!;
     }
 }
