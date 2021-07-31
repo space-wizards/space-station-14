@@ -1621,6 +1621,7 @@ Entries:
   id: 288
   time: '2021-07-31T01:14:00.0000000+00:00'
 - author: plinyvic
-  changes: []
+  changes:
+  - {message: Fixed reagent grinder not giving correct output with stacked items, type: Fix}
   id: 289
   time: '2021-07-31T12:06:25.0000000+00:00'
