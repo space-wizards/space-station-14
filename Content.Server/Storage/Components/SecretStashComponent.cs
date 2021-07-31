@@ -81,7 +81,7 @@ namespace Content.Server.Storage.Components
             if (_itemContainer.ContainedEntity == null)
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", ("stash", SecretPartName)));
+            Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
             if (user.TryGetComponent(out HandsComponent? hands))
             {

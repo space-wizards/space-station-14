@@ -36,22 +36,22 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
-
-            if (!vent.Enabled)
+            if (!vent.Enabled
+                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
+            {
+                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
                 return;
-
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
-                return;
+            }
 
             var environment = _atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)
+            {
+                appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
                 return;
+            }
 
             if (vent.PumpDirection == VentPumpDirection.Releasing)
             {

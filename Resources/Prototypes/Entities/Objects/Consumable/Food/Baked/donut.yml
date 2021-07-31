@@ -13,7 +13,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 5
     contents:
