@@ -57,10 +57,11 @@ namespace Content.Shared.Damage.Components
         public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs => ConvertDictKeysToIDs(DamagePerSupportedGroup);
         public IReadOnlyDictionary<string, int> DamagePerTypeIDs => ConvertDictKeysToIDs(DamagePerType);
 
-        // TODO QUESTIONS This is how we are currently specifying the effects of explosions and radiation. The damage
-        // type was hard coded, now its a yaml datafield as recommended. However, as DrSmugleaf said, "There should be a
-        // better way of doing this". I think there is, and have some comments in the damage.yml file, though maybe
-        // those are controversial oppinions.
+        // TODO QUESTION This is how we are currently specifying the effects of explosions and radiation. The damage
+        // type was hard coded, now its a yaml datafield with defaults as recommended by DrSmug. However, as they said,
+        // "There should be a better way of doing this". I think might be a straight forward way is, and have some
+        // comments in/on the damage.yml file, though maybe those are controversial oppinions about the definition of
+        // damage groups.
         [ViewVariables]
         [DataField("radiationDamageTypes")]
         public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
@@ -309,16 +310,16 @@ namespace Content.Shared.Damage.Components
 
 
         // TODO QUESTION Please dont run away, its a very interesting wall of text.
-        // Below is an alternative version of ChangeDamage(DamageGroupPrototype). Currently for a damge
-        // group with n types, ChangeDamage() can call ChangeDamage(DamageTypePrototype) up to 2*n-1 times. As this
-        // function has a not-insignificant bit of logic, and I think uses some sort of networking/messaging we probably
-        // want to minimise that down to n (or 1 if somehow possible with networking). In the case where all of the
-        // damage is of one type, reducing it to 1 is trivial.
         //
-        // Additionally currently ChangeDamage will ignore a damageType if it is not supported. As a result, the actual
-        // amount by which the total grouip damage changes may be less than expected. I think this is a good thing for
-        // dealing damage: if a damageContainer is 'immune' to some of the damage in the group, it should take less
-        // damage.
+        // Below is an alternative version of ChangeDamage(DamageGroupPrototype). Currently for a damge group with n
+        // types, ChangeDamage() can call ChangeDamage(DamageTypePrototype) up to 2*n-1 times. As I think this function
+        // uses some sort of networking/messaging we probably want to minimise that down to n (or 1 if somehow possible
+        // with networking)? In the case where all of the damage is of one type, adding logic to reducing it to 1 is trivial.
+        //
+        // Additionally currently ChangeDamage will ignore a damageType if it is not supported by the container. As a
+        // result, the actual amount by which the total grouip damage changes MAY be less than expected. I think this is
+        // a good thing for dealing damage: if a damageContainer is 'immune' to some of the damage in the group, it
+        // should take less damage (even though this may overlap with how resistances are donw, I havent checked).
         //
         // On the other hand, I feel that when a doctor injects a patient with 1u drug that should heal 10 damage in a
         // damage group, they expect it to do so. The total health change should be the same, regardless of whether a
@@ -326,16 +327,21 @@ namespace Content.Shared.Damage.Components
         // patient with brute, and try a brute drug, only to have it work at 1/3 effectivness because slash and piercing
         // are already at full health. Currently, this is also how ChangeDamage behaves.
         //
+        // I realise these are sort of contradictary opintions but I still think thats how it should work. Though if we
+        // add code to restrict DamageContainerPrototypes to only allow for one damage group per damage type, and force
+        // it to support all damage types in any groups, then this is a non-issue. (except for the networking/repeated
+        // OnHealthChange() calls).
+        //
         // So below is an alternative version of ChangeDamage(DamageGroupPrototype) that keeps the same behaviour
-        // outlined above, but uses less ChangeDamage(DamageTypePrototype) calls. It does change healing behaviour: the
-        // ammount that each damage type is healed by is proportional to current damage in that type relative to the
-        // group.
+        // outlined above, but uses less ChangeDamage(DamageTypePrototype) calls. It does change healing behaviour
+        // somewhat: the ammount that each damage type is healed by is proportional to current damage in that type
+        // relative to the group.
         //
         // So for example, consider someone with Blun/Slash/Piercing damage of 20/20/10.
-        // If you heal for 31 Brute using this code, you would heal for 12/12/7.
+        // If you heal for 31 Brute using this code, you should heal for 12/12/7 (havent done rigorous testing).
         // This wasn't an intentional design decision, it just so happens that this is the easiest algorithm I can think
         // of that minimises calls to ChangeDamage(damageType), while also not wasting any healing. Although, I do
-        // actually like this behaviour.
+        // actually like this damage-scaling healing behaviour.
         public void ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
     IEntity? source = null,
     DamageChangeParams? extraParams = null)
@@ -414,6 +420,7 @@ namespace Content.Shared.Damage.Components
 
             // TODO QUESTION what is this if statement supposed to do?
             // Is TotalDamage supposed to be something like MaxDamage? I don't think DamageableComponents has a MaxDamage?
+            // Or are you just not allowed to Set the damage of a type to be larger than the current total???
             if (newValue >= TotalDamage)
             {
                 return true;
@@ -501,11 +508,13 @@ namespace Content.Shared.Damage.Components
         }
 
         // TODO QUESTION I created this function, and the one below it, to covert between Dictionary<IPrototype,int> and
-        // Dictionary<string,int> using the IPrototype ID field. This sort of action is neededwhen sending damage
-        // dictionary data over the network, as is apparently doesn't support sending prototypes. However, given how
-        // generalizable this function is, and that it may be usefull when sending other prototype data, this function
-        // should probably be moved somewhere else. Would this belong in PrototypeManager?
-        // Or it might just become obsolete whenever that is supported.
+        // Dictionary<string,int> using the IPrototype ID field. Maybe such a function already exists somewhere, but I
+        // couldnt where. This sort of function is apparently needed when sending damage dictionary data over the
+        // network, as is apparently doesn't support sending prototypes. However, given how generalizable this function
+        // is, and that it may be usefull when sending other prototype data, this function should probably be moved
+        // somewhere else. Would this belong in PrototypeManager? Alternatively, as it is currently ONLY used for the
+        // health scanner display (i.e., only used in one place), you could remove the function and just add the
+        // required code in that one place, without all the generality.
 
         /// <summary>
         /// Take a dictionary with protoype keys, and return a dictionary using the prototype ID strings as keys

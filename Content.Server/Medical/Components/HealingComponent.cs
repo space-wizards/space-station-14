@@ -22,7 +22,6 @@ namespace Content.Server.Medical.Components
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
-        // TODO QUESTION Would protype references be able to deal with this, loading a Dictionary<DamagePrototype, int> from the yaml file?
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("heal", required: true )]
         public Dictionary<string, int> Heal { get; private set; } = new();

@@ -49,11 +49,12 @@ namespace Content.Server.Nutrition.Components
             {HungerThreshold.Dead, 0.0f},
         };
 
-        // TODO QUESTION Are all of _baseDecayRate, _actualDecayRate, _currentHunger all redundant here?
-        // i.e., shouldn't it just be:
+        // TODO QUESTION Just based on DrSmugleaf's other comments on similar situations: are all of _baseDecayRate,
+        // _actualDecayRate, _currentHunger all redundant here? i.e., shouldn't it just be:
         //    [ViewVariables(VVAccess.ReadWrite)]
         //    [DataField("baseDecayRate")]
         //    private float BaseDecayRate { get; set; } = 0.1f;
+        // and similar for the others?
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
