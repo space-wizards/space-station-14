@@ -631,7 +631,8 @@ namespace Content.Server.Storage.Components
 
         private void PlaySoundCollection()
         {
-            if(StorageSoundCollection.TryGetSound(out var sound))
+            // TODO this doesn't compile or work
+            if(StorageSoundCollection?.TryGetSound(out var sound))
                 SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default);
         }
     }
