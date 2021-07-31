@@ -1622,6 +1622,13 @@ Entries:
   time: '2021-07-31T01:14:00.0000000+00:00'
 - author: plinyvic
   changes:
-  - {message: Fixed reagent grinder not giving correct output with stacked items, type: Fix}
+  - {message: Fixed reagent grinder not giving correct output with stacked items,
+    type: Fix}
   id: 289
   time: '2021-07-31T12:06:25.0000000+00:00'
+- author: michaelcooke
+  changes:
+  - {message: Throwing items in space will now push you in the opposite direction
+      to the thrown object, type: Fix}
+  id: 290
+  time: '2021-07-31T12:53:18.0000000+00:00'
