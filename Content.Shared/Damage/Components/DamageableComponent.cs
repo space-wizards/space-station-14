@@ -47,7 +47,7 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageTypesDictToDamageGroupDict(_damageDict);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, SupportedGroups);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageDict;
 
         // TODO DAMAGE Cache this
@@ -387,34 +387,6 @@ namespace Content.Shared.Damage.Components
         {
             var args = new DamageChangedEventArgs(this, changes);
             OnHealthChanged(args);
-        }
-
-        /// <summary>
-        /// Converts a dictionary of damage types to a dictionary of damage groups.
-        /// Returned dictionary adds up the total damage in each group.
-        /// If a damage type is associated with more than one supported damage group,
-        /// it will contribute to the total of each group.
-        /// </summary>
-        /// <param name="damageTypeDict"></param>
-        /// <returns></returns>
-        private IReadOnlyDictionary<DamageGroupPrototype, int> DamageTypesDictToDamageGroupDict(IReadOnlyDictionary<DamageTypePrototype, int> damageTypeDict)
-        {
-            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
-            int damageGroupSumDamage, damageTypeDamage;
-            foreach (var group in SupportedGroups)
-            {
-                damageGroupSumDamage = 0;
-                foreach (var type in group.DamageTypes)
-                {
-                    // if the damage type is in the dictionary, add it's damage to the group total.
-                    if (damageTypeDict.TryGetValue(type, out damageTypeDamage)) {
-                        damageGroupSumDamage += damageTypeDamage;
-                    }
-                }
-                damageGroupDict.Add(group, damageGroupSumDamage);
-            }
-
-            return damageGroupDict;
         }
 
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
