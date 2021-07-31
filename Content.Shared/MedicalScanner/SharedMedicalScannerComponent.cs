@@ -20,6 +20,10 @@ namespace Content.Shared.MedicalScanner
             public readonly Dictionary<string, int> DamageTypeIDs;
             public readonly bool IsScanned;
 
+            // TODO QUESTION DrSmugleaf previously commented here saying that these dicitionaries should be using
+            // strings, instead when they were previously <DamageGroupPrototype, int> dictionaries. I think I've made
+            // all the needed changes, but have no idea how the networking or UI work. The medicalscanner works when
+            // testing locally with two local clients, so hopefully this is what I was supposed to do?
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
                 Dictionary<string, int> damageGroupIDs,

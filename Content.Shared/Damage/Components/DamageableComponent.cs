@@ -45,21 +45,27 @@ namespace Content.Shared.Damage.Components
         [DataField("damageContainer")]
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
-        // TODO DAMAGE Cache this
+        // TODO DAMAGE Cache this, refresh on DamageChange() or DamageSet()
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamageGroups => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
-        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamageTypes => _damageDict;
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerSupportedGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, SupportedDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamagePerType => _damageDict;
 
-        // TODO DAMAGE Cache this
+        // TODO DAMAGE Cache this, refresh on DamageChange() or DamageSet()
         // Whenever sending over network, need a <string, int> dictionary
-        public IReadOnlyDictionary<string, int> DamageGroupIDs => ConvertDictKeysToIDs(DamageGroups);
-        public IReadOnlyDictionary<string, int> DamageTypeIDs => ConvertDictKeysToIDs(DamageTypes);
+        public IReadOnlyDictionary<string, int> DamagePerGroupIDs => ConvertDictKeysToIDs(DamagePerGroup);
+        public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs => ConvertDictKeysToIDs(DamagePerSupportedGroup);
+        public IReadOnlyDictionary<string, int> DamagePerTypeIDs => ConvertDictKeysToIDs(DamagePerType);
 
-        // Some inorganic damageable components might take shock/electrical damage from radiation?
-        // Similarly, some may react differetly to explosions?
-        // There definittely should be a better way of doing this.
-        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
-        // This also requires changing the list type and modifying the functions here that use them.
+
+
+        // TODO QUESTIONS This is how we are currently specifying the effects of explosions and radiation. The damage
+        // type was hard coded, now its a yaml datafield as recommended. However, as DrSmugleaf said, "There should be a
+        // better way of doing this". I think there is, and have some comments in the damage.yml file, though maybe
+        // those are controversial oppinions.
+        //
+        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported. This
+        // also requires changing the list type and modifying the functions here that use them.
         [ViewVariables]
         [DataField("radiationDamageTypes")]
         public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
@@ -67,8 +73,9 @@ namespace Content.Shared.Damage.Components
         [DataField("explosionDamageTypes")]
         public List<string> ExplosionDamageTypeIDs { get; set; } = new() { "Piercing", "Heat" };
 
-
         public HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; } = new();
+
+        public HashSet<DamageGroupPrototype> SupportedDamageGroups { get; } = new();
 
         public HashSet<DamageTypePrototype> SupportedDamageTypes { get; } = new();
 
@@ -80,29 +87,22 @@ namespace Content.Shared.Damage.Components
             var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
             ApplicableDamageGroups.Clear();
+            SupportedDamageGroups.Clear();
             SupportedDamageTypes.Clear();
 
+            //Get Damage groups/types from the DamageContainerPrototype.
             DamageContainerId = damageContainerPrototype.ID;
             ApplicableDamageGroups.UnionWith(damageContainerPrototype.ApplicableDamageGroups);
+            SupportedDamageGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
             SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
-            foreach (var DamageType in SupportedDamageTypes)
+            //initialise damage dictionary 0 damage
+            foreach (var type in SupportedDamageTypes)
             {
-                _damageDict.Add(DamageType,0);
+                _damageDict.Add(type, 0);
             }
 
-            var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
-            Resistances = new ResistanceSet(resistancePrototype);
-        }
-
-        public bool SupportsDamageGroup(DamageGroupPrototype group)
-        {
-            return ApplicableDamageGroups.Contains(group);
-        }
-
-        public bool SupportsDamageType(DamageTypePrototype type)
-        {
-            return SupportedDamageTypes.Contains(type);
+            Resistances = new ResistanceSet(_prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId));
         }
 
         protected override void Startup()
@@ -134,73 +134,28 @@ namespace Content.Shared.Damage.Components
             }
         }
 
+
+        // TODO QUESTION These four functions here are just wrapping standard function calls on public dictionaries. I'm
+        // not sure whether or not they should just be replaced by those dictionary calls. The current function names
+        // probably make for nicer to read code.
         public int GetDamage(DamageTypePrototype type)
         {
-            return _damageDict.GetValueOrDefault(type);
+            return DamagePerType.GetValueOrDefault(type);
         }
 
         public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
-            return _damageDict.TryGetValue(type, out damage);
+            return DamagePerType.TryGetValue(type, out damage);
         }
 
         public int GetDamage(DamageGroupPrototype group)
         {
-            if (!SupportsDamageGroup(group))
-            {
-                return 0;
-            }
-
-            var damage = 0;
-
-            foreach (var type in group.DamageTypes)
-            {
-                damage += GetDamage(type);
-            }
-
-            return damage;
+            return DamagePerGroup.GetValueOrDefault(group);
         }
 
         public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
-            if (!SupportsDamageGroup(group))
-            {
-                damage = 0;
-                return false;
-            }
-
-            damage = GetDamage(group);
-            return true;
-        }
-
-        /// <summary>
-        ///     Attempts to set the damage value for the given <see cref="DamageTypePrototype"/>.
-        /// </summary>
-        /// <returns>
-        ///     True if successful, false if this container does not support that type.
-        /// </returns>
-        public bool TrySetDamage(DamageTypePrototype type, int newValue)
-        {
-            if (newValue < 0)
-            {
-                return false;
-            }
-
-            if (SupportedDamageTypes.Contains(type))
-            {
-                var old = _damageDict[type] = newValue;
-                _damageDict[type] = newValue;
-
-                var delta = newValue - old;
-                var datum = new DamageChangeData(type, newValue, delta);
-                var data = new List<DamageChangeData> {datum};
-
-                OnHealthChanged(data);
-
-                return true;
-            }
-
-            return false;
+            return DamagePerGroup.TryGetValue(group, out damage);
         }
 
         public void SetGroupDamage(int newValue, DamageGroupPrototype group)
@@ -219,7 +174,10 @@ namespace Content.Shared.Damage.Components
             }
         }
 
-        // TODO QUESTION both source and extraParams are unused here. Should they be removed, or will they have use in the future?
+        // TODO QUESTION both source and extraParams are unused here. Should they be removed, or will they have use in
+        // the future? The documentation for IDamageableComponent.SetDamage() mentions it would be used for targeting
+        // limbs and such. But so far I've been under the assumption that each limb/organ would have it's own
+        // DamageableComponent, and limb targeting would be elsewhere?
         public bool ChangeDamage(
             DamageTypePrototype type,
             int amount,
@@ -228,9 +186,14 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null)
         {
             // Check if damage type is supported, and get the current value if it is.
-            if (amount == 0 || !_damageDict.TryGetValue(type, out var current))
+            if (!_damageDict.TryGetValue(type, out var current))
             {
                 return false;
+            }
+
+            if (amount == 0)
+            {
+                return true;
             }
 
             // Apply resistances (does nothing if amount<0)
@@ -241,7 +204,7 @@ namespace Content.Shared.Damage.Components
             }
 
             if (finalDamage == 0)
-                return false;
+                return true;
 
             // Are we healing below zero?
             if (current + finalDamage < 0)
@@ -273,7 +236,7 @@ namespace Content.Shared.Damage.Components
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (!SupportsDamageGroup(group))
+            if (!ApplicableDamageGroups.Contains(group))
             {
                 return false;
             }
@@ -391,7 +354,7 @@ namespace Content.Shared.Damage.Components
                 var availableHealing = -amount;
 
                 // Get total group damage.
-                var damageToHeal = DamageGroups[group];
+                var damageToHeal = DamagePerGroup[group];
 
                 // Is there any damage to even heal?
                 if (damageToHeal == 0)
@@ -407,7 +370,7 @@ namespace Content.Shared.Damage.Components
                 foreach (var type in types)
                 {
 
-                    if (!DamageTypes.TryGetValue(type, out damage))
+                    if (!DamagePerType.TryGetValue(type, out damage))
                     {
                         // Damage Type is not supported. Continue without reducing availableHealing
                         continue;
@@ -447,28 +410,26 @@ namespace Content.Shared.Damage.Components
             }
         }
 
-
-
-
-
         public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
-            // TODO QUESTION what is this if statement supposed to do?
-            // Is TotalDamage supposed to be something like MaxDamage? I don't think DamageableComponents has a MaxDamage?
-            if (newValue >= TotalDamage)
-            {
-                return false;
-            }
-
-            if (newValue < 0)
-            {
-                return false;
-            }
-
             if (!_damageDict.TryGetValue(type, out var oldValue))
             {
                 return false;
             }
+
+            // TODO QUESTION what is this if statement supposed to do?
+            // Is TotalDamage supposed to be something like MaxDamage? I don't think DamageableComponents has a MaxDamage?
+            if (newValue >= TotalDamage)
+            {
+                return true;
+            }
+
+            if (newValue < 0)
+            {
+                return true;
+            }
+
+
 
             if (oldValue == newValue)
             {
@@ -544,13 +505,23 @@ namespace Content.Shared.Damage.Components
             }
         }
 
-        // TODO This probably does not belong here? Should this be a PrototypeManager function?
+        // TODO QUESTION I created this function, and the one below it, to covert between Dictionary<IPrototype,int> and
+        // Dictionary<string,int> using the IPrototype ID field. This sort of action is neededwhen sending damage
+        // dictionary data over the network, as is apparently doesn't support sending prototypes. However, given how
+        // generalizable this function is, and that it may be usefull when sending other prototype data, this function
+        // should probably be moved somewhere else. Would this belong in PrototypeManager?
+        // Or it might just become obsolete whenever that is supported.
+
         /// <summary>
-        /// Take a dictionary with protoype keys, and return a dictionary using the prototype ID strings as keys instead.
-        /// Usefull when sending prototypes dictionaries over the network.
+        /// Take a dictionary with protoype keys, and return a dictionary using the prototype ID strings as keys
+        /// instead.
         /// </summary>
+        /// <remarks>
+        /// Usefull when sending prototypes dictionaries over the network.
+        /// </remarks>
         public static IReadOnlyDictionary<string, TValue>
-            ConvertDictKeysToIDs<TPrototype,TValue>(IReadOnlyDictionary<TPrototype, TValue> prototypeDict) where TPrototype : IPrototype
+            ConvertDictKeysToIDs<TPrototype,TValue>(IReadOnlyDictionary<TPrototype, TValue> prototypeDict)
+            where TPrototype : IPrototype
         {
             Dictionary<string, TValue> idDict = new(prototypeDict.Count);
             foreach (var entry in prototypeDict)
@@ -560,13 +531,13 @@ namespace Content.Shared.Damage.Components
             return idDict;
         }
 
-        // TODO This probably does not belong here? Should this be a PrototypeManager function?
         /// <summary>
-        /// Takes a dictionary with strings as keys.
-        /// Find prototypes with matching IDs using the prototype manager.
-        /// Returns a dictionary with the ID strings replaced by prototypes.
-        /// Usefull when receiving prototypes dictionaries over the network.
+        /// Takes a dictionary with strings as keys and attempts to return one using Prototypes as keys.
         /// </summary>
+        /// <remarks>
+        /// Finds prototypes with matching IDs using the prototype manager. Usefull when receiving prototypes
+        /// dictionaries over the network.
+        /// </remarks>
         /// <exception cref="KeyNotFoundException">
         /// Thrown if one of the string IDs does not exist.
         /// </exception>
@@ -588,6 +559,8 @@ namespace Content.Shared.Damage.Components
     {
         public readonly Dictionary<DamageTypePrototype, int> DamageList;
 
+        // TODO QUESTION I thought Prototypes could not be sent over the network? Was that just wrong or is this
+        // function doing something else? TBH I have no idea what its for.
         public DamageableComponentState(Dictionary<DamageTypePrototype, int> damageList) 
 
         {
