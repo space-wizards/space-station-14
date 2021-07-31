@@ -211,21 +211,23 @@ namespace Content.Shared.Damage.Components
             }
         }
 
+        // TODO QUESTION both source and extraParams are unused here. Should they be removed, or will they have use in the future?
         public bool ChangeDamage(
             DamageTypePrototype type,
             int amount,
-            bool ignoreResistances,
+            bool ignoreDamageResistances = false,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
-            if (!SupportsDamageType(type))
+            // Check if damage type is supported, and get the current value if it is.
+            if (!_damageDict.TryGetValue(type, out var current))
             {
                 return false;
             }
 
+            // Apply resistances (does nothing if amount<0)
             var finalDamage = amount;
-
-            if (!ignoreResistances)
+            if (!ignoreDamageResistances)
             {
                 finalDamage = Resistances.CalculateDamage(type, amount);
             }
@@ -233,15 +235,14 @@ namespace Content.Shared.Damage.Components
             if (finalDamage == 0)
                 return false;
 
-            if (!_damageDict.TryGetValue(type, out var current))
-            {
-                return false;
-            }
-
+            // Are we healing below zero?
             if (current + finalDamage < 0)
             {
                 if (current == 0)
-                    return false;
+                    // Damage type is supported, but there is nothing to do
+                    return true;
+
+                // Cap healing down to zero
                 _damageDict[type] = 0;
                 finalDamage = -current;
             }
@@ -260,7 +261,7 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
-        public bool ChangeDamage(DamageGroupPrototype group, int amount, bool ignoreResistances,
+        public bool ChangeDamage(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
@@ -305,7 +306,7 @@ namespace Content.Shared.Damage.Components
                         var healAmount = Math.Min(healingLeft, damage);
                         healAmount = Math.Min(healAmount, healPerType);
 
-                        ChangeDamage(type, -healAmount, true);
+                        ChangeDamage(type, -healAmount, ignoreDamageResistances, source, extraParams);
                         healThisCycle += healAmount;
                         healingLeft -= healAmount;
                     }
@@ -332,7 +333,7 @@ namespace Content.Shared.Damage.Components
                 foreach (var type in types)
                 {
                     var damageAmount = Math.Min(damagePerType, damageLeft);
-                    ChangeDamage(type, damageAmount, true);
+                    ChangeDamage(type, damageAmount, ignoreDamageResistances, source, extraParams);
                     damageLeft -= damageAmount;
                 }
             }

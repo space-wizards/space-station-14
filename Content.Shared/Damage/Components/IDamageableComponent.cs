@@ -73,8 +73,8 @@ namespace Content.Shared.Damage.Components
         /// <param name="amount">
         ///     Amount of damage being received (positive for damage, negative for heals).
         /// </param>
-        /// <param name="ignoreResistances">
-        ///     Whether or not to ignore resistances.
+        /// <param name="ignoreDamageResistances">
+        ///     Whether or not to ignore resistances when taking damage.
         ///     Healing always ignores resistances, regardless of this input.
         /// </param>
         /// <param name="source">
@@ -90,7 +90,7 @@ namespace Content.Shared.Damage.Components
         bool ChangeDamage(
             DamageTypePrototype type,
             int amount,
-            bool ignoreResistances,
+            bool ignoreDamageResistances = false,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
@@ -106,8 +106,8 @@ namespace Content.Shared.Damage.Components
         /// <param name="amount">
         ///     Amount of damage being received (positive for damage, negative for heals).
         /// </param>
-        /// <param name="ignoreResistances">
-        ///     Whether to ignore resistances.
+        /// <param name="ignoreDamageResistances">
+        ///     Whether to ignore resistances when taking damage.
         ///     Healing always ignores resistances, regardless of this input.
         /// </param>
         /// <param name="source">Entity that dealt or healed the damage, if any.</param>
@@ -122,7 +122,7 @@ namespace Content.Shared.Damage.Components
         bool ChangeDamage(
             DamageGroupPrototype group,
             int amount,
-            bool ignoreResistances,
+            bool ignoreDamageResistances = false,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
