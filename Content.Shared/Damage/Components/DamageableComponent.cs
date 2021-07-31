@@ -45,13 +45,13 @@ namespace Content.Shared.Damage.Components
         [DataField("damageContainer")]
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
 
-        // TODO DAMAGE Cache this, refresh on DamageChange() or DamageSet()
+        // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerSupportedGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, SupportedDamageGroups);
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamagePerType => _damageDict;
 
-        // TODO DAMAGE Cache this, refresh on DamageChange() or DamageSet()
+        // TODO DAMAGE Cache this
         // Whenever sending over network, need a <string, int> dictionary
         public IReadOnlyDictionary<string, int> DamagePerGroupIDs => ConvertDictKeysToIDs(DamagePerGroup);
         public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs => ConvertDictKeysToIDs(DamagePerSupportedGroup);
@@ -563,7 +563,7 @@ namespace Content.Shared.Damage.Components
     {
         public readonly Dictionary<DamageTypePrototype, int> DamageList;
 
-        // TODO QUESTION I thought Prototypes could not be sent over the network? Was that just wrong or is this
+        // TODO QUESTION I thought Prototypes could/should not be sent over the network? Was that just wrong or is this
         // function doing something else? TBH I have no idea what its for.
         public DamageableComponentState(Dictionary<DamageTypePrototype, int> damageList) 
 
