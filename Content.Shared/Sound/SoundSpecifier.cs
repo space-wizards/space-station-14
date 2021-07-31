@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Sound
 {
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class SoundSpecifier
     {
         public abstract string GetSound();
@@ -15,7 +15,6 @@ namespace Content.Shared.Sound
         public abstract bool TryGetSound([NotNullWhen(true)] out string? sound);
     }
 
-    [DataDefinition]
     public sealed class SoundPathSpecifier : SoundSpecifier
     {
         public const string Node = "path";
@@ -49,7 +48,6 @@ namespace Content.Shared.Sound
         }
     }
 
-    [DataDefinition]
     public sealed class SoundCollectionSpecifier : SoundSpecifier
     {
         public const string Node = "collection";

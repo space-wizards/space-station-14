@@ -12,7 +12,7 @@ namespace Content.Shared.Chemistry.Reagent
         Ingestion,
     }
 
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class ReagentEntityReaction
     {
         [ViewVariables]

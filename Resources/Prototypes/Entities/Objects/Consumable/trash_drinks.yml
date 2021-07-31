@@ -6,7 +6,6 @@
   id: DrinkBottleBaseEmpty
   description: That's an empty bottle.
   components:
-  - type: LoopingSound
   - type: Sprite
     state: icon
   - type: SolutionContainer

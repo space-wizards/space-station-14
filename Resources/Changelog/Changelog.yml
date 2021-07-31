@@ -1613,3 +1613,10 @@ Entries:
   - {message: Added bio suits into bio lockers, type: Add}
   id: 287
   time: '2021-07-28T17:36:06.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Pulling is better integrated with hands now. It properly picks an empty
+      hand and dropping on the pulling hand stops the pull. You also see what you're
+      pulling in your hand!, type: Tweak}
+  id: 288
+  time: '2021-07-31T01:14:00.0000000+00:00'

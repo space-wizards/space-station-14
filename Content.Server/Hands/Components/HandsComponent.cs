@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -10,7 +11,6 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
 using Content.Shared.Notification.Managers;
-using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
@@ -20,9 +20,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Hands.Components
@@ -38,48 +36,6 @@ namespace Content.Server.Hands.Components
         [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case PullAttemptMessage msg:
-                    AttemptPull(msg);
-                    break;
-                case PullStartedMessage:
-                    StartPulling();
-                    break;
-                case PullStoppedMessage:
-                    StopPulling();
-                    break;
-            }
-        }
-
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
-        {
-            base.HandleNetworkMessage(message, channel, session);
-
-            switch (message)
-            {
-                case ClientChangedHandMsg msg:
-                    ActiveHand = msg.HandName;
-                    break;
-                case ClientAttackByInHandMsg msg:
-                    InteractHandWithActiveHand(msg.HandName);
-                    break;
-                case UseInHandMsg:
-                    UseActiveHeldEntity();
-                    break;
-                case ActivateInHandMsg msg:
-                    ActivateHeldEntity(msg.HandName);
-                    break;
-                case MoveItemFromHandMsg msg:
-                    TryMoveHeldEntityToActiveHand(msg.HandName);
-                    break;
-            }
-        }
 
         protected override void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState)
         {
@@ -145,7 +101,8 @@ namespace Content.Server.Hands.Components
             if (pickupDirection == initialPosition.ToMapPos(Owner.EntityManager))
                 return;
 
-            SendNetworkMessage(new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
+            Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
+                new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
         }
 
         #region Pull/Disarm
@@ -155,9 +112,17 @@ namespace Content.Server.Hands.Components
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
 
-            var handLocation = ReadOnlyHands.Count == 0 ? HandLocation.Right : HandLocation.Left; //TODO: make hand body part have a handlocation?
+            // If this annoys you, which it should.
+            // Ping Smugleaf.
+            var location = args.Part.Symmetry switch
+            {
+                BodyPartSymmetry.None => HandLocation.Middle,
+                BodyPartSymmetry.Left => HandLocation.Left,
+                BodyPartSymmetry.Right => HandLocation.Right,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-            AddHand(args.Slot, handLocation);
+            AddHand(args.Slot, location);
         }
 
         void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs args)
@@ -209,41 +174,13 @@ namespace Content.Server.Hands.Components
             return pullable.TryStopPull();
         }
 
-        private void AttemptPull(PullAttemptMessage msg)
-        {
-            if (!ReadOnlyHands.Any(hand => hand.Enabled))
-            {
-                msg.Cancelled = true;
-            }
-        }
-
-        private void StartPulling()
-        {
-            var firstFreeHand = Hands.FirstOrDefault(hand => hand.Enabled);
-
-            if (firstFreeHand == null)
-                return;
-
-            DisableHand(firstFreeHand);
-        }
-
-        private void StopPulling()
-        {
-            var firstOccupiedHand = Hands.FirstOrDefault(hand => !hand.Enabled);
-
-            if (firstOccupiedHand == null)
-                return;
-
-            EnableHand(firstOccupiedHand);
-        }
-
         #endregion
 
         #region Old public methods
 
-        public IEnumerable<string> HandNames => ReadOnlyHands.Select(h => h.Name);
+        public IEnumerable<string> HandNames => Hands.Select(h => h.Name);
 
-        public int Count => ReadOnlyHands.Count;
+        public int Count => Hands.Count;
 
         /// <summary>
         ///     Returns a list of all hand names, with the active hand being first.
@@ -253,9 +190,9 @@ namespace Content.Server.Hands.Components
             if (ActiveHand != null)
                 yield return ActiveHand;
 
-            foreach (var hand in ReadOnlyHands)
+            foreach (var hand in Hands)
             {
-                if (hand.Name == ActiveHand || !hand.Enabled)
+                if (hand.Name == ActiveHand)
                     continue;
 
                 yield return hand.Name;

@@ -1,5 +1,9 @@
 using System;
 using Content.Shared.Sound;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -9,7 +13,8 @@ namespace Content.Shared.Light.Component
     [Serializable, NetSerializable]
     public enum ExpendableLightVisuals
     {
-        State
+        State,
+        Behavior
     }
 
     [Serializable, NetSerializable]
@@ -21,8 +26,11 @@ namespace Content.Shared.Light.Component
         Dead
     }
 
+    [NetworkedComponent]
     public abstract class SharedExpendableLightComponent: Robust.Shared.GameObjects.Component
     {
+        public static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, true, 0.3f);
+
         public sealed override string Name => "ExpendableLight";
 
         [ViewVariables(VVAccess.ReadOnly)]
@@ -66,7 +74,7 @@ namespace Content.Shared.Light.Component
 
         [ViewVariables]
         [DataField("loopedSound")]
-        protected string LoopedSound { get; set; } = default!;
+        public string LoopedSound { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("dieSound")]

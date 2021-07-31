@@ -92,7 +92,6 @@
           - box11
           - box12
   # Someday...
-  # - type: LoopingSound
   # - type: DamageOnLand
   #   amount: 5
   # - type: DamageOtherOnHit

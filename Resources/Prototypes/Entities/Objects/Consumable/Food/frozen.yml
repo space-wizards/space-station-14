@@ -9,7 +9,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 20 # For sprinkles or something? Idk.
     contents:
