@@ -1,4 +1,6 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor
 {
@@ -13,5 +15,12 @@ namespace Content.Shared.SubFloor
     {
         /// <inheritdoc />
         public override string Name => "SubFloorHide";
+
+        /// <summary>
+        ///     This entity needs to be anchored to be hid in the subfloor.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("requireAnchored")]
+        public bool RequireAnchored { get; set; } = true;
     }
 }

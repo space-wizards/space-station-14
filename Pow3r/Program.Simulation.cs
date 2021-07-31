@@ -10,7 +10,6 @@ namespace Pow3r
     {
         private const int MaxTickData = 180;
 
-        private int _nextId = 1;
         private PowerState _state = new();
         private Network _linking;
         private int _tickDataIdx;
@@ -18,13 +17,11 @@ namespace Pow3r
 
         private readonly string[] _solverNames =
         {
-            nameof(GraphWalkSolver),
             nameof(BatteryRampPegSolver),
             nameof(NoOpSolver)
         };
 
         private readonly IPowerSolver[] _solvers = {
-            new GraphWalkSolver(),
             new BatteryRampPegSolver(),
             new NoOpSolver()
         };
@@ -34,11 +31,6 @@ namespace Pow3r
         private readonly float[] _simTickTimes = new float[MaxTickData];
         private readonly Queue<object> _remQueue = new();
         private readonly Stopwatch _simStopwatch = new Stopwatch();
-
-        private NodeId AllocId()
-        {
-            return new(_nextId++);
-        }
 
         private void Tick(float frameTime)
         {
