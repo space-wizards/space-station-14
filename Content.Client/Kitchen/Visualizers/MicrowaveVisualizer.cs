@@ -17,33 +17,33 @@ namespace Content.Client.Kitchen.Visualizers
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            var microwaveSystem = EntitySystem.Get<MicrowaveSystem>();
             var microwaveComponent = component.Owner.GetComponentOrNull<MicrowaveComponent>();
 
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {
                 state = MicrowaveVisualState.Idle;
             }
+            // The only reason we get the entity system so late is so that tests don't fail... Amazing, huh?
             switch (state)
             {
                 case MicrowaveVisualState.Broken:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mwb");
                     if(microwaveComponent != null)
-                        microwaveSystem.StopSoundLoop(microwaveComponent);
+                        EntitySystem.Get<MicrowaveSystem>().StopSoundLoop(microwaveComponent);
                     break;
 
                 case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");
                     if(microwaveComponent != null)
-                        microwaveSystem.StopSoundLoop(microwaveComponent);
+                        EntitySystem.Get<MicrowaveSystem>().StopSoundLoop(microwaveComponent);
                     break;
 
                 case MicrowaveVisualState.Cooking:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_running_unlit");
                     if(microwaveComponent != null)
-                        microwaveSystem.StartSoundLoop(microwaveComponent);
+                        EntitySystem.Get<MicrowaveSystem>().StartSoundLoop(microwaveComponent);
                     break;
 
                 default:
