@@ -50,18 +50,30 @@
     compatibility: Biological
 
 - type: entity
-  id: OrganHumanHeart
+  id: OrganHumanTongue
   parent: BaseHumanOrgan
-  name: heart
-  description: "I feel bad for the heartless bastard who lost this."
+  name: tongue
+  description: "A fleshy muscle mostly used for lying."
   components:
   - type: Sprite
-    state: heart-on
+    state: tongue
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:HeartBehavior {}
+
+- type: entity
+  id: OrganHumanAppendix
+  parent: BaseHumanOrgan
+  name: appendix
+  components:
+  - type: Sprite
+    layers:
+    - state: appendix
+    - state: appendix-inflamed
+      visible: false
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
 
 - type: entity
   id: OrganHumanEars
@@ -92,6 +104,92 @@
     - !type:LungBehavior {}
 
 - type: entity
+  id: OrganHumanHeart
+  parent: BaseHumanOrgan
+  name: heart
+  description: "I feel bad for the heartless bastard who lost this."
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:HeartBehavior {}
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  - type: Metabolizer
+    metabolisms:
+      Dylovene:
+        effects:
+        - !type:HealthChange
+          damageClass: Toxin
+          healthChange: -1
+      Arithrazine:
+        effects:
+        - !type:HealthChange
+          damageClass: Toxin
+          healthChange: -1
+        - !type:HealthChange
+          damageClass: Brute
+          healthChange: 0.5
+      Bicaridine:
+        effects:
+        - !type:HealthChange
+          damageClass: Brute
+          healthChange: -2
+      Dermaline:
+        effects:
+        - !type:HealthChange
+          damageClass: Burn
+          healthChange: -3
+      Dexalin:
+        effects:
+        - !type:HealthChange
+          damageClass: Airloss
+          healthChange: -1
+      DexalinPlus:
+        effects:
+        - !type:HealthChange
+          damageClass: Airloss
+          healthChange: -3
+      Kelotane:
+        effects:
+        - !type:HealthChange
+          damageClass: Burn
+          healthChange: -1
+      Synaptizine:
+        effects:
+        - !type:HealthChange
+          damageClass: Toxin
+          healthChange: 0.5
+      HeartbreakerToxin:
+        effects:
+        - !type:HealthChange
+          damageClass: Airloss
+          healthChange: 4
+      Lexorin:
+        effects:
+        - !type:HealthChange
+          damageClass: Airloss
+          healthChange: 7
+      Omnizine:
+        effects:
+        - !type:HealthChange
+          healthChange: -2
+          damageClass: Burn
+        - !type:HealthChange
+          healthChange: -2
+          damageClass: Toxin
+        - !type:HealthChange
+          healthChange: -2
+          damageClass: Airloss
+        - !type:HealthChange
+          healthChange: -2
+          damageClass: Brute
+
+- type: entity
   id: OrganHumanStomach
   parent: BaseHumanOrgan
   name: stomach
@@ -108,6 +206,93 @@
       digestionDelay: 20
   - type: SolutionContainer
     maxVol: 250
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer # Release me from this hell called 1 reagent for every drink
+    # TODO please make every drink their own base thing
+    metabolisms:
+      Flour:
+        effects:
+        - !type:SatiateHunger
+      JuiceApple:
+        effects:
+        - !type:SatiateThirst
+      JuiceBerry:
+        effects:
+        - !type:SatiateThirst
+      JuiceBanana:
+        effects:
+        - !type:SatiateThirst
+      JuiceCarrot:
+        effects:
+        - !type:SatiateThirst
+      JuiceLime:
+        effects:
+        - !type:SatiateThirst
+      JuiceLemon:
+        effects:
+        - !type:SatiateThirst
+      JuiceGrape:
+        effects:
+        - !type:SatiateThirst
+      JuiceOrange:
+        effects:
+        - !type:SatiateThirst
+      JuiceTomato:
+        effects:
+        - !type:SatiateThirst
+      JuiceBerryPoison:
+        effects:
+        - !type:SatiateThirst
+        - !type:HealthChange
+          damageClass: Toxin
+          healthChange: 1
+      JuiceWatermelon:
+        effects:
+        - !type:SatiateThirst
+      JuicePineapple:
+        effects:
+        - !type:SatiateThirst
+      Nutriment:
+        effects:
+        - !type:SatiateHunger
+      Water:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+      Coffee:
+        effects:
+        - !type:SatiateThirst
+      Tea:
+        effects:
+        - !type:SatiateThirst
+      Milk:
+        effects:
+        - !type:SatiateThirst
+      SpoiledMilk:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: -2
+      MilkSoy:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2 # soyboys stay winning
+      MilkOat:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2 # oatboys stay winning
+      Cola:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 0.5 # sodaboys stay losing
+      ThirteenLoko:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+        - !type:HealthChange
+          damageClass: Toxin
+          healthChange: 1
 
 - type: entity
   id: OrganHumanLiver
@@ -120,12 +305,17 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:LiverBehavior
-      alcoholLethality: 0.005
-      alcoholExponent: 1.6
-      toxinTolerance: 3
-      toxinLethality: 0.01
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    metabolisms: # TODO add the rest of alcohol
+      CreamyDelight:
+        effects:
+        - !type:SatiateThirst
+      Lean:
+        effects:
+        - !type:SatiateThirst
+      LeanShine: # who added this?
+        effects:
+        - !type:SatiateThirst
 
 - type: entity
   id: OrganHumanKidneys
@@ -141,28 +331,4 @@
     size: 1
     compatibility: Biological
 
-- type: entity
-  id: OrganHumanTongue
-  parent: BaseHumanOrgan
-  name: tongue
-  description: "A fleshy muscle mostly used for lying."
-  components:
-  - type: Sprite
-    state: tongue
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
 
-- type: entity
-  id: OrganHumanAppendix
-  parent: BaseHumanOrgan
-  name: appendix
-  components:
-  - type: Sprite
-    layers:
-      - state: appendix
-      - state: appendix-inflamed
-        visible: false
-  - type: Mechanism
-    size: 1
-    compatibility: Biological

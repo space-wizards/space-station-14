@@ -13,7 +13,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Metabolism.Events;
 using Content.Shared.MobState;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
@@ -21,14 +20,14 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Metabolism
+namespace Content.Server.Body.Respiratory
 {
     [RegisterComponent]
-    public class MetabolismComponent : Component
+    public class RespiratorComponent : Component
     {
         [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
 
-        public override string Name => "Metabolism";
+        public override string Name => "Respirator";
 
         private float _accumulatedFrameTime;
 
