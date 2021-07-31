@@ -481,9 +481,9 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/click.ogg
+      path: /Audio/Weapons/click.ogg
     soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
+      path: /Audio/Weapons/drawbow2.ogg
 
 - type: entity
   parent: BaseItem

@@ -272,7 +272,7 @@
   - type: Projectile
     deleteOnCollide: true
     soundHit:
-      path: /Audio/Guns/Hits/snap.ogg
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Blunt: 2
 
