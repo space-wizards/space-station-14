@@ -203,6 +203,14 @@ namespace Content.Shared.Damage.Components
             return false;
         }
 
+        public void SetGroupDamage(int newValue, DamageGroupPrototype group)
+        {
+            foreach (var type in group.DamageTypes)
+            {
+                SetDamage(type, newValue);
+            }
+        }
+
         public void SetAllDamage(int newValue)
         {
             foreach (var type in SupportedTypes)
@@ -220,7 +228,7 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null)
         {
             // Check if damage type is supported, and get the current value if it is.
-            if (!_damageDict.TryGetValue(type, out var current))
+            if (amount == 0 || !_damageDict.TryGetValue(type, out var current))
             {
                 return false;
             }
@@ -343,6 +351,8 @@ namespace Content.Shared.Damage.Components
 
         public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
+            // TODO QUESTION what is this if statement supposed to do?
+            // Is TotalDamage supposed to be something like MaxDamage? I don't think DamagableComponents have a MaxDamage Field?
             if (newValue >= TotalDamage)
             {
                 return false;
@@ -353,15 +363,20 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            if (!_damageDict.ContainsKey(type))
+            if (!_damageDict.TryGetValue(type, out var oldValue))
             {
                 return false;
             }
 
-            var old = _damageDict[type];
+            if (oldValue == newValue)
+            {
+                // Dont bother calling OnHealthChanged(data).
+                return true;
+            }
+
             _damageDict[type] = newValue;
 
-            var delta = newValue - old;
+            var delta = newValue - oldValue;
             var datum = new DamageChangeData(type, 0, delta);
             var data = new List<DamageChangeData> {datum};
 

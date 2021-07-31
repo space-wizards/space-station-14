@@ -148,6 +148,11 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null);
 
         /// <summary>
+        ///     Sets all damage types in a specifc damage group using <see cref="SetDamage"></see>.
+        /// </summary>
+        public void SetGroupDamage(int newValue, DamageGroupPrototype group);
+
+        /// <summary>
         ///     Sets all supported damage types to specified value using <see cref="SetDamage"></see>.
         /// </summary>
         void SetAllDamage(int newValue);
