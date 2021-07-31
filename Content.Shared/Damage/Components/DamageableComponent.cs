@@ -57,8 +57,6 @@ namespace Content.Shared.Damage.Components
         public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs => ConvertDictKeysToIDs(DamagePerSupportedGroup);
         public IReadOnlyDictionary<string, int> DamagePerTypeIDs => ConvertDictKeysToIDs(DamagePerType);
 
-
-
         // TODO QUESTIONS This is how we are currently specifying the effects of explosions and radiation. The damage
         // type was hard coded, now its a yaml datafield as recommended. However, as DrSmugleaf said, "There should be a
         // better way of doing this". I think there is, and have some comments in the damage.yml file, though maybe

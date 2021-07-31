@@ -16,8 +16,8 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly Dictionary<string, int> DamageGroupIDs;
-            public readonly Dictionary<string, int> DamageTypeIDs;
+            public readonly Dictionary<string, int> DamagePerSupportedGroupID;
+            public readonly Dictionary<string, int> DamagePerTypeID;
             public readonly bool IsScanned;
 
             // TODO QUESTION DrSmugleaf previously commented here saying that these dicitionaries should be using
@@ -26,19 +26,19 @@ namespace Content.Shared.MedicalScanner
             // testing locally with two local clients, so hopefully this is what I was supposed to do?
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-                Dictionary<string, int> damageGroupIDs,
-                Dictionary<string, int> damageTypesIDs,
+                Dictionary<string, int> damagePerSupportedGroupID,
+                Dictionary<string, int> damagePerTypeID,
                 bool isScanned)
             {
                 Entity = entity;
-                DamageGroupIDs = damageGroupIDs;
-                DamageTypeIDs = damageTypesIDs;
+                DamagePerSupportedGroupID = damagePerSupportedGroupID;
+                DamagePerTypeID = damagePerTypeID;
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-                return DamageGroupIDs.Count > 0 || DamageTypeIDs.Count > 0;
+                return DamagePerSupportedGroupID.Count > 0 || DamagePerTypeID.Count > 0;
             }
         }
 
