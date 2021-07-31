@@ -69,7 +69,7 @@
 
 - type: damageContainer
   id: biologicalDamageContainer
-  supportedClasses:
+  supportedGroups:
     - Brute
     - Burn
     - Toxin
@@ -78,7 +78,7 @@
 
 - type: damageContainer
   id: metallicDamageContainer
-  supportedClasses:
+  supportedGroups:
     - Brute
     - Burn
 

@@ -22,7 +22,7 @@ namespace Content.Shared.Damage.Container
         public string ID { get; } = default!;
 
         [DataField("supportAll")] private bool _supportAll;
-        [DataField("supportedClasses")] private HashSet<string> _supportedDamageGroupIDs = new();
+        [DataField("supportedGroups")] private HashSet<string> _supportedDamageGroupIDs = new();
         [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypeIDs = new();
 
         private HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
@@ -38,26 +38,31 @@ namespace Content.Shared.Damage.Container
 
             if (_supportAll)
             {
-                foreach (var DamageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+                foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
-                    _supportedDamageGroups.Add(DamageGroup);
-                    foreach (var SupportedDamageType in DamageGroup.DamageTypes)
+                    _supportedDamageGroups.Add(group);
+                    foreach (var type in group.DamageTypes)
                     {
-                        _supportedDamageTypes.Add(SupportedDamageType);
+                        _supportedDamageTypes.Add(type);
                     }
                 }
 
                 return;
             }
 
-            foreach (var supportedClassID in _supportedDamageGroupIDs)
+            foreach (var groupID in _supportedDamageGroupIDs)
             {
-                var DamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
-                _supportedDamageGroups.Add(DamageGroup);
-                foreach (var DamageType in DamageGroup.DamageTypes)
+                var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
+                _supportedDamageGroups.Add(group);
+                foreach (var type in group.DamageTypes)
                 {
-                    _supportedDamageTypes.Add(DamageType);
+                    _supportedDamageTypes.Add(type);
                 }
+            }
+
+            foreach (var supportedTypeID in _supportedDamageTypeIDs)
+            {
+                _supportedDamageTypes.Add(_prototypeManager.Index<DamageTypePrototype>(supportedTypeID));
             }
 
         }
