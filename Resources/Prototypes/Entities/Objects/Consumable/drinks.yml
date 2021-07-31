@@ -9,11 +9,15 @@
   - type: SolutionContainer
     maxVol: 50
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
   - type: Drink
   - type: Sprite
     state: icon
   - type: Spillable
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
 
 - type: entity
   parent: DrinkBase
@@ -56,8 +60,12 @@
   - type: SolutionContainer
     maxVol: 50
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
   - type: TransformableContainer
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
 
 - type: entity
   parent: DrinkGlassBase

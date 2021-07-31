@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Tool;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;

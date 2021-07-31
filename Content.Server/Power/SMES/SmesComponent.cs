@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Server.Power.Components;
 using Content.Shared.Power;
 using Content.Shared.Rounding;

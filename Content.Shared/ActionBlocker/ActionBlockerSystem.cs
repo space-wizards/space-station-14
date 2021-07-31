@@ -1,11 +1,10 @@
-﻿#nullable enable
-using Content.Shared.DragDrop;
+﻿using Content.Shared.DragDrop;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Metabolism.Events;
+using Content.Shared.Body.Metabolism;
 using Content.Shared.Movement;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;

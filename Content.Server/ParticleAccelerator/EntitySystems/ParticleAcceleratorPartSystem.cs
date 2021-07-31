@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.ParticleAccelerator.Components;
+﻿using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

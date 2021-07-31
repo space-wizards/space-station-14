@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 20
     contents:

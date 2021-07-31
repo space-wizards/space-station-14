@@ -1,5 +1,4 @@
-﻿#nullable enable
-
+﻿
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using JetBrains.Annotations;

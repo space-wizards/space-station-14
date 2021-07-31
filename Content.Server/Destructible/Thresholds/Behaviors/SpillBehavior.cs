@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using JetBrains.Annotations;

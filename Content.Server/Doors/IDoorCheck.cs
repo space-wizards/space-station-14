@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;

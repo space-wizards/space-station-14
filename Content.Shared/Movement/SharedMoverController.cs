@@ -1,8 +1,9 @@
-#nullable enable
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -10,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement
 {
@@ -21,12 +23,16 @@ namespace Content.Shared.Movement
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private SharedBroadPhaseSystem _broadPhaseSystem = default!;
+        private SharedBroadphaseSystem _broadPhaseSystem = default!;
+
+        private bool _relativeMovement;
 
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedBroadPhaseSystem>();
+            _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.RelativeMovement, value => _relativeMovement = value, true);
         }
 
         /// <summary>
@@ -40,12 +46,14 @@ namespace Content.Shared.Movement
             // Target velocity.
             var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
 
-            if (total != Vector2.Zero)
+            var worldTotal = _relativeMovement ? new Angle(mover.Owner.Transform.Parent!.WorldRotation.Theta).RotateVec(total) : total;
+
+            if (worldTotal != Vector2.Zero)
             {
-                mover.Owner.Transform.LocalRotation = total.GetDir().ToAngle();
+                mover.Owner.Transform.WorldRotation = worldTotal.GetDir().ToAngle();
             }
 
-            physicsComponent.LinearVelocity = total;
+            physicsComponent.LinearVelocity = worldTotal;
         }
 
         /// <summary>
@@ -54,7 +62,8 @@ namespace Content.Shared.Movement
         /// <param name="mover"></param>
         /// <param name="physicsComponent"></param>
         /// <param name="mobMover"></param>
-        protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent, IMobMoverComponent mobMover)
+        protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
+            IMobMoverComponent mobMover)
         {
             // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
             if (!UseMobMovement(_broadPhaseSystem, physicsComponent, _mapManager))
@@ -75,33 +84,40 @@ namespace Content.Shared.Movement
 
                 if (!touching)
                 {
-                    transform.LocalRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
+                    transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
             }
 
             // Regular movement.
             // Target velocity.
+            // This is relative to the map / grid we're on.
             var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+
+            var worldTotal = _relativeMovement ?
+                new Angle(transform.Parent!.WorldRotation.Theta).RotateVec(total) :
+                total;
+
+            DebugTools.Assert(MathHelper.CloseTo(total.Length, worldTotal.Length));
 
             if (weightless)
             {
-                total *= mobMover.WeightlessStrength;
+                worldTotal *= mobMover.WeightlessStrength;
             }
 
-            if (total != Vector2.Zero)
+            if (worldTotal != Vector2.Zero)
             {
                 // This should have its event run during island solver soooo
                 transform.DeferUpdates = true;
-                transform.LocalRotation = total.GetDir().ToAngle();
+                transform.WorldRotation = worldTotal.GetDir().ToAngle();
                 transform.DeferUpdates = false;
                 HandleFootsteps(mover, mobMover);
             }
 
-            physicsComponent.LinearVelocity = total;
+            physicsComponent.LinearVelocity = worldTotal;
         }
 
-        public static bool UseMobMovement(SharedBroadPhaseSystem broadPhaseSystem, PhysicsComponent body, IMapManager mapManager)
+        public static bool UseMobMovement(SharedBroadphaseSystem broadPhaseSystem, PhysicsComponent body, IMapManager mapManager)
         {
             return (body.BodyStatus == BodyStatus.OnGround) &
                    body.Owner.HasComponent<IMobStateComponent>() &&
@@ -119,7 +135,7 @@ namespace Content.Shared.Movement
         /// <param name="mover"></param>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public static bool IsAroundCollider(SharedBroadPhaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedBroadphaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

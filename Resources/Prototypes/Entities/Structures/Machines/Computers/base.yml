@@ -1,0 +1,31 @@
+- type: entity
+  abstract: true
+  parent: ComputerFrame
+  id: ComputerBase
+  name: computer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Construction
+    graph: computer
+    node: computer
+  - type: Computer
+  - type: ApcPowerReceiver
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - state: computer
+      map: ["enum.ComputerVisualizer+Layers.Body"]
+    - state: generic_key_off
+      map: ["enum.ComputerVisualizer+Layers.Keyboard"]
+    - state: generic
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - state: generic_key
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.KeyboardOn"]
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: generic

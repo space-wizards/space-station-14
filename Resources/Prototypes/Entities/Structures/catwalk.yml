@@ -1,0 +1,31 @@
+- type: entity
+  id: Catwalk
+  name: catwalk
+  description: A catwalk for easier EVA maneuvering and cable placement.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Physics
+    canCollide: false
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [ Passable ]
+  - type: Sprite
+    netsync: false
+    sprite: Structures/catwalk.rsi
+    drawdepth: FloorTiles
+  - type: Icon
+    sprite: Structures/catwalk.rsi
+    state: catwalk_preview
+  - type: SnapGrid
+  - type: IconSmooth
+    key: catwalk
+    base: catwalk_
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_catwalk
+  - type: Construction
+    graph: Catwalk
+    node: Catwalk

@@ -15,6 +15,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -165,9 +166,9 @@ namespace Content.Client.Kitchen.UI
 
             public ButtonGroup CookTimeButtonGroup { get; }
 
-            public VBoxContainer CookTimeButtonVbox { get; }
+            public BoxContainer CookTimeButtonVbox { get; }
 
-            private VBoxContainer ButtonGridContainer { get; }
+            private BoxContainer ButtonGridContainer { get; }
 
             private PanelContainer DisableCookingPanelOverlay { get; }
 
@@ -188,7 +189,10 @@ namespace Content.Client.Kitchen.UI
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.60f)},
                 };
 
-                var hSplit = new HBoxContainer();
+                var hSplit = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal
+                };
 
                 IngredientsListReagents = new ItemList
                 {
@@ -217,17 +221,19 @@ namespace Content.Client.Kitchen.UI
 
                 hSplit.AddChild(IngredientsList);
 
-                var vSplit = new VBoxContainer
+                var vSplit = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
                     HorizontalExpand = true,
                 };
 
                 hSplit.AddChild(vSplit);
 
-                ButtonGridContainer = new VBoxContainer
+                ButtonGridContainer = new BoxContainer
                 {
-                    Align = BoxContainer.AlignMode.Center,
+                    Orientation = LayoutOrientation.Vertical,
+                    Align = AlignMode.Center,
                     SizeFlagsStretchRatio = 3
                 };
 
@@ -255,10 +261,11 @@ namespace Content.Client.Kitchen.UI
                 });
 
                 CookTimeButtonGroup = new ButtonGroup();
-                CookTimeButtonVbox = new VBoxContainer
+                CookTimeButtonVbox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     VerticalExpand = true,
-                    Align = BoxContainer.AlignMode.Center,
+                    Align = AlignMode.Center,
                 };
 
                 var index = 0;
@@ -301,8 +308,9 @@ namespace Content.Client.Kitchen.UI
 
                     Children =
                     {
-                        new VBoxContainer
+                        new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Vertical,
                             Children =
                             {
                                 new PanelContainer

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Alert;
+﻿using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage.Components;
 using Content.Shared.MobState;

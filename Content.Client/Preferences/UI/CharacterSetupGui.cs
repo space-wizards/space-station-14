@@ -17,12 +17,13 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Preferences.UI
 {
     public class CharacterSetupGui : Control
     {
-        private readonly VBoxContainer _charactersVBox;
+        private readonly BoxContainer _charactersVBox;
         private readonly Button _createNewCharacterButton;
         private readonly IEntityManager _entityManager;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
@@ -62,12 +63,17 @@ namespace Content.Client.Preferences.UI
 
             margin.AddChild(panel);
 
-            var vBox = new VBoxContainer {SeparationOverride = 0};
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 0
+            };
 
             margin.AddChild(vBox);
 
-            var topHBox = new HBoxContainer
+            var topHBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 40),
                 Children =
                 {
@@ -104,14 +110,18 @@ namespace Content.Client.Preferences.UI
                 }
             });
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true,
                 SeparationOverride = 0
             };
             vBox.AddChild(hBox);
 
-            _charactersVBox = new VBoxContainer();
+            _charactersVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             hBox.AddChild(new ScrollContainer
             {
@@ -271,8 +281,9 @@ namespace Content.Client.Preferences.UI
                     preferencesManager.DeleteCharacter(profile);
                 };
 
-                var internalHBox = new HBoxContainer
+                var internalHBox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     SeparationOverride = 0,
                     Children =

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;

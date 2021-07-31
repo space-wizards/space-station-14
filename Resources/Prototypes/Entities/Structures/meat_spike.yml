@@ -1,0 +1,32 @@
+﻿- type: entity
+  id: KitchenSpike
+  parent: BaseStructure
+  name: meat spike
+  description: A spike for collecting meat from animals.
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    # temp to make clickmask work
+    sprite: Structures/meat_spike.rsi
+    state: spike
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: KitchenSpike
+  - type: Anchorable
+  - type: Pullable

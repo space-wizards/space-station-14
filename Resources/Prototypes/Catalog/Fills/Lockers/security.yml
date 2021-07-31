@@ -68,8 +68,8 @@
 
 
 - type: entity
-  id: LockerBombFilled
-  parent: LockerBomb
+  id: ClosetBombFilled
+  parent: ClosetBomb
   suffix: Filled
   components:
   - type: StorageFill

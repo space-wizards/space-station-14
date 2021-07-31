@@ -3,6 +3,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cargo.UI
 {
@@ -19,7 +20,10 @@ namespace Content.Client.Cargo.UI
 
             Title = Loc.GetString("cargo-console-order-menu-title");
 
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             var gridContainer = new GridContainer { Columns = 2 };
 
             var requesterLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-requester-label") };
@@ -27,12 +31,12 @@ namespace Content.Client.Cargo.UI
             gridContainer.AddChild(requesterLabel);
             gridContainer.AddChild(Requester);
 
-            var reasonLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-reason-label:") };
+            var reasonLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-reason-label") };
             Reason = new LineEdit();
             gridContainer.AddChild(reasonLabel);
             gridContainer.AddChild(Reason);
 
-            var amountLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-amount-label:") };
+            var amountLabel = new Label { Text = Loc.GetString("cargo-console-order-menu-amount-label") };
             Amount = new SpinBox
             {
                 HorizontalExpand = true,
