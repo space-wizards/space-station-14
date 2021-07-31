@@ -17,14 +17,14 @@ namespace Content.Shared.Tabletop.Events
         [Dependency] private IEntityManager _entityManager = default!;
 
         //public IEntity User;
-        public IEntity Camera;
+        public EntityUid CameraUid;
         public string Title;
         public Vector2i Size;
 
-        public TabletopPlayEvent(/*EntityUid userUid,*/IEntity camera, string title, Vector2i size)
+        public TabletopPlayEvent(/*EntityUid userUid,*/EntityUid cameraUid, string title, Vector2i size)
         {
             //User = _entityManager.GetEntity(userUid);
-            Camera = camera;
+            CameraUid = cameraUid;
             Title = title;
             Size = size;
         }

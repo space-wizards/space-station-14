@@ -57,20 +57,15 @@ namespace Content.Client.Tabletop
             // TODO: remove log message
             Logger.Info("Game started: " + msg.Title);
 
+            var camera = EntityManager.GetEntity(msg.CameraUid);
+
             var window = new SS14Window
             {
                 MinWidth = 400,
                 MinHeight = 400
             };
 
-            /*var eyeCoordinates =
-                EntityCoordinates.FromMap(EntityManager, _mapManager, new MapCoordinates((0, 0), new MapId(1)));
-            var eyeEntity = EntityManager.SpawnEntity(null, eyeCoordinates);
-            var eyeComponent = eyeEntity.EnsureComponent<EyeComponent>();
-
-            eyeEntity.EnsureComponent<ActorComponent>();*/
-
-            if (!msg.Camera.TryGetComponent<EyeComponent>(out var eyeComponent))
+            if (!camera.TryGetComponent<EyeComponent>(out var eyeComponent))
             {
                 throw new Exception("Camera does not have EyeComponent.");
             }

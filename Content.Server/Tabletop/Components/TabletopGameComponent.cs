@@ -2,6 +2,7 @@
 using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -39,20 +40,27 @@ namespace Content.Server.Tabletop.Components
             {
                 // Tell the client that it has to open a viewport for the tabletop game
                 var entityNetManager = component.Owner.EntityManager.EntityNetManager;
+                if (entityNetManager == null) return;
+
                 // TODO: use actual title/size from prototype
-                entityNetManager?.SendSystemNetworkMessage(new TabletopPlayEvent(/*user.Uid,*/CreateCamera(component), "Chess", (400, 400)));
+
+                var playerSession = user.PlayerSession();
+                if (playerSession == null) return;
+
+                entityNetManager.SendSystemNetworkMessage(new TabletopPlayEvent(CreateCamera(component, playerSession).Uid, "Chess", (400, 400)));
             }
 
-            private static IEntity CreateCamera(TabletopGameComponent component)
+            private static IEntity CreateCamera(TabletopGameComponent component, IPlayerSession playerSession)
             {
                 var entityManager = component.Owner.EntityManager;
                 var mapManager = IoCManager.Resolve<IMapManager>();
+                var viewSubscriberSystem = EntitySystem.Get<ViewSubscriberSystem>();
 
-                var eyeCoordinates = EntityCoordinates.FromMap(entityManager, mapManager, new MapCoordinates((0, 0), new MapId(1)));
-                var camera = entityManager.SpawnEntity(null, eyeCoordinates);
+                var viewCoordinates = EntityCoordinates.FromMap(mapManager, new MapCoordinates((0, 0), new MapId(1)));
+                var camera = entityManager.SpawnEntity(null, viewCoordinates);
 
                 camera.EnsureComponent<EyeComponent>();
-                camera.EnsureComponent<ActorComponent>();
+                viewSubscriberSystem.AddViewSubscriber(camera.Uid, playerSession);
 
                 return camera;
             }
