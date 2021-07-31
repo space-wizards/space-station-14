@@ -387,6 +387,18 @@ namespace Content.Server.Interaction
             return false;
         }
 
+        private async Task<bool> InteractDoBefore(
+            IEntity user,
+            IEntity used,
+            IEntity? target,
+            EntityCoordinates clickLocation,
+            bool canReach)
+        {
+            var ev = new BeforeInteractEvent(user, used, target, clickLocation, canReach);
+            RaiseLocalEvent(used.Uid, ev, false);
+            return ev.Handled;
+        }
+
         /// <summary>
         /// Uses a item/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
@@ -395,6 +407,9 @@ namespace Content.Server.Interaction
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
             if (!_actionBlockerSystem.CanInteract(user))
+                return;
+
+            if (await InteractDoBefore(user, used, target, clickLocation, true))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -696,6 +711,9 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
+            if (await InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+                return true;
+
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
@@ -715,10 +733,7 @@ namespace Content.Server.Interaction
                 }
             }
 
-            if (inRangeUnobstructed)
-                return await InteractDoAfter(user, used, target, clickLocation, false);
-            else
-                return await InteractDoAfter(user, used, null, clickLocation, false);
+            return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)

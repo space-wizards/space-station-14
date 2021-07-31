@@ -1,4 +1,4 @@
-﻿using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reagent;
@@ -9,28 +9,27 @@ namespace Content.Server.Chemistry.Metabolism
 {
     /// <summary>
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
-    /// and to update it's thirst values.
+    /// and to update it's thirst values. Inherits metabolisation rate logic from DefaultMetabolizable.
     /// </summary>
     [DataDefinition]
-    public class DefaultDrink : IMetabolizable
+    public class DefaultDrink : DefaultMetabolizable
     {
-        //Rate of metabolism in units / second
-        [DataField("rate")]
-        public ReagentUnit MetabolismRate { get; set; } = ReagentUnit.New(1);
-
         //How much thirst is satiated when 1u of the reagent is metabolized
         [DataField("hydrationFactor")]
         public float HydrationFactor { get; set; } = 30.0f;
 
         //Remove reagent at set rate, satiate thirst if a ThirstComponent can be found
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
+        public override ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
         {
-            var metabolismAmount = MetabolismRate * tickTime;
+            // use DefaultMetabolism to determine how much reagent we should metabolize
+            var amountMetabolized = base.Metabolize(solutionEntity, reagentId, tickTime, availableReagent);
+
+            // If metabolizing entity has a ThirstComponent, hydrate them.
             if (solutionEntity.TryGetComponent(out ThirstComponent? thirst))
-                thirst.UpdateThirst(metabolismAmount.Float() * HydrationFactor);
+                thirst.UpdateThirst(amountMetabolized.Float() * HydrationFactor);
 
             //Return amount of reagent to be removed, remove reagent regardless of ThirstComponent presence
-            return metabolismAmount;
+            return amountMetabolized;
         }
     }
 }

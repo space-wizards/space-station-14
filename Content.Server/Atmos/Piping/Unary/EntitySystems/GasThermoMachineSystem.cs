@@ -27,16 +27,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
             var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
-            appearance?.SetData(ThermoMachineVisuals.Enabled, false);
 
-            if (!thermoMachine.Enabled)
+            if (!thermoMachine.Enabled
+                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
+            {
+                appearance?.SetData(ThermoMachineVisuals.Enabled, false);
                 return;
-
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
-                return;
+            }
 
             var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
             var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
