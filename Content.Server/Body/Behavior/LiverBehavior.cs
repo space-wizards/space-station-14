@@ -18,6 +18,11 @@ namespace Content.Server.Body.Behavior
         private float _accumulatedFrameTime;
 
         /// <summary>
+        ///     Delay time that determines how often to metabolise blood contents (in seconds).
+        /// </summary>
+        private float _updateIntervalSeconds = 1.0f;
+
+        /// <summary>
         ///     Whether the liver is functional.
         /// </summary>
         //[ViewVariables] private bool _liverFailing = false;
@@ -63,13 +68,13 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime += frameTime;
 
-            // Update at most once per second
-            if (_accumulatedFrameTime < 1)
+            // Update at most once every _updateIntervalSeconds
+            if (_accumulatedFrameTime < _updateIntervalSeconds)
             {
                 return;
             }
 
-            _accumulatedFrameTime -= 1;
+            _accumulatedFrameTime -= _updateIntervalSeconds;
 
             if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
@@ -90,6 +95,10 @@ namespace Content.Server.Body.Behavior
                     continue;
                 }
 
+                // How much reagent is available to metabolise?
+                // This needs to be passed to other functions that have metabolism rate information, such that they don't "overmetabolise" a reagent.
+                var availableReagent = bloodstream.Solution.Solution.GetReagentQuantity(reagent.ReagentId);
+
                 //TODO BODY Check if it's a Toxin. If volume < _toxinTolerance, just remove it. If greater, add damage = volume * _toxinLethality
                 //TODO BODY Check if it has BoozePower > 0. Affect drunkenness, apply damage. Proposed formula (SS13-derived): damage = sqrt(volume) * BoozePower^_alcoholExponent * _alcoholLethality / 10
                 //TODO BODY Liver failure.
@@ -99,8 +108,9 @@ namespace Content.Server.Body.Behavior
                 // Run metabolism code for each reagent
                 foreach (var metabolizable in prototype.Metabolism)
                 {
-                    var reagentDelta = metabolizable.Metabolize(Body.Owner, reagent.ReagentId, frameTime);
+                    var reagentDelta = metabolizable.Metabolize(Body.Owner, reagent.ReagentId, _updateIntervalSeconds, availableReagent);
                     bloodstream.Solution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
+                    availableReagent -= reagentDelta;
                 }
             }
         }
