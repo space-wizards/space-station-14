@@ -97,11 +97,11 @@ namespace Content.Server.Nutrition.Components
 
             if (Opened)
             {
-                contents.Capabilities |= SolutionContainerCaps.Refillable | SolutionContainerCaps.Drainable;
+                contents.Capabilities |= Capability.Refillable | Capability.Drainable;
             }
             else
             {
-                contents.Capabilities &= ~(SolutionContainerCaps.Refillable | SolutionContainerCaps.Drainable);
+                contents.Capabilities &= ~(Capability.Refillable | Capability.Drainable);
             }
         }
 

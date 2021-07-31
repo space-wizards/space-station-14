@@ -335,7 +335,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-has-container-already-message"));
                 }
-                else if ((solution.Capabilities & SolutionContainerCaps.FitsInDispenser) == 0)
+                else if ((solution.Capabilities & Capability.FitsInDispenser) == 0)
                 {
                     //If it can't fit in the dispenser, don't put it in. For example, buckets and mop buckets can't fit.
                     Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-cannot-fit-message"));

@@ -8,7 +8,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     /// </summary>
     /// <remarks>
     ///     This interface is most often implemented by using <see cref="SharedSolutionContainerComponent"/>
-    ///     and setting the appropriate <see cref="SolutionContainerCaps"/>
+    ///     and setting the appropriate <see cref="Capability"/>
     /// </remarks>
     public interface ISolutionInteractionsComponent : IComponent
     {

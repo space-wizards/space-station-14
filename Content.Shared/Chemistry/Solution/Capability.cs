@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry.Solution
     /// <seealso cref="ISolutionInteractionsComponent"/>
     [Flags]
     [Serializable, NetSerializable]
-    public enum SolutionContainerCaps : ushort
+    public enum Capability : ushort
     {
         None = 0,
 
@@ -52,9 +52,9 @@ namespace Content.Shared.Chemistry.Solution
         OpenContainer = Refillable | Drainable | CanExamine
     }
 
-    public static class SolutionContainerCapsHelpers
+    public static class CapabilityHelpers
     {
-        public static bool HasCap(this SolutionContainerCaps cap, SolutionContainerCaps other)
+        public static bool HasCap(this Capability cap, Capability other)
         {
             return (cap & other) == other;
         }

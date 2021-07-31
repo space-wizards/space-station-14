@@ -57,17 +57,17 @@ namespace Content.Shared.Chemistry.Solution.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("caps")]
-        public SolutionContainerCaps Capabilities { get; set; }
+        public Capability Capabilities { get; set; }
 
-        public bool CanExamineContents => Capabilities.HasCap(SolutionContainerCaps.CanExamine);
+        public bool CanExamineContents => Capabilities.HasCap(Capability.CanExamine);
 
-        public bool CanUseWithChemDispenser => Capabilities.HasCap(SolutionContainerCaps.FitsInDispenser);
+        public bool CanUseWithChemDispenser => Capabilities.HasCap(Capability.FitsInDispenser);
 
-        public bool CanInject => Capabilities.HasCap(SolutionContainerCaps.Injectable) || CanRefill;
-        public bool CanDraw => Capabilities.HasCap(SolutionContainerCaps.Drawable) || CanDrain;
+        public bool CanInject => Capabilities.HasCap(Capability.Injectable) || CanRefill;
+        public bool CanDraw => Capabilities.HasCap(Capability.Drawable) || CanDrain;
 
-        public bool CanRefill => Capabilities.HasCap(SolutionContainerCaps.Refillable);
-        public bool CanDrain => Capabilities.HasCap(SolutionContainerCaps.Drainable);
+        public bool CanRefill => Capabilities.HasCap(Capability.Refillable);
+        public bool CanDrain => Capabilities.HasCap(Capability.Drainable);
 
         protected override void Initialize()
         {

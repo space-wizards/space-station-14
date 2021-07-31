@@ -43,7 +43,7 @@ namespace Content.Server.Chemistry.Components
 
             Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
 
-            solution.Capabilities |= SolutionContainerCaps.FitsInDispenser;
+            solution.Capabilities |= Capability.FitsInDispenser;
         }
 
         public void CancelTransformation()

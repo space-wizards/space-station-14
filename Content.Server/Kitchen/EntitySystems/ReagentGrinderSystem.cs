@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.Components;
@@ -66,7 +66,7 @@ namespace Content.Server.Kitchen.EntitySystems
             //First, check if user is trying to insert a beaker.
             //No promise it will be a beaker right now, but whatever.
             //Maybe this should whitelist "beaker" in the prototype id of heldEnt?
-            if (heldEnt.TryGetComponent(out SolutionContainerComponent? beaker) && beaker.Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser))
+            if (heldEnt.TryGetComponent(out SolutionContainerComponent? beaker) && beaker.Capabilities.HasFlag(Capability.FitsInDispenser))
             {
                 component.BeakerContainer.Insert(heldEnt);
                 component.HeldBeaker = beaker;
