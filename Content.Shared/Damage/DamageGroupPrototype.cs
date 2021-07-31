@@ -19,18 +19,19 @@ namespace Content.Shared.Damage
         [DataField("id", required: true)] public string ID { get; } = default!;
 
         [DataField("damageTypes", required: true)]
-        public List<string> TypeIds { get; } = default!;
+        public List<string> TypeIDs { get; } = default!;
 
-        public HashSet<DamageTypePrototype> DamageTypes { get; } = default!;
+        public HashSet<DamageTypePrototype> DamageTypes { get; } = new();
 
 
-        // Initialise list of damage types in this group
+        // Create list of set of damage types
         void ISerializationHooks.AfterDeserialization()
         {
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var id in TypeIds)
+
+            foreach (var typeID in TypeIDs)
             {
-                DamageTypes.Add(_prototypeManager.Index<DamageTypePrototype>(ID));
+                DamageTypes.Add(_prototypeManager.Index<DamageTypePrototype>(typeID));
             }
 
         }
@@ -39,7 +40,7 @@ namespace Content.Shared.Damage
     /// Convert a dictionary with damage type keys to a dictionary of damage groups keys.
     /// </summary>
     /// <remarks>
-    /// Takes a dictionary with damage types as key, integers as values, and an iterable list of damge groups. Returns a
+    /// Takes a dictionary with damage types as key and integers as values, and an iterable list of damge groups. Returns a
     /// dictionary with damage group keys, with values calculated by adding up the values for each damage type in that
     /// group key. If a damage type is associated with more than one supported damage group, it will contribute to the
     /// total of each group. Conversely, some damage types may not be represented in the new dictionary.
