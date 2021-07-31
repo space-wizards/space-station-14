@@ -59,10 +59,7 @@ namespace Content.Client.Disposal.Visualizers
             var sound = new AnimationTrackPlaySound();
             _flushAnimation.AnimationTracks.Add(sound);
 
-            if (_flushSound.TryGetSound(out var flushSound))
-            {
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(flushSound, 0));
-            }
+            sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_flushSound.GetSound(), 0));
         }
 
         private void ChangeState(AppearanceComponent appearance)

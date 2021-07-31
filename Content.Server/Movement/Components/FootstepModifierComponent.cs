@@ -15,13 +15,12 @@ namespace Content.Server.Movement.Components
         /// <inheritdoc />
         public override string Name => "FootstepModifier";
 
-        [DataField("footstepSoundCollection")]
-        public SoundSpecifier _soundCollection = default!;
+        [DataField("footstepSoundCollection", required: true)]
+        public SoundSpecifier SoundCollection = default!;
 
         public void PlayFootstep()
         {
-            if (_soundCollection.TryGetSound(out var footstepSound))
-                SoundSystem.Play(Filter.Pvs(Owner), footstepSound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2f));
         }
     }
 }

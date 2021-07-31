@@ -47,7 +47,8 @@ namespace Content.Server.Light.Components
         [DataField("color")]
         private Color _color = Color.White;
 
-        [ViewVariables(VVAccess.ReadWrite)] public Color Color
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Color Color
         {
             get { return _color; }
             set
@@ -78,7 +79,8 @@ namespace Content.Server.Light.Components
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
         ///     It also updates the bulb's sprite accordingly.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public LightBulbState State
+        [ViewVariables(VVAccess.ReadWrite)]
+        public LightBulbState State
         {
             get { return _state; }
             set
@@ -132,8 +134,7 @@ namespace Content.Server.Light.Components
 
         public void PlayBreakSound()
         {
-            if(_breakSound.TryGetSound(out var breakSound))
-                SoundSystem.Play(Filter.Pvs(Owner), breakSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _breakSound.GetSound(), Owner);
         }
     }
 }

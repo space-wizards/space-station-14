@@ -314,8 +314,7 @@ namespace Content.Server.Explosion
             var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange),
                 epicenterMapPos + new Vector2(maxRange, maxRange));
 
-            if(_explosionSound.TryGetSound(out var explosionSound))
-                SoundSystem.Play(Filter.Broadcast(), explosionSound, epicenter);
+            SoundSystem.Play(Filter.Broadcast(), _explosionSound.GetSound(), epicenter);
             DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
 
             var mapGridsNear = mapManager.FindGridsIntersecting(mapId, boundingBox);

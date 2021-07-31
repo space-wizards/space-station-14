@@ -373,8 +373,7 @@ namespace Content.Server.Disposal.Unit.Components
                     break;
                 case UiButton.Power:
                     TogglePower();
-                    if(_clickSound.TryGetSound(out var clickSound))
-                        SoundSystem.Play(Filter.Pvs(Owner), clickSound, Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

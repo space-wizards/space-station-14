@@ -58,7 +58,8 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        [ViewVariables] [DataField("on")]
+        [ViewVariables]
+        [DataField("on")]
         private bool _on = true;
 
         [ViewVariables]
@@ -67,7 +68,8 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         private bool _isBlinking;
 
-        [ViewVariables] [DataField("ignoreGhostsBoo")]
+        [ViewVariables]
+        [DataField("ignoreGhostsBoo")]
         private bool _ignoreGhostsBoo;
 
         [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
@@ -102,9 +104,9 @@ namespace Content.Server.Light.Components
                 Eject();
                 return false;
             }
-            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
+            if (eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
             {
-                if(CanBurn(heatResistanceComponent.GetHeatResistance()))
+                if (CanBurn(heatResistanceComponent.GetHeatResistance()))
                 {
                     Burn();
                     return true;
@@ -125,8 +127,7 @@ namespace Content.Server.Light.Components
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
-                if(_burnHandSound.TryGetSound(out var burnHandSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), burnHandSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 
             void Eject()
@@ -228,8 +229,7 @@ namespace Content.Server.Light.Components
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            if(_turnOnSound.TryGetSound(out var turnOnSound))
-                                SoundSystem.Play(Filter.Pvs(Owner), turnOnSound, Owner, AudioParams.Default.WithVolume(-10f));
+                            SoundSystem.Play(Filter.Pvs(Owner), _turnOnSound.GetSound(), Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -338,7 +338,8 @@ namespace Content.Server.Light.Components
             _lastGhostBlink = time;
 
             ToggleBlinkingLight(true);
-            Owner.SpawnTimer(ghostBlinkingTime, () => {
+            Owner.SpawnTimer(ghostBlinkingTime, () =>
+            {
                 ToggleBlinkingLight(false);
             });
 

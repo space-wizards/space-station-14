@@ -226,8 +226,7 @@ namespace Content.Server.Storage.Components
             }
 
             ModifyComponents();
-            if(_closeSound.TryGetSound(out var closeSound))
-                SoundSystem.Play(Filter.Pvs(Owner), closeSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -236,8 +235,7 @@ namespace Content.Server.Storage.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            if(_openSound.TryGetSound(out var openSound))
-                SoundSystem.Play(Filter.Pvs(Owner), openSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
         }
 
         private void UpdateAppearance()

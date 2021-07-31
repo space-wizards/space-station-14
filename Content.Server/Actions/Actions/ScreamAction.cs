@@ -26,9 +26,9 @@ namespace Content.Server.Actions.Actions
 
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        [DataField("male")] private SoundSpecifier _male = default!;
-        [DataField("female")] private SoundSpecifier _female = default!;
-        [DataField("wilhelm")] private SoundSpecifier _wilhelm = default!;
+        [DataField("male", required: true)] private SoundSpecifier _male = default!;
+        [DataField("female", required: true)] private SoundSpecifier _female = default!;
+        [DataField("wilhelm", required: true)] private SoundSpecifier _wilhelm = default!;
 
         /// seconds
         [DataField("cooldown")] private float _cooldown = 10;
@@ -44,21 +44,19 @@ namespace Content.Server.Actions.Actions
             if (!args.Performer.TryGetComponent<HumanoidAppearanceComponent>(out var humanoid)) return;
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 
-            if (_random.Prob(.01f) && _wilhelm.TryGetSound(out var wilhelm))
+            if (_random.Prob(.01f))
             {
-                SoundSystem.Play(Filter.Pvs(args.Performer), wilhelm, args.Performer, AudioParams.Default.WithVolume(Volume));
+                SoundSystem.Play(Filter.Pvs(args.Performer), _wilhelm.GetSound(), args.Performer, AudioParams.Default.WithVolume(Volume));
             }
             else
             {
                 switch (humanoid.Sex)
                 {
                     case Sex.Male:
-                        if (_male.TryGetSound(out var male))
-                            SoundSystem.Play(Filter.Pvs(args.Performer), male, args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
+                        SoundSystem.Play(Filter.Pvs(args.Performer), _male.GetSound(), args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
                         break;
                     case Sex.Female:
-                        if (_female.TryGetSound(out var female))
-                            SoundSystem.Play(Filter.Pvs(args.Performer), female, args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
+                        SoundSystem.Play(Filter.Pvs(args.Performer), _female.GetSound(), args.Performer, AudioHelpers.WithVariation(Variation).WithVolume(Volume));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

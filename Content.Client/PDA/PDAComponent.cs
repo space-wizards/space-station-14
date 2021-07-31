@@ -24,16 +24,14 @@ namespace Content.Client.PDA
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
-            switch(message)
+            switch (message)
             {
                 case PDAUplinkBuySuccessMessage:
-                    if(BuySuccessSound.TryGetSound(out var buySuccessSound))
-                        SoundSystem.Play(Filter.Local(), buySuccessSound, Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Local(), BuySuccessSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
                     break;
 
                 case PDAUplinkInsufficientFundsMessage:
-                    if(InsufficientFundsSound.TryGetSound(out var insufficientFundsSound))
-                        SoundSystem.Play(Filter.Local(), insufficientFundsSound, Owner, AudioParams.Default);
+                    SoundSystem.Play(Filter.Local(), InsufficientFundsSound.GetSound(), Owner, AudioParams.Default);
                     break;
             }
         }

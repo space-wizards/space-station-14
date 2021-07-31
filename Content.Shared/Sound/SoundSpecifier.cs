@@ -3,7 +3,6 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Sound
 {
@@ -11,8 +10,6 @@ namespace Content.Shared.Sound
     public abstract class SoundSpecifier
     {
         public abstract string GetSound();
-
-        public abstract bool TryGetSound([NotNullWhen(true)] out string? sound);
     }
 
     public sealed class SoundPathSpecifier : SoundSpecifier
@@ -40,12 +37,6 @@ namespace Content.Shared.Sound
         {
             return Path == null ? string.Empty : Path.ToString();
         }
-    
-        public override bool TryGetSound([NotNullWhen(true)] out string? sound)
-        {
-            sound = GetSound();
-            return !string.IsNullOrWhiteSpace(sound);
-        }
     }
 
     public sealed class SoundCollectionSpecifier : SoundSpecifier
@@ -67,12 +58,6 @@ namespace Content.Shared.Sound
         public override string GetSound()
         {
             return Collection == null ? string.Empty : AudioHelpers.GetRandomFileFromSoundCollection(Collection);
-        }
-
-        public override bool TryGetSound([NotNullWhen(true)] out string? sound)
-        {
-            sound = GetSound();
-            return !string.IsNullOrWhiteSpace(sound);
         }
     }
 }

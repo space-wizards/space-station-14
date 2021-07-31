@@ -114,10 +114,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            if (_sound.TryGetSound(out var sound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner);
 
             return true;
         }

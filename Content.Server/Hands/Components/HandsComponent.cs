@@ -143,8 +143,7 @@ namespace Content.Server.Hands.Components
 
             if (source != null)
             {
-                if(_disarmedSound.TryGetSound(out var disarmedSound))
-                    SoundSystem.Play(Filter.Pvs(source), disarmedSound, source, AudioHelpers.WithVariation(0.025f));
+                SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
                 if (target != null)
                 {

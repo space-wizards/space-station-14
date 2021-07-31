@@ -163,10 +163,7 @@ namespace Content.Server.Fluids.Components
                 contents.SplitSolution(transferAmount);
             }
 
-            if (_pickupSound.TryGetSound(out var pickupSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), pickupSound, Owner);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
             return true;
         }

@@ -115,10 +115,9 @@ namespace Content.Server.Cargo.Components
                     }
 
                     if (!_cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId,
-                        msg.Amount, _bankAccount.Id) &&
-                        _errorSound.TryGetSound(out var errorSound))
+                        msg.Amount, _bankAccount.Id))
                     {
-                        SoundSystem.Play(Filter.Local(), errorSound, Owner, AudioParams.Default);
+                        SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
                     }
                     break;
                 }
@@ -146,11 +145,9 @@ namespace Content.Server.Cargo.Components
                         || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
                         || !_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber)
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
-                        &&
-                        _errorSound.TryGetSound(out var errorSound)
                         )
                     {
-                        SoundSystem.Play(Filter.Local(), errorSound, Owner, AudioParams.Default);
+                        SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
                         break;
                     }
                     UpdateUIState();

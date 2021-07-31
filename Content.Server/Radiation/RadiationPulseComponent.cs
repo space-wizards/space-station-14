@@ -93,8 +93,7 @@ namespace Content.Server.Radiation
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            if(Sound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner.Transform.Coordinates);
 
             Dirty();
         }
@@ -109,7 +108,7 @@ namespace Content.Server.Radiation
             if (!Decay || Owner.Deleted)
                 return;
 
-            if(_duration <= 0f)
+            if (_duration <= 0f)
                 Owner.QueueDelete();
 
             _duration -= frameTime;

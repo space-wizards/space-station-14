@@ -50,7 +50,7 @@ namespace Content.Server.Buckle.Components
         /// </summary>
         [DataField("delay")]
         [ViewVariables]
-        private TimeSpan _unbuckleDelay  = TimeSpan.FromSeconds(0.25f);
+        private TimeSpan _unbuckleDelay = TimeSpan.FromSeconds(0.25f);
 
         /// <summary>
         ///     The time that this entity buckled at.
@@ -199,7 +199,7 @@ namespace Content.Server.Buckle.Components
             {
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-already-buckled-message"
-                    : "buckle-component-other-already-buckled-message",("owner", Owner));
+                    : "buckle-component-other-already-buckled-message", ("owner", Owner));
                 Owner.PopupMessage(user, message);
 
                 return false;
@@ -212,7 +212,7 @@ namespace Content.Server.Buckle.Components
                 {
                     var message = Loc.GetString(Owner == user
                         ? "buckle-component-cannot-buckle-message"
-                        : "buckle-component-other-cannot-buckle-message",("owner", Owner));
+                        : "buckle-component-other-cannot-buckle-message", ("owner", Owner));
                     Owner.PopupMessage(user, message);
 
                     return false;
@@ -225,7 +225,7 @@ namespace Content.Server.Buckle.Components
             {
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-fit-message"
-                    : "buckle-component-other-cannot-fit-message",("owner", Owner));
+                    : "buckle-component-other-cannot-fit-message", ("owner", Owner));
                 Owner.PopupMessage(user, message);
 
                 return false;
@@ -241,16 +241,13 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if(strap.BuckleSound.TryGetSound(out var buckleSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), buckleSound, Owner);
-            }       
+            SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound.GetSound(), Owner);
 
             if (!strap.TryAdd(this))
             {
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-buckle-message"
-                    : "buckle-component-other-cannot-buckle-message",("owner", Owner));
+                    : "buckle-component-other-cannot-buckle-message", ("owner", Owner));
                 Owner.PopupMessage(user, message);
                 return false;
             }
@@ -352,11 +349,8 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            if (oldBuckledTo.UnbuckleSound.TryGetSound(out var unbuckleSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), unbuckleSound, Owner);
-            }
-            
+            SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
+
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
             return true;

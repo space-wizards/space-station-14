@@ -33,10 +33,10 @@ namespace Content.Server.Tools.Components
             [DataField("sprite")]
             public string Sprite { get; } = string.Empty;
 
-            [DataField("useSound")]
+            [DataField("useSound", required: true)]
             public SoundSpecifier Sound { get; } = default!;
 
-            [DataField("changeSound")]
+            [DataField("changeSound", required: true)]
             public SoundSpecifier ChangeSound { get; } = default!;
         }
 
@@ -60,8 +60,7 @@ namespace Content.Server.Tools.Components
             _currentTool = (_currentTool + 1) % _tools.Count;
             SetTool();
             var current = _tools[_currentTool];
-            if(current.ChangeSound.TryGetSound(out var changeSound))
-                SoundSystem.Play(Filter.Pvs(Owner), changeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), current.ChangeSound.GetSound(), Owner);
         }
 
         private void SetTool()

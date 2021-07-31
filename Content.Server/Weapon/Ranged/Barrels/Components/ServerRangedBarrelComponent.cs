@@ -97,7 +97,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public bool CanMuzzleFlash { get; } = true;
 
         // Sounds
-        [DataField("soundGunshot")]
+        [DataField("soundGunshot", required: true)]
         public SoundSpecifier SoundGunshot { get; set; } = default!;
 
         [DataField("soundEmpty")]
@@ -197,10 +197,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             if (ShotsLeft == 0)
             {
-                if (SoundEmpty.TryGetSound(out var sound))
-                {
-                    SoundSystem.Play(Filter.Broadcast(), sound, Owner.Transform.Coordinates);
-                }
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner.Transform.Coordinates);
                 return;
             }
 
@@ -208,8 +205,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                if(SoundEmpty.TryGetSound(out var soundEmpty))
-                    SoundSystem.Play(Filter.Broadcast(), soundEmpty, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner.Transform.Coordinates);
                 return;
             }
 
@@ -249,10 +245,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 throw new InvalidOperationException();
             }
 
-            if (SoundGunshot.TryGetSound(out var soundGunshot))
-            {
-                SoundSystem.Play(Filter.Broadcast(), soundGunshot, Owner.Transform.Coordinates);
-            }
+            SoundSystem.Play(Filter.Broadcast(), SoundGunshot.GetSound(), Owner.Transform.Coordinates);
 
             _lastFire = _gameTiming.CurTime;
         }
@@ -283,10 +276,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            if (ammo.SoundCollectionEject.TryGetSound(out var ejectSounds) && playSound)
-            {
-                SoundSystem.Play(Filter.Broadcast(), ejectSounds, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
-            }     
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));   
         }
 
         /// <summary>

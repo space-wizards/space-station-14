@@ -107,10 +107,10 @@ namespace Content.Server.Kitchen.Components
 
             switch (message.Message)
             {
-                case MicrowaveStartCookMessage msg :
+                case MicrowaveStartCookMessage msg:
                     Wzhzhzh();
                     break;
-                case MicrowaveEjectMessage msg :
+                case MicrowaveEjectMessage msg:
                     if (_hasContents)
                     {
                         VaporizeReagents();
@@ -271,7 +271,7 @@ namespace Content.Server.Kitchen.Components
                 }
 
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-transfer-success",
-                                                                 ("amount",removedSolution.TotalVolume)));
+                                                                 ("amount", removedSolution.TotalVolume)));
                 return true;
             }
 
@@ -300,14 +300,14 @@ namespace Content.Server.Kitchen.Components
             _busy = true;
             // Convert storage into Dictionary of ingredients
             var solidsDict = new Dictionary<string, int>();
-            foreach(var item in _storage.ContainedEntities)
+            foreach (var item in _storage.ContainedEntities)
             {
                 if (item.Prototype == null)
                 {
                     continue;
                 }
 
-                if(solidsDict.ContainsKey(item.Prototype.ID))
+                if (solidsDict.ContainsKey(item.Prototype.ID))
                 {
                     solidsDict[item.Prototype.ID]++;
                 }
@@ -318,9 +318,9 @@ namespace Content.Server.Kitchen.Components
             }
 
             var failState = MicrowaveSuccessState.RecipeFail;
-            foreach(var id in solidsDict.Keys)
+            foreach (var id in solidsDict.Keys)
             {
-                if(_recipeManager.SolidAppears(id))
+                if (_recipeManager.SolidAppears(id))
                 {
                     continue;
                 }
@@ -337,43 +337,41 @@ namespace Content.Server.Kitchen.Components
             }
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            if(_startCookingSound.TryGetSound(out var startCookingSound))
-                SoundSystem.Play(Filter.Pvs(Owner), startCookingSound, Owner, AudioParams.Default);
-            Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
-            {
-                if (_lostPower)
-                {
-                    return;
-                }
+            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
+            Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), (Action) (() =>
+              {
+                  if (_lostPower)
+                  {
+                      return;
+                  }
 
-                if(failState == MicrowaveSuccessState.UnwantedForeignObject)
-                {
-                    VaporizeReagents();
-                    EjectSolids();
-                }
-                else
-                {
-                    if (recipeToCook != null)
-                    {
-                        SubtractContents(recipeToCook);
-                        Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
-                    }
-                    else
-                    {
-                        VaporizeReagents();
-                        VaporizeSolids();
-                        Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
-                    }
-                }
+                  if (failState == MicrowaveSuccessState.UnwantedForeignObject)
+                  {
+                      VaporizeReagents();
+                      EjectSolids();
+                  }
+                  else
+                  {
+                      if (recipeToCook != null)
+                      {
+                          SubtractContents(recipeToCook);
+                          Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
+                      }
+                      else
+                      {
+                          VaporizeReagents();
+                          VaporizeSolids();
+                          Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
+                      }
+                  }
 
-                if(_cookingCompleteSound.TryGetSound(out var cookingCompleteSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
+                  SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner, AudioParams.Default.WithVolume(-1f));
 
-                SetAppearance(MicrowaveVisualState.Idle);
-                _busy = false;
+                  SetAppearance(MicrowaveVisualState.Idle);
+                  _busy = false;
 
-                _uiDirty = true;
-            }));
+                  _uiDirty = true;
+              }));
             _lostPower = false;
             _uiDirty = true;
         }
@@ -396,7 +394,7 @@ namespace Content.Server.Kitchen.Components
 
         private void VaporizeSolids()
         {
-            for(var i = _storage.ContainedEntities.Count-1; i>=0; i--)
+            for (var i = _storage.ContainedEntities.Count - 1; i >= 0; i--)
             {
                 var item = _storage.ContainedEntities.ElementAt(i);
                 _storage.Remove(item);
@@ -407,7 +405,7 @@ namespace Content.Server.Kitchen.Components
         private void EjectSolids()
         {
 
-            for(var i = _storage.ContainedEntities.Count-1; i>=0; i--)
+            for (var i = _storage.ContainedEntities.Count - 1; i >= 0; i--)
             {
                 _storage.Remove(_storage.ContainedEntities.ElementAt(i));
             }
@@ -429,7 +427,7 @@ namespace Content.Server.Kitchen.Components
                 return;
             }
 
-            foreach(var recipeReagent in recipe.IngredientsReagents)
+            foreach (var recipeReagent in recipe.IngredientsReagents)
             {
                 solution?.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
             }
@@ -457,7 +455,7 @@ namespace Content.Server.Kitchen.Components
 
         }
 
-        private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
+        private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string, int> solids)
         {
             if (_currentCookTimerTime != (uint) recipe.CookTime)
             {
@@ -500,8 +498,7 @@ namespace Content.Server.Kitchen.Components
 
         private void ClickSound()
         {
-            if(_clickSound.TryGetSound(out var clickSound))
-                SoundSystem.Play(Filter.Pvs(Owner), clickSound, Owner,AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
@@ -537,7 +534,7 @@ namespace Content.Server.Kitchen.Components
 
             var othersMessage = headCount > 1
                 ? Loc.GetString("microwave-component-suicide-multi-head-others-message", ("victim", victim))
-                : Loc.GetString("microwave-component-suicide-others-message",("victim", victim));
+                : Loc.GetString("microwave-component-suicide-others-message", ("victim", victim));
 
             victim.PopupMessageOtherClients(othersMessage);
 

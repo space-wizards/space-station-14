@@ -24,8 +24,7 @@ namespace Content.Server.GameTicking.Rules
             var filter = Filter.Empty()
                 .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<TraitorRole>() ?? false);
 
-            if(_addedSound.TryGetSound(out var addedSound))
-                SoundSystem.Play(filter, addedSound, AudioParams.Default);
+            SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
         }
     }
 }

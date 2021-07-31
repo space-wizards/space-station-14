@@ -24,13 +24,16 @@ namespace Content.Server.Nutrition.Components
 
         int IInteractUsing.Priority => 1; // take priority over eating with utensils
 
-        [DataField("slice")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("slice")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private string _slice = string.Empty;
 
-        [DataField("sound")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("sound")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Items/Culinary/chop.ogg");
 
-        [DataField("count")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("count")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private ushort _totalCount = 5;
 
         [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
@@ -67,9 +70,8 @@ namespace Content.Server.Nutrition.Components
                 }
             }
 
-            if(_sound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates,
-                    AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner.Transform.Coordinates,
+                AudioParams.Default.WithVolume(-2));
 
             Count--;
             if (Count < 1)

@@ -44,7 +44,7 @@ namespace Content.Server.Tools.Components
         [DataField("speed")]
         public float SpeedModifier { get; set; } = 1;
 
-        [DataField("useSound")]
+        [DataField("useSound", required: true)]
         public SoundSpecifier UseSound { get; set; } = default!;
 
         public void AddQuality(ToolQuality quality)
@@ -96,8 +96,7 @@ namespace Content.Server.Tools.Components
 
         public void PlayUseSound(float volume = -5f)
         {
-            if(UseSound.TryGetSound(out var useSound))
-                SoundSystem.Play(Filter.Pvs(Owner), useSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            SoundSystem.Play(Filter.Pvs(Owner), UseSound.GetSound(), Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
     }
 }

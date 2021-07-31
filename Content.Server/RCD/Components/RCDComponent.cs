@@ -33,7 +33,7 @@ namespace Content.Server.RCD.Components
 
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
-        private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
+        private readonly RcdMode[] _modes = (RcdMode[]) Enum.GetValues(typeof(RcdMode));
         [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int MaxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
@@ -77,8 +77,7 @@ namespace Content.Server.RCD.Components
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            if(_swapModeSound.TryGetSound(out var swapModeSound))
-                SoundSystem.Play(Filter.Pvs(Owner), swapModeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _swapModeSound.GetSound(), Owner);
             var mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
@@ -104,7 +103,7 @@ namespace Content.Server.RCD.Components
             }
         }
 
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
             if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager) || !eventArgs.ClickLocation.GetGridId(Owner.EntityManager).IsValid())
@@ -163,8 +162,7 @@ namespace Content.Server.RCD.Components
                     return true; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            if(_successSound.TryGetSound(out var successSound))
-                SoundSystem.Play(Filter.Pvs(Owner), successSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _successSound.GetSound(), Owner);
             _ammo--;
             return true;
         }

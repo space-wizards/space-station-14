@@ -144,9 +144,9 @@ namespace Content.Server.PowerCell.Components
                 cell.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
 
-            if (playSound && CellRemoveSound.TryGetSound(out var cellRemoveSound))
+            if (playSound)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
@@ -167,9 +167,9 @@ namespace Content.Server.PowerCell.Components
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
             //Dirty();
-            if (playSound && CellInsertSound.TryGetSound(out var cellInsertSound))
+            if (playSound)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);

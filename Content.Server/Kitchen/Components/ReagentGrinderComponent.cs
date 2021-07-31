@@ -39,8 +39,8 @@ namespace Content.Server.Kitchen.Components
         //YAML serialization vars
         [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")] public int StorageCap = 16;
         [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")] public int WorkTime = 3500; //3.5 seconds, completely arbitrary for now.
-        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-        [DataField("grindSound")] private SoundSpecifier _grindSound = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
-        [DataField("juiceSound")] private SoundSpecifier _juiceSound = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+        [DataField("clickSound")] public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        [DataField("grindSound")] public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
+        [DataField("juiceSound")] public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
     }
 }

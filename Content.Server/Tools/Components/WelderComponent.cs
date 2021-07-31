@@ -60,7 +60,7 @@ namespace Content.Server.Tools.Components
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
-        [DataField("weldSounds")]
+        [DataField("weldSounds", required: true)]
         private SoundSpecifier WeldSounds { get; set; } = default!;
 
         [DataField("welderOffSounds")]
@@ -171,9 +171,9 @@ namespace Content.Server.Tools.Components
 
             var succeeded = _solutionComponent.TryRemoveReagent("WeldingFuel", ReagentUnit.New(value));
 
-            if (succeeded && !silent && WeldSounds.TryGetSound(out var weldSounds))
+            if (succeeded && !silent)
             {
-                PlaySound(weldSounds);
+                PlaySound(WeldSounds);
             }
             return succeeded;
         }
@@ -204,8 +204,7 @@ namespace Content.Server.Tools.Components
 
                 if (_pointLightComponent != null) _pointLightComponent.Enabled = false;
 
-                if(WelderOffSounds.TryGetSound(out var welderOffSOunds))
-                    PlaySound(welderOffSOunds, -5);
+                PlaySound(WelderOffSounds, -5);
                 _welderSystem.Unsubscribe(this);
                 return true;
             }
@@ -222,8 +221,7 @@ namespace Content.Server.Tools.Components
 
             if (_pointLightComponent != null) _pointLightComponent.Enabled = true;
 
-            if (WelderOnSounds.TryGetSound(out var welderOnSOunds))
-                PlaySound(welderOnSOunds, -5);
+            PlaySound(WelderOnSounds, -5);
             _welderSystem.Subscribe(this);
 
             EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
@@ -283,8 +281,7 @@ namespace Content.Server.Tools.Components
 
             if (TryWeld(5, victim, silent: true))
             {
-                if(WeldSounds.TryGetSound(out var weldSound))
-                    PlaySound(weldSound);
+                PlaySound(WeldSounds);
 
                 othersMessage =
                     Loc.GetString("welder-component-suicide-lit-others-message",
@@ -337,8 +334,7 @@ namespace Content.Server.Tools.Components
                 {
                     var drained = targetSolution.Drain(trans);
                     _solutionComponent.TryAddSolution(drained);
-                    if(WelderRefill.TryGetSound(out var welderRefillSound))
-                        SoundSystem.Play(Filter.Pvs(Owner), welderRefillSound, Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), WelderRefill.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
             }
@@ -346,9 +342,9 @@ namespace Content.Server.Tools.Components
             return true;
         }
 
-        private void PlaySound(string soundName, float volume = -5f)
+        private void PlaySound(SoundSpecifier sound, float volume = -5f)
         {
-            SoundSystem.Play(Filter.Pvs(Owner), soundName, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            SoundSystem.Play(Filter.Pvs(Owner), sound.GetSound(), Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
     }
 }

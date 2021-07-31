@@ -147,7 +147,8 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if(!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode) {
+            if (!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            {
                 return;
             }
 
@@ -167,13 +168,13 @@ namespace Content.Server.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                if(_clumsyWeaponHandlingSound.TryGetSound(out var clumsyWeaponHandlingSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), clumsyWeaponHandlingSound,
-                        Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                if(_clumsyWeaponShotSound.TryGetSound(out var clumsyWeaponShotSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), clumsyWeaponShotSound,
-                        Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 if (user.TryGetComponent(out IDamageableComponent? health))
                 {

@@ -64,8 +64,7 @@ namespace Content.Server.Dice
 
         public void PlayDiceEffect()
         {
-            if(_sound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner, AudioParams.Default);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

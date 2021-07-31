@@ -144,8 +144,7 @@ namespace Content.Server.Gravity.EntitySystems
                     || player.AttachedEntity.Transform.GridID != gridId)
                     continue;
 
-                if(comp.GravityShakeSound.TryGetSound(out var gravityShakeSound))
-                    SoundSystem.Play(Filter.Pvs(player.AttachedEntity), gravityShakeSound, player.AttachedEntity);
+                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), comp.GravityShakeSound.GetSound(), player.AttachedEntity);
             }
         }
 

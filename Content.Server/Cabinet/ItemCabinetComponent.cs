@@ -24,7 +24,7 @@ namespace Content.Server.Cabinet
         ///     Sound to be played when the cabinet door is opened.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("doorSound")]
+        [DataField("doorSound", required: true)]
         public SoundSpecifier DoorSound { get; set; } = default!;
 
         /// <summary>

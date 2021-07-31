@@ -24,13 +24,14 @@ namespace Content.Server.Light.Components
         /// <summary>
         /// How long will matchstick last in seconds.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)] [DataField("duration")]
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("duration")]
         private int _duration = 10;
 
         /// <summary>
         /// Sound played when you ignite the matchstick.
         /// </summary>
-        [DataField("igniteSound")] private SoundSpecifier _igniteSound = default!;
+        [DataField("igniteSound", required: true)] private SoundSpecifier _igniteSound = default!;
 
         /// <summary>
         /// Point light component. Gives matches a glow in dark effect.
@@ -69,11 +70,9 @@ namespace Content.Server.Light.Components
         public void Ignite(IEntity user)
         {
             // Play Sound
-            if (_igniteSound.TryGetSound(out var igniteSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), igniteSound, Owner,
-                    AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
-            }
+            SoundSystem.Play(
+                Filter.Pvs(Owner), _igniteSound.GetSound(), Owner,
+                AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
             CurrentState = SharedBurningStates.Lit;

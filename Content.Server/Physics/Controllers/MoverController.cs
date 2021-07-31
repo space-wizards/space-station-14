@@ -214,10 +214,9 @@ namespace Content.Server.Physics.Controllers
             string? soundToPlay = null;
             foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep) &&
-                    footstep._soundCollection.TryGetSound(out var footstepSound))
+                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
-                    soundToPlay = footstepSound;
+                    soundToPlay = footstep.SoundCollection.GetSound();
                     break;
                 }
             }
@@ -226,11 +225,8 @@ namespace Content.Server.Physics.Controllers
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                if (def.FootstepSounds.TryGetSound(out var footstepSound))
-                {
-                    soundToPlay = footstepSound;
-                    return;
-                }                
+                soundToPlay = def.FootstepSounds.GetSound();
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(soundToPlay))

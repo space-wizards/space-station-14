@@ -71,9 +71,9 @@ namespace Content.Server.Nutrition.Components
 
         internal void TryBreak(IEntity user)
         {
-            if (_breakSound.TryGetSound(out var breakSound) && IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
+            if (IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
             {
-                SoundSystem.Play(Filter.Pvs(user), breakSound, user, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(user), _breakSound.GetSound(), user, AudioParams.Default.WithVolume(-2f));
                 Owner.Delete();
             }
         }

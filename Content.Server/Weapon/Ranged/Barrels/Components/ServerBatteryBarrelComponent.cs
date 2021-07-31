@@ -83,9 +83,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private AppearanceComponent? _appearanceComponent;
 
         // Sounds
-        [DataField("soundPowerCellInsert")]
+        [DataField("soundPowerCellInsert", required: true)]
         private SoundSpecifier _soundPowerCellInsert = default!;
-        [DataField("soundPowerCellEject")]
+        [DataField("soundPowerCellEject", required: true)]
         private SoundSpecifier _soundPowerCellEject = default!;
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -223,10 +223,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (_soundPowerCellInsert.TryGetSound(out var sound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             _powerCellContainer.Insert(entity);
 
@@ -276,10 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            if (_soundPowerCellEject.TryGetSound(out var sound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             return true;
         }
 

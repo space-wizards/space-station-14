@@ -75,18 +75,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (value)
                 {
                     TryEjectChamber();
-                    if (_soundBoltOpen.TryGetSound(out var soundBoltOpen))
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
                 else
                 {
                     TryFeedChamber();
-                    if (_soundBoltClosed.TryGetSound(out var soundBoltClosed))
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
 
                 _boltOpen = value;
@@ -102,7 +96,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Sounds
         [DataField("soundCycle")]
-        private SoundSpecifier _soundCycle = new SoundPathSpecifier( "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
+        private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
         [DataField("soundBoltOpen")]
         private SoundSpecifier _soundBoltOpen = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
         [DataField("soundBoltClosed")]
@@ -225,10 +219,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
             else
             {
-                if (_soundCycle.TryGetSound(out var soundCycle))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -257,10 +248,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (_chamberContainer.ContainedEntity == null)
             {
                 _chamberContainer.Insert(ammo);
-                if (_soundInsert.TryGetSound(out var soundInsert))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 Dirty();
                 UpdateAppearance();
                 return true;
@@ -270,10 +258,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 _ammoContainer.Insert(ammo);
                 _spawnedAmmo.Push(ammo);
-                if (_soundInsert.TryGetSound(out var soundInsert))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 Dirty();
                 UpdateAppearance();
                 return true;
@@ -347,7 +332,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup("\n" + Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber",_caliber)));
+            message.AddMarkup("\n" + Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber", _caliber)));
         }
 
         [Verb]

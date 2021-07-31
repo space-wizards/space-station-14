@@ -25,8 +25,7 @@ namespace Content.Server.Nutrition.Components
 
         public void PlaySound()
         {
-            if(_sound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
         }
 
         void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)

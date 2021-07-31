@@ -125,8 +125,7 @@ namespace Content.Server.Research.Components
 
         private void PlayKeyboardSound()
         {
-            if (_soundCollectionName.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), _soundCollectionName.GetSound(), Owner, AudioParams.Default);
         }
     }
 }

@@ -72,8 +72,7 @@ namespace Content.Server.Chemistry.Components
                 meleeSys.SendLunge(angle, user);
             }
 
-            if(_injectSound.TryGetSound(out var injectSound))
-                SoundSystem.Play(Filter.Pvs(user), injectSound, user);
+            SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
 
             var targetSolution = target.GetComponent<SolutionContainerComponent>();
 

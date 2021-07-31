@@ -76,7 +76,7 @@ namespace Content.Server.Fluids.Components
             set => _sprayVelocity = value;
         }
 
-        [DataField("spraySound")]
+        [DataField("spraySound", required: true)]
         public SoundSpecifier SpraySound { get; } = default!;
 
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
@@ -173,11 +173,7 @@ namespace Content.Server.Fluids.Components
                 }
             }
 
-            //Play sound
-            if (SpraySound.TryGetSound(out var spraySound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), spraySound, Owner, AudioHelpers.WithVariation(0.125f));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), SpraySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
 
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);

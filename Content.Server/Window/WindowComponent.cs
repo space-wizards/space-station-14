@@ -31,7 +31,8 @@ namespace Content.Server.Window
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
 
-        [DataField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("knockDelay")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
 
         [DataField("rateLimitedKnocking")]
@@ -47,11 +48,11 @@ namespace Content.Server.Window
             switch (message)
             {
                 case DamageChangedMessage msg:
-                {
-                    var current = msg.Damageable.TotalDamage;
-                    UpdateVisuals(current);
-                    break;
-                }
+                    {
+                        var current = msg.Damageable.TotalDamage;
+                        UpdateVisuals(current);
+                        break;
+                    }
             }
         }
 
@@ -133,9 +134,9 @@ namespace Content.Server.Window
                 return false;
             }
 
-            if(_knockSound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(eventArgs.Target), sound,
-                    eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(
+                Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
+                eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

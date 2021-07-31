@@ -17,7 +17,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class CursedEntityStorageComponent : EntityStorageComponent
     {
-         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "CursedEntityStorage";
 
@@ -42,7 +42,7 @@ namespace Content.Server.Storage.Components
 
             var locker = lockerEnt.GetComponent<EntityStorageComponent>();
 
-            if(locker.Open)
+            if (locker.Open)
                 locker.TryCloseStorage(Owner);
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
@@ -51,10 +51,8 @@ namespace Content.Server.Storage.Components
                 locker.Insert(entity);
             }
 
-            if(_cursedSound.TryGetSound(out var cursedSound))
-                SoundSystem.Play(Filter.Pvs(Owner), cursedSound, Owner, AudioHelpers.WithVariation(0.125f));
-            if(_cursedLockerSound.TryGetSound(out var cursedLockerSound))
-                SoundSystem.Play(Filter.Pvs(lockerEnt), cursedLockerSound, lockerEnt, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(Owner), _cursedSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(lockerEnt), _cursedLockerSound.GetSound(), lockerEnt, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

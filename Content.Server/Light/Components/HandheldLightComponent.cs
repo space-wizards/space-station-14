@@ -120,9 +120,9 @@ namespace Content.Server.Light.Components
             UpdateLightAction();
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
-            if (makeNoise && TurnOffSound.TryGetSound(out var turnOffSound))
+            if (makeNoise)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), turnOffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOffSound.GetSound(), Owner);
             }
 
             return true;
@@ -137,8 +137,7 @@ namespace Content.Server.Light.Components
 
             if (Cell == null)
             {
-                if (TurnOnFailSound.TryGetSound(out var turnOnFailSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), turnOnFailSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound.GetSound(), Owner);
                 Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-missing-message"));
                 UpdateLightAction();
                 return false;
@@ -149,8 +148,7 @@ namespace Content.Server.Light.Components
             // Simple enough.
             if (Wattage > Cell.CurrentCharge)
             {
-                if (TurnOnFailSound.TryGetSound(out var turnOnFailSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), turnOnFailSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound.GetSound(), Owner);
                 Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-dead-message"));
                 UpdateLightAction();
                 return false;
@@ -161,8 +159,7 @@ namespace Content.Server.Light.Components
             SetState(true);
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
-            if (TurnOnSound.TryGetSound(out var turnOnSound))
-                SoundSystem.Play(Filter.Pvs(Owner), turnOnSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound.GetSound(), Owner);
             return true;
         }
 

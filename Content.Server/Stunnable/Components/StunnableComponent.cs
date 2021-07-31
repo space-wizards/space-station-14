@@ -29,7 +29,7 @@ namespace Content.Server.Stunnable.Components
 
         protected override void OnKnockdownEnd()
         {
-            if(Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
+            if (Owner.TryGetComponent(out IMobStateComponent? mobState) && !mobState.IsIncapacitated())
                 EntitySystem.Get<StandingStateSystem>().Stand(Owner);
         }
 
@@ -57,8 +57,7 @@ namespace Content.Server.Stunnable.Components
 
         protected override void OnInteractHand()
         {
-            if(_stunAttemptSound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(Owner), _stunAttemptSound.GetSound(), Owner, AudioHelpers.WithVariation(0.05f));
         }
 
         bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
@@ -73,12 +72,11 @@ namespace Content.Server.Stunnable.Components
 
             if (source != null)
             {
-                if (_stunAttemptSound.TryGetSound(out var sound))
-                    SoundSystem.Play(Filter.Pvs(source), sound, source, AudioHelpers.WithVariation(0.025f));
+                SoundSystem.Play(Filter.Pvs(source), _stunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
                 if (target != null)
                 {
-                    source.PopupMessageOtherClients(Loc.GetString("stunnable-component-disarm-success-others", ("source", source.Name),("target", target.Name)));
-                    source.PopupMessageCursor(Loc.GetString("stunnable-component-disarm-success",("target", target.Name)));
+                    source.PopupMessageOtherClients(Loc.GetString("stunnable-component-disarm-success-others", ("source", source.Name), ("target", target.Name)));
+                    source.PopupMessageCursor(Loc.GetString("stunnable-component-disarm-success", ("target", target.Name)));
                 }
             }
 

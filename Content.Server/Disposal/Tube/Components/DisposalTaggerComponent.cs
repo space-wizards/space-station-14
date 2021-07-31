@@ -119,8 +119,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void ClickSound()
         {
-            if(_clickSound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>

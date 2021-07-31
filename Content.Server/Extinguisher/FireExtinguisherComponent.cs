@@ -43,8 +43,7 @@ namespace Content.Server.Extinguisher
                     var drained = targetSolution.Drain(trans);
                     container.TryAddSolution(drained);
 
-                    if(_refillSound.TryGetSound(out var sound))
-                        SoundSystem.Play(Filter.Pvs(Owner), sound, Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("fire-extinguisher-component-after-interact-refilled-message",("owner", Owner)));
                 }
 

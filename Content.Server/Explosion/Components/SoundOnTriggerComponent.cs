@@ -14,7 +14,7 @@ namespace Content.Server.Explosion.Components
         public override string Name => "SoundOnTrigger";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("sound")]
+        [DataField("sound", required: true)]
         public SoundSpecifier? Sound { get; set; } = null;
     }
 }

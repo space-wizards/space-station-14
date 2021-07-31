@@ -28,7 +28,7 @@ namespace Content.Server.Actions.Spells
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
         [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
 
-        [ViewVariables] [DataField("castSound")] public SoundSpecifier CastSound { get; set; } = default!;
+        [ViewVariables] [DataField("castSound", required: true)] public SoundSpecifier CastSound { get; set; } = default!;
 
         //Rubber-band snapping items into player's hands, originally was a workaround, later found it works quite well with stuns
         //Not sure if needs fixing
@@ -69,8 +69,7 @@ namespace Content.Server.Actions.Spells
 
             handsComponent.PutInHandOrDrop(itemComponent);
 
-            if (CastSound.TryGetSound(out var castSound))
-                SoundSystem.Play(Filter.Pvs(caster), castSound, caster);
+            SoundSystem.Play(Filter.Pvs(caster), CastSound.GetSound(), caster);
         }
     }
 }

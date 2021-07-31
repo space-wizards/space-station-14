@@ -435,8 +435,7 @@ namespace Content.Server.Disposal.Mailing
                         break;
                     case UiButton.Power:
                         TogglePower();
-                        if(_receivedMessageSound.TryGetSound(out var sound))
-                            SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default.WithVolume(-2f));
+                        SoundSystem.Play(Filter.Pvs(Owner), _receivedMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

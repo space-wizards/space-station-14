@@ -15,15 +15,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
-        [DataField("sound")] public SoundSpecifier Sound { get; set; } = default!;
+        [DataField("sound", required: true)] public SoundSpecifier Sound { get; set; } = default!;
 
         public void Execute(IEntity owner, DestructibleSystem system)
         {
-            if (Sound.TryGetSound(out var sound))
-            {
-                var pos = owner.Transform.Coordinates;
-                SoundSystem.Play(Filter.Pvs(pos), sound, pos, AudioHelpers.WithVariation(0.125f));
-            }         
+            var pos = owner.Transform.Coordinates;
+            SoundSystem.Play(Filter.Pvs(pos), Sound.GetSound(), pos, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

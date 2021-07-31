@@ -14,12 +14,11 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class PlaySound : IGraphAction
     {
-        [DataField("sound")] public SoundSpecifier Sound { get; private set; } = default!;
+        [DataField("sound", required: true)] public SoundSpecifier Sound { get; private set; } = default!;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            if(Sound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(entity), sound, entity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(entity), Sound.GetSound(), entity, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

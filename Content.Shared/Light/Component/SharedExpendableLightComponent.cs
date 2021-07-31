@@ -69,11 +69,11 @@ namespace Content.Shared.Light.Component
         protected string IconStateLit { get; set; } = string.Empty;
 
         [ViewVariables]
-        [DataField("litSound")]
+        [DataField("litSound", required: true)]
         protected SoundSpecifier LitSound { get; set; } = default!;
 
         [ViewVariables]
-        [DataField("loopedSound")]
+        [DataField("loopedSound", required: true)]
         public string LoopedSound { get; set; } = string.Empty;
 
         [ViewVariables]

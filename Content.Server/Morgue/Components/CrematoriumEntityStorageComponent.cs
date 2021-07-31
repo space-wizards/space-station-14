@@ -120,8 +120,7 @@ namespace Content.Server.Morgue.Components
 
                 TryOpenStorage(Owner);
 
-                if (_cremateFinishSound.TryGetSound(out var cremateFinishSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), cremateFinishSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _cremateFinishSound.GetSound(), Owner);
 
             }, _cremateCancelToken.Token);
         }

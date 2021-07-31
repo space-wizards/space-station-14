@@ -130,8 +130,7 @@ namespace Content.Server.Toilet
         public void ToggleToiletSeat()
         {
             IsSeatUp = !IsSeatUp;
-            if(_toggleSound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(Owner), _toggleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite();
         }

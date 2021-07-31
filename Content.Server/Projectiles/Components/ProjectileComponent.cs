@@ -26,8 +26,8 @@ namespace Content.Server.Projectiles.Components
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
-        [DataField("soundHit")] public SoundSpecifier SoundHit = default!;
-        [DataField("soundHitSpecies")] public SoundSpecifier SoundHitSpecies = default!;
+        [DataField("soundHit", required: true)] public SoundSpecifier SoundHit = default!;
+        [DataField("soundHitSpecies", required: true)] public SoundSpecifier SoundHitSpecies = default!;
 
         public bool DamagedEntity;
 

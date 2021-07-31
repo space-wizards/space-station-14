@@ -23,7 +23,7 @@ namespace Content.Server.Tiles
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
-        [DataField("outputs", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
+        [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
 
         [DataField("placeTileSound")] SoundSpecifier _placeTileSound = new SoundPathSpecifier("/Audio/Items/genhit.ogg");
@@ -50,8 +50,7 @@ namespace Content.Server.Tiles
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
-            if(_placeTileSound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(location), sound, location, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(location), _placeTileSound.GetSound(), location, AudioHelpers.WithVariation(0.125f));
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

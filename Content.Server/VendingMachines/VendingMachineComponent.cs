@@ -202,8 +202,7 @@ namespace Content.Server.VendingMachines
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
-            if(_soundVend.TryGetSound(out var soundVend))
-                SoundSystem.Play(Filter.Pvs(Owner), soundVend, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void TryEject(string id, IEntity? sender)
@@ -222,8 +221,7 @@ namespace Content.Server.VendingMachines
 
         private void Deny()
         {
-            if(_soundDeny.TryGetSound(out var soundDeny))
-                SoundSystem.Play(Filter.Pvs(Owner), soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
 
             // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);

@@ -12,8 +12,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.OnReaction(reaction, owner, unitReactions);
 
-            if (reaction.Sound.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(owner), sound, owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(owner), reaction.Sound.GetSound(), owner.Transform.Coordinates);
         }
     }
 }

@@ -284,8 +284,7 @@ namespace Content.Server.Atmos.Components
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    if(_ruptureSound.TryGetSound(out var sound))
-                        SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     Owner.QueueDelete();
                     return;

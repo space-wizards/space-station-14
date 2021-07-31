@@ -74,8 +74,7 @@ namespace Content.Server.Cargo.Components
                         {
                             if (!Deleted && !Owner.Deleted && _currentState == CargoTelepadState.Teleporting && _teleportQueue.Count > 0)
                             {
-                                if (_teleportSound.TryGetSound(out var teleportSound))
-                                    SoundSystem.Play(Filter.Pvs(Owner), teleportSound, Owner, AudioParams.Default.WithVolume(-8f));
+                                SoundSystem.Play(Filter.Pvs(Owner), _teleportSound.GetSound(), Owner, AudioParams.Default.WithVolume(-8f));
                                 Owner.EntityManager.SpawnEntity(_teleportQueue[0].Product, Owner.Transform.Coordinates);
                                 _teleportQueue.RemoveAt(0);
                                 if (Owner.TryGetComponent<SpriteComponent>(out var spriteComponent) && spriteComponent.LayerCount > 0)

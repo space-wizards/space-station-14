@@ -78,8 +78,7 @@ namespace Content.Server.Actions.Actions
 
             if (random.Prob(_failProb))
             {
-                if(PunchMissSound.TryGetSound(out var punchMissSound))
-                    SoundSystem.Play(Filter.Pvs(args.Performer), punchMissSound, args.Performer, AudioHelpers.WithVariation(0.025f));
+                SoundSystem.Play(Filter.Pvs(args.Performer), PunchMissSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
 
                 args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
                                                                       ("performerName", args.Performer.Name),
@@ -90,9 +89,9 @@ namespace Content.Server.Actions.Actions
                 return;
             }
 
-            system.SendAnimation("disarm", angle, args.Performer, args.Performer, new []{ args.Target });
+            system.SendAnimation("disarm", angle, args.Performer, args.Performer, new[] { args.Target });
 
-            var eventArgs = new DisarmedActEventArgs() {Target = args.Target, Source = args.Performer, PushProbability = _pushProb};
+            var eventArgs = new DisarmedActEventArgs() { Target = args.Target, Source = args.Performer, PushProbability = _pushProb };
 
             // Sort by priority.
             Array.Sort(disarmedActs, (a, b) => a.Priority.CompareTo(b.Priority));
@@ -103,8 +102,7 @@ namespace Content.Server.Actions.Actions
                     return;
             }
 
-            if(DisarmSuccessSound.TryGetSound(out var disarmSuccessSound))
-                SoundSystem.Play(Filter.Pvs(args.Performer), disarmSuccessSound, args.Performer.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(args.Performer), DisarmSuccessSound.GetSound(), args.Performer.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new (DefaultCapacity-1);
+        private Stack<IEntity> _spawnedAmmo = new(DefaultCapacity - 1);
         private Container _ammoContainer = default!;
 
         [ViewVariables]
@@ -190,10 +190,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (manual)
             {
-                if (_soundCycle.TryGetSound(out var sound))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -219,10 +216,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _spawnedAmmo.Push(eventArgs.Using);
                 Dirty();
                 UpdateAppearance();
-                if (_soundInsert.TryGetSound(out var soundInsert))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 return true;
             }
 
@@ -246,7 +240,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine",("caliber", _caliber)));
+            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine", ("caliber", _caliber)));
         }
     }
 }

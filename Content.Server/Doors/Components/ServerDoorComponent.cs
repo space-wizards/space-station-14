@@ -222,10 +222,9 @@ namespace Content.Server.Doors.Components
             {
                 Open();
 
-                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0
-                    && _tryOpenDoorSound.TryGetSound(out var tryOpenDoorSound))
+                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), tryOpenDoorSound, Owner, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _tryOpenDoorSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
             }
             else

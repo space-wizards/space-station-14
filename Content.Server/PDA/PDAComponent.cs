@@ -104,49 +104,49 @@ namespace Content.Server.PDA
             switch (message.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                {
-                    UpdatePDAUserInterface();
-                    break;
-                }
-                case PDAToggleFlashlightMessage _:
-                {
-                    ToggleLight();
-                    break;
-                }
-
-                case PDAEjectIDMessage _:
-                {
-                    HandleIDEjection(message.Session.AttachedEntity!);
-                    break;
-                }
-
-                case PDAEjectPenMessage _:
-                {
-                    HandlePenEjection(message.Session.AttachedEntity!);
-                    break;
-                }
-
-                case PDAUplinkBuyListingMessage buyMsg:
-                {
-                    var player = message.Session.AttachedEntity;
-                    if (player == null)
-                        break;
-
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
-                        player.Transform.Coordinates, out var entity))
                     {
-                        SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                        UpdatePDAUserInterface();
+                        break;
+                    }
+                case PDAToggleFlashlightMessage _:
+                    {
+                        ToggleLight();
                         break;
                     }
 
-                    if (!player.TryGetComponent(out HandsComponent? hands) || !entity.TryGetComponent(out ItemComponent? item))
+                case PDAEjectIDMessage _:
+                    {
+                        HandleIDEjection(message.Session.AttachedEntity!);
                         break;
+                    }
 
-                    hands.PutInHandOrDrop(item);
+                case PDAEjectPenMessage _:
+                    {
+                        HandlePenEjection(message.Session.AttachedEntity!);
+                        break;
+                    }
 
-                    SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
-                    break;
-                }
+                case PDAUplinkBuyListingMessage buyMsg:
+                    {
+                        var player = message.Session.AttachedEntity;
+                        if (player == null)
+                            break;
+
+                        if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
+                            player.Transform.Coordinates, out var entity))
+                        {
+                            SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                            break;
+                        }
+
+                        if (!player.TryGetComponent(out HandsComponent? hands) || !entity.TryGetComponent(out ItemComponent? item))
+                            break;
+
+                        hands.PutInHandOrDrop(item);
+
+                        SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
+                        break;
+                    }
             }
         }
 
@@ -305,8 +305,7 @@ namespace Content.Server.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            if(_insertIdSound.TryGetSound(out var insertIdSound))
-                SoundSystem.Play(Filter.Pvs(Owner), insertIdSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _insertIdSound.GetSound(), Owner);
         }
 
         /// <summary>
@@ -335,8 +334,7 @@ namespace Content.Server.PDA
 
             _lightOn = !_lightOn;
             light.Enabled = _lightOn;
-            if(_toggleFlashlightSound.TryGetSound(out var toggleFlashlightSound))
-                SoundSystem.Play(Filter.Pvs(Owner), toggleFlashlightSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _toggleFlashlightSound.GetSound(), Owner);
             UpdatePDAUserInterface();
         }
 
@@ -355,8 +353,7 @@ namespace Content.Server.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            if(_ejectIdSound.TryGetSound(out var ejectIdSound))
-                SoundSystem.Play(Filter.Pvs(Owner), ejectIdSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _ejectIdSound.GetSound(), Owner);
             UpdatePDAUserInterface();
         }
 

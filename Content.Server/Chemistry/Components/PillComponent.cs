@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.Components
         public override string Name => "Pill";
 
         [ViewVariables]
-        [DataField("useSound")]
+        [DataField("useSound", required: true)]
         protected override SoundSpecifier UseSound { get; set; } = default!;
 
         [ViewVariables]
@@ -99,10 +99,7 @@ namespace Content.Server.Chemistry.Components
 
             firstStomach.TryTransferSolution(split);
 
-            if (UseSound.TryGetSound(out var sound))
-            {
-                SoundSystem.Play(Filter.Pvs(trueTarget), sound, trueTarget, AudioParams.Default.WithVolume(-1f));
-            }
+            SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
             trueTarget.PopupMessage(user, Loc.GetString("pill-component-swallow-success-message"));
 

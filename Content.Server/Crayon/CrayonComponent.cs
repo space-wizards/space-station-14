@@ -30,7 +30,7 @@ namespace Content.Server.Crayon
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         //TODO: useSound
-        [DataField("useSound")]
+        [DataField("useSound", required: true)]
         private SoundSpecifier _useSound = default!;
 
         [ViewVariables]
@@ -139,10 +139,7 @@ namespace Content.Server.Crayon
                 appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 
-            if (_useSound.TryGetSound(out var useSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), useSound, Owner, AudioHelpers.WithVariation(0.125f));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _useSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
 
             // Decrease "Ammo"
             Charges--;

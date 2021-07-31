@@ -75,7 +75,7 @@ namespace Content.Server.AME.Components
 
         internal void OnUpdate(float frameTime)
         {
-            if(!_injecting)
+            if (!_injecting)
             {
                 return;
             }
@@ -88,11 +88,11 @@ namespace Content.Server.AME.Components
             }
 
             var jar = _jarSlot.ContainedEntity;
-            if(jar is null)
+            if (jar is null)
                 return;
 
             jar.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
-            if(fuelJar != null && _powerSupplier != null)
+            if (fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
                 _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
@@ -105,7 +105,7 @@ namespace Content.Server.AME.Components
 
             UpdateDisplay(_stability);
 
-            if(_stability <= 0) { group.ExplodeCores(); }
+            if (_stability <= 0) { group.ExplodeCores(); }
 
         }
 
@@ -229,7 +229,7 @@ namespace Content.Server.AME.Components
                 return;
 
             var jar = _jarSlot.ContainedEntity;
-            if(jar is null)
+            if (jar is null)
                 return;
 
             _jarSlot.Remove(jar);
@@ -262,7 +262,7 @@ namespace Content.Server.AME.Components
 
         private void UpdateDisplay(int stability)
         {
-            if(_appearance == null) { return; }
+            if (_appearance == null) { return; }
 
             _appearance.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
 
@@ -291,7 +291,7 @@ namespace Content.Server.AME.Components
 
         private bool IsMasterController()
         {
-            if(GetAMENodeGroup()?.MasterController == this)
+            if (GetAMENodeGroup()?.MasterController == this)
             {
                 return true;
             }
@@ -315,14 +315,12 @@ namespace Content.Server.AME.Components
 
         private void ClickSound()
         {
-            if(_clickSound.TryGetSound(out var clickSound))
-                SoundSystem.Play(Filter.Pvs(Owner), clickSound, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void InjectSound(bool overloading)
         {
-            if(_injectSound.TryGetSound(out var injectSound))
-                SoundSystem.Play(Filter.Pvs(Owner), injectSound, Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+            SoundSystem.Play(Filter.Pvs(Owner), _injectSound.GetSound(), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)

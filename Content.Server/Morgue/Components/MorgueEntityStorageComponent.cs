@@ -146,10 +146,9 @@ namespace Content.Server.Morgue.Components
         {
             CheckContents();
 
-            if (DoSoulBeep && Appearance != null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul &&
-                _occupantHasSoulAlarmSound.TryGetSound(out var occupantHasSoulAlarmSound))
+            if (DoSoulBeep && Appearance != null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), occupantHasSoulAlarmSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
             }                
         }
 

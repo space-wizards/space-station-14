@@ -49,8 +49,7 @@ namespace Content.Server.Plants.Components
 
         private void Rustle()
         {
-            if(_rustleSound.TryGetSound(out var rustleSound))
-                SoundSystem.Play(Filter.Pvs(Owner), rustleSound, Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(Filter.Pvs(Owner), _rustleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

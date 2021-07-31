@@ -123,8 +123,7 @@ namespace Content.Server.Pointing.Components
             }
 
             Owner.SpawnExplosion(0, 2, 1, 1);
-            if(_explosionSound.TryGetSound(out var explosionSound))
-                SoundSystem.Play(Filter.Pvs(Owner), explosionSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _explosionSound.GetSound(), Owner);
 
             Owner.Delete();
         }

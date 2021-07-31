@@ -231,13 +231,11 @@ namespace Content.Server.Cuffs.Components
 
             if (isOwner)
             {
-                if (cuff.StartBreakoutSound.TryGetSound(out var startBreakoutSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), startBreakoutSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound.GetSound(), Owner);
             }
             else
             {
-                if (cuff.StartUncuffSound.TryGetSound(out var startUncuffSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), startUncuffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound.GetSound(), Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
@@ -258,8 +256,7 @@ namespace Content.Server.Cuffs.Components
 
             if (result != DoAfterStatus.Cancelled)
             {
-                if (cuff.EndUncuffSound.TryGetSound(out var endUncuffSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), endUncuffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
                 Container.ForceRemove(cuffsToRemove);
                 cuffsToRemove.Transform.AttachToGridOrMap();
@@ -289,7 +286,7 @@ namespace Content.Server.Cuffs.Components
 
                     if (!isOwner)
                     {
-                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",("otherName", user)));
+                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message", ("otherName", user)));
                     }
                 }
                 else
@@ -305,7 +302,7 @@ namespace Content.Server.Cuffs.Components
                     }
                     else
                     {
-                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",("cuffedHandCount", CuffedHandCount)));
+                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount)));
                     }
                 }
             }

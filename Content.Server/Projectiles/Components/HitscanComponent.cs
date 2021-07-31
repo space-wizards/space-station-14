@@ -86,8 +86,7 @@ namespace Content.Server.Projectiles.Components
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
                 var coordinates = user.Transform.Coordinates.Offset(offset);
-                if(_soundHitWall.TryGetSound(out var soundHitWall))
-                    SoundSystem.Play(Filter.Pvs(coordinates), soundHitWall, coordinates);
+                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>

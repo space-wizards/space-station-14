@@ -359,7 +359,7 @@ namespace Content.Server.Doors.Components
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            if(_doorComponent == null)
+            if (_doorComponent == null)
             {
                 return;
             }
@@ -463,13 +463,11 @@ namespace Content.Server.Doors.Components
 
             if (newBolts)
             {
-                if (_setBoltsDownSound.TryGetSound(out var boltsDownSound))
-                    SoundSystem.Play(Filter.Broadcast(), boltsDownSound, Owner);
+                SoundSystem.Play(Filter.Broadcast(), _setBoltsDownSound.GetSound(), Owner);
             }
             else
             {
-                if (_setBoltsUpSound.TryGetSound(out var boltsUpSound))
-                    SoundSystem.Play(Filter.Broadcast(), boltsUpSound, Owner);
+                SoundSystem.Play(Filter.Broadcast(), _setBoltsUpSound.GetSound(), Owner);
             }
         }
     }

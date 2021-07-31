@@ -266,8 +266,7 @@ namespace Content.Server.Disposal.Tube.Components
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    if(_clangSound.TryGetSound(out var clangSound))
-                        SoundSystem.Play(Filter.Pvs(Owner), clangSound, Owner.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(Owner), _clangSound.GetSound(), Owner.Transform.Coordinates);
                     break;
             }
         }

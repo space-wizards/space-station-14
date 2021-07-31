@@ -52,10 +52,9 @@ namespace Content.Server.GameTicking.Rules
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-added-announcement"));
 
             var filter = Filter.Empty()
-                .AddWhere(session => ((IPlayerSession)session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
+                .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
-            if(_addedSound.TryGetSound(out var addedSound))
-                SoundSystem.Play(filter, addedSound, AudioParams.Default);
+            SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
             EntitySystem.Get<SuspicionEndTimerSystem>().EndTime = _endTime;
 
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
@@ -160,7 +159,7 @@ namespace Content.Server.GameTicking.Rules
             var gameTicker = EntitySystem.Get<GameTicker>();
             gameTicker.EndRound(text);
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) RoundEndDelay.TotalSeconds)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds", (int) RoundEndDelay.TotalSeconds)));
             _checkTimerCancel.Cancel();
 
             Timer.Spawn(RoundEndDelay, () => gameTicker.RestartRound());

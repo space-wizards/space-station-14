@@ -85,7 +85,7 @@ namespace Content.Server.Power.Components
             if (serverMsg.Message is ApcToggleMainBreakerMessage)
             {
                 var user = serverMsg.Session.AttachedEntity;
-                if(user == null) return;
+                if (user == null) return;
 
                 if (_accessReader == null || _accessReader.IsAllowed(user))
                 {
@@ -93,8 +93,7 @@ namespace Content.Server.Power.Components
                     Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;
 
                     _uiDirty = true;
-                    if(_onReceiveMessageSound.TryGetSound(out var onReceiveMessageSound))
-                        SoundSystem.Play(Filter.Pvs(Owner), onReceiveMessageSound, Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
                 }
                 else
                 {

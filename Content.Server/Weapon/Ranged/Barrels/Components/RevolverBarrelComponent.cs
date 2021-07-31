@@ -165,10 +165,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     _currentSlot = i;
                     _ammoSlots[i] = entity;
                     _ammoContainer.Insert(entity);
-                    if (_soundInsert.TryGetSound(out var sound))
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
                     Dirty();
                     UpdateAppearance();
@@ -195,10 +192,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             var random = _random.Next(_ammoSlots.Length - 1);
             _currentSlot = random;
-            if (_soundSpin.TryGetSound(out var sound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundSpin.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             Dirty();
         }
 
@@ -249,10 +243,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_ammoContainer.ContainedEntities.Count > 0)
             {
-                if (_soundEject.TryGetSound(out var sound))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), sound, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
             }
 
             // May as well point back at the end?

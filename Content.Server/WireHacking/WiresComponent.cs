@@ -456,8 +456,7 @@ namespace Content.Server.WireHacking
                                 return;
                             }
 
-                            if(_pulseSound.TryGetSound(out var pulseSound))
-                                SoundSystem.Play(Filter.Pvs(Owner), pulseSound, Owner);
+                            SoundSystem.Play(Filter.Pvs(Owner), _pulseSound.GetSound(), Owner);
                             break;
                     }
 
@@ -509,17 +508,11 @@ namespace Content.Server.WireHacking
                 IsPanelOpen = !IsPanelOpen;
                 if (IsPanelOpen)
                 {
-                    if(_screwdriverOpenSound.TryGetSound(out var openSound))
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), openSound, Owner);
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _screwdriverOpenSound.GetSound(), Owner);
                 }
                 else
                 {
-                    if (_screwdriverCloseSound.TryGetSound(out var closeSound))
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), closeSound, Owner);
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _screwdriverCloseSound.GetSound(), Owner);
                 }
 
                 return true;

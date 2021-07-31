@@ -50,7 +50,7 @@ namespace Content.Server.Nutrition.Components
 
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Content.Server.Nutrition.Components
             }
 
             var utensils = utensilUsed != null
-                ? new List<UtensilComponent> {utensilUsed}
+                ? new List<UtensilComponent> { utensilUsed }
                 : null;
 
             if (_utensilsNeeded != UtensilType.None)
@@ -160,10 +160,7 @@ namespace Content.Server.Nutrition.Components
 
             firstStomach.TryTransferSolution(split);
 
-            if (UseSound.TryGetSound(out var useSound))
-            {
-                SoundSystem.Play(Filter.Pvs(trueTarget), useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
-            }
+            SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
             trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
 

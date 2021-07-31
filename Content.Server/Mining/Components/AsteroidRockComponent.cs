@@ -42,10 +42,7 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
                 return true;
 
-            if (pickaxeComponent.MiningSound.TryGetSound(out var miningSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), miningSound, Owner, AudioParams.Default);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), pickaxeComponent.MiningSound.GetSound(), Owner, AudioParams.Default);
             return true;
         }
     }

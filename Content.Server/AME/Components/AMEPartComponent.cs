@@ -51,8 +51,7 @@ namespace Content.Server.AME.Components
             var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
             ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
 
-            if(_unwrapSound.TryGetSound(out var unwrapSound))
-                SoundSystem.Play(Filter.Pvs(Owner), unwrapSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _unwrapSound.GetSound(), Owner);
 
             Owner.Delete();
 

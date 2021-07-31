@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Placeable;
 using Content.Shared.Acts;
-using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
@@ -31,6 +24,11 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Content.Server.Storage.Components
 {
@@ -66,7 +64,7 @@ namespace Content.Server.Storage.Components
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
-        public SoundSpecifier StorageSoundCollection { get; set; } = default!;
+        public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -389,79 +387,79 @@ namespace Content.Server.Storage.Components
             switch (message)
             {
                 case RemoveEntityMessage remove:
-                {
-                    EnsureInitialCalculated();
-
-                    var player = session.AttachedEntity;
-
-                    if (player == null)
                     {
+                        EnsureInitialCalculated();
+
+                        var player = session.AttachedEntity;
+
+                        if (player == null)
+                        {
+                            break;
+                        }
+
+                        var ownerTransform = Owner.Transform;
+                        var playerTransform = player.Transform;
+
+                        if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
+                            !ownerTransform.IsMapTransform &&
+                            !playerTransform.ContainsEntity(ownerTransform))
+                        {
+                            break;
+                        }
+
+                        var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
+
+                        if (entity == null || _storage?.Contains(entity) == false)
+                        {
+                            break;
+                        }
+
+                        var item = entity.GetComponent<ItemComponent>();
+                        if (item == null ||
+                            !player.TryGetComponent(out HandsComponent? hands))
+                        {
+                            break;
+                        }
+
+                        if (!hands.CanPutInHand(item))
+                        {
+                            break;
+                        }
+
+                        hands.PutInHand(item);
+
                         break;
                     }
-
-                    var ownerTransform = Owner.Transform;
-                    var playerTransform = player.Transform;
-
-                    if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                        !ownerTransform.IsMapTransform &&
-                        !playerTransform.ContainsEntity(ownerTransform))
-                    {
-                        break;
-                    }
-
-                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                    if (entity == null || _storage?.Contains(entity) == false)
-                    {
-                        break;
-                    }
-
-                    var item = entity.GetComponent<ItemComponent>();
-                    if (item == null ||
-                        !player.TryGetComponent(out HandsComponent? hands))
-                    {
-                        break;
-                    }
-
-                    if (!hands.CanPutInHand(item))
-                    {
-                        break;
-                    }
-
-                    hands.PutInHand(item);
-
-                    break;
-                }
                 case InsertEntityMessage _:
-                {
-                    EnsureInitialCalculated();
-
-                    var player = session.AttachedEntity;
-
-                    if (player == null)
                     {
+                        EnsureInitialCalculated();
+
+                        var player = session.AttachedEntity;
+
+                        if (player == null)
+                        {
+                            break;
+                        }
+
+                        if (!player.InRangeUnobstructed(Owner, popup: true))
+                        {
+                            break;
+                        }
+
+                        PlayerInsertHeldEntity(player);
+
                         break;
                     }
-
-                    if (!player.InRangeUnobstructed(Owner, popup: true))
-                    {
-                        break;
-                    }
-
-                    PlayerInsertHeldEntity(player);
-
-                    break;
-                }
                 case CloseStorageUIMessage _:
-                {
-                    if (session is not IPlayerSession playerSession)
                     {
+                        if (session is not IPlayerSession playerSession)
+                        {
+                            break;
+                        }
+
+                        UnsubscribeSession(playerSession);
                         break;
                     }
-
-                    UnsubscribeSession(playerSession);
-                    break;
-                }
             }
         }
 
@@ -511,7 +509,7 @@ namespace Content.Server.Storage.Components
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
+            if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
@@ -556,7 +554,7 @@ namespace Content.Server.Storage.Components
                 }
 
                 // If we picked up atleast one thing, play a sound and do a cool animation!
-                if (successfullyInserted.Count>0)
+                if (successfullyInserted.Count > 0)
                 {
                     PlaySoundCollection();
                     SendNetworkMessage(
@@ -569,7 +567,7 @@ namespace Content.Server.Storage.Components
                 return true;
             }
             // Pick up the clicked entity
-            else if(_quickInsert)
+            else if (_quickInsert)
             {
                 if (eventArgs.Target == null
                     || !eventArgs.Target.Transform.IsMapTransform
@@ -577,7 +575,7 @@ namespace Content.Server.Storage.Components
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
                 var position = eventArgs.Target.Transform.Coordinates;
-                if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
+                if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
                         new List<EntityUid>() { eventArgs.Target.Uid },
@@ -631,9 +629,7 @@ namespace Content.Server.Storage.Components
 
         private void PlaySoundCollection()
         {
-            // TODO this doesn't compile or work
-            if(StorageSoundCollection?.TryGetSound(out var sound))
-                SoundSystem.Play(Filter.Pvs(Owner), sound, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
         }
     }
 }

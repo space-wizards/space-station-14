@@ -7,7 +7,6 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
 
 namespace Content.Server.Sound
@@ -50,14 +49,7 @@ namespace Content.Server.Sound
 
         private static void TryEmitSound(BaseEmitSoundComponent component)
         {
-            if (component.Sound.TryGetSound(out var sound))
-            {
-                SoundSystem.Play(Filter.Pvs(component.Owner), sound, component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
-            }
-            else
-            {
-                Logger.Warning($"{nameof(component)} Uid:{component.Owner.Uid} has no {nameof(component.Sound)} to play.");
-            }
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
         }
     }
 }

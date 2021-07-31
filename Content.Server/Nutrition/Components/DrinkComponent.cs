@@ -127,8 +127,7 @@ namespace Content.Server.Nutrition.Components
             if (!Opened)
             {
                 //Do the opening stuff like playing the sounds.
-                if(_openSounds.TryGetSound(out var openSound))
-                    SoundSystem.Play(Filter.Pvs(args.User), openSound, args.User, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(args.User), _openSounds.GetSound(), args.User, AudioParams.Default);
 
                 Opened = true;
                 return false;
@@ -137,7 +136,7 @@ namespace Content.Server.Nutrition.Components
             if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? contents) ||
                 contents.DrainAvailable <= 0)
             {
-                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty",("owner", Owner)));
+                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", Owner)));
                 return true;
             }
 
@@ -163,14 +162,14 @@ namespace Content.Server.Nutrition.Components
             }
             var color = Empty ? "gray" : "yellow";
             var openedText = Loc.GetString(Empty ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text",("colorName", color),("text", openedText)));
+            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText)));
         }
 
         private bool TryUseDrink(IEntity user, IEntity target, bool forced = false)
         {
             if (!Opened)
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open",("owner", Owner)));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", Owner)));
                 return false;
             }
 
@@ -180,7 +179,7 @@ namespace Content.Server.Nutrition.Components
             {
                 if (!forced)
                 {
-                    target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity",Owner)));
+                    target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", Owner)));
                 }
 
                 return false;
@@ -189,7 +188,7 @@ namespace Content.Server.Nutrition.Components
             if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink",("owner", Owner)));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", Owner)));
                 return false;
             }
 
@@ -207,7 +206,7 @@ namespace Content.Server.Nutrition.Components
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough",("owner", Owner)));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough", ("owner", Owner)));
 
                 if (!interactions.CanRefill)
                 {
@@ -219,10 +218,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (_useSound.TryGetSound(out var useSound))
-            {
-                SoundSystem.Play(Filter.Pvs(target), useSound, target, AudioParams.Default.WithVolume(-2f));
-            }
+            SoundSystem.Play(Filter.Pvs(target), _useSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
             target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
             UpdateAppearance();
@@ -253,8 +249,7 @@ namespace Content.Server.Nutrition.Components
                 var solution = interactions.Drain(interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
-                if(_burstSound.TryGetSound(out var burstSound))
-                    SoundSystem.Play(Filter.Pvs(Owner), burstSound, Owner, AudioParams.Default.WithVolume(-4));
+                SoundSystem.Play(Filter.Pvs(Owner), _burstSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4));
             }
         }
     }

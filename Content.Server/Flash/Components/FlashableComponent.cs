@@ -42,9 +42,9 @@ namespace Content.Server.Flash.Components
                 flashable.Flash(duration);
             }
 
-            if (sound != null && sound.TryGetSound(out var soundName))
+            if (sound != null)
             {
-                SoundSystem.Play(Filter.Pvs(source), soundName, source.Transform.Coordinates);
+                SoundSystem.Play(Filter.Pvs(source), sound.GetSound(), source.Transform.Coordinates);
             }
         }
     }

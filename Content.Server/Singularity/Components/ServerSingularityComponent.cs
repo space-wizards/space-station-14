@@ -89,9 +89,8 @@ namespace Content.Server.Singularity.Components
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            if(_singularityFormingSound.TryGetSound(out var singuloFormingSound))
-                SoundSystem.Play(Filter.Pvs(Owner), singuloFormingSound, Owner);
-            Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), _singularitySound.GetSound(), Owner, audioParams));
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityFormingSound.GetSound(), Owner);
+            Timer.Spawn(5200, () => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), _singularitySound.GetSound(), Owner, audioParams));
 
             _singularitySystem.ChangeSingularityLevel(this, 1);
         }
@@ -104,8 +103,7 @@ namespace Content.Server.Singularity.Components
         protected override void OnRemove()
         {
             _playingSound?.Stop();
-            if(_singularityCollapsingSound.TryGetSound(out var singuloCollapseSound))
-                SoundSystem.Play(Filter.Pvs(Owner), singuloCollapseSound, Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
             base.OnRemove();
         }
     }
