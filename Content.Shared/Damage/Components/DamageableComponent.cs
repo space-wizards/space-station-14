@@ -349,6 +349,108 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
+
+        // TODO QUESTION Please dont run away, its a very interesting wall of text.
+        // Below is an alternative version of ChangeDamage(DamageGroupPrototype). Currently for a damge
+        // group with n types, ChangeDamage() can call ChangeDamage(DamageTypePrototype) up to 2*n-1 times. As this
+        // function has a not-insignificant bit of logic, and I think uses some sort of networking/messaging we probably
+        // want to minimise that down to n (or 1 if somehow possible with networking). In the case where all of the
+        // damage is of one type, reducing it to 1 is trivial.
+        //
+        // Additionally currently ChangeDamage will ignore a damageType if it is not supported. As a result, the actual
+        // amount by which the total grouip damage changes may be less than expected. I think this is a good thing for
+        // dealing damage: if a damageContainer is 'immune' to some of the damage in the group, it should take less
+        // damage.
+        //
+        // On the other hand, I feel that when a doctor injects a patient with 1u drug that should heal 10 damage in a
+        // damage group, they expect it to do so. The total health change should be the same, regardless of whether a
+        // damage type is supported, or whether a damge type is already set to zero. Otherwise a doctor could see a
+        // patient with brute, and try a brute drug, only to have it work at 1/3 effectivness because slash and piercing
+        // are already at full health. Currently, this is also how ChangeDamage behaves.
+        //
+        // So below is an alternative version of ChangeDamage(DamageGroupPrototype) that keeps the same behaviour
+        // outlined above, but uses less ChangeDamage(DamageTypePrototype) calls. It does change healing behaviour: the
+        // ammount that each damage type is healed by is proportional to current damage in that type relative to the
+        // group.
+        //
+        // So for example, consider someone with Blun/Slash/Piercing damage of 20/20/10.
+        // If you heal for 31 Brute using this code, you would heal for 12/12/7.
+        // This wasn't an intentional design decision, it just so happens that this is the easiest algorithm I can think
+        // of that minimises calls to ChangeDamage(damageType), while also not wasting any healing. Although, I do
+        // actually like this behaviour.
+        public void ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
+    IEntity? source = null,
+    DamageChangeParams? extraParams = null)
+        {
+
+            var types = group.DamageTypes.ToArray();
+
+            if (amount < 0)
+            {
+                // We are Healing. Keep track of how much we can hand out (with a better var name for readbility).
+                var availableHealing = -amount;
+
+                // Get total group damage.
+                var damageToHeal = DamageGroups[group];
+
+                // Is there any damage to even heal?
+                if (damageToHeal == 0)
+                    return;
+
+                // If total healing is more than there is damage, just set to 0 and return.
+                if (damageToHeal <= availableHealing)
+                    SetGroupDamage(0, group);
+
+                // Partially heal each damage group
+                int healing;
+                int damage;
+                foreach (var type in types)
+                {
+
+                    if (!DamageTypes.TryGetValue(type, out damage))
+                    {
+                        // Damage Type is not supported. Continue without reducing availableHealing
+                        continue;
+                    }
+
+                    // Apply healing to the damage type. The healing amount may be zero if either damage==0, or if
+                    // integer rounding made it zero (i.e., damage is small)
+                    healing = (availableHealing * damage) / damageToHeal;
+                    ChangeDamage(type, -healing, ignoreDamageResistances, source, extraParams);
+
+                    // remove this damage type from the damage we consider for future loops, regardless of how much we
+                    // actually healed this type.
+                    damageToHeal -= damage;
+                    availableHealing -= healing;
+                }
+            }
+            else if (amount > 0)
+            {
+                // We are adding damage. Keep track of how much we can dish out (with a better var name for readbility).
+                var availableDamage = amount;
+
+                // How many damage types do we have to distribute over?.
+                var numberDamageTypes = types.Length;
+
+                // Apply damage to each damage group
+                int damage;
+                foreach (var type in types)
+                {
+                    damage = availableDamage / numberDamageTypes;
+                    availableDamage -= damage;
+                    numberDamageTypes -= 1;
+
+                    // Damage is applied. If damage type is not supported, this has no effect.
+                    // This may results in less total damage change than naively expected, but is intentional.
+                    ChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
+                }
+            }
+        }
+
+
+
+
+
         public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
         {
             // TODO QUESTION what is this if statement supposed to do?
