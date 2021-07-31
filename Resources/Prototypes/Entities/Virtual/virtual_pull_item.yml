@@ -1,0 +1,8 @@
+﻿# This item is stored in the hand slot while you are pulling something, to represent that and what you are pulling.
+- type: entity
+  id: HandVirtualPull
+  name: VIRTUAL PULL YOU SHOULD NOT SEE THIS
+  abstract: true
+  components:
+  - type: Item
+  - type: HandVirtualPull

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
@@ -56,10 +57,32 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<MoveEvent>(PullerMoved);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
 
+            SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
+            SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
                 .Register<SharedPullingSystem>();
+        }
+
+        // Raise a "you are being pulled" alert if the pulled entity has alerts.
+        private static void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
+        {
+            if (args.Pulled.Owner.Uid != uid)
+                return;
+
+            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
+                alerts.ShowAlert(AlertType.Pulled);
+        }
+
+        private static void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
+        {
+            if (args.Pulled.Owner.Uid != uid)
+                return;
+
+            if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
+                alerts.ClearAlert(AlertType.Pulled);
         }
 
         public override void Update(float frameTime)
