@@ -33,13 +33,13 @@ namespace Content.Server.Projectiles
             var playerFilter = Filter.Pvs(coordinates);
 
             if (!otherEntity.Deleted &&
-                otherEntity.HasComponent<SharedBodyComponent>() && component.SoundHitSpecies != null)
+                otherEntity.HasComponent<SharedBodyComponent>() && component.SoundHitSpecies.TryGetSound(out var soundHitSpecies))
             {
-                SoundSystem.Play(playerFilter, component.SoundHitSpecies, coordinates);
+                SoundSystem.Play(playerFilter, soundHitSpecies, coordinates);
             }
-            else if (component.SoundHit != null)
+            else if (component.SoundHit.TryGetSound(out var soundHit))
             {
-                SoundSystem.Play(playerFilter, component.SoundHit, coordinates);
+                SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
             if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))

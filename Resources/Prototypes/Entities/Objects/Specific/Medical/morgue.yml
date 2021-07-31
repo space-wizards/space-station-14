@@ -28,8 +28,10 @@
   - type: BodyBagEntityStorage
     CanWeldShut: false
     Capacity: 1
-    closeSound: /Audio/Misc/zip.ogg
-    openSound: /Audio/Misc/zip.ogg
+    closeSound:
+      path: /Audio/Misc/zip.ogg
+    openSound:
+      path: /Audio/Misc/zip.ogg
   - type: Appearance
     visuals:
     - type: StorageVisualizer

@@ -38,8 +38,8 @@
         !type:DamageTrigger
         damage: 15
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:

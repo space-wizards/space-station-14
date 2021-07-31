@@ -35,7 +35,8 @@
     - type: MeleeWeapon
       damage: 10
       damageType: Blunt
-      hitSound: /Audio/Weapons/smash.ogg
+      hitSound:
+        path: /Audio/Weapons/smash.ogg
     - type: Appearance
       visuals:
         - type: SprayVisualizer

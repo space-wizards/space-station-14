@@ -499,8 +499,8 @@ entities:
     pos: 39.53893,-0.77325034
     parent: 853
     type: Transform
-  - useSoundCollection: ''
-    useSound: /Audio/Items/jaws_pry.ogg
+  - useSound:
+      path: /Audio/Items/jaws_pry.ogg
     type: Tool
 - uid: 54
   type: ClothingHandsGlovesLatex

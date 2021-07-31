@@ -18,7 +18,8 @@
   - type: Tool
     qualities:
       - Cutting
-    useSound: /Audio/Items/wirecutter.ogg
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
   - type: RandomSpriteColor
     state: cutters
     colors:
@@ -85,7 +86,8 @@
   - type: Tool
     qualities:
       - Anchoring
-    useSound: /Audio/Items/ratchet.ogg
+    useSound:
+      path: /Audio/Items/ratchet.ogg
 
 - type: entity
   name: crowbar
@@ -108,7 +110,8 @@
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/crowbar.ogg
+    useSound:
+      path: /Audio/Items/crowbar.ogg
   - type: TilePrying
 
 - type: entity
@@ -132,7 +135,8 @@
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/crowbar.ogg
+    useSound:
+      path: /Audio/Items/crowbar.ogg
   - type: TilePrying
 
 - type: entity
@@ -181,12 +185,16 @@
     tools:
       - behavior: Screwing
         state: drill_screw
-        useSound: /Audio/Items/drill_use.ogg
-        changeSound: /Audio/Items/change_drill.ogg
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
         state: drill_bolt
-        useSound: /Audio/Items/drill_use.ogg
-        changeSound: /Audio/Items/change_drill.ogg
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
 
 - type: entity
   name: RCD

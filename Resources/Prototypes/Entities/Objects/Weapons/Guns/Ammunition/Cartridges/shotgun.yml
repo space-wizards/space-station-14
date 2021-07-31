@@ -8,7 +8,8 @@
     caliber: Shotgun
     ammoSpread: 40
     projectilesFired: 6
-    soundCollectionEject: ShellEject
+    soundCollectionEject:
+      collection: ShellEject
   - type: Sprite
     netsync: false
     noRot: false

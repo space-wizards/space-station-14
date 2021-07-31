@@ -36,8 +36,10 @@
     CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
-    closeSound: /Audio/Items/deconstruct.ogg
-    openSound: /Audio/Items/deconstruct.ogg
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
     trayPrototype: MorgueTray
   - type: Appearance
     visuals:
@@ -101,8 +103,10 @@
     CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
-    closeSound: /Audio/Items/deconstruct.ogg
-    openSound: /Audio/Items/deconstruct.ogg
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
     trayPrototype: CrematoriumTray
     doSoulBeep: false
   - type: Appearance

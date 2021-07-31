@@ -29,7 +29,8 @@
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: true
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -68,7 +69,8 @@
     powerCellPrototype: PowerCellSmallSuper
     powerCellRemovable: true
     ammoPrototype: RedHeavyLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -109,7 +111,8 @@
     powerCellRemovable: true
     fireCost: 600
     ammoPrototype: XrayLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -152,7 +155,8 @@
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: false
     ammoPrototype: BulletTaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -191,7 +195,8 @@
     powerCellPrototype: PowerCellMediumStandard
     powerCellRemovable: true
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer

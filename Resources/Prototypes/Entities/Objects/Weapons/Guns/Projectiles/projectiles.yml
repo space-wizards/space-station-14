@@ -25,7 +25,8 @@
     linearDamping: 0
     angularDamping: 0
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Piercing: 20
 
@@ -36,7 +37,8 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Piercing: 10
   - type: FlashOnTrigger
@@ -74,7 +76,8 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Blunt: 3
   - type: StunOnCollide
@@ -139,7 +142,8 @@
       mask:
         - Opaque
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Heat: 20
   - type: Tag
@@ -184,7 +188,8 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/Effects/gen_hit.ogg
+    soundHit:
+      path: /Audio/Effects/gen_hit.ogg
   - type: StunOnCollide
     stunAmount: 8
     knockdownAmount: 8
@@ -222,7 +227,8 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/Effects/flash_bang.ogg
+    soundHit:
+      path: /Audio/Effects/flash_bang.ogg
   - type: FlashOnTrigger
     range: 7
   - type: SoundOnTrigger
@@ -265,7 +271,8 @@
     state: foamdart
   - type: Projectile
     deleteOnCollide: true
-    soundHit: /Audio/Guns/Hits/snap.ogg
+    soundHit:
+      path: /Audio/Guns/Hits/snap.ogg
     damages:
       Blunt: 2
 

@@ -478,9 +478,12 @@
     - Single
     fireRate: 0.5
     capacity: 1
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/click.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/click.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
 
 - type: entity
   parent: BaseItem
@@ -517,9 +520,12 @@
     caliber: Cap
     capacity: 6
     autoCycle: true
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer

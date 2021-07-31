@@ -13,7 +13,8 @@
       iconStateSpent: flare_spent
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
-      litSound: /Audio/Items/Flare/flare_on.ogg
+      litSound:
+        path: /Audio/Items/Flare/flare_on.ogg
       loopedSound: /Audio/Items/Flare/flare_burn.ogg
     - type: Sprite
       sprite: Objects/Misc/flare.rsi

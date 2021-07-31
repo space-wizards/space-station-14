@@ -1,8 +1,8 @@
 using System;
-using Content.Client.Wires;
 using Content.Client.Wires.Visualizers;
 using Content.Shared.Audio;
 using Content.Shared.Doors;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -18,13 +18,13 @@ namespace Content.Client.Doors
         private const string AnimationKey = "airlock_animation";
 
         [DataField("open_sound", required: true)]
-        private string _openSound = default!;
+        private SoundSpecifier _openSound = default!;
 
         [DataField("close_sound", required: true)]
-        private string _closeSound = default!;
+        private SoundSpecifier _closeSound = default!;
 
         [DataField("deny_sound", required: true)]
-        private string _denySound = default!;
+        private SoundSpecifier _denySound = default!;
 
         [DataField("animation_time")]
         private float _delay = 0.8f;
@@ -55,9 +55,9 @@ namespace Content.Client.Doors
                 var sound = new AnimationTrackPlaySound();
                 CloseAnimation.AnimationTracks.Add(sound);
 
-                if (_closeSound != null)
+                if (_closeSound.TryGetSound(out var closeSound))
                 {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
                 }
             }
 
@@ -81,9 +81,9 @@ namespace Content.Client.Doors
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
 
-                if (_openSound != null)
+                if (_openSound.TryGetSound(out var openSound))
                 {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
                 }
             }
 
@@ -97,9 +97,9 @@ namespace Content.Client.Doors
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
 
-                if (_denySound != null)
+                if (_denySound.TryGetSound(out var denySound))
                 {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
                 }
             }
         }

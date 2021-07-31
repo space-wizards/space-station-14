@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -39,7 +40,7 @@ namespace Content.Client.Disposal.Visualizers
         private string? _stateFlush;
 
         [DataField("flush_sound", required: true)]
-        private string? _flushSound;
+        private SoundSpecifier _flushSound = default!;
 
         [DataField("flush_time", required: true)]
         private float _flushTime;
@@ -58,9 +59,9 @@ namespace Content.Client.Disposal.Visualizers
             var sound = new AnimationTrackPlaySound();
             _flushAnimation.AnimationTracks.Add(sound);
 
-            if (_flushSound != null)
+            if (_flushSound.TryGetSound(out var flushSound))
             {
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_flushSound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(flushSound, 0));
             }
         }
 

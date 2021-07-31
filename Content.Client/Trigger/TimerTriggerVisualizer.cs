@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -15,7 +16,7 @@ namespace Content.Client.Trigger
         private const string AnimationKey = "priming_animation";
 
         [DataField("countdown_sound", required: true)]
-        private string? _countdownSound;
+        private SoundSpecifier _countdownSound = default!;
 
         private Animation PrimingAnimation = default!;
 
@@ -28,11 +29,11 @@ namespace Content.Client.Trigger
                 flick.LayerKey = TriggerVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("primed", 0f));
 
-                if (_countdownSound != null)
+                if (_countdownSound.TryGetSound(out var countdownSound))
                 {
                     var sound = new AnimationTrackPlaySound();
                     PrimingAnimation.AnimationTracks.Add(sound);
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound, 0));
+                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(countdownSound, 0));
                 }
             }
         }
