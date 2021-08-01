@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
-                health.ChangeDamage(damageComponent.GetDamageType(damageType), (int)AmountToChange, true);
+                damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), (int)AmountToChange, true);
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
                 _accumulatedHealth += decHealthChange;
 
