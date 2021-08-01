@@ -15,6 +15,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Log;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -25,9 +26,11 @@ namespace Content.Server.Nutrition.Components
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        private readonly string _damageTypeID = default!;
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+
+        private float _acumulatedDamage;
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
@@ -181,6 +184,7 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentThirstThreshold != ThirstThreshold.Dead)
                 return;
+            // --> Current Hunger is below dead threhsold
 
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;
@@ -188,9 +192,18 @@ namespace Content.Server.Nutrition.Components
             if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
                 return;
 
+            Logger.ErrorS("aa", $"frametime:{frametime}");
             if (!mobState.IsDead())
             {
-                damageable.ChangeDamage(_damageType, 2, true);
+                // --> But they are not dead yet.
+                var damage = 2 * frametime;
+                _acumulatedDamage += damage - ((int) damage);
+                damageable.ChangeDamage(_damageType, (int) damage);
+                if (_acumulatedDamage >= 1)
+                {
+                    _acumulatedDamage -= 1;
+                    damageable.ChangeDamage(_damageType, 1, true);
+                }
             }
         }
 

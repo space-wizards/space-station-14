@@ -23,16 +23,15 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-
+        // TODO QUESTION This was previously dealing blunt damage. this doesn't feel right, but I will leave it here.
+        // Same thing for ThirstComponent
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        private readonly string _damageTypeID = default!;
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
-        [DataField("damageRecoveredPerSecond")]
-        private float _damageRecoveredPerSecond = 0.1f;
-        private float _acumulatedDamageRecovery;
+        private float _acumulatedDamage;
 
         // TODO QUESTION Just based on DrSmugleaf's other comments on similar situations: are all of _baseDecayRate,
         // _actualDecayRate, _currentHunger all redundant here? i.e., shouldn't it just be:
@@ -196,6 +195,8 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
+            // --> Current Hunger is below dead threhsold
+
 
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;
@@ -205,13 +206,13 @@ namespace Content.Server.Nutrition.Components
 
             if (!mobState.IsDead())
             {
-                // Recover some health over time
-                var damageRecovered = _damageRecoveredPerSecond * frametime;
-                _acumulatedDamageRecovery += damageRecovered - ((int) damageRecovered);
-                damageable.ChangeDamage(_damageType, (int) -damageRecovered);
-                if (_acumulatedDamageRecovery >= 1) {
-                    _acumulatedDamageRecovery -= 1;
-                    damageable.ChangeDamage(_damageType, -1);
+                // --> But they are not dead yet.
+                var damage = 2 * frametime;
+                _acumulatedDamage += damage - ((int) damage);
+                damageable.ChangeDamage(_damageType, (int) damage);
+                if (_acumulatedDamage >= 1) {
+                    _acumulatedDamage -= 1;
+                    damageable.ChangeDamage(_damageType, 1, true);
                 }
             }
         }
