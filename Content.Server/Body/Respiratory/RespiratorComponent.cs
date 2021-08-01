@@ -13,7 +13,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Metabolism.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
 using Content.Shared.MobState;
