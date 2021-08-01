@@ -1,17 +1,15 @@
-﻿#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
+    [NetworkedComponent()]
     public class SharedPDAComponent : Component
     {
         public override string Name => "PDA";
-        public override uint? NetID => ContentNetIDs.PDA;
-
     }
 
     [Serializable, NetSerializable]
@@ -177,7 +175,7 @@ namespace Content.Shared.PDA
 
         public UplinkListingData(string listingName,string itemId,
             int price, UplinkCategory category,
-            string description) : base(ContentNetIDs.PDA)
+            string description)
         {
             ListingName = listingName;
             Price = price;

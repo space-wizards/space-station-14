@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Containers;
 using Content.Server.GameObjects;

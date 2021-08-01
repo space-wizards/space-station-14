@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
@@ -182,9 +183,9 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if (_canHotspot && user.Transform.Coordinates.TryGetTileAtmosphere(out var tile))
+            if (_canHotspot)
             {
-                tile.HotspotExpose(700, 50);
+                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(user.Transform.Coordinates, 700, 50);
             }
             FireHandler?.Invoke(user, targetPos);
         }

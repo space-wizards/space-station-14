@@ -20,15 +20,14 @@ namespace Pow3r
                 return;
 
             _paused = dat.Paused;
-            _nextId = dat.NextId;
             _currentSolver = dat.Solver;
 
             _state = new PowerState
             {
-                Networks = dat.Networks.ToDictionary(n => n.Id, n => n),
-                Supplies = dat.Supplies.ToDictionary(s => s.Id, s => s),
-                Loads = dat.Loads.ToDictionary(l => l.Id, l => l),
-                Batteries = dat.Batteries.ToDictionary(b => b.Id, b => b)
+                Networks = GenIdStorage.FromEnumerable(dat.Networks.Select(n => (n.Id, n))),
+                Supplies = GenIdStorage.FromEnumerable(dat.Supplies.Select(s => (s.Id, s))),
+                Loads = GenIdStorage.FromEnumerable(dat.Loads.Select(l => (l.Id, l))),
+                Batteries = GenIdStorage.FromEnumerable(dat.Batteries.Select(b => (b.Id, b)))
             };
 
             _displayLoads = dat.Loads.ToDictionary(n => n.Id, _ => new DisplayLoad());
@@ -44,7 +43,6 @@ namespace Pow3r
             var data = new DiskDat
             {
                 Paused = _paused,
-                NextId = _nextId,
                 Solver = _currentSolver,
 
                 Loads = _state.Loads.Values.ToList(),
@@ -59,7 +57,6 @@ namespace Pow3r
         private sealed class DiskDat
         {
             public bool Paused;
-            public int NextId;
             public int Solver;
 
             public List<Load> Loads;

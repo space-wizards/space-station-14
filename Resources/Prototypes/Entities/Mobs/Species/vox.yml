@@ -84,7 +84,7 @@
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset
-  - type: Metabolism
+  - type: Respirator
     needsGases:
       Nitrogen: 0.00060763888
     producesGases:

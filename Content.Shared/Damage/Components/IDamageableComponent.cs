@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Resistances;

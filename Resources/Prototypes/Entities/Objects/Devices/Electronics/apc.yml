@@ -5,5 +5,5 @@
   description: Circuit used in APC construction.
   components:
     - type: Sprite
-      sprite: Constructible/Misc/module.rsi
+      sprite: Objects/Misc/module.rsi
       state: charger_APC

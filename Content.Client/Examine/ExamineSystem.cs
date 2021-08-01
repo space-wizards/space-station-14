@@ -8,6 +8,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -15,6 +16,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using static Content.Shared.Interaction.SharedInteractionSystem;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Examine
 {
@@ -26,6 +29,8 @@ namespace Content.Client.Examine
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
+        private IEntity? _examinedEntity;
+        private IEntity? _playerEntity;
         private Popup? _examineTooltipOpen;
         private CancellationTokenSource? _requestCancelTokenSource;
 
@@ -38,6 +43,24 @@ namespace Content.Client.Examine
                 .Register<ExamineSystem>();
         }
 
+        public override void Update(float frameTime)
+        {
+            if (_examineTooltipOpen == null || !_examineTooltipOpen.Visible) return;
+            if (_examinedEntity == null || _playerEntity == null) return;
+
+            Ignored predicate = entity => entity == _playerEntity || entity == _examinedEntity;
+
+            if (_playerEntity.TryGetContainer(out var container))
+            {
+                predicate += entity => entity == container.Owner;
+            }
+
+            if (!InRangeUnOccluded(_playerEntity, _examinedEntity, ExamineRange, predicate))
+            {
+                CloseTooltip();
+            }
+        }
+
         public override void Shutdown()
         {
             CommandBinds.Unregister<ExamineSystem>();
@@ -46,44 +69,54 @@ namespace Content.Client.Examine
 
         private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var examined))
+            if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out _examinedEntity))
             {
                 return false;
             }
 
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (playerEntity == null || !CanExamine(playerEntity, examined))
+            if (_playerEntity == null || !CanExamine(_playerEntity, _examinedEntity))
             {
                 return false;
             }
 
-            DoExamine(examined);
+            DoExamine(_examinedEntity);
             return true;
         }
 
         public async void DoExamine(IEntity entity)
         {
-            const float minWidth = 300;
+            // Close any examine tooltip that might already be opened
             CloseTooltip();
 
+            const float minWidth = 300;
             var popupPos = _userInterfaceManager.MousePositionScaled;
 
             // Actually open the tooltip.
-            _examineTooltipOpen = new Popup { MaxWidth = 400};
+            _examineTooltipOpen = new Popup { MaxWidth = 400 };
             _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
-            //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
-            var vBox = new VBoxContainer();
+
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             panel.AddChild(vBox);
-            var hBox = new HBoxContainer {SeparationOverride = 5};
+
+            var hBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                SeparationOverride = 5
+            };
             vBox.AddChild(hBox);
+
             if (entity.TryGetComponent(out ISpriteComponent? sprite))
             {
-                hBox.AddChild(new SpriteView {Sprite = sprite, OverrideDirection = Direction.South});
+                hBox.AddChild(new SpriteView { Sprite = sprite, OverrideDirection = Direction.South });
             }
 
             hBox.AddChild(new Label
@@ -104,7 +137,6 @@ namespace Content.Client.Examine
             }
             else
             {
-
                 // Ask server for extra examine info.
                 RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity.Uid));
 
@@ -130,17 +162,16 @@ namespace Content.Client.Examine
 
             foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
             {
-                if (!string.IsNullOrWhiteSpace(msg.Text))
-                {
-                    var richLabel = new RichTextLabel();
-                    richLabel.SetMessage(message);
-                    vBox.AddChild(richLabel);
-                    break;
-                }
+                if (string.IsNullOrWhiteSpace(msg.Text)) continue;
+
+                var richLabel = new RichTextLabel();
+                richLabel.SetMessage(message);
+                vBox.AddChild(richLabel);
+                break;
             }
         }
 
-        public void CloseTooltip()
+        private void CloseTooltip()
         {
             if (_examineTooltipOpen != null)
             {

@@ -1,0 +1,99 @@
+﻿- type: entity
+  id: UnfinishedMachineFrame
+  name: machine frame
+  description: A machine under construction. Needs more parts.
+  suffix: Unfinished
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Physics
+      bodyType: Static
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
+        mass: 25
+        layer:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - Opaque
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Rotatable
+    - type: Pullable
+    - type: Construction
+      graph: machine
+      node: missingWires
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - type: Sprite
+      sprite: Structures/Machines/parts.rsi
+      state: box_0
+
+- type: entity
+  id: MachineFrame
+  name: machine frame
+  suffix: Ready
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Physics
+      bodyType: Static
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.25,0.5,0.25"
+        mass: 25
+        layer:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - Opaque
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Rotatable
+    - type: Pullable
+    - type: Construction
+      graph: machine
+      node: machineFrame
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:ChangeConstructionNodeBehavior
+          node: missingWires
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - type: MachineFrame
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Machines/parts.rsi
+      state: box_1
+    - type: Appearance
+      visuals:
+      - type: MachineFrameVisualizer

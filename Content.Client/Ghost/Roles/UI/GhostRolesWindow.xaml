@@ -4,7 +4,7 @@
         <Label Text="There are currently no available ghost roles." />
     </CenterContainer>
     <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-        <VBoxContainer Name="EntryContainer" HorizontalExpand="True" VerticalExpand="True" />
+        <BoxContainer Orientation="Vertical" Name="EntryContainer" HorizontalExpand="True" VerticalExpand="True" />
     </ScrollContainer>
 
 </SS14Window>

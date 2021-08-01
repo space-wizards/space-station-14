@@ -1,10 +1,10 @@
-using Content.Client.Sound;
+using Content.Client.Kitchen.Components;
+using Content.Client.Kitchen.EntitySystems;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Power;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
 namespace Content.Client.Kitchen.Visualizers
@@ -17,35 +17,33 @@ namespace Content.Client.Kitchen.Visualizers
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            var loopingSoundComponent = component.Owner.GetComponentOrNull<LoopingSoundComponent>();
+            var microwaveComponent = component.Owner.GetComponentOrNull<MicrowaveComponent>();
 
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {
                 state = MicrowaveVisualState.Idle;
             }
+            // The only reason we get the entity system so late is so that tests don't fail... Amazing, huh?
             switch (state)
             {
                 case MicrowaveVisualState.Broken:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mwb");
-                    loopingSoundComponent?.StopAllSounds();
+                    if(microwaveComponent != null)
+                        EntitySystem.Get<MicrowaveSystem>().StopSoundLoop(microwaveComponent);
                     break;
 
                 case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");
-                    loopingSoundComponent?.StopAllSounds();
+                    if(microwaveComponent != null)
+                        EntitySystem.Get<MicrowaveSystem>().StopSoundLoop(microwaveComponent);
                     break;
 
                 case MicrowaveVisualState.Cooking:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_running_unlit");
-                    var audioParams = AudioParams.Default;
-                    audioParams.Loop = true;
-                    var scheduledSound = new ScheduledSound();
-                    scheduledSound.Filename = "/Audio/Machines/microwave_loop.ogg";
-                    scheduledSound.AudioParams = audioParams;
-                    loopingSoundComponent?.StopAllSounds();
-                    loopingSoundComponent?.AddScheduledSound(scheduledSound);
+                    if(microwaveComponent != null)
+                        EntitySystem.Get<MicrowaveSystem>().StartSoundLoop(microwaveComponent);
                     break;
 
                 default:

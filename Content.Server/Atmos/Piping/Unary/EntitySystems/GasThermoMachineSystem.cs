@@ -7,12 +7,15 @@ using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public class GasThermoMachineSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,18 +27,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
             var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
-            appearance?.SetData(ThermoMachineVisuals.Enabled, false);
 
-            if (!thermoMachine.Enabled)
+            if (!thermoMachine.Enabled
+                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
+            {
+                appearance?.SetData(ThermoMachineVisuals.Enabled, false);
                 return;
+            }
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
-                return;
-
-            var airHeatCapacity = Get<AtmosphereSystem>().GetHeatCapacity(inlet.Air);
+            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
             var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
             var oldTemperature = inlet.Air.Temperature;
 

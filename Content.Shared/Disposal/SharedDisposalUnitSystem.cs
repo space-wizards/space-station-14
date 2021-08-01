@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Disposal.Components;
+﻿using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

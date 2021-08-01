@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Light;
 using JetBrains.Annotations;

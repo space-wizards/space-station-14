@@ -1,4 +1,3 @@
-#nullable enable
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;

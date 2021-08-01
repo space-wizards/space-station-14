@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -446,7 +445,7 @@ namespace Content.Server.Construction.Components
                 otherPhysics.BodyType = physics.BodyType;
             }
 
-            Owner.Delete();
+            Owner.QueueDelete();
 
             foreach (var action in node.Actions)
             {

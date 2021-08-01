@@ -1,0 +1,32 @@
+﻿- type: entity
+  id: CloningPod
+  parent: BaseMachinePowered
+  name: cloning pod
+  description: A Cloning Pod. 50% reliable.
+  components:
+  - type: CloningPod
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/cloning.rsi
+    layers:
+      - state: pod_0
+        map: ["enum.CloningPodVisualLayers.Machine"]
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+      mass: 25
+      layer:
+      - SmallImpassable
+      - Opaque
+      mask:
+      - MobMask
+  - type: Appearance
+    visuals:
+      - type: CloningPodVisualizer
+  - type: UserInterface
+    interfaces:
+      - key: enum.CloningPodUIKey.Key
+        type: CloningPodBoundUserInterface
