@@ -1,21 +1,20 @@
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Movement.Components;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.IoC;
 using System;
+using Content.Shared.Chemistry.Solution;
 
-namespace Content.Server.Chemistry.Metabolism
+namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
     /// Default metabolism for stimulants and tranqs. Attempts to find a MovementSpeedModifier on the target,
     /// adding one if not there and to change the movespeed
     /// </summary>
-    [DataDefinition]
-    public class MovespeedModifierMetabolism : IMetabolizable
+    public class MovespeedModifier : ReagentEffect
     {
         private IGameTiming _gametiming = IoCManager.Resolve<IGameTiming>();
         /// <summary>
@@ -50,7 +49,7 @@ namespace Content.Server.Chemistry.Metabolism
         /// <param name="reagentId"></param>
         /// <param name="tickTime"></param>
         /// <returns></returns>
-        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime, ReagentUnit availableReagent)
+        public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
             if (solutionEntity.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
@@ -77,7 +76,7 @@ namespace Content.Server.Chemistry.Metabolism
                     movement?.RefreshMovementSpeedModifiers();
 
             }
-            return MetabolismRate;
+            
         }
         public void ResetTimer(MovespeedModifierMetabolismComponent status)
         {

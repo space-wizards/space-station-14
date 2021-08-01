@@ -15,7 +15,6 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent]
     public sealed class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables]
         public override string Name => "MovespeedModifierMetabolismComponent";
