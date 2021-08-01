@@ -26,6 +26,7 @@
 
 # Damage due to being unable to breathe.
 # Represents not enough oxygen (or equivalent) getting to the blood.
+# Usually healed automatically if entity can breathe
 - type: damageType
   id: Asphyxiation
 
@@ -80,10 +81,6 @@
   supportAll: true
 
 
-# Burn contains shock. If a doctor gets a burn patients, what do they do?
-# --> Apply burn ointment to heal heat damage
-# --> Somehow deal with cold-burns
-# --> Using wiring to fix shock damage??? What does shock damage represent here biologically?
 - type: damageContainer
   id: biologicalDamageContainer
   supportedGroups:
@@ -93,33 +90,8 @@
     - Airloss
     - Genetic
 
-# Burn contains cold --> metallic parts damaged by the cold of space?
-# The solar panels are gonna have a great time.
 - type: damageContainer
   id: metallicDamageContainer
   supportedGroups:
     - Brute
     - Burn
-
-
-
-# Maybe change damage groups & types around:
-
-# - remove damage type shock
-# + add damage type electrical. Represents damage to electrical components. Fixed with wires or circuits. EMP would cause pure electrical damage?
-# add damage group shock ( heat + electrical ). can hurt organics and computers, but would deal less damage to organics as they do not support electrical (unless they have implants).
-
-# I know there is already some talk about reworking how radiation works in general, but I still think we should make some sensible changes here:
-# - Remove damage type radiation
-# + add damage group radiation (heat + cellular + electrical). Would damage organics, computers, and metallics, but would deal less damage to metallics as they support only one damageType.
-# SS13 Wikis (TGstation, Para) describe radiation as not being a 'damageType' as such. It is  it's own thing that can contaminate object and just deals toxin-damage. Funnily, it doesnt seem to do cellular damage, which seems like that is exactly what that damageType should be there there for?
-
-# The way explosion damage is currently managed is also weird. Currently its a datafield with a list of damage types. Some would call this a group of damage types. The issue is that to make this change you would have to commit to allowing damage types to be memebers of more than one damage group.
-
-# Also, when organs get the ability to be damaged, they will need a damageContainer with some sort of damage type / group. We could just give them the biologicalDamageContainer (or equivalent for implants).
-# However that could make healing organ damage quite complicated. Compare with SS13 TGStation, organs just have a single number representing damage (afaik).
-# So maybe add damageType: "internal" or "organ"?
-# If organs & organ damaging/healing/targeting is done well, then changing between these systems should really only require modifiying yaml files.
-
-# These changes are based around the idea that a single damageType can be part of more than one damage group, which was mostly how code was written before I started making changes.
-# Furthermore, some of the logic relies on the fact that when dealing damage from a damage Group, damage to unsupported damage types is ignored. Again, the code already did that.
