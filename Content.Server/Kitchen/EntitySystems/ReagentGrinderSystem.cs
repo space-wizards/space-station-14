@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Kitchen.Components;
+using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
-using Content.Server.Kitchen.Events;
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification.Managers;
@@ -313,7 +313,7 @@ namespace Content.Server.Kitchen.EntitySystems
                                 RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent);
                             }
                             if (component.HeldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
-                            juiceMe.JuiceResultSolution.ScaleSolution(juiceEvent.Scalar);  
+                            juiceMe.JuiceResultSolution.ScaleSolution(juiceEvent.Scalar);
                             component.HeldBeaker.TryAddSolution(juiceMe.JuiceResultSolution);
                             item.Delete();
                         }

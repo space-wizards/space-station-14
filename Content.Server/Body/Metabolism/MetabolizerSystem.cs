@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Metabolism
 {

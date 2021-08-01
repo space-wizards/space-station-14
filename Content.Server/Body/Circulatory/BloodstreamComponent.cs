@@ -1,13 +1,12 @@
 using System;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -23,8 +22,8 @@ namespace Content.Server.Body.Circulatory
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
-        [DataField("maxVolume")]
-        [ViewVariables] private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
+        [DataField("maxVolume")] [ViewVariables]
+        private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
 
         /// <summary>
         ///     Internal solution for reagent storage
@@ -34,11 +33,12 @@ namespace Content.Server.Body.Circulatory
         /// <summary>
         ///     Empty volume of internal solution
         /// </summary>
-        [ViewVariables] public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
+        [ViewVariables]
+        public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
 
         [ViewVariables]
         public GasMixture Air { get; set; } = new(6)
-            {Temperature = Atmospherics.NormalBodyTemperature};
+            { Temperature = Atmospherics.NormalBodyTemperature };
 
         [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
 

@@ -1,5 +1,4 @@
-using Content.Server.Chemistry.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kitchen.Components
 {
-
     /// <summary>
     /// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
     /// think of grinding as a utility to break an object down into its reagents. Think of juicing as
@@ -36,7 +34,10 @@ namespace Content.Server.Kitchen.Components
         public bool Busy;
 
         //YAML serialization vars
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")] public int StorageCap = 16;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")] public int WorkTime = 3500; //3.5 seconds, completely arbitrary for now.
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")]
+        public int StorageCap = 16;
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")]
+        public int WorkTime = 3500; //3.5 seconds, completely arbitrary for now.
     }
 }

@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
 using Content.Server.DoAfter;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -49,18 +48,14 @@ namespace Content.Server.Fluids.Components
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
-        [DataField("pickup_amount")]
-        public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
+        [DataField("pickup_amount")] public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
-        [DataField("pickup_sound")]
-        private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
+        [DataField("pickup_sound")] private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
 
         /// <summary>
         ///     Multiplier for the do_after delay for how fast the mop works.
         /// </summary>
-        [ViewVariables]
-        [DataField("speed")]
-        private float _mopSpeed = 1;
+        [ViewVariables] [DataField("speed")] private float _mopSpeed = 1;
 
         protected override void Initialize()
         {
@@ -116,7 +111,8 @@ namespace Content.Server.Fluids.Components
             Mopping = true;
 
             // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
-            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleVolume.Float() / 10.0f, target: eventArgs.Target)
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleVolume.Float() / 10.0f,
+                target: eventArgs.Target)
             {
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -137,7 +133,9 @@ namespace Content.Server.Fluids.Components
 
             if (transferAmount == 0)
             {
-                if (puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (
+                    puddleComponent
+                        .EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
@@ -153,7 +151,8 @@ namespace Content.Server.Fluids.Components
                 puddleComponent.SplitSolution(transferAmount);
             }
 
-            if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
+            if (
+                puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
                 contents.SplitSolution(transferAmount).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }

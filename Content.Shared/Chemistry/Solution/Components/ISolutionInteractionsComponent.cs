@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     ///     High-level solution transferring operations like "what happens when a syringe tries to inject this entity."
     /// </summary>
     /// <remarks>
-    ///     This interface is most often implemented by using <see cref="SharedSolutionContainerComponent"/>
+    ///     This interface is most often implemented by using <see cref="SolutionContainerComponent"/>
     ///     and setting the appropriate <see cref="Capability"/>
     /// </remarks>
     public interface ISolutionInteractionsComponent : IComponent

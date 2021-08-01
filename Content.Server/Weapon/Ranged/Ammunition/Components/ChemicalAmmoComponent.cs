@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Chemistry.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components

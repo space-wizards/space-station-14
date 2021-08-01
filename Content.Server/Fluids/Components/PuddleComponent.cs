@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Directions;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
@@ -50,14 +50,20 @@ namespace Content.Server.Fluids.Components
         public override string Name => "Puddle";
 
         private CancellationTokenSource? _evaporationToken;
+
         [DataField("evaporate_threshold")]
-        private ReagentUnit _evaporateThreshold = ReagentUnit.New(20); // How few <Solution Quantity> we can hold prior to self-destructing
+        private ReagentUnit
+            _evaporateThreshold =
+                ReagentUnit.New(20); // How few <Solution Quantity> we can hold prior to self-destructing
+
         public ReagentUnit EvaporateThreshold
         {
             get => _evaporateThreshold;
             set => _evaporateThreshold = value;
         }
+
         private ReagentUnit _slipThreshold = ReagentUnit.New(3);
+
         public ReagentUnit SlipThreshold
         {
             get => _slipThreshold;
@@ -70,8 +76,7 @@ namespace Content.Server.Fluids.Components
         [DataField("evaporate_time")]
         public float EvaporateTime { get; private set; } = 5f;
 
-        [DataField("spill_sound")]
-        private string _spillSound = "/Audio/Effects/Fluids/splat.ogg";
+        [DataField("spill_sound")] private string _spillSound = "/Audio/Effects/Fluids/splat.ogg";
 
         /// <summary>
         /// Whether or not this puddle is currently overflowing onto its neighbors
@@ -86,27 +91,26 @@ namespace Content.Server.Fluids.Components
             set => _contents.MaxVolume = value;
         }
 
-        [ViewVariables]
-        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        [ViewVariables] public ReagentUnit CurrentVolume => _contents.CurrentVolume;
 
         // Volume at which the fluid will try to spill to adjacent components
         // Currently a random number, potentially change
         public ReagentUnit OverflowVolume => _overflowVolume;
-        [ViewVariables]
-        [DataField("overflow_volume")]
+
+        [ViewVariables] [DataField("overflow_volume")]
         private ReagentUnit _overflowVolume = ReagentUnit.New(20);
+
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
         private SolutionContainerComponent _contents = default!;
         public bool EmptyHolder => _contents.ReagentList.Count == 0;
-        [DataField("variants")]
-        private int _spriteVariants = 1;
-        // Whether the underlying solution color should be used
-        [DataField("recolor")]
-        private bool _recolor = default;
 
-        [DataField("state")]
-        private string _spriteState = "puddle";
+        [DataField("variants")] private int _spriteVariants = 1;
+
+        // Whether the underlying solution color should be used
+        [DataField("recolor")] private bool _recolor = default;
+
+        [DataField("state")] private string _spriteState = "puddle";
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
@@ -142,7 +146,7 @@ namespace Content.Server.Fluids.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if(Slippery)
+            if (Slippery)
             {
                 message.AddText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }
@@ -159,12 +163,14 @@ namespace Content.Server.Fluids.Components
         }
 
         // Flow rate should probably be controlled globally so this is it for now
-        internal bool TryAddSolution(Solution solution, bool sound = true, bool checkForEvaporate = true, bool checkForOverflow = true)
+        internal bool TryAddSolution(Solution solution, bool sound = true, bool checkForEvaporate = true,
+            bool checkForOverflow = true)
         {
             if (solution.TotalVolume == 0)
             {
                 return false;
             }
+
             var result = _contents.TryAddSolution(solution);
             if (!result)
             {
@@ -225,7 +231,7 @@ namespace Content.Server.Fluids.Components
         public void UpdateStatus()
         {
             _evaporationToken?.Cancel();
-            if(Owner.Deleted) return;
+            if (Owner.Deleted) return;
 
             UpdateAppearance();
             UpdateSlip();
@@ -261,6 +267,7 @@ namespace Content.Server.Fluids.Components
             {
                 return;
             }
+
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
             var volumeScale = (CurrentVolume.Float() / OverflowVolume.Float()) * 0.75f + 0.25f;
@@ -291,7 +298,7 @@ namespace Content.Server.Fluids.Components
                 return;
             }
 
-            var nextPuddles = new List<PuddleComponent>() {this};
+            var nextPuddles = new List<PuddleComponent>() { this };
             var overflownPuddles = new List<PuddleComponent>();
 
             while (OverflowLeft > ReagentUnit.Zero && nextPuddles.Count > 0)
@@ -389,7 +396,9 @@ namespace Content.Server.Fluids.Components
 
             if (puddle == default)
             {
-                puddle = () => Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, mapGrid.DirectionToGrid(coords, direction)).GetComponent<PuddleComponent>();
+                puddle = () =>
+                    Owner.EntityManager.SpawnEntity(Owner.Prototype?.ID, mapGrid.DirectionToGrid(coords, direction))
+                        .GetComponent<PuddleComponent>();
             }
 
             return true;

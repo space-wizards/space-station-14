@@ -24,6 +24,14 @@ namespace Content.Shared.Chemistry
         }
     }
 
+    /// <summary>
+    /// This event is used when sy
+    /// </summary>
+    public class SolutionInteractionEvent : EntityEventArgs
+    {
+
+    }
+
     [UsedImplicitly]
     public class ChemistrySystem : EntitySystem
     {
@@ -33,10 +41,10 @@ namespace Content.Shared.Chemistry
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedSolutionContainerComponent, ExaminedEvent>(OnExamineSolution);
+            SubscribeLocalEvent<SolutionContainerComponent, ExaminedEvent>(OnExamineSolution);
         }
 
-        private void OnExamineSolution(EntityUid uid, SharedSolutionContainerComponent component, ExaminedEvent args)
+        private void OnExamineSolution(EntityUid uid, SolutionContainerComponent component, ExaminedEvent args)
         {
             if (!component.CanExamineContents)
                 return;
@@ -51,7 +59,7 @@ namespace Content.Shared.Chemistry
             if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
             {
                 Logger.Error(
-                    $"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
+                    $"{nameof(SolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
                 return;
             }
 

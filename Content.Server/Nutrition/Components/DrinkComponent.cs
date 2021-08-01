@@ -90,7 +90,7 @@ namespace Content.Server.Nutrition.Components
 
         private void OpenedChanged()
         {
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {
                 return;
             }

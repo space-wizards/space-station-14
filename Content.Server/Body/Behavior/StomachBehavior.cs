@@ -91,10 +91,10 @@ namespace Content.Server.Body.Behavior
         /// </summary>
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SharedSolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SharedSolutionContainerComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
@@ -132,7 +132,7 @@ namespace Content.Server.Body.Behavior
 
         public bool CanTransferSolution(Solution solution)
         {
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solutionComponent))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }

@@ -5,6 +5,7 @@ using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -16,7 +17,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -217,7 +217,7 @@ namespace Content.Server.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(mapId,
+                var res = Get<SharedBroadphaseSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
                         (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
 

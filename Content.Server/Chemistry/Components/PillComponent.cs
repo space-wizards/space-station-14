@@ -4,6 +4,7 @@ using Content.Server.Body.Behavior;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -25,16 +26,13 @@ namespace Content.Server.Chemistry.Components
         [DataField("useSound")]
         protected override string? UseSound { get; set; } = default;
 
-        [ViewVariables]
-        [DataField("trash")]
-        protected override string? TrashPrototype { get; set; } = default;
+        [ViewVariables] [DataField("trash")] protected override string? TrashPrototype { get; set; } = default;
 
         [ViewVariables]
         [DataField("transferAmount")]
         protected override ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1000);
 
-        [ViewVariables]
-        private SolutionContainerComponent _contents = default!;
+        [ViewVariables] private SolutionContainerComponent _contents = default!;
 
         protected override void Initialize()
         {

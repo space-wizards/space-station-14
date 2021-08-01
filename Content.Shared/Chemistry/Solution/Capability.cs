@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Solution
 {
     /// <summary>
-    ///     Define common interaction behaviors for <see cref="SharedSolutionContainerComponent"/>
+    ///     Define common interaction behaviors for <see cref="SolutionContainerComponent"/>
     /// </summary>
     /// <seealso cref="ISolutionInteractionsComponent"/>
     [Flags]

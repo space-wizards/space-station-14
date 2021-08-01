@@ -7,10 +7,10 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
@@ -48,9 +48,14 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
-        [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
 
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [UsedImplicitly]
+        [ViewVariables]
+        private SolutionContainerComponent? Solution =>
+            _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+
+        [ViewVariables]
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
 
@@ -130,7 +135,7 @@ namespace Content.Server.Chemistry.Components
                 _ => true,
             };
 
-            if(!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
+            if (!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
                 return;
 
             switch (msg.Button)
@@ -214,12 +219,14 @@ namespace Content.Server.Chemistry.Components
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0),
+                    ReagentUnit.New(0),
                     string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionContainerComponent>();
-            return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
+            return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume,
+                solution.MaxVolume,
                 beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 
@@ -239,13 +246,14 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            if(beaker is null)
+            if (beaker is null)
                 return;
 
             _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
-            if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
+            if (!user.TryGetComponent<HandsComponent>(out var hands) ||
+                !beaker.TryGetComponent<ItemComponent>(out var item))
                 return;
             if (hands.CanPutInHand(item))
                 hands.PutInHand(item);
@@ -258,7 +266,7 @@ namespace Content.Server.Chemistry.Components
         {
             if (!HasBeaker) return;
             var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
-            if(solution is null)
+            if (solution is null)
                 return;
 
             solution.RemoveAllSolution();
@@ -324,7 +332,8 @@ namespace Content.Server.Chemistry.Components
 
             if (hands.GetActiveHand == null)
             {
-                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-interact-using-nothing-in-hands"));
+                Owner.PopupMessage(args.User,
+                    Loc.GetString("reagent-dispenser-component-interact-using-nothing-in-hands"));
                 return false;
             }
 
@@ -333,7 +342,8 @@ namespace Content.Server.Chemistry.Components
             {
                 if (HasBeaker)
                 {
-                    Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-has-container-already-message"));
+                    Owner.PopupMessage(args.User,
+                        Loc.GetString("reagent-dispenser-component-has-container-already-message"));
                 }
                 else if ((solution.Capabilities & Capability.FitsInDispenser) == 0)
                 {
@@ -348,7 +358,9 @@ namespace Content.Server.Chemistry.Components
             }
             else
             {
-                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-cannot-put-entity-message", ("entity", activeHandEntity)));
+                Owner.PopupMessage(args.User,
+                    Loc.GetString("reagent-dispenser-component-cannot-put-entity-message",
+                        ("entity", activeHandEntity)));
             }
 
             return true;
@@ -356,7 +368,8 @@ namespace Content.Server.Chemistry.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner,
+                AudioParams.Default.WithVolume(-2f));
         }
 
         [Verb]

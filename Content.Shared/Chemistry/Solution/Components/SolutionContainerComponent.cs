@@ -15,8 +15,10 @@ namespace Content.Shared.Chemistry.Solution.Components
     /// <summary>
     ///     Holds a <see cref="Solution"/> with a limited volume.
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(ISolutionInteractionsComponent))]
     [NetworkedComponent()]
-    public abstract class SharedSolutionContainerComponent : Component, ISolutionInteractionsComponent
+    public class SolutionContainerComponent : Component, ISolutionInteractionsComponent
     {
         public override string Name => "SolutionContainer";
 

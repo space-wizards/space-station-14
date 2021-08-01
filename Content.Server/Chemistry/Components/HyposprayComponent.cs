@@ -1,9 +1,9 @@
 using Content.Server.Interaction.Components;
 using Content.Server.MobState.States;
 using Content.Server.Weapon.Melee;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

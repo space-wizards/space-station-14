@@ -2,6 +2,7 @@ using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 

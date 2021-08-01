@@ -5,6 +5,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -67,10 +68,12 @@ namespace Content.Server.Chemistry.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                        out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out AirtightComponent? airtight) && airtight.AirBlocked)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                        out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }
 
@@ -95,7 +98,6 @@ namespace Content.Server.Chemistry.Components
             SpreadToDir(Direction.East);
             SpreadToDir(Direction.South);
             SpreadToDir(Direction.West);
-
         }
 
         /// <summary>
@@ -140,7 +142,8 @@ namespace Content.Server.Chemistry.Components
                 // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
-                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent, reagentQuantity.Quantity * solutionFraction, SolutionContainerComponent.Solution);
+                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
+                        reagentQuantity.Quantity * solutionFraction, SolutionContainerComponent.Solution);
                 }
             }
 
