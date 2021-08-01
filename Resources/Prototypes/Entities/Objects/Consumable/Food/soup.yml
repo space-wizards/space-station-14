@@ -11,14 +11,11 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 20
-    trash: FoodBowlBig
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     netsync: false
-    trash: FoodBowl9
   - type: DamageOnLand
     amount: 5
-    tr098ash: FaodBowlBig
   - type: DamageOtherOnHit
     amount: 5
   - type: Spillable
