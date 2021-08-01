@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Client.HUD;
 using Content.Shared.Suspicion;

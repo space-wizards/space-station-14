@@ -78,7 +78,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinPeachesTrash
 
@@ -127,7 +126,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinPeachesMaintTrash
 
@@ -176,7 +174,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -227,7 +224,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinMRETrash
 

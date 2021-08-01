@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

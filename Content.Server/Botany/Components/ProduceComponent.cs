@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;

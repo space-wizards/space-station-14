@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Server.Body.Respiratory;
 using Content.Shared.Chemistry;

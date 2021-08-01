@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -114,6 +113,27 @@ namespace Content.Shared.Chemistry.Solution
 
             _contents.Add(new ReagentQuantity(reagentId, quantity));
             TotalVolume += quantity;
+        }
+
+        /// <summary>
+        ///     Scales the amount of solution.
+        /// </summary>
+        /// <param name="scale">The scalar to modify the solution by.</param>
+        public void ScaleSolution(float scale)
+        {
+            if (scale == 1) return;
+            var tempContents = new List<ReagentQuantity>(_contents);
+            foreach(ReagentQuantity current in tempContents)
+            {
+                if(scale > 1)
+                {
+                    AddReagent(current.ReagentId, current.Quantity * scale - current.Quantity);
+                }
+                else
+                {
+                    RemoveReagent(current.ReagentId, current.Quantity - current.Quantity * scale);
+                }
+            }
         }
 
         /// <summary>

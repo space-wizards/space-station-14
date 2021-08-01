@@ -1,13 +1,12 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Container;
 using Content.Shared.Damage.Resistances;
-using Content.Shared.NetIDs;
 using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -23,13 +22,10 @@ namespace Content.Shared.Damage.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
+    [NetworkedComponent()]
     public class DamageableComponent : Component, IDamageableComponent, IRadiationAct, ISerializationHooks
     {
         public override string Name => "Damageable";
-        public override uint? NetID => ContentNetIDs.DAMAGEABLE;
-
-        private IPrototypeManager _prototypeManager = default!;
-        private Dictionary<DamageTypePrototype, int> _damageList = new();
 
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
@@ -444,7 +440,7 @@ namespace Content.Shared.Damage.Components
     {
         public readonly Dictionary<DamageTypePrototype, int> DamageList;
 
-        public DamageableComponentState(Dictionary<DamageTypePrototype, int> damageList) : base(ContentNetIDs.DAMAGEABLE)
+        public DamageableComponentState(Dictionary<DamageTypePrototype, int> damageList)
         {
             DamageList = damageList;
         }

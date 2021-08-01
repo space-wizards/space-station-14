@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
-#nullable enable
 
 namespace Content.Shared.MobState.State
 {

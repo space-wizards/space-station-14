@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Solar.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

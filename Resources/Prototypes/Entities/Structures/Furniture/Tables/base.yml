@@ -1,0 +1,19 @@
+- type: entity
+  id: TableBase
+  parent: BaseStructure
+  name: table
+  description: A square piece of metal standing on four metal legs.
+  abstract: true
+  components:
+  - type: Damageable
+    resistances: metallicResistances
+  - type: PlaceableSurface
+  - type: Sprite
+    netsync: false
+    drawdepth: FloorTiles
+  - type: Icon
+    state: full
+  - type: IconSmooth
+    key: state
+    base: state_
+  - type: Climbable

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Buckle.Components;
 using Content.Server.CombatMode;
+using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
@@ -46,6 +47,7 @@ namespace Content.Server.Interaction
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
@@ -175,9 +177,7 @@ namespace Content.Server.Interaction
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
-            var actionBlocker = Get<ActionBlockerSystem>();
-
-            if (!actionBlocker.CanInteract(user) || ! actionBlocker.CanUse(user))
+            if (!_actionBlockerSystem.CanInteract(user) || ! _actionBlockerSystem.CanUse(user))
                 return;
 
             // all activates should only fire when in range / unobstructed
@@ -275,7 +275,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -344,7 +344,7 @@ namespace Content.Server.Interaction
             if (diff.LengthSquared <= 0.01f)
                 return;
             var diffAngle = Angle.FromWorldVec(diff);
-            if (Get<ActionBlockerSystem>().CanChangeDirection(user))
+            if (_actionBlockerSystem.CanChangeDirection(user))
             {
                 user.Transform.WorldRotation = diffAngle;
             }
@@ -387,6 +387,18 @@ namespace Content.Server.Interaction
             return false;
         }
 
+        private async Task<bool> InteractDoBefore(
+            IEntity user,
+            IEntity used,
+            IEntity? target,
+            EntityCoordinates clickLocation,
+            bool canReach)
+        {
+            var ev = new BeforeInteractEvent(user, used, target, clickLocation, canReach);
+            RaiseLocalEvent(used.Uid, ev, false);
+            return ev.Handled;
+        }
+
         /// <summary>
         /// Uses a item/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
@@ -394,7 +406,10 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user))
+                return;
+
+            if (await InteractDoBefore(user, used, target, clickLocation, true))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -424,7 +439,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -457,7 +472,7 @@ namespace Content.Server.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(IEntity user, IEntity used)
         {
-            if (user != null && used != null && Get<ActionBlockerSystem>().CanUse(user))
+            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
             {
                 UseInteraction(user, used);
             }
@@ -501,7 +516,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
-            if (user == null || item == null || !Get<ActionBlockerSystem>().CanThrow(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user)) return false;
 
             ThrownInteraction(user, item);
             return true;
@@ -618,7 +633,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            if (user == null || item == null || !Get<ActionBlockerSystem>().CanDrop(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
 
             DroppedInteraction(user, item, intentional);
             return true;
@@ -696,6 +711,9 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
+            if (await InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+                return true;
+
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
@@ -715,10 +733,7 @@ namespace Content.Server.Interaction
                 }
             }
 
-            if (inRangeUnobstructed)
-                return await InteractDoAfter(user, used, target, clickLocation, false);
-            else
-                return await InteractDoAfter(user, used, null, clickLocation, false);
+            return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
@@ -726,7 +741,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!Get<ActionBlockerSystem>().CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user))
                 return;
 
             IEntity? targetEnt = null;

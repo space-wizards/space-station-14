@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Server.Player;
 using Robust.Shared.Console;

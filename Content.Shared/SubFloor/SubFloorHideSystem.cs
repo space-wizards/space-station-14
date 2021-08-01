@@ -1,10 +1,11 @@
-#nullable enable
+using System;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor
@@ -69,8 +70,7 @@ namespace Content.Shared.SubFloor
             var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
 
             // We do this directly instead of calling UpdateEntity.
-            if(_mapManager.TryGetGrid(transform.GridID, out var grid))
-                UpdateTile(grid, grid.TileIndicesFor(transform.Coordinates));
+            UpdateEntity(uid);
         }
 
         private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
@@ -114,6 +114,7 @@ namespace Content.Shared.SubFloor
         private void UpdateEntity(EntityUid uid)
         {
             var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
+
             if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
             {
                 // Not being on a grid counts as no subfloor, unhide this.
@@ -135,10 +136,31 @@ namespace Content.Shared.SubFloor
             if (subFloorHideEvent.Handled)
                 return;
 
+            // This might look weird, but basically we only need to query the SubFloorHide and Transform components
+            // if we are gonna hide the entity and we require it to be anchored to be hidden. Because getting components
+            // is "expensive", we have a slow path where we query them, and a fast path where we don't.
+            if (!subFloor
+                && ComponentManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent) &&
+                subFloorHideComponent.RequireAnchored
+                && ComponentManager.TryGetComponent(uid, out ITransformComponent? transformComponent))
+            {
+                // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
+                subFloor = !transformComponent.Anchored;
+            }
+
+            // Whether to show this entity as visible, visually.
+            var subFloorVisible = ShowAll || subFloor;
+
             // Show sprite
             if (ComponentManager.TryGetComponent(uid, out SharedSpriteComponent? spriteComponent))
             {
-                spriteComponent.Visible = ShowAll || subFloor;
+                spriteComponent.Visible = subFloorVisible;
+            }
+
+            // Set an appearance data value so visualizers can use this as needed.
+            if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
             }
 
             // So for collision all we care about is that the component is running.
@@ -157,5 +179,11 @@ namespace Content.Shared.SubFloor
         {
             SubFloor = subFloor;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public enum SubFloorVisuals : byte
+    {
+        SubFloor,
     }
 }

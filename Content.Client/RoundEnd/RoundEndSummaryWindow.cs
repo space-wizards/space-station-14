@@ -7,13 +7,14 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using static Content.Shared.GameTicking.SharedGameTicker;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.RoundEnd
 {
     public sealed class RoundEndSummaryWindow : SS14Window
     {
-        private VBoxContainer RoundEndSummaryTab { get; }
-        private VBoxContainer PlayerManifestoTab { get; }
+        private BoxContainer RoundEndSummaryTab { get; }
+        private BoxContainer PlayerManifestoTab { get; }
         private TabContainer RoundEndWindowTabs { get; }
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, RoundEndMessageEvent.RoundEndPlayerInfo[] info)
@@ -27,14 +28,16 @@ namespace Content.Client.RoundEnd
             //This tab would be a good place for things like: "x many people died.",
             //"clown slipped the crew x times.", "x shots were fired this round.", etc.
             //Also good for serious info.
-            RoundEndSummaryTab = new VBoxContainer()
+            RoundEndSummaryTab = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-round-end-summary-tab-title")
             };
 
             //Tab for listing  unique info per player.
-            PlayerManifestoTab = new VBoxContainer()
+            PlayerManifestoTab = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
             };
 
@@ -70,7 +73,10 @@ namespace Content.Client.RoundEnd
             {
                 VerticalExpand = true
             };
-            var innerScrollContainer = new VBoxContainer();
+            var innerScrollContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             //Put observers at the bottom of the list. Put antags on top.
             var manifestSortedList = info.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);

@@ -8,7 +8,7 @@
   components:
   - type: Tag
     tags:
-    - Teleportable
+    - CanPilot
     - FootstepSound
   - type: Reactive
     reactions:
@@ -152,7 +152,6 @@
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -171,8 +170,8 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: biologicalDamageContainer
-  - type: Metabolism
-    damageType: Blunt
+  - type: Respirator
+    damageType: Asphyxiation
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -258,6 +257,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+      noRot: true
       # TODO BODY Turn these into individual body parts?
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
@@ -344,7 +344,7 @@
         - VaultImpassable
         - SmallImpassable
         layer:
-        - MobImpassable
+        - Opaque
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate

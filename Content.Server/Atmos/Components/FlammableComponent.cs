@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Alert;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.ActionBlocker;
@@ -17,15 +18,13 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IInteractUsing
+    public class FlammableComponent : SharedFlammableComponent, IFireAct, IInteractUsing
     {
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
@@ -34,10 +33,10 @@ namespace Content.Server.Atmos.Components
         private readonly DamageTypePrototype _damageType = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool OnFire { get; private set; }
+        public bool OnFire { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float FireStacks { get; private set; }
+        public float FireStacks { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("fireSpread")]
@@ -46,17 +45,6 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
-
-        public void Ignite()
-        {
-            if (FireStacks > 0 && !OnFire)
-            {
-                OnFire = true;
-
-            }
-
-            UpdateAppearance();
-        }
 
         public void Extinguish()
         {
@@ -125,7 +113,7 @@ namespace Content.Server.Atmos.Components
                 return;
             }
 
-            tile.HotspotExpose(700, 50, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(tile.GridIndex, tile.GridIndices, 700f, 50f, true);
 
             var physics = Owner.GetComponent<IPhysBody>();
 
@@ -147,37 +135,7 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (!otherFixture.Body.Owner.TryGetComponent(out FlammableComponent? otherFlammable))
-                return;
-
-            if (!FireSpread || !otherFlammable.FireSpread)
-                return;
-
-            if (OnFire)
-            {
-                if (otherFlammable.OnFire)
-                {
-                    var fireSplit = (FireStacks + otherFlammable.FireStacks) / 2;
-                    FireStacks = fireSplit;
-                    otherFlammable.FireStacks = fireSplit;
-                }
-                else
-                {
-                    FireStacks /= 2;
-                    otherFlammable.FireStacks += FireStacks;
-                    otherFlammable.Ignite();
-                }
-            } else if (otherFlammable.OnFire)
-            {
-                otherFlammable.FireStacks /= 2;
-                FireStacks += otherFlammable.FireStacks;
-                Ignite();
-            }
-        }
-
-        private void UpdateAppearance()
+        public void UpdateAppearance()
         {
             if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)) return;
             appearanceComponent.SetData(FireVisuals.OnFire, OnFire);
@@ -187,7 +145,7 @@ namespace Content.Server.Atmos.Components
         public void FireAct(float temperature, float volume)
         {
             AdjustFireStacks(3);
-            Ignite();
+            EntitySystem.Get<FlammableSystem>().Ignite(this);
         }
 
         // This needs some improvements...
@@ -214,7 +172,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (hotItem.IsCurrentlyHot())
                 {
-                    Ignite();
+                    EntitySystem.Get<FlammableSystem>().Ignite(this);
                     return true;
                 }
             }

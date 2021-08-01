@@ -16,10 +16,10 @@
   - type: Hands
   - type: Sprite
     drawdepth: Mobs
-    sprite: Constructible/Power/VendingMachines/cola.rsi
+    sprite: Structures/Machines/VendingMachines/cola.rsi
     state: normal
   - type: Icon
-    sprite: Constructible/Power/VendingMachines/cola.rsi
+    sprite: Structures/Machines/VendingMachines/cola.rsi
     state: normal
   - type: Physics
     bodyType: Dynamic

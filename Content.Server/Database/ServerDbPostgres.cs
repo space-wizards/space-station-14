@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.Database
 {

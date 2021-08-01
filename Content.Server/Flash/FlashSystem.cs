@@ -3,7 +3,6 @@ using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -14,7 +13,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Flash
 {
-    public class FlashSystem : EntitySystem
+    internal sealed class FlashSystem : EntitySystem
     {
         public override void Initialize()
         {

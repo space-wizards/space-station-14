@@ -1,5 +1,7 @@
-#nullable enable
+using Content.Server.Doors.Components;
 using Content.Shared.Doors;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Doors
 {
@@ -38,6 +40,24 @@ namespace Content.Server.Doors
             base.Initialize();
 
             AccessType = AccessTypes.Id;
+            SubscribeLocalEvent<ServerDoorComponent, StartCollideEvent>(HandleCollide);
+        }
+
+        private void HandleCollide(EntityUid uid, ServerDoorComponent component, StartCollideEvent args)
+        {
+            if (component.State != SharedDoorComponent.DoorState.Closed)
+            {
+                return;
+            }
+
+            if (!component.BumpOpen)
+            {
+                return;
+            }
+
+            // Disabled because it makes it suck hard to walk through double doors.
+
+            component.TryOpen(args.OtherFixture.Body.Owner);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace Content.Shared.Module
+﻿namespace Content.Shared.Module
 {
     /// <summary>
     /// Provides a simple way to check whether calling code is being run by

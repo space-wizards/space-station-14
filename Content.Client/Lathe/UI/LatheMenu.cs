@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lathe.UI
 {
@@ -36,14 +37,16 @@ namespace Content.Client.Lathe.UI
 
             Title = "Lathe Menu";
 
-            var vBox = new VBoxContainer()
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SeparationOverride = 5,
             };
 
-            var hBoxButtons = new HBoxContainer()
+            var hBoxButtons = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1,
@@ -76,8 +79,9 @@ namespace Content.Client.Lathe.UI
                 SizeFlagsStretchRatio = 3,
             };
 
-            var hBoxFilter = new HBoxContainer()
+            var hBoxFilter = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 1

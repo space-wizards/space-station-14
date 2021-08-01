@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Shared.Movement.Components;

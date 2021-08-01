@@ -1,0 +1,15 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:ui="clr-namespace:Content.Client.Kitchen.UI"
+            Title="{Loc grinder-menu-title}" MinSize="512 256" SetSize="512 256">
+<BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Center">
+            <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 64"/>
+            <Control MinSize="0 16"/>
+            <Button Name="JuiceButton" Text="{Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 64"/>
+        </BoxContainer>
+        <Control MinSize="16 0"/>
+        <ui:LabelledContentBox Name="ChamberContentBox" LabelText="{Loc grinder-menu-chamber-content-box-label}" ButtonText="{Loc grinder-menu-chamber-content-box-button}" VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+        <Control MinSize="8 0"/>
+        <ui:LabelledContentBox Name="BeakerContentBox" LabelText="{Loc grinder-menu-beaker-content-box-label}" ButtonText="{Loc grinder-menu-beaker-content-box-button}" VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+    </BoxContainer>
+</SS14Window>

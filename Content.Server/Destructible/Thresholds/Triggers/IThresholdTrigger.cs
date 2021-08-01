@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Damage.Components;
+﻿using Content.Shared.Damage.Components;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {
