@@ -34,8 +34,8 @@ namespace Content.Server.Atmos.Components
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        private readonly string _damageTypeID = default!;
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat";
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [ViewVariables(VVAccess.ReadWrite)]

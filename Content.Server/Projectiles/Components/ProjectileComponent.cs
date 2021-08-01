@@ -15,7 +15,8 @@ namespace Content.Server.Projectiles.Components
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // This also requires changing the dictionary type and modifying ProjectileSystem.cs, which uses it.
-        [DataField("damageTypes")]
+        // While thats being done, also replace "damages" -> "damageTypes" For consistency.
+        [DataField("damages")]
         private Dictionary<string, int> _damageTypes = new();
 
         [ViewVariables]

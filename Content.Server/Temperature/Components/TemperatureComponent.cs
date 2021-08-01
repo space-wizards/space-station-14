@@ -24,13 +24,14 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
+        // TODO QUESTION Similar to the asphyxiation question, does this actually need to be a datafield?
         // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("coldDamageType", required: true)]
-        private readonly string _coldDamageTypeID = default!;
+        [DataField("coldDamageType")]
+        private readonly string _coldDamageTypeID = "Cold";
         private DamageTypePrototype _coldDamageType => _prototypeManager.Index<DamageTypePrototype>(_coldDamageTypeID);
-        [DataField("hotDamageType", required: true)]
-        private readonly string _hotDamageTypeID = default!;
+        [DataField("hotDamageType")]
+        private readonly string _hotDamageTypeID = "Heat";
         private DamageTypePrototype _hotDamageType => _prototypeManager.Index<DamageTypePrototype>(_hotDamageTypeID);
 
 
