@@ -7,24 +7,23 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Shared.Maths;
 using EyeComponent = Robust.Client.GameObjects.EyeComponent;
 
 namespace Content.Client.Tabletop
 {
     [UsedImplicitly]
-    public class ClientTabletopSystem : EntitySystem
+    public class TabletopSystem : EntitySystem
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
 
         /**
          * Time in seconds to wait until sending the location of a dragged entity to the server again.
@@ -34,6 +33,9 @@ namespace Content.Client.Tabletop
         // Entity being dragged
         private IEntity? _draggedEntity;
 
+        // Viewport being used
+        private IViewportControl? _viewport;
+
         // Time passed since last update sent to the server.
         private float _timePassed = 0f;
 
@@ -41,7 +43,7 @@ namespace Content.Client.Tabletop
         {
             CommandBinds.Builder
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
-                        .Register<ClientTabletopSystem>();
+                        .Register<TabletopSystem>();
 
             SubscribeNetworkEvent<TabletopPlayEvent>(TabletopPlayHandler);
         }
@@ -54,15 +56,13 @@ namespace Content.Client.Tabletop
          */
         private void TabletopPlayHandler(TabletopPlayEvent msg)
         {
-            // TODO: remove log message
-            Logger.Info("Game started: " + msg.Title);
-
             var camera = EntityManager.GetEntity(msg.CameraUid);
 
             var window = new SS14Window
             {
-                MinWidth = 400,
-                MinHeight = 400
+                MinWidth = 512,
+                MinHeight = 512 + 26,
+                Title = msg.Title
             };
 
             if (!camera.TryGetComponent<EyeComponent>(out var eyeComponent))
@@ -73,7 +73,9 @@ namespace Content.Client.Tabletop
             var viewport = new ScalingViewport
             {
                 Eye = eyeComponent.Eye,
-                ViewportSize = (400, 400)
+                ViewportSize = (msg.Size.X * 32, msg.Size.Y * 32),
+                MouseFilter = Control.MouseFilterMode.Stop, // Make the mouse interact with the viewport
+                RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt // Nearest neighbor scaling
             };
 
             window.Contents.AddChild(viewport);
@@ -82,11 +84,11 @@ namespace Content.Client.Tabletop
 
         public override void Update(float frameTime)
         {
-            // If no entity is being dragged, just return
-            if (_draggedEntity == null) return;
+            // If no entity is being dragged or no viewport is clicked, just return
+            if (_draggedEntity == null || _viewport == null) return;
 
             // Map mouse position to EntityCoordinates
-            var worldPos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var worldPos = _viewport.ScreenToMap(_inputManager.MouseScreenPosition.Position);
             EntityCoordinates coords = new(_mapManager.GetMapEntityId(worldPos.MapId), worldPos.Position);
 
             // Move the entity locally every update
@@ -125,16 +127,18 @@ namespace Content.Client.Tabletop
                 return false;
             }
 
-            // Set the dragged entity
+            // Set the dragged entity and the viewport it was clicked in
             _draggedEntity = entity;
+            _viewport = _uiManger.MouseGetControl(args.ScreenCoordinates) as IViewportControl;
 
             return true;
         }
 
         private bool OnMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            // Unset the dragged entity
+            // Unset the dragged entity and viewport
             _draggedEntity = null;
+            _viewport = null;
 
             return true;
         }
