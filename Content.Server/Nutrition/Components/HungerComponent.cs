@@ -23,8 +23,6 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        // TODO QUESTION This was previously dealing blunt damage. this doesn't feel right, but I will leave it here.
-        // Same thing for ThirstComponent
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType")]
