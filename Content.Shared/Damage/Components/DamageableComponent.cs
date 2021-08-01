@@ -38,7 +38,10 @@ namespace Content.Shared.Damage.Components
         private IPrototypeManager _prototypeManager = default!;
         private Dictionary<DamageTypePrototype, int> _damageList = new();
 
+<<<<<<< refs/remotes/origin/master
 >>>>>>> update damagecomponent across shared and server
+=======
+>>>>>>> Fix Merge issues
         // TODO define these in yaml?
         public const string DefaultResistanceSet = "defaultResistances";
         public const string DefaultDamageContainer = "metallicDamageContainer";
@@ -136,7 +139,7 @@ namespace Content.Shared.Damage.Components
 
             foreach (var DamageType in SupportedTypes)
             {
-                _damageList.Add(DamageType,0);
+                _damageList.Add(DamageType, 0);
             }
 
             var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId);
@@ -260,7 +263,7 @@ namespace Content.Shared.Damage.Components
 
                 var delta = newValue - old;
                 var datum = new DamageChangeData(type, newValue, delta);
-                var data = new List<DamageChangeData> {datum};
+                var data = new List<DamageChangeData> { datum };
 
                 OnHealthChanged(data);
 
@@ -325,7 +328,7 @@ namespace Content.Shared.Damage.Components
             current = _damageList[type];
 
             var datum = new DamageChangeData(type, current, finalDamage);
-            var data = new List<DamageChangeData> {datum};
+            var data = new List<DamageChangeData> { datum };
 
             OnHealthChanged(data);
 
@@ -416,7 +419,11 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
+<<<<<<< refs/remotes/origin/master
         public bool SetDamage(DamageType type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
+=======
+        public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null, DamageChangeParams? extraParams = null)
+>>>>>>> Fix Merge issues
         {
             if (newValue >= TotalDamage)
             {
@@ -438,7 +445,7 @@ namespace Content.Shared.Damage.Components
 
             var delta = newValue - old;
             var datum = new DamageChangeData(type, 0, delta);
-            var data = new List<DamageChangeData> {datum};
+            var data = new List<DamageChangeData> { datum };
 
             OnHealthChanged(data);
 
@@ -471,17 +478,17 @@ namespace Content.Shared.Damage.Components
         {
             var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
             int damageGroupSumDamage = 0;
-            int damageTypeDamage = 0 ;
+            int damageTypeDamage = 0;
             foreach (var damageGroup in SupportedGroups)
             {
                 damageGroupSumDamage = 0;
                 foreach (var damageType in SupportedTypes)
                 {
                     damageTypeDamage = 0;
-                     damagelist.TryGetValue(damageType,out damageTypeDamage);
-                     damageGroupSumDamage += damageTypeDamage;
+                    damagelist.TryGetValue(damageType, out damageTypeDamage);
+                    damageGroupSumDamage += damageTypeDamage;
                 }
-                damageGroupDict.Add(damageGroup,damageGroupSumDamage);
+                damageGroupDict.Add(damageGroup, damageGroupSumDamage);
             }
 
             return damageGroupDict;
@@ -500,7 +507,7 @@ namespace Content.Shared.Damage.Components
 
         void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
-            var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
+            var totalDamage = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
 
             ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
         }

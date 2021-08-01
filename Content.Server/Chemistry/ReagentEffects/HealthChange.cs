@@ -36,8 +36,12 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
+<<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Chemistry/ReagentEffects/HealthChange.cs
                 health.ChangeDamage(DamageType, (int)AmountToChange, true);
+=======
+                damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), (int)AmountToChange, true);
+>>>>>>> Fix Merge issues
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
 =======
                 damageComponent.ChangeDamage(damageComponent.GetDamageType(damageType), (int)HealthChange, true);
