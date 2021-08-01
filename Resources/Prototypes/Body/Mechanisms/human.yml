@@ -197,7 +197,7 @@
           walkSpeedModifier: 1.65
           sprintSpeedModifier: 1.65
       Ephedrine:
-        effects:
+         effects:
         - !type:MovespeedModifier
           walkSpeedModifier: 1.5
           sprintSpeedModifier: 1.5
