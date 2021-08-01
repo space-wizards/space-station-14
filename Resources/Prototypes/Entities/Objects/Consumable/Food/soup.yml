@@ -11,7 +11,7 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 20
-    trash: BowlBigTrash
+    trash: FoodBowlBig
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     netsync: false
