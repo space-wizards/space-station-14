@@ -72,7 +72,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
                 //If any of the modifers aren't synced to the movement modifier component, then refresh them, otherwise don't
                 //Also I don't know if this is a good way to do a NAND gate in c#
-                if (!(status.WalkSpeedModifier.Equals(movement.WalkSpeedModifier) & status.SprintSpeedModifier.Equals(movement.SprintSpeedModifier)))
+                if (!(status.WalkSpeedModifier.Equals(movement.WalkSpeedModifier) && status.SprintSpeedModifier.Equals(movement.SprintSpeedModifier)))
                     movement?.RefreshMovementSpeedModifiers();
 
             }

@@ -188,7 +188,20 @@
         - !type:HealthChange
           healthChange: -2
           damageClass: Brute
-
+      Meth:
+        effects:
+        - !type:HealthChange
+          healthChange: 2.5
+          damageClass: Toxin
+        - !type:MovespeedModifier
+          walkSpeedModifier: 1.65
+          sprintSpeedModifier: 1.65
+       Ephedrine:
+         effects:
+        - !type:MovespeedModifierMetabolism
+          walkSpeedModifier: 1.5
+          sprintSpeedModifier: 1.5
+          
 - type: entity
   id: OrganHumanStomach
   parent: BaseHumanOrgan

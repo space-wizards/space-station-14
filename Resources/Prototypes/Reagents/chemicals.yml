@@ -230,14 +230,6 @@
   color: "#FAFAFA"
   boilingPoint: 212.0 #Meth vape when?
   meltingPoint: 170.0
-  metabolism:
-    - !type:HealthChangeMetabolism
-      healthChange: 2.5 # On tg it's 1-4 brain damage, but since as of now, we don't have brain damage, toxin will have to do.
-      damageClass: Toxin
-      rate: 1
-    - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 1.65
-      sprintSpeedModifier: 1.65
 
 - type: reagent
   id: Iodine
@@ -248,7 +240,6 @@
   boilingPoint: 184.3
   meltingPoint: 113.7
 
-
 - type: reagent
   id: Ephedrine
   name: ephedrine
@@ -257,10 +248,6 @@
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
-  metabolism:
-    - !type:MovespeedModifierMetabolism
-      walkSpeedModifier: 1.5
-      sprintSpeedModifier: 1.5
 
 - type: reagent
   id: Oil
